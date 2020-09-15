@@ -1,0 +1,3008 @@
+\documentclass[]{book}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage[]{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\PassOptionsToPackage{hyphens}{url} % url is loaded by hyperref
+\usepackage[unicode=true]{hyperref}
+\hypersetup{
+            pdftitle={Aprendizaje Estadístico},
+            pdfauthor={Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{natbib}
+\bibliographystyle{apalike}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{longtable,booktabs}
+% Fix footnotes in tables (requires footnote package)
+\IfFileExists{footnote.sty}{\usepackage{footnote}\makesavenoteenv{long table}}{}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+\usepackage{booktabs}
+\usepackage{amsthm}
+\usepackage[a4paper, top=3.25cm, bottom=2.5cm, left=3cm, right=2.5cm]{geometry}
+%\usepackage{fontspec}
+%\setmainfont{Arial}
+% Espacio después de teorema
+% https://tex.stackexchange.com/questions/37797/theorem-environment-line-break-after-label
+\newtheoremstyle{break}
+  {\topsep}{\topsep}%
+  {\itshape}{}%
+  {\bfseries}{}%
+  {\newline}%
+  {}%
+
+\theoremstyle{break}
+
+\ifxetex
+  \usepackage{polyglossia}
+  \setmainlanguage{spanish}
+  % Tabla en lugar de cuadro
+  \gappto\captionsspanish{\renewcommand{\tablename}{Tabla}
+          \renewcommand{\listtablename}{Índice de tablas}}
+
+\else
+  \usepackage[spanish,es-tabla]{babel}
+\fi
+\makeatletter
+\def\thm@space@setup{
+  \thm@preskip=8pt plus 2pt minus 4pt
+  \thm@postskip=\thm@preskip
+}
+\makeatother
+
+\title{Aprendizaje Estadístico}
+\author{Rubén Fernández Casal
+(\href{mailto:ruben.fcasal@udc.es}{\nolinkurl{ruben.fcasal@udc.es}}),
+Julián Costa
+(\href{mailto:julian.costa@udc.es}{\nolinkurl{julian.costa@udc.es}})}
+\date{2020-09-15}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{1}
+\tableofcontents
+}
+\chapter*{Prólogo}\label{pruxf3logo}
+\addcontentsline{toc}{chapter}{Prólogo}
+
+Este libro contiene los apuntes de la asignatura de
+\href{http://eamo.usc.es/pub/mte/index.php?option=com_content\&view=article\&id=74}{Aprendizaje
+Estadístico} del \href{http://eio.usc.es/pub/mte}{Máster en Técnicas
+Estadísticas}.
+
+Este libro ha sido escrito en
+\href{http://rmarkdown.rstudio.com}{R-Markdown} empleando el paquete
+\href{https://bookdown.org/yihui/bookdown/}{\texttt{bookdown}} y está
+disponible en el repositorio Github:
+\href{https://github.com/rubenfcasal/aprendizaje_estadistico}{rubenfcasal/aprendizaje\_estadistico}.
+Se puede acceder a la versión en línea a través del siguiente enlace:
+
+\url{https://rubenfcasal.github.io/aprendizaje_estadistico/index.html}.
+
+donde puede descargarse en formato
+\href{https://rubenfcasal.github.io/aprendizaje_estadistico/aprendizaje_estadistico.pdf}{pdf}.
+
+Para ejecutar los ejemplos mostrados en el libro sería necesario tener
+instalados los siguientes paquetes:
+\href{https://CRAN.R-project.org/package=caret}{\texttt{caret}},
+\href{https://CRAN.R-project.org/package=rattle}{\texttt{rattle}},
+\href{https://CRAN.R-project.org/package=car}{\texttt{car}},
+\href{https://CRAN.R-project.org/package=leaps}{\texttt{leaps}},
+\href{https://CRAN.R-project.org/package=MASS}{\texttt{MASS}},
+\href{https://CRAN.R-project.org/package=RcmdrMisc}{\texttt{RcmdrMisc}},
+\href{https://CRAN.R-project.org/package=lmtest}{\texttt{lmtest}},
+\href{https://CRAN.R-project.org/package=glmnet}{\texttt{glmnet}},
+\href{https://CRAN.R-project.org/package=mgcv}{\texttt{mgcv}},
+\href{https://CRAN.R-project.org/package=AppliedPredictiveModeling}{\texttt{AppliedPredictiveModeling}},
+\href{https://CRAN.R-project.org/package=ISLR}{\texttt{ISLR}}. Por
+ejemplo mediante los siguientes comandos:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pkgs <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"caret"}\NormalTok{, }\StringTok{"rattle"}\NormalTok{, }\StringTok{"car"}\NormalTok{, }\StringTok{"leaps"}\NormalTok{, }\StringTok{"MASS"}\NormalTok{, }\StringTok{"RcmdrMisc"}\NormalTok{, }
+          \StringTok{"lmtest"}\NormalTok{, }\StringTok{"glmnet"}\NormalTok{, }\StringTok{"mgcv"}\NormalTok{, }
+          \StringTok{"AppliedPredictiveModeling"}\NormalTok{, }\StringTok{"ISLR"}\NormalTok{)}
+
+\KeywordTok{install.packages}\NormalTok{(}\KeywordTok{setdiff}\NormalTok{(pkgs, }\KeywordTok{installed.packages}\NormalTok{()[,}\StringTok{"Package"}\NormalTok{]), }\DataTypeTok{dependencies =} \OtherTok{TRUE}\NormalTok{)}
+\CommentTok{# Si aparecen errores (normalmente debidos a incompatibilidades con versiones ya instaladas), }
+\CommentTok{# probar a ejecutar en lugar de lo anterior:}
+\CommentTok{# install.packages(pkgs, dependencies=TRUE) # Instala todos...}
+\end{Highlighting}
+\end{Shaded}
+
+Para generar el libro (compilar) serán necesarios paquetes adicionales,
+para lo que se recomendaría consultar el libro de
+\href{https://rubenfcasal.github.io/bookdown_intro}{``Escritura de
+libros con bookdown''} en castellano.
+
+\includegraphics[width=1.22in]{images/by-nc-nd-88x31}
+
+Este obra está bajo una licencia de
+\href{https://creativecommons.org/licenses/by-nc-nd/4.0/deed.es_ES}{Creative
+Commons Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional}
+(esperamos poder liberarlo bajo una licencia menos restrictiva más
+adelante\ldots{}).
+
+\chapter{Introducción al Aprendizaje Estadístico}\label{intro-AE}
+
+La denominada \emph{Ciencia de Datos} (Data Science; también denominada
+\emph{Science of Learning}) se ha vuelto muy popular hoy en día. Se
+trata de un campo multidisciplicar, con importantes aportaciones
+estadísticas e informáticas, dentro del que se incluirían disciplinas
+como \emph{Minería de Datos} (Data Mining), \emph{Aprendizaje
+Automático} (Machine Learning), \emph{Aprendizaje Profundo} (Deep
+Learning), \emph{Modelado Predictivo} (Predictive Modeling),
+\emph{Extracción de Conocimiento} (Knowlegde Discovery) y también el
+\emph{Aprendizaje Estadístico} (Statistical Learning).
+
+Podríamos definir la Ciencia de Datos como el conjunto de conocimientos
+y herramientas utilizados en las distintas etapas del análisis de datos
+(ver Figura \ref{fig:esquema}). Otras definiciones podrían ser:
+
+\begin{itemize}
+\item
+  El arte y la ciencia del análisis inteligente de los datos.
+\item
+  El conjunto de herramientas para entender y modelizar conjuntos
+  (complejos) de datos.
+\item
+  El proceso de descubrir patrones y obtener conocimiento a partir de
+  grandes conjuntos de datos (\emph{Big Data}).
+\end{itemize}
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{images/esquema2} 
+
+}
+
+\caption{Etapas del proceso}\label{fig:esquema}
+\end{figure}
+
+Una de estas etapas (que están interrelacionadas) es la construcción de
+modelos a partir de los datos para aprender y predecir. Podríamos decir
+que el Aprendizaje Estadístico (AE) se encarga de este problema desde el
+punto de vista estadístico.
+
+En Estadística se consideran modelos estocásticos (con componente
+aleatoria), para tratar de tener en cuenta la incertidumbre debida a que
+no se disponga de toda la información (sobre las variables que influyen
+en el fenómeno de interés).
+
+\begin{quote}
+``Nothing in Nature is random\ldots{} a thing appears random only
+through the incompleteness of our knowledge.''
+
+--- Spinoza, Baruch (Ethics, 1677)
+\end{quote}
+
+\begin{quote}
+``To my mind, although Spinoza lived and thought long before Darwin,
+Freud, Einstein, and the startling implications of quantum theory, he
+had a vision of truth beyond what is normally granted to human beings.''
+
+--- Shirley, Samuel (Complete Works, 2002). Traductor de la obra
+completa de Spinoza al inglés.
+\end{quote}
+
+La Inferencia Estadística proporciona herramientas para ajustar este
+tipo de modelos a los datos observados (seleccionar un modelo adecuado,
+estimar sus parámetros y contrastar su validez). Sin embargo, en la
+aproximación estadística clásica como primer objetivo se trata de
+explicar por completo lo que ocurre en la población y suponiendo que
+esto se puede hacer con modelos tratables analíticamente, emplear
+resultados teóricos (típicamente resultados asintóticos) para realizar
+inferencias (entre ellas la predicción). Los avances en computación han
+permitido el uso de modelos estadísticos más avanzados, principalmente
+métodos no paramétricos, muchos de los cuales no pueden ser tratados
+analíticamente (por lo menos no por completo o no inicialmente), este es
+el campo de la Estadística Computacional\footnote{Lauro (1996) definió
+  la Estadística Computacional como la disciplina que tiene como
+  objetivo ``diseñar algoritmos para implementar métodos estadísticos en
+  computadoras, incluidos los impensables antes de la era de las
+  computadoras (por ejemplo, bootstrap, simulación), así como hacer
+  frente a problemas analíticamente intratables''.}. Desde este punto de
+vista, el AE se enmarcaría dentro del campo de la Estadística
+Computacional.
+
+Cuando pensamos en AE pensamos en:
+
+\begin{itemize}
+\item
+  Flexibilidad (hay menos suposiciones sobre los datos).
+\item
+  Procesamiento automático de datos.
+\item
+  Big Data (en el sentido amplio, donde ``big'' puede hacer referencia a
+  datos complejos).
+\item
+  Predicción.
+\end{itemize}
+
+Por el contrario, muchos de los métodos del AE no se preocupan (o se
+preocupan poco) por:
+
+\begin{itemize}
+\item
+  Reproducibilidad.
+\item
+  Cuantificación de la incertidumbre (en términos de probabilidad).
+\item
+  Inferencia.
+\end{itemize}
+
+La idea es ``dejar hablar a los datos'' y no ``encorsetarlos'' a priori,
+dándoles mayor peso que a los modelos. Sin embargo, esta aproximación
+puede presentar diversos inconvenientes:
+
+\begin{itemize}
+\item
+  Algunos métodos son poco interpretables (se sacrifica la
+  interpretabilidad por la precisión de las predicciones).
+\item
+  Pueden aparecer problemas de sobreajuste (\emph{overfitting}; en los
+  métodos estadísticos clásicos es más habitual que aparezcan problemas
+  de infraajuste, \emph{underfitting}).
+\item
+  Pueden presentar más problemas al extrapolar o interpolar (en
+  comparación con los métodos clásicos).
+\end{itemize}
+
+\section{Aprendizaje Estadístico vs.~Aprendizaje
+Automático}\label{aprendizaje-estaduxedstico-vs.aprendizaje-automuxe1tico}
+
+El término \emph{Machine Learning} (ML; Aprendizaje Automático) se
+utiliza en el campo de la \emph{Intelingencia Artificial} desde 1959
+para hacer referencia, fundamentalmente, a algoritmos de predicción
+(inicialmente para reconocimiento de patrones). Muchas de las
+herramientas que utilizan provienen del campo de la Estadística y, en
+cualquier caso, la Estadística (y por tanto las Matemáticas) es la base
+de todos estos enfoques para analizar datos (y no conviene perder la
+base formal). Por este motivo desde la Estadística Computacional se
+introdujo el término \emph{Statistical Learning} (Aprendizaje
+Estadístico) para hacer referencia a este tipo de herramientas, pero
+desde el punto de vista estadístico (teniendo en cuenta la incertidumbre
+debida a no disponer de toda la información).
+
+Tradicionalmente ML no se preocupa del origen de los datos e incluso es
+habitual que se considere que un conjunto enorme de datos es equivalente
+a disponer de toda la información (i.e.~a la población).
+
+\begin{quote}
+``The sheer volume of data would obviate the need of theory and even
+scientific method''
+
+--- Chris Anderson, físico y periodista, 2008
+\end{quote}
+
+Por el contrario en el caso del AE se trata de comprender, si es
+posible, el proceso subyacente del que provienen los datos y si estos
+son representativos de la población de interés (i.e.~si tienen algún
+tipo de sesgo). No obstante, en este libro se considerará en general
+ambos términos como sinónimos.
+
+ML/AE hacen un importante uso de la programación matemática, ya que
+muchos de sus problemas se plantean en términos de la optimización de
+funciones bajo restricciones. Recíprocamente, en optimización también se
+utilizan algoritmos de ML/AE.
+
+\subsection{Machine Learning vs.~Data
+Mining}\label{machine-learning-vs.data-mining}
+
+Mucha gente utiliza indistintamente los nombres ML y \emph{Data Mining}
+(DM). Sin embargo, aunque tienen mucho solapamiento, lo cierto es que
+hacen referencia a conceptos ligeramente distintos.
+
+ML es un conjunto de algoritmos principalmente dedicados a hacer
+predicciones y que son esencialmente automáticos minimizando la
+intervención humana.
+
+DM intenta \emph{entender} conjuntos de datos (en el sentido de
+encontrar sus patrones), requiere de una intervención humana activa (al
+igual que la Inferencia Estadística tradicional), pero utiliza entre
+otras las técnicas automáticas de ML. Por tanto podríamos pensar que es
+más parecido al AE.
+
+\subsection{Las dos culturas (Breiman,
+2001)}\label{las-dos-culturas-breiman-2001}
+
+Breiman diferencia dos objetivos en el análisis de datos, que él llama
+\emph{información} (en el sentido de \emph{inferencia}) y
+\emph{predicción}. Cada uno de estos objetivos da lugar a una cultura:
+
+\begin{itemize}
+\item
+  \emph{Modelización de datos}: desarrollo de modelos (estocásticos) que
+  permitan ajustar los datos y hacer inferencia. Es el trabajo habitual
+  de los estadísticos académicos.
+\item
+  \emph{Modelización algorítmica} (en el sentido de predictiva): esta
+  cultura no está interesada en los mecanismos que generan los datos,
+  sólo en los algoritmos de predicción. Es el trabajo habitual de muchos
+  estadísticos industriales y de muchos ingenieros informáticos. El ML
+  es el núcleo de esta cultura que pone todo el énfasis en la precisión
+  predictiva (así, un importante elemento dinamizador son las
+  competiciones entre algoritmos predictivos, al estilo del
+  \href{https://en.wikipedia.org/wiki/Netflix_Prize}{Netflix
+  Challenge}).
+\end{itemize}
+
+\subsection{Machine Learning vs.~Estadística (Dunson,
+2018)}\label{machine-learning-vs.estaduxedstica-dunson-2018}
+
+\begin{itemize}
+\item
+  ``Machine learning: The main publication outlets tend to be
+  peer-reviewed conference proceedings and the style of research is very
+  fast paced, trendy, and driven by performance metrics in prediction
+  and related tasks''.
+\item
+  ``Statistical community: The main publication outlets are
+  peer-reviewed journals, most of which have a long drawn out review
+  process, and the style of research tends to be careful, slower paced,
+  intellectual as opposed to primarily performance driven, emphasizing
+  theoretical support (e.g., through asymptotic properties),
+  under-stated, and conservative''.
+\item
+  ``\emph{Big data} in ML typically means that the number of examples
+  (i.e.~sample size) is very large''.
+\item
+  ``In statistics (\ldots{}) it has become common to collect high
+  dimensional, complex and intricately structured data. Often the
+  dimensionality of the data vastly exceeds the available sample size,
+  and the fundamental challenge of the statistical analysis is obtaining
+  new insights from these huge data, while maintaining
+  reproducibility/replicability and reliability of the results''.
+\end{itemize}
+
+\section{Métodos de Aprendizaje
+Estadístico}\label{muxe9todos-de-aprendizaje-estaduxedstico}
+
+Dentro de los problemas que aborda el Aprendizaje Estadístico se suelen
+diferenciar dos grandes bloques: el aprendizaje no supervisado y el
+supervisado. El \emph{aprendizaje no supervisado} comprende los métodos
+exploratorios, es decir, aquellos en los que no hay una variable
+respuesta (al menos no de forma explícita). El principal objetivo de
+estos métodos es entender las relaciones entre los datos y su
+estructura, y pueden clasificarse en las siguientes categorías:
+
+\begin{itemize}
+\item
+  Análisis descriptivo.
+\item
+  Métodos de reducción de la dimensión (análisis de componentes
+  principales, análisis factorial\ldots{}).
+\item
+  Clúster.
+\item
+  Detección de datos atípicos.
+\end{itemize}
+
+El \emph{aprendizaje supervisado} engloba los métodos predictivos, en
+los que una de las variables está definida como variable respuesta. Su
+principal objetivo es la construcción de modelos que posteriormente se
+utilizarán, sobre todo, para hacer predicciones. Dependiendo del tipo de
+variable respuesta se diferencia entre:
+
+\begin{itemize}
+\item
+  Clasificación: respuesta categórica (también se emplea la denominación
+  de variable cualitativa, discreta o factor).
+\item
+  Regresión: respuesta numérica (cuantitativa).
+\end{itemize}
+
+En este libro nos centraremos únicamente en el campo del aprendizaje
+supervisado y combinaremos la terminología propia de la Estadística con
+la empleada en AE (por ejemplo, en Estadística es habitual considerar un
+problema de clasificación como un caso particular de regresión).
+
+\subsection{Notación y
+terminología}\label{notaciuxf3n-y-terminologuxeda}
+
+Denotaremos por \(\mathbf{X}=(X_1, X_2, \ldots, X_p)\) al vector formado
+por las variables predictoras (variables explicativas o variables
+independientes; también \emph{inputs} o \emph{features} en la
+terminología de ML), cada una de las cuales podría ser tanto numérica
+como categórica\footnote{Aunque hay que tener en cuenta que algunos
+  métodos están diseñados para predictores numéricos, otros para
+  categóricos y algunos para ambos tipos.}. En general (ver comentarios
+más adelante), emplearemos \(Y\left(\mathbf{X} \right)\) para referirnos
+a la variable objetivo (variable respuesta o variable dependiente;
+también \emph{output} en la terminología de ML), que como ya se comentó
+puede ser una variable numérica (regresión) o categórica
+(clasificación).
+
+Supondremos que el objetivo principal es, a partir de una muestra:
+\[\left\{ \left( x_{1i}, \ldots, x_{pi}, y_{i} \right)  : i = 1, \ldots, n \right\},\]
+obtener (futuras) predicciones \(\hat Y\left(\mathbf{x} \right)\) de la
+respuesta para
+\(\mathbf{X}=\mathbf{x}=\left(x_{1}, \ldots, x_{p}\right)\).
+
+En regresión consideraremos como base el siguiente modelo general
+(podría ser después de una transformación de la respuesta):
+
+\begin{equation} 
+  Y(\mathbf{X})=m(\mathbf{X})+\varepsilon,
+  \label{eq:modelogeneral}
+\end{equation}
+
+donde
+\(m(\mathbf{x}) = E\left( \left. Y\right\vert_{\mathbf{X}=\mathbf{x}} \right)\)
+es la media condicional, denominada función de regresión (o tendencia),
+y \(\varepsilon\) es un error aleatorio de media cero y varianza
+\(\sigma^2\), independiente de \(\mathbf{X}\). Este modelo puede
+generalizarse de diversas formas, por ejemplo, asumiendo que la
+distribución del error depende de \(X\) (considerando
+\(\varepsilon(\mathbf{X})\) en lugar de \(\varepsilon\)) podríamos
+incluir dependencia y heterocedasticidad. En estos casos normalmente se
+supone que lo hace únicamente a través de la varianza (error
+heterocedástico independiente), denotando por
+\(\sigma^2(\mathbf{x}) = Var\left( \left. Y\right\vert_{\mathbf{X}=\mathbf{x}} \right)\)
+la varianza condicional\footnote{Por ejemplo considerando en el modelo
+  base \(\sigma(\mathbf{X})\varepsilon\) como termino de error y
+  suponiendo adicionalmente que \(\varepsilon\) tiene varianza uno.}.
+
+Como ya se comentó se podría considerar clasificación como un caso
+particular, por ejemplo definiendo \(Y\left(\mathbf{X} \right)\) de
+forma que tome los valores \(1, 2, \ldots, K\), etiquetas que
+identifican las \(K\) posibles categorías (también se habla de
+modalidades, niveles, clases o grupos). Sin embargo, muchos métodos de
+clasificación emplean variables auxiliares (variables \emph{dummy}),
+indicadoras de las distintas categorías, y emplearemos la notación
+anterior para referirnos a estas variables (también denominadas
+variables \emph{target}). En cuyo caso, denotaremos por
+\(G \left(\mathbf{X} \right)\) la respuesta categórica (la clase
+verdadera; \(g_i\), \(i =1, \ldots, n\), serían los valores observados)
+y por \(\hat G \left(\mathbf{X} \right)\) el predictor.
+
+Por ejemplo, en el caso de dos categorías, se suele definir \(Y\) de
+forma que toma el valor 1 en la categoría de interés (también denominada
+\emph{éxito} o \emph{resultado positivo}) y 0 en caso contrario
+(\emph{fracaso} o \emph{resultado negativo})\footnote{Otra alternativa
+  sería emplear 1 y -1, algo que simplifica las expresiones de algunos
+  métodos.}. Además, en este caso, los modelos típicamente devuelven
+estimaciones de la probabilidad de la clase de interés en lugar de
+predecir directamente la clase, por lo que se empleará \(\hat p\) en
+lugar de \(\hat Y\). A partir de esa estimación se obtiene una
+predicción de la categoría. Normalmente se predice la clase más
+probable, i.e. ``éxito'' si \(\hat p(\mathbf{x}) > c = 0.5\) y
+``fracaso'' en caso contrario (con probabilidad estimada
+\(1 - \hat p(\mathbf{x})\)).
+
+Resulta claro que el modelo base general \eqref{eq:modelogeneral} puede no
+ser adecuado para modelar variables indicadoras (o probabilidades).
+Muchos de los métodos de AE emplean \eqref{eq:modelogeneral} para una
+variable auxiliar numérica (denominada puntuación o \emph{score}) que se
+transforma a escala de probabilidades mediante la función logística
+(denominada función sigmoidal, \emph{sigmoid function}, en ML)\footnote{De
+  especial interés en regresión logística y en redes neuronales
+  artificiales.}: \[p(s) = \frac{1}{1 + e^{-s}},\] cuya inversa es la
+\emph{función logit}:
+\[\operatorname{logit}(p)=\log\left( \frac{p}{1-p} \right).\]
+
+Lo anterior se puede generalizar para el caso de múltiples categorías,
+considerando variables indicadoras de cada categoría
+\(Y_1, \ldots, Y_K\) (es lo que se conoce como la estrategia de ``uno
+contra todos''). En este caso típicamente:
+\[\hat G \left(\mathbf{x} \right) = \underset{k}{\operatorname{argmax}} \left\{ \hat p_k(\mathbf{x}) : k = 1, 2, \ldots, K \right\}.\]
+
+\subsection{Métodos (de aprendizaje supervisado) y paquetes de
+R}\label{muxe9todos-de-aprendizaje-supervisado-y-paquetes-de-r}
+
+Hay una gran cantidad de métodos de aprendizaje supervisado
+implementados en centenares de paquetes de \texttt{R} (ver por ejemplo
+\href{https://cran.r-project.org/web/views/MachineLearning.html}{CRAN
+Task View: Machine Learning \& Statistical Learning}). A continuación se
+muestran los principales métodos y algunos de los paquetes de R que los
+implementan (muchos son válidos para regresión y clasificación, como por
+ejemplo los basados en árboles, aunque aquí aparecen en su aplicación
+habitual).
+
+Métodos de Clasificación:
+
+\begin{itemize}
+\item
+  Análisis discriminante (lineal, cuadrático), Regresión logística,
+  multinomial\ldots{}: \texttt{stats}, \texttt{MASS}\ldots{}
+\item
+  Árboles de decisión, \emph{bagging}, \emph{random forest},
+  \emph{boosting}: \texttt{rpart}, \texttt{party}, \texttt{C50},
+  \texttt{Cubist}, \texttt{randomForest}, \texttt{adabag},
+  \texttt{xgboost}\ldots{}
+\item
+  \emph{Support vector machines} (SVM): \texttt{kernlab},
+  \texttt{e1071}\ldots{}
+\end{itemize}
+
+Métodos de regresión:
+
+\begin{itemize}
+\item
+  Modelos lineales:
+
+  \begin{itemize}
+  \item
+    Regresión lineal: \texttt{lm()}, \texttt{lme()},
+    \texttt{biglm}\ldots{}
+  \item
+    Regresión lineal robusta: \texttt{MASS::rlm()}\ldots{}
+  \item
+    Métodos de regularización (Ridge regression, Lasso):
+    \texttt{glmnet}, \texttt{elasticnet}\ldots{}
+  \end{itemize}
+\item
+  Modelos lineales generalizados: \texttt{glm()}, \texttt{bigglm}, ..
+\item
+  Modelos paramétricos no lineales: \texttt{nls()},
+  \texttt{nlme}\ldots{}
+\item
+  Regresión local (vecinos más próximos y métodos de suavizado):
+  \texttt{kknn}, \texttt{loess()}, \texttt{KernSmooth}, \texttt{sm},
+  \texttt{np}\ldots{}
+\item
+  Modelos aditivos generalizados (GAM): \texttt{mgcv},
+  \texttt{gam}\ldots{}
+\item
+  Redes neuronales: \texttt{nnet}\ldots{}
+\end{itemize}
+
+También existen paquetes de \texttt{R} que permiten utilizar plataformas
+de ML externas, como por ejemplo
+\href{https://github.com/h2oai/h2o-3/tree/master/h2o-r}{\texttt{h2o}} o
+\href{https://CRAN.R-project.org/package=RWeka}{\texttt{RWeka}}.
+
+Como todos estos paquetes emplean opciones, estructuras y convenciones
+sintácticas diferentes, se han desarrollado paquetes que proporcionan
+interfaces unificadas a muchas de estas implementaciones. Entre ellos
+podríamos citar
+\href{https://topepo.github.io/caret}{\texttt{caret}},\href{https://mlr3.mlr-org.com}{\texttt{mlr3}}
+y \href{https://www.tidymodels.org}{\texttt{tidymodels}}. En la Sección
+\ref{caret} se incluye una breve introducción al paquete
+\href{https://topepo.github.io/caret}{\texttt{caret}} que será empleado
+en diversas ocasiones a lo largo del presente libro.
+
+Adicionalmente hay paquetes de R que disponen de entornos gráficos que
+permiten emplear estos métodos evitando el uso de comandos. Entre ellos
+estarían R-Commander con el plugin FactoMineR (\texttt{Rcmdr},
+\texttt{RcmdrPlugin.FactoMineR}) y
+\href{https://rattle.togaware.com}{\texttt{rattle}}.
+
+\section{Construcción y evaluación de los modelos}\label{const-eval}
+
+En Inferencia Estadística clásica el procedimiento habitual es emplear
+toda la información disponible para construir un modelo válido (que
+refleje de la forma más fiel posible lo que ocurre en la población) y
+asumiendo que el modelo es el verdadero (lo que en general sería falso)
+utilizar métodos de inferencia para evaluar su precisión. Por ejemplo,
+en el caso de regresión lineal múltiple, el coeficiente de determinación
+ajustado sería una medida del la precisión del modelo para predecir
+nuevas observaciones (no se debería emplear el coeficiente de
+determinación sin ajustar; aunque, en cualquier caso, su validez
+dependería de la de las suposiciones estructurales del modelo).
+
+Alternativamente, en Estadística Computacional es habitual emplear
+técnicas de remuestreo para evaluar la precisión (entrenando también el
+modelo con todos los datos disponibles), principalmente validación
+cruzada (leave-one-out, k-fold), jackniffe o bootstrap.
+
+Por otra parte, como ya se comentó, algunos de los modelos empleados en
+AE son muy flexibles (están hiperparametrizados) y pueden aparecer
+problemas si se permite que se ajusten demasiado bien a las
+observaciones (podrían llegar a interpolar los datos). En estos casos
+habrá que controlar el procedimiento de aprendizaje, típicamente a
+traves de parámetros relacionados con la complejidad del modelo (ver
+sección siguiente).
+
+En AE se distingue entre parámetros estructurales, los que van a ser
+estimados al ajustar el modelo a los datos (en el entrenamiento), e
+hiperparámetros (\emph{tuning parameters} o parámetros de ajuste), que
+imponen restricciones al aprendizaje del modelo (por ejemplo
+determinando el número de parámetros estructurales). Si los
+hiperparámetros seleccionados producen un modelo demasiado complejo
+aparecerán problemas de sobreajuste (\emph{overfitting}) y en caso
+contrario de infraajuste (\emph{undefitting}).
+
+Hay que tener en cuenta también que al aumentar la complejidad disminuye
+la interpretabilidad de los modelos. Se trataría entonces de conseguir
+buenas predicciones (habrá que evaluar la capacidad predictiva) con el
+modelo más sencillo posible.
+
+\subsection{Equilibrio entre sesgo y varianza: infraajuste y
+sobreajuste}\label{bias-variance}
+
+La idea es que queremos aprender más allá de los datos empleados en el
+entrenamiento (en Estadística diríamos que queremos hacer inferencia
+sobre nuevas observaciones). Como ya se comentó, en AE hay que tener
+especial cuidado con el sobreajuste. Este problema ocurre cuando el
+modelo se ajusta demasiado bien a los datos de entrenamiento pero falla
+cuando se utiliza en un nuevo conjunto de datos (nunca antes visto).
+
+Como ejemplo ilustrativo emplearemos regresión polinómica, considerando
+el grado del polinomio como un hiperparámetro que determina la
+complejidad del modelo. En primer lugar simulamos una muestra y
+ajustamos modelos polinómicos con distintos grados de complejidad.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Simulación datos}
+\NormalTok{n <-}\StringTok{ }\DecValTok{30}
+\NormalTok{x <-}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DataTypeTok{length =}\NormalTok{ n)}
+\NormalTok{mu <-}\StringTok{ }\DecValTok{2} \OperatorTok{+}\StringTok{ }\DecValTok{4}\OperatorTok{*}\NormalTok{(}\DecValTok{5}\OperatorTok{*}\NormalTok{x }\OperatorTok{-}\StringTok{ }\DecValTok{1}\NormalTok{)}\OperatorTok{*}\NormalTok{(}\DecValTok{4}\OperatorTok{*}\NormalTok{x }\OperatorTok{-}\StringTok{ }\DecValTok{2}\NormalTok{)}\OperatorTok{*}\NormalTok{(x }\OperatorTok{-}\StringTok{ }\FloatTok{0.8}\NormalTok{)}\OperatorTok{^}\DecValTok{2} \CommentTok{# grado 4}
+\NormalTok{sd <-}\StringTok{ }\FloatTok{0.5}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{y <-}\StringTok{ }\NormalTok{mu }\OperatorTok{+}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(n, }\DecValTok{0}\NormalTok{, sd)}
+\KeywordTok{plot}\NormalTok{(x, y) }
+\KeywordTok{lines}\NormalTok{(x, mu, }\DataTypeTok{lwd =} \DecValTok{2}\NormalTok{)}
+\CommentTok{# Ajuste de los modelos}
+\NormalTok{fit1 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(y }\OperatorTok{~}\StringTok{ }\NormalTok{x)}
+\KeywordTok{lines}\NormalTok{(x, }\KeywordTok{fitted}\NormalTok{(fit1))}
+\NormalTok{fit2 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(y }\OperatorTok{~}\StringTok{ }\KeywordTok{poly}\NormalTok{(x, }\DecValTok{4}\NormalTok{))}
+\KeywordTok{lines}\NormalTok{(x, }\KeywordTok{fitted}\NormalTok{(fit2), }\DataTypeTok{lty =} \DecValTok{2}\NormalTok{)}
+\NormalTok{fit3 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(y }\OperatorTok{~}\StringTok{ }\KeywordTok{poly}\NormalTok{(x, }\DecValTok{20}\NormalTok{)) }
+\CommentTok{# NOTA: poly(x, degree, raw = FALSE) tiene un problema de desbordamiento si degree > 25}
+\KeywordTok{lines}\NormalTok{(x, }\KeywordTok{fitted}\NormalTok{(fit3), }\DataTypeTok{lty =} \DecValTok{3}\NormalTok{)}
+\KeywordTok{legend}\NormalTok{(}\StringTok{"topright"}\NormalTok{, }\DataTypeTok{legend =} \KeywordTok{c}\NormalTok{(}\StringTok{"Verdadero"}\NormalTok{, }\StringTok{"Ajuste con grado 1"}\NormalTok{, }
+                              \StringTok{"Ajuste con grado 4"}\NormalTok{, }\StringTok{"Ajuste con grado 20"}\NormalTok{), }
+       \DataTypeTok{lty =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{), }\DataTypeTok{lwd =} \KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/polyfit-1} 
+
+}
+
+\caption{Muestra (simulada) y ajustes polinómicos con distinta complejidad.}\label{fig:polyfit}
+\end{figure}
+
+Como se observa en la Figura \ref{fig:polyfit} al aumentar la
+complejidad del modelo se consigue un mejor ajuste a los datos
+observados (empleados en el entrenamiento), a costa de un incremento en
+la variabilidad de las predicciones, lo que puede producir un mal
+comportamiento del modelo a ser empleado en un conjunto de datos
+distinto del observado.
+
+Si calculamos medidas de bondad de ajuste, como el error cuadrático
+medio (MSE) o el coeficiente de determinación, se obtienen mejores
+resultados al aumentar la complejidad. Como se trata de modelos
+lineales, podríamos obtener también el coeficiente de determinación
+ajustado, que sería preferible (en principio, ya que dependería de la
+validez de las hipótesis estructurales del modelo) para medir la
+precisión al emplear los modelos en un nuevo conjunto de datos.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{knitr}\OperatorTok{::}\KeywordTok{kable}\NormalTok{(}\KeywordTok{t}\NormalTok{(}\KeywordTok{sapply}\NormalTok{(}\KeywordTok{list}\NormalTok{(}\DataTypeTok{fit1 =}\NormalTok{ fit1, }\DataTypeTok{fit2 =}\NormalTok{ fit2, }\DataTypeTok{fit3 =}\NormalTok{ fit3), }
+       \ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{with}\NormalTok{(}\KeywordTok{summary}\NormalTok{(x), }
+                        \KeywordTok{c}\NormalTok{(}\DataTypeTok{MSE =} \KeywordTok{mean}\NormalTok{(residuals}\OperatorTok{^}\DecValTok{2}\NormalTok{), }\DataTypeTok{R2 =}\NormalTok{ r.squared, }\DataTypeTok{R2adj =}\NormalTok{ adj.r.squared)))), }\DataTypeTok{digits =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{l|r|r|r}
+\hline
+  & MSE & R2 & R2adj\\
+\hline
+fit1 & 1.22 & 0.20 & 0.17\\
+\hline
+fit2 & 0.19 & 0.87 & 0.85\\
+\hline
+fit3 & 0.07 & 0.95 & 0.84\\
+\hline
+\end{tabular}
+
+Por ejemplo, si generamos nuevas respuestas de este proceso, la
+precisión del modelo más complejo empeorará considerablemente:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y.new <-}\StringTok{ }\NormalTok{mu }\OperatorTok{+}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(n, }\DecValTok{0}\NormalTok{, sd)}
+\KeywordTok{plot}\NormalTok{(x, y) }
+\KeywordTok{points}\NormalTok{(x, y.new, }\DataTypeTok{pch =} \DecValTok{2}\NormalTok{)}
+\KeywordTok{lines}\NormalTok{(x, mu, }\DataTypeTok{lwd =} \DecValTok{2}\NormalTok{)}
+\KeywordTok{lines}\NormalTok{(x, }\KeywordTok{fitted}\NormalTok{(fit1))}
+\KeywordTok{lines}\NormalTok{(x, }\KeywordTok{fitted}\NormalTok{(fit2), }\DataTypeTok{lty =} \DecValTok{2}\NormalTok{)}
+\KeywordTok{lines}\NormalTok{(x, }\KeywordTok{fitted}\NormalTok{(fit3), }\DataTypeTok{lty =} \DecValTok{3}\NormalTok{)}
+\KeywordTok{legend}\NormalTok{(}\StringTok{"topright"}\NormalTok{, }\DataTypeTok{legend =} \KeywordTok{c}\NormalTok{(}\StringTok{"Verdadero"}\NormalTok{, }\StringTok{"Muestra"}\NormalTok{, }\StringTok{"Ajuste con grado 1"}\NormalTok{, }\StringTok{"Ajuste con grado 4"}\NormalTok{, }
+                              \StringTok{"Ajuste con grado 20"}\NormalTok{, }\StringTok{"Nuevas observaciones"}\NormalTok{), }
+       \DataTypeTok{lty =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\OtherTok{NA}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\OtherTok{NA}\NormalTok{), }\DataTypeTok{lwd =} \KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\OtherTok{NA}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\OtherTok{NA}\NormalTok{), }\DataTypeTok{pch =} \KeywordTok{c}\NormalTok{(}\OtherTok{NA}\NormalTok{, }\DecValTok{1}\NormalTok{, }\OtherTok{NA}\NormalTok{, }\OtherTok{NA}\NormalTok{, }\OtherTok{NA}\NormalTok{, }\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/polyfit2-1} 
+
+}
+
+\caption{Muestra con ajustes polinómicos con distinta complejidad y nuevas observaciones.}\label{fig:polyfit2}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{MSEP <-}\StringTok{ }\KeywordTok{sapply}\NormalTok{(}\KeywordTok{list}\NormalTok{(}\DataTypeTok{fit1 =}\NormalTok{ fit1, }\DataTypeTok{fit2 =}\NormalTok{ fit2, }\DataTypeTok{fit3 =}\NormalTok{ fit3), }
+               \ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{mean}\NormalTok{((y.new }\OperatorTok{-}\StringTok{ }\KeywordTok{fitted}\NormalTok{(x))}\OperatorTok{^}\DecValTok{2}\NormalTok{))}
+\NormalTok{MSEP}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      fit1      fit2      fit3 
+## 1.4983208 0.1711238 0.2621064
+\end{verbatim}
+
+Como ejemplo adicional, para evitar el efecto de la aleatoriedad de la
+muestra, en el siguiente código se simulan 100 muestras del proceso
+anterior a las que se les ajustan modelos polinómicos variando el grado
+de 1 a 20. Posteriormente se evalua la precisión en la muestra empleada
+en el ajuste y en un nuevo conjunto de datos procedente de la misma
+población.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{nsim <-}\StringTok{ }\DecValTok{100}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{grado.max <-}\StringTok{ }\DecValTok{20}
+\NormalTok{grados <-}\StringTok{ }\KeywordTok{seq_len}\NormalTok{(grado.max) }
+\NormalTok{mse <-}\StringTok{ }\NormalTok{mse.new <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\DataTypeTok{nrow =}\NormalTok{ grado.max, }\DataTypeTok{ncol =}\NormalTok{ nsim) }\CommentTok{# Error cuadrático medio}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \KeywordTok{seq_len}\NormalTok{(nsim)) \{}
+\NormalTok{  y <-}\StringTok{ }\NormalTok{mu }\OperatorTok{+}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(n, }\DecValTok{0}\NormalTok{, sd)}
+\NormalTok{  y.new <-}\StringTok{ }\NormalTok{mu }\OperatorTok{+}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(n, }\DecValTok{0}\NormalTok{, sd)}
+  \ControlFlowTok{for}\NormalTok{ (grado }\ControlFlowTok{in}\NormalTok{ grados) \{ }\CommentTok{# grado <- 1}
+\NormalTok{    fit <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(y }\OperatorTok{~}\StringTok{ }\KeywordTok{poly}\NormalTok{(x, grado))}
+\NormalTok{    mse[grado, i] <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(}\KeywordTok{residuals}\NormalTok{(fit)}\OperatorTok{^}\DecValTok{2}\NormalTok{)}
+\NormalTok{    mse.new[grado, i] <-}\StringTok{ }\KeywordTok{mean}\NormalTok{((y.new }\OperatorTok{-}\StringTok{ }\KeywordTok{fitted}\NormalTok{(fit))}\OperatorTok{^}\DecValTok{2}\NormalTok{)}
+\NormalTok{  \}}
+\NormalTok{\}}
+\CommentTok{# Simulaciones}
+\KeywordTok{matplot}\NormalTok{(grados, mse, }\DataTypeTok{type =} \StringTok{"l"}\NormalTok{, }\DataTypeTok{col =} \StringTok{"lightgray"}\NormalTok{, }\DataTypeTok{lty =} \DecValTok{1}\NormalTok{, }\DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{2}\NormalTok{),}
+        \DataTypeTok{xlab =} \StringTok{"Grado del polinomio (complejidad)"}\NormalTok{,}
+        \DataTypeTok{ylab =} \StringTok{"Error cuadrático medio"}\NormalTok{)}
+\KeywordTok{matlines}\NormalTok{(grados, mse.new, }\DataTypeTok{type =} \StringTok{"l"}\NormalTok{, }\DataTypeTok{lty =} \DecValTok{2}\NormalTok{, }\DataTypeTok{col =} \StringTok{"lightgray"}\NormalTok{) }
+\CommentTok{# Global}
+\NormalTok{precision <-}\StringTok{ }\KeywordTok{rowMeans}\NormalTok{(mse)}
+\NormalTok{precision.new <-}\StringTok{ }\KeywordTok{rowMeans}\NormalTok{(mse.new)}
+\KeywordTok{lines}\NormalTok{(grados, precision, }\DataTypeTok{lwd =} \DecValTok{2}\NormalTok{)}
+\KeywordTok{lines}\NormalTok{(grados, precision.new, }\DataTypeTok{lty =} \DecValTok{2}\NormalTok{, }\DataTypeTok{lwd =} \DecValTok{2}\NormalTok{)}
+\KeywordTok{abline}\NormalTok{(}\DataTypeTok{h =}\NormalTok{ sd}\OperatorTok{^}\DecValTok{2}\NormalTok{, }\DataTypeTok{lty =} \DecValTok{3}\NormalTok{)}
+\KeywordTok{abline}\NormalTok{(}\DataTypeTok{v =} \DecValTok{4}\NormalTok{, }\DataTypeTok{lty =} \DecValTok{3}\NormalTok{)}
+\KeywordTok{legend}\NormalTok{(}\StringTok{"topright"}\NormalTok{, }\DataTypeTok{legend =} \KeywordTok{c}\NormalTok{(}\StringTok{"Muestras"}\NormalTok{, }\StringTok{"Nuevas observaciones"}\NormalTok{), }\DataTypeTok{lty =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/polyfitsim-1} 
+
+}
+
+\caption{Precisiones (errores cuadráticos medios) de ajustes polinómicos variando la complejidad, en las muestras empleadas en el ajuste y en nuevas observaciones (simulados).}\label{fig:polyfitsim}
+\end{figure}
+
+Como se puede observar en la Figura \ref{fig:polyfitsim} los errores de
+entrenamiento disminuyen a medida que aumenta la complejidad del modelo.
+Sin embargo los errores de predicción en nuevas observaciones primero
+disminuyen hasta alcanzar un mínimo, marcado por la línea de puntos
+vertical que se corresponde con el modelo de grado 4, y después aumentan
+(la línea de puntos horizontal es la varianza del proceso; el error
+cuadrático medio de predicción asintótico). La línea vertical representa
+el equilibrio entre el sesgo y la varianza. Considerando un valor de
+complejidad a la izquierda de esa línea tendríamos infraajuste (mayor
+sesgo y menor varianza) y a la derecha sobreajuste (menor sesgo y mayor
+varianza).
+
+En general, al aumentar la complejidad disminuye el sesgo y aumenta la
+varianza (y viceversa). Será necesario seleccionar los hiperparámetros
+de forma que haya un equilibrio entre el sesgo y la varianza (es lo que
+se conoce como \emph{bias-variance tradeoff}).
+
+\subsection{Datos de entrenamiento y datos de
+test}\label{entrenamiento-test}
+
+Como se mostró en la sección anterior hay que tener mucho cuidado si se
+pretende evaluar la precisión de las predicciones empleando la muestra
+de entrenamiento.
+
+Si el número de observaciones no es muy grande, se puede entrenar el
+modelo con todos los datos y emplear técnicas de remuestreo para evaluar
+la precisión (típicamente validación cruzada o bootstrap). Habría que
+asegurase de que el procedimiento de remuestreo empleado es adecuado
+(por ejemplo, la presencia de dependencia requeriría de métodos más
+sofisticados).
+
+Sin embargo, si el número de obervaciones es grande, se suele emplear el
+procedimiento tradicional en ML, que consiste en particionar la base de
+datos en 2 (o incluso en 3) conjuntos (disjuntos):
+
+\begin{itemize}
+\item
+  Conjunto de datos de entrenamiento (o aprendizaje) para construir los
+  modelos.
+\item
+  Conjunto de datos de test para evaluar el rendimiento de los modelos.
+\end{itemize}
+
+Los datos de test deberían utilizarse únicamente para evaluar los
+modelos finales, no se deberían emplear para seleccionar
+hiperparámetros. Para seleccionalos se podría volver a particionar los
+datos de entrenamiento, es decir, dividir la muestra en tres
+subconjuntos: datos de entrenamiento, de validación y de test (por
+ejemplo considerando un 70\%, 15\% y 15\% de las observaciones,
+respectivamente). Para cada combinación de hiperparámetros se ajustaría
+el correspondiente modelo con los datos de entrenamiento, se emplearían
+los de validación para evaluarlos y posteriormente seleccionar los
+valores ``óptimos''. Por último, se emplean los datos de test para
+evaluar el rendimiento del modelo seleccionado. No obstante, lo más
+habitual es seleccionar los hiperparámetros empleando validación cruzada
+(o otro tipo de remuestreo) en la muestra de entrenamiento, en lugar de
+considerar una muestra adicional de validación. En la siguiente sección
+se describirá esta última aproximación.
+
+En R se puede realizar el particionamiento de los datos empleando la
+función \texttt{sample()} del paquete base (otra alternativa sería
+emplear la función \texttt{createDataPartition} del paquete
+\texttt{caret} como se describe en la Sección \ref{caret}). Típicamente
+se selecciona el 80\% de los datos como muestra de entrenamiento y el
+20\% restante como muestra de test, aunque esto dependería del número de
+datos.
+
+Como ejemplo consideraremos el conjunto de datos \texttt{Boston} del
+paquete \texttt{MASS} que contiene, entre otros datos, la valoración de
+las viviendas (\texttt{medv}, mediana de los valores de las viviendas
+ocupadas, en miles de dólares) y el porcentaje de población con ``menor
+estatus'' (\texttt{lstat}) en los suburbios de Boston. Podemos contruir
+las muestras de entrenamiento (80\%) y de test (20\%) con el siguiente
+código:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{data}\NormalTok{(Boston, }\DataTypeTok{package =} \StringTok{"MASS"}\NormalTok{)}
+\CommentTok{# ?Boston}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{nobs <-}\StringTok{ }\KeywordTok{nrow}\NormalTok{(Boston)}
+\NormalTok{itrain <-}\StringTok{ }\KeywordTok{sample}\NormalTok{(nobs, }\FloatTok{0.8} \OperatorTok{*}\StringTok{ }\NormalTok{nobs)}
+\NormalTok{train <-}\StringTok{ }\NormalTok{Boston[itrain, ]}
+\NormalTok{test <-}\StringTok{ }\NormalTok{Boston[}\OperatorTok{-}\NormalTok{itrain, ]}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Validación cruzada}\label{cv}
+
+Como ya se comentó, una herramienta para evaluar la calidad predictiva
+de un modelo es la \emph{validación cruzada}, que permite cuantificar el
+error de predicción utilizando una única muestra de datos.
+
+En su versión más simple, validación cruzada dejando uno fuera
+(\emph{Leave-one-out cross-validation}, LOOCV), para cada observación de
+la muestra se realiza un ajuste empleando el resto de observaciones, y
+se mide el error de predicción en esa observación (único dato no
+utilizado en el ajuste del modelo). Finalmente, combinando todos los
+errores individuales se puede obtener medidas globales del error de
+predicción (o aproximar características de su distribución).
+
+El método de LOOCV requeriría, en principio (ver comentarios más
+adelante), el ajuste de un modelo para cada observación por lo que
+pueden aparecer problemas computacionales si el conjunto de datos es
+grande. En este caso se suele emplear grupos de observaciones en lugar
+de observaciones individuales. Si se particiona el conjunto de datos en
+\emph{k} grupos, típicamente 10 o 5 grupos, se denomina \emph{k-fold
+cross-validation} (LOOCV sería un caso particular considerando un número
+de grupos igual al número de observaciones). Hay muchas variaciones de
+este método, entre ellas particionar repetidamente de forma aleatoria
+los datos en un conjunto de entrenamiento y otro de validación (de esta
+forma algunas observaciones podrían aparecer repetidas veces y otras
+ninguna en las muestras de validación).
+
+Continuando con el ejemplo anterior, supongamos que queremos emplear
+regresión polinómica para explicar la valoración de las viviendas
+(\texttt{medv}) a partir del ``estatus'' de los residentes
+(\texttt{lstat}). Al igual que se hizo en la Sección
+\ref{bias-variance}, consideraremos el grado del polinomio como un
+hiperparámetro.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(medv }\OperatorTok{~}\StringTok{ }\NormalTok{lstat, }\DataTypeTok{data =}\NormalTok{ train)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/unnamed-chunk-4-1} \end{center}
+
+Podríamos emplear la siguiente función que devuelve para cada
+observación (fila) de una muestra de entrenamiento, el error de
+predicción en esa observación ajustando un modelo lineal con todas las
+demás observaciones:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cv.lm0 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(formula, datos) \{}
+\NormalTok{    n <-}\StringTok{ }\KeywordTok{nrow}\NormalTok{(datos)}
+\NormalTok{    cv.res <-}\StringTok{ }\KeywordTok{numeric}\NormalTok{(n)}
+    \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{n) \{}
+\NormalTok{        modelo <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(formula, datos[}\OperatorTok{-}\NormalTok{i, ])}
+\NormalTok{        cv.pred <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(modelo, }\DataTypeTok{newdata =}\NormalTok{ datos[i, ])}
+\NormalTok{        cv.res[i] <-}\StringTok{ }\NormalTok{cv.pred }\OperatorTok{-}\StringTok{ }\NormalTok{datos[i, ]}
+\NormalTok{    \}}
+    \KeywordTok{return}\NormalTok{(cv.res)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+La función anterior no es muy eficiente, pero podría modificarse
+fácilmente para emplear otros métodos de regresión. En el caso de
+regresión lineal múltiple (y de otros modelos lineales), se pueden
+obtener fácilmente las predicciones eliminando una de las observaciones
+a partir del ajuste con todos los datos. Por ejemplo, en lugar de la
+anterior sería preferible emplear la siguiente función (ver
+\texttt{?rstandard}):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cv.lm <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(formula, datos) \{}
+\NormalTok{    modelo <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(formula, datos)}
+    \KeywordTok{return}\NormalTok{(}\KeywordTok{rstandard}\NormalTok{(modelo, }\DataTypeTok{type =} \StringTok{"predictive"}\NormalTok{))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Empleando esta función, podemos calcular una medida del error de
+predicción de validación cruzada (en este caso el \emph{error cuadrático
+medio}) para cada valor del hiperparámetro (grado del ajuste polinómico)
+y seleccionar el que lo minimiza.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{grado.max <-}\StringTok{ }\DecValTok{10}
+\NormalTok{grados <-}\StringTok{ }\KeywordTok{seq_len}\NormalTok{(grado.max) }
+\NormalTok{cv.mse <-}\StringTok{ }\NormalTok{cv.mse.sd <-}\StringTok{ }\KeywordTok{numeric}\NormalTok{(grado.max)}
+\ControlFlowTok{for}\NormalTok{(grado }\ControlFlowTok{in}\NormalTok{ grados)\{}
+\NormalTok{  cv.res <-}\StringTok{ }\KeywordTok{cv.lm}\NormalTok{(medv }\OperatorTok{~}\StringTok{ }\KeywordTok{poly}\NormalTok{(lstat, grado), train)}
+\NormalTok{  se <-}\StringTok{ }\NormalTok{cv.res}\OperatorTok{^}\DecValTok{2}
+\NormalTok{  cv.mse[grado] <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(se)}
+\NormalTok{  cv.mse.sd[grado] <-}\StringTok{ }\KeywordTok{sd}\NormalTok{(se)}\OperatorTok{/}\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{length}\NormalTok{(se))}
+\NormalTok{\}}
+\KeywordTok{plot}\NormalTok{(grados, cv.mse, }\DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\DecValTok{25}\NormalTok{, }\DecValTok{45}\NormalTok{),}
+  \DataTypeTok{xlab =} \StringTok{"Grado del polinomio (complejidad)"}\NormalTok{)}
+\CommentTok{# Valor óptimo}
+\NormalTok{imin.mse <-}\StringTok{ }\KeywordTok{which.min}\NormalTok{(cv.mse)}
+\NormalTok{grado.op <-}\StringTok{ }\NormalTok{grados[imin.mse]}
+\KeywordTok{points}\NormalTok{(grado.op, cv.mse[imin.mse], }\DataTypeTok{pch =} \DecValTok{16}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/unnamed-chunk-7-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{grado.op}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5
+\end{verbatim}
+
+En lugar de emplear los valores óptimos de los hiperparámetros, Breiman
+\emph{et al.} (1984) propusieron la regla de ``un error estándar'' para
+seleccionar la complejidad del modelo. La idea es que estamos trabajando
+con estimaciones de la precisión y pueden presentar variabilidad, por lo
+que la sugerencia es seleccionar el modelo más simple\footnote{Suponiendo
+  que los modelos se pueden ordenar del más simple al más complejo.}
+dentro de un error estándar de la precisión del modelo correspondiente
+al valor óptimo (se consideraría que no hay diferencias significativas
+en la precisión; además, se mitigaría el efecto de la variabilidad
+debida a aleatoriedad/semilla).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(grados, cv.mse, }\DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\DecValTok{25}\NormalTok{, }\DecValTok{45}\NormalTok{))}
+\KeywordTok{segments}\NormalTok{(grados, cv.mse }\OperatorTok{-}\StringTok{ }\NormalTok{cv.mse.sd, grados, cv.mse }\OperatorTok{+}\StringTok{ }\NormalTok{cv.mse.sd)}
+\CommentTok{# Límite superior "oneSE rule" y complejidad mínima por debajo de ese valor}
+\NormalTok{upper.cv.mse <-}\StringTok{ }\NormalTok{cv.mse[imin.mse] }\OperatorTok{+}\StringTok{ }\NormalTok{cv.mse.sd[imin.mse]}
+\KeywordTok{abline}\NormalTok{(}\DataTypeTok{h =}\NormalTok{ upper.cv.mse, }\DataTypeTok{lty =} \DecValTok{2}\NormalTok{)}
+\NormalTok{imin.1se <-}\StringTok{ }\KeywordTok{min}\NormalTok{(}\KeywordTok{which}\NormalTok{(cv.mse }\OperatorTok{<=}\StringTok{ }\NormalTok{upper.cv.mse))}
+\NormalTok{grado.1se <-}\StringTok{ }\NormalTok{grados[imin.1se]}
+\KeywordTok{points}\NormalTok{(grado.1se, cv.mse[imin.1se], }\DataTypeTok{pch =} \DecValTok{16}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/unnamed-chunk-8-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{grado.1se}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(medv }\OperatorTok{~}\StringTok{ }\NormalTok{lstat, }\DataTypeTok{data =}\NormalTok{ train)}
+\NormalTok{fit.op <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(medv }\OperatorTok{~}\StringTok{ }\KeywordTok{poly}\NormalTok{(lstat, grado.op), train)}
+\NormalTok{fit.1se <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(medv }\OperatorTok{~}\StringTok{ }\KeywordTok{poly}\NormalTok{(lstat, grado.1se), train)}
+\NormalTok{newdata <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{lstat =} \KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{40}\NormalTok{, }\DataTypeTok{len =} \DecValTok{100}\NormalTok{))}
+\KeywordTok{lines}\NormalTok{(newdata}\OperatorTok{$}\NormalTok{lstat, }\KeywordTok{predict}\NormalTok{(fit.op, }\DataTypeTok{newdata =}\NormalTok{ newdata))}
+\KeywordTok{lines}\NormalTok{(newdata}\OperatorTok{$}\NormalTok{lstat, }\KeywordTok{predict}\NormalTok{(fit.1se, }\DataTypeTok{newdata =}\NormalTok{ newdata), }\DataTypeTok{lty =} \DecValTok{2}\NormalTok{)}
+\KeywordTok{legend}\NormalTok{(}\StringTok{"topright"}\NormalTok{, }\DataTypeTok{legend =} \KeywordTok{c}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{"Grado óptimo:"}\NormalTok{, grado.op), }\KeywordTok{paste}\NormalTok{(}\StringTok{"oneSE rule:"}\NormalTok{, grado.1se)), }
+       \DataTypeTok{lty =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/unnamed-chunk-9-1} \end{center}
+
+\subsection{Evaluación de un método de regresión}\label{eval-reg}
+
+Para estudiar la precisión de las predicciones de un método de regresión
+se evalúa el modelo en el conjunto de datos de test y se comparan las
+predicciones frente a los valores reales.
+
+Si generamos un gráfico de dispersión de observaciones frente a
+predicciones, los puntos deberían estar en torno a la recta \(y=x\)
+(línea continua).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{obs <-}\StringTok{ }\NormalTok{test}\OperatorTok{$}\NormalTok{medv}
+\NormalTok{pred <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(fit.op, }\DataTypeTok{newdata =}\NormalTok{ test)}
+
+\KeywordTok{plot}\NormalTok{(pred, obs, }\DataTypeTok{main =} \StringTok{"Observado frente a predicciones"}\NormalTok{,}
+     \DataTypeTok{xlab =} \StringTok{"Predicción", ylab = "}\NormalTok{Observado}\StringTok{")}
+\StringTok{abline(a = 0, b = 1)}
+\StringTok{res <- lm(obs ~ pred)}
+\StringTok{# summary(res)}
+\StringTok{abline(res, lty = 2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/obs-pred-plot-1} \end{center}
+
+También es habitual calcular distintas medidas de error. Por ejemplo,
+podríamos emplear la función \texttt{postResample()} del paquete
+\texttt{caret}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{caret}\OperatorTok{::}\KeywordTok{postResample}\NormalTok{(pred, obs)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      RMSE  Rsquared       MAE 
+## 4.8526718 0.6259583 3.6671847
+\end{verbatim}
+
+La función anterior, además de las medidas de error habituales (que
+dependen en su mayoría de la escala de la variable respuesta) calcula un
+\emph{pseudo R-cuadrado}. En este paquete (también en \texttt{rattle})
+se emplea uno de los más utilizados, el cuadrado del coeficiente de
+correlación entre las predicciones y los valores observados (que se
+corresponde con la línea discontinua en la figura anterior). Estos
+valores se interpretarían como el coeficiente de determinación en
+regresión lineal, debería ser próximo a 1. Hay otras alternativas (ver
+Kvålseth, 1985), pero la idea es que deberían medir la proporción de
+variabilidad de la respuesta explicada por el modelo, algo que en
+general no es cierto con el anterior\footnote{Por ejemplo obtendríamos
+  el mismo valor si desplazamos las predicciones sumando una constante
+  (i.e.~no tiene en cuenta el sesgo).}. La recomendación sería emplear:
+\[\tilde R^2 = 1 - \frac{\sum_{i=1}^n(y_i - \hat y_i)^2}{\sum_{i=1}^n(y_i - \bar y_i)^2}\]
+implementado junto con otras medidas en la siguiente función:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{accuracy <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(pred, obs, }\DataTypeTok{na.rm =} \OtherTok{FALSE}\NormalTok{, }
+                     \DataTypeTok{tol =} \KeywordTok{sqrt}\NormalTok{(.Machine}\OperatorTok{$}\NormalTok{double.eps)) \{}
+\NormalTok{  err <-}\StringTok{ }\NormalTok{obs }\OperatorTok{-}\StringTok{ }\NormalTok{pred     }\CommentTok{# Errores}
+  \ControlFlowTok{if}\NormalTok{(na.rm) \{}
+\NormalTok{    is.a <-}\StringTok{ }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(err)}
+\NormalTok{    err <-}\StringTok{ }\NormalTok{err[is.a]}
+\NormalTok{    obs <-}\StringTok{ }\NormalTok{obs[is.a]}
+\NormalTok{  \}  }
+\NormalTok{  perr <-}\StringTok{ }\DecValTok{100}\OperatorTok{*}\NormalTok{err}\OperatorTok{/}\KeywordTok{pmax}\NormalTok{(obs, tol)  }\CommentTok{# Errores porcentuales}
+  \KeywordTok{return}\NormalTok{(}\KeywordTok{c}\NormalTok{(}
+    \DataTypeTok{me =} \KeywordTok{mean}\NormalTok{(err),           }\CommentTok{# Error medio}
+    \DataTypeTok{rmse =} \KeywordTok{sqrt}\NormalTok{(}\KeywordTok{mean}\NormalTok{(err}\OperatorTok{^}\DecValTok{2}\NormalTok{)), }\CommentTok{# Raíz del error cuadrático medio }
+    \DataTypeTok{mae =} \KeywordTok{mean}\NormalTok{(}\KeywordTok{abs}\NormalTok{(err)),     }\CommentTok{# Error absoluto medio}
+    \DataTypeTok{mpe =} \KeywordTok{mean}\NormalTok{(perr),         }\CommentTok{# Error porcentual medio}
+    \DataTypeTok{mape =} \KeywordTok{mean}\NormalTok{(}\KeywordTok{abs}\NormalTok{(perr)),   }\CommentTok{# Error porcentual absoluto medio}
+    \DataTypeTok{r.squared =} \DecValTok{1} \OperatorTok{-}\StringTok{ }\KeywordTok{sum}\NormalTok{(err}\OperatorTok{^}\DecValTok{2}\NormalTok{)}\OperatorTok{/}\KeywordTok{sum}\NormalTok{((obs }\OperatorTok{-}\StringTok{ }\KeywordTok{mean}\NormalTok{(obs))}\OperatorTok{^}\DecValTok{2}\NormalTok{) }\CommentTok{# Pseudo R-cuadrado}
+\NormalTok{  ))}
+\NormalTok{\}}
+\KeywordTok{accuracy}\NormalTok{(pred, obs)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         me       rmse        mae        mpe       mape  r.squared 
+## -0.6731294  4.8526718  3.6671847 -8.2322506 19.7097373  0.6086704
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{accuracy}\NormalTok{(}\KeywordTok{predict}\NormalTok{(fit.1se, }\DataTypeTok{newdata =}\NormalTok{ test), obs)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         me       rmse        mae        mpe       mape  r.squared 
+## -0.9236280  5.2797360  4.1252053 -9.0029771 21.6512406  0.5367608
+\end{verbatim}
+
+\subsection{Evaluación de un método de clasificación}\label{eval-class}
+
+Para estudiar la eficiencia de un método de clasificación supervisada se
+obtienen las predicciones para el conjunto de datos de test y se genera
+una tabla de contingencia, denominada \emph{matriz de confusión}, con
+las predicciones frente a los valores reales.
+
+En primer lugar consideraremos el caso de dos categorías. La matriz de
+confusión será de la forma:
+
+\begin{longtable}[]{@{}ccc@{}}
+\toprule
+Observado\textbackslash{}Predicción & Positivo & Negativo\tabularnewline
+\midrule
+\endhead
+Verdadero & Verdaderos positivos (TP) & Falsos negativos
+(FN)\tabularnewline
+Falso & Falsos positivos (FP) & Verdaderos negativos (TN)\tabularnewline
+\bottomrule
+\end{longtable}
+
+A partir de esta tabla se pueden obtener distintas medidas de la
+precisión de las predicciones. Por ejemplo, dos de las más utilizadas
+son la tasa de verdaderos positivos y la de verdaderos negativos (tasas
+de acierto en positivos y negativos), también denominadas
+\emph{sensibilidad} y \emph{especificidad}:
+
+\begin{itemize}
+\item
+  Sensibilidad (\emph{sensitivity}, \emph{recall}, \emph{hit rate},
+  \emph{true positive rate}; TPR):
+  \[TPR = \frac{TP}{P} = \frac{TP}{TP+FN}\]
+\item
+  Especificidad (\emph{specificity}, \emph{true negative rate}; TNR):
+  \[TNR = \frac{TN}{TN+FP}\]
+\end{itemize}
+
+La precisión global o tasa de aciertos (\emph{accuracy}; ACC) sería:
+\[ACC = \frac{TP + TN}{P + N} = \frac{TP+TN}{TP+TN+FP+FN}\] Sin embargo
+hay que tener cuidado con esta medida cuando las clases no están
+balanceadas\footnote{También hay que tener cuidado las medidas que
+  utilizan la prevalencia estimada a partir de la muestra de test, como
+  el índice predictivo positivo y negativo, si la muestra de test no
+  refleja lo que ocurre en la población (por ejemplo si la clase de
+  interés está sobrerrepresentada en la muestra).}. Otras medidas de la
+precisión global que tratan de evitar este problema son la
+\emph{precisión balanceada} (\emph{balanced accuracy}, BA):
+\[BA = \frac{TPR + TNR}{2}\] (media aritmética de TPR y TNR) o la
+\emph{puntuación F1} (\emph{F1 score}; media armónica de TPR y TNR):
+\[F_1 = \frac{2TP}{2TP+FP+FN}\] Otra medida global es el coeficiente
+kappa de Cohen, que compara la tasa de aciertos con la obtenida en una
+clasificación al azar (un valor de 1 indicaría máxima precisión y 0 que
+la precisión es igual a la que obtendríamos clasificando al azar;
+empleando la tasa de positivos, denominada \emph{prevalencia}, para
+predecir positivo).
+
+NOTA: La precisión global (ACC) no debe ser confundida con el índice
+predictivo positivo (\emph{precision}, \emph{positive predictive value};
+PPV): \(PPV = TP/(TP+FP)\).
+
+Como ejemplo emplearemos los datos anteriores de valoraciones de
+viviendas y estatus de la población, considerando como respuesta una
+nueva variable \texttt{fmedv} que clasifica las valoraciones en ``Bajo''
+o ``Alto'' dependiendo de si \texttt{medv\ \textgreater{}\ 25}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# data(Boston, package = "MASS")}
+\NormalTok{datos <-}\StringTok{ }\NormalTok{Boston}
+\NormalTok{datos}\OperatorTok{$}\NormalTok{fmedv <-}\StringTok{ }\KeywordTok{factor}\NormalTok{(datos}\OperatorTok{$}\NormalTok{medv }\OperatorTok{>}\StringTok{ }\DecValTok{25}\NormalTok{, }\DataTypeTok{labels =} \KeywordTok{c}\NormalTok{(}\StringTok{"Bajo"}\NormalTok{, }\StringTok{"Alto"}\NormalTok{)) }\CommentTok{# levels = c('FALSE', 'TRUE')}
+\CommentTok{# En este caso las clases no están balanceadas}
+\KeywordTok{table}\NormalTok{(datos}\OperatorTok{$}\NormalTok{fmedv)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Bajo Alto 
+##  382  124
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{caret}\OperatorTok{::}\KeywordTok{featurePlot}\NormalTok{(datos}\OperatorTok{$}\NormalTok{lstat, datos}\OperatorTok{$}\NormalTok{fmedv, }\DataTypeTok{plot =} \StringTok{"density"}\NormalTok{,}
+            \DataTypeTok{labels =} \KeywordTok{c}\NormalTok{(}\StringTok{"lstat"}\NormalTok{, }\StringTok{"Density"}\NormalTok{), }\DataTypeTok{auto.key =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/unnamed-chunk-12-1} \end{center}
+
+El siguiente código realiza la partición de los datos y posteriormente
+ajustar un modelo de regresión logística en la muestra de entrenamiento
+considerando \texttt{lstat} como única variable explicativa:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Particionado de los datos}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{nobs <-}\StringTok{ }\KeywordTok{nrow}\NormalTok{(datos)}
+\NormalTok{itrain <-}\StringTok{ }\KeywordTok{sample}\NormalTok{(nobs, }\FloatTok{0.8} \OperatorTok{*}\StringTok{ }\NormalTok{nobs)}
+\NormalTok{train <-}\StringTok{ }\NormalTok{datos[itrain, ]}
+\NormalTok{test <-}\StringTok{ }\NormalTok{datos[}\OperatorTok{-}\NormalTok{itrain, ]}
+\CommentTok{# Ajuste modelo}
+\NormalTok{modelo <-}\StringTok{ }\KeywordTok{glm}\NormalTok{(fmedv }\OperatorTok{~}\StringTok{ }\NormalTok{lstat, }\DataTypeTok{family =}\NormalTok{ binomial, }\DataTypeTok{data =}\NormalTok{ train)}
+\KeywordTok{summary}\NormalTok{(modelo)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## glm(formula = fmedv ~ lstat, family = binomial, data = train)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.9749  -0.4161  -0.0890   0.3785   3.6450  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(>|z|)    
+## (Intercept)  3.74366    0.47901   7.815 5.48e-15 ***
+## lstat       -0.54231    0.06134  -8.842  < 2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 460.84  on 403  degrees of freedom
+## Residual deviance: 243.34  on 402  degrees of freedom
+## AIC: 247.34
+## 
+## Number of Fisher Scoring iterations: 7
+\end{verbatim}
+
+En este caso podemos obtener las estimaciones de la probabilidad de la
+segunda categoría empleando \texttt{predict()} con
+\texttt{type\ =\ "response"}, a partir de las cuales podemos establecer
+las predicciones como la categoría más probable:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{obs <-}\StringTok{ }\NormalTok{test}\OperatorTok{$}\NormalTok{fmedv}
+\NormalTok{p.est <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(modelo, }\DataTypeTok{type =} \StringTok{"response"}\NormalTok{, }\DataTypeTok{newdata =}\NormalTok{ test)}
+\NormalTok{pred <-}\StringTok{ }\KeywordTok{factor}\NormalTok{(p.est }\OperatorTok{>}\StringTok{ }\FloatTok{0.5}\NormalTok{, }\DataTypeTok{labels =} \KeywordTok{c}\NormalTok{(}\StringTok{"Bajo"}\NormalTok{, }\StringTok{"Alto"}\NormalTok{)) }\CommentTok{# levels = c('FALSE', 'TRUE')}
+\end{Highlighting}
+\end{Shaded}
+
+Podemos obtener la matriz de confusión con el siguiente código:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tabla <-}\StringTok{ }\KeywordTok{table}\NormalTok{(obs, pred)}
+\CommentTok{# addmargins(tabla, FUN = list(Total = sum))}
+\NormalTok{tabla}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       pred
+## obs    Bajo Alto
+##   Bajo   71   11
+##   Alto    8   12
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Porcentajes respecto al total}
+\KeywordTok{print}\NormalTok{(}\DecValTok{100}\OperatorTok{*}\KeywordTok{prop.table}\NormalTok{(tabla), }\DataTypeTok{digits =} \DecValTok{2}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       pred
+## obs    Bajo Alto
+##   Bajo 69.6 10.8
+##   Alto  7.8 11.8
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Porcentajes (de aciertos y fallos) por categorías}
+\KeywordTok{print}\NormalTok{(}\DecValTok{100}\OperatorTok{*}\KeywordTok{prop.table}\NormalTok{(tabla, }\DecValTok{1}\NormalTok{), }\DataTypeTok{digits =} \DecValTok{3}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       pred
+## obs    Bajo Alto
+##   Bajo 86.6 13.4
+##   Alto 40.0 60.0
+\end{verbatim}
+
+Alternativamente se podría emplear la función \texttt{confusionMatrix()}
+del paquete \texttt{caret} que permite obtener distintas medidas de la
+precisión:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{caret}\OperatorTok{::}\KeywordTok{confusionMatrix}\NormalTok{(pred, obs, }\DataTypeTok{positive =} \StringTok{"Alto"}\NormalTok{, }\DataTypeTok{mode =} \StringTok{"everything"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction Bajo Alto
+##       Bajo   71    8
+##       Alto   11   12
+##                                          
+##                Accuracy : 0.8137         
+##                  95% CI : (0.7245, 0.884)
+##     No Information Rate : 0.8039         
+##     P-Value [Acc > NIR] : 0.4604         
+##                                          
+##                   Kappa : 0.4409         
+##                                          
+##  Mcnemar's Test P-Value : 0.6464         
+##                                          
+##             Sensitivity : 0.6000         
+##             Specificity : 0.8659         
+##          Pos Pred Value : 0.5217         
+##          Neg Pred Value : 0.8987         
+##               Precision : 0.5217         
+##                  Recall : 0.6000         
+##                      F1 : 0.5581         
+##              Prevalence : 0.1961         
+##          Detection Rate : 0.1176         
+##    Detection Prevalence : 0.2255         
+##       Balanced Accuracy : 0.7329         
+##                                          
+##        'Positive' Class : Alto           
+## 
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{\emph{A partir de aquí en preparación\ldots{}}}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Evaluación de las estimaciones de las probabilidades:
+
+Curva ROC
+
+AUC
+
+Caso de más de dos categorías:
+
+Medidas globales: precisión y kappa.
+
+Medidas por categoría: estrategia ``uno contra todos''.
+\texttt{caret::confusionMatrix()\$byClass}
+
+\section{La maldición de la
+dimensionalidad}\label{la-maldiciuxf3n-de-la-dimensionalidad}
+
+En preparación\ldots{}
+
+\section{\texorpdfstring{Introducción al paquete
+\texttt{caret}}{Introducción al paquete caret}}\label{caret}
+
+En preparación\ldots{}
+
+\chapter{Árboles de decisión}\label{trees}
+
+Los \emph{árboles de decisión} son uno de los métodos más simples y
+fáciles de interpretar para realizar predicciones en problemas de
+clasificación y de regresión. Se desarrollan a partir de los años 70 del
+siglo pasado como una alternativa versátil a los métodos clásicos de la
+estadística, fuertemente basados en las hipótesis de linealidad y de
+normalidad, y enseguida se convierten en una técnica básica del
+aprendizaje automático. Aunque su calidad predictiva es mediocre
+(especialmente en el caso de regresión), constituyen la base de otros
+métodos altamente competitivos (bagging, bosques aleatorios, boosting)
+en los que se combinan múltiples árboles para mejorar la predicción,
+pagando el precio, eso sí, de hacer más difícil la interpretación del
+modelo resultante.
+
+La idea de este método consiste en la segmentación (partición) del
+\emph{espacio predictor} (es decir, del conjunto de posibles valores de
+las variables predictoras) en regiones tan simples que el proceso se
+pueda representar mediante un árbol binario. Se parte de un nodo inicial
+que representa a toda la muestra (se utiliza la muestra de
+entrenamiento), del que salen dos ramas que dividen la muestra en dos
+subconjuntos, cada uno representado por un nuevo nodo. Este proceso se
+repite un número finito de veces hasta obtener las hojas del árbol, es
+decir, los nodos terminales, que son los que se utilizan para realizar
+la predicción. Una vez construido el árbol, la predicción se realizará
+en cada nodo terminal utilizando, típicamente, la media en un problema
+de regresión y la moda en un problema de clasificación.
+
+\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-2-1} \end{center}
+
+Al final de este proceso iterativo el espacio predictor se ha
+particionado en regiones de forma rectangular en la que la predicción de
+la respuesta es constante. Si la relación entre las variables
+predictoras y la variable respuesta no se puede describir adecuadamente
+mediante rectángulos, la calidad predictiva del árbol será limitada.
+Como vemos, la simplicidad del modelo es su principal argumento, pero
+también su talón de Aquiles.
+
+\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-3-1} \end{center}
+
+Como se ha dicho antes, cada nodo padre se divide, a través de dos
+ramas, en dos nodos hijos. Esto se hace seleccionando una variable
+predictora y dando respuesta a una pregunta dicotómica sobre ella. Por
+ejemplo, ¿es el sueldo anual menor que 30000 euros?, o ¿es el género
+igual a \emph{mujer}? Lo que se persigue con esta partición recursiva es
+que los nodos terminales sean homogéneos respecto a la variable
+respuesta \(Y\).
+
+Por ejemplo, en un problema de clasificación, la homogeneidad de los
+nodos terminales significaría que en cada uno de ellos sólo hay
+elementos de una clase (categoría), y diríamos que los nodos son
+\emph{puros}. En la práctica, esto siempre se puede conseguir
+construyendo árboles suficientemente profundos, con muchas hojas. Pero
+esta solución no es interesante, ya que va a dar lugar a un modelo
+excesivamente complejo y por tanto sobreajustado y de difícil
+interpretación. Será necesario encontrar un equilibrio entre la
+complejidad del árbol y la pureza de los nodos terminales.
+
+En resumen:
+
+\begin{itemize}
+\item
+  Métodos simples y fácilmente interpretables.
+\item
+  Se representan mediante árboles binarios.
+\item
+  Técnica clásica de apendizaje automático (computación).
+\item
+  Válidos para regresión y para clasificación.
+\item
+  Válidos para predictores numéricos y categóricos.
+\end{itemize}
+
+La metodología CART (Classification and Regresion Trees, Breiman
+\emph{et al.}, 1984) es la más popular para la construcción de árboles
+de decisión y es la que se va a explicar con algo de detalle en las
+siguientes secciones.
+
+En primer lugar se tratarán los \emph{árboles de regresión} (árboles de
+decisión en un problema de regresión, en el que la variable respuesta
+\(Y\) es numérica) y después veremos los \emph{arboles de clasificación}
+(respuesta categórica) que son los más utilizados en la práctica (los
+primeros se suelen emplear únicamente como métodos descriptivos o como
+base de métodos más complejos). Las variables predictoras
+\(\mathbf{X}=(X_1, X_2, \ldots, X_p)\) pueden ser tanto numéricas como
+categóricas. Además, con la metodología CART, las variables explicativas
+podrían contener datos faltantes. Se pueden establecer ``particiones
+sustitutas'' (\emph{surrogate splits}), de forma que cuando falta un
+valor en una variable que determina una división, se usa una variable
+alternativa que produce una partición similar.
+
+\section{Árboles de regresión
+CART}\label{uxe1rboles-de-regresiuxf3n-cart}
+
+Como ya se comentó, la construcción del modelo se hace a partir de la
+muestra de entrenamiento, y consiste en la partición del espacio
+predictor en \(J\) regiones \(R_1, R_2, \ldots, R_J\), para cada una de
+las cuales se va a calcular una constante: la media de la variable
+respuesta \(Y\) para las observaciones de entranamiento que caen en la
+región. Estas constantes son las que se van a utilizar para la
+predicción de nuevas observaciones; para ello solo hay que comprobar
+cuál es la región que le corresponde.
+
+La cuestión clave es cómo se elige la partición del espacio predictor,
+para lo que vamos a utilizar como criterio de error el RSS (suma de los
+residuos al cuadrado). Como hemos dicho, vamos a modelizar la respuesta
+en cada región como una constante, por tanto en la región \(R_j\) nos
+interesa el \(min_{c_j} \sum_{i\in R_j} (y_i - c_j)^2\), que se alcanza
+en la media de las respuestas \(y_i\) (de la muestra de entrenamiento)
+en la región \(R_j\), a la que llamaremos \(\widehat y_{R_j}\). Por
+tanto, se deben seleccionar las regiones \(R_1, R_2, \ldots, R_J\) que
+minimicen
+
+\[\sum_{j=1}^{J} \sum_{i\in R_j} (y_i - \widehat y_{R_j})^2\] (Obsérvese
+el abuso de notación \(i\in R_j\), que significa las observaciones
+\(i\in N\) que verifican \(x_i \in R_j\)).
+
+Pero este problema es, en la práctica, intratable y vamos a tener que
+simplificarlo. El método CART busca un compromiso entre rendimiento, por
+una parte, y sencillez e interpretabilidad, por otra, y por ello en
+lugar de hacer una búsqueda por todas las particiones posibles sigue un
+proceso iterativo (recursivo) en el que va realizando cortes binarios.
+En la primera iteración se trabaja con todos los datos:
+
+\begin{itemize}
+\item
+  Una variable explicativa \(X_j\) y un punto de corte \(s\) definen dos
+  hiperplanos \(R_1 = \{ X \mid X_j \le s \}\) y
+  \(R_2 = \{ X \mid X_j > s \}\).
+\item
+  Se seleccionan los valores de \(j\) y \(s\) que minimizen
+\end{itemize}
+
+\[ \sum_{i\in R_1} (y_i - \widehat y_{R_1})^2 + \sum_{i\in R_2} (y_i - \widehat y_{R_2})^2\]
+
+A diferencia del problema original, este se soluciona de forma muy
+rápida. A continuación se repite el proceso en cada una de las dos
+regiones \(R_1\) y \(R_2\), y así sucesivamente hasta alcanzar un
+criterio de parada.
+
+Fijémonos en que este método hace dos concesiones importantes: no solo
+restringe la forma que pueden adoptar las particiones, sino que además
+sigue un criterio de error \emph{greedy}: en cada iteración busca
+minimizar el RSS de las dos regiones resultantes, sin preocuparse del
+error que se va a cometer en iteraciones sucesivas. Y fijémonos también
+en que este proceso se puede representar en forma de árbol binario (en
+el sentido de que de cada nodo salen dos ramas, o ninguna cuando se
+llega al final), de ahí la terminología de \emph{hacer crecer} el árbol.
+
+¿Y cuándo paramos? Se puede parar cuando se alcance una profundidad
+máxima, aunque lo más habitual es, para dividir un nodo (es decir, una
+región), exigirle un número mínimo de observaciones.
+
+\begin{itemize}
+\item
+  Si el árbol resultante es demasiado grande, va a ser un modelo
+  demasiado complejo, por tanto va a ser difícil de interpretar y, sobre
+  todo, va a provocar un sobreajuste de los datos. Cuando se evalúe el
+  rendimiento utilizando la muestra de validación, los resultados van a
+  ser malos. Dicho de otra manera, tendremos un modelo con poco sesgo
+  pero con mucha varianza y en consecuencia inestable (pequeños cambios
+  en los datos darán lugar a modelos muy distintos). Más adelante
+  veremos que esto justifica la utilización del \emph{bagging} como
+  técnica para reducir la varianza.
+\item
+  Si el árbol es demasiado pequeño, va a tener menos varianza (menos
+  inestable) a costa de más sesgo. Más adelante veremos que esto
+  justifica la utilización del \emph{boosting}. Los árboles pequeños son
+  más fáciles de interpretar ya que permiten identificar las variables
+  explicativas que más influyen en la predicción.
+\end{itemize}
+
+Sin entrar por ahora en métodos combinados (métodos \emph{ensemble},
+tipo \emph{bagging} o \emph{boosting}), vamos a explicar cómo encontrar
+un equilibrio entre sesgo y varianza. Lo que se hace es construir un
+árbol grande para a continuación empezar a \emph{podarlo}. Podar un
+árbol significa colapsar cualquier cantidad de sus nodos internos (no
+terminales), dando lugar a otro árbol más pequeño al que llamaremos
+\emph{subárbol} del árbol original. Sabemos que el árbol completo es el
+que va a tener menor error si utilizamos la muestra de entrenamiento,
+pero lo que realmente nos interesa es encontrar el subárbol con un menor
+error al utilizar la muestra de validación. Lamentablemente, no es una
+buena estrategia el evaluar todos los subárboles: simplemente, hay
+demasiados. Lo que se hace es, mediante un hiperparámetro (\emph{tuning
+parameter} o parámetro de ajuste) controlar el tamaño del árbol, es
+decir, la complejidad del modelo, seleccionando el subárbol
+\emph{optimo} (para los datos de los que disponemos, claro). Veamos la
+idea.
+
+Dado un subárbol \(T\) con \(R_1, R_2, \ldots, R_t\) nodos terminales,
+consideramos como medida del error el RSS más una penalización que
+depende de un hiperparámetro no negativo \(\alpha \ge 0\)
+
+\[\sum_{j=1}^t \sum_{i\in R_j} (y_i - \widehat y_{R_j})^2 + \alpha t\]
+
+Para cada valor del parámetro \(\alpha\) existe un único subárbol
+\emph{más pequeño} que minimiza este error (obsérvese que aunque hay un
+continuo de valores distinos de \(\alpha\), sólo hay una cantidad finita
+de subárboles). Evidentemente, cuando \(\alpha = 0\), ese subárbol será
+el árbol completo, algo que no nos interesa. Pero a medida que se
+incrementa \(\alpha\) se penalizan los subárboles con muchos nodos
+terminales, dando lugar a una solución más pequeña. Encontrarla puede
+parecer muy costoso computacionalmente, pero lo cierto es que no lo es.
+El algoritmo consistente en ir colapsando nodos de forma sucesiva, de
+cada vez el nodo que produzca el menor incremento en el RSS (corregido
+por un factor que depende del tamaño), da lugar a una sucesión finita de
+subárboles que contiene, para todo \(\alpha\), la solución.
+
+Para finalizar, sólo resta seleccionar un valor de \(\alpha\). Para
+ello, como se comentó en la Sección \ref{entrenamiento-test}, se podría
+dividir la muestra en tres subconjuntos: datos de entrenamiento, de
+validación y de test. Para cada valor del parámetro de complejidad
+\(\alpha\) hemos utilizado la muestra de entrenamiento para obtener un
+árbol (en la jerga, para cada valor del hiperparámetro \(\alpha\) se
+entrena un modelo). Se emplea la muestra independiente de validación
+para seleccionar el valor de \(\alpha\) (y por tanto el árbol) con el
+que nos quedamos. Y por último emplearemos la muestra de test
+(independiente de las otras dos) para evaluar el rendimiento del árbol
+seleccionado. No obstante, lo más habitual para seleccionar el valor del
+hiperparámetro \(\alpha\) es emplear validación cruzada (o otro tipo de
+remuestreo) en la muestra de entrenamiento en lugar de considerar una
+muestra adicional de validación.
+
+Hay dos opciones muy utilizadas en la práctica para seleccionar el valor
+de \(\alpha\): se puede utilizar directamente el valor que minimice el
+error; o se puede forzar que el modelo sea un poco más sencillo con la
+regla \emph{one-standard-error}, que selecciona el árbol más pequeño que
+esté a una distancia de un error estándar del árbol obtenido mediante la
+opción anterior.
+
+\section{Árboles de clasificación
+CART}\label{uxe1rboles-de-clasificaciuxf3n-cart}
+
+En un problema de clasificación la variable respuesta puede tomar los
+valores \(1, 2, \ldots, K\), etiquetas que identifican las \(K\)
+categorías del problema. Una vez construido el árbol, se comprueba cuál
+es la categoría modal de cada región: considerando la muestra de
+entrenamiento, la categoría más frecuente. Dada una observación, se
+predice que pertenece a la categoría modal de la región a la que
+pertenece.
+
+El resto del proceso es idéntico al de los árboles de regresión ya
+explicado, con una única salvedad: no podemos utilizar RSS como medida
+del error. Es necesario buscar una medida del error adaptada a este
+contexto. Fijada una región, vamos a denotar por \(\widehat p_{k}\), con
+\(k = 1, 2, \ldots, K\), a la proporción de observaciones (de la muestra
+de entrenamiento) en la región que pertenecen a la categoría \(k\). Se
+utilizan tres medidas distintas del error en la región:
+
+\begin{itemize}
+\item
+  Proporción de errores de clasificación:
+  \[1 - max_{k} (\widehat p_{k})\]
+\item
+  Índice de Gini: \[\sum_{k=1}^K \widehat p_{k} (1 - \widehat p_{k})\]
+\item
+  Entropía (\emph{cross-entropy}):
+  \[- \sum_{k=1}^K \widehat p_{k} \text{log}(\widehat p_{k})\]
+\end{itemize}
+
+Aunque la proporción de errores de clasificación es la medida del error
+más intuitiva, en la práctica sólo se utiliza para la fase de poda. Para
+la fase de crecimiento se utilizan indistintamente el índice de Gini o
+la entropía. Cuando nos interesa el error no en una única región sino en
+varias (al romper un nodo en dos, o al considerar todos los nodos
+terminales), se suman los errores de cada región previa ponderación por
+el número de observaciones que hay en cada una de ellas.
+
+\section{\texorpdfstring{CART con el paquete
+\texttt{rpart}}{CART con el paquete rpart}}\label{cart-con-el-paquete-rpart}
+
+La metodología CART está implementada en el paquete
+\href{https://CRAN.R-project.org/package=rpart}{\texttt{rpart}}
+(Recursive PARTitioning)\footnote{El paquete
+  \href{https://CRAN.R-project.org/package=tree}{\texttt{tree}} es una
+  traducción del original en S.}. La función principal es
+\texttt{rpart()} y habitualmente se emplea de la forma:
+
+\texttt{rpart(formula,\ data,\ method,\ parms,\ control,\ ...)}
+
+\begin{itemize}
+\item
+  \texttt{formula}: permite especificar la respuesta y las variables
+  predictoras de la forma habitual, se suele establecer de la forma
+  \texttt{respuesta\ \textasciitilde{}\ .} para incluir todas las
+  posibles variables explicativas.
+\item
+  \texttt{data}: \texttt{data.frame} (opcional; donde se evaluará la
+  fórmula) con la muestra de entrenamiento.
+\item
+  \texttt{method}: método empleado para realizar las particiones, puede
+  ser \texttt{"anova"} (regresión), \texttt{"class"} (clasificación),
+  \texttt{"poisson"} (regresión de Poisson) o \texttt{"exp"}
+  (supervivencia), o alternativamente una lista de funciones (con
+  componentes \texttt{init}, \texttt{split}, \texttt{eval}; ver la
+  vignette
+  \href{https://cran.r-project.org/web/packages/rpart/vignettes/usercode.pdf}{\emph{User
+  Written Split Functions}}). Por defecto se selecciona a partir de la
+  variable respuesta en \texttt{formula}, por ejemplo si es un factor
+  (lo recomendado en clasificación) emplea \texttt{method\ =\ "class"}.
+\item
+  \texttt{parms}: lista de parámetros opcionales para la partición en el
+  caso de clasificación (o regresión de Poisson). Puede contener los
+  componentes \texttt{prior} (vector de probabilidades previas; por
+  defecto las frecuencias observadas), \texttt{loss} (matriz de
+  pérdidas; con ceros en la diagonal y por defecto 1 en el resto) y
+  \texttt{split} (criterio de error; por defecto \texttt{"gini"} o
+  alternativamente \texttt{"information"}).
+\item
+  \texttt{control}: lista de opciones que controlan el algoritmo de
+  partición, por defecto se seleccionan mediante la función
+  \texttt{rpart.control}, aunque también se pueden establecer en la
+  llamada a la función principal, y los principales parámetros son:
+
+  \texttt{rpart.control(minsplit\ =\ 20,\ minbucket\ =\ round(minsplit/3),\ cp\ =\ 0.01,\ xval\ =\ 10,\ maxdepth\ =\ 30,\ ...)}
+
+  \begin{itemize}
+  \item
+    \texttt{cp} es el parámetro de complejidad para la poda del árbol.
+    Es la proporción mínima de reducción del error que debe producir una
+    nueva partición para que se incorpore al modelo (valores más grandes
+    simplifican el modelo y reducen el tiempo de computación;
+    estableciéndolo a 0 se obtiene un árbol de profundidad máxima)
+  \item
+    \texttt{maxdepth} es la profundidad máxima del árbol (la profundidad
+    de la raíz sería 0).
+  \item
+    \texttt{minsplit} y \texttt{minbucket} son, respectivamente, los
+    números mínimos de observaciones en un nodo intermedio para
+    particionarlo y en un nodo terminal.
+  \item
+    \texttt{xval} es el número de grupos (folds) para validación
+    cruzada.
+  \end{itemize}
+\end{itemize}
+
+Para más detalles consultar la documentación de esta función o la
+vignette
+\href{https://cran.r-project.org/web/packages/rpart/vignettes/longintro.pdf}{\emph{Introduction
+to Rpart}}.
+
+\subsection{Ejemplo: regresión}\label{ejemplo-regresiuxf3n}
+
+Emplearemos el conjunto de datos \emph{winequality.RData} (ver Cortez et
+al., 2009), que contiene información fisico-química
+(\texttt{fixed.acidity}, \texttt{volatile.acidity},
+\texttt{citric.acid}, \texttt{residual.sugar}, \texttt{chlorides},
+\texttt{free.sulfur.dioxide}, \texttt{total.sulfur.dioxide},
+\texttt{density}, \texttt{pH}, \texttt{sulphates} y \texttt{alcohol}) y
+sensorial (\texttt{quality}) de una muestra de 1250 vinos portugueses de
+la variedad \emph{Vinho Verde}. Como respuesta consideraremos la
+variable \texttt{quality}, mediana de al menos 3 evaluaciones de la
+calidad del vino realizadas por expertos, que los evaluaron entre 0 (muy
+malo) y 10 (muy excelente).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{load}\NormalTok{(}\StringTok{"data/winequality.RData"}\NormalTok{)}
+\KeywordTok{str}\NormalTok{(winequality)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    1250 obs. of  12 variables:
+##  $ fixed.acidity       : num  6.8 7.1 6.9 7.5 8.6 7.7 5.4 6.8 6.1 5.5 ...
+##  $ volatile.acidity    : num  0.37 0.24 0.32 0.23 0.36 0.28 0.59 0.16 0.28 0.28 ...
+##  $ citric.acid         : num  0.47 0.34 0.13 0.49 0.26 0.63 0.07 0.36 0.27 0.21 ...
+##  $ residual.sugar      : num  11.2 1.2 7.8 7.7 11.1 11.1 7 1.3 4.7 1.6 ...
+##  $ chlorides           : num  0.071 0.045 0.042 0.049 0.03 0.039 0.045 0.034 0.03 0.032 ...
+##  $ free.sulfur.dioxide : num  44 6 11 61 43.5 58 36 32 56 23 ...
+##  $ total.sulfur.dioxide: num  136 132 117 209 171 179 147 98 140 85 ...
+##  $ density             : num  0.997 0.991 0.996 0.994 0.995 ...
+##  $ pH                  : num  2.98 3.16 3.23 3.14 3.03 3.08 3.34 3.02 3.16 3.42 ...
+##  $ sulphates           : num  0.88 0.46 0.37 0.3 0.49 0.44 0.57 0.58 0.42 0.42 ...
+##  $ alcohol             : num  9.2 11.2 9.2 11.1 12 8.8 9.7 11.3 12.5 12.5 ...
+##  $ quality             : int  5 4 5 7 5 4 6 6 8 5 ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{barplot}\NormalTok{(}\KeywordTok{table}\NormalTok{(winequality}\OperatorTok{$}\NormalTok{quality))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-4-1} \end{center}
+
+En primer lugar se selecciona el 80\% de los datos como muestra de
+entrenamiento y el 20\% restante como muestra de test:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{nobs <-}\StringTok{ }\KeywordTok{nrow}\NormalTok{(winequality)}
+\NormalTok{itrain <-}\StringTok{ }\KeywordTok{sample}\NormalTok{(nobs, }\FloatTok{0.8} \OperatorTok{*}\StringTok{ }\NormalTok{nobs)}
+\NormalTok{train <-}\StringTok{ }\NormalTok{winequality[itrain, ]}
+\NormalTok{test <-}\StringTok{ }\NormalTok{winequality[}\OperatorTok{-}\NormalTok{itrain, ]}
+\end{Highlighting}
+\end{Shaded}
+
+Podemos obtener el arbol con las opciones por defecto con el comando:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tree <-}\StringTok{ }\KeywordTok{rpart}\NormalTok{(quality }\OperatorTok{~}\StringTok{ }\NormalTok{., }\DataTypeTok{data =}\NormalTok{ train)}
+\end{Highlighting}
+\end{Shaded}
+
+Al imprimirlo se muestra el número de observaciones e información sobre
+los distintos nodos (número de nodo, condición que define la partición,
+número de observaciones en el nodo, función de pérdida y predicción),
+marcando con un \texttt{*} los nodos terminales.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tree}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## n= 1000 
+## 
+## node), split, n, deviance, yval
+##       * denotes terminal node
+## 
+##  1) root 1000 768.95600 5.862000  
+##    2) alcohol< 10.75 622 340.81190 5.586817  
+##      4) volatile.acidity>=0.2575 329 154.75990 5.370821  
+##        8) total.sulfur.dioxide< 98.5 24  12.50000 4.750000 *
+##        9) total.sulfur.dioxide>=98.5 305 132.28200 5.419672  
+##         18) pH< 3.315 269 101.44980 5.353160 *
+##         19) pH>=3.315 36  20.75000 5.916667 *
+##      5) volatile.acidity< 0.2575 293 153.46760 5.829352  
+##       10) sulphates< 0.475 144  80.32639 5.659722 *
+##       11) sulphates>=0.475 149  64.99329 5.993289 *
+##    3) alcohol>=10.75 378 303.53700 6.314815  
+##      6) alcohol< 11.775 200 173.87500 6.075000  
+##       12) free.sulfur.dioxide< 11.5 15  10.93333 4.933333 *
+##       13) free.sulfur.dioxide>=11.5 185 141.80540 6.167568  
+##         26) volatile.acidity>=0.395 7  12.85714 5.142857 *
+##         27) volatile.acidity< 0.395 178 121.30900 6.207865  
+##           54) citric.acid>=0.385 31  21.93548 5.741935 *
+##           55) citric.acid< 0.385 147  91.22449 6.306122 *
+##      7) alcohol>=11.775 178 105.23600 6.584270 *
+\end{verbatim}
+
+Para representarlo se puede emplear las herramientas del paquete
+\href{https://CRAN.R-project.org/package=rpart}{\texttt{rpart}}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(tree)}
+\KeywordTok{text}\NormalTok{(tree)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-8-1} \end{center}
+
+Pero puede ser preferible emplear el paquete
+\href{https://CRAN.R-project.org/package=rpart.plot}{\texttt{rpart.plot}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(rpart.plot)}
+\KeywordTok{rpart.plot}\NormalTok{(tree, }\DataTypeTok{main=}\StringTok{"Regresion tree winequality"}\NormalTok{)  }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-9-1} \end{center}
+
+Nos interesa como se clasificaría a una nueva observación en los nodos
+terminales (en los nodos intermedios solo nos interesarían las
+condiciones, y el orden de las variables consideradas, hasta llegar a
+las hojas) y las correspondientes predicciones (la media de la respuesta
+en el correspondiente nodo terminal). Para ello, puede ser de utilidad
+imprimir las reglas:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{rpart.rules}\NormalTok{(tree, }\DataTypeTok{style =} \StringTok{"tall"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## quality is 4.8 when
+##     alcohol < 11
+##     volatile.acidity >= 0.26
+##     total.sulfur.dioxide < 99
+## 
+## quality is 4.9 when
+##     alcohol is 11 to 12
+##     free.sulfur.dioxide < 12
+## 
+## quality is 5.1 when
+##     alcohol is 11 to 12
+##     volatile.acidity >= 0.40
+##     free.sulfur.dioxide >= 12
+## 
+## quality is 5.4 when
+##     alcohol < 11
+##     volatile.acidity >= 0.26
+##     total.sulfur.dioxide >= 99
+##     pH < 3.3
+## 
+## quality is 5.7 when
+##     alcohol < 11
+##     volatile.acidity < 0.26
+##     sulphates < 0.48
+## 
+## quality is 5.7 when
+##     alcohol is 11 to 12
+##     volatile.acidity < 0.40
+##     free.sulfur.dioxide >= 12
+##     citric.acid >= 0.39
+## 
+## quality is 5.9 when
+##     alcohol < 11
+##     volatile.acidity >= 0.26
+##     total.sulfur.dioxide >= 99
+##     pH >= 3.3
+## 
+## quality is 6.0 when
+##     alcohol < 11
+##     volatile.acidity < 0.26
+##     sulphates >= 0.48
+## 
+## quality is 6.3 when
+##     alcohol is 11 to 12
+##     volatile.acidity < 0.40
+##     free.sulfur.dioxide >= 12
+##     citric.acid < 0.39
+## 
+## quality is 6.6 when
+##     alcohol >= 12
+\end{verbatim}
+
+Por defecto se poda el arbol considerando \texttt{cp\ =\ 0.01}, que
+puede ser adecuado en muchos casos. Sin embargo, para seleccionar el
+valor óptimo de este (hiper)parámetro se puede emplear validación
+cruzada. En primer lugar habría que establecer \texttt{cp\ =\ 0} para
+construir el árbol completo, a la profundidad máxima (determinada por
+los valores de \texttt{minsplit} y \texttt{minbucket}, que se podrían
+seleccionar ``a mano'' dependiendo del número de observaciones o también
+considerándolos como hiperparámetos; esto último no está implementado en
+\texttt{rpart}, ni en principio en \texttt{caret})\footnote{Los
+  parámetros \texttt{maxsurrogate}, \texttt{usesurrogate} y
+  \texttt{surrogatestyle} serían de utilidad si hay datos faltantes.}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tree <-}\StringTok{ }\KeywordTok{rpart}\NormalTok{(quality }\OperatorTok{~}\StringTok{ }\NormalTok{., }\DataTypeTok{data =}\NormalTok{ train, }\DataTypeTok{cp =} \DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Posteriormente podemos emplear las funciones \texttt{printcp()} (o
+\texttt{plotcp()}) para obtener (representar) los valores de CP para los
+árboles (óptimos) de menor tamaño junto con su error de validación
+cruzada \texttt{xerror} (reescalado de forma que el máximo es 1):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{printcp}\NormalTok{(tree)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Regression tree:
+## rpart(formula = quality ~ ., data = train, cp = 0)
+## 
+## Variables actually used in tree construction:
+##  [1] alcohol              chlorides            citric.acid         
+##  [4] density              fixed.acidity        free.sulfur.dioxide 
+##  [7] pH                   residual.sugar       sulphates           
+## [10] total.sulfur.dioxide volatile.acidity    
+## 
+## Root node error: 768.96/1000 = 0.76896
+## 
+## n= 1000 
+## 
+##            CP nsplit rel error  xerror     xstd
+## 1  0.16204707      0   1.00000 1.00203 0.048591
+## 2  0.04237491      1   0.83795 0.85779 0.043646
+## 3  0.03176525      2   0.79558 0.82810 0.043486
+## 4  0.02748696      3   0.76381 0.81350 0.042814
+## 5  0.01304370      4   0.73633 0.77038 0.039654
+## 6  0.01059605      6   0.71024 0.78168 0.039353
+## 7  0.01026605      7   0.69964 0.78177 0.039141
+## 8  0.00840800      9   0.67911 0.78172 0.039123
+## 9  0.00813924     10   0.67070 0.80117 0.039915
+## 10 0.00780567     11   0.66256 0.80020 0.040481
+## 11 0.00684175     13   0.64695 0.79767 0.040219
+## 12 0.00673843     15   0.63327 0.81381 0.040851
+## 13 0.00643577     18   0.61305 0.82059 0.041240
+## 14 0.00641137     19   0.60662 0.82323 0.041271
+## 15 0.00549694     21   0.59379 0.84187 0.042714
+## 16 0.00489406     23   0.58280 0.84748 0.042744
+## 17 0.00483045     24   0.57791 0.85910 0.043897
+## 18 0.00473741     25   0.57308 0.86553 0.045463
+## 19 0.00468372     26   0.56834 0.86455 0.045413
+## 20 0.00450496     28   0.55897 0.87049 0.045777
+## 21 0.00448365     32   0.54095 0.87263 0.045824
+## 22 0.00437484     33   0.53647 0.87260 0.045846
+## 23 0.00435280     35   0.52772 0.87772 0.046022
+## 24 0.00428623     36   0.52337 0.87999 0.046124
+## 25 0.00412515     37   0.51908 0.88151 0.046505
+## 26 0.00390866     39   0.51083 0.89242 0.047068
+## 27 0.00375301     42   0.49910 0.90128 0.047319
+## 28 0.00370055     43   0.49535 0.90965 0.047991
+## 29 0.00351987     45   0.48795 0.91404 0.048079
+## 30 0.00308860     47   0.48091 0.92132 0.048336
+## 31 0.00305781     49   0.47473 0.93168 0.049699
+## 32 0.00299018     51   0.46862 0.93258 0.049701
+## 33 0.00295148     52   0.46563 0.93062 0.049644
+## 34 0.00286138     54   0.45972 0.93786 0.050366
+## 35 0.00283972     55   0.45686 0.93474 0.050404
+## 36 0.00274809     56   0.45402 0.93307 0.050390
+## 37 0.00273457     58   0.44853 0.93642 0.050406
+## 38 0.00260607     59   0.44579 0.93726 0.050543
+## 39 0.00252978     60   0.44318 0.93692 0.050323
+## 40 0.00252428     62   0.43813 0.93778 0.050381
+## 41 0.00250804     64   0.43308 0.93778 0.050381
+## 42 0.00232226     65   0.43057 0.93642 0.050081
+## 43 0.00227625     66   0.42825 0.93915 0.050166
+## 44 0.00225146     67   0.42597 0.94101 0.050195
+## 45 0.00224774     68   0.42372 0.94101 0.050195
+## 46 0.00216406     69   0.42147 0.94067 0.050124
+## 47 0.00204851     70   0.41931 0.94263 0.050366
+## 48 0.00194517     72   0.41521 0.94203 0.050360
+## 49 0.00188139     73   0.41326 0.93521 0.050349
+## 50 0.00154129     75   0.40950 0.93500 0.050277
+## 51 0.00143642     76   0.40796 0.93396 0.050329
+## 52 0.00118294     77   0.40652 0.93289 0.050325
+## 53 0.00117607     78   0.40534 0.93738 0.050406
+## 54 0.00108561     79   0.40417 0.93738 0.050406
+## 55 0.00097821     80   0.40308 0.93670 0.050406
+## 56 0.00093107     81   0.40210 0.93752 0.050589
+## 57 0.00090075     82   0.40117 0.93752 0.050589
+## 58 0.00082968     83   0.40027 0.93634 0.050561
+## 59 0.00048303     85   0.39861 0.93670 0.050557
+## 60 0.00000000     86   0.39813 0.93745 0.050558
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plotcp}\NormalTok{(tree)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-12-1} \end{center}
+
+La tabla con los valores de las podas (óptimas, dependiendo del
+parámetro de complejidad) está almacenada en la componente
+\texttt{\$cptable}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(tree}\OperatorTok{$}\NormalTok{cptable, }\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             CP nsplit rel error    xerror       xstd
+## 1  0.162047069      0 1.0000000 1.0020304 0.04859127
+## 2  0.042374911      1 0.8379529 0.8577876 0.04364585
+## 3  0.031765253      2 0.7955780 0.8281010 0.04348571
+## 4  0.027486958      3 0.7638128 0.8134957 0.04281430
+## 5  0.013043701      4 0.7363258 0.7703804 0.03965433
+## 6  0.010596054      6 0.7102384 0.7816774 0.03935308
+## 7  0.010266055      7 0.6996424 0.7817716 0.03914071
+## 8  0.008408003      9 0.6791102 0.7817177 0.03912344
+## 9  0.008139238     10 0.6707022 0.8011719 0.03991498
+## 10 0.007805674     11 0.6625630 0.8001996 0.04048088
+\end{verbatim}
+
+A partir de la que podríamos seleccionar el valor óptimo de forma
+automática, siguiendo el criterio de un error estándar de Breiman et al.
+(1984):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{xerror <-}\StringTok{ }\NormalTok{tree}\OperatorTok{$}\NormalTok{cptable[,}\StringTok{"xerror"}\NormalTok{]}
+\NormalTok{imin.xerror <-}\StringTok{ }\KeywordTok{which.min}\NormalTok{(xerror)}
+\CommentTok{# Valor óptimo}
+\NormalTok{tree}\OperatorTok{$}\NormalTok{cptable[imin.xerror, ]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         CP     nsplit  rel error     xerror       xstd 
+## 0.01304370 4.00000000 0.73632581 0.77038039 0.03965433
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Límite superior "oneSE rule" y complejidad mínima por debajo de ese valor}
+\NormalTok{upper.xerror <-}\StringTok{ }\NormalTok{xerror[imin.xerror] }\OperatorTok{+}\StringTok{ }\NormalTok{tree}\OperatorTok{$}\NormalTok{cptable[imin.xerror, }\StringTok{"xstd"}\NormalTok{]}
+\NormalTok{icp <-}\StringTok{ }\KeywordTok{min}\NormalTok{(}\KeywordTok{which}\NormalTok{(xerror }\OperatorTok{<=}\StringTok{ }\NormalTok{upper.xerror))}
+\NormalTok{cp <-}\StringTok{ }\NormalTok{tree}\OperatorTok{$}\NormalTok{cptable[icp, }\StringTok{"CP"}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+Para obtener el modelo final podamos el arbol con el valor de
+complejidad obtenido 0.0130437 (que en este caso coincide con el valor
+óptimo):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tree <-}\StringTok{ }\KeywordTok{prune}\NormalTok{(tree, }\DataTypeTok{cp =}\NormalTok{ cp)}
+\KeywordTok{rpart.plot}\NormalTok{(tree, }\DataTypeTok{main=}\StringTok{"Regresion tree winequality"}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-15-1} \end{center}
+
+Podríamos estudiar el modelo final, por ejemplo mediante el método
+\texttt{summary()}, que entre otras cosas muestra una medida (en
+porcentaje) de la importancia de las variables explicativas para la
+predicción de la respuesta (teniendo en cuenta todas las particiones,
+principales y secundarias, en las que se emplea cada variable
+explicativa). Alternativamente podríamos emplear el siguiente código:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# summary(tree)}
+\NormalTok{importance <-}\StringTok{ }\NormalTok{tree}\OperatorTok{$}\NormalTok{variable.importance }\CommentTok{# Equivalente a caret::varImp(tree) }
+\NormalTok{importance <-}\StringTok{ }\KeywordTok{round}\NormalTok{(}\DecValTok{100}\OperatorTok{*}\NormalTok{importance}\OperatorTok{/}\KeywordTok{sum}\NormalTok{(importance), }\DecValTok{1}\NormalTok{)}
+\NormalTok{importance[importance }\OperatorTok{>=}\StringTok{ }\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              alcohol              density            chlorides 
+##                 36.1                 21.7                 11.3 
+##     volatile.acidity total.sulfur.dioxide  free.sulfur.dioxide 
+##                  8.7                  8.5                  5.0 
+##       residual.sugar            sulphates          citric.acid 
+##                  4.0                  1.9                  1.1 
+##                   pH 
+##                  1.1
+\end{verbatim}
+
+El último paso sería evaluarlo en la muestra de test siguiendo los pasos
+descritos en la Sección \ref{eval-reg}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{obs <-}\StringTok{ }\NormalTok{test}\OperatorTok{$}\NormalTok{quality}
+\NormalTok{pred <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(tree, }\DataTypeTok{newdata =}\NormalTok{ test)}
+
+\KeywordTok{plot}\NormalTok{(pred, obs, }\DataTypeTok{main =} \StringTok{"Observado frente a predicciones (quality)"}\NormalTok{,}
+     \DataTypeTok{xlab =} \StringTok{"Predicción", ylab = "}\NormalTok{Observado}\StringTok{")}
+\StringTok{abline(a = 0, b = 1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-17-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Empleando el paquete caret }
+\NormalTok{caret}\OperatorTok{::}\KeywordTok{postResample}\NormalTok{(pred, obs)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      RMSE  Rsquared       MAE 
+## 0.8145614 0.1969485 0.6574264
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Con la función accuracy()}
+\NormalTok{accuracy <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(pred, obs, }\DataTypeTok{na.rm =} \OtherTok{FALSE}\NormalTok{, }
+                     \DataTypeTok{tol =} \KeywordTok{sqrt}\NormalTok{(.Machine}\OperatorTok{$}\NormalTok{double.eps)) \{}
+\NormalTok{  err <-}\StringTok{ }\NormalTok{obs }\OperatorTok{-}\StringTok{ }\NormalTok{pred     }\CommentTok{# Errores}
+  \ControlFlowTok{if}\NormalTok{(na.rm) \{}
+\NormalTok{    is.a <-}\StringTok{ }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(err)}
+\NormalTok{    err <-}\StringTok{ }\NormalTok{err[is.a]}
+\NormalTok{    obs <-}\StringTok{ }\NormalTok{obs[is.a]}
+\NormalTok{  \}  }
+\NormalTok{  perr <-}\StringTok{ }\DecValTok{100}\OperatorTok{*}\NormalTok{err}\OperatorTok{/}\KeywordTok{pmax}\NormalTok{(obs, tol)  }\CommentTok{# Errores porcentuales}
+  \KeywordTok{return}\NormalTok{(}\KeywordTok{c}\NormalTok{(}
+    \DataTypeTok{me =} \KeywordTok{mean}\NormalTok{(err),           }\CommentTok{# Error medio}
+    \DataTypeTok{rmse =} \KeywordTok{sqrt}\NormalTok{(}\KeywordTok{mean}\NormalTok{(err}\OperatorTok{^}\DecValTok{2}\NormalTok{)), }\CommentTok{# Raíz del error cuadrático medio }
+    \DataTypeTok{mae =} \KeywordTok{mean}\NormalTok{(}\KeywordTok{abs}\NormalTok{(err)),     }\CommentTok{# Error absoluto medio}
+    \DataTypeTok{mpe =} \KeywordTok{mean}\NormalTok{(perr),         }\CommentTok{# Error porcentual medio}
+    \DataTypeTok{mape =} \KeywordTok{mean}\NormalTok{(}\KeywordTok{abs}\NormalTok{(perr)),   }\CommentTok{# Error porcentual absoluto medio}
+    \DataTypeTok{r.squared =} \DecValTok{1} \OperatorTok{-}\StringTok{ }\KeywordTok{sum}\NormalTok{(err}\OperatorTok{^}\DecValTok{2}\NormalTok{)}\OperatorTok{/}\KeywordTok{sum}\NormalTok{((obs }\OperatorTok{-}\StringTok{ }\KeywordTok{mean}\NormalTok{(obs))}\OperatorTok{^}\DecValTok{2}\NormalTok{)}
+\NormalTok{  ))}
+\NormalTok{\}}
+\KeywordTok{accuracy}\NormalTok{(pred, test}\OperatorTok{$}\NormalTok{quality)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##           me         rmse          mae          mpe         mape    r.squared 
+## -0.001269398  0.814561435  0.657426365 -1.952342173 11.576716037  0.192007721
+\end{verbatim}
+
+\subsection{Ejemplo: modelo de
+clasificación}\label{ejemplo-modelo-de-clasificaciuxf3n}
+
+Para ilustrar los árboles de clasificación CART, podemos emplear los
+datos anteriores de calidad de vino, considerando como respuesta una
+nueva variable \texttt{taste} que clasifica los vinos en ``good'' o
+``bad'' dependiendo de si
+\texttt{winequality\$quality\ \textgreater{}=\ 5} (este conjunto de
+datos está almacenado en el archivo \emph{winetaste.RData}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# load("data/winetaste.RData")}
+\NormalTok{winetaste <-}\StringTok{ }\NormalTok{winequality[, }\KeywordTok{colnames}\NormalTok{(winequality)}\OperatorTok{!=}\StringTok{"quality"}\NormalTok{]}
+\NormalTok{winetaste}\OperatorTok{$}\NormalTok{taste <-}\StringTok{ }\KeywordTok{factor}\NormalTok{(winequality}\OperatorTok{$}\NormalTok{quality }\OperatorTok{<}\StringTok{ }\DecValTok{6}\NormalTok{, }\DataTypeTok{labels =} \KeywordTok{c}\NormalTok{(}\StringTok{'good'}\NormalTok{, }\StringTok{'bad'}\NormalTok{)) }\CommentTok{# levels = c('FALSE', 'TRUE')}
+\KeywordTok{str}\NormalTok{(winetaste)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    1250 obs. of  12 variables:
+##  $ fixed.acidity       : num  6.8 7.1 6.9 7.5 8.6 7.7 5.4 6.8 6.1 5.5 ...
+##  $ volatile.acidity    : num  0.37 0.24 0.32 0.23 0.36 0.28 0.59 0.16 0.28 0.28 ...
+##  $ citric.acid         : num  0.47 0.34 0.13 0.49 0.26 0.63 0.07 0.36 0.27 0.21 ...
+##  $ residual.sugar      : num  11.2 1.2 7.8 7.7 11.1 11.1 7 1.3 4.7 1.6 ...
+##  $ chlorides           : num  0.071 0.045 0.042 0.049 0.03 0.039 0.045 0.034 0.03 0.032 ...
+##  $ free.sulfur.dioxide : num  44 6 11 61 43.5 58 36 32 56 23 ...
+##  $ total.sulfur.dioxide: num  136 132 117 209 171 179 147 98 140 85 ...
+##  $ density             : num  0.997 0.991 0.996 0.994 0.995 ...
+##  $ pH                  : num  2.98 3.16 3.23 3.14 3.03 3.08 3.34 3.02 3.16 3.42 ...
+##  $ sulphates           : num  0.88 0.46 0.37 0.3 0.49 0.44 0.57 0.58 0.42 0.42 ...
+##  $ alcohol             : num  9.2 11.2 9.2 11.1 12 8.8 9.7 11.3 12.5 12.5 ...
+##  $ taste               : Factor w/ 2 levels "good","bad": 2 2 2 1 2 2 1 1 1 2 ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{table}\NormalTok{(winetaste}\OperatorTok{$}\NormalTok{taste)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## good  bad 
+##  828  422
+\end{verbatim}
+
+Como en el caso anterior, se contruyen las muestras de entrenamiento
+(80\%) y de test (20\%):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# set.seed(1)}
+\CommentTok{# nobs <- nrow(winetaste)}
+\CommentTok{# itrain <- sample(nobs, 0.8 * nobs)}
+\NormalTok{train <-}\StringTok{ }\NormalTok{winetaste[itrain, ]}
+\NormalTok{test <-}\StringTok{ }\NormalTok{winetaste[}\OperatorTok{-}\NormalTok{itrain, ]}
+\end{Highlighting}
+\end{Shaded}
+
+Al igual que en el caso anterior podemos obtener el árbol de
+clasificación con las opciones por defecto (\texttt{cp\ =\ 0.01} y
+\texttt{split\ =\ "gini"}) con el comando:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tree <-}\StringTok{ }\KeywordTok{rpart}\NormalTok{(taste }\OperatorTok{~}\StringTok{ }\NormalTok{., }\DataTypeTok{data =}\NormalTok{ train)}
+\end{Highlighting}
+\end{Shaded}
+
+En este caso al imprimirlo como información de los nodos se muestra
+(además del número de nodo, la condición de la partición y el número de
+observaciones en el nodo) el número de observaciones mal clasificadas,
+la predicción y las proporciones estimadas (frecuencias relativas en la
+muestra de entrenamiento) de las clases:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tree}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## n= 1000 
+## 
+## node), split, n, loss, yval, (yprob)
+##       * denotes terminal node
+## 
+##  1) root 1000 338 good (0.6620000 0.3380000)  
+##    2) alcohol>=10.11667 541 100 good (0.8151571 0.1848429)  
+##      4) free.sulfur.dioxide>=8.5 522  87 good (0.8333333 0.1666667)  
+##        8) fixed.acidity< 8.55 500  73 good (0.8540000 0.1460000) *
+##        9) fixed.acidity>=8.55 22   8 bad (0.3636364 0.6363636) *
+##      5) free.sulfur.dioxide< 8.5 19   6 bad (0.3157895 0.6842105) *
+##    3) alcohol< 10.11667 459 221 bad (0.4814815 0.5185185)  
+##      6) volatile.acidity< 0.2875 264 102 good (0.6136364 0.3863636)  
+##       12) fixed.acidity< 7.45 213  71 good (0.6666667 0.3333333)  
+##         24) citric.acid>=0.265 160  42 good (0.7375000 0.2625000) *
+##         25) citric.acid< 0.265 53  24 bad (0.4528302 0.5471698)  
+##           50) free.sulfur.dioxide< 42.5 33  13 good (0.6060606 0.3939394) *
+##           51) free.sulfur.dioxide>=42.5 20   4 bad (0.2000000 0.8000000) *
+##       13) fixed.acidity>=7.45 51  20 bad (0.3921569 0.6078431)  
+##         26) total.sulfur.dioxide>=150 26  10 good (0.6153846 0.3846154) *
+##         27) total.sulfur.dioxide< 150 25   4 bad (0.1600000 0.8400000) *
+##      7) volatile.acidity>=0.2875 195  59 bad (0.3025641 0.6974359)  
+##       14) pH>=3.235 49  24 bad (0.4897959 0.5102041)  
+##         28) chlorides< 0.0465 18   4 good (0.7777778 0.2222222) *
+##         29) chlorides>=0.0465 31  10 bad (0.3225806 0.6774194) *
+##       15) pH< 3.235 146  35 bad (0.2397260 0.7602740) *
+\end{verbatim}
+
+También puede ser preferible emplear el paquete
+\href{https://CRAN.R-project.org/package=rpart.plot}{\texttt{rpart.plot}}
+para representarlo:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(rpart.plot)}
+\KeywordTok{rpart.plot}\NormalTok{(tree, }\DataTypeTok{main=}\StringTok{"Classification tree winetaste"}\NormalTok{) }\CommentTok{# Alternativa: rattle::fancyRpartPlot}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-22-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{rpart.plot}\NormalTok{(tree, }\DataTypeTok{main=}\StringTok{"Classification tree winetaste"}\NormalTok{,}
+           \DataTypeTok{extra =} \DecValTok{104}\NormalTok{,          }\CommentTok{# show fitted class, probs, percentages}
+           \DataTypeTok{box.palette =} \StringTok{"GnBu"}\NormalTok{, }\CommentTok{# color scheme}
+           \DataTypeTok{branch.lty =} \DecValTok{3}\NormalTok{,       }\CommentTok{# dotted branch lines}
+           \DataTypeTok{shadow.col =} \StringTok{"gray"}\NormalTok{,  }\CommentTok{# shadows under the node boxes}
+           \DataTypeTok{nn =} \OtherTok{TRUE}\NormalTok{)            }\CommentTok{# display the node numbers }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-22-2} \end{center}
+
+Nos interesa como se clasificaría a una nueva observación (como se llega
+a los nodos terminales) y su probabilidad estimada (la frecuencia
+relativa de la clase más frecuente en el correspondiente nodo terminal).
+Al igual que en el caso de regresión, puede ser de utilidad imprimir las
+reglas:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{rpart.rules}\NormalTok{(tree, }\DataTypeTok{style =} \StringTok{"tall"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## taste is 0.15 when
+##     alcohol >= 10
+##     fixed.acidity < 8.6
+##     free.sulfur.dioxide >= 8.5
+## 
+## taste is 0.22 when
+##     alcohol < 10
+##     volatile.acidity >= 0.29
+##     pH >= 3.2
+##     chlorides < 0.047
+## 
+## taste is 0.26 when
+##     alcohol < 10
+##     volatile.acidity < 0.29
+##     fixed.acidity < 7.5
+##     citric.acid >= 0.27
+## 
+## taste is 0.38 when
+##     alcohol < 10
+##     volatile.acidity < 0.29
+##     fixed.acidity >= 7.5
+##     total.sulfur.dioxide >= 150
+## 
+## taste is 0.39 when
+##     alcohol < 10
+##     volatile.acidity < 0.29
+##     fixed.acidity < 7.5
+##     free.sulfur.dioxide < 42.5
+##     citric.acid < 0.27
+## 
+## taste is 0.64 when
+##     alcohol >= 10
+##     fixed.acidity >= 8.6
+##     free.sulfur.dioxide >= 8.5
+## 
+## taste is 0.68 when
+##     alcohol < 10
+##     volatile.acidity >= 0.29
+##     pH >= 3.2
+##     chlorides >= 0.047
+## 
+## taste is 0.68 when
+##     alcohol >= 10
+##     free.sulfur.dioxide < 8.5
+## 
+## taste is 0.76 when
+##     alcohol < 10
+##     volatile.acidity >= 0.29
+##     pH < 3.2
+## 
+## taste is 0.80 when
+##     alcohol < 10
+##     volatile.acidity < 0.29
+##     fixed.acidity < 7.5
+##     free.sulfur.dioxide >= 42.5
+##     citric.acid < 0.27
+## 
+## taste is 0.84 when
+##     alcohol < 10
+##     volatile.acidity < 0.29
+##     fixed.acidity >= 7.5
+##     total.sulfur.dioxide < 150
+\end{verbatim}
+
+Al igual que en el caso anterior, para seleccionar un valor óptimo del
+(hiper)parámetro de complejidad, se puede construir un árbol de decisión
+completo y emplear validación cruzada para podarlo. Además, si el número
+de observaciones es grande y las clases están más o menos balanceadas,
+se podría aumentar los valores mínimos de observaciones en los nodos
+intermedios y terminales\footnote{Otra opción, más interesante para
+  regresión, sería considerar estos valores como hiperparámetros.}, por
+ejemplo:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tree <-}\StringTok{ }\KeywordTok{rpart}\NormalTok{(taste }\OperatorTok{~}\StringTok{ }\NormalTok{., }\DataTypeTok{data =}\NormalTok{ train, }\DataTypeTok{cp =} \DecValTok{0}\NormalTok{, }\DataTypeTok{minsplit =} \DecValTok{30}\NormalTok{, }\DataTypeTok{minbucket =} \DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+En este caso mantenemos el resto de valores por defecto:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tree <-}\StringTok{ }\KeywordTok{rpart}\NormalTok{(taste }\OperatorTok{~}\StringTok{ }\NormalTok{., }\DataTypeTok{data =}\NormalTok{ train, }\DataTypeTok{cp =} \DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Representamos los errores (reescalados) de validación cruzada:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# printcp(tree)}
+\KeywordTok{plotcp}\NormalTok{(tree)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-26-1} \end{center}
+
+Para obtener el modelo final, seleccionamos el valor óptimo de
+complejidad siguiendo el criterio de un error estándar de Breiman et al.
+(1984) y podamos el arbol:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{xerror <-}\StringTok{ }\NormalTok{tree}\OperatorTok{$}\NormalTok{cptable[,}\StringTok{"xerror"}\NormalTok{]}
+\NormalTok{imin.xerror <-}\StringTok{ }\KeywordTok{which.min}\NormalTok{(xerror)}
+\NormalTok{upper.xerror <-}\StringTok{ }\NormalTok{xerror[imin.xerror] }\OperatorTok{+}\StringTok{ }\NormalTok{tree}\OperatorTok{$}\NormalTok{cptable[imin.xerror, }\StringTok{"xstd"}\NormalTok{]}
+\NormalTok{icp <-}\StringTok{ }\KeywordTok{min}\NormalTok{(}\KeywordTok{which}\NormalTok{(xerror }\OperatorTok{<=}\StringTok{ }\NormalTok{upper.xerror))}
+\NormalTok{cp <-}\StringTok{ }\NormalTok{tree}\OperatorTok{$}\NormalTok{cptable[icp, }\StringTok{"CP"}\NormalTok{]}
+\NormalTok{tree <-}\StringTok{ }\KeywordTok{prune}\NormalTok{(tree, }\DataTypeTok{cp =}\NormalTok{ cp)}
+\CommentTok{# tree}
+\CommentTok{# summary(tree)}
+\CommentTok{# caret::varImp(tree)}
+\CommentTok{# importance <- tree$variable.importance}
+\CommentTok{# importance <- round(100*importance/sum(importance), 1)}
+\CommentTok{# importance[importance >= 1]}
+\KeywordTok{rpart.plot}\NormalTok{(tree, }\DataTypeTok{main=}\StringTok{"Classification tree winetaste"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-27-1} \end{center}
+
+El último paso sería evaluarlo en la muestra de test siguiendo los pasos
+descritos en la Sección \ref{eval-class}. El método \texttt{predict()}
+por defecto (\texttt{type\ =\ "prob"}) devuelve una matriz con las
+probabilidades de cada clase, habrá que establecer
+\texttt{type\ =\ "class"} (para más detalles consultar la ayuda de
+\texttt{predic.rpart()}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{obs <-}\StringTok{ }\NormalTok{test}\OperatorTok{$}\NormalTok{taste}
+\KeywordTok{head}\NormalTok{(}\KeywordTok{predict}\NormalTok{(tree, }\DataTypeTok{newdata =}\NormalTok{ test))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         good       bad
+## 1  0.3025641 0.6974359
+## 4  0.8151571 0.1848429
+## 9  0.8151571 0.1848429
+## 10 0.8151571 0.1848429
+## 12 0.8151571 0.1848429
+## 16 0.8151571 0.1848429
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pred <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(tree, }\DataTypeTok{newdata =}\NormalTok{ test, }\DataTypeTok{type =} \StringTok{"class"}\NormalTok{)}
+\KeywordTok{table}\NormalTok{(obs, pred)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       pred
+## obs    good bad
+##   good  153  13
+##   bad    54  30
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{caret}\OperatorTok{::}\KeywordTok{confusionMatrix}\NormalTok{(obs, pred)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction good bad
+##       good  153  13
+##       bad    54  30
+##                                           
+##                Accuracy : 0.732           
+##                  95% CI : (0.6725, 0.7859)
+##     No Information Rate : 0.828           
+##     P-Value [Acc > NIR] : 0.9999          
+##                                           
+##                   Kappa : 0.3171          
+##                                           
+##  Mcnemar's Test P-Value : 1.025e-06       
+##                                           
+##             Sensitivity : 0.7391          
+##             Specificity : 0.6977          
+##          Pos Pred Value : 0.9217          
+##          Neg Pred Value : 0.3571          
+##              Prevalence : 0.8280          
+##          Detection Rate : 0.6120          
+##    Detection Prevalence : 0.6640          
+##       Balanced Accuracy : 0.7184          
+##                                           
+##        'Positive' Class : good            
+## 
+\end{verbatim}
+
+\subsection{\texorpdfstring{Interfaz de
+\texttt{caret}}{Interfaz de caret}}\label{interfaz-de-caret}
+
+En \texttt{caret} podemos ajustar un árbol CART seleccionando
+\texttt{method\ =\ "rpart"}. Por defecto emplea bootstrap de las
+observaciones para seleccionar el valor óptimo del hiperparámetro
+\texttt{cp} (considerando únicamente tres posibles valores). Si queremos
+emplear validación cruzada como en el caso anterior podemos emplear la
+función auxiliar \texttt{trainControl()} y para considerar un mayor
+rango de posibles valores, el argumento \texttt{tuneLength}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(caret)}
+\CommentTok{# names(getModelInfo()) # Listado de todos los métodos disponibles}
+\CommentTok{# modelLookup("rpart")  # Información sobre hiperparámetros}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\CommentTok{# itrain <- <- createDataPartition(winetaste$taste, p = 0.8, list = FALSE)}
+\CommentTok{# train <- winetaste[itrain, ]}
+\CommentTok{# test <- winetaste[-itrain, ]}
+\NormalTok{caret.rpart <-}\StringTok{ }\KeywordTok{train}\NormalTok{(taste }\OperatorTok{~}\StringTok{ }\NormalTok{., }\DataTypeTok{method =} \StringTok{"rpart"}\NormalTok{, }\DataTypeTok{data =}\NormalTok{ train, }
+                     \DataTypeTok{tuneLength =} \DecValTok{20}\NormalTok{,}
+                     \DataTypeTok{trControl =} \KeywordTok{trainControl}\NormalTok{(}\DataTypeTok{method =} \StringTok{"cv"}\NormalTok{, }\DataTypeTok{number =} \DecValTok{10}\NormalTok{)) }
+\NormalTok{caret.rpart}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## CART 
+## 
+## 1000 samples
+##   11 predictor
+##    2 classes: 'good', 'bad' 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold) 
+## Summary of sample sizes: 901, 900, 900, 900, 900, 900, ... 
+## Resampling results across tuning parameters:
+## 
+##   cp           Accuracy   Kappa    
+##   0.000000000  0.7018843  0.3487338
+##   0.005995017  0.7330356  0.3870552
+##   0.011990034  0.7410655  0.3878517
+##   0.017985051  0.7230748  0.3374518
+##   0.023980069  0.7360748  0.3698691
+##   0.029975086  0.7340748  0.3506377
+##   0.035970103  0.7320748  0.3418235
+##   0.041965120  0.7350849  0.3422651
+##   0.047960137  0.7350849  0.3422651
+##   0.053955154  0.7350849  0.3422651
+##   0.059950171  0.7350849  0.3422651
+##   0.065945188  0.7350849  0.3422651
+##   0.071940206  0.7350849  0.3422651
+##   0.077935223  0.7350849  0.3422651
+##   0.083930240  0.7350849  0.3422651
+##   0.089925257  0.7350849  0.3422651
+##   0.095920274  0.7350849  0.3422651
+##   0.101915291  0.7350849  0.3422651
+##   0.107910308  0.7229637  0.2943312
+##   0.113905325  0.6809637  0.1087694
+## 
+## Accuracy was used to select the optimal model using the largest value.
+## The final value used for the model was cp = 0.01199003.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(caret.rpart)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-29-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{caret.rpart}\OperatorTok{$}\NormalTok{finalModel}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## n= 1000 
+## 
+## node), split, n, loss, yval, (yprob)
+##       * denotes terminal node
+## 
+##  1) root 1000 338 good (0.6620000 0.3380000)  
+##    2) alcohol>=10.11667 541 100 good (0.8151571 0.1848429)  
+##      4) free.sulfur.dioxide>=8.5 522  87 good (0.8333333 0.1666667)  
+##        8) fixed.acidity< 8.55 500  73 good (0.8540000 0.1460000) *
+##        9) fixed.acidity>=8.55 22   8 bad (0.3636364 0.6363636) *
+##      5) free.sulfur.dioxide< 8.5 19   6 bad (0.3157895 0.6842105) *
+##    3) alcohol< 10.11667 459 221 bad (0.4814815 0.5185185)  
+##      6) volatile.acidity< 0.2875 264 102 good (0.6136364 0.3863636)  
+##       12) fixed.acidity< 7.45 213  71 good (0.6666667 0.3333333)  
+##         24) citric.acid>=0.265 160  42 good (0.7375000 0.2625000) *
+##         25) citric.acid< 0.265 53  24 bad (0.4528302 0.5471698)  
+##           50) free.sulfur.dioxide< 42.5 33  13 good (0.6060606 0.3939394) *
+##           51) free.sulfur.dioxide>=42.5 20   4 bad (0.2000000 0.8000000) *
+##       13) fixed.acidity>=7.45 51  20 bad (0.3921569 0.6078431)  
+##         26) total.sulfur.dioxide>=150 26  10 good (0.6153846 0.3846154) *
+##         27) total.sulfur.dioxide< 150 25   4 bad (0.1600000 0.8400000) *
+##      7) volatile.acidity>=0.2875 195  59 bad (0.3025641 0.6974359)  
+##       14) pH>=3.235 49  24 bad (0.4897959 0.5102041)  
+##         28) chlorides< 0.0465 18   4 good (0.7777778 0.2222222) *
+##         29) chlorides>=0.0465 31  10 bad (0.3225806 0.6774194) *
+##       15) pH< 3.235 146  35 bad (0.2397260 0.7602740) *
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{rpart.plot}\NormalTok{(caret.rpart}\OperatorTok{$}\NormalTok{finalModel, }\DataTypeTok{main=}\StringTok{"Classification tree winetaste"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-29-2} \end{center}
+
+Para utilizar la regla de ``un error estándar'' se puede añadir
+\texttt{selectionFunction\ =\ "oneSE"}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{caret.rpart <-}\StringTok{ }\KeywordTok{train}\NormalTok{(taste }\OperatorTok{~}\StringTok{ }\NormalTok{., }\DataTypeTok{method =} \StringTok{"rpart"}\NormalTok{, }\DataTypeTok{data =}\NormalTok{ train, }
+                     \DataTypeTok{tuneLength =} \DecValTok{20}\NormalTok{,}
+                     \DataTypeTok{trControl =} \KeywordTok{trainControl}\NormalTok{(}\DataTypeTok{method =} \StringTok{"cv"}\NormalTok{, }\DataTypeTok{number =} \DecValTok{10}\NormalTok{,}
+                                              \DataTypeTok{selectionFunction =} \StringTok{"oneSE"}\NormalTok{)) }
+\NormalTok{caret.rpart}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## CART 
+## 
+## 1000 samples
+##   11 predictor
+##    2 classes: 'good', 'bad' 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold) 
+## Summary of sample sizes: 901, 900, 900, 900, 900, 900, ... 
+## Resampling results across tuning parameters:
+## 
+##   cp           Accuracy   Kappa    
+##   0.000000000  0.7018843  0.3487338
+##   0.005995017  0.7330356  0.3870552
+##   0.011990034  0.7410655  0.3878517
+##   0.017985051  0.7230748  0.3374518
+##   0.023980069  0.7360748  0.3698691
+##   0.029975086  0.7340748  0.3506377
+##   0.035970103  0.7320748  0.3418235
+##   0.041965120  0.7350849  0.3422651
+##   0.047960137  0.7350849  0.3422651
+##   0.053955154  0.7350849  0.3422651
+##   0.059950171  0.7350849  0.3422651
+##   0.065945188  0.7350849  0.3422651
+##   0.071940206  0.7350849  0.3422651
+##   0.077935223  0.7350849  0.3422651
+##   0.083930240  0.7350849  0.3422651
+##   0.089925257  0.7350849  0.3422651
+##   0.095920274  0.7350849  0.3422651
+##   0.101915291  0.7350849  0.3422651
+##   0.107910308  0.7229637  0.2943312
+##   0.113905325  0.6809637  0.1087694
+## 
+## Accuracy was used to select the optimal model using  the one SE rule.
+## The final value used for the model was cp = 0.1019153.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# ggplot(caret.rpart)}
+\NormalTok{caret.rpart}\OperatorTok{$}\NormalTok{finalModel}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## n= 1000 
+## 
+## node), split, n, loss, yval, (yprob)
+##       * denotes terminal node
+## 
+## 1) root 1000 338 good (0.6620000 0.3380000)  
+##   2) alcohol>=10.11667 541 100 good (0.8151571 0.1848429) *
+##   3) alcohol< 10.11667 459 221 bad (0.4814815 0.5185185)  
+##     6) volatile.acidity< 0.2875 264 102 good (0.6136364 0.3863636) *
+##     7) volatile.acidity>=0.2875 195  59 bad (0.3025641 0.6974359) *
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{rpart.plot}\NormalTok{(caret.rpart}\OperatorTok{$}\NormalTok{finalModel, }\DataTypeTok{main =} \StringTok{"Classification tree winetaste"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-30-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{var.imp <-}\StringTok{ }\KeywordTok{varImp}\NormalTok{(caret.rpart)}
+\KeywordTok{plot}\NormalTok{(var.imp)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-30-2} \end{center}
+
+En principio también se podría utilizar la regla de ``un error
+estándar'' seleccionando \texttt{method\ =\ "rpart1SE"} (pero implementa
+internamente este método y en ocasiones no se obtienen los resultados
+esperados).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{caret.rpart <-}\StringTok{ }\KeywordTok{train}\NormalTok{(taste }\OperatorTok{~}\StringTok{ }\NormalTok{., }\DataTypeTok{method =} \StringTok{"rpart1SE"}\NormalTok{, }\DataTypeTok{data =}\NormalTok{ train) }
+\NormalTok{caret.rpart}
+\KeywordTok{printcp}\NormalTok{(caret.rpart}\OperatorTok{$}\NormalTok{finalModel)}
+\NormalTok{caret.rpart}\OperatorTok{$}\NormalTok{finalModel}
+\KeywordTok{rpart.plot}\NormalTok{(caret.rpart}\OperatorTok{$}\NormalTok{finalModel, }\DataTypeTok{main =} \StringTok{"Classification tree winetaste"}\NormalTok{)}
+\KeywordTok{varImp}\NormalTok{(caret.rpart)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Alternativas a los árboles
+CART}\label{alternativas-a-los-uxe1rboles-cart}
+
+Una de las alternativas más populares es la metodología C4.5 (Quinlan,
+1993), evolución de ID3 (1986), que en estos momentos se encuentra en la
+versión C5.0 (y es ya muy similar a CART). C5.0 se utiliza sólo para
+clasificación e incorpora \emph{boosting} (que veremos en el tema
+siguiente). Esta metodología está implementada en el paquete
+\href{https://topepo.github.io/C5.0/index.html}{\texttt{C50}}.
+
+Ross Quinlan desarrolló también la metodologia M5 (Quinlan, 1992) para
+regresión. Su principal característica es que los nodos terminales, en
+lugar de contener un número, contienen un modelo (de regresión) lineal.
+El paquete \href{https://topepo.github.io/Cubist}{\texttt{Cubist}} es
+una evolución de M5 que incorpora un método \emph{ensemble} similar a
+\emph{boosting}.
+
+La motivación detrás de M5 es que, si la predicción que aporta un nodo
+terminal se limita a un único número (como hace la metodología CART),
+entonces el modelo va a predecir muy mal los valores que
+\emph{realmente} son muy extremos, ya que el número de posibles valores
+predichos está limitado por el número de nodos terminales, y en cada uno
+de ellos se utiliza una media. Por ello M5 le asocia a cada nodo un
+modelo de regresión lineal, para cuyo ajuste se utilizan los datos del
+nodo y todas las variables que están en la ruta del nodo. Para evaluar
+los posibles cortes que conducen al siguiente nodo, se utilizan los
+propios modelos lineales para calcular la medida del error.
+
+Una vez se ha construido todo el árbol, para realizar la predicción se
+puede utilizar el modelo lineal que está en el nodo terminal
+correspondiente, pero funciona mejor si se utiliza una combinación
+lineal del modelo del nodo terminal y de todos sus nodos ascendientes
+(es decir, los que están en su camino).
+
+Otra opción es CHAID (CHi-squared Automated Interaction Detection, Kass,
+1980), que se basa en una idea diferente. Es un método de construcción
+de árboles de clasificación que se utiliza cuando las variables
+predictoras son cualitativas o discretas; en caso contrario deben ser
+categorizadas previamente. Y se basa en el contraste chi-cuadrado de
+independencia para tablas de contingencia.
+
+Para cada par \((X_i, Y)\), se considera su tabla de contingencia y se
+calcula el p-valor del contraste chi-cuadrado, seleccionándose la
+variable predictora que tenga un p-valor más pequeño, ya que se asume
+que las variables predictoreas más relacionadas con la respuesta \(Y\)
+son las que van a tener p-valores más pequeños y darán lugar a mejores
+predicciones. Se divide el nodo de acuerdo con los distintos valores de
+la variable predictora seleccionada, y se repite el proceso mientras
+haya variables \emph{significativas}. Como el método exige que el
+p-valor sea menor que 0.05 (o el nivel de significación que se elija), y
+hay que hacer muchas comparaciones es necesario aplicar una corrección
+para comparaciones múltiples, por ejemplo la de Bonferroni.
+
+Lo que acabamos de explicar daría lugar a árboles no necesariamente
+binarios. Como se desea trabajar con árboles binarios (si se admite que
+de un nodo salga cualquier número de ramas, con muy pocos niveles de
+profundidad del árbol ya nos quedaríamos sin datos), es necesario hacer
+algo más: forzar a que las variables predictoras tengan sólo dos
+categorías mediante un proceso de fusión. Se van haciendo pruebas
+chi-cuadrado entre pares de categorías y la variable respuesta, y se
+fusiona el par con el p-valor más alto, ya que se trata de fusionar las
+categorías que sean más similares.
+
+Para árboles de regresión hay metodologías que, al igual que CHAID, se
+basan en el cálculo de p-valores, en este caso de contrastes de igualdes
+de medias. Una de las más utilizadas son los \emph{conditional inference
+trees} (Hothorn \emph{et al.}, 2006)\footnote{Otra alternativa es GUIDE
+  (Generalized, Unbiased, Interaction Detection and Estimation; Loh,
+  2002).}, implementada en la función \texttt{ctree()} del paquete
+\href{https://CRAN.R-project.org/package=party}{\texttt{party}}.
+
+Un problema conocido de los árboles CART es que sufren un sesgo de
+selección de variables: los predictores con más valores distintos son
+favorecidos. Esta es una de las motivaciones de utilizar estos métodos
+basados en contrastes de hipótesis. Por otra parte hay que ser
+conscientes de que los contrastes de hipótesis y la calidad predictiva
+son cosas distintas.
+
+\subsection{Ejemplo}\label{ejemplo}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(party)}
+\NormalTok{tree2 <-}\StringTok{ }\KeywordTok{ctree}\NormalTok{(taste }\OperatorTok{~}\StringTok{ }\NormalTok{., }\DataTypeTok{data =}\NormalTok{ train) }
+\KeywordTok{plot}\NormalTok{(tree2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-32-1} \end{center}
+
+\chapter*{Referencias}\label{referencias}
+\addcontentsline{toc}{chapter}{Referencias}
+
+\section*{Bibliografía básica}\label{bibliografuxeda-buxe1sica}
+\addcontentsline{toc}{section}{Bibliografía básica}
+
+Burger, S. V. (2018). \emph{Introduction to machine learning with R:
+Rigorous mathematical analysis}. O'Reilly.
+
+James, G., Witten, D., Hastie, T. y Tibshirani, R. (2017).
+\emph{\href{http://faculty.marshall.usc.edu/gareth-james/ISL}{An
+Introduction to Statistical Learning: with Aplications in R}}. Springer.
+
+Williams, G. (2011). \emph{Data Mining with Rattle and R}. Springer.
+
+\section*{Bibliografía
+complementaria}\label{bibliografuxeda-complementaria}
+\addcontentsline{toc}{section}{Bibliografía complementaria}
+
+\subsection*{Libros}\label{libros}
+\addcontentsline{toc}{subsection}{Libros}
+
+Efron, B. y Hastie, T. (2016).
+\emph{\href{http://web.stanford.edu/~hastie/CASI/}{Computer age
+statistical inference}}. Cambridge University Press.
+
+Hastie, T., Tibshirani, R. y Friedman, J. (2017).
+\emph{\href{https://web.stanford.edu/~hastie/ElemStatLearn}{The Elements
+of Statistical Learning: Data Mining, Inference, and Prediction}}.
+Springer.
+
+Hastie, T., Tibshirani, R. y Wainwright, M. (2015). \emph{Statistical
+learning with sparsity: the lasso and generalizations}. CRC press.
+
+Torgo, L. (2011). \emph{Data Mining with R: Learning with Case Studies}.
+Chapman \& Hall/CRC Press.
+
+\subsection*{Artículos}\label{artuxedculos}
+\addcontentsline{toc}{subsection}{Artículos}
+
+Breiman, L. (1996). Bagging predictors. \emph{Machine Learning}, 24 (2),
+123-140.
+
+Breiman, L. (2001). Statistical Modeling: The Two Cultures (with
+comments and a rejoinder by the author). \emph{Statistical Science}, 16,
+199-231.
+
+Dunson D.B. (2018). Statistics in the big data era: Failures of the
+machine. \emph{Statistics and Probability Letters}, 136, 4-9.
+
+Kuhn, M. (2008). Building predictive models in R using the caret
+package. \emph{Journal of statistical software}, 28 (5), 1-26.
+
+Lauro, C. (1996). Computational statistics or statistical computing, is
+that the question?, \emph{Computational Statistics \& Data Analysis}, 23
+(1), 191-193.
+
+1996 - Bagging predictors. Machine learning - Breiman
+
+\bibliography{book.bib,packages.bib}
+
+\end{document}

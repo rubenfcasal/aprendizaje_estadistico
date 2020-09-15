@@ -1,0 +1,28 @@
+bookdown::gitbook:
+  css: style.css
+  split_by: section
+  config:
+    toc:
+      before: |
+        <li><a href="./">Aprendizaje Estadístico</a></li>
+      after: |
+        <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+    edit: https://github.com/rubenfcasal/aprendizaje_estadistico/edit/master/%s
+    sharing:
+      github: yes
+      facebook: no
+      twitter: no
+    download: "pdf"
+    # download: ["pdf", "epub"]
+bookdown::pdf_book:
+  includes:
+    in_header: preamble.tex
+  latex_engine: xelatex
+  citation_package: natbib
+  keep_tex: yes
+  # pandoc_args: "--variable geometry:a4paper"
+  # classoption: "a4paper, oneside"
+  # geometry: "left=3cm, right=3cm, top=2.5cm, bottom=2.5cm"
+  # papersize: a4paper
+  # https://github.com/jgm/pandoc-templates/blob/master/default.latex
+# bookdown::epub_book: default

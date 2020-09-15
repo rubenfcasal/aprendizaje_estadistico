@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1.3 Construcción y evaluación de los modelos | Aprendizaje Estadístico</title>
+  <meta name="description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1.3 Construcción y evaluación de los modelos | Aprendizaje Estadístico" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
+  <meta name="github-repo" content="rubenfcasal/aprendizaje_estadistico" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1.3 Construcción y evaluación de los modelos | Aprendizaje Estadístico" />
+  
+  <meta name="twitter:description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
+  
+
+<meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)" />
+
+
+<meta name="date" content="2020-09-15" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="métodos-de-aprendizaje-estadístico.html"/>
+<link rel="next" href="la-maldición-de-la-dimensionalidad.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Aprendizaje Estadístico</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prólogo</a></li>
+<li class="chapter" data-level="1" data-path="intro-AE.html"><a href="intro-AE.html"><i class="fa fa-check"></i><b>1</b> Introducción al Aprendizaje Estadístico</a><ul>
+<li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje Estadístico vs. Aprendizaje Automático</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
+<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#las-dos-culturas-breiman-2001"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas (Breiman, 2001)</a></li>
+<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.estadística-dunson-2018"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística (Dunson, 2018)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de Aprendizaje Estadístico</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#notación-y-terminología"><i class="fa fa-check"></i><b>1.2.1</b> Notación y terminología</a></li>
+<li class="chapter" data-level="1.2.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#métodos-de-aprendizaje-supervisado-y-paquetes-de-r"><i class="fa fa-check"></i><b>1.2.2</b> Métodos (de aprendizaje supervisado) y paquetes de R</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="const-eval.html"><a href="const-eval.html"><i class="fa fa-check"></i><b>1.3</b> Construcción y evaluación de los modelos</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="const-eval.html"><a href="const-eval.html#bias-variance"><i class="fa fa-check"></i><b>1.3.1</b> Equilibrio entre sesgo y varianza: infraajuste y sobreajuste</a></li>
+<li class="chapter" data-level="1.3.2" data-path="const-eval.html"><a href="const-eval.html#entrenamiento-test"><i class="fa fa-check"></i><b>1.3.2</b> Datos de entrenamiento y datos de test</a></li>
+<li class="chapter" data-level="1.3.3" data-path="const-eval.html"><a href="const-eval.html#cv"><i class="fa fa-check"></i><b>1.3.3</b> Validación cruzada</a></li>
+<li class="chapter" data-level="1.3.4" data-path="const-eval.html"><a href="const-eval.html#eval-reg"><i class="fa fa-check"></i><b>1.3.4</b> Evaluación de un método de regresión</a></li>
+<li class="chapter" data-level="1.3.5" data-path="const-eval.html"><a href="const-eval.html#eval-class"><i class="fa fa-check"></i><b>1.3.5</b> Evaluación de un método de clasificación</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="la-maldición-de-la-dimensionalidad.html"><a href="la-maldición-de-la-dimensionalidad.html"><i class="fa fa-check"></i><b>1.4</b> La maldición de la dimensionalidad</a></li>
+<li class="chapter" data-level="1.5" data-path="caret.html"><a href="caret.html"><i class="fa fa-check"></i><b>1.5</b> Introducción al paquete <code>caret</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="trees.html"><a href="trees.html"><i class="fa fa-check"></i><b>2</b> Árboles de decisión</a><ul>
+<li class="chapter" data-level="2.1" data-path="árboles-de-regresión-cart.html"><a href="árboles-de-regresión-cart.html"><i class="fa fa-check"></i><b>2.1</b> Árboles de regresión CART</a></li>
+<li class="chapter" data-level="2.2" data-path="árboles-de-clasificación-cart.html"><a href="árboles-de-clasificación-cart.html"><i class="fa fa-check"></i><b>2.2</b> Árboles de clasificación CART</a></li>
+<li class="chapter" data-level="2.3" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html"><i class="fa fa-check"></i><b>2.3</b> CART con el paquete <code>rpart</code></a><ul>
+<li class="chapter" data-level="2.3.1" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#ejemplo-regresión"><i class="fa fa-check"></i><b>2.3.1</b> Ejemplo: regresión</a></li>
+<li class="chapter" data-level="2.3.2" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#ejemplo-modelo-de-clasificación"><i class="fa fa-check"></i><b>2.3.2</b> Ejemplo: modelo de clasificación</a></li>
+<li class="chapter" data-level="2.3.3" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#interfaz-de-caret"><i class="fa fa-check"></i><b>2.3.3</b> Interfaz de <code>caret</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html"><i class="fa fa-check"></i><b>2.4</b> Alternativas a los árboles CART</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html#ejemplo"><i class="fa fa-check"></i><b>2.4.1</b> Ejemplo</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
+<li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a><ul>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html#libros"><i class="fa fa-check"></i>Libros</a></li>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html#artículos"><i class="fa fa-check"></i>Artículos</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Aprendizaje Estadístico</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="const-eval" class="section level2">
+<h2><span class="header-section-number">1.3</span> Construcción y evaluación de los modelos</h2>
+<p>En Inferencia Estadística clásica el procedimiento habitual es emplear toda la información disponible para construir un modelo válido (que refleje de la forma más fiel posible lo que ocurre en la población) y asumiendo que el modelo es el verdadero (lo que en general sería falso) utilizar métodos de inferencia para evaluar su precisión. Por ejemplo, en el caso de regresión lineal múltiple, el coeficiente de determinación ajustado sería una medida del la precisión del modelo para predecir nuevas observaciones (no se debería emplear el coeficiente de determinación sin ajustar; aunque, en cualquier caso, su validez dependería de la de las suposiciones estructurales del modelo).</p>
+<p>Alternativamente, en Estadística Computacional es habitual emplear técnicas de remuestreo para evaluar la precisión (entrenando también el modelo con todos los datos disponibles), principalmente validación cruzada (leave-one-out, k-fold), jackniffe o bootstrap.</p>
+<p>Por otra parte, como ya se comentó, algunos de los modelos empleados en AE son muy flexibles (están hiperparametrizados) y pueden aparecer problemas si se permite que se ajusten demasiado bien a las observaciones (podrían llegar a interpolar los datos). En estos casos habrá que controlar el procedimiento de aprendizaje, típicamente a traves de parámetros relacionados con la complejidad del modelo (ver sección siguiente).</p>
+<p>En AE se distingue entre parámetros estructurales, los que van a ser estimados al ajustar el modelo a los datos (en el entrenamiento), e hiperparámetros (<em>tuning parameters</em> o parámetros de ajuste), que imponen restricciones al aprendizaje del modelo (por ejemplo determinando el número de parámetros estructurales). Si los hiperparámetros seleccionados producen un modelo demasiado complejo aparecerán problemas de sobreajuste (<em>overfitting</em>) y en caso contrario de infraajuste (<em>undefitting</em>).</p>
+<p>Hay que tener en cuenta también que al aumentar la complejidad disminuye la interpretabilidad de los modelos. Se trataría entonces de conseguir buenas predicciones (habrá que evaluar la capacidad predictiva) con el modelo más sencillo posible.</p>
+<!-- Sección \@ref(bias-variance) -->
+<div id="bias-variance" class="section level3">
+<h3><span class="header-section-number">1.3.1</span> Equilibrio entre sesgo y varianza: infraajuste y sobreajuste</h3>
+<p>La idea es que queremos aprender más allá de los datos empleados en el entrenamiento (en Estadística diríamos que queremos hacer inferencia sobre nuevas observaciones). Como ya se comentó, en AE hay que tener especial cuidado con el sobreajuste. Este problema ocurre cuando el modelo se ajusta demasiado bien a los datos de entrenamiento pero falla cuando se utiliza en un nuevo conjunto de datos (nunca antes visto).</p>
+<p>Como ejemplo ilustrativo emplearemos regresión polinómica, considerando el grado del polinomio como un hiperparámetro que determina la complejidad del modelo. En primer lugar simulamos una muestra y ajustamos modelos polinómicos con distintos grados de complejidad.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Simulación datos</span>
+n &lt;-<span class="st"> </span><span class="dv">30</span>
+x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">length =</span> n)
+mu &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">4</span><span class="op">*</span>(<span class="dv">5</span><span class="op">*</span>x <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)<span class="op">*</span>(<span class="dv">4</span><span class="op">*</span>x <span class="op">-</span><span class="st"> </span><span class="dv">2</span>)<span class="op">*</span>(x <span class="op">-</span><span class="st"> </span><span class="fl">0.8</span>)<span class="op">^</span><span class="dv">2</span> <span class="co"># grado 4</span>
+sd &lt;-<span class="st"> </span><span class="fl">0.5</span>
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+y &lt;-<span class="st"> </span>mu <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dv">0</span>, sd)
+<span class="kw">plot</span>(x, y) 
+<span class="kw">lines</span>(x, mu, <span class="dt">lwd =</span> <span class="dv">2</span>)
+<span class="co"># Ajuste de los modelos</span>
+fit1 &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x)
+<span class="kw">lines</span>(x, <span class="kw">fitted</span>(fit1))
+fit2 &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(x, <span class="dv">4</span>))
+<span class="kw">lines</span>(x, <span class="kw">fitted</span>(fit2), <span class="dt">lty =</span> <span class="dv">2</span>)
+fit3 &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(x, <span class="dv">20</span>)) 
+<span class="co"># NOTA: poly(x, degree, raw = FALSE) tiene un problema de desbordamiento si degree &gt; 25</span>
+<span class="kw">lines</span>(x, <span class="kw">fitted</span>(fit3), <span class="dt">lty =</span> <span class="dv">3</span>)
+<span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Verdadero&quot;</span>, <span class="st">&quot;Ajuste con grado 1&quot;</span>, 
+                              <span class="st">&quot;Ajuste con grado 4&quot;</span>, <span class="st">&quot;Ajuste con grado 20&quot;</span>), 
+       <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">lwd =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>))</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:polyfit"></span>
+<img src="01-introduccion_files/figure-html/polyfit-1.png" alt="Muestra (simulada) y ajustes polinómicos con distinta complejidad." width="80%" />
+<p class="caption">
+Figura 1.2: Muestra (simulada) y ajustes polinómicos con distinta complejidad.
+</p>
+</div>
+<p>Como se observa en la Figura <a href="const-eval.html#fig:polyfit">1.2</a> al aumentar la complejidad del modelo se consigue un mejor ajuste a los datos observados (empleados en el entrenamiento), a costa de un incremento en la variabilidad de las predicciones, lo que puede producir un mal comportamiento del modelo a ser empleado en un conjunto de datos distinto del observado.</p>
+<p>Si calculamos medidas de bondad de ajuste, como el error cuadrático medio (MSE) o el coeficiente de determinación, se obtienen mejores resultados al aumentar la complejidad. Como se trata de modelos lineales, podríamos obtener también el coeficiente de determinación ajustado, que sería preferible (en principio, ya que dependería de la validez de las hipótesis estructurales del modelo) para medir la precisión al emplear los modelos en un nuevo conjunto de datos.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">t</span>(<span class="kw">sapply</span>(<span class="kw">list</span>(<span class="dt">fit1 =</span> fit1, <span class="dt">fit2 =</span> fit2, <span class="dt">fit3 =</span> fit3), 
+       <span class="cf">function</span>(x) <span class="kw">with</span>(<span class="kw">summary</span>(x), 
+                        <span class="kw">c</span>(<span class="dt">MSE =</span> <span class="kw">mean</span>(residuals<span class="op">^</span><span class="dv">2</span>), <span class="dt">R2 =</span> r.squared, <span class="dt">R2adj =</span> adj.r.squared)))), <span class="dt">digits =</span> <span class="dv">2</span>)</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">MSE</th>
+<th align="right">R2</th>
+<th align="right">R2adj</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>fit1</td>
+<td align="right">1.22</td>
+<td align="right">0.20</td>
+<td align="right">0.17</td>
+</tr>
+<tr class="even">
+<td>fit2</td>
+<td align="right">0.19</td>
+<td align="right">0.87</td>
+<td align="right">0.85</td>
+</tr>
+<tr class="odd">
+<td>fit3</td>
+<td align="right">0.07</td>
+<td align="right">0.95</td>
+<td align="right">0.84</td>
+</tr>
+</tbody>
+</table>
+<p>Por ejemplo, si generamos nuevas respuestas de este proceso, la precisión del modelo más complejo empeorará considerablemente:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y.new &lt;-<span class="st"> </span>mu <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dv">0</span>, sd)
+<span class="kw">plot</span>(x, y) 
+<span class="kw">points</span>(x, y.new, <span class="dt">pch =</span> <span class="dv">2</span>)
+<span class="kw">lines</span>(x, mu, <span class="dt">lwd =</span> <span class="dv">2</span>)
+<span class="kw">lines</span>(x, <span class="kw">fitted</span>(fit1))
+<span class="kw">lines</span>(x, <span class="kw">fitted</span>(fit2), <span class="dt">lty =</span> <span class="dv">2</span>)
+<span class="kw">lines</span>(x, <span class="kw">fitted</span>(fit3), <span class="dt">lty =</span> <span class="dv">3</span>)
+<span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Verdadero&quot;</span>, <span class="st">&quot;Muestra&quot;</span>, <span class="st">&quot;Ajuste con grado 1&quot;</span>, <span class="st">&quot;Ajuste con grado 4&quot;</span>, 
+                              <span class="st">&quot;Ajuste con grado 20&quot;</span>, <span class="st">&quot;Nuevas observaciones&quot;</span>), 
+       <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="ot">NA</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="ot">NA</span>), <span class="dt">lwd =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="ot">NA</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="ot">NA</span>), <span class="dt">pch =</span> <span class="kw">c</span>(<span class="ot">NA</span>, <span class="dv">1</span>, <span class="ot">NA</span>, <span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dv">2</span>))</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:polyfit2"></span>
+<img src="01-introduccion_files/figure-html/polyfit2-1.png" alt="Muestra con ajustes polinómicos con distinta complejidad y nuevas observaciones." width="80%" />
+<p class="caption">
+Figura 1.3: Muestra con ajustes polinómicos con distinta complejidad y nuevas observaciones.
+</p>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">MSEP &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span class="kw">list</span>(<span class="dt">fit1 =</span> fit1, <span class="dt">fit2 =</span> fit2, <span class="dt">fit3 =</span> fit3), 
+               <span class="cf">function</span>(x) <span class="kw">mean</span>((y.new <span class="op">-</span><span class="st"> </span><span class="kw">fitted</span>(x))<span class="op">^</span><span class="dv">2</span>))
+MSEP</code></pre></div>
+<pre><code>##      fit1      fit2      fit3 
+## 1.4983208 0.1711238 0.2621064</code></pre>
+<!-- lines(x, y.new, type = "b", pch = 2, lty = 4, col = "blue") -->
+<p>Como ejemplo adicional, para evitar el efecto de la aleatoriedad de la muestra, en el siguiente código se simulan 100 muestras del proceso anterior a las que se les ajustan modelos polinómicos variando el grado de 1 a 20. Posteriormente se evalua la precisión en la muestra empleada en el ajuste y en un nuevo conjunto de datos procedente de la misma población.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nsim &lt;-<span class="st"> </span><span class="dv">100</span>
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+grado.max &lt;-<span class="st"> </span><span class="dv">20</span>
+grados &lt;-<span class="st"> </span><span class="kw">seq_len</span>(grado.max) 
+mse &lt;-<span class="st"> </span>mse.new &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">nrow =</span> grado.max, <span class="dt">ncol =</span> nsim) <span class="co"># Error cuadrático medio</span>
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="kw">seq_len</span>(nsim)) {
+  y &lt;-<span class="st"> </span>mu <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dv">0</span>, sd)
+  y.new &lt;-<span class="st"> </span>mu <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dv">0</span>, sd)
+  <span class="cf">for</span> (grado <span class="cf">in</span> grados) { <span class="co"># grado &lt;- 1</span>
+    fit &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(x, grado))
+    mse[grado, i] &lt;-<span class="st"> </span><span class="kw">mean</span>(<span class="kw">residuals</span>(fit)<span class="op">^</span><span class="dv">2</span>)
+    mse.new[grado, i] &lt;-<span class="st"> </span><span class="kw">mean</span>((y.new <span class="op">-</span><span class="st"> </span><span class="kw">fitted</span>(fit))<span class="op">^</span><span class="dv">2</span>)
+  }
+}
+<span class="co"># Simulaciones</span>
+<span class="kw">matplot</span>(grados, mse, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;lightgray&quot;</span>, <span class="dt">lty =</span> <span class="dv">1</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">2</span>),
+        <span class="dt">xlab =</span> <span class="st">&quot;Grado del polinomio (complejidad)&quot;</span>,
+        <span class="dt">ylab =</span> <span class="st">&quot;Error cuadrático medio&quot;</span>)
+<span class="kw">matlines</span>(grados, mse.new, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;lightgray&quot;</span>) 
+<span class="co"># Global</span>
+precision &lt;-<span class="st"> </span><span class="kw">rowMeans</span>(mse)
+precision.new &lt;-<span class="st"> </span><span class="kw">rowMeans</span>(mse.new)
+<span class="kw">lines</span>(grados, precision, <span class="dt">lwd =</span> <span class="dv">2</span>)
+<span class="kw">lines</span>(grados, precision.new, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
+<span class="kw">abline</span>(<span class="dt">h =</span> sd<span class="op">^</span><span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">3</span>)
+<span class="kw">abline</span>(<span class="dt">v =</span> <span class="dv">4</span>, <span class="dt">lty =</span> <span class="dv">3</span>)
+<span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Muestras&quot;</span>, <span class="st">&quot;Nuevas observaciones&quot;</span>), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:polyfitsim"></span>
+<img src="01-introduccion_files/figure-html/polyfitsim-1.png" alt="Precisiones (errores cuadráticos medios) de ajustes polinómicos variando la complejidad, en las muestras empleadas en el ajuste y en nuevas observaciones (simulados)." width="80%" />
+<p class="caption">
+Figura 1.4: Precisiones (errores cuadráticos medios) de ajustes polinómicos variando la complejidad, en las muestras empleadas en el ajuste y en nuevas observaciones (simulados).
+</p>
+</div>
+<p>Como se puede observar en la Figura <a href="const-eval.html#fig:polyfitsim">1.4</a> los errores de entrenamiento disminuyen a medida que aumenta la complejidad del modelo. Sin embargo los errores de predicción en nuevas observaciones primero disminuyen hasta alcanzar un mínimo, marcado por la línea de puntos vertical que se corresponde con el modelo de grado 4, y después aumentan (la línea de puntos horizontal es la varianza del proceso; el error cuadrático medio de predicción asintótico). La línea vertical representa el equilibrio entre el sesgo y la varianza. Considerando un valor de complejidad a la izquierda de esa línea tendríamos infraajuste (mayor sesgo y menor varianza) y a la derecha sobreajuste (menor sesgo y mayor varianza).</p>
+<p>En general, al aumentar la complejidad disminuye el sesgo y aumenta la varianza (y viceversa). Será necesario seleccionar los hiperparámetros de forma que haya un equilibrio entre el sesgo y la varianza (es lo que se conoce como <em>bias-variance tradeoff</em>).</p>
+<!-- 
+PENDIENTE: 
+Gráfico equilibrio entre sesgo y varianza
+Ecuaciones a partir del modelo general
+-->
+</div>
+<div id="entrenamiento-test" class="section level3">
+<h3><span class="header-section-number">1.3.2</span> Datos de entrenamiento y datos de test</h3>
+<p>Como se mostró en la sección anterior hay que tener mucho cuidado si se pretende evaluar la precisión de las predicciones empleando la muestra de entrenamiento.</p>
+<p>Si el número de observaciones no es muy grande, se puede entrenar el modelo con todos los datos y emplear técnicas de remuestreo para evaluar la precisión (típicamente validación cruzada o bootstrap). Habría que asegurase de que el procedimiento de remuestreo empleado es adecuado (por ejemplo, la presencia de dependencia requeriría de métodos más sofisticados).</p>
+<p>Sin embargo, si el número de obervaciones es grande, se suele emplear el procedimiento tradicional en ML, que consiste en particionar la base de datos en 2 (o incluso en 3) conjuntos (disjuntos):</p>
+<ul>
+<li><p>Conjunto de datos de entrenamiento (o aprendizaje) para construir los modelos.</p></li>
+<li><p>Conjunto de datos de test para evaluar el rendimiento de los modelos.</p></li>
+</ul>
+<p>Los datos de test deberían utilizarse únicamente para evaluar los modelos finales, no se deberían emplear para seleccionar hiperparámetros. Para seleccionalos se podría volver a particionar los datos de entrenamiento, es decir, dividir la muestra en tres subconjuntos: datos de entrenamiento, de validación y de test (por ejemplo considerando un 70%, 15% y 15% de las observaciones, respectivamente). Para cada combinación de hiperparámetros se ajustaría el correspondiente modelo con los datos de entrenamiento, se emplearían los de validación para evaluarlos y posteriormente seleccionar los valores “óptimos”. Por último, se emplean los datos de test para evaluar el rendimiento del modelo seleccionado. No obstante, lo más habitual es seleccionar los hiperparámetros empleando validación cruzada (o otro tipo de remuestreo) en la muestra de entrenamiento, en lugar de considerar una muestra adicional de validación. En la siguiente sección se describirá esta última aproximación.</p>
+<p>En R se puede realizar el particionamiento de los datos empleando la función <code>sample()</code> del paquete base (otra alternativa sería emplear la función <code>createDataPartition</code> del paquete <code>caret</code> como se describe en la Sección <a href="caret.html#caret">1.5</a>). Típicamente se selecciona el 80% de los datos como muestra de entrenamiento y el 20% restante como muestra de test, aunque esto dependería del número de datos.</p>
+<p>Como ejemplo consideraremos el conjunto de datos <code>Boston</code> del paquete <code>MASS</code> que contiene, entre otros datos, la valoración de las viviendas (<code>medv</code>, mediana de los valores de las viviendas ocupadas, en miles de dólares) y el porcentaje de población con “menor estatus” (<code>lstat</code>) en los suburbios de Boston. Podemos contruir las muestras de entrenamiento (80%) y de test (20%) con el siguiente código:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(Boston, <span class="dt">package =</span> <span class="st">&quot;MASS&quot;</span>)
+<span class="co"># ?Boston</span>
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+nobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(Boston)
+itrain &lt;-<span class="st"> </span><span class="kw">sample</span>(nobs, <span class="fl">0.8</span> <span class="op">*</span><span class="st"> </span>nobs)
+train &lt;-<span class="st"> </span>Boston[itrain, ]
+test &lt;-<span class="st"> </span>Boston[<span class="op">-</span>itrain, ]</code></pre></div>
+<!-- Sección \@ref(cv) -->
+</div>
+<div id="cv" class="section level3">
+<h3><span class="header-section-number">1.3.3</span> Validación cruzada</h3>
+<p>Como ya se comentó, una herramienta para evaluar la calidad predictiva de un modelo es la <em>validación cruzada</em>, que permite cuantificar el error de predicción utilizando una única muestra de datos.</p>
+<p>En su versión más simple, validación cruzada dejando uno fuera (<em>Leave-one-out cross-validation</em>, LOOCV), para cada observación de la muestra se realiza un ajuste empleando el resto de observaciones, y se mide el error de predicción en esa observación (único dato no utilizado en el ajuste del modelo). Finalmente, combinando todos los errores individuales se puede obtener medidas globales del error de predicción (o aproximar características de su distribución).</p>
+<p>El método de LOOCV requeriría, en principio (ver comentarios más adelante), el ajuste de un modelo para cada observación por lo que pueden aparecer problemas computacionales si el conjunto de datos es grande. En este caso se suele emplear grupos de observaciones en lugar de observaciones individuales. Si se particiona el conjunto de datos en <em>k</em> grupos, típicamente 10 o 5 grupos, se denomina <em>k-fold cross-validation</em> (LOOCV sería un caso particular considerando un número de grupos igual al número de observaciones). Hay muchas variaciones de este método, entre ellas particionar repetidamente de forma aleatoria los datos en un conjunto de entrenamiento y otro de validación (de esta forma algunas observaciones podrían aparecer repetidas veces y otras ninguna en las muestras de validación).</p>
+<p>Continuando con el ejemplo anterior, supongamos que queremos emplear regresión polinómica para explicar la valoración de las viviendas (<code>medv</code>) a partir del “estatus” de los residentes (<code>lstat</code>). Al igual que se hizo en la Sección <a href="const-eval.html#bias-variance">1.3.1</a>, consideraremos el grado del polinomio como un hiperparámetro.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(medv <span class="op">~</span><span class="st"> </span>lstat, <span class="dt">data =</span> train)</code></pre></div>
+<p><img src="01-introduccion_files/figure-html/unnamed-chunk-4-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>Podríamos emplear la siguiente función que devuelve para cada observación (fila) de una muestra de entrenamiento, el error de predicción en esa observación ajustando un modelo lineal con todas las demás observaciones:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cv.lm0 &lt;-<span class="st"> </span><span class="cf">function</span>(formula, datos) {
+    n &lt;-<span class="st"> </span><span class="kw">nrow</span>(datos)
+    cv.res &lt;-<span class="st"> </span><span class="kw">numeric</span>(n)
+    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n) {
+        modelo &lt;-<span class="st"> </span><span class="kw">lm</span>(formula, datos[<span class="op">-</span>i, ])
+        cv.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(modelo, <span class="dt">newdata =</span> datos[i, ])
+        cv.res[i] &lt;-<span class="st"> </span>cv.pred <span class="op">-</span><span class="st"> </span>datos[i, ]
+    }
+    <span class="kw">return</span>(cv.res)
+}</code></pre></div>
+<p>La función anterior no es muy eficiente, pero podría modificarse fácilmente para emplear otros métodos de regresión. En el caso de regresión lineal múltiple (y de otros modelos lineales), se pueden obtener fácilmente las predicciones eliminando una de las observaciones a partir del ajuste con todos los datos. Por ejemplo, en lugar de la anterior sería preferible emplear la siguiente función (ver <code>?rstandard</code>):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cv.lm &lt;-<span class="st"> </span><span class="cf">function</span>(formula, datos) {
+    modelo &lt;-<span class="st"> </span><span class="kw">lm</span>(formula, datos)
+    <span class="kw">return</span>(<span class="kw">rstandard</span>(modelo, <span class="dt">type =</span> <span class="st">&quot;predictive&quot;</span>))
+}</code></pre></div>
+<p>Empleando esta función, podemos calcular una medida del error de predicción de validación cruzada (en este caso el <em>error cuadrático medio</em>) para cada valor del hiperparámetro (grado del ajuste polinómico) y seleccionar el que lo minimiza.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grado.max &lt;-<span class="st"> </span><span class="dv">10</span>
+grados &lt;-<span class="st"> </span><span class="kw">seq_len</span>(grado.max) 
+cv.mse &lt;-<span class="st"> </span>cv.mse.sd &lt;-<span class="st"> </span><span class="kw">numeric</span>(grado.max)
+<span class="cf">for</span>(grado <span class="cf">in</span> grados){
+  cv.res &lt;-<span class="st"> </span><span class="kw">cv.lm</span>(medv <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(lstat, grado), train)
+  se &lt;-<span class="st"> </span>cv.res<span class="op">^</span><span class="dv">2</span>
+  cv.mse[grado] &lt;-<span class="st"> </span><span class="kw">mean</span>(se)
+  cv.mse.sd[grado] &lt;-<span class="st"> </span><span class="kw">sd</span>(se)<span class="op">/</span><span class="kw">sqrt</span>(<span class="kw">length</span>(se))
+}
+<span class="kw">plot</span>(grados, cv.mse, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">25</span>, <span class="dv">45</span>),
+  <span class="dt">xlab =</span> <span class="st">&quot;Grado del polinomio (complejidad)&quot;</span>)
+<span class="co"># Valor óptimo</span>
+imin.mse &lt;-<span class="st"> </span><span class="kw">which.min</span>(cv.mse)
+grado.op &lt;-<span class="st"> </span>grados[imin.mse]
+<span class="kw">points</span>(grado.op, cv.mse[imin.mse], <span class="dt">pch =</span> <span class="dv">16</span>)</code></pre></div>
+<p><img src="01-introduccion_files/figure-html/unnamed-chunk-7-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grado.op</code></pre></div>
+<pre><code>## [1] 5</code></pre>
+<p>En lugar de emplear los valores óptimos de los hiperparámetros, Breiman <em>et al.</em> (1984) propusieron la regla de “un error estándar” para seleccionar la complejidad del modelo. La idea es que estamos trabajando con estimaciones de la precisión y pueden presentar variabilidad, por lo que la sugerencia es seleccionar el modelo más simple<a href="#fn6" class="footnoteRef" id="fnref6"><sup>6</sup></a> dentro de un error estándar de la precisión del modelo correspondiente al valor óptimo (se consideraría que no hay diferencias significativas en la precisión; además, se mitigaría el efecto de la variabilidad debida a aleatoriedad/semilla).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(grados, cv.mse, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">25</span>, <span class="dv">45</span>))
+<span class="kw">segments</span>(grados, cv.mse <span class="op">-</span><span class="st"> </span>cv.mse.sd, grados, cv.mse <span class="op">+</span><span class="st"> </span>cv.mse.sd)
+<span class="co"># Límite superior &quot;oneSE rule&quot; y complejidad mínima por debajo de ese valor</span>
+upper.cv.mse &lt;-<span class="st"> </span>cv.mse[imin.mse] <span class="op">+</span><span class="st"> </span>cv.mse.sd[imin.mse]
+<span class="kw">abline</span>(<span class="dt">h =</span> upper.cv.mse, <span class="dt">lty =</span> <span class="dv">2</span>)
+imin.1se &lt;-<span class="st"> </span><span class="kw">min</span>(<span class="kw">which</span>(cv.mse <span class="op">&lt;=</span><span class="st"> </span>upper.cv.mse))
+grado.1se &lt;-<span class="st"> </span>grados[imin.1se]
+<span class="kw">points</span>(grado.1se, cv.mse[imin.1se], <span class="dt">pch =</span> <span class="dv">16</span>)</code></pre></div>
+<p><img src="01-introduccion_files/figure-html/unnamed-chunk-8-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grado.1se</code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(medv <span class="op">~</span><span class="st"> </span>lstat, <span class="dt">data =</span> train)
+fit.op &lt;-<span class="st"> </span><span class="kw">lm</span>(medv <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(lstat, grado.op), train)
+fit.1se &lt;-<span class="st"> </span><span class="kw">lm</span>(medv <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(lstat, grado.1se), train)
+newdata &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">lstat =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">40</span>, <span class="dt">len =</span> <span class="dv">100</span>))
+<span class="kw">lines</span>(newdata<span class="op">$</span>lstat, <span class="kw">predict</span>(fit.op, <span class="dt">newdata =</span> newdata))
+<span class="kw">lines</span>(newdata<span class="op">$</span>lstat, <span class="kw">predict</span>(fit.1se, <span class="dt">newdata =</span> newdata), <span class="dt">lty =</span> <span class="dv">2</span>)
+<span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="dt">legend =</span> <span class="kw">c</span>(<span class="kw">paste</span>(<span class="st">&quot;Grado óptimo:&quot;</span>, grado.op), <span class="kw">paste</span>(<span class="st">&quot;oneSE rule:&quot;</span>, grado.1se)), 
+       <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</code></pre></div>
+<p><img src="01-introduccion_files/figure-html/unnamed-chunk-9-1.png" width="80%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="eval-reg" class="section level3">
+<h3><span class="header-section-number">1.3.4</span> Evaluación de un método de regresión</h3>
+<p>Para estudiar la precisión de las predicciones de un método de regresión se evalúa el modelo en el conjunto de datos de test y se comparan las predicciones frente a los valores reales.</p>
+<p>Si generamos un gráfico de dispersión de observaciones frente a predicciones, los puntos deberían estar en torno a la recta <span class="math inline">\(y=x\)</span> (línea continua).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">obs &lt;-<span class="st"> </span>test<span class="op">$</span>medv
+pred &lt;-<span class="st"> </span><span class="kw">predict</span>(fit.op, <span class="dt">newdata =</span> test)
+
+<span class="kw">plot</span>(pred, obs, <span class="dt">main =</span> <span class="st">&quot;Observado frente a predicciones&quot;</span>,
+     <span class="dt">xlab =</span> <span class="st">&quot;Predicción&quot;, ylab = &quot;</span>Observado<span class="st">&quot;)</span>
+<span class="st">abline(a = 0, b = 1)</span>
+<span class="st">res &lt;- lm(obs ~ pred)</span>
+<span class="st"># summary(res)</span>
+<span class="st">abline(res, lty = 2)</span></code></pre></div>
+<p><img src="01-introduccion_files/figure-html/obs-pred-plot-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>También es habitual calcular distintas medidas de error. Por ejemplo, podríamos emplear la función <code>postResample()</code> del paquete <code>caret</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">caret<span class="op">::</span><span class="kw">postResample</span>(pred, obs)</code></pre></div>
+<pre><code>##      RMSE  Rsquared       MAE 
+## 4.8526718 0.6259583 3.6671847</code></pre>
+<p>La función anterior, además de las medidas de error habituales (que dependen en su mayoría de la escala de la variable respuesta) calcula un <em>pseudo R-cuadrado</em>. En este paquete (también en <code>rattle</code>) se emplea uno de los más utilizados, el cuadrado del coeficiente de correlación entre las predicciones y los valores observados (que se corresponde con la línea discontinua en la figura anterior). Estos valores se interpretarían como el coeficiente de determinación en regresión lineal, debería ser próximo a 1. Hay otras alternativas (ver Kvålseth, 1985), pero la idea es que deberían medir la proporción de variabilidad de la respuesta explicada por el modelo, algo que en general no es cierto con el anterior<a href="#fn7" class="footnoteRef" id="fnref7"><sup>7</sup></a>. La recomendación sería emplear: <span class="math display">\[\tilde R^2 = 1 - \frac{\sum_{i=1}^n(y_i - \hat y_i)^2}{\sum_{i=1}^n(y_i - \bar y_i)^2}\]</span> implementado junto con otras medidas en la siguiente función:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">accuracy &lt;-<span class="st"> </span><span class="cf">function</span>(pred, obs, <span class="dt">na.rm =</span> <span class="ot">FALSE</span>, 
+                     <span class="dt">tol =</span> <span class="kw">sqrt</span>(.Machine<span class="op">$</span>double.eps)) {
+  err &lt;-<span class="st"> </span>obs <span class="op">-</span><span class="st"> </span>pred     <span class="co"># Errores</span>
+  <span class="cf">if</span>(na.rm) {
+    is.a &lt;-<span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(err)
+    err &lt;-<span class="st"> </span>err[is.a]
+    obs &lt;-<span class="st"> </span>obs[is.a]
+  }  
+  perr &lt;-<span class="st"> </span><span class="dv">100</span><span class="op">*</span>err<span class="op">/</span><span class="kw">pmax</span>(obs, tol)  <span class="co"># Errores porcentuales</span>
+  <span class="kw">return</span>(<span class="kw">c</span>(
+    <span class="dt">me =</span> <span class="kw">mean</span>(err),           <span class="co"># Error medio</span>
+    <span class="dt">rmse =</span> <span class="kw">sqrt</span>(<span class="kw">mean</span>(err<span class="op">^</span><span class="dv">2</span>)), <span class="co"># Raíz del error cuadrático medio </span>
+    <span class="dt">mae =</span> <span class="kw">mean</span>(<span class="kw">abs</span>(err)),     <span class="co"># Error absoluto medio</span>
+    <span class="dt">mpe =</span> <span class="kw">mean</span>(perr),         <span class="co"># Error porcentual medio</span>
+    <span class="dt">mape =</span> <span class="kw">mean</span>(<span class="kw">abs</span>(perr)),   <span class="co"># Error porcentual absoluto medio</span>
+    <span class="dt">r.squared =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">sum</span>(err<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span><span class="kw">sum</span>((obs <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(obs))<span class="op">^</span><span class="dv">2</span>) <span class="co"># Pseudo R-cuadrado</span>
+  ))
+}
+<span class="kw">accuracy</span>(pred, obs)</code></pre></div>
+<pre><code>##         me       rmse        mae        mpe       mape  r.squared 
+## -0.6731294  4.8526718  3.6671847 -8.2322506 19.7097373  0.6086704</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">accuracy</span>(<span class="kw">predict</span>(fit.1se, <span class="dt">newdata =</span> test), obs)</code></pre></div>
+<pre><code>##         me       rmse        mae        mpe       mape  r.squared 
+## -0.9236280  5.2797360  4.1252053 -9.0029771 21.6512406  0.5367608</code></pre>
+</div>
+<div id="eval-class" class="section level3">
+<h3><span class="header-section-number">1.3.5</span> Evaluación de un método de clasificación</h3>
+<p>Para estudiar la eficiencia de un método de clasificación supervisada se obtienen las predicciones para el conjunto de datos de test y se genera una tabla de contingencia, denominada <em>matriz de confusión</em>, con las predicciones frente a los valores reales.</p>
+<p>En primer lugar consideraremos el caso de dos categorías. La matriz de confusión será de la forma:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">Observado\Predicción</th>
+<th align="center">Positivo</th>
+<th align="center">Negativo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Verdadero</td>
+<td align="center">Verdaderos positivos (TP)</td>
+<td align="center">Falsos negativos (FN)</td>
+</tr>
+<tr class="even">
+<td align="center">Falso</td>
+<td align="center">Falsos positivos (FP)</td>
+<td align="center">Verdaderos negativos (TN)</td>
+</tr>
+</tbody>
+</table>
+<p>A partir de esta tabla se pueden obtener distintas medidas de la precisión de las predicciones. Por ejemplo, dos de las más utilizadas son la tasa de verdaderos positivos y la de verdaderos negativos (tasas de acierto en positivos y negativos), también denominadas <em>sensibilidad</em> y <em>especificidad</em>:</p>
+<ul>
+<li><p>Sensibilidad (<em>sensitivity</em>, <em>recall</em>, <em>hit rate</em>, <em>true positive rate</em>; TPR): <span class="math display">\[TPR = \frac{TP}{P} = \frac{TP}{TP+FN}\]</span></p></li>
+<li><p>Especificidad (<em>specificity</em>, <em>true negative rate</em>; TNR): <span class="math display">\[TNR = \frac{TN}{TN+FP}\]</span></p></li>
+</ul>
+<p>La precisión global o tasa de aciertos (<em>accuracy</em>; ACC) sería: <span class="math display">\[ACC = \frac{TP + TN}{P + N} = \frac{TP+TN}{TP+TN+FP+FN}\]</span> Sin embargo hay que tener cuidado con esta medida cuando las clases no están balanceadas<a href="#fn8" class="footnoteRef" id="fnref8"><sup>8</sup></a>. Otras medidas de la precisión global que tratan de evitar este problema son la <em>precisión balanceada</em> (<em>balanced accuracy</em>, BA): <span class="math display">\[BA = \frac{TPR + TNR}{2}\]</span> (media aritmética de TPR y TNR) o la <em>puntuación F1</em> (<em>F1 score</em>; media armónica de TPR y TNR): <span class="math display">\[F_1 = \frac{2TP}{2TP+FP+FN}\]</span> Otra medida global es el coeficiente kappa de Cohen, que compara la tasa de aciertos con la obtenida en una clasificación al azar (un valor de 1 indicaría máxima precisión y 0 que la precisión es igual a la que obtendríamos clasificando al azar; empleando la tasa de positivos, denominada <em>prevalencia</em>, para predecir positivo).</p>
+<p>NOTA: La precisión global (ACC) no debe ser confundida con el índice predictivo positivo (<em>precision</em>, <em>positive predictive value</em>; PPV): <span class="math inline">\(PPV = TP/(TP+FP)\)</span>. <!-- $PPV = \frac{TP}{TP+FP}$ --></p>
+<p>Como ejemplo emplearemos los datos anteriores de valoraciones de viviendas y estatus de la población, considerando como respuesta una nueva variable <code>fmedv</code> que clasifica las valoraciones en “Bajo” o “Alto” dependiendo de si <code>medv &gt; 25</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># data(Boston, package = &quot;MASS&quot;)</span>
+datos &lt;-<span class="st"> </span>Boston
+datos<span class="op">$</span>fmedv &lt;-<span class="st"> </span><span class="kw">factor</span>(datos<span class="op">$</span>medv <span class="op">&gt;</span><span class="st"> </span><span class="dv">25</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Bajo&quot;</span>, <span class="st">&quot;Alto&quot;</span>)) <span class="co"># levels = c(&#39;FALSE&#39;, &#39;TRUE&#39;)</span>
+<span class="co"># En este caso las clases no están balanceadas</span>
+<span class="kw">table</span>(datos<span class="op">$</span>fmedv)</code></pre></div>
+<pre><code>## 
+## Bajo Alto 
+##  382  124</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">caret<span class="op">::</span><span class="kw">featurePlot</span>(datos<span class="op">$</span>lstat, datos<span class="op">$</span>fmedv, <span class="dt">plot =</span> <span class="st">&quot;density&quot;</span>,
+            <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;lstat&quot;</span>, <span class="st">&quot;Density&quot;</span>), <span class="dt">auto.key =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p><img src="01-introduccion_files/figure-html/unnamed-chunk-12-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>El siguiente código realiza la partición de los datos y posteriormente ajustar un modelo de regresión logística en la muestra de entrenamiento considerando <code>lstat</code> como única variable explicativa:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Particionado de los datos</span>
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+nobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(datos)
+itrain &lt;-<span class="st"> </span><span class="kw">sample</span>(nobs, <span class="fl">0.8</span> <span class="op">*</span><span class="st"> </span>nobs)
+train &lt;-<span class="st"> </span>datos[itrain, ]
+test &lt;-<span class="st"> </span>datos[<span class="op">-</span>itrain, ]
+<span class="co"># Ajuste modelo</span>
+modelo &lt;-<span class="st"> </span><span class="kw">glm</span>(fmedv <span class="op">~</span><span class="st"> </span>lstat, <span class="dt">family =</span> binomial, <span class="dt">data =</span> train)
+<span class="kw">summary</span>(modelo)</code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = fmedv ~ lstat, family = binomial, data = train)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.9749  -0.4161  -0.0890   0.3785   3.6450  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)  3.74366    0.47901   7.815 5.48e-15 ***
+## lstat       -0.54231    0.06134  -8.842  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 460.84  on 403  degrees of freedom
+## Residual deviance: 243.34  on 402  degrees of freedom
+## AIC: 247.34
+## 
+## Number of Fisher Scoring iterations: 7</code></pre>
+<p>En este caso podemos obtener las estimaciones de la probabilidad de la segunda categoría empleando <code>predict()</code> con <code>type = &quot;response&quot;</code>, a partir de las cuales podemos establecer las predicciones como la categoría más probable:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">obs &lt;-<span class="st"> </span>test<span class="op">$</span>fmedv
+p.est &lt;-<span class="st"> </span><span class="kw">predict</span>(modelo, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>, <span class="dt">newdata =</span> test)
+pred &lt;-<span class="st"> </span><span class="kw">factor</span>(p.est <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.5</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Bajo&quot;</span>, <span class="st">&quot;Alto&quot;</span>)) <span class="co"># levels = c(&#39;FALSE&#39;, &#39;TRUE&#39;)</span></code></pre></div>
+<p>Podemos obtener la matriz de confusión con el siguiente código:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tabla &lt;-<span class="st"> </span><span class="kw">table</span>(obs, pred)
+<span class="co"># addmargins(tabla, FUN = list(Total = sum))</span>
+tabla</code></pre></div>
+<pre><code>##       pred
+## obs    Bajo Alto
+##   Bajo   71   11
+##   Alto    8   12</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Porcentajes respecto al total</span>
+<span class="kw">print</span>(<span class="dv">100</span><span class="op">*</span><span class="kw">prop.table</span>(tabla), <span class="dt">digits =</span> <span class="dv">2</span>) </code></pre></div>
+<pre><code>##       pred
+## obs    Bajo Alto
+##   Bajo 69.6 10.8
+##   Alto  7.8 11.8</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Porcentajes (de aciertos y fallos) por categorías</span>
+<span class="kw">print</span>(<span class="dv">100</span><span class="op">*</span><span class="kw">prop.table</span>(tabla, <span class="dv">1</span>), <span class="dt">digits =</span> <span class="dv">3</span>) </code></pre></div>
+<pre><code>##       pred
+## obs    Bajo Alto
+##   Bajo 86.6 13.4
+##   Alto 40.0 60.0</code></pre>
+<p>Alternativamente se podría emplear la función <code>confusionMatrix()</code> del paquete <code>caret</code> que permite obtener distintas medidas de la precisión:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">caret<span class="op">::</span><span class="kw">confusionMatrix</span>(pred, obs, <span class="dt">positive =</span> <span class="st">&quot;Alto&quot;</span>, <span class="dt">mode =</span> <span class="st">&quot;everything&quot;</span>)</code></pre></div>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction Bajo Alto
+##       Bajo   71    8
+##       Alto   11   12
+##                                          
+##                Accuracy : 0.8137         
+##                  95% CI : (0.7245, 0.884)
+##     No Information Rate : 0.8039         
+##     P-Value [Acc &gt; NIR] : 0.4604         
+##                                          
+##                   Kappa : 0.4409         
+##                                          
+##  Mcnemar&#39;s Test P-Value : 0.6464         
+##                                          
+##             Sensitivity : 0.6000         
+##             Specificity : 0.8659         
+##          Pos Pred Value : 0.5217         
+##          Neg Pred Value : 0.8987         
+##               Precision : 0.5217         
+##                  Recall : 0.6000         
+##                      F1 : 0.5581         
+##              Prevalence : 0.1961         
+##          Detection Rate : 0.1176         
+##    Detection Prevalence : 0.2255         
+##       Balanced Accuracy : 0.7329         
+##                                          
+##        &#39;Positive&#39; Class : Alto           
+## </code></pre>
+<hr />
+<p><strong><em>A partir de aquí en preparación…</em></strong></p>
+<hr />
+<p>Evaluación de las estimaciones de las probabilidades:</p>
+<p>Curva ROC</p>
+<p>AUC</p>
+<p>Caso de más de dos categorías:</p>
+<p>Medidas globales: precisión y kappa.</p>
+<p>Medidas por categoría: estrategia “uno contra todos”. <code>caret::confusionMatrix()$byClass</code></p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="6">
+<li id="fn6"><p>Suponiendo que los modelos se pueden ordenar del más simple al más complejo.<a href="const-eval.html#fnref6">↩</a></p></li>
+<li id="fn7"><p>Por ejemplo obtendríamos el mismo valor si desplazamos las predicciones sumando una constante (i.e. no tiene en cuenta el sesgo).<a href="const-eval.html#fnref7">↩</a></p></li>
+<li id="fn8"><p>También hay que tener cuidado las medidas que utilizan la prevalencia estimada a partir de la muestra de test, como el índice predictivo positivo y negativo, si la muestra de test no refleja lo que ocurre en la población (por ejemplo si la clase de interés está sobrerrepresentada en la muestra).<a href="const-eval.html#fnref8">↩</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="métodos-de-aprendizaje-estadístico.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="la-maldición-de-la-dimensionalidad.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rubenfcasal/aprendizaje_estadistico/edit/master/01-introduccion.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["aprendizaje_estadistico.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

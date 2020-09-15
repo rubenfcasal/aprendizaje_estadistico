@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2.3 CART con el paquete rpart | Aprendizaje Estadístico</title>
+  <meta name="description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2.3 CART con el paquete rpart | Aprendizaje Estadístico" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
+  <meta name="github-repo" content="rubenfcasal/aprendizaje_estadistico" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2.3 CART con el paquete rpart | Aprendizaje Estadístico" />
+  
+  <meta name="twitter:description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
+  
+
+<meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)" />
+
+
+<meta name="date" content="2020-09-15" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="árboles-de-clasificación-cart.html"/>
+<link rel="next" href="alternativas-a-los-árboles-cart.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Aprendizaje Estadístico</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prólogo</a></li>
+<li class="chapter" data-level="1" data-path="intro-AE.html"><a href="intro-AE.html"><i class="fa fa-check"></i><b>1</b> Introducción al Aprendizaje Estadístico</a><ul>
+<li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje Estadístico vs. Aprendizaje Automático</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
+<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#las-dos-culturas-breiman-2001"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas (Breiman, 2001)</a></li>
+<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.estadística-dunson-2018"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística (Dunson, 2018)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de Aprendizaje Estadístico</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#notación-y-terminología"><i class="fa fa-check"></i><b>1.2.1</b> Notación y terminología</a></li>
+<li class="chapter" data-level="1.2.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#métodos-de-aprendizaje-supervisado-y-paquetes-de-r"><i class="fa fa-check"></i><b>1.2.2</b> Métodos (de aprendizaje supervisado) y paquetes de R</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="const-eval.html"><a href="const-eval.html"><i class="fa fa-check"></i><b>1.3</b> Construcción y evaluación de los modelos</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="const-eval.html"><a href="const-eval.html#bias-variance"><i class="fa fa-check"></i><b>1.3.1</b> Equilibrio entre sesgo y varianza: infraajuste y sobreajuste</a></li>
+<li class="chapter" data-level="1.3.2" data-path="const-eval.html"><a href="const-eval.html#entrenamiento-test"><i class="fa fa-check"></i><b>1.3.2</b> Datos de entrenamiento y datos de test</a></li>
+<li class="chapter" data-level="1.3.3" data-path="const-eval.html"><a href="const-eval.html#cv"><i class="fa fa-check"></i><b>1.3.3</b> Validación cruzada</a></li>
+<li class="chapter" data-level="1.3.4" data-path="const-eval.html"><a href="const-eval.html#eval-reg"><i class="fa fa-check"></i><b>1.3.4</b> Evaluación de un método de regresión</a></li>
+<li class="chapter" data-level="1.3.5" data-path="const-eval.html"><a href="const-eval.html#eval-class"><i class="fa fa-check"></i><b>1.3.5</b> Evaluación de un método de clasificación</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="la-maldición-de-la-dimensionalidad.html"><a href="la-maldición-de-la-dimensionalidad.html"><i class="fa fa-check"></i><b>1.4</b> La maldición de la dimensionalidad</a></li>
+<li class="chapter" data-level="1.5" data-path="caret.html"><a href="caret.html"><i class="fa fa-check"></i><b>1.5</b> Introducción al paquete <code>caret</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="trees.html"><a href="trees.html"><i class="fa fa-check"></i><b>2</b> Árboles de decisión</a><ul>
+<li class="chapter" data-level="2.1" data-path="árboles-de-regresión-cart.html"><a href="árboles-de-regresión-cart.html"><i class="fa fa-check"></i><b>2.1</b> Árboles de regresión CART</a></li>
+<li class="chapter" data-level="2.2" data-path="árboles-de-clasificación-cart.html"><a href="árboles-de-clasificación-cart.html"><i class="fa fa-check"></i><b>2.2</b> Árboles de clasificación CART</a></li>
+<li class="chapter" data-level="2.3" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html"><i class="fa fa-check"></i><b>2.3</b> CART con el paquete <code>rpart</code></a><ul>
+<li class="chapter" data-level="2.3.1" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#ejemplo-regresión"><i class="fa fa-check"></i><b>2.3.1</b> Ejemplo: regresión</a></li>
+<li class="chapter" data-level="2.3.2" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#ejemplo-modelo-de-clasificación"><i class="fa fa-check"></i><b>2.3.2</b> Ejemplo: modelo de clasificación</a></li>
+<li class="chapter" data-level="2.3.3" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#interfaz-de-caret"><i class="fa fa-check"></i><b>2.3.3</b> Interfaz de <code>caret</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html"><i class="fa fa-check"></i><b>2.4</b> Alternativas a los árboles CART</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html#ejemplo"><i class="fa fa-check"></i><b>2.4.1</b> Ejemplo</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
+<li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a><ul>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html#libros"><i class="fa fa-check"></i>Libros</a></li>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html#artículos"><i class="fa fa-check"></i>Artículos</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Aprendizaje Estadístico</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="cart-con-el-paquete-rpart" class="section level2">
+<h2><span class="header-section-number">2.3</span> CART con el paquete <code>rpart</code></h2>
+<p>La metodología CART está implementada en el paquete <a href="https://CRAN.R-project.org/package=rpart"><code>rpart</code></a> (Recursive PARTitioning)<a href="#fn9" class="footnoteRef" id="fnref9"><sup>9</sup></a>. La función principal es <code>rpart()</code> y habitualmente se emplea de la forma:</p>
+<p><code>rpart(formula, data, method, parms, control, ...)</code></p>
+<ul>
+<li><p><code>formula</code>: permite especificar la respuesta y las variables predictoras de la forma habitual, se suele establecer de la forma <code>respuesta ~ .</code> para incluir todas las posibles variables explicativas.</p></li>
+<li><p><code>data</code>: <code>data.frame</code> (opcional; donde se evaluará la fórmula) con la muestra de entrenamiento.</p></li>
+<li><p><code>method</code>: método empleado para realizar las particiones, puede ser <code>&quot;anova&quot;</code> (regresión), <code>&quot;class&quot;</code> (clasificación), <code>&quot;poisson&quot;</code> (regresión de Poisson) o <code>&quot;exp&quot;</code> (supervivencia), o alternativamente una lista de funciones (con componentes <code>init</code>, <code>split</code>, <code>eval</code>; ver la vignette <a href="https://cran.r-project.org/web/packages/rpart/vignettes/usercode.pdf"><em>User Written Split Functions</em></a>). Por defecto se selecciona a partir de la variable respuesta en <code>formula</code>, por ejemplo si es un factor (lo recomendado en clasificación) emplea <code>method = &quot;class&quot;</code>.</p></li>
+<li><p><code>parms</code>: lista de parámetros opcionales para la partición en el caso de clasificación (o regresión de Poisson). Puede contener los componentes <code>prior</code> (vector de probabilidades previas; por defecto las frecuencias observadas), <code>loss</code> (matriz de pérdidas; con ceros en la diagonal y por defecto 1 en el resto) y <code>split</code> (criterio de error; por defecto <code>&quot;gini&quot;</code> o alternativamente <code>&quot;information&quot;</code>).</p></li>
+<li><p><code>control</code>: lista de opciones que controlan el algoritmo de partición, por defecto se seleccionan mediante la función <code>rpart.control</code>, aunque también se pueden establecer en la llamada a la función principal, y los principales parámetros son:</p>
+<p><code>rpart.control(minsplit = 20, minbucket = round(minsplit/3), cp = 0.01, xval = 10, maxdepth = 30, ...)</code></p>
+<ul>
+<li><p><code>cp</code> es el parámetro de complejidad para la poda del árbol. Es la proporción mínima de reducción del error que debe producir una nueva partición para que se incorpore al modelo (valores más grandes simplifican el modelo y reducen el tiempo de computación; estableciéndolo a 0 se obtiene un árbol de profundidad máxima)</p></li>
+<li><p><code>maxdepth</code> es la profundidad máxima del árbol (la profundidad de la raíz sería 0).</p></li>
+<li><p><code>minsplit</code> y <code>minbucket</code> son, respectivamente, los números mínimos de observaciones en un nodo intermedio para particionarlo y en un nodo terminal.</p></li>
+<li><p><code>xval</code> es el número de grupos (folds) para validación cruzada.</p></li>
+</ul></li>
+</ul>
+<p>Para más detalles consultar la documentación de esta función o la vignette <a href="https://cran.r-project.org/web/packages/rpart/vignettes/longintro.pdf"><em>Introduction to Rpart</em></a>.</p>
+<div id="ejemplo-regresión" class="section level3">
+<h3><span class="header-section-number">2.3.1</span> Ejemplo: regresión</h3>
+<p>Emplearemos el conjunto de datos <em>winequality.RData</em> (ver Cortez et al., 2009), que contiene información fisico-química (<code>fixed.acidity</code>, <code>volatile.acidity</code>, <code>citric.acid</code>, <code>residual.sugar</code>, <code>chlorides</code>, <code>free.sulfur.dioxide</code>, <code>total.sulfur.dioxide</code>, <code>density</code>, <code>pH</code>, <code>sulphates</code> y <code>alcohol</code>) y sensorial (<code>quality</code>) de una muestra de 1250 vinos portugueses de la variedad <em>Vinho Verde</em>. Como respuesta consideraremos la variable <code>quality</code>, mediana de al menos 3 evaluaciones de la calidad del vino realizadas por expertos, que los evaluaron entre 0 (muy malo) y 10 (muy excelente).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="st">&quot;data/winequality.RData&quot;</span>)
+<span class="kw">str</span>(winequality)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    1250 obs. of  12 variables:
+##  $ fixed.acidity       : num  6.8 7.1 6.9 7.5 8.6 7.7 5.4 6.8 6.1 5.5 ...
+##  $ volatile.acidity    : num  0.37 0.24 0.32 0.23 0.36 0.28 0.59 0.16 0.28 0.28 ...
+##  $ citric.acid         : num  0.47 0.34 0.13 0.49 0.26 0.63 0.07 0.36 0.27 0.21 ...
+##  $ residual.sugar      : num  11.2 1.2 7.8 7.7 11.1 11.1 7 1.3 4.7 1.6 ...
+##  $ chlorides           : num  0.071 0.045 0.042 0.049 0.03 0.039 0.045 0.034 0.03 0.032 ...
+##  $ free.sulfur.dioxide : num  44 6 11 61 43.5 58 36 32 56 23 ...
+##  $ total.sulfur.dioxide: num  136 132 117 209 171 179 147 98 140 85 ...
+##  $ density             : num  0.997 0.991 0.996 0.994 0.995 ...
+##  $ pH                  : num  2.98 3.16 3.23 3.14 3.03 3.08 3.34 3.02 3.16 3.42 ...
+##  $ sulphates           : num  0.88 0.46 0.37 0.3 0.49 0.44 0.57 0.58 0.42 0.42 ...
+##  $ alcohol             : num  9.2 11.2 9.2 11.1 12 8.8 9.7 11.3 12.5 12.5 ...
+##  $ quality             : int  5 4 5 7 5 4 6 6 8 5 ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>(<span class="kw">table</span>(winequality<span class="op">$</span>quality))</code></pre></div>
+<p><img src="02-arboles_files/figure-html/unnamed-chunk-4-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>En primer lugar se selecciona el 80% de los datos como muestra de entrenamiento y el 20% restante como muestra de test:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+nobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(winequality)
+itrain &lt;-<span class="st"> </span><span class="kw">sample</span>(nobs, <span class="fl">0.8</span> <span class="op">*</span><span class="st"> </span>nobs)
+train &lt;-<span class="st"> </span>winequality[itrain, ]
+test &lt;-<span class="st"> </span>winequality[<span class="op">-</span>itrain, ]</code></pre></div>
+<p>Podemos obtener el arbol con las opciones por defecto con el comando:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tree &lt;-<span class="st"> </span><span class="kw">rpart</span>(quality <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train)</code></pre></div>
+<p>Al imprimirlo se muestra el número de observaciones e información sobre los distintos nodos (número de nodo, condición que define la partición, número de observaciones en el nodo, función de pérdida y predicción), marcando con un <code>*</code> los nodos terminales.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tree</code></pre></div>
+<pre><code>## n= 1000 
+## 
+## node), split, n, deviance, yval
+##       * denotes terminal node
+## 
+##  1) root 1000 768.95600 5.862000  
+##    2) alcohol&lt; 10.75 622 340.81190 5.586817  
+##      4) volatile.acidity&gt;=0.2575 329 154.75990 5.370821  
+##        8) total.sulfur.dioxide&lt; 98.5 24  12.50000 4.750000 *
+##        9) total.sulfur.dioxide&gt;=98.5 305 132.28200 5.419672  
+##         18) pH&lt; 3.315 269 101.44980 5.353160 *
+##         19) pH&gt;=3.315 36  20.75000 5.916667 *
+##      5) volatile.acidity&lt; 0.2575 293 153.46760 5.829352  
+##       10) sulphates&lt; 0.475 144  80.32639 5.659722 *
+##       11) sulphates&gt;=0.475 149  64.99329 5.993289 *
+##    3) alcohol&gt;=10.75 378 303.53700 6.314815  
+##      6) alcohol&lt; 11.775 200 173.87500 6.075000  
+##       12) free.sulfur.dioxide&lt; 11.5 15  10.93333 4.933333 *
+##       13) free.sulfur.dioxide&gt;=11.5 185 141.80540 6.167568  
+##         26) volatile.acidity&gt;=0.395 7  12.85714 5.142857 *
+##         27) volatile.acidity&lt; 0.395 178 121.30900 6.207865  
+##           54) citric.acid&gt;=0.385 31  21.93548 5.741935 *
+##           55) citric.acid&lt; 0.385 147  91.22449 6.306122 *
+##      7) alcohol&gt;=11.775 178 105.23600 6.584270 *</code></pre>
+<p>Para representarlo se puede emplear las herramientas del paquete <a href="https://CRAN.R-project.org/package=rpart"><code>rpart</code></a>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(tree)
+<span class="kw">text</span>(tree)</code></pre></div>
+<p><img src="02-arboles_files/figure-html/unnamed-chunk-8-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>Pero puede ser preferible emplear el paquete <a href="https://CRAN.R-project.org/package=rpart.plot"><code>rpart.plot</code></a></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rpart.plot)
+<span class="kw">rpart.plot</span>(tree, <span class="dt">main=</span><span class="st">&quot;Regresion tree winequality&quot;</span>)  </code></pre></div>
+<p><img src="02-arboles_files/figure-html/unnamed-chunk-9-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>Nos interesa como se clasificaría a una nueva observación en los nodos terminales (en los nodos intermedios solo nos interesarían las condiciones, y el orden de las variables consideradas, hasta llegar a las hojas) y las correspondientes predicciones (la media de la respuesta en el correspondiente nodo terminal). Para ello, puede ser de utilidad imprimir las reglas:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rpart.rules</span>(tree, <span class="dt">style =</span> <span class="st">&quot;tall&quot;</span>)</code></pre></div>
+<pre><code>## quality is 4.8 when
+##     alcohol &lt; 11
+##     volatile.acidity &gt;= 0.26
+##     total.sulfur.dioxide &lt; 99
+## 
+## quality is 4.9 when
+##     alcohol is 11 to 12
+##     free.sulfur.dioxide &lt; 12
+## 
+## quality is 5.1 when
+##     alcohol is 11 to 12
+##     volatile.acidity &gt;= 0.40
+##     free.sulfur.dioxide &gt;= 12
+## 
+## quality is 5.4 when
+##     alcohol &lt; 11
+##     volatile.acidity &gt;= 0.26
+##     total.sulfur.dioxide &gt;= 99
+##     pH &lt; 3.3
+## 
+## quality is 5.7 when
+##     alcohol &lt; 11
+##     volatile.acidity &lt; 0.26
+##     sulphates &lt; 0.48
+## 
+## quality is 5.7 when
+##     alcohol is 11 to 12
+##     volatile.acidity &lt; 0.40
+##     free.sulfur.dioxide &gt;= 12
+##     citric.acid &gt;= 0.39
+## 
+## quality is 5.9 when
+##     alcohol &lt; 11
+##     volatile.acidity &gt;= 0.26
+##     total.sulfur.dioxide &gt;= 99
+##     pH &gt;= 3.3
+## 
+## quality is 6.0 when
+##     alcohol &lt; 11
+##     volatile.acidity &lt; 0.26
+##     sulphates &gt;= 0.48
+## 
+## quality is 6.3 when
+##     alcohol is 11 to 12
+##     volatile.acidity &lt; 0.40
+##     free.sulfur.dioxide &gt;= 12
+##     citric.acid &lt; 0.39
+## 
+## quality is 6.6 when
+##     alcohol &gt;= 12</code></pre>
+<p>Por defecto se poda el arbol considerando <code>cp = 0.01</code>, que puede ser adecuado en muchos casos. Sin embargo, para seleccionar el valor óptimo de este (hiper)parámetro se puede emplear validación cruzada. En primer lugar habría que establecer <code>cp = 0</code> para construir el árbol completo, a la profundidad máxima (determinada por los valores de <code>minsplit</code> y <code>minbucket</code>, que se podrían seleccionar “a mano” dependiendo del número de observaciones o también considerándolos como hiperparámetos; esto último no está implementado en <code>rpart</code>, ni en principio en <code>caret</code>)<a href="#fn10" class="footnoteRef" id="fnref10"><sup>10</sup></a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tree &lt;-<span class="st"> </span><span class="kw">rpart</span>(quality <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train, <span class="dt">cp =</span> <span class="dv">0</span>)</code></pre></div>
+<p>Posteriormente podemos emplear las funciones <code>printcp()</code> (o <code>plotcp()</code>) para obtener (representar) los valores de CP para los árboles (óptimos) de menor tamaño junto con su error de validación cruzada <code>xerror</code> (reescalado de forma que el máximo es 1):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">printcp</span>(tree)</code></pre></div>
+<pre><code>## 
+## Regression tree:
+## rpart(formula = quality ~ ., data = train, cp = 0)
+## 
+## Variables actually used in tree construction:
+##  [1] alcohol              chlorides            citric.acid         
+##  [4] density              fixed.acidity        free.sulfur.dioxide 
+##  [7] pH                   residual.sugar       sulphates           
+## [10] total.sulfur.dioxide volatile.acidity    
+## 
+## Root node error: 768.96/1000 = 0.76896
+## 
+## n= 1000 
+## 
+##            CP nsplit rel error  xerror     xstd
+## 1  0.16204707      0   1.00000 1.00203 0.048591
+## 2  0.04237491      1   0.83795 0.85779 0.043646
+## 3  0.03176525      2   0.79558 0.82810 0.043486
+## 4  0.02748696      3   0.76381 0.81350 0.042814
+## 5  0.01304370      4   0.73633 0.77038 0.039654
+## 6  0.01059605      6   0.71024 0.78168 0.039353
+## 7  0.01026605      7   0.69964 0.78177 0.039141
+## 8  0.00840800      9   0.67911 0.78172 0.039123
+## 9  0.00813924     10   0.67070 0.80117 0.039915
+## 10 0.00780567     11   0.66256 0.80020 0.040481
+## 11 0.00684175     13   0.64695 0.79767 0.040219
+## 12 0.00673843     15   0.63327 0.81381 0.040851
+## 13 0.00643577     18   0.61305 0.82059 0.041240
+## 14 0.00641137     19   0.60662 0.82323 0.041271
+## 15 0.00549694     21   0.59379 0.84187 0.042714
+## 16 0.00489406     23   0.58280 0.84748 0.042744
+## 17 0.00483045     24   0.57791 0.85910 0.043897
+## 18 0.00473741     25   0.57308 0.86553 0.045463
+## 19 0.00468372     26   0.56834 0.86455 0.045413
+## 20 0.00450496     28   0.55897 0.87049 0.045777
+## 21 0.00448365     32   0.54095 0.87263 0.045824
+## 22 0.00437484     33   0.53647 0.87260 0.045846
+## 23 0.00435280     35   0.52772 0.87772 0.046022
+## 24 0.00428623     36   0.52337 0.87999 0.046124
+## 25 0.00412515     37   0.51908 0.88151 0.046505
+## 26 0.00390866     39   0.51083 0.89242 0.047068
+## 27 0.00375301     42   0.49910 0.90128 0.047319
+## 28 0.00370055     43   0.49535 0.90965 0.047991
+## 29 0.00351987     45   0.48795 0.91404 0.048079
+## 30 0.00308860     47   0.48091 0.92132 0.048336
+## 31 0.00305781     49   0.47473 0.93168 0.049699
+## 32 0.00299018     51   0.46862 0.93258 0.049701
+## 33 0.00295148     52   0.46563 0.93062 0.049644
+## 34 0.00286138     54   0.45972 0.93786 0.050366
+## 35 0.00283972     55   0.45686 0.93474 0.050404
+## 36 0.00274809     56   0.45402 0.93307 0.050390
+## 37 0.00273457     58   0.44853 0.93642 0.050406
+## 38 0.00260607     59   0.44579 0.93726 0.050543
+## 39 0.00252978     60   0.44318 0.93692 0.050323
+## 40 0.00252428     62   0.43813 0.93778 0.050381
+## 41 0.00250804     64   0.43308 0.93778 0.050381
+## 42 0.00232226     65   0.43057 0.93642 0.050081
+## 43 0.00227625     66   0.42825 0.93915 0.050166
+## 44 0.00225146     67   0.42597 0.94101 0.050195
+## 45 0.00224774     68   0.42372 0.94101 0.050195
+## 46 0.00216406     69   0.42147 0.94067 0.050124
+## 47 0.00204851     70   0.41931 0.94263 0.050366
+## 48 0.00194517     72   0.41521 0.94203 0.050360
+## 49 0.00188139     73   0.41326 0.93521 0.050349
+## 50 0.00154129     75   0.40950 0.93500 0.050277
+## 51 0.00143642     76   0.40796 0.93396 0.050329
+## 52 0.00118294     77   0.40652 0.93289 0.050325
+## 53 0.00117607     78   0.40534 0.93738 0.050406
+## 54 0.00108561     79   0.40417 0.93738 0.050406
+## 55 0.00097821     80   0.40308 0.93670 0.050406
+## 56 0.00093107     81   0.40210 0.93752 0.050589
+## 57 0.00090075     82   0.40117 0.93752 0.050589
+## 58 0.00082968     83   0.40027 0.93634 0.050561
+## 59 0.00048303     85   0.39861 0.93670 0.050557
+## 60 0.00000000     86   0.39813 0.93745 0.050558</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotcp</span>(tree)</code></pre></div>
+<p><img src="02-arboles_files/figure-html/unnamed-chunk-12-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>La tabla con los valores de las podas (óptimas, dependiendo del parámetro de complejidad) está almacenada en la componente <code>$cptable</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(tree<span class="op">$</span>cptable, <span class="dv">10</span>)</code></pre></div>
+<pre><code>##             CP nsplit rel error    xerror       xstd
+## 1  0.162047069      0 1.0000000 1.0020304 0.04859127
+## 2  0.042374911      1 0.8379529 0.8577876 0.04364585
+## 3  0.031765253      2 0.7955780 0.8281010 0.04348571
+## 4  0.027486958      3 0.7638128 0.8134957 0.04281430
+## 5  0.013043701      4 0.7363258 0.7703804 0.03965433
+## 6  0.010596054      6 0.7102384 0.7816774 0.03935308
+## 7  0.010266055      7 0.6996424 0.7817716 0.03914071
+## 8  0.008408003      9 0.6791102 0.7817177 0.03912344
+## 9  0.008139238     10 0.6707022 0.8011719 0.03991498
+## 10 0.007805674     11 0.6625630 0.8001996 0.04048088</code></pre>
+<p>A partir de la que podríamos seleccionar el valor óptimo de forma automática, siguiendo el criterio de un error estándar de Breiman et al. (1984):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xerror &lt;-<span class="st"> </span>tree<span class="op">$</span>cptable[,<span class="st">&quot;xerror&quot;</span>]
+imin.xerror &lt;-<span class="st"> </span><span class="kw">which.min</span>(xerror)
+<span class="co"># Valor óptimo</span>
+tree<span class="op">$</span>cptable[imin.xerror, ]</code></pre></div>
+<pre><code>##         CP     nsplit  rel error     xerror       xstd 
+## 0.01304370 4.00000000 0.73632581 0.77038039 0.03965433</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Límite superior &quot;oneSE rule&quot; y complejidad mínima por debajo de ese valor</span>
+upper.xerror &lt;-<span class="st"> </span>xerror[imin.xerror] <span class="op">+</span><span class="st"> </span>tree<span class="op">$</span>cptable[imin.xerror, <span class="st">&quot;xstd&quot;</span>]
+icp &lt;-<span class="st"> </span><span class="kw">min</span>(<span class="kw">which</span>(xerror <span class="op">&lt;=</span><span class="st"> </span>upper.xerror))
+cp &lt;-<span class="st"> </span>tree<span class="op">$</span>cptable[icp, <span class="st">&quot;CP&quot;</span>]</code></pre></div>
+<p>Para obtener el modelo final podamos el arbol con el valor de complejidad obtenido 0.0130437 (que en este caso coincide con el valor óptimo):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tree &lt;-<span class="st"> </span><span class="kw">prune</span>(tree, <span class="dt">cp =</span> cp)
+<span class="kw">rpart.plot</span>(tree, <span class="dt">main=</span><span class="st">&quot;Regresion tree winequality&quot;</span>) </code></pre></div>
+<p><img src="02-arboles_files/figure-html/unnamed-chunk-15-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>Podríamos estudiar el modelo final, por ejemplo mediante el método <code>summary()</code>, que entre otras cosas muestra una medida (en porcentaje) de la importancia de las variables explicativas para la predicción de la respuesta (teniendo en cuenta todas las particiones, principales y secundarias, en las que se emplea cada variable explicativa). Alternativamente podríamos emplear el siguiente código:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># summary(tree)</span>
+importance &lt;-<span class="st"> </span>tree<span class="op">$</span>variable.importance <span class="co"># Equivalente a caret::varImp(tree) </span>
+importance &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="dv">100</span><span class="op">*</span>importance<span class="op">/</span><span class="kw">sum</span>(importance), <span class="dv">1</span>)
+importance[importance <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1</span>]</code></pre></div>
+<pre><code>##              alcohol              density            chlorides 
+##                 36.1                 21.7                 11.3 
+##     volatile.acidity total.sulfur.dioxide  free.sulfur.dioxide 
+##                  8.7                  8.5                  5.0 
+##       residual.sugar            sulphates          citric.acid 
+##                  4.0                  1.9                  1.1 
+##                   pH 
+##                  1.1</code></pre>
+<p>El último paso sería evaluarlo en la muestra de test siguiendo los pasos descritos en la Sección <a href="const-eval.html#eval-reg">1.3.4</a>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">obs &lt;-<span class="st"> </span>test<span class="op">$</span>quality
+pred &lt;-<span class="st"> </span><span class="kw">predict</span>(tree, <span class="dt">newdata =</span> test)
+
+<span class="kw">plot</span>(pred, obs, <span class="dt">main =</span> <span class="st">&quot;Observado frente a predicciones (quality)&quot;</span>,
+     <span class="dt">xlab =</span> <span class="st">&quot;Predicción&quot;, ylab = &quot;</span>Observado<span class="st">&quot;)</span>
+<span class="st">abline(a = 0, b = 1)</span></code></pre></div>
+<p><img src="02-arboles_files/figure-html/unnamed-chunk-17-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Empleando el paquete caret </span>
+caret<span class="op">::</span><span class="kw">postResample</span>(pred, obs)</code></pre></div>
+<pre><code>##      RMSE  Rsquared       MAE 
+## 0.8145614 0.1969485 0.6574264</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Con la función accuracy()</span>
+accuracy &lt;-<span class="st"> </span><span class="cf">function</span>(pred, obs, <span class="dt">na.rm =</span> <span class="ot">FALSE</span>, 
+                     <span class="dt">tol =</span> <span class="kw">sqrt</span>(.Machine<span class="op">$</span>double.eps)) {
+  err &lt;-<span class="st"> </span>obs <span class="op">-</span><span class="st"> </span>pred     <span class="co"># Errores</span>
+  <span class="cf">if</span>(na.rm) {
+    is.a &lt;-<span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(err)
+    err &lt;-<span class="st"> </span>err[is.a]
+    obs &lt;-<span class="st"> </span>obs[is.a]
+  }  
+  perr &lt;-<span class="st"> </span><span class="dv">100</span><span class="op">*</span>err<span class="op">/</span><span class="kw">pmax</span>(obs, tol)  <span class="co"># Errores porcentuales</span>
+  <span class="kw">return</span>(<span class="kw">c</span>(
+    <span class="dt">me =</span> <span class="kw">mean</span>(err),           <span class="co"># Error medio</span>
+    <span class="dt">rmse =</span> <span class="kw">sqrt</span>(<span class="kw">mean</span>(err<span class="op">^</span><span class="dv">2</span>)), <span class="co"># Raíz del error cuadrático medio </span>
+    <span class="dt">mae =</span> <span class="kw">mean</span>(<span class="kw">abs</span>(err)),     <span class="co"># Error absoluto medio</span>
+    <span class="dt">mpe =</span> <span class="kw">mean</span>(perr),         <span class="co"># Error porcentual medio</span>
+    <span class="dt">mape =</span> <span class="kw">mean</span>(<span class="kw">abs</span>(perr)),   <span class="co"># Error porcentual absoluto medio</span>
+    <span class="dt">r.squared =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">sum</span>(err<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span><span class="kw">sum</span>((obs <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(obs))<span class="op">^</span><span class="dv">2</span>)
+  ))
+}
+<span class="kw">accuracy</span>(pred, test<span class="op">$</span>quality)</code></pre></div>
+<pre><code>##           me         rmse          mae          mpe         mape    r.squared 
+## -0.001269398  0.814561435  0.657426365 -1.952342173 11.576716037  0.192007721</code></pre>
+</div>
+<div id="ejemplo-modelo-de-clasificación" class="section level3">
+<h3><span class="header-section-number">2.3.2</span> Ejemplo: modelo de clasificación</h3>
+<p>Para ilustrar los árboles de clasificación CART, podemos emplear los datos anteriores de calidad de vino, considerando como respuesta una nueva variable <code>taste</code> que clasifica los vinos en “good” o “bad” dependiendo de si <code>winequality$quality &gt;= 5</code> (este conjunto de datos está almacenado en el archivo <em>winetaste.RData</em>).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># load(&quot;data/winetaste.RData&quot;)</span>
+winetaste &lt;-<span class="st"> </span>winequality[, <span class="kw">colnames</span>(winequality)<span class="op">!=</span><span class="st">&quot;quality&quot;</span>]
+winetaste<span class="op">$</span>taste &lt;-<span class="st"> </span><span class="kw">factor</span>(winequality<span class="op">$</span>quality <span class="op">&lt;</span><span class="st"> </span><span class="dv">6</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&#39;good&#39;</span>, <span class="st">&#39;bad&#39;</span>)) <span class="co"># levels = c(&#39;FALSE&#39;, &#39;TRUE&#39;)</span>
+<span class="kw">str</span>(winetaste)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    1250 obs. of  12 variables:
+##  $ fixed.acidity       : num  6.8 7.1 6.9 7.5 8.6 7.7 5.4 6.8 6.1 5.5 ...
+##  $ volatile.acidity    : num  0.37 0.24 0.32 0.23 0.36 0.28 0.59 0.16 0.28 0.28 ...
+##  $ citric.acid         : num  0.47 0.34 0.13 0.49 0.26 0.63 0.07 0.36 0.27 0.21 ...
+##  $ residual.sugar      : num  11.2 1.2 7.8 7.7 11.1 11.1 7 1.3 4.7 1.6 ...
+##  $ chlorides           : num  0.071 0.045 0.042 0.049 0.03 0.039 0.045 0.034 0.03 0.032 ...
+##  $ free.sulfur.dioxide : num  44 6 11 61 43.5 58 36 32 56 23 ...
+##  $ total.sulfur.dioxide: num  136 132 117 209 171 179 147 98 140 85 ...
+##  $ density             : num  0.997 0.991 0.996 0.994 0.995 ...
+##  $ pH                  : num  2.98 3.16 3.23 3.14 3.03 3.08 3.34 3.02 3.16 3.42 ...
+##  $ sulphates           : num  0.88 0.46 0.37 0.3 0.49 0.44 0.57 0.58 0.42 0.42 ...
+##  $ alcohol             : num  9.2 11.2 9.2 11.1 12 8.8 9.7 11.3 12.5 12.5 ...
+##  $ taste               : Factor w/ 2 levels &quot;good&quot;,&quot;bad&quot;: 2 2 2 1 2 2 1 1 1 2 ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(winetaste<span class="op">$</span>taste)</code></pre></div>
+<pre><code>## 
+## good  bad 
+##  828  422</code></pre>
+<p>Como en el caso anterior, se contruyen las muestras de entrenamiento (80%) y de test (20%):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># set.seed(1)</span>
+<span class="co"># nobs &lt;- nrow(winetaste)</span>
+<span class="co"># itrain &lt;- sample(nobs, 0.8 * nobs)</span>
+train &lt;-<span class="st"> </span>winetaste[itrain, ]
+test &lt;-<span class="st"> </span>winetaste[<span class="op">-</span>itrain, ]</code></pre></div>
+<p>Al igual que en el caso anterior podemos obtener el árbol de clasificación con las opciones por defecto (<code>cp = 0.01</code> y <code>split = &quot;gini&quot;</code>) con el comando:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tree &lt;-<span class="st"> </span><span class="kw">rpart</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train)</code></pre></div>
+<p>En este caso al imprimirlo como información de los nodos se muestra (además del número de nodo, la condición de la partición y el número de observaciones en el nodo) el número de observaciones mal clasificadas, la predicción y las proporciones estimadas (frecuencias relativas en la muestra de entrenamiento) de las clases:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tree</code></pre></div>
+<pre><code>## n= 1000 
+## 
+## node), split, n, loss, yval, (yprob)
+##       * denotes terminal node
+## 
+##  1) root 1000 338 good (0.6620000 0.3380000)  
+##    2) alcohol&gt;=10.11667 541 100 good (0.8151571 0.1848429)  
+##      4) free.sulfur.dioxide&gt;=8.5 522  87 good (0.8333333 0.1666667)  
+##        8) fixed.acidity&lt; 8.55 500  73 good (0.8540000 0.1460000) *
+##        9) fixed.acidity&gt;=8.55 22   8 bad (0.3636364 0.6363636) *
+##      5) free.sulfur.dioxide&lt; 8.5 19   6 bad (0.3157895 0.6842105) *
+##    3) alcohol&lt; 10.11667 459 221 bad (0.4814815 0.5185185)  
+##      6) volatile.acidity&lt; 0.2875 264 102 good (0.6136364 0.3863636)  
+##       12) fixed.acidity&lt; 7.45 213  71 good (0.6666667 0.3333333)  
+##         24) citric.acid&gt;=0.265 160  42 good (0.7375000 0.2625000) *
+##         25) citric.acid&lt; 0.265 53  24 bad (0.4528302 0.5471698)  
+##           50) free.sulfur.dioxide&lt; 42.5 33  13 good (0.6060606 0.3939394) *
+##           51) free.sulfur.dioxide&gt;=42.5 20   4 bad (0.2000000 0.8000000) *
+##       13) fixed.acidity&gt;=7.45 51  20 bad (0.3921569 0.6078431)  
+##         26) total.sulfur.dioxide&gt;=150 26  10 good (0.6153846 0.3846154) *
+##         27) total.sulfur.dioxide&lt; 150 25   4 bad (0.1600000 0.8400000) *
+##      7) volatile.acidity&gt;=0.2875 195  59 bad (0.3025641 0.6974359)  
+##       14) pH&gt;=3.235 49  24 bad (0.4897959 0.5102041)  
+##         28) chlorides&lt; 0.0465 18   4 good (0.7777778 0.2222222) *
+##         29) chlorides&gt;=0.0465 31  10 bad (0.3225806 0.6774194) *
+##       15) pH&lt; 3.235 146  35 bad (0.2397260 0.7602740) *</code></pre>
+<p>También puede ser preferible emplear el paquete <a href="https://CRAN.R-project.org/package=rpart.plot"><code>rpart.plot</code></a> para representarlo:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rpart.plot)
+<span class="kw">rpart.plot</span>(tree, <span class="dt">main=</span><span class="st">&quot;Classification tree winetaste&quot;</span>) <span class="co"># Alternativa: rattle::fancyRpartPlot</span></code></pre></div>
+<p><img src="02-arboles_files/figure-html/unnamed-chunk-22-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rpart.plot</span>(tree, <span class="dt">main=</span><span class="st">&quot;Classification tree winetaste&quot;</span>,
+           <span class="dt">extra =</span> <span class="dv">104</span>,          <span class="co"># show fitted class, probs, percentages</span>
+           <span class="dt">box.palette =</span> <span class="st">&quot;GnBu&quot;</span>, <span class="co"># color scheme</span>
+           <span class="dt">branch.lty =</span> <span class="dv">3</span>,       <span class="co"># dotted branch lines</span>
+           <span class="dt">shadow.col =</span> <span class="st">&quot;gray&quot;</span>,  <span class="co"># shadows under the node boxes</span>
+           <span class="dt">nn =</span> <span class="ot">TRUE</span>)            <span class="co"># display the node numbers </span></code></pre></div>
+<p><img src="02-arboles_files/figure-html/unnamed-chunk-22-2.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>Nos interesa como se clasificaría a una nueva observación (como se llega a los nodos terminales) y su probabilidad estimada (la frecuencia relativa de la clase más frecuente en el correspondiente nodo terminal). Al igual que en el caso de regresión, puede ser de utilidad imprimir las reglas:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rpart.rules</span>(tree, <span class="dt">style =</span> <span class="st">&quot;tall&quot;</span>)</code></pre></div>
+<pre><code>## taste is 0.15 when
+##     alcohol &gt;= 10
+##     fixed.acidity &lt; 8.6
+##     free.sulfur.dioxide &gt;= 8.5
+## 
+## taste is 0.22 when
+##     alcohol &lt; 10
+##     volatile.acidity &gt;= 0.29
+##     pH &gt;= 3.2
+##     chlorides &lt; 0.047
+## 
+## taste is 0.26 when
+##     alcohol &lt; 10
+##     volatile.acidity &lt; 0.29
+##     fixed.acidity &lt; 7.5
+##     citric.acid &gt;= 0.27
+## 
+## taste is 0.38 when
+##     alcohol &lt; 10
+##     volatile.acidity &lt; 0.29
+##     fixed.acidity &gt;= 7.5
+##     total.sulfur.dioxide &gt;= 150
+## 
+## taste is 0.39 when
+##     alcohol &lt; 10
+##     volatile.acidity &lt; 0.29
+##     fixed.acidity &lt; 7.5
+##     free.sulfur.dioxide &lt; 42.5
+##     citric.acid &lt; 0.27
+## 
+## taste is 0.64 when
+##     alcohol &gt;= 10
+##     fixed.acidity &gt;= 8.6
+##     free.sulfur.dioxide &gt;= 8.5
+## 
+## taste is 0.68 when
+##     alcohol &lt; 10
+##     volatile.acidity &gt;= 0.29
+##     pH &gt;= 3.2
+##     chlorides &gt;= 0.047
+## 
+## taste is 0.68 when
+##     alcohol &gt;= 10
+##     free.sulfur.dioxide &lt; 8.5
+## 
+## taste is 0.76 when
+##     alcohol &lt; 10
+##     volatile.acidity &gt;= 0.29
+##     pH &lt; 3.2
+## 
+## taste is 0.80 when
+##     alcohol &lt; 10
+##     volatile.acidity &lt; 0.29
+##     fixed.acidity &lt; 7.5
+##     free.sulfur.dioxide &gt;= 42.5
+##     citric.acid &lt; 0.27
+## 
+## taste is 0.84 when
+##     alcohol &lt; 10
+##     volatile.acidity &lt; 0.29
+##     fixed.acidity &gt;= 7.5
+##     total.sulfur.dioxide &lt; 150</code></pre>
+<p>Al igual que en el caso anterior, para seleccionar un valor óptimo del (hiper)parámetro de complejidad, se puede construir un árbol de decisión completo y emplear validación cruzada para podarlo. Además, si el número de observaciones es grande y las clases están más o menos balanceadas, se podría aumentar los valores mínimos de observaciones en los nodos intermedios y terminales<a href="#fn11" class="footnoteRef" id="fnref11"><sup>11</sup></a>, por ejemplo:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tree &lt;-<span class="st"> </span><span class="kw">rpart</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train, <span class="dt">cp =</span> <span class="dv">0</span>, <span class="dt">minsplit =</span> <span class="dv">30</span>, <span class="dt">minbucket =</span> <span class="dv">10</span>)</code></pre></div>
+<p>En este caso mantenemos el resto de valores por defecto:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tree &lt;-<span class="st"> </span><span class="kw">rpart</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train, <span class="dt">cp =</span> <span class="dv">0</span>)</code></pre></div>
+<p>Representamos los errores (reescalados) de validación cruzada:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># printcp(tree)</span>
+<span class="kw">plotcp</span>(tree)</code></pre></div>
+<p><img src="02-arboles_files/figure-html/unnamed-chunk-26-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>Para obtener el modelo final, seleccionamos el valor óptimo de complejidad siguiendo el criterio de un error estándar de Breiman et al. (1984) y podamos el arbol:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xerror &lt;-<span class="st"> </span>tree<span class="op">$</span>cptable[,<span class="st">&quot;xerror&quot;</span>]
+imin.xerror &lt;-<span class="st"> </span><span class="kw">which.min</span>(xerror)
+upper.xerror &lt;-<span class="st"> </span>xerror[imin.xerror] <span class="op">+</span><span class="st"> </span>tree<span class="op">$</span>cptable[imin.xerror, <span class="st">&quot;xstd&quot;</span>]
+icp &lt;-<span class="st"> </span><span class="kw">min</span>(<span class="kw">which</span>(xerror <span class="op">&lt;=</span><span class="st"> </span>upper.xerror))
+cp &lt;-<span class="st"> </span>tree<span class="op">$</span>cptable[icp, <span class="st">&quot;CP&quot;</span>]
+tree &lt;-<span class="st"> </span><span class="kw">prune</span>(tree, <span class="dt">cp =</span> cp)
+<span class="co"># tree</span>
+<span class="co"># summary(tree)</span>
+<span class="co"># caret::varImp(tree)</span>
+<span class="co"># importance &lt;- tree$variable.importance</span>
+<span class="co"># importance &lt;- round(100*importance/sum(importance), 1)</span>
+<span class="co"># importance[importance &gt;= 1]</span>
+<span class="kw">rpart.plot</span>(tree, <span class="dt">main=</span><span class="st">&quot;Classification tree winetaste&quot;</span>)</code></pre></div>
+<p><img src="02-arboles_files/figure-html/unnamed-chunk-27-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>El último paso sería evaluarlo en la muestra de test siguiendo los pasos descritos en la Sección <a href="const-eval.html#eval-class">1.3.5</a>. El método <code>predict()</code> por defecto (<code>type = &quot;prob&quot;</code>) devuelve una matriz con las probabilidades de cada clase, habrá que establecer <code>type = &quot;class&quot;</code> (para más detalles consultar la ayuda de <code>predic.rpart()</code>).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">obs &lt;-<span class="st"> </span>test<span class="op">$</span>taste
+<span class="kw">head</span>(<span class="kw">predict</span>(tree, <span class="dt">newdata =</span> test))</code></pre></div>
+<pre><code>##         good       bad
+## 1  0.3025641 0.6974359
+## 4  0.8151571 0.1848429
+## 9  0.8151571 0.1848429
+## 10 0.8151571 0.1848429
+## 12 0.8151571 0.1848429
+## 16 0.8151571 0.1848429</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pred &lt;-<span class="st"> </span><span class="kw">predict</span>(tree, <span class="dt">newdata =</span> test, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>)
+<span class="kw">table</span>(obs, pred)</code></pre></div>
+<pre><code>##       pred
+## obs    good bad
+##   good  153  13
+##   bad    54  30</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">caret<span class="op">::</span><span class="kw">confusionMatrix</span>(obs, pred)</code></pre></div>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction good bad
+##       good  153  13
+##       bad    54  30
+##                                           
+##                Accuracy : 0.732           
+##                  95% CI : (0.6725, 0.7859)
+##     No Information Rate : 0.828           
+##     P-Value [Acc &gt; NIR] : 0.9999          
+##                                           
+##                   Kappa : 0.3171          
+##                                           
+##  Mcnemar&#39;s Test P-Value : 1.025e-06       
+##                                           
+##             Sensitivity : 0.7391          
+##             Specificity : 0.6977          
+##          Pos Pred Value : 0.9217          
+##          Neg Pred Value : 0.3571          
+##              Prevalence : 0.8280          
+##          Detection Rate : 0.6120          
+##    Detection Prevalence : 0.6640          
+##       Balanced Accuracy : 0.7184          
+##                                           
+##        &#39;Positive&#39; Class : good            
+## </code></pre>
+</div>
+<div id="interfaz-de-caret" class="section level3">
+<h3><span class="header-section-number">2.3.3</span> Interfaz de <code>caret</code></h3>
+<p>En <code>caret</code> podemos ajustar un árbol CART seleccionando <code>method = &quot;rpart&quot;</code>. Por defecto emplea bootstrap de las observaciones para seleccionar el valor óptimo del hiperparámetro <code>cp</code> (considerando únicamente tres posibles valores). Si queremos emplear validación cruzada como en el caso anterior podemos emplear la función auxiliar <code>trainControl()</code> y para considerar un mayor rango de posibles valores, el argumento <code>tuneLength</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(caret)
+<span class="co"># names(getModelInfo()) # Listado de todos los métodos disponibles</span>
+<span class="co"># modelLookup(&quot;rpart&quot;)  # Información sobre hiperparámetros</span>
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+<span class="co"># itrain &lt;- &lt;- createDataPartition(winetaste$taste, p = 0.8, list = FALSE)</span>
+<span class="co"># train &lt;- winetaste[itrain, ]</span>
+<span class="co"># test &lt;- winetaste[-itrain, ]</span>
+caret.rpart &lt;-<span class="st"> </span><span class="kw">train</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">method =</span> <span class="st">&quot;rpart&quot;</span>, <span class="dt">data =</span> train, 
+                     <span class="dt">tuneLength =</span> <span class="dv">20</span>,
+                     <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="dt">number =</span> <span class="dv">10</span>)) 
+caret.rpart</code></pre></div>
+<pre><code>## CART 
+## 
+## 1000 samples
+##   11 predictor
+##    2 classes: &#39;good&#39;, &#39;bad&#39; 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold) 
+## Summary of sample sizes: 901, 900, 900, 900, 900, 900, ... 
+## Resampling results across tuning parameters:
+## 
+##   cp           Accuracy   Kappa    
+##   0.000000000  0.7018843  0.3487338
+##   0.005995017  0.7330356  0.3870552
+##   0.011990034  0.7410655  0.3878517
+##   0.017985051  0.7230748  0.3374518
+##   0.023980069  0.7360748  0.3698691
+##   0.029975086  0.7340748  0.3506377
+##   0.035970103  0.7320748  0.3418235
+##   0.041965120  0.7350849  0.3422651
+##   0.047960137  0.7350849  0.3422651
+##   0.053955154  0.7350849  0.3422651
+##   0.059950171  0.7350849  0.3422651
+##   0.065945188  0.7350849  0.3422651
+##   0.071940206  0.7350849  0.3422651
+##   0.077935223  0.7350849  0.3422651
+##   0.083930240  0.7350849  0.3422651
+##   0.089925257  0.7350849  0.3422651
+##   0.095920274  0.7350849  0.3422651
+##   0.101915291  0.7350849  0.3422651
+##   0.107910308  0.7229637  0.2943312
+##   0.113905325  0.6809637  0.1087694
+## 
+## Accuracy was used to select the optimal model using the largest value.
+## The final value used for the model was cp = 0.01199003.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(caret.rpart)</code></pre></div>
+<p><img src="02-arboles_files/figure-html/unnamed-chunk-29-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">caret.rpart<span class="op">$</span>finalModel</code></pre></div>
+<pre><code>## n= 1000 
+## 
+## node), split, n, loss, yval, (yprob)
+##       * denotes terminal node
+## 
+##  1) root 1000 338 good (0.6620000 0.3380000)  
+##    2) alcohol&gt;=10.11667 541 100 good (0.8151571 0.1848429)  
+##      4) free.sulfur.dioxide&gt;=8.5 522  87 good (0.8333333 0.1666667)  
+##        8) fixed.acidity&lt; 8.55 500  73 good (0.8540000 0.1460000) *
+##        9) fixed.acidity&gt;=8.55 22   8 bad (0.3636364 0.6363636) *
+##      5) free.sulfur.dioxide&lt; 8.5 19   6 bad (0.3157895 0.6842105) *
+##    3) alcohol&lt; 10.11667 459 221 bad (0.4814815 0.5185185)  
+##      6) volatile.acidity&lt; 0.2875 264 102 good (0.6136364 0.3863636)  
+##       12) fixed.acidity&lt; 7.45 213  71 good (0.6666667 0.3333333)  
+##         24) citric.acid&gt;=0.265 160  42 good (0.7375000 0.2625000) *
+##         25) citric.acid&lt; 0.265 53  24 bad (0.4528302 0.5471698)  
+##           50) free.sulfur.dioxide&lt; 42.5 33  13 good (0.6060606 0.3939394) *
+##           51) free.sulfur.dioxide&gt;=42.5 20   4 bad (0.2000000 0.8000000) *
+##       13) fixed.acidity&gt;=7.45 51  20 bad (0.3921569 0.6078431)  
+##         26) total.sulfur.dioxide&gt;=150 26  10 good (0.6153846 0.3846154) *
+##         27) total.sulfur.dioxide&lt; 150 25   4 bad (0.1600000 0.8400000) *
+##      7) volatile.acidity&gt;=0.2875 195  59 bad (0.3025641 0.6974359)  
+##       14) pH&gt;=3.235 49  24 bad (0.4897959 0.5102041)  
+##         28) chlorides&lt; 0.0465 18   4 good (0.7777778 0.2222222) *
+##         29) chlorides&gt;=0.0465 31  10 bad (0.3225806 0.6774194) *
+##       15) pH&lt; 3.235 146  35 bad (0.2397260 0.7602740) *</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rpart.plot</span>(caret.rpart<span class="op">$</span>finalModel, <span class="dt">main=</span><span class="st">&quot;Classification tree winetaste&quot;</span>)</code></pre></div>
+<p><img src="02-arboles_files/figure-html/unnamed-chunk-29-2.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>Para utilizar la regla de “un error estándar” se puede añadir <code>selectionFunction = &quot;oneSE&quot;</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+caret.rpart &lt;-<span class="st"> </span><span class="kw">train</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">method =</span> <span class="st">&quot;rpart&quot;</span>, <span class="dt">data =</span> train, 
+                     <span class="dt">tuneLength =</span> <span class="dv">20</span>,
+                     <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="dt">number =</span> <span class="dv">10</span>,
+                                              <span class="dt">selectionFunction =</span> <span class="st">&quot;oneSE&quot;</span>)) 
+caret.rpart</code></pre></div>
+<pre><code>## CART 
+## 
+## 1000 samples
+##   11 predictor
+##    2 classes: &#39;good&#39;, &#39;bad&#39; 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold) 
+## Summary of sample sizes: 901, 900, 900, 900, 900, 900, ... 
+## Resampling results across tuning parameters:
+## 
+##   cp           Accuracy   Kappa    
+##   0.000000000  0.7018843  0.3487338
+##   0.005995017  0.7330356  0.3870552
+##   0.011990034  0.7410655  0.3878517
+##   0.017985051  0.7230748  0.3374518
+##   0.023980069  0.7360748  0.3698691
+##   0.029975086  0.7340748  0.3506377
+##   0.035970103  0.7320748  0.3418235
+##   0.041965120  0.7350849  0.3422651
+##   0.047960137  0.7350849  0.3422651
+##   0.053955154  0.7350849  0.3422651
+##   0.059950171  0.7350849  0.3422651
+##   0.065945188  0.7350849  0.3422651
+##   0.071940206  0.7350849  0.3422651
+##   0.077935223  0.7350849  0.3422651
+##   0.083930240  0.7350849  0.3422651
+##   0.089925257  0.7350849  0.3422651
+##   0.095920274  0.7350849  0.3422651
+##   0.101915291  0.7350849  0.3422651
+##   0.107910308  0.7229637  0.2943312
+##   0.113905325  0.6809637  0.1087694
+## 
+## Accuracy was used to select the optimal model using  the one SE rule.
+## The final value used for the model was cp = 0.1019153.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># ggplot(caret.rpart)</span>
+caret.rpart<span class="op">$</span>finalModel</code></pre></div>
+<pre><code>## n= 1000 
+## 
+## node), split, n, loss, yval, (yprob)
+##       * denotes terminal node
+## 
+## 1) root 1000 338 good (0.6620000 0.3380000)  
+##   2) alcohol&gt;=10.11667 541 100 good (0.8151571 0.1848429) *
+##   3) alcohol&lt; 10.11667 459 221 bad (0.4814815 0.5185185)  
+##     6) volatile.acidity&lt; 0.2875 264 102 good (0.6136364 0.3863636) *
+##     7) volatile.acidity&gt;=0.2875 195  59 bad (0.3025641 0.6974359) *</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rpart.plot</span>(caret.rpart<span class="op">$</span>finalModel, <span class="dt">main =</span> <span class="st">&quot;Classification tree winetaste&quot;</span>)</code></pre></div>
+<p><img src="02-arboles_files/figure-html/unnamed-chunk-30-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">var.imp &lt;-<span class="st"> </span><span class="kw">varImp</span>(caret.rpart)
+<span class="kw">plot</span>(var.imp)</code></pre></div>
+<p><img src="02-arboles_files/figure-html/unnamed-chunk-30-2.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>En principio también se podría utilizar la regla de “un error estándar” seleccionando <code>method = &quot;rpart1SE&quot;</code> (pero implementa internamente este método y en ocasiones no se obtienen los resultados esperados).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+caret.rpart &lt;-<span class="st"> </span><span class="kw">train</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">method =</span> <span class="st">&quot;rpart1SE&quot;</span>, <span class="dt">data =</span> train) 
+caret.rpart
+<span class="kw">printcp</span>(caret.rpart<span class="op">$</span>finalModel)
+caret.rpart<span class="op">$</span>finalModel
+<span class="kw">rpart.plot</span>(caret.rpart<span class="op">$</span>finalModel, <span class="dt">main =</span> <span class="st">&quot;Classification tree winetaste&quot;</span>)
+<span class="kw">varImp</span>(caret.rpart)</code></pre></div>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="9">
+<li id="fn9"><p>El paquete <a href="https://CRAN.R-project.org/package=tree"><code>tree</code></a> es una traducción del original en S.<a href="cart-con-el-paquete-rpart.html#fnref9">↩</a></p></li>
+<li id="fn10"><p>Los parámetros <code>maxsurrogate</code>, <code>usesurrogate</code> y <code>surrogatestyle</code> serían de utilidad si hay datos faltantes.<a href="cart-con-el-paquete-rpart.html#fnref10">↩</a></p></li>
+<li id="fn11"><p>Otra opción, más interesante para regresión, sería considerar estos valores como hiperparámetros.<a href="cart-con-el-paquete-rpart.html#fnref11">↩</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="árboles-de-clasificación-cart.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="alternativas-a-los-árboles-cart.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rubenfcasal/aprendizaje_estadistico/edit/master/02-arboles.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["aprendizaje_estadistico.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

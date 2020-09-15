@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1.2 Métodos de Aprendizaje Estadístico | Aprendizaje Estadístico</title>
+  <meta name="description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1.2 Métodos de Aprendizaje Estadístico | Aprendizaje Estadístico" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
+  <meta name="github-repo" content="rubenfcasal/aprendizaje_estadistico" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1.2 Métodos de Aprendizaje Estadístico | Aprendizaje Estadístico" />
+  
+  <meta name="twitter:description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
+  
+
+<meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)" />
+
+
+<meta name="date" content="2020-09-15" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="aprendizaje-estadístico-vs-aprendizaje-automático.html"/>
+<link rel="next" href="const-eval.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Aprendizaje Estadístico</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prólogo</a></li>
+<li class="chapter" data-level="1" data-path="intro-AE.html"><a href="intro-AE.html"><i class="fa fa-check"></i><b>1</b> Introducción al Aprendizaje Estadístico</a><ul>
+<li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje Estadístico vs. Aprendizaje Automático</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
+<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#las-dos-culturas-breiman-2001"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas (Breiman, 2001)</a></li>
+<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.estadística-dunson-2018"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística (Dunson, 2018)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de Aprendizaje Estadístico</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#notación-y-terminología"><i class="fa fa-check"></i><b>1.2.1</b> Notación y terminología</a></li>
+<li class="chapter" data-level="1.2.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#métodos-de-aprendizaje-supervisado-y-paquetes-de-r"><i class="fa fa-check"></i><b>1.2.2</b> Métodos (de aprendizaje supervisado) y paquetes de R</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="const-eval.html"><a href="const-eval.html"><i class="fa fa-check"></i><b>1.3</b> Construcción y evaluación de los modelos</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="const-eval.html"><a href="const-eval.html#bias-variance"><i class="fa fa-check"></i><b>1.3.1</b> Equilibrio entre sesgo y varianza: infraajuste y sobreajuste</a></li>
+<li class="chapter" data-level="1.3.2" data-path="const-eval.html"><a href="const-eval.html#entrenamiento-test"><i class="fa fa-check"></i><b>1.3.2</b> Datos de entrenamiento y datos de test</a></li>
+<li class="chapter" data-level="1.3.3" data-path="const-eval.html"><a href="const-eval.html#cv"><i class="fa fa-check"></i><b>1.3.3</b> Validación cruzada</a></li>
+<li class="chapter" data-level="1.3.4" data-path="const-eval.html"><a href="const-eval.html#eval-reg"><i class="fa fa-check"></i><b>1.3.4</b> Evaluación de un método de regresión</a></li>
+<li class="chapter" data-level="1.3.5" data-path="const-eval.html"><a href="const-eval.html#eval-class"><i class="fa fa-check"></i><b>1.3.5</b> Evaluación de un método de clasificación</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="la-maldición-de-la-dimensionalidad.html"><a href="la-maldición-de-la-dimensionalidad.html"><i class="fa fa-check"></i><b>1.4</b> La maldición de la dimensionalidad</a></li>
+<li class="chapter" data-level="1.5" data-path="caret.html"><a href="caret.html"><i class="fa fa-check"></i><b>1.5</b> Introducción al paquete <code>caret</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="trees.html"><a href="trees.html"><i class="fa fa-check"></i><b>2</b> Árboles de decisión</a><ul>
+<li class="chapter" data-level="2.1" data-path="árboles-de-regresión-cart.html"><a href="árboles-de-regresión-cart.html"><i class="fa fa-check"></i><b>2.1</b> Árboles de regresión CART</a></li>
+<li class="chapter" data-level="2.2" data-path="árboles-de-clasificación-cart.html"><a href="árboles-de-clasificación-cart.html"><i class="fa fa-check"></i><b>2.2</b> Árboles de clasificación CART</a></li>
+<li class="chapter" data-level="2.3" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html"><i class="fa fa-check"></i><b>2.3</b> CART con el paquete <code>rpart</code></a><ul>
+<li class="chapter" data-level="2.3.1" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#ejemplo-regresión"><i class="fa fa-check"></i><b>2.3.1</b> Ejemplo: regresión</a></li>
+<li class="chapter" data-level="2.3.2" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#ejemplo-modelo-de-clasificación"><i class="fa fa-check"></i><b>2.3.2</b> Ejemplo: modelo de clasificación</a></li>
+<li class="chapter" data-level="2.3.3" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#interfaz-de-caret"><i class="fa fa-check"></i><b>2.3.3</b> Interfaz de <code>caret</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html"><i class="fa fa-check"></i><b>2.4</b> Alternativas a los árboles CART</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html#ejemplo"><i class="fa fa-check"></i><b>2.4.1</b> Ejemplo</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
+<li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a><ul>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html#libros"><i class="fa fa-check"></i>Libros</a></li>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html#artículos"><i class="fa fa-check"></i>Artículos</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Aprendizaje Estadístico</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="métodos-de-aprendizaje-estadístico" class="section level2">
+<h2><span class="header-section-number">1.2</span> Métodos de Aprendizaje Estadístico</h2>
+<p>Dentro de los problemas que aborda el Aprendizaje Estadístico se suelen diferenciar dos grandes bloques: el aprendizaje no supervisado y el supervisado. El <em>aprendizaje no supervisado</em> comprende los métodos exploratorios, es decir, aquellos en los que no hay una variable respuesta (al menos no de forma explícita). El principal objetivo de estos métodos es entender las relaciones entre los datos y su estructura, y pueden clasificarse en las siguientes categorías:</p>
+<ul>
+<li><p>Análisis descriptivo.</p></li>
+<li><p>Métodos de reducción de la dimensión (análisis de componentes principales, análisis factorial…).</p></li>
+<li><p>Clúster.</p></li>
+<li><p>Detección de datos atípicos.</p></li>
+</ul>
+<p>El <em>aprendizaje supervisado</em> engloba los métodos predictivos, en los que una de las variables está definida como variable respuesta. Su principal objetivo es la construcción de modelos que posteriormente se utilizarán, sobre todo, para hacer predicciones. Dependiendo del tipo de variable respuesta se diferencia entre:</p>
+<ul>
+<li><p>Clasificación: respuesta categórica (también se emplea la denominación de variable cualitativa, discreta o factor).</p></li>
+<li><p>Regresión: respuesta numérica (cuantitativa).</p></li>
+</ul>
+<p>En este libro nos centraremos únicamente en el campo del aprendizaje supervisado y combinaremos la terminología propia de la Estadística con la empleada en AE (por ejemplo, en Estadística es habitual considerar un problema de clasificación como un caso particular de regresión).</p>
+<div id="notación-y-terminología" class="section level3">
+<h3><span class="header-section-number">1.2.1</span> Notación y terminología</h3>
+<!-- Emplearemos principalmente la terminología estadística, pero trataremos de incluir también la de ML -->
+<p>Denotaremos por <span class="math inline">\(\mathbf{X}=(X_1, X_2, \ldots, X_p)\)</span> al vector formado por las variables predictoras (variables explicativas o variables independientes; también <em>inputs</em> o <em>features</em> en la terminología de ML), cada una de las cuales podría ser tanto numérica como categórica<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>. En general (ver comentarios más adelante), emplearemos <span class="math inline">\(Y\left(\mathbf{X} \right)\)</span> para referirnos a la variable objetivo (variable respuesta o variable dependiente; también <em>output</em> en la terminología de ML), que como ya se comentó puede ser una variable numérica (regresión) o categórica (clasificación).</p>
+<p>Supondremos que el objetivo principal es, a partir de una muestra: <span class="math display">\[\left\{ \left( x_{1i}, \ldots, x_{pi}, y_{i} \right)  : i = 1, \ldots, n \right\},\]</span> <!-- 
+$$\left\{ \left( \mathbf{x}_{i}, y_{i} \right)  : i = 1, \ldots, n \right\},$$
+siendo $\mathbf{x}_{i}=\left(  x_{1i},\ldots,x_{pi}\right)^{\prime}$ el vector de valores de las variables explicativas e $y_i$ el valor de la respuesta en la observación *i*-ésima,
+--> obtener (futuras) predicciones <span class="math inline">\(\hat Y\left(\mathbf{x} \right)\)</span> de la respuesta para <span class="math inline">\(\mathbf{X}=\mathbf{x}=\left(x_{1}, \ldots, x_{p}\right)\)</span>. <!-- 
+ajustando un modelo, diseñando un algoritmo, entrenando una *machine* o *learner* 
+
+$\mathbf{Y}=\left(  y_{1},\ldots,y_{n}\right)^{\prime}$
+vector de observaciones de la variable $Y$
+--></p>
+En regresión consideraremos como base el siguiente modelo general (podría ser después de una transformación de la respuesta):
+<span class="math display" id="eq:modelogeneral">\[\begin{equation} 
+  Y(\mathbf{X})=m(\mathbf{X})+\varepsilon,
+  \tag{1.1}
+\end{equation}\]</span>
+<p>donde <span class="math inline">\(m(\mathbf{x}) = E\left( \left. Y\right\vert_{\mathbf{X}=\mathbf{x}} \right)\)</span> es la media condicional, denominada función de regresión (o tendencia), y <span class="math inline">\(\varepsilon\)</span> es un error aleatorio de media cero y varianza <span class="math inline">\(\sigma^2\)</span>, independiente de <span class="math inline">\(\mathbf{X}\)</span>. Este modelo puede generalizarse de diversas formas, por ejemplo, asumiendo que la distribución del error depende de <span class="math inline">\(X\)</span> (considerando <span class="math inline">\(\varepsilon(\mathbf{X})\)</span> en lugar de <span class="math inline">\(\varepsilon\)</span>) podríamos incluir dependencia y heterocedasticidad. En estos casos normalmente se supone que lo hace únicamente a través de la varianza (error heterocedástico independiente), denotando por <span class="math inline">\(\sigma^2(\mathbf{x}) = Var\left( \left. Y\right\vert_{\mathbf{X}=\mathbf{x}} \right)\)</span> la varianza condicional<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a>.</p>
+<p>Como ya se comentó se podría considerar clasificación como un caso particular, por ejemplo definiendo <span class="math inline">\(Y\left(\mathbf{X} \right)\)</span> de forma que tome los valores <span class="math inline">\(1, 2, \ldots, K\)</span>, etiquetas que identifican las <span class="math inline">\(K\)</span> posibles categorías (también se habla de modalidades, niveles, clases o grupos). Sin embargo, muchos métodos de clasificación emplean variables auxiliares (variables <em>dummy</em>), indicadoras de las distintas categorías, y emplearemos la notación anterior para referirnos a estas variables (también denominadas variables <em>target</em>). En cuyo caso, denotaremos por <span class="math inline">\(G \left(\mathbf{X} \right)\)</span> la respuesta categórica (la clase verdadera; <span class="math inline">\(g_i\)</span>, <span class="math inline">\(i =1, \ldots, n\)</span>, serían los valores observados) y por <span class="math inline">\(\hat G \left(\mathbf{X} \right)\)</span> el predictor.</p>
+<p>Por ejemplo, en el caso de dos categorías, se suele definir <span class="math inline">\(Y\)</span> de forma que toma el valor 1 en la categoría de interés (también denominada <em>éxito</em> o <em>resultado positivo</em>) y 0 en caso contrario (<em>fracaso</em> o <em>resultado negativo</em>)<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a>. Además, en este caso, los modelos típicamente devuelven estimaciones de la probabilidad de la clase de interés en lugar de predecir directamente la clase, por lo que se empleará <span class="math inline">\(\hat p\)</span> en lugar de <span class="math inline">\(\hat Y\)</span>. A partir de esa estimación se obtiene una predicción de la categoría. Normalmente se predice la clase más probable, i.e. “éxito” si <span class="math inline">\(\hat p(\mathbf{x}) &gt; c = 0.5\)</span> y “fracaso” en caso contrario (con probabilidad estimada <span class="math inline">\(1 - \hat p(\mathbf{x})\)</span>).</p>
+<p>Resulta claro que el modelo base general <a href="métodos-de-aprendizaje-estadístico.html#eq:modelogeneral">(1.1)</a> puede no ser adecuado para modelar variables indicadoras (o probabilidades). Muchos de los métodos de AE emplean <a href="métodos-de-aprendizaje-estadístico.html#eq:modelogeneral">(1.1)</a> para una variable auxiliar numérica (denominada puntuación o <em>score</em>) que se transforma a escala de probabilidades mediante la función logística (denominada función sigmoidal, <em>sigmoid function</em>, en ML)<a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a>: <span class="math display">\[p(s) = \frac{1}{1 + e^{-s}},\]</span> cuya inversa es la <em>función logit</em>: <span class="math display">\[\operatorname{logit}(p)=\log\left( \frac{p}{1-p} \right).\]</span></p>
+<p>Lo anterior se puede generalizar para el caso de múltiples categorías, considerando variables indicadoras de cada categoría <span class="math inline">\(Y_1, \ldots, Y_K\)</span> (es lo que se conoce como la estrategia de “uno contra todos”). En este caso típicamente: <span class="math display">\[\hat G \left(\mathbf{x} \right) = \underset{k}{\operatorname{argmax}} \left\{ \hat p_k(\mathbf{x}) : k = 1, 2, \ldots, K \right\}.\]</span></p>
+<!-- 
+Otra notación:
+
+$\mathcal{G}$ conjunto de posibles categorías
+
+Matrices en mayúsculas y negrita/caligráfico? 
+Mayúsculas y negrita/caligráfico con subíndice para referirse al vector columna? 
+Traspuesta al estilo de JSS 
+-->
+</div>
+<div id="métodos-de-aprendizaje-supervisado-y-paquetes-de-r" class="section level3">
+<h3><span class="header-section-number">1.2.2</span> Métodos (de aprendizaje supervisado) y paquetes de R</h3>
+<p>Hay una gran cantidad de métodos de aprendizaje supervisado implementados en centenares de paquetes de <code>R</code> (ver por ejemplo <a href="https://cran.r-project.org/web/views/MachineLearning.html">CRAN Task View: Machine Learning &amp; Statistical Learning</a>). A continuación se muestran los principales métodos y algunos de los paquetes de R que los implementan (muchos son válidos para regresión y clasificación, como por ejemplo los basados en árboles, aunque aquí aparecen en su aplicación habitual).</p>
+<p>Métodos de Clasificación:</p>
+<ul>
+<li><p>Análisis discriminante (lineal, cuadrático), Regresión logística, multinomial…: <code>stats</code>, <code>MASS</code>…</p></li>
+<li><p>Árboles de decisión, <em>bagging</em>, <em>random forest</em>, <em>boosting</em>: <code>rpart</code>, <code>party</code>, <code>C50</code>, <code>Cubist</code>, <code>randomForest</code>, <code>adabag</code>, <code>xgboost</code>…</p></li>
+<li><p><em>Support vector machines</em> (SVM): <code>kernlab</code>, <code>e1071</code>…</p></li>
+</ul>
+<p>Métodos de regresión:</p>
+<ul>
+<li><p>Modelos lineales:</p>
+<ul>
+<li><p>Regresión lineal: <code>lm()</code>, <code>lme()</code>, <code>biglm</code>…</p></li>
+<li><p>Regresión lineal robusta: <code>MASS::rlm()</code>…</p></li>
+<li><p>Métodos de regularización (Ridge regression, Lasso): <code>glmnet</code>, <code>elasticnet</code>…</p></li>
+</ul></li>
+<li><p>Modelos lineales generalizados: <code>glm()</code>, <code>bigglm</code>, ..</p></li>
+<li><p>Modelos paramétricos no lineales: <code>nls()</code>, <code>nlme</code>…</p></li>
+<li><p>Regresión local (vecinos más próximos y métodos de suavizado): <code>kknn</code>, <code>loess()</code>, <code>KernSmooth</code>, <code>sm</code>, <code>np</code>…</p></li>
+<li><p>Modelos aditivos generalizados (GAM): <code>mgcv</code>, <code>gam</code>…</p></li>
+<li><p>Redes neuronales: <code>nnet</code>…</p></li>
+</ul>
+<p>También existen paquetes de <code>R</code> que permiten utilizar plataformas de ML externas, como por ejemplo <a href="https://github.com/h2oai/h2o-3/tree/master/h2o-r"><code>h2o</code></a> o <a href="https://CRAN.R-project.org/package=RWeka"><code>RWeka</code></a>.</p>
+<p>Como todos estos paquetes emplean opciones, estructuras y convenciones sintácticas diferentes, se han desarrollado paquetes que proporcionan interfaces unificadas a muchas de estas implementaciones. Entre ellos podríamos citar <a href="https://topepo.github.io/caret"><code>caret</code></a>,<a href="https://mlr3.mlr-org.com"><code>mlr3</code></a> y <a href="https://www.tidymodels.org"><code>tidymodels</code></a>. En la Sección <a href="caret.html#caret">1.5</a> se incluye una breve introducción al paquete <a href="https://topepo.github.io/caret"><code>caret</code></a> que será empleado en diversas ocasiones a lo largo del presente libro.</p>
+<p>Adicionalmente hay paquetes de R que disponen de entornos gráficos que permiten emplear estos métodos evitando el uso de comandos. Entre ellos estarían R-Commander con el plugin FactoMineR (<code>Rcmdr</code>, <code>RcmdrPlugin.FactoMineR</code>) y <a href="https://rattle.togaware.com"><code>rattle</code></a>.</p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="2">
+<li id="fn2"><p>Aunque hay que tener en cuenta que algunos métodos están diseñados para predictores numéricos, otros para categóricos y algunos para ambos tipos.<a href="métodos-de-aprendizaje-estadístico.html#fnref2">↩</a></p></li>
+<li id="fn3"><p>Por ejemplo considerando en el modelo base <span class="math inline">\(\sigma(\mathbf{X})\varepsilon\)</span> como termino de error y suponiendo adicionalmente que <span class="math inline">\(\varepsilon\)</span> tiene varianza uno.<a href="métodos-de-aprendizaje-estadístico.html#fnref3">↩</a></p></li>
+<li id="fn4"><p>Otra alternativa sería emplear 1 y -1, algo que simplifica las expresiones de algunos métodos.<a href="métodos-de-aprendizaje-estadístico.html#fnref4">↩</a></p></li>
+<li id="fn5"><p>De especial interés en regresión logística y en redes neuronales artificiales.<a href="métodos-de-aprendizaje-estadístico.html#fnref5">↩</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="aprendizaje-estadístico-vs-aprendizaje-automático.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="const-eval.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rubenfcasal/aprendizaje_estadistico/edit/master/01-introduccion.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["aprendizaje_estadistico.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
