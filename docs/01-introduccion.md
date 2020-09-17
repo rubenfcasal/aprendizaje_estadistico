@@ -2,7 +2,7 @@
 
 <!-- 
 knitr::purl("01-introduccion.Rmd", documentation = 2)
-knitr::spin("01-introduccion.Rmd",knit = FALSE)
+knitr::spin("01-introduccion.R",knit = FALSE)
 -->
 
 
@@ -26,6 +26,7 @@ Podríamos definir la Ciencia de Datos como el conjunto de conocimientos y herra
 -   El proceso de descubrir patrones y obtener conocimiento a partir de
     grandes conjuntos de datos (*Big Data*).
 
+Aunque esta ciencia incluiría también la gestión (sin olvidarnos del proceso de obtención) y la manipulación de los datos.
 
 \begin{figure}[!htb]
 
@@ -433,14 +434,24 @@ Sin embargo los errores de predicción en nuevas observaciones primero disminuye
 La línea vertical representa el equilibrio entre el sesgo y la varianza.
 Considerando un valor de complejidad a la izquierda de esa línea tendríamos infraajuste (mayor sesgo y menor varianza) y a la derecha sobreajuste (menor sesgo y mayor varianza).
 
+Desde un punto de vista más formal, considerando el modelo \@ref(eq:modelogeneral) y una función de pérdidas cuadrática, el predictor óptimo (desconocido) sería la media condicional $m(\mathbf{x}) = E\left( \left. Y\right\vert_{\mathbf{X}=\mathbf{x}} \right)$^[Se podrían considerar otras funciones de pérdida, por ejemplo con la distancia $L_1$ sería la mediana condicional, pero las consideraciones serían análogas.]. 
+Por tanto los predictores serían realmente estimaciones de la función de regresión, $\hat Y(\mathbf{x}) = \hat m(\mathbf{x})$ y podemos expresar la media del error cuadrático de predicción en términos del sesgo y la varianza:
+$$
+\begin{aligned}
+E \left( Y(\mathbf{x}_0) - \hat Y(\mathbf{x}_0) \right)^2 & = E \left( m(\mathbf{x}_0) + \varepsilon - \hat m(\mathbf{x}_0) \right)^2 = E \left( m(\mathbf{x}_0) - \hat m(\mathbf{x}_0) \right)^2 + \sigma^2 \\
+& = E^2 \left( m(\mathbf{x}_0) - \hat m(\mathbf{x}_0) \right) + Var\left( \hat m(\mathbf{x}_0) \right) + \sigma^2 \\
+& = \text{sesgo}^2 + \text{varianza} + \text{error irreducible}
+\end{aligned}
+$$
+donde $\mathbf{x}_0$ hace referencia al vector de valores de las variables explicativas de una nueva observación (no empleada en la construcción del predictor).
 
 En general, al aumentar la complejidad disminuye el sesgo y aumenta la varianza (y viceversa).
-Será necesario seleccionar los hiperparámetros de forma que haya un equilibrio entre el sesgo y la varianza (es lo que se conoce como *bias-variance tradeoff*).
+Esto es lo que se conoce como el dilema o compromiso entre el sesgo y la varianza (*bias-variance tradeoff*).
+La recomendación sería por tanto seleccionar los hiperparámetros (el modelo final) tratando de que haya un equilibrio entre el sesgo y la varianza.
 
 <!-- 
 PENDIENTE: 
 Gráfico equilibrio entre sesgo y varianza
-Ecuaciones a partir del modelo general
 -->
 
 ### Datos de entrenamiento y datos de test {#entrenamiento-test}
@@ -694,10 +705,91 @@ accuracy(predict(fit.1se, newdata = test), obs)
 ## -0.9236280  5.2797360  4.1252053 -9.0029771 21.6512406  0.5367608
 ```
 
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:train-validate-test"><strong>(\#exr:train-validate-test) </strong></span></div>\EndKnitrBlock{exercise}
+
+Considerando de nuevo el ejemplo anterior, particionar la muestra en datos de entrenamiento (70\%), de validación (15\%) y de test (15\%), para entrenar los modelos polinómicos, seleccionar el grado óptimo (el hiperparámetro) y evaluar las predicciones del modelo final, respectivamente.
+
+Podría ser de utilidad el siguiente código (basado en la aproximación de `rattle`), que particiona los datos suponiendo que están almacenados en el data.frame `df`:
+
+
+```r
+df <- Boston
+set.seed(1)
+nobs <- nrow(df)
+itrain <- sample(nobs, 0.7 * nobs)
+inotrain <- setdiff(seq_len(nobs), itrain)
+ivalidate <- sample(inotrain, 0.15 * nobs)
+itest <- setdiff(inotrain, ivalidate)
+train <- df[itrain, ]
+validate <- df[ivalidate, ]
+test <- df[itest, ]
+```
+  
+Alternativamente podríamos emplear la función `split()` creando un factor que divida aleatoriamente los datos en tres grupos (versión "simplificada" de una propuesta en este [post](https://stackoverflow.com/questions/36068963/r-how-to-split-a-data-frame-into-training-validation-and-test-sets)):
+
+
+```r
+set.seed(1)
+p <- c(train = 0.7, validate = 0.15, test = 0.15)
+f <- sample( rep(factor(seq_along(p), labels = names(p)),
+                 times = nrow(df)*p/sum(p)) )
+samples <- suppressWarnings(split(df, f))
+str(samples)
+```
+
+```
+## List of 3
+##  $ train   :'data.frame':	356 obs. of  14 variables:
+##   ..$ crim   : num [1:356] 0.00632 0.02731 0.02729 0.02985 0.08829 ...
+##   ..$ zn     : num [1:356] 18 0 0 0 12.5 12.5 12.5 12.5 12.5 0 ...
+##   ..$ indus  : num [1:356] 2.31 7.07 7.07 2.18 7.87 7.87 7.87 7.87 7.87 8.14 ...
+##   ..$ chas   : int [1:356] 0 0 0 0 0 0 0 0 0 0 ...
+##   ..$ nox    : num [1:356] 0.538 0.469 0.469 0.458 0.524 0.524 0.524 0.524 0.524 0.538 ...
+##   ..$ rm     : num [1:356] 6.58 6.42 7.18 6.43 6.01 ...
+##   ..$ age    : num [1:356] 65.2 78.9 61.1 58.7 66.6 100 85.9 82.9 39 56.5 ...
+##   ..$ dis    : num [1:356] 4.09 4.97 4.97 6.06 5.56 ...
+##   ..$ rad    : int [1:356] 1 2 2 3 5 5 5 5 5 4 ...
+##   ..$ tax    : num [1:356] 296 242 242 222 311 311 311 311 311 307 ...
+##   ..$ ptratio: num [1:356] 15.3 17.8 17.8 18.7 15.2 15.2 15.2 15.2 15.2 21 ...
+##   ..$ black  : num [1:356] 397 397 393 394 396 ...
+##   ..$ lstat  : num [1:356] 4.98 9.14 4.03 5.21 12.43 ...
+##   ..$ medv   : num [1:356] 24 21.6 34.7 28.7 22.9 16.5 18.9 18.9 21.7 19.9 ...
+##  $ validate:'data.frame':	75 obs. of  14 variables:
+##   ..$ crim   : num [1:75] 0.0324 0.6298 0.9884 0.9558 1.0025 ...
+##   ..$ zn     : num [1:75] 0 0 0 0 0 0 0 75 75 0 ...
+##   ..$ indus  : num [1:75] 2.18 8.14 8.14 8.14 8.14 8.14 5.96 2.95 2.95 6.91 ...
+##   ..$ chas   : int [1:75] 0 0 0 0 0 0 0 0 0 0 ...
+##   ..$ nox    : num [1:75] 0.458 0.538 0.538 0.538 0.538 0.538 0.499 0.428 0.428 0.448 ...
+##   ..$ rm     : num [1:75] 7 5.95 5.81 6.05 6.67 ...
+##   ..$ age    : num [1:75] 45.8 61.8 100 88.8 87.3 95 41.5 21.8 15.8 6.5 ...
+##   ..$ dis    : num [1:75] 6.06 4.71 4.1 4.45 4.24 ...
+##   ..$ rad    : int [1:75] 3 4 4 4 4 4 5 3 3 3 ...
+##   ..$ tax    : num [1:75] 222 307 307 307 307 307 279 252 252 233 ...
+##   ..$ ptratio: num [1:75] 18.7 21 21 21 21 21 19.2 18.3 18.3 17.9 ...
+##   ..$ black  : num [1:75] 395 397 395 306 380 ...
+##   ..$ lstat  : num [1:75] 2.94 8.26 19.88 17.28 11.98 ...
+##   ..$ medv   : num [1:75] 33.4 20.4 14.5 14.8 21 13.1 21 30.8 34.9 24.7 ...
+##  $ test    :'data.frame':	75 obs. of  14 variables:
+##   ..$ crim   : num [1:75] 0.069 0.1446 0.2249 0.638 0.6719 ...
+##   ..$ zn     : num [1:75] 0 12.5 12.5 0 0 0 0 90 0 0 ...
+##   ..$ indus  : num [1:75] 2.18 7.87 7.87 8.14 8.14 ...
+##   ..$ chas   : int [1:75] 0 0 0 0 0 0 0 0 0 0 ...
+##   ..$ nox    : num [1:75] 0.458 0.524 0.524 0.538 0.538 0.538 0.499 0.403 0.413 0.413 ...
+##   ..$ rm     : num [1:75] 7.15 6.17 6.38 6.1 5.81 ...
+##   ..$ age    : num [1:75] 54.2 96.1 94.3 84.5 90.3 94.1 68.2 21.9 6.6 7.8 ...
+##   ..$ dis    : num [1:75] 6.06 5.95 6.35 4.46 4.68 ...
+##   ..$ rad    : int [1:75] 3 5 5 4 4 4 5 5 4 4 ...
+##   ..$ tax    : num [1:75] 222 311 311 307 307 307 279 226 305 305 ...
+##   ..$ ptratio: num [1:75] 18.7 15.2 15.2 21 21 21 19.2 17.9 19.2 19.2 ...
+##   ..$ black  : num [1:75] 397 397 393 380 377 ...
+##   ..$ lstat  : num [1:75] 5.33 19.15 20.45 10.26 14.81 ...
+##   ..$ medv   : num [1:75] 36.2 27.1 15 18.2 16.6 12.7 18.9 35.4 24.2 22.8 ...
+```
+
 
 ### Evaluación de un método de clasificación {#eval-class}
 
-Para estudiar la eficiencia de un método de clasificación supervisada se obtienen las predicciones para el conjunto de datos de test y se genera una tabla de contingencia, denominada *matriz de confusión*, con las predicciones frente a los valores reales.
+Para estudiar la eficiencia de un método de clasificación supervisada típicamente se obtienen las predicciones para el conjunto de datos de test y se genera una tabla de contingencia, denominada *matriz de confusión*, con las predicciones frente a los valores reales.
 
 En primer lugar consideraremos el caso de dos categorías.
 La matriz de confusión será de la forma:
@@ -754,9 +846,9 @@ caret::featurePlot(datos$lstat, datos$fmedv, plot = "density",
 
 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/unnamed-chunk-12-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/unnamed-chunk-14-1} \end{center}
 
-El siguiente código realiza la partición de los datos y posteriormente ajustar un modelo de regresión logística en la muestra de entrenamiento considerando `lstat` como única variable explicativa:
+El siguiente código realiza la partición de los datos y posteriormente ajusta un modelo de regresión logística en la muestra de entrenamiento considerando `lstat` como única variable explicativa (en el Capítulo 5 se darán más detalles sobre este tipo de modelos):
 
 
 ```r
@@ -805,7 +897,7 @@ p.est <- predict(modelo, type = "response", newdata = test)
 pred <- factor(p.est > 0.5, labels = c("Bajo", "Alto")) # levels = c('FALSE', 'TRUE')
 ```
 
-Podemos obtener la matriz de confusión con el siguiente código:
+Finalmente podemos obtener la matriz de confusión con el siguiente código:
 
 
 ```r

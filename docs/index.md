@@ -1,7 +1,7 @@
 --- 
 title: "Aprendizaje Estadístico"
 author: "Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)"
-date: "2020-09-15"
+date: "2020-09-17"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
@@ -21,7 +21,7 @@ Este libro contiene los apuntes de la asignatura de [Aprendizaje Estadístico](h
 Este libro ha sido escrito en [R-Markdown](http://rmarkdown.rstudio.com) empleando el paquete [`bookdown`](https://bookdown.org/yihui/bookdown/)  y está disponible en el repositorio Github: [rubenfcasal/aprendizaje_estadistico](https://github.com/rubenfcasal/aprendizaje_estadistico). 
 Se puede acceder a la versión en línea a través del siguiente enlace:
 
-<https://rubenfcasal.github.io/aprendizaje_estadistico/index.html>.
+<https://rubenfcasal.github.io/aprendizaje_estadistico>.
 
 donde puede descargarse en formato [pdf](https://rubenfcasal.github.io/aprendizaje_estadistico/aprendizaje_estadistico.pdf).
 

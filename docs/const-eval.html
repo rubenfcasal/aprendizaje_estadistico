@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)" />
 
 
-<meta name="date" content="2020-09-15" />
+<meta name="date" content="2020-09-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -297,11 +297,17 @@ Figura 1.4: Precisiones (errores cuadráticos medios) de ajustes polinómicos va
 </p>
 </div>
 <p>Como se puede observar en la Figura <a href="const-eval.html#fig:polyfitsim">1.4</a> los errores de entrenamiento disminuyen a medida que aumenta la complejidad del modelo. Sin embargo los errores de predicción en nuevas observaciones primero disminuyen hasta alcanzar un mínimo, marcado por la línea de puntos vertical que se corresponde con el modelo de grado 4, y después aumentan (la línea de puntos horizontal es la varianza del proceso; el error cuadrático medio de predicción asintótico). La línea vertical representa el equilibrio entre el sesgo y la varianza. Considerando un valor de complejidad a la izquierda de esa línea tendríamos infraajuste (mayor sesgo y menor varianza) y a la derecha sobreajuste (menor sesgo y mayor varianza).</p>
-<p>En general, al aumentar la complejidad disminuye el sesgo y aumenta la varianza (y viceversa). Será necesario seleccionar los hiperparámetros de forma que haya un equilibrio entre el sesgo y la varianza (es lo que se conoce como <em>bias-variance tradeoff</em>).</p>
+<p>Desde un punto de vista más formal, considerando el modelo <a href="métodos-de-aprendizaje-estadístico.html#eq:modelogeneral">(1.1)</a> y una función de pérdidas cuadrática, el predictor óptimo (desconocido) sería la media condicional <span class="math inline">\(m(\mathbf{x}) = E\left( \left. Y\right\vert_{\mathbf{X}=\mathbf{x}} \right)\)</span><a href="#fn6" class="footnoteRef" id="fnref6"><sup>6</sup></a>. Por tanto los predictores serían realmente estimaciones de la función de regresión, <span class="math inline">\(\hat Y(\mathbf{x}) = \hat m(\mathbf{x})\)</span> y podemos expresar la media del error cuadrático de predicción en términos del sesgo y la varianza: <span class="math display">\[
+\begin{aligned}
+E \left( Y(\mathbf{x}_0) - \hat Y(\mathbf{x}_0) \right)^2 &amp; = E \left( m(\mathbf{x}_0) + \varepsilon - \hat m(\mathbf{x}_0) \right)^2 = E \left( m(\mathbf{x}_0) - \hat m(\mathbf{x}_0) \right)^2 + \sigma^2 \\
+&amp; = E^2 \left( m(\mathbf{x}_0) - \hat m(\mathbf{x}_0) \right) + Var\left( \hat m(\mathbf{x}_0) \right) + \sigma^2 \\
+&amp; = \text{sesgo}^2 + \text{varianza} + \text{error irreducible}
+\end{aligned}
+\]</span> donde <span class="math inline">\(\mathbf{x}_0\)</span> hace referencia al vector de valores de las variables explicativas de una nueva observación (no empleada en la construcción del predictor).</p>
+<p>En general, al aumentar la complejidad disminuye el sesgo y aumenta la varianza (y viceversa). Esto es lo que se conoce como el dilema o compromiso entre el sesgo y la varianza (<em>bias-variance tradeoff</em>). La recomendación sería por tanto seleccionar los hiperparámetros (el modelo final) tratando de que haya un equilibrio entre el sesgo y la varianza.</p>
 <!-- 
 PENDIENTE: 
 Gráfico equilibrio entre sesgo y varianza
-Ecuaciones a partir del modelo general
 -->
 </div>
 <div id="entrenamiento-test" class="section level3">
@@ -368,7 +374,7 @@ grado.op &lt;-<span class="st"> </span>grados[imin.mse]
 <p><img src="01-introduccion_files/figure-html/unnamed-chunk-7-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grado.op</code></pre></div>
 <pre><code>## [1] 5</code></pre>
-<p>En lugar de emplear los valores óptimos de los hiperparámetros, Breiman <em>et al.</em> (1984) propusieron la regla de “un error estándar” para seleccionar la complejidad del modelo. La idea es que estamos trabajando con estimaciones de la precisión y pueden presentar variabilidad, por lo que la sugerencia es seleccionar el modelo más simple<a href="#fn6" class="footnoteRef" id="fnref6"><sup>6</sup></a> dentro de un error estándar de la precisión del modelo correspondiente al valor óptimo (se consideraría que no hay diferencias significativas en la precisión; además, se mitigaría el efecto de la variabilidad debida a aleatoriedad/semilla).</p>
+<p>En lugar de emplear los valores óptimos de los hiperparámetros, Breiman <em>et al.</em> (1984) propusieron la regla de “un error estándar” para seleccionar la complejidad del modelo. La idea es que estamos trabajando con estimaciones de la precisión y pueden presentar variabilidad, por lo que la sugerencia es seleccionar el modelo más simple<a href="#fn7" class="footnoteRef" id="fnref7"><sup>7</sup></a> dentro de un error estándar de la precisión del modelo correspondiente al valor óptimo (se consideraría que no hay diferencias significativas en la precisión; además, se mitigaría el efecto de la variabilidad debida a aleatoriedad/semilla).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(grados, cv.mse, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">25</span>, <span class="dv">45</span>))
 <span class="kw">segments</span>(grados, cv.mse <span class="op">-</span><span class="st"> </span>cv.mse.sd, grados, cv.mse <span class="op">+</span><span class="st"> </span>cv.mse.sd)
 <span class="co"># Límite superior &quot;oneSE rule&quot; y complejidad mínima por debajo de ese valor</span>
@@ -408,7 +414,7 @@ pred &lt;-<span class="st"> </span><span class="kw">predict</span>(fit.op, <span
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">caret<span class="op">::</span><span class="kw">postResample</span>(pred, obs)</code></pre></div>
 <pre><code>##      RMSE  Rsquared       MAE 
 ## 4.8526718 0.6259583 3.6671847</code></pre>
-<p>La función anterior, además de las medidas de error habituales (que dependen en su mayoría de la escala de la variable respuesta) calcula un <em>pseudo R-cuadrado</em>. En este paquete (también en <code>rattle</code>) se emplea uno de los más utilizados, el cuadrado del coeficiente de correlación entre las predicciones y los valores observados (que se corresponde con la línea discontinua en la figura anterior). Estos valores se interpretarían como el coeficiente de determinación en regresión lineal, debería ser próximo a 1. Hay otras alternativas (ver Kvålseth, 1985), pero la idea es que deberían medir la proporción de variabilidad de la respuesta explicada por el modelo, algo que en general no es cierto con el anterior<a href="#fn7" class="footnoteRef" id="fnref7"><sup>7</sup></a>. La recomendación sería emplear: <span class="math display">\[\tilde R^2 = 1 - \frac{\sum_{i=1}^n(y_i - \hat y_i)^2}{\sum_{i=1}^n(y_i - \bar y_i)^2}\]</span> implementado junto con otras medidas en la siguiente función:</p>
+<p>La función anterior, además de las medidas de error habituales (que dependen en su mayoría de la escala de la variable respuesta) calcula un <em>pseudo R-cuadrado</em>. En este paquete (también en <code>rattle</code>) se emplea uno de los más utilizados, el cuadrado del coeficiente de correlación entre las predicciones y los valores observados (que se corresponde con la línea discontinua en la figura anterior). Estos valores se interpretarían como el coeficiente de determinación en regresión lineal, debería ser próximo a 1. Hay otras alternativas (ver Kvålseth, 1985), pero la idea es que deberían medir la proporción de variabilidad de la respuesta explicada por el modelo, algo que en general no es cierto con el anterior<a href="#fn8" class="footnoteRef" id="fnref8"><sup>8</sup></a>. La recomendación sería emplear: <span class="math display">\[\tilde R^2 = 1 - \frac{\sum_{i=1}^n(y_i - \hat y_i)^2}{\sum_{i=1}^n(y_i - \bar y_i)^2}\]</span> implementado junto con otras medidas en la siguiente función:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">accuracy &lt;-<span class="st"> </span><span class="cf">function</span>(pred, obs, <span class="dt">na.rm =</span> <span class="ot">FALSE</span>, 
                      <span class="dt">tol =</span> <span class="kw">sqrt</span>(.Machine<span class="op">$</span>double.eps)) {
   err &lt;-<span class="st"> </span>obs <span class="op">-</span><span class="st"> </span>pred     <span class="co"># Errores</span>
@@ -433,10 +439,80 @@ pred &lt;-<span class="st"> </span><span class="kw">predict</span>(fit.op, <span
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">accuracy</span>(<span class="kw">predict</span>(fit.1se, <span class="dt">newdata =</span> test), obs)</code></pre></div>
 <pre><code>##         me       rmse        mae        mpe       mape  r.squared 
 ## -0.9236280  5.2797360  4.1252053 -9.0029771 21.6512406  0.5367608</code></pre>
+
+<div class="exercise">
+<span id="exr:train-validate-test" class="exercise"><strong>Ejercicio 1.1  </strong></span>
+</div>
+
+<p>Considerando de nuevo el ejemplo anterior, particionar la muestra en datos de entrenamiento (70%), de validación (15%) y de test (15%), para entrenar los modelos polinómicos, seleccionar el grado óptimo (el hiperparámetro) y evaluar las predicciones del modelo final, respectivamente.</p>
+<p>Podría ser de utilidad el siguiente código (basado en la aproximación de <code>rattle</code>), que particiona los datos suponiendo que están almacenados en el data.frame <code>df</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span>Boston
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+nobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(df)
+itrain &lt;-<span class="st"> </span><span class="kw">sample</span>(nobs, <span class="fl">0.7</span> <span class="op">*</span><span class="st"> </span>nobs)
+inotrain &lt;-<span class="st"> </span><span class="kw">setdiff</span>(<span class="kw">seq_len</span>(nobs), itrain)
+ivalidate &lt;-<span class="st"> </span><span class="kw">sample</span>(inotrain, <span class="fl">0.15</span> <span class="op">*</span><span class="st"> </span>nobs)
+itest &lt;-<span class="st"> </span><span class="kw">setdiff</span>(inotrain, ivalidate)
+train &lt;-<span class="st"> </span>df[itrain, ]
+validate &lt;-<span class="st"> </span>df[ivalidate, ]
+test &lt;-<span class="st"> </span>df[itest, ]</code></pre></div>
+<p>Alternativamente podríamos emplear la función <code>split()</code> creando un factor que divida aleatoriamente los datos en tres grupos (versión “simplificada” de una propuesta en este <a href="https://stackoverflow.com/questions/36068963/r-how-to-split-a-data-frame-into-training-validation-and-test-sets">post</a>):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+p &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">train =</span> <span class="fl">0.7</span>, <span class="dt">validate =</span> <span class="fl">0.15</span>, <span class="dt">test =</span> <span class="fl">0.15</span>)
+f &lt;-<span class="st"> </span><span class="kw">sample</span>( <span class="kw">rep</span>(<span class="kw">factor</span>(<span class="kw">seq_along</span>(p), <span class="dt">labels =</span> <span class="kw">names</span>(p)),
+                 <span class="dt">times =</span> <span class="kw">nrow</span>(df)<span class="op">*</span>p<span class="op">/</span><span class="kw">sum</span>(p)) )
+samples &lt;-<span class="st"> </span><span class="kw">suppressWarnings</span>(<span class="kw">split</span>(df, f))
+<span class="kw">str</span>(samples)</code></pre></div>
+<pre><code>## List of 3
+##  $ train   :&#39;data.frame&#39;:    356 obs. of  14 variables:
+##   ..$ crim   : num [1:356] 0.00632 0.02731 0.02729 0.02985 0.08829 ...
+##   ..$ zn     : num [1:356] 18 0 0 0 12.5 12.5 12.5 12.5 12.5 0 ...
+##   ..$ indus  : num [1:356] 2.31 7.07 7.07 2.18 7.87 7.87 7.87 7.87 7.87 8.14 ...
+##   ..$ chas   : int [1:356] 0 0 0 0 0 0 0 0 0 0 ...
+##   ..$ nox    : num [1:356] 0.538 0.469 0.469 0.458 0.524 0.524 0.524 0.524 0.524 0.538 ...
+##   ..$ rm     : num [1:356] 6.58 6.42 7.18 6.43 6.01 ...
+##   ..$ age    : num [1:356] 65.2 78.9 61.1 58.7 66.6 100 85.9 82.9 39 56.5 ...
+##   ..$ dis    : num [1:356] 4.09 4.97 4.97 6.06 5.56 ...
+##   ..$ rad    : int [1:356] 1 2 2 3 5 5 5 5 5 4 ...
+##   ..$ tax    : num [1:356] 296 242 242 222 311 311 311 311 311 307 ...
+##   ..$ ptratio: num [1:356] 15.3 17.8 17.8 18.7 15.2 15.2 15.2 15.2 15.2 21 ...
+##   ..$ black  : num [1:356] 397 397 393 394 396 ...
+##   ..$ lstat  : num [1:356] 4.98 9.14 4.03 5.21 12.43 ...
+##   ..$ medv   : num [1:356] 24 21.6 34.7 28.7 22.9 16.5 18.9 18.9 21.7 19.9 ...
+##  $ validate:&#39;data.frame&#39;:    75 obs. of  14 variables:
+##   ..$ crim   : num [1:75] 0.0324 0.6298 0.9884 0.9558 1.0025 ...
+##   ..$ zn     : num [1:75] 0 0 0 0 0 0 0 75 75 0 ...
+##   ..$ indus  : num [1:75] 2.18 8.14 8.14 8.14 8.14 8.14 5.96 2.95 2.95 6.91 ...
+##   ..$ chas   : int [1:75] 0 0 0 0 0 0 0 0 0 0 ...
+##   ..$ nox    : num [1:75] 0.458 0.538 0.538 0.538 0.538 0.538 0.499 0.428 0.428 0.448 ...
+##   ..$ rm     : num [1:75] 7 5.95 5.81 6.05 6.67 ...
+##   ..$ age    : num [1:75] 45.8 61.8 100 88.8 87.3 95 41.5 21.8 15.8 6.5 ...
+##   ..$ dis    : num [1:75] 6.06 4.71 4.1 4.45 4.24 ...
+##   ..$ rad    : int [1:75] 3 4 4 4 4 4 5 3 3 3 ...
+##   ..$ tax    : num [1:75] 222 307 307 307 307 307 279 252 252 233 ...
+##   ..$ ptratio: num [1:75] 18.7 21 21 21 21 21 19.2 18.3 18.3 17.9 ...
+##   ..$ black  : num [1:75] 395 397 395 306 380 ...
+##   ..$ lstat  : num [1:75] 2.94 8.26 19.88 17.28 11.98 ...
+##   ..$ medv   : num [1:75] 33.4 20.4 14.5 14.8 21 13.1 21 30.8 34.9 24.7 ...
+##  $ test    :&#39;data.frame&#39;:    75 obs. of  14 variables:
+##   ..$ crim   : num [1:75] 0.069 0.1446 0.2249 0.638 0.6719 ...
+##   ..$ zn     : num [1:75] 0 12.5 12.5 0 0 0 0 90 0 0 ...
+##   ..$ indus  : num [1:75] 2.18 7.87 7.87 8.14 8.14 ...
+##   ..$ chas   : int [1:75] 0 0 0 0 0 0 0 0 0 0 ...
+##   ..$ nox    : num [1:75] 0.458 0.524 0.524 0.538 0.538 0.538 0.499 0.403 0.413 0.413 ...
+##   ..$ rm     : num [1:75] 7.15 6.17 6.38 6.1 5.81 ...
+##   ..$ age    : num [1:75] 54.2 96.1 94.3 84.5 90.3 94.1 68.2 21.9 6.6 7.8 ...
+##   ..$ dis    : num [1:75] 6.06 5.95 6.35 4.46 4.68 ...
+##   ..$ rad    : int [1:75] 3 5 5 4 4 4 5 5 4 4 ...
+##   ..$ tax    : num [1:75] 222 311 311 307 307 307 279 226 305 305 ...
+##   ..$ ptratio: num [1:75] 18.7 15.2 15.2 21 21 21 19.2 17.9 19.2 19.2 ...
+##   ..$ black  : num [1:75] 397 397 393 380 377 ...
+##   ..$ lstat  : num [1:75] 5.33 19.15 20.45 10.26 14.81 ...
+##   ..$ medv   : num [1:75] 36.2 27.1 15 18.2 16.6 12.7 18.9 35.4 24.2 22.8 ...</code></pre>
 </div>
 <div id="eval-class" class="section level3">
 <h3><span class="header-section-number">1.3.5</span> Evaluación de un método de clasificación</h3>
-<p>Para estudiar la eficiencia de un método de clasificación supervisada se obtienen las predicciones para el conjunto de datos de test y se genera una tabla de contingencia, denominada <em>matriz de confusión</em>, con las predicciones frente a los valores reales.</p>
+<p>Para estudiar la eficiencia de un método de clasificación supervisada típicamente se obtienen las predicciones para el conjunto de datos de test y se genera una tabla de contingencia, denominada <em>matriz de confusión</em>, con las predicciones frente a los valores reales.</p>
 <p>En primer lugar consideraremos el caso de dos categorías. La matriz de confusión será de la forma:</p>
 <table>
 <thead>
@@ -464,7 +540,7 @@ pred &lt;-<span class="st"> </span><span class="kw">predict</span>(fit.op, <span
 <li><p>Sensibilidad (<em>sensitivity</em>, <em>recall</em>, <em>hit rate</em>, <em>true positive rate</em>; TPR): <span class="math display">\[TPR = \frac{TP}{P} = \frac{TP}{TP+FN}\]</span></p></li>
 <li><p>Especificidad (<em>specificity</em>, <em>true negative rate</em>; TNR): <span class="math display">\[TNR = \frac{TN}{TN+FP}\]</span></p></li>
 </ul>
-<p>La precisión global o tasa de aciertos (<em>accuracy</em>; ACC) sería: <span class="math display">\[ACC = \frac{TP + TN}{P + N} = \frac{TP+TN}{TP+TN+FP+FN}\]</span> Sin embargo hay que tener cuidado con esta medida cuando las clases no están balanceadas<a href="#fn8" class="footnoteRef" id="fnref8"><sup>8</sup></a>. Otras medidas de la precisión global que tratan de evitar este problema son la <em>precisión balanceada</em> (<em>balanced accuracy</em>, BA): <span class="math display">\[BA = \frac{TPR + TNR}{2}\]</span> (media aritmética de TPR y TNR) o la <em>puntuación F1</em> (<em>F1 score</em>; media armónica de TPR y TNR): <span class="math display">\[F_1 = \frac{2TP}{2TP+FP+FN}\]</span> Otra medida global es el coeficiente kappa de Cohen, que compara la tasa de aciertos con la obtenida en una clasificación al azar (un valor de 1 indicaría máxima precisión y 0 que la precisión es igual a la que obtendríamos clasificando al azar; empleando la tasa de positivos, denominada <em>prevalencia</em>, para predecir positivo).</p>
+<p>La precisión global o tasa de aciertos (<em>accuracy</em>; ACC) sería: <span class="math display">\[ACC = \frac{TP + TN}{P + N} = \frac{TP+TN}{TP+TN+FP+FN}\]</span> Sin embargo hay que tener cuidado con esta medida cuando las clases no están balanceadas<a href="#fn9" class="footnoteRef" id="fnref9"><sup>9</sup></a>. Otras medidas de la precisión global que tratan de evitar este problema son la <em>precisión balanceada</em> (<em>balanced accuracy</em>, BA): <span class="math display">\[BA = \frac{TPR + TNR}{2}\]</span> (media aritmética de TPR y TNR) o la <em>puntuación F1</em> (<em>F1 score</em>; media armónica de TPR y TNR): <span class="math display">\[F_1 = \frac{2TP}{2TP+FP+FN}\]</span> Otra medida global es el coeficiente kappa de Cohen, que compara la tasa de aciertos con la obtenida en una clasificación al azar (un valor de 1 indicaría máxima precisión y 0 que la precisión es igual a la que obtendríamos clasificando al azar; empleando la tasa de positivos, denominada <em>prevalencia</em>, para predecir positivo).</p>
 <p>NOTA: La precisión global (ACC) no debe ser confundida con el índice predictivo positivo (<em>precision</em>, <em>positive predictive value</em>; PPV): <span class="math inline">\(PPV = TP/(TP+FP)\)</span>. <!-- $PPV = \frac{TP}{TP+FP}$ --></p>
 <p>Como ejemplo emplearemos los datos anteriores de valoraciones de viviendas y estatus de la población, considerando como respuesta una nueva variable <code>fmedv</code> que clasifica las valoraciones en “Bajo” o “Alto” dependiendo de si <code>medv &gt; 25</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># data(Boston, package = &quot;MASS&quot;)</span>
@@ -477,8 +553,8 @@ datos<span class="op">$</span>fmedv &lt;-<span class="st"> </span><span class="k
 ##  382  124</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">caret<span class="op">::</span><span class="kw">featurePlot</span>(datos<span class="op">$</span>lstat, datos<span class="op">$</span>fmedv, <span class="dt">plot =</span> <span class="st">&quot;density&quot;</span>,
             <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;lstat&quot;</span>, <span class="st">&quot;Density&quot;</span>), <span class="dt">auto.key =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<p><img src="01-introduccion_files/figure-html/unnamed-chunk-12-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<p>El siguiente código realiza la partición de los datos y posteriormente ajustar un modelo de regresión logística en la muestra de entrenamiento considerando <code>lstat</code> como única variable explicativa:</p>
+<p><img src="01-introduccion_files/figure-html/unnamed-chunk-14-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>El siguiente código realiza la partición de los datos y posteriormente ajusta un modelo de regresión logística en la muestra de entrenamiento considerando <code>lstat</code> como única variable explicativa (en el Capítulo 5 se darán más detalles sobre este tipo de modelos):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Particionado de los datos</span>
 <span class="kw">set.seed</span>(<span class="dv">1</span>)
 nobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(datos)
@@ -514,7 +590,7 @@ modelo &lt;-<span class="st"> </span><span class="kw">glm</span>(fmedv <span cla
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">obs &lt;-<span class="st"> </span>test<span class="op">$</span>fmedv
 p.est &lt;-<span class="st"> </span><span class="kw">predict</span>(modelo, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>, <span class="dt">newdata =</span> test)
 pred &lt;-<span class="st"> </span><span class="kw">factor</span>(p.est <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.5</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Bajo&quot;</span>, <span class="st">&quot;Alto&quot;</span>)) <span class="co"># levels = c(&#39;FALSE&#39;, &#39;TRUE&#39;)</span></code></pre></div>
-<p>Podemos obtener la matriz de confusión con el siguiente código:</p>
+<p>Finalmente podemos obtener la matriz de confusión con el siguiente código:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tabla &lt;-<span class="st"> </span><span class="kw">table</span>(obs, pred)
 <span class="co"># addmargins(tabla, FUN = list(Total = sum))</span>
 tabla</code></pre></div>
@@ -580,9 +656,10 @@ tabla</code></pre></div>
 <div class="footnotes">
 <hr />
 <ol start="6">
-<li id="fn6"><p>Suponiendo que los modelos se pueden ordenar del más simple al más complejo.<a href="const-eval.html#fnref6">↩</a></p></li>
-<li id="fn7"><p>Por ejemplo obtendríamos el mismo valor si desplazamos las predicciones sumando una constante (i.e. no tiene en cuenta el sesgo).<a href="const-eval.html#fnref7">↩</a></p></li>
-<li id="fn8"><p>También hay que tener cuidado las medidas que utilizan la prevalencia estimada a partir de la muestra de test, como el índice predictivo positivo y negativo, si la muestra de test no refleja lo que ocurre en la población (por ejemplo si la clase de interés está sobrerrepresentada en la muestra).<a href="const-eval.html#fnref8">↩</a></p></li>
+<li id="fn6"><p>Se podrían considerar otras funciones de pérdida, por ejemplo con la distancia <span class="math inline">\(L_1\)</span> sería la mediana condicional, pero las consideraciones serían análogas.<a href="const-eval.html#fnref6">↩</a></p></li>
+<li id="fn7"><p>Suponiendo que los modelos se pueden ordenar del más simple al más complejo.<a href="const-eval.html#fnref7">↩</a></p></li>
+<li id="fn8"><p>Por ejemplo obtendríamos el mismo valor si desplazamos las predicciones sumando una constante (i.e. no tiene en cuenta el sesgo).<a href="const-eval.html#fnref8">↩</a></p></li>
+<li id="fn9"><p>También hay que tener cuidado las medidas que utilizan la prevalencia estimada a partir de la muestra de test, como el índice predictivo positivo y negativo, si la muestra de test no refleja lo que ocurre en la población (por ejemplo si la clase de interés está sobrerrepresentada en la muestra).<a href="const-eval.html#fnref9">↩</a></p></li>
 </ol>
 </div>
             </section>

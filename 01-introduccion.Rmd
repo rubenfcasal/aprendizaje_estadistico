@@ -2,7 +2,7 @@
 
 <!-- 
 knitr::purl("01-introduccion.Rmd", documentation = 2)
-knitr::spin("01-introduccion.Rmd",knit = FALSE)
+knitr::spin("01-introduccion.R",knit = FALSE)
 -->
 
 ```{r , child = '_global_options.Rmd'}
@@ -26,6 +26,7 @@ Podríamos definir la Ciencia de Datos como el conjunto de conocimientos y herra
 -   El proceso de descubrir patrones y obtener conocimiento a partir de
     grandes conjuntos de datos (*Big Data*).
 
+Aunque esta ciencia incluiría también la gestión (sin olvidarnos del proceso de obtención) y la manipulación de los datos.
 
 ```{r esquema, echo=FALSE, out.width="80%", fig.cap="Etapas del proceso"}
 knitr::include_graphics("images/esquema2.png")
@@ -378,14 +379,24 @@ Sin embargo los errores de predicción en nuevas observaciones primero disminuye
 La línea vertical representa el equilibrio entre el sesgo y la varianza.
 Considerando un valor de complejidad a la izquierda de esa línea tendríamos infraajuste (mayor sesgo y menor varianza) y a la derecha sobreajuste (menor sesgo y mayor varianza).
 
+Desde un punto de vista más formal, considerando el modelo \@ref(eq:modelogeneral) y una función de pérdidas cuadrática, el predictor óptimo (desconocido) sería la media condicional $m(\mathbf{x}) = E\left( \left. Y\right\vert_{\mathbf{X}=\mathbf{x}} \right)$^[Se podrían considerar otras funciones de pérdida, por ejemplo con la distancia $L_1$ sería la mediana condicional, pero las consideraciones serían análogas.]. 
+Por tanto los predictores serían realmente estimaciones de la función de regresión, $\hat Y(\mathbf{x}) = \hat m(\mathbf{x})$ y podemos expresar la media del error cuadrático de predicción en términos del sesgo y la varianza:
+$$
+\begin{aligned}
+E \left( Y(\mathbf{x}_0) - \hat Y(\mathbf{x}_0) \right)^2 & = E \left( m(\mathbf{x}_0) + \varepsilon - \hat m(\mathbf{x}_0) \right)^2 = E \left( m(\mathbf{x}_0) - \hat m(\mathbf{x}_0) \right)^2 + \sigma^2 \\
+& = E^2 \left( m(\mathbf{x}_0) - \hat m(\mathbf{x}_0) \right) + Var\left( \hat m(\mathbf{x}_0) \right) + \sigma^2 \\
+& = \text{sesgo}^2 + \text{varianza} + \text{error irreducible}
+\end{aligned}
+$$
+donde $\mathbf{x}_0$ hace referencia al vector de valores de las variables explicativas de una nueva observación (no empleada en la construcción del predictor).
 
 En general, al aumentar la complejidad disminuye el sesgo y aumenta la varianza (y viceversa).
-Será necesario seleccionar los hiperparámetros de forma que haya un equilibrio entre el sesgo y la varianza (es lo que se conoce como *bias-variance tradeoff*).
+Esto es lo que se conoce como el dilema o compromiso entre el sesgo y la varianza (*bias-variance tradeoff*).
+La recomendación sería por tanto seleccionar los hiperparámetros (el modelo final) tratando de que haya un equilibrio entre el sesgo y la varianza.
 
 <!-- 
 PENDIENTE: 
 Gráfico equilibrio entre sesgo y varianza
-Ecuaciones a partir del modelo general
 -->
 
 ### Datos de entrenamiento y datos de test {#entrenamiento-test}
@@ -578,10 +589,41 @@ accuracy(predict(fit.1se, newdata = test), obs)
 
 ```
 
+```{exercise, label="train-validate-test"}
+```
+
+Considerando de nuevo el ejemplo anterior, particionar la muestra en datos de entrenamiento (70\%), de validación (15\%) y de test (15\%), para entrenar los modelos polinómicos, seleccionar el grado óptimo (el hiperparámetro) y evaluar las predicciones del modelo final, respectivamente.
+
+Podría ser de utilidad el siguiente código (basado en la aproximación de `rattle`), que particiona los datos suponiendo que están almacenados en el data.frame `df`:
+
+```{r}
+df <- Boston
+set.seed(1)
+nobs <- nrow(df)
+itrain <- sample(nobs, 0.7 * nobs)
+inotrain <- setdiff(seq_len(nobs), itrain)
+ivalidate <- sample(inotrain, 0.15 * nobs)
+itest <- setdiff(inotrain, ivalidate)
+train <- df[itrain, ]
+validate <- df[ivalidate, ]
+test <- df[itest, ]
+```    
+  
+Alternativamente podríamos emplear la función `split()` creando un factor que divida aleatoriamente los datos en tres grupos (versión "simplificada" de una propuesta en este [post](https://stackoverflow.com/questions/36068963/r-how-to-split-a-data-frame-into-training-validation-and-test-sets)):
+
+```{r}
+set.seed(1)
+p <- c(train = 0.7, validate = 0.15, test = 0.15)
+f <- sample( rep(factor(seq_along(p), labels = names(p)),
+                 times = nrow(df)*p/sum(p)) )
+samples <- suppressWarnings(split(df, f))
+str(samples)
+```
+
 
 ### Evaluación de un método de clasificación {#eval-class}
 
-Para estudiar la eficiencia de un método de clasificación supervisada se obtienen las predicciones para el conjunto de datos de test y se genera una tabla de contingencia, denominada *matriz de confusión*, con las predicciones frente a los valores reales.
+Para estudiar la eficiencia de un método de clasificación supervisada típicamente se obtienen las predicciones para el conjunto de datos de test y se genera una tabla de contingencia, denominada *matriz de confusión*, con las predicciones frente a los valores reales.
 
 En primer lugar consideraremos el caso de dos categorías.
 La matriz de confusión será de la forma:
@@ -626,7 +668,7 @@ caret::featurePlot(datos$lstat, datos$fmedv, plot = "density",
             labels = c("lstat", "Density"), auto.key = TRUE)
 ```
 
-El siguiente código realiza la partición de los datos y posteriormente ajustar un modelo de regresión logística en la muestra de entrenamiento considerando `lstat` como única variable explicativa:
+El siguiente código realiza la partición de los datos y posteriormente ajusta un modelo de regresión logística en la muestra de entrenamiento considerando `lstat` como única variable explicativa (en el Capítulo 5 se darán más detalles sobre este tipo de modelos):
 
 ```{r}
 # Particionado de los datos
@@ -648,7 +690,7 @@ p.est <- predict(modelo, type = "response", newdata = test)
 pred <- factor(p.est > 0.5, labels = c("Bajo", "Alto")) # levels = c('FALSE', 'TRUE')
 ```
 
-Podemos obtener la matriz de confusión con el siguiente código:
+Finalmente podemos obtener la matriz de confusión con el siguiente código:
 
 ```{r}
 tabla <- table(obs, pred)
