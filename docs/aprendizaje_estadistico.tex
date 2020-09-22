@@ -146,7 +146,7 @@
 (\href{mailto:ruben.fcasal@udc.es}{\nolinkurl{ruben.fcasal@udc.es}}),
 Julián Costa
 (\href{mailto:julian.costa@udc.es}{\nolinkurl{julian.costa@udc.es}})}
-\date{2020-09-17}
+\date{2020-09-22}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Teorema}[chapter]
@@ -509,8 +509,7 @@ supervisado y combinaremos la terminología propia de la Estadística con
 la empleada en AE (por ejemplo, en Estadística es habitual considerar un
 problema de clasificación como un caso particular de regresión).
 
-\subsection{Notación y
-terminología}\label{notaciuxf3n-y-terminologuxeda}
+\subsection{Notación y terminología}\label{notacion}
 
 Denotaremos por \(\mathbf{X}=(X_1, X_2, \ldots, X_p)\) al vector formado
 por las variables predictoras (variables explicativas o variables
@@ -1596,24 +1595,94 @@ precisión:
 ## 
 \end{verbatim}
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+Si el método de clasificación proporciona estimaciones de las
+probabilidades de las categorías, disponemos de más información en la
+clasificación que también podemos emplear en la evaluación del
+rendimiento. Por ejemplo, se puede realizar un analisis descriptivo de
+las probabilidades estimadas y las categorías observadas en la muestra
+de test:
 
-\textbf{\emph{A partir de aquí en preparación\ldots{}}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Imitamos la función caret::plotClassProbs()}
+\KeywordTok{library}\NormalTok{(lattice) }
+\KeywordTok{histogram}\NormalTok{(}\OperatorTok{~}\StringTok{ }\NormalTok{p.est }\OperatorTok{|}\StringTok{ }\NormalTok{obs, }\DataTypeTok{xlab =} \StringTok{"Probabilidad estimada de 'Alto'"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/unnamed-chunk-19-1} \end{center}
 
-Evaluación de las estimaciones de las probabilidades:
+Para evaluar las estimaciones de las probabilidades se suele emplear la
+curva ROC (\emph{receiver operating characteristics}, característica
+operativa del receptor; diseñada inicialmente en el campo de la
+deteccción de señales). Como ya se comentó, normalmente se emplea
+\(c = 0.5\) como punto de corte para clasificar en la categoría de
+interés, aunque se podrían considerar otros valores (por ejemplo para
+mejorar la clasificación en una de las categorías, a costa de empeorar
+la precisión global). En la curva ROC se representa la sensibilidad
+(TPR) frente a la tasa de falsos negativos (FNR = 1 - TNR = 1 -
+especificidad) para distintos valores de corte. Para ello se puede
+emplear el paquete \texttt{pROC}:
 
-Curva ROC
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(pROC)}
+\NormalTok{roc_glm <-}\StringTok{ }\KeywordTok{roc}\NormalTok{(}\DataTypeTok{response =}\NormalTok{ obs, }\DataTypeTok{predictor =}\NormalTok{ p.est)}
+\CommentTok{# View((as.data.frame(roc_glm[2:4])))}
+\KeywordTok{plot}\NormalTok{(roc_glm)}
+\end{Highlighting}
+\end{Shaded}
 
-AUC
+\begin{figure}[!htb]
 
-Caso de más de dos categorías:
+{\centering \includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/ROC-curve-1} 
 
-Medidas globales: precisión y kappa.
+}
 
-Medidas por categoría: estrategia ``uno contra todos''.
-\texttt{caret::confusionMatrix()\$byClass}
+\caption{Curva ROC correspondiente al modelo de regresión logística.}\label{fig:ROC-curve}
+\end{figure}
+
+Lo ideal sería que la curva se aproximase a la esquina superior
+izquierda (máxima sensibilidad y especificidad). La recta diagonal se
+correspondería con un clasificador aleatorio. Una medida global del
+rendimiento del clasificador es el área bajo la curva ROC (AUC;
+equivalente al estadístico U de Mann-Whitney o al índice de Gini). Un
+clasificador perfecto tendría un valor de 1 y 0.5 uno aleatorio.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# roc_glm$auc}
+\NormalTok{roc_glm}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## roc.default(response = obs, predictor = p.est)
+## 
+## Data: p.est in 82 controls (obs Bajo) < 20 cases (obs Alto).
+## Area under the curve: 0.8427
+\end{verbatim}
+
+Como comentario adicional, aunque se puede modificar el punto de corte
+para mejorar la clasificación en la categoría de interés (de hecho,
+algunas herramientas como \texttt{h2o} lo modifican por defecto; en este
+caso concreto para maximizar \(F_1\) en la muestra de entrenamiento),
+muchos métodos de clasificación (como los basados en árboles descritos
+en el Capítulo 2) admiten como opción una matriz de pérdidas que se
+tendrá en cuenta para medir la eficiencia durante el aprendizaje y
+normalmente esta sería la aproximación recomendada.
+
+En el caso de más de dos categorías podríamos generar una matriz de
+confusión de forma análoga, aunque en este caso en principio solo
+podríamos calcular medidas globales de la precisión como la tasa de
+aciertos o el coeficiente kappa de Cohen. Podríamos obtener también
+medidas por clase, como la sensibilidad y la especificidad, siguiendo la
+estrategia ``uno contra todos'' descrita en la Sección \ref{notacion}.
+Esta aproximación es la que sigue la función \texttt{confusionMatrix()}
+del paquete \texttt{caret} (devuelve las medidas comparando cada
+categoría con las restantes en el componente \texttt{\$byClass}).
 
 \section{La maldición de la
 dimensionalidad}\label{la-maldiciuxf3n-de-la-dimensionalidad}

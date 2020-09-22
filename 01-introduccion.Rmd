@@ -149,7 +149,7 @@ El *aprendizaje supervisado* engloba los métodos predictivos, en los que una de
 En este libro nos centraremos únicamente en el campo del aprendizaje supervisado y combinaremos la terminología propia de la Estadística con la empleada en AE (por ejemplo, en Estadística es habitual considerar un problema de clasificación como un caso particular de regresión).
 
 
-### Notación y terminología
+### Notación y terminología {#notacion}
 
 <!-- Emplearemos principalmente la terminología estadística, pero trataremos de incluir también la de ML -->
 
@@ -708,25 +708,44 @@ Alternativamente se podría emplear la función `confusionMatrix()` del paquete 
 caret::confusionMatrix(pred, obs, positive = "Alto", mode = "everything")
 ```
 
----
+Si el método de clasificación proporciona estimaciones de las probabilidades de las categorías, disponemos de más información en la clasificación que también podemos emplear en la evaluación del rendimiento.
+Por ejemplo, se puede realizar un analisis descriptivo de las probabilidades estimadas y las categorías observadas en la muestra de test:
 
-***A partir de aquí en preparación...***
-
----
-
-Evaluación de las estimaciones de las probabilidades: 
-
-Curva ROC
-
-AUC
+```{r}
+# Imitamos la función caret::plotClassProbs()
+library(lattice) 
+histogram(~ p.est | obs, xlab = "Probabilidad estimada de 'Alto'")
+```
 
 
-Caso de más de dos categorías: 
+Para evaluar las estimaciones de las probabilidades se suele emplear la curva ROC (*receiver operating characteristics*, característica operativa del receptor; diseñada inicialmente en el campo de la deteccción de señales).
+Como ya se comentó, normalmente se emplea $c = 0.5$ como punto de corte para clasificar en la categoría de interés, aunque se podrían considerar otros valores (por ejemplo para mejorar la clasificación en una de las categorías, a costa de empeorar la precisión global).
+En la curva ROC se representa la sensibilidad (TPR) frente a la tasa de falsos negativos (FNR = 1 - TNR = 1 - especificidad) para distintos valores de corte.
+Para ello se puede emplear el paquete `pROC`:
 
-Medidas globales: precisión y kappa.
+```{r ROC-curve, fig.cap="Curva ROC correspondiente al modelo de regresión logística."}
+library(pROC)
+roc_glm <- roc(response = obs, predictor = p.est)
+# View((as.data.frame(roc_glm[2:4])))
+plot(roc_glm)
+```
 
-Medidas por categoría: estrategia “uno contra todos”.
-`caret::confusionMatrix()$byClass`
+Lo ideal sería que la curva se aproximase a la esquina superior izquierda (máxima sensibilidad y especificidad). 
+La recta diagonal se correspondería con un clasificador aleatorio.
+Una medida global del rendimiento del clasificador es el área bajo la curva ROC (AUC; equivalente al estadístico U de Mann-Whitney o al índice de Gini).
+Un clasificador perfecto tendría un valor de 1 y 0.5 uno aleatorio.
+
+```{r}
+# roc_glm$auc
+roc_glm
+```
+
+Como comentario adicional, aunque se puede modificar el punto de corte para mejorar la clasificación en la categoría de interés (de hecho, algunas herramientas como `h2o` lo modifican por defecto; en este caso concreto para maximizar $F_1$ en la muestra de entrenamiento), muchos métodos de clasificación (como los basados en árboles descritos en el Capítulo 2) admiten como opción una matriz de pérdidas que se tendrá en cuenta para medir la eficiencia durante el aprendizaje y normalmente esta sería la aproximación recomendada.
+
+En el caso de más de dos categorías podríamos generar una matriz de confusión de forma análoga,
+aunque en este caso en principio solo podríamos calcular medidas globales de la precisión como la tasa de aciertos o el coeficiente kappa de Cohen.
+Podríamos obtener también medidas por clase, como la sensibilidad y la especificidad, siguiendo la estrategia “uno contra todos” descrita en la Sección \@ref(notacion).
+Esta aproximación es la que sigue la función `confusionMatrix()` del paquete `caret` (devuelve las medidas comparando cada categoría con las restantes en el componente `$byClass`).
 
 
 ## La maldición de la dimensionalidad
