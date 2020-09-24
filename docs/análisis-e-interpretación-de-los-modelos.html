@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Bibliografía básica | Aprendizaje Estadístico</title>
+  <title>1.5 Análisis e interpretación de los modelos | Aprendizaje Estadístico</title>
   <meta name="description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
   <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Bibliografía básica | Aprendizaje Estadístico" />
+  <meta property="og:title" content="1.5 Análisis e interpretación de los modelos | Aprendizaje Estadístico" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="rubenfcasal/aprendizaje_estadistico" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Bibliografía básica | Aprendizaje Estadístico" />
+  <meta name="twitter:title" content="1.5 Análisis e interpretación de los modelos | Aprendizaje Estadístico" />
   
   <meta name="twitter:description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="referencias.html"/>
-<link rel="next" href="bibliografía-complementaria.html"/>
+<link rel="prev" href="la-maldición-de-la-dimensionalidad.html"/>
+<link rel="next" href="caret.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -167,19 +167,37 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="bibliografía-básica" class="section level2 unnumbered">
-<h2>Bibliografía básica</h2>
-<p>James, G., Witten, D., Hastie, T. y Tibshirani, R. (2017). <em><a href="http://faculty.marshall.usc.edu/gareth-james/ISL">An Introduction to Statistical Learning: with Aplications in R</a></em>. Springer.</p>
-<p>Kuhn, M. y Johnson, K. (2013). <em><a href="http://appliedpredictivemodeling.com">Applied predictive modeling</a></em>. Springer.</p>
-<p>Williams, G. (2011). <em>Data Mining with Rattle and R</em>. Springer.</p>
+<div id="análisis-e-interpretación-de-los-modelos" class="section level2">
+<h2><span class="header-section-number">1.5</span> Análisis e interpretación de los modelos</h2>
+<p>El análisis e interpretación de modelos es un campo muy activo en AE/ML, para el que recientemente se ha acuñado el término de <em>interpretable machine learning</em> (IML). A continuación se resumen brevemente algunas de las principales ideas, para más detalles ver por ejemplo <a href="https://christophm.github.io/interpretable-ml-book">Molnar (2020)</a>.</p>
+<p>Como ya se comentó, a medida que aumenta la complejidad de los modelos normalmente disminuye su interpretabilidad, por lo que normalmente interesa encontrar el modelo más simple posible que resulte de utilidad para los objetivos propuestos. Aunque el principal objetivo sea la predicción, una vez obtenido el modelo final suele interesar medir la importancia de cada predictor en el modelo y si es posible como influyen en la predicción de la respuesta, es decir, estudiar el efecto de las variables explicativas. Esto puede presentar serias dificultades especialmente en modelos complejos en los que hay interacciones entre los predictores (el efecto de una variable explicativa depende de los valores de otras).</p>
+<p>La mayoría de los métodos de aprendizaje supervisado permiten obtener medidas de la importancia de las variables explicativas en la predicción (ver p.e. la <a href="https://topepo.github.io/caret/variable-importance.html">ayuda</a> de la función <code>caret::varImp()</code>; algunos, como los basados en árboles, incluso de las no incluidas en el modelo final). Muchos de los métodos de clasificación, en lugar de proporcionar medidas globales, calculan medidas para cada categoría. Alternativamente también se pueden obtener medidas independientes del modelo empleado, pero suelen requerir de mucho más tiempo de computación (ver p.e. <a href="https://christophm.github.io/interpretable-ml-book">Molnar, 2020</a>, <a href="https://christophm.github.io/interpretable-ml-book/agnostic.htm">Capítulo 5</a>).</p>
+<p>En algunos de los métodos se modela explícitamente los efectos de los distintos predictores y estos se pueden analizar con (mas o menos) facilidad. Hay que tener en cuenta que, al margen de las interacciones, la colinealidad/concurvidad dificulta notablemente el estudio de los efectos de las variables explicativas. Otros métodos son más del tipo “caja negra” (<em>black box</em>) y precisan de aproximaciones más generales, como los gráficos PDP (<em>Partial Dependence Plots</em>; Friedman y Popescu, 2008; ver también <a href="https://journal.r-project.org/archive/2017/RJ-2017-016/index.html">Greenwell, 2017</a>) o las curvas ICE (<em>Individual Conditional Expectation</em>; <a href="https://doi.org/10.1080/10618600.2014.907095">Goldstein <em>et al.</em> , 2015</a>). Estos métodos<a href="#fn11" class="footnoteRef" id="fnref11"><sup>11</sup></a> tratan de estimar el efecto marginal de las variables explicativas, es decir, la variación en la predicción a medida que varía una variable explicativa manteniendo constantes el resto. La principal diferencia entre ambas aproximaciones es que los gráficos PDP muestran una única curva con el promedio de la respuesta mientras que las curvas ICE muestran una curva para cada observación (para más detalles ver las referencias anteriores).</p>
+<p>Paquetes y funciones de R:</p>
+<ul>
+<li><p><a href="https://bgreenwell.github.io/pdp/index.html"><code>pdp</code></a>: Partial Dependence Plots</p>
+<p>(también implementa curvas ICE y es compatible con <code>caret</code>)</p></li>
+<li><p><a href="https://christophm.github.io/iml"><code>iml</code></a>: Interpretable Machine Learning</p></li>
+<li><p><a href="https://modeloriented.github.io/DALEX"><code>DALEX</code></a>: moDel Agnostic Language for Exploration and eXplanation</p></li>
+<li><p><a href="https://lime.data-imaginist.com"><code>lime</code></a>: Local Interpretable Model-Agnostic Explanations</p></li>
+<li><p><a href="https://koalaverse.github.io/vip/index.html"><code>vip</code></a>: Variable Importance Plots</p></li>
+<li><p><code>caret::varImp()</code>, <code>h2o::h2o.partialPplot()</code>…</p></li>
+</ul>
+<p>En los siguientes capítulos se mostrarán ejemplos empleando algunas de estas herramientas.</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="11">
+<li id="fn11"><p>Similares a los gráficos parciales de residuos de los modelos lineales o aditivos (ver p.e. las funciones <code>termplot()</code>, <code>car::crPlots()</code> o <code>car::avPlots()</code>).<a href="análisis-e-interpretación-de-los-modelos.html#fnref11">↩</a></p></li>
+</ol>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="referencias.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="bibliografía-complementaria.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="la-maldición-de-la-dimensionalidad.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="caret.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -210,7 +228,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rubenfcasal/aprendizaje_estadistico/edit/master/10-referencias.Rmd",
+"link": "https://github.com/rubenfcasal/aprendizaje_estadistico/edit/master/01-introduccion.Rmd",
 "text": "Edit"
 },
 "history": {

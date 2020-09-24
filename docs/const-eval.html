@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)" />
 
 
-<meta name="date" content="2020-09-22" />
+<meta name="date" content="2020-09-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -125,7 +125,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.3.5" data-path="const-eval.html"><a href="const-eval.html#eval-class"><i class="fa fa-check"></i><b>1.3.5</b> Evaluación de un método de clasificación</a></li>
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="la-maldición-de-la-dimensionalidad.html"><a href="la-maldición-de-la-dimensionalidad.html"><i class="fa fa-check"></i><b>1.4</b> La maldición de la dimensionalidad</a></li>
-<li class="chapter" data-level="1.5" data-path="caret.html"><a href="caret.html"><i class="fa fa-check"></i><b>1.5</b> Introducción al paquete <code>caret</code></a></li>
+<li class="chapter" data-level="1.5" data-path="análisis-e-interpretación-de-los-modelos.html"><a href="análisis-e-interpretación-de-los-modelos.html"><i class="fa fa-check"></i><b>1.5</b> Análisis e interpretación de los modelos</a></li>
+<li class="chapter" data-level="1.6" data-path="caret.html"><a href="caret.html"><i class="fa fa-check"></i><b>1.6</b> Introducción al paquete <code>caret</code></a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="trees.html"><a href="trees.html"><i class="fa fa-check"></i><b>2</b> Árboles de decisión</a><ul>
 <li class="chapter" data-level="2.1" data-path="árboles-de-regresión-cart.html"><a href="árboles-de-regresión-cart.html"><i class="fa fa-check"></i><b>2.1</b> Árboles de regresión CART</a></li>
@@ -320,7 +321,7 @@ Gráfico equilibrio entre sesgo y varianza
 <li><p>Conjunto de datos de test para evaluar el rendimiento de los modelos.</p></li>
 </ul>
 <p>Los datos de test deberían utilizarse únicamente para evaluar los modelos finales, no se deberían emplear para seleccionar hiperparámetros. Para seleccionalos se podría volver a particionar los datos de entrenamiento, es decir, dividir la muestra en tres subconjuntos: datos de entrenamiento, de validación y de test (por ejemplo considerando un 70%, 15% y 15% de las observaciones, respectivamente). Para cada combinación de hiperparámetros se ajustaría el correspondiente modelo con los datos de entrenamiento, se emplearían los de validación para evaluarlos y posteriormente seleccionar los valores “óptimos”. Por último, se emplean los datos de test para evaluar el rendimiento del modelo seleccionado. No obstante, lo más habitual es seleccionar los hiperparámetros empleando validación cruzada (o otro tipo de remuestreo) en la muestra de entrenamiento, en lugar de considerar una muestra adicional de validación. En la siguiente sección se describirá esta última aproximación.</p>
-<p>En R se puede realizar el particionamiento de los datos empleando la función <code>sample()</code> del paquete base (otra alternativa sería emplear la función <code>createDataPartition</code> del paquete <code>caret</code> como se describe en la Sección <a href="caret.html#caret">1.5</a>). Típicamente se selecciona el 80% de los datos como muestra de entrenamiento y el 20% restante como muestra de test, aunque esto dependería del número de datos.</p>
+<p>En R se puede realizar el particionamiento de los datos empleando la función <code>sample()</code> del paquete base (otra alternativa sería emplear la función <code>createDataPartition</code> del paquete <code>caret</code> como se describe en la Sección <a href="caret.html#caret">1.6</a>). Típicamente se selecciona el 80% de los datos como muestra de entrenamiento y el 20% restante como muestra de test, aunque esto dependería del número de datos.</p>
 <p>Como ejemplo consideraremos el conjunto de datos <code>Boston</code> del paquete <code>MASS</code> que contiene, entre otros datos, la valoración de las viviendas (<code>medv</code>, mediana de los valores de las viviendas ocupadas, en miles de dólares) y el porcentaje de población con “menor estatus” (<code>lstat</code>) en los suburbios de Boston. Podemos contruir las muestras de entrenamiento (80%) y de test (20%) con el siguiente código:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(Boston, <span class="dt">package =</span> <span class="st">&quot;MASS&quot;</span>)
 <span class="co"># ?Boston</span>
@@ -647,7 +648,7 @@ tabla</code></pre></div>
 <span class="kw">library</span>(lattice) 
 <span class="kw">histogram</span>(<span class="op">~</span><span class="st"> </span>p.est <span class="op">|</span><span class="st"> </span>obs, <span class="dt">xlab =</span> <span class="st">&quot;Probabilidad estimada de &#39;Alto&#39;&quot;</span>)</code></pre></div>
 <p><img src="01-introduccion_files/figure-html/unnamed-chunk-19-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<p>Para evaluar las estimaciones de las probabilidades se suele emplear la curva ROC (<em>receiver operating characteristics</em>, característica operativa del receptor; diseñada inicialmente en el campo de la deteccción de señales). Como ya se comentó, normalmente se emplea <span class="math inline">\(c = 0.5\)</span> como punto de corte para clasificar en la categoría de interés, aunque se podrían considerar otros valores (por ejemplo para mejorar la clasificación en una de las categorías, a costa de empeorar la precisión global). En la curva ROC se representa la sensibilidad (TPR) frente a la tasa de falsos negativos (FNR = 1 - TNR = 1 - especificidad) para distintos valores de corte. Para ello se puede emplear el paquete <code>pROC</code>:</p>
+<p>Para evaluar las estimaciones de las probabilidades se suele emplear la curva ROC (<em>receiver operating characteristics</em>, característica operativa del receptor; diseñada inicialmente en el campo de la deteccción de señales). Como ya se comentó, normalmente se emplea <span class="math inline">\(c = 0.5\)</span> como punto de corte para clasificar en la categoría de interés (es lo que se conoce como <em>regla de Bayes</em>), aunque se podrían considerar otros valores (por ejemplo para mejorar la clasificación en una de las categorías, a costa de empeorar la precisión global). En la curva ROC se representa la sensibilidad (TPR) frente a la tasa de falsos negativos (FNR = 1 - TNR = 1 - especificidad) para distintos valores de corte. Para ello se puede emplear el paquete <code>pROC</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(pROC)
 roc_glm &lt;-<span class="st"> </span><span class="kw">roc</span>(<span class="dt">response =</span> obs, <span class="dt">predictor =</span> p.est)
 <span class="co"># View((as.data.frame(roc_glm[2:4])))</span>
@@ -658,6 +659,7 @@ roc_glm &lt;-<span class="st"> </span><span class="kw">roc</span>(<span class="d
 Figura 1.5: Curva ROC correspondiente al modelo de regresión logística.
 </p>
 </div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot(roc_glm, legacy.axes = TRUE)</span></code></pre></div>
 <p>Lo ideal sería que la curva se aproximase a la esquina superior izquierda (máxima sensibilidad y especificidad). La recta diagonal se correspondería con un clasificador aleatorio. Una medida global del rendimiento del clasificador es el área bajo la curva ROC (AUC; equivalente al estadístico U de Mann-Whitney o al índice de Gini). Un clasificador perfecto tendría un valor de 1 y 0.5 uno aleatorio.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># roc_glm$auc</span>
 roc_glm</code></pre></div>
@@ -667,8 +669,61 @@ roc_glm</code></pre></div>
 ## 
 ## Data: p.est in 82 controls (obs Bajo) &lt; 20 cases (obs Alto).
 ## Area under the curve: 0.8427</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ci.auc</span>(roc_glm)</code></pre></div>
+<pre><code>## 95% CI: 0.7428-0.9426 (DeLong)</code></pre>
 <p>Como comentario adicional, aunque se puede modificar el punto de corte para mejorar la clasificación en la categoría de interés (de hecho, algunas herramientas como <code>h2o</code> lo modifican por defecto; en este caso concreto para maximizar <span class="math inline">\(F_1\)</span> en la muestra de entrenamiento), muchos métodos de clasificación (como los basados en árboles descritos en el Capítulo 2) admiten como opción una matriz de pérdidas que se tendrá en cuenta para medir la eficiencia durante el aprendizaje y normalmente esta sería la aproximación recomendada.</p>
 <p>En el caso de más de dos categorías podríamos generar una matriz de confusión de forma análoga, aunque en este caso en principio solo podríamos calcular medidas globales de la precisión como la tasa de aciertos o el coeficiente kappa de Cohen. Podríamos obtener también medidas por clase, como la sensibilidad y la especificidad, siguiendo la estrategia “uno contra todos” descrita en la Sección <a href="métodos-de-aprendizaje-estadístico.html#notacion">1.2.1</a>. Esta aproximación es la que sigue la función <code>confusionMatrix()</code> del paquete <code>caret</code> (devuelve las medidas comparando cada categoría con las restantes en el componente <code>$byClass</code>).</p>
+<p>Como ejemplo ilustrativo consideraremos el conocido conjunto de datos <code>iris</code> (Fisher, 1936) en el que el objetivo es clasificar flores de lirio en tres especies (<code>Species</code>) a partir del largo y ancho de sépalos y pétalos, aunque en este caso emplearemos un clasificador aleatorio.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(iris)
+<span class="co"># Partición de los datos</span>
+datos &lt;-<span class="st"> </span>iris
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+nobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(datos)
+itrain &lt;-<span class="st"> </span><span class="kw">sample</span>(nobs, <span class="fl">0.8</span> <span class="op">*</span><span class="st"> </span>nobs)
+train &lt;-<span class="st"> </span>datos[itrain, ]
+test &lt;-<span class="st"> </span>datos[<span class="op">-</span>itrain, ]
+<span class="co"># Entrenamiento </span>
+prevalences &lt;-<span class="st"> </span><span class="kw">table</span>(train<span class="op">$</span>Species)<span class="op">/</span><span class="kw">nrow</span>(train)
+prevalences</code></pre></div>
+<pre><code>## 
+##     setosa versicolor  virginica 
+##  0.3250000  0.3166667  0.3583333</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Calculo de las predicciones</span>
+levels &lt;-<span class="st"> </span><span class="kw">names</span>(prevalences) <span class="co"># levels(train$Species)</span>
+f &lt;-<span class="st"> </span><span class="kw">factor</span>(levels, <span class="dt">levels =</span> levels) <span class="co"># factor(levels) valdría en este caso al estar por orden alfabético</span>
+pred.rand &lt;-<span class="st"> </span><span class="kw">sample</span>(f, <span class="kw">nrow</span>(test), <span class="dt">replace =</span> <span class="ot">TRUE</span>, <span class="dt">prob =</span> prevalences)
+<span class="co"># Evaluación</span>
+caret<span class="op">::</span><span class="kw">confusionMatrix</span>(pred.rand, test<span class="op">$</span>Species)</code></pre></div>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##             Reference
+## Prediction   setosa versicolor virginica
+##   setosa          3          3         1
+##   versicolor      4          2         5
+##   virginica       4          7         1
+## 
+## Overall Statistics
+##                                           
+##                Accuracy : 0.2             
+##                  95% CI : (0.0771, 0.3857)
+##     No Information Rate : 0.4             
+##     P-Value [Acc &gt; NIR] : 0.9943          
+##                                           
+##                   Kappa : -0.1862         
+##                                           
+##  Mcnemar&#39;s Test P-Value : 0.5171          
+## 
+## Statistics by Class:
+## 
+##                      Class: setosa Class: versicolor Class: virginica
+## Sensitivity                 0.2727           0.16667          0.14286
+## Specificity                 0.7895           0.50000          0.52174
+## Pos Pred Value              0.4286           0.18182          0.08333
+## Neg Pred Value              0.6522           0.47368          0.66667
+## Prevalence                  0.3667           0.40000          0.23333
+## Detection Rate              0.1000           0.06667          0.03333
+## Detection Prevalence        0.2333           0.36667          0.40000
+## Balanced Accuracy           0.5311           0.33333          0.33230</code></pre>
 </div>
 </div>
 <div class="footnotes">

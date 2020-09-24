@@ -146,7 +146,7 @@
 (\href{mailto:ruben.fcasal@udc.es}{\nolinkurl{ruben.fcasal@udc.es}}),
 Julián Costa
 (\href{mailto:julian.costa@udc.es}{\nolinkurl{julian.costa@udc.es}})}
-\date{2020-09-22}
+\date{2020-09-24}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Teorema}[chapter]
@@ -1617,12 +1617,13 @@ curva ROC (\emph{receiver operating characteristics}, característica
 operativa del receptor; diseñada inicialmente en el campo de la
 deteccción de señales). Como ya se comentó, normalmente se emplea
 \(c = 0.5\) como punto de corte para clasificar en la categoría de
-interés, aunque se podrían considerar otros valores (por ejemplo para
-mejorar la clasificación en una de las categorías, a costa de empeorar
-la precisión global). En la curva ROC se representa la sensibilidad
-(TPR) frente a la tasa de falsos negativos (FNR = 1 - TNR = 1 -
-especificidad) para distintos valores de corte. Para ello se puede
-emplear el paquete \texttt{pROC}:
+interés (es lo que se conoce como \emph{regla de Bayes}), aunque se
+podrían considerar otros valores (por ejemplo para mejorar la
+clasificación en una de las categorías, a costa de empeorar la precisión
+global). En la curva ROC se representa la sensibilidad (TPR) frente a la
+tasa de falsos negativos (FNR = 1 - TNR = 1 - especificidad) para
+distintos valores de corte. Para ello se puede emplear el paquete
+\texttt{pROC}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1641,6 +1642,12 @@ emplear el paquete \texttt{pROC}:
 
 \caption{Curva ROC correspondiente al modelo de regresión logística.}\label{fig:ROC-curve}
 \end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# plot(roc_glm, legacy.axes = TRUE)}
+\end{Highlighting}
+\end{Shaded}
 
 Lo ideal sería que la curva se aproximase a la esquina superior
 izquierda (máxima sensibilidad y especificidad). La recta diagonal se
@@ -1665,6 +1672,16 @@ clasificador perfecto tendría un valor de 1 y 0.5 uno aleatorio.
 ## Area under the curve: 0.8427
 \end{verbatim}
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ci.auc}\NormalTok{(roc_glm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 95% CI: 0.7428-0.9426 (DeLong)
+\end{verbatim}
+
 Como comentario adicional, aunque se puede modificar el punto de corte
 para mejorar la clasificación en la categoría de interés (de hecho,
 algunas herramientas como \texttt{h2o} lo modifican por defecto; en este
@@ -1684,15 +1701,464 @@ Esta aproximación es la que sigue la función \texttt{confusionMatrix()}
 del paquete \texttt{caret} (devuelve las medidas comparando cada
 categoría con las restantes en el componente \texttt{\$byClass}).
 
+Como ejemplo ilustrativo consideraremos el conocido conjunto de datos
+\texttt{iris} (Fisher, 1936) en el que el objetivo es clasificar flores
+de lirio en tres especies (\texttt{Species}) a partir del largo y ancho
+de sépalos y pétalos, aunque en este caso emplearemos un clasificador
+aleatorio.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{data}\NormalTok{(iris)}
+\CommentTok{# Partición de los datos}
+\NormalTok{datos <-}\StringTok{ }\NormalTok{iris}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{nobs <-}\StringTok{ }\KeywordTok{nrow}\NormalTok{(datos)}
+\NormalTok{itrain <-}\StringTok{ }\KeywordTok{sample}\NormalTok{(nobs, }\FloatTok{0.8} \OperatorTok{*}\StringTok{ }\NormalTok{nobs)}
+\NormalTok{train <-}\StringTok{ }\NormalTok{datos[itrain, ]}
+\NormalTok{test <-}\StringTok{ }\NormalTok{datos[}\OperatorTok{-}\NormalTok{itrain, ]}
+\CommentTok{# Entrenamiento }
+\NormalTok{prevalences <-}\StringTok{ }\KeywordTok{table}\NormalTok{(train}\OperatorTok{$}\NormalTok{Species)}\OperatorTok{/}\KeywordTok{nrow}\NormalTok{(train)}
+\NormalTok{prevalences}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##     setosa versicolor  virginica 
+##  0.3250000  0.3166667  0.3583333
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Calculo de las predicciones}
+\NormalTok{levels <-}\StringTok{ }\KeywordTok{names}\NormalTok{(prevalences) }\CommentTok{# levels(train$Species)}
+\NormalTok{f <-}\StringTok{ }\KeywordTok{factor}\NormalTok{(levels, }\DataTypeTok{levels =}\NormalTok{ levels) }\CommentTok{# factor(levels) valdría en este caso al estar por orden alfabético}
+\NormalTok{pred.rand <-}\StringTok{ }\KeywordTok{sample}\NormalTok{(f, }\KeywordTok{nrow}\NormalTok{(test), }\DataTypeTok{replace =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{prob =}\NormalTok{ prevalences)}
+\CommentTok{# Evaluación}
+\NormalTok{caret}\OperatorTok{::}\KeywordTok{confusionMatrix}\NormalTok{(pred.rand, test}\OperatorTok{$}\NormalTok{Species)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Confusion Matrix and Statistics
+## 
+##             Reference
+## Prediction   setosa versicolor virginica
+##   setosa          3          3         1
+##   versicolor      4          2         5
+##   virginica       4          7         1
+## 
+## Overall Statistics
+##                                           
+##                Accuracy : 0.2             
+##                  95% CI : (0.0771, 0.3857)
+##     No Information Rate : 0.4             
+##     P-Value [Acc > NIR] : 0.9943          
+##                                           
+##                   Kappa : -0.1862         
+##                                           
+##  Mcnemar's Test P-Value : 0.5171          
+## 
+## Statistics by Class:
+## 
+##                      Class: setosa Class: versicolor Class: virginica
+## Sensitivity                 0.2727           0.16667          0.14286
+## Specificity                 0.7895           0.50000          0.52174
+## Pos Pred Value              0.4286           0.18182          0.08333
+## Neg Pred Value              0.6522           0.47368          0.66667
+## Prevalence                  0.3667           0.40000          0.23333
+## Detection Rate              0.1000           0.06667          0.03333
+## Detection Prevalence        0.2333           0.36667          0.40000
+## Balanced Accuracy           0.5311           0.33333          0.33230
+\end{verbatim}
+
 \section{La maldición de la
 dimensionalidad}\label{la-maldiciuxf3n-de-la-dimensionalidad}
 
-En preparación\ldots{}
+Podríamos pensar que al aumentar el número de variables explicativas se
+mejora la capacidad predictiva de los modelos. Lo cual, en general,
+sería cierto si realmente los predictores fuesen de utilidad para
+explicar la respuesta. Sin embargo, al aumentar el número de dimensiones
+se pueden agravar notablemente muchos de los problemas que ya pueden
+aparecer en dimensiones menores, esto es lo que se conoce como la
+\emph{maldición de la dimensionalidad} (\emph{curse of dimensionality},
+Bellman, 1961).
+
+Uno de estos problemas es el denominado \emph{efecto frontera} que ya
+puede aparecer en una dimensión, especialmente al trabajar con modelos
+flexibles (como ajustes polinómicos con grados altos o los métodos
+locales que trataremos en el Capítulo 6). La idea es que en la
+``frontera'' del rango de valores de una variable explicativa vamos a
+disponer de pocos datos y los errores de predicción van a tener gran
+variabilidad (se están haciendo extrapolaciones de los datos, más que
+interpolaciones, y van a ser menos fiables).
+
+Como ejemplo consideraremos un problema de regresión simple, con un
+conjunto de datos simulados (del proceso ya considerado en la Sección
+\ref{bias-variance}) con 100 observaciones (que ya podríamos considerar
+que no es muy pequeño).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Simulación datos}
+\NormalTok{n <-}\StringTok{ }\DecValTok{100}
+\NormalTok{x <-}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DataTypeTok{length =}\NormalTok{ n)}
+\NormalTok{mu <-}\StringTok{ }\DecValTok{2} \OperatorTok{+}\StringTok{ }\DecValTok{4}\OperatorTok{*}\NormalTok{(}\DecValTok{5}\OperatorTok{*}\NormalTok{x }\OperatorTok{-}\StringTok{ }\DecValTok{1}\NormalTok{)}\OperatorTok{*}\NormalTok{(}\DecValTok{4}\OperatorTok{*}\NormalTok{x }\OperatorTok{-}\StringTok{ }\DecValTok{2}\NormalTok{)}\OperatorTok{*}\NormalTok{(x }\OperatorTok{-}\StringTok{ }\FloatTok{0.8}\NormalTok{)}\OperatorTok{^}\DecValTok{2} \CommentTok{# grado 4}
+\NormalTok{sd <-}\StringTok{ }\FloatTok{0.5}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{y <-}\StringTok{ }\NormalTok{mu }\OperatorTok{+}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(n, }\DecValTok{0}\NormalTok{, sd)}
+\NormalTok{datos <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ x, }\DataTypeTok{y =}\NormalTok{ y)}
+\KeywordTok{plot}\NormalTok{(x, y) }
+\KeywordTok{lines}\NormalTok{(x, mu, }\DataTypeTok{lwd =} \DecValTok{2}\NormalTok{, }\DataTypeTok{col =} \StringTok{"lightgray"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/simdat100-1} 
+
+}
+
+\caption{Muestra simulada y tendencia teórica.}\label{fig:simdat100}
+\end{figure}
+
+Cuando el número de datos es más o menos grande podríamos pensar en
+predecir la respuesta a partir de lo que ocurre en las observaciones
+cercanas a la posición de predicción, esta es la idea de los métodos
+locales (Capítulo 6). Uno de los métodos de este tipo más conocidos es
+el de los \emph{k-vecinos más cercanos} (\emph{k-nearest neighbors};
+KNN). Se trata de un método muy simple, pero que puede ser muy efectivo,
+que se basa en la idea de que localmente la media condicional (la
+predicción óptima) es constante. Concretamente, dados un entero \(k\)
+(hiperparámetro) y un conjunto de entrenamiento \(\mathcal{T}\), para
+obtener la predicción correspondiente a un vector de valores de las
+variables explicativas \(\mathbf{x}\), el método de regresión\footnote{En
+  el caso de clasificación se considerarían las variables indicadoras de
+  las categorías y se obtendrían las frecuencias relativas en el
+  vecindario como estimaciones de las probabilidades de las clases.} KNN
+promedia las obsevaciones en un vecindario
+\(\mathcal{N}_k(\mathbf{x}, \mathcal{T})\) formado por las \(k\)
+observaciones más cercanas a \(\mathbf{x}\):
+\[\hat{Y}(\mathbf{x}) = \hat{m}(\mathbf{x}) = \frac{1}{k} \sum_{i \in \mathcal{N}_k(\mathbf{x}, \mathcal{T})} Y_i\]
+(sería necesario definir una distancia, normalmente la distancia
+euclídea de los predictores estandarizados).
+
+Este método está implementado en numerosos paquetes, por ejemplo en la
+función \texttt{knnreg()} del paquete \texttt{caret}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(caret)}
+
+\CommentTok{# Ajuste de los modelos}
+\NormalTok{fit1 <-}\StringTok{ }\KeywordTok{knnreg}\NormalTok{(y }\OperatorTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{data =}\NormalTok{ datos, }\DataTypeTok{k =} \DecValTok{5}\NormalTok{) }\CommentTok{# 5 observaciones más cercanas (5% de los datos)}
+\NormalTok{fit2 <-}\StringTok{ }\KeywordTok{knnreg}\NormalTok{(y }\OperatorTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{data =}\NormalTok{ datos, }\DataTypeTok{k =} \DecValTok{10}\NormalTok{)}
+\NormalTok{fit3 <-}\StringTok{ }\KeywordTok{knnreg}\NormalTok{(y }\OperatorTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{data =}\NormalTok{ datos, }\DataTypeTok{k =} \DecValTok{20}\NormalTok{)}
+
+\KeywordTok{plot}\NormalTok{(x, y) }
+\KeywordTok{lines}\NormalTok{(x, mu, }\DataTypeTok{lwd =} \DecValTok{2}\NormalTok{, }\DataTypeTok{col =} \StringTok{"lightgray"}\NormalTok{)}
+\NormalTok{newdata <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ x)}
+\KeywordTok{lines}\NormalTok{(x, }\KeywordTok{predict}\NormalTok{(fit1, newdata), }\DataTypeTok{lwd =} \DecValTok{2}\NormalTok{, }\DataTypeTok{lty =} \DecValTok{3}\NormalTok{)}
+\KeywordTok{lines}\NormalTok{(x, }\KeywordTok{predict}\NormalTok{(fit2, newdata), }\DataTypeTok{lwd =} \DecValTok{2}\NormalTok{, }\DataTypeTok{lty =} \DecValTok{2}\NormalTok{)}
+\KeywordTok{lines}\NormalTok{(x, }\KeywordTok{predict}\NormalTok{(fit3, newdata), }\DataTypeTok{lwd =} \DecValTok{2}\NormalTok{)}
+\KeywordTok{legend}\NormalTok{(}\StringTok{"topright"}\NormalTok{, }\DataTypeTok{legend =} \KeywordTok{c}\NormalTok{(}\StringTok{"Verdadero"}\NormalTok{, }\StringTok{"5-NN"}\NormalTok{, }\StringTok{"10-NN"}\NormalTok{, }\StringTok{"20-NN"}\NormalTok{), }
+       \DataTypeTok{lty =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{), }\DataTypeTok{lwd =} \DecValTok{2}\NormalTok{, }\DataTypeTok{col =} \KeywordTok{c}\NormalTok{(}\StringTok{"lightgray"}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/knnfit2-1} 
+
+}
+
+\caption{Predicciones con el método KNN y distintos vecindarios}\label{fig:knnfit2}
+\end{figure}
+
+A medida que aumenta \(k\) disminuye la complejidad del modelo y se
+observa un incremento del efecto frontera. Habría que seleccionar un
+valor óptimo de \(k\) (buscando un equilibro entre sesgo y varianza,
+como se mostró en la Sección \ref{bias-variance} y se ilustrará en la
+última sección de este capítulo empleando este método con el paquete
+\texttt{caret}), que dependerá de la tendencia teórica y del número de
+datos. En este caso, para \(k=5\), podríamos pensar que el efecto
+frontera aparece en el 10\% más externo del rango de la variable
+explicativa (con un número mayor de datos podría bajar al 1\%). Al
+aumentar el número de variables explicativas, considerando que el 10\%
+más externo del rango de cada una de ellas constituye la ``frontera'' de
+los datos, tendríamos que la proporción de frontera sería \(1-0.9^d\),
+siendo \(d\) el número de dimensiones. Lo que se traduce que con
+\(d = 10\) el 65\% del espacio predictivo sería frontera y en torno al
+88\% para \(d=20\), es decir, al aumentar el número de dimensiones el
+problema del efecto frontera será generalizado.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{curve}\NormalTok{(}\DecValTok{1} \OperatorTok{-}\StringTok{ }\FloatTok{0.9}\OperatorTok{^}\NormalTok{x, }\DecValTok{0}\NormalTok{, }\DecValTok{200}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{'Proporción de "frontera"'}\NormalTok{, }\DataTypeTok{xlab =} \StringTok{'Número de dimensiones'}\NormalTok{)}
+\KeywordTok{curve}\NormalTok{(}\DecValTok{1} \OperatorTok{-}\StringTok{ }\FloatTok{0.95}\OperatorTok{^}\NormalTok{x, }\DataTypeTok{lty =} \DecValTok{2}\NormalTok{, }\DataTypeTok{add =} \OtherTok{TRUE}\NormalTok{)}
+\KeywordTok{curve}\NormalTok{(}\DecValTok{1} \OperatorTok{-}\StringTok{ }\FloatTok{0.99}\OperatorTok{^}\NormalTok{x, }\DataTypeTok{lty =} \DecValTok{3}\NormalTok{, }\DataTypeTok{add =} \OtherTok{TRUE}\NormalTok{)}
+\KeywordTok{abline}\NormalTok{(}\DataTypeTok{h =} \FloatTok{0.5}\NormalTok{, }\DataTypeTok{col =} \StringTok{"lightgray"}\NormalTok{)}
+\KeywordTok{legend}\NormalTok{(}\StringTok{"bottomright"}\NormalTok{, }\DataTypeTok{title =} \StringTok{"Rango en cada dimensión", legend = c("}\DecValTok{10}\OperatorTok{%" , "5%}\StringTok{", "}\DecValTok{1}\NormalTok{%}\StringTok{"), }
+\StringTok{       lty = c(1, 2, 3))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/unnamed-chunk-22-1} \end{center}
+
+Desde otro punto de vista, suponiendo que los predictores se distribuyen
+de forma uniforme, la densidad de las observaciones es proporcional a
+\(n^{1/d}\), siendo \(n\) el tamaño muestral. Por lo que si consideramos
+que una muestra de tamaño \(n=100\) es suficientemente densa en una
+dimensión, para obtener la misma densidad muestral en 10 dimensiones
+tendríamos que disponer de un tamaño muestral de
+\(n = 100^{10} = 10^{20}\). Por tanto, cuando el número de dimensiones
+es grande no va a haber muchas observaciones en el entorno de la
+posición de predicción y puede haber serios problemas de sobreajuste si
+se pretende emplear un modelo demasiado flexible (por ejemplo KNN con
+\(k\) pequeño). Hay que tener en cuenta que, en general, fijado el
+tamaño muestral, la flexibilidad de los modelos aumenta al aumentar el
+número de dimensiones del espacio predictivo.
+
+Para concluir, otro de los problemas que se agravan notablemente al
+aumentar el número de dimensiones es el de colinealidad (o concurvidad)
+que puede producir que muchos métodos (como los modelos lineales o las
+redes neuronales) sean muy poco eficientes o inestables (llegando
+incluso a que no se puedan aplicar), además de que complica notablemente
+la interpretación de cualquier método. Esto está relacionado también con
+la dificultad para determinar que variables son de interés para predecir
+la respuesta (i.e.~no son ruido). Debido a la aleatoriedad, predictores
+que realmente no están relacionados con la respuesta pueden ser tenidos
+en cuenta por el modelo con mayor facilidad (KNN con las opciones
+habituales tiene en cuenta todos los predictores con el mismo peso). Lo
+que resulta claro es que si se agrega ruido se producirá un incremento
+en el error de predicción. Incluso si las variables añadidas resultan de
+interés, si el número de observaciones es pequeño en comparación, el
+incremento en la variabilidad de las predicciones puede no compensar la
+disminución del sesgo de predicción.
+
+Como conclusión, en el caso multidimensional habrá que tratar de emplear
+métodos que minimicen estos problemas.
+
+\section{Análisis e interpretación de los
+modelos}\label{anuxe1lisis-e-interpretaciuxf3n-de-los-modelos}
+
+El análisis e interpretación de modelos es un campo muy activo en AE/ML,
+para el que recientemente se ha acuñado el término de
+\emph{interpretable machine learning} (IML). A continuación se resumen
+brevemente algunas de las principales ideas, para más detalles ver por
+ejemplo \href{https://christophm.github.io/interpretable-ml-book}{Molnar
+(2020)}.
+
+Como ya se comentó, a medida que aumenta la complejidad de los modelos
+normalmente disminuye su interpretabilidad, por lo que normalmente
+interesa encontrar el modelo más simple posible que resulte de utilidad
+para los objetivos propuestos. Aunque el principal objetivo sea la
+predicción, una vez obtenido el modelo final suele interesar medir la
+importancia de cada predictor en el modelo y si es posible como influyen
+en la predicción de la respuesta, es decir, estudiar el efecto de las
+variables explicativas. Esto puede presentar serias dificultades
+especialmente en modelos complejos en los que hay interacciones entre
+los predictores (el efecto de una variable explicativa depende de los
+valores de otras).
+
+La mayoría de los métodos de aprendizaje supervisado permiten obtener
+medidas de la importancia de las variables explicativas en la predicción
+(ver p.e. la
+\href{https://topepo.github.io/caret/variable-importance.html}{ayuda} de
+la función \texttt{caret::varImp()}; algunos, como los basados en
+árboles, incluso de las no incluidas en el modelo final). Muchos de los
+métodos de clasificación, en lugar de proporcionar medidas globales,
+calculan medidas para cada categoría. Alternativamente también se pueden
+obtener medidas independientes del modelo empleado, pero suelen requerir
+de mucho más tiempo de computación (ver p.e.
+\href{https://christophm.github.io/interpretable-ml-book}{Molnar, 2020},
+\href{https://christophm.github.io/interpretable-ml-book/agnostic.htm}{Capítulo
+5}).
+
+En algunos de los métodos se modela explícitamente los efectos de los
+distintos predictores y estos se pueden analizar con (mas o menos)
+facilidad. Hay que tener en cuenta que, al margen de las interacciones,
+la colinealidad/concurvidad dificulta notablemente el estudio de los
+efectos de las variables explicativas. Otros métodos son más del tipo
+``caja negra'' (\emph{black box}) y precisan de aproximaciones más
+generales, como los gráficos PDP (\emph{Partial Dependence Plots};
+Friedman y Popescu, 2008; ver también
+\href{https://journal.r-project.org/archive/2017/RJ-2017-016/index.html}{Greenwell,
+2017}) o las curvas ICE (\emph{Individual Conditional Expectation};
+\href{https://doi.org/10.1080/10618600.2014.907095}{Goldstein \emph{et
+al.} , 2015}). Estos métodos\footnote{Similares a los gráficos parciales
+  de residuos de los modelos lineales o aditivos (ver p.e. las funciones
+  \texttt{termplot()}, \texttt{car::crPlots()} o
+  \texttt{car::avPlots()}).} tratan de estimar el efecto marginal de las
+variables explicativas, es decir, la variación en la predicción a medida
+que varía una variable explicativa manteniendo constantes el resto. La
+principal diferencia entre ambas aproximaciones es que los gráficos PDP
+muestran una única curva con el promedio de la respuesta mientras que
+las curvas ICE muestran una curva para cada observación (para más
+detalles ver las referencias anteriores).
+
+Paquetes y funciones de R:
+
+\begin{itemize}
+\item
+  \href{https://bgreenwell.github.io/pdp/index.html}{\texttt{pdp}}:
+  Partial Dependence Plots
+
+  (también implementa curvas ICE y es compatible con \texttt{caret})
+\item
+  \href{https://christophm.github.io/iml}{\texttt{iml}}: Interpretable
+  Machine Learning
+\item
+  \href{https://modeloriented.github.io/DALEX}{\texttt{DALEX}}: moDel
+  Agnostic Language for Exploration and eXplanation
+\item
+  \href{https://lime.data-imaginist.com}{\texttt{lime}}: Local
+  Interpretable Model-Agnostic Explanations
+\item
+  \href{https://koalaverse.github.io/vip/index.html}{\texttt{vip}}:
+  Variable Importance Plots
+\item
+  \texttt{caret::varImp()}, \texttt{h2o::h2o.partialPplot()}\ldots{}
+\end{itemize}
+
+En los siguientes capítulos se mostrarán ejemplos empleando algunas de
+estas herramientas.
 
 \section{\texorpdfstring{Introducción al paquete
 \texttt{caret}}{Introducción al paquete caret}}\label{caret}
 
 En preparación\ldots{}
+
+The caret package (short for Classification And REgression
+Training)\ldots{}
+
+Enlaces:
+
+\begin{itemize}
+\item
+  \href{https://topepo.github.io/caret}{Documentación}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \href{https://topepo.github.io/caret/available-models.html}{6.Available
+    Models}
+  \end{itemize}
+\item
+  \href{https://cran.r-project.org/web/packages/caret/vignettes/caret.html}{Vignette}
+\item
+  \href{https://raw.githubusercontent.com/rstudio/cheatsheets/master/caret.pdf}{Cheat
+  Sheet}
+\end{itemize}
+
+Ejemplo regresión con KNN:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# caret}
+\KeywordTok{data}\NormalTok{(Boston, }\DataTypeTok{package =} \StringTok{"MASS"}\NormalTok{)}
+
+\KeywordTok{library}\NormalTok{(caret)}
+\CommentTok{# Partición}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{itrain <-}\StringTok{ }\KeywordTok{createDataPartition}\NormalTok{(Boston}\OperatorTok{$}\NormalTok{medv, }\DataTypeTok{p =} \FloatTok{0.8}\NormalTok{, }\DataTypeTok{list =} \OtherTok{FALSE}\NormalTok{)}
+\NormalTok{train <-}\StringTok{ }\NormalTok{Boston[itrain, ]}
+\NormalTok{test <-}\StringTok{ }\NormalTok{Boston[}\OperatorTok{-}\NormalTok{itrain, ]}
+\CommentTok{# Entrenamiento y selección de hiperparámetros}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{knn <-}\StringTok{ }\KeywordTok{train}\NormalTok{(medv }\OperatorTok{~}\StringTok{ }\NormalTok{., }\DataTypeTok{data =}\NormalTok{ train,}
+             \DataTypeTok{method =} \StringTok{"knn"}\NormalTok{,}
+             \DataTypeTok{preProc =} \KeywordTok{c}\NormalTok{(}\StringTok{"center"}\NormalTok{, }\StringTok{"scale"}\NormalTok{),}
+             \DataTypeTok{tuneGrid =} \KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{k =} \DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{),}
+             \DataTypeTok{trControl =} \KeywordTok{trainControl}\NormalTok{(}\DataTypeTok{method =} \StringTok{"cv"}\NormalTok{, }\DataTypeTok{number =} \DecValTok{10}\NormalTok{))}
+\KeywordTok{plot}\NormalTok{(knn)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/unnamed-chunk-23-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(knn, }\DataTypeTok{highlight =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/unnamed-chunk-23-2} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{knn}\OperatorTok{$}\NormalTok{bestTune}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   k
+## 3 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{knn}\OperatorTok{$}\NormalTok{finalModel}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 3-nearest neighbor regression model
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Interpretación}
+\KeywordTok{varImp}\NormalTok{(knn)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## loess r-squared variable importance
+## 
+##         Overall
+## lstat    100.00
+## rm        88.26
+## indus     36.29
+## ptratio   33.27
+## tax       30.58
+## crim      28.33
+## nox       23.44
+## black     21.29
+## age       20.47
+## rad       17.16
+## zn        15.11
+## dis       14.35
+## chas       0.00
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Evaluación}
+\KeywordTok{postResample}\NormalTok{(}\KeywordTok{predict}\NormalTok{(knn, }\DataTypeTok{newdata =}\NormalTok{ test), test}\OperatorTok{$}\NormalTok{medv)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     RMSE Rsquared      MAE 
+## 4.960971 0.733945 2.724242
+\end{verbatim}
+
+Un comentario final:
+
+\begin{quote}
+``While I'm still supporting caret, the majority of my development
+effort has gone into the tidyverse modeling packages (called
+tidymodels)''.
+
+--- Max Kuhn, autor del paquete \texttt{caret} (actualmente ingeniero de
+software en RStudio).
+\end{quote}
+
+Kuhn, M. y Wickham, H. (2020). \emph{Tidymodels: a collection of
+packages for modeling and machine learning using tidyverse principles}.
+Version 0.1.1 (2020-07-14). \url{https://www.tidymodels.org}.
 
 \chapter{Árboles de decisión}\label{trees}
 
@@ -3174,6 +3640,9 @@ complementaria}\label{bibliografuxeda-complementaria}
 \subsection*{Libros}\label{libros}
 \addcontentsline{toc}{subsection}{Libros}
 
+Bellman, R.E. (1961). \emph{Adaptive Control Processes}, Princeton
+University Press.
+
 Burger, S.V. (2018). \emph{Introduction to machine learning with R:
 Rigorous mathematical analysis}. O'Reilly.
 
@@ -3189,11 +3658,25 @@ Springer.
 Hastie, T., Tibshirani, R. y Wainwright, M. (2015). \emph{Statistical
 learning with sparsity: the lasso and generalizations}. CRC press.
 
+Irizarry, R.A. (2019).
+\emph{\href{https://rafalab.github.io/dsbook}{Introduction to Data
+Science: Data Analysis and Prediction Algorithms with R}}. CRC Press.
+
+Molnar, C. (2020).
+\href{https://christophm.github.io/interpretable-ml-book}{Interpretable
+Machine Learning. A Guide for Making Black Box Models Explainable}.
+Lulu.com.
+
 Torgo, L. (2011). \emph{Data Mining with R: Learning with Case Studies}.
 Chapman \& Hall/CRC Press.
 
 \subsection*{Artículos}\label{artuxedculos}
 \addcontentsline{toc}{subsection}{Artículos}
+
+Biecek, P. (2018).
+\href{http://www.jmlr.org/papers/volume19/18-416/18-416.pdf}{DALEX:
+explainers for complex predictive models in R}. \emph{The Journal of
+Machine Learning Research}, 19(1), 3245-3249.
 
 Breiman, L. (1996). Bagging predictors. \emph{Machine Learning}, 24 (2),
 123-140.
@@ -3204,6 +3687,23 @@ comments and a rejoinder by the author). \emph{Statistical Science}, 16,
 
 Dunson D.B. (2018). Statistics in the big data era: Failures of the
 machine. \emph{Statistics and Probability Letters}, 136, 4-9.
+
+Fisher, R.A. (1936). The use of multiple measurements in taxonomic
+problems. \emph{Annals of Eugenics}, 7(2), 179-188.
+
+Friedman, J.H. y Popescu, B.E. (2008). Predictive learning via rule
+ensembles. \emph{The Annals of Applied Statistics}, 2(3), 916-954.
+
+Goldstein, A., Kapelner, A., Bleich, J. y Pitkin, E. (2015).
+\href{https://doi.org/10.1080/10618600.2014.907095}{Peeking inside the
+black box: Visualizing statistical learning with plots of individual
+conditional expectation}. \emph{Journal of Computational and Graphical
+Statistics}, 24(1), 44-65.
+
+Greenwell, B.M. (2017).
+\href{https://journal.r-project.org/archive/2017/RJ-2017-016/index.html}{pdp:
+An R Package for Constructing Partial Dependence Plots}. \emph{The R
+Journal}, 9(1), 421-436.
 
 Kuhn, M. (2008). Building predictive models in R using the caret
 package. \emph{Journal of Statistical Software}, 28 (5), 1-26.

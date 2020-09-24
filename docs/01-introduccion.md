@@ -28,14 +28,10 @@ Podríamos definir la Ciencia de Datos como el conjunto de conocimientos y herra
 
 Aunque esta ciencia incluiría también la gestión (sin olvidarnos del proceso de obtención) y la manipulación de los datos.
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.8\linewidth]{images/esquema2} 
-
-}
-
-\caption{Etapas del proceso}(\#fig:esquema)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="images/esquema2.png" alt="Etapas del proceso" width="80%" />
+<p class="caption">(\#fig:esquema)Etapas del proceso</p>
+</div>
 
 Una de estas etapas (que están interrelacionadas) es la construcción de modelos a partir de los datos para aprender y predecir. Podríamos decir que el Aprendizaje Estadístico (AE) se encarga de este problema desde el punto de vista estadístico.
 
@@ -313,14 +309,10 @@ legend("topright", legend = c("Verdadero", "Ajuste con grado 1",
        lty = c(1, 1, 2, 3), lwd = c(2, 1, 1, 1))
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/polyfit-1} 
-
-}
-
-\caption{Muestra (simulada) y ajustes polinómicos con distinta complejidad.}(\#fig:polyfit)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="01-introduccion_files/figure-html/polyfit-1.png" alt="Muestra (simulada) y ajustes polinómicos con distinta complejidad." width="80%" />
+<p class="caption">(\#fig:polyfit)Muestra (simulada) y ajustes polinómicos con distinta complejidad.</p>
+</div>
 
 Como se observa en la Figura \@ref(fig:polyfit) al aumentar la complejidad del modelo se consigue un mejor ajuste a los datos observados (empleados en el entrenamiento), a costa de un incremento en la variabilidad de las predicciones, lo que puede producir un mal comportamiento del modelo a ser empleado en un conjunto de datos distinto del observado. 
 
@@ -334,18 +326,11 @@ knitr::kable(t(sapply(list(fit1 = fit1, fit2 = fit2, fit3 = fit3),
                         c(MSE = mean(residuals^2), R2 = r.squared, R2adj = adj.r.squared)))), digits = 2)
 ```
 
-
-\begin{tabular}{l|r|r|r}
-\hline
-  & MSE & R2 & R2adj\\
-\hline
-fit1 & 1.22 & 0.20 & 0.17\\
-\hline
-fit2 & 0.19 & 0.87 & 0.85\\
-\hline
-fit3 & 0.07 & 0.95 & 0.84\\
-\hline
-\end{tabular}
+         MSE     R2   R2adj
+-----  -----  -----  ------
+fit1    1.22   0.20    0.17
+fit2    0.19   0.87    0.85
+fit3    0.07   0.95    0.84
 
 Por ejemplo, si generamos nuevas respuestas de este proceso, la precisión del modelo más complejo empeorará considerablemente:
 
@@ -363,14 +348,10 @@ legend("topright", legend = c("Verdadero", "Muestra", "Ajuste con grado 1", "Aju
        lty = c(1, NA, 1, 2, 3, NA), lwd = c(2, NA, 1, 1, 1, NA), pch = c(NA, 1, NA, NA, NA, 2))
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/polyfit2-1} 
-
-}
-
-\caption{Muestra con ajustes polinómicos con distinta complejidad y nuevas observaciones.}(\#fig:polyfit2)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="01-introduccion_files/figure-html/polyfit2-1.png" alt="Muestra con ajustes polinómicos con distinta complejidad y nuevas observaciones." width="80%" />
+<p class="caption">(\#fig:polyfit2)Muestra con ajustes polinómicos con distinta complejidad y nuevas observaciones.</p>
+</div>
 
 ```r
 MSEP <- sapply(list(fit1 = fit1, fit2 = fit2, fit3 = fit3), 
@@ -419,14 +400,10 @@ abline(v = 4, lty = 3)
 legend("topright", legend = c("Muestras", "Nuevas observaciones"), lty = c(1, 2))
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/polyfitsim-1} 
-
-}
-
-\caption{Precisiones (errores cuadráticos medios) de ajustes polinómicos variando la complejidad, en las muestras empleadas en el ajuste y en nuevas observaciones (simulados).}(\#fig:polyfitsim)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="01-introduccion_files/figure-html/polyfitsim-1.png" alt="Precisiones (errores cuadráticos medios) de ajustes polinómicos variando la complejidad, en las muestras empleadas en el ajuste y en nuevas observaciones (simulados)." width="80%" />
+<p class="caption">(\#fig:polyfitsim)Precisiones (errores cuadráticos medios) de ajustes polinómicos variando la complejidad, en las muestras empleadas en el ajuste y en nuevas observaciones (simulados).</p>
+</div>
 
 
 Como se puede observar en la Figura \@ref(fig:polyfitsim) los errores de entrenamiento disminuyen a medida que aumenta la complejidad del modelo.
@@ -512,9 +489,7 @@ Al igual que se hizo en la Sección \@ref(bias-variance), consideraremos el grad
 plot(medv ~ lstat, data = train)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/unnamed-chunk-4-1} \end{center}
+<img src="01-introduccion_files/figure-html/unnamed-chunk-4-1.png" width="80%" style="display: block; margin: auto;" />
 
 Podríamos emplear la siguiente función que devuelve para cada observación (fila) de una muestra de entrenamiento, el error de predicción en esa observación ajustando un modelo lineal con todas las demás observaciones:
 
@@ -565,9 +540,7 @@ grado.op <- grados[imin.mse]
 points(grado.op, cv.mse[imin.mse], pch = 16)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/unnamed-chunk-7-1} \end{center}
+<img src="01-introduccion_files/figure-html/unnamed-chunk-7-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 grado.op
@@ -594,9 +567,7 @@ grado.1se <- grados[imin.1se]
 points(grado.1se, cv.mse[imin.1se], pch = 16)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/unnamed-chunk-8-1} \end{center}
+<img src="01-introduccion_files/figure-html/unnamed-chunk-8-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 grado.1se
@@ -619,9 +590,7 @@ legend("topright", legend = c(paste("Grado óptimo:", grado.op), paste("oneSE ru
        lty = c(1, 2))
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/unnamed-chunk-9-1} \end{center}
+<img src="01-introduccion_files/figure-html/unnamed-chunk-9-1.png" width="80%" style="display: block; margin: auto;" />
 
 
 ### Evaluación de un método de regresión {#eval-reg}
@@ -644,9 +613,7 @@ res <- lm(obs ~ pred)
 abline(res, lty = 2)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/obs-pred-plot-1} \end{center}
+<img src="01-introduccion_files/figure-html/obs-pred-plot-1.png" width="80%" style="display: block; margin: auto;" />
 
 También es habitual calcular distintas medidas de error. 
 Por ejemplo, podríamos emplear la función `postResample()` del paquete `caret`: 
@@ -844,9 +811,7 @@ caret::featurePlot(datos$lstat, datos$fmedv, plot = "density",
             labels = c("lstat", "Density"), auto.key = TRUE)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/unnamed-chunk-14-1} \end{center}
+<img src="01-introduccion_files/figure-html/unnamed-chunk-14-1.png" width="80%" style="display: block; margin: auto;" />
 
 El siguiente código realiza la partición de los datos y posteriormente ajusta un modelo de regresión logística en la muestra de entrenamiento considerando `lstat` como única variable explicativa (en el Capítulo 5 se darán más detalles sobre este tipo de modelos):
 
@@ -987,13 +952,11 @@ library(lattice)
 histogram(~ p.est | obs, xlab = "Probabilidad estimada de 'Alto'")
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/unnamed-chunk-19-1} \end{center}
+<img src="01-introduccion_files/figure-html/unnamed-chunk-19-1.png" width="80%" style="display: block; margin: auto;" />
 
 
 Para evaluar las estimaciones de las probabilidades se suele emplear la curva ROC (*receiver operating characteristics*, característica operativa del receptor; diseñada inicialmente en el campo de la deteccción de señales).
-Como ya se comentó, normalmente se emplea $c = 0.5$ como punto de corte para clasificar en la categoría de interés, aunque se podrían considerar otros valores (por ejemplo para mejorar la clasificación en una de las categorías, a costa de empeorar la precisión global).
+Como ya se comentó, normalmente se emplea $c = 0.5$ como punto de corte para clasificar en la categoría de interés (es lo que se conoce como *regla de Bayes*), aunque se podrían considerar otros valores (por ejemplo para mejorar la clasificación en una de las categorías, a costa de empeorar la precisión global).
 En la curva ROC se representa la sensibilidad (TPR) frente a la tasa de falsos negativos (FNR = 1 - TNR = 1 - especificidad) para distintos valores de corte.
 Para ello se puede emplear el paquete `pROC`:
 
@@ -1005,14 +968,14 @@ roc_glm <- roc(response = obs, predictor = p.est)
 plot(roc_glm)
 ```
 
-\begin{figure}[!htb]
+<div class="figure" style="text-align: center">
+<img src="01-introduccion_files/figure-html/ROC-curve-1.png" alt="Curva ROC correspondiente al modelo de regresión logística." width="80%" />
+<p class="caption">(\#fig:ROC-curve)Curva ROC correspondiente al modelo de regresión logística.</p>
+</div>
 
-{\centering \includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/ROC-curve-1} 
-
-}
-
-\caption{Curva ROC correspondiente al modelo de regresión logística.}(\#fig:ROC-curve)
-\end{figure}
+```r
+# plot(roc_glm, legacy.axes = TRUE)
+```
 
 Lo ideal sería que la curva se aproximase a la esquina superior izquierda (máxima sensibilidad y especificidad). 
 La recta diagonal se correspondería con un clasificador aleatorio.
@@ -1034,6 +997,14 @@ roc_glm
 ## Area under the curve: 0.8427
 ```
 
+```r
+ci.auc(roc_glm)
+```
+
+```
+## 95% CI: 0.7428-0.9426 (DeLong)
+```
+
 Como comentario adicional, aunque se puede modificar el punto de corte para mejorar la clasificación en la categoría de interés (de hecho, algunas herramientas como `h2o` lo modifican por defecto; en este caso concreto para maximizar $F_1$ en la muestra de entrenamiento), muchos métodos de clasificación (como los basados en árboles descritos en el Capítulo 2) admiten como opción una matriz de pérdidas que se tendrá en cuenta para medir la eficiencia durante el aprendizaje y normalmente esta sería la aproximación recomendada.
 
 En el caso de más de dos categorías podríamos generar una matriz de confusión de forma análoga,
@@ -1041,13 +1012,311 @@ aunque en este caso en principio solo podríamos calcular medidas globales de la
 Podríamos obtener también medidas por clase, como la sensibilidad y la especificidad, siguiendo la estrategia “uno contra todos” descrita en la Sección \@ref(notacion).
 Esta aproximación es la que sigue la función `confusionMatrix()` del paquete `caret` (devuelve las medidas comparando cada categoría con las restantes en el componente `$byClass`).
 
+Como ejemplo ilustrativo consideraremos el conocido conjunto de datos `iris` (Fisher, 1936) en el que el objetivo es clasificar flores de lirio en tres especies (`Species`) a partir del largo y ancho de sépalos y pétalos, aunque en este caso emplearemos un clasificador aleatorio.
+
+
+```r
+data(iris)
+# Partición de los datos
+datos <- iris
+set.seed(1)
+nobs <- nrow(datos)
+itrain <- sample(nobs, 0.8 * nobs)
+train <- datos[itrain, ]
+test <- datos[-itrain, ]
+# Entrenamiento 
+prevalences <- table(train$Species)/nrow(train)
+prevalences
+```
+
+```
+## 
+##     setosa versicolor  virginica 
+##  0.3250000  0.3166667  0.3583333
+```
+
+```r
+# Calculo de las predicciones
+levels <- names(prevalences) # levels(train$Species)
+f <- factor(levels, levels = levels) # factor(levels) valdría en este caso al estar por orden alfabético
+pred.rand <- sample(f, nrow(test), replace = TRUE, prob = prevalences)
+# Evaluación
+caret::confusionMatrix(pred.rand, test$Species)
+```
+
+```
+## Confusion Matrix and Statistics
+## 
+##             Reference
+## Prediction   setosa versicolor virginica
+##   setosa          3          3         1
+##   versicolor      4          2         5
+##   virginica       4          7         1
+## 
+## Overall Statistics
+##                                           
+##                Accuracy : 0.2             
+##                  95% CI : (0.0771, 0.3857)
+##     No Information Rate : 0.4             
+##     P-Value [Acc > NIR] : 0.9943          
+##                                           
+##                   Kappa : -0.1862         
+##                                           
+##  Mcnemar's Test P-Value : 0.5171          
+## 
+## Statistics by Class:
+## 
+##                      Class: setosa Class: versicolor Class: virginica
+## Sensitivity                 0.2727           0.16667          0.14286
+## Specificity                 0.7895           0.50000          0.52174
+## Pos Pred Value              0.4286           0.18182          0.08333
+## Neg Pred Value              0.6522           0.47368          0.66667
+## Prevalence                  0.3667           0.40000          0.23333
+## Detection Rate              0.1000           0.06667          0.03333
+## Detection Prevalence        0.2333           0.36667          0.40000
+## Balanced Accuracy           0.5311           0.33333          0.33230
+```
+
 
 ## La maldición de la dimensionalidad
 
-<!-- edge effect -->
+Podríamos pensar que al aumentar el número de variables explicativas se mejora la capacidad predictiva de los modelos. Lo cual, en general, sería cierto si realmente los predictores fuesen de utilidad para explicar la respuesta.
+Sin embargo, al aumentar el número de dimensiones se pueden agravar notablemente muchos de los problemas que ya pueden aparecer en dimensiones menores, esto es lo que se conoce como la *maldición de la dimensionalidad* (*curse of dimensionality*, Bellman, 1961).
 
-En preparación...
+Uno de estos problemas es el denominado *efecto frontera* que ya puede aparecer en una dimensión, especialmente al trabajar con modelos flexibles (como ajustes polinómicos con grados altos o los métodos locales que trataremos en el Capítulo 6).
+La idea es que en la "frontera" del rango de valores de una variable explicativa vamos a disponer de pocos datos y los errores de predicción van a tener gran variabilidad (se están haciendo extrapolaciones de los datos, más que interpolaciones, y van a ser menos fiables).
+
+Como ejemplo consideraremos un problema de regresión simple, con un conjunto de datos simulados (del proceso ya considerado en la Sección \@ref(bias-variance)) con 100 observaciones (que ya podríamos considerar que no es muy pequeño).
+
+
+
+```r
+# Simulación datos
+n <- 100
+x <- seq(0, 1, length = n)
+mu <- 2 + 4*(5*x - 1)*(4*x - 2)*(x - 0.8)^2 # grado 4
+sd <- 0.5
+set.seed(1)
+y <- mu + rnorm(n, 0, sd)
+datos <- data.frame(x = x, y = y)
+plot(x, y) 
+lines(x, mu, lwd = 2, col = "lightgray")
+```
+
+<div class="figure" style="text-align: center">
+<img src="01-introduccion_files/figure-html/simdat100-1.png" alt="Muestra simulada y tendencia teórica." width="80%" />
+<p class="caption">(\#fig:simdat100)Muestra simulada y tendencia teórica.</p>
+</div>
+
+Cuando el número de datos es más o menos grande podríamos pensar en predecir la respuesta a partir de lo que ocurre en las observaciones cercanas a la posición de predicción, esta es la idea de los métodos locales (Capítulo 6).
+Uno de los métodos de este tipo más conocidos es el de los *k-vecinos más cercanos* (*k-nearest neighbors*; KNN). 
+Se trata de un método muy simple, pero que puede ser muy efectivo, que se basa en la idea de que localmente la media condicional (la predicción óptima) es constante.
+Concretamente, dados un entero $k$ (hiperparámetro) y un conjunto de entrenamiento $\mathcal{T}$, para obtener la predicción correspondiente a un vector de valores de las variables explicativas $\mathbf{x}$, el método de regresión^[En el caso de clasificación se considerarían las variables indicadoras de las categorías y se obtendrían las frecuencias relativas en el vecindario como estimaciones de las probabilidades de las clases.] KNN promedia las obsevaciones en un vecindario $\mathcal{N}_k(\mathbf{x}, \mathcal{T})$ formado por las $k$ observaciones más cercanas a $\mathbf{x}$: 
+$$\hat{Y}(\mathbf{x}) = \hat{m}(\mathbf{x}) = \frac{1}{k} \sum_{i \in \mathcal{N}_k(\mathbf{x}, \mathcal{T})} Y_i$$ 
+(sería necesario definir una distancia, normalmente la distancia euclídea de los predictores estandarizados).
+
+Este método está implementado en numerosos paquetes, por ejemplo en la función `knnreg()` del paquete `caret`:
+
+
+
+```r
+library(caret)
+
+# Ajuste de los modelos
+fit1 <- knnreg(y ~ x, data = datos, k = 5) # 5 observaciones más cercanas (5% de los datos)
+fit2 <- knnreg(y ~ x, data = datos, k = 10)
+fit3 <- knnreg(y ~ x, data = datos, k = 20)
+
+plot(x, y) 
+lines(x, mu, lwd = 2, col = "lightgray")
+newdata <- data.frame(x = x)
+lines(x, predict(fit1, newdata), lwd = 2, lty = 3)
+lines(x, predict(fit2, newdata), lwd = 2, lty = 2)
+lines(x, predict(fit3, newdata), lwd = 2)
+legend("topright", legend = c("Verdadero", "5-NN", "10-NN", "20-NN"), 
+       lty = c(1, 3, 2, 1), lwd = 2, col = c("lightgray", 1, 1, 1))
+```
+
+<div class="figure" style="text-align: center">
+<img src="01-introduccion_files/figure-html/knnfit2-1.png" alt="Predicciones con el método KNN y distintos vecindarios" width="80%" />
+<p class="caption">(\#fig:knnfit2)Predicciones con el método KNN y distintos vecindarios</p>
+</div>
+
+A medida que aumenta $k$ disminuye la complejidad del modelo y se observa un incremento del efecto frontera.
+Habría que seleccionar un valor óptimo de $k$ (buscando un equilibro entre sesgo y varianza, como se mostró en la Sección \@ref(bias-variance) y se ilustrará en la última sección de este capítulo empleando este método con el paquete `caret`), que dependerá de la tendencia teórica y del número de datos.
+En este caso, para $k=5$, podríamos pensar que el efecto frontera aparece en el 10\% más externo del rango de la variable explicativa (con un número mayor de datos podría bajar al 1\%).
+Al aumentar el número de variables explicativas, considerando que el 10\% más externo del rango de cada una de ellas constituye la "frontera" de los datos, tendríamos que la proporción de frontera sería $1-0.9^d$, siendo $d$ el número de dimensiones.
+Lo que se traduce que con $d = 10$ el 65\% del espacio predictivo sería frontera y en torno al 88\% para $d=20$, es decir, al aumentar el número de dimensiones el problema del efecto frontera será generalizado.  
+
+
+```r
+curve(1 - 0.9^x, 0, 200, ylab = 'Proporción de "frontera"', xlab = 'Número de dimensiones')
+curve(1 - 0.95^x, lty = 2, add = TRUE)
+curve(1 - 0.99^x, lty = 3, add = TRUE)
+abline(h = 0.5, col = "lightgray")
+legend("bottomright", title = "Rango en cada dimensión", legend = c("10%" , "5%", "1%"), 
+       lty = c(1, 2, 3))
+```
+
+<img src="01-introduccion_files/figure-html/unnamed-chunk-22-1.png" width="80%" style="display: block; margin: auto;" />
+
+Desde otro punto de vista, suponiendo que los predictores se distribuyen de forma uniforme, la densidad de las observaciones es proporcional a $n^{1/d}$, siendo $n$ el tamaño muestral. 
+Por lo que si consideramos que una muestra de tamaño $n=100$ es suficientemente densa en una dimensión, para obtener la misma densidad muestral en 10 dimensiones tendríamos que disponer de un tamaño muestral de $n = 100^{10} = 10^{20}$.
+Por tanto, cuando el número de dimensiones es grande no va a haber muchas observaciones en el entorno de la posición de predicción y puede haber serios problemas de sobreajuste si se pretende emplear un modelo demasiado flexible (por ejemplo KNN con $k$ pequeño). Hay que tener en cuenta que, en general, fijado el tamaño muestral, la flexibilidad de los modelos aumenta al aumentar el número de dimensiones del espacio predictivo.
+
+Para concluir, otro de los problemas que se agravan notablemente al aumentar el número de dimensiones es el de colinealidad (o concurvidad) que puede producir que muchos métodos (como los modelos lineales o las redes neuronales) sean muy poco eficientes o inestables (llegando incluso a que no se puedan aplicar), además de que complica notablemente la interpretación de cualquier método. 
+Esto está relacionado también con la dificultad para determinar que variables son de interés para predecir la respuesta (i.e. no son ruido).
+Debido a la aleatoriedad, predictores que realmente no están relacionados con la respuesta pueden ser tenidos en cuenta por el modelo con mayor facilidad (KNN con las opciones habituales tiene en cuenta todos los predictores con el mismo peso).
+Lo que resulta claro es que si se agrega ruido se producirá un incremento en el error de predicción. 
+Incluso si las variables añadidas resultan de interés, si el número de observaciones es pequeño en comparación, el incremento en la variabilidad de las predicciones puede no compensar la disminución del sesgo de predicción.
+
+Como conclusión, en el caso multidimensional habrá que tratar de emplear métodos que minimicen estos problemas.
+
+
+## Análisis e interpretación de los modelos 
+
+El análisis e interpretación de modelos es un campo muy activo en AE/ML, para el que recientemente se ha acuñado el término de *interpretable machine learning* (IML). 
+A continuación se resumen brevemente algunas de las principales ideas, para más detalles ver por ejemplo [Molnar (2020)](https://christophm.github.io/interpretable-ml-book).
+
+Como ya se comentó, a medida que aumenta la complejidad de los modelos normalmente disminuye su interpretabilidad, por lo que normalmente interesa encontrar el modelo más simple posible que resulte de utilidad para los objetivos propuestos.
+Aunque el principal objetivo sea la predicción, una vez obtenido el modelo final suele interesar medir la importancia de cada predictor en el modelo y si es posible como influyen en la predicción de la respuesta, es decir, estudiar el efecto de las variables explicativas.
+Esto puede presentar serias dificultades especialmente en modelos complejos en los que hay interacciones entre los predictores (el efecto de una variable explicativa depende de los valores de otras).
+
+La mayoría de los métodos de aprendizaje supervisado permiten obtener medidas de la importancia de las variables explicativas en la predicción (ver p.e. la [ayuda](https://topepo.github.io/caret/variable-importance.html) de la función `caret::varImp()`; algunos, como los basados en árboles, incluso de las no incluidas en el modelo final).
+Muchos de los métodos de clasificación, en lugar de proporcionar medidas globales, calculan medidas para cada categoría.
+Alternativamente también se pueden obtener medidas independientes del modelo empleado, pero suelen requerir de mucho más tiempo de computación (ver p.e. [Molnar, 2020](https://christophm.github.io/interpretable-ml-book), [Capítulo 5](https://christophm.github.io/interpretable-ml-book/agnostic.htm)).
+
+En algunos de los métodos se modela explícitamente los efectos de los distintos predictores y estos se pueden analizar con (mas o menos) facilidad. 
+Hay que tener en cuenta que, al margen de las interacciones, la colinealidad/concurvidad dificulta notablemente el estudio de los efectos de las variables explicativas.
+Otros métodos son más del tipo "caja negra" (*black box*) y precisan de aproximaciones más generales, como los gráficos PDP (*Partial Dependence Plots*; Friedman y Popescu, 2008; ver también [Greenwell, 2017](https://journal.r-project.org/archive/2017/RJ-2017-016/index.html)) o las curvas ICE (*Individual Conditional Expectation*; [Goldstein *et al.* , 2015](https://doi.org/10.1080/10618600.2014.907095)). 
+Estos métodos^[Similares a los gráficos parciales de residuos de los modelos lineales o aditivos (ver p.e. las funciones `termplot()`, `car::crPlots()` o `car::avPlots()`).] tratan de estimar el efecto marginal de las variables explicativas, es decir, la variación en la predicción a medida que varía una variable explicativa manteniendo constantes el resto.
+La principal diferencia entre ambas aproximaciones es que los gráficos PDP muestran una única curva con el promedio de la respuesta mientras que las curvas ICE muestran una curva para cada observación (para más detalles ver las referencias anteriores).
+
+
+Paquetes y funciones de R:
+
+* [`pdp`](https://bgreenwell.github.io/pdp/index.html): Partial Dependence Plots 
+
+    (también implementa curvas ICE y es compatible con `caret`)
+
+* [`iml`](https://christophm.github.io/iml): Interpretable Machine Learning
+
+* [`DALEX`](https://modeloriented.github.io/DALEX): moDel Agnostic Language for Exploration and eXplanation
+
+* [`lime`](https://lime.data-imaginist.com): Local Interpretable Model-Agnostic Explanations
+
+* [`vip`](https://koalaverse.github.io/vip/index.html): Variable Importance Plots
+
+*  `caret::varImp()`, `h2o::h2o.partialPplot()`...
+
+En los siguientes capítulos se mostrarán ejemplos empleando algunas de estas herramientas.
+
 
 ## Introducción al paquete `caret` {#caret}    
 
 En preparación...
+
+The caret package (short for Classification And REgression Training)...
+
+Enlaces:
+
+* [Documentación](https://topepo.github.io/caret)
+
+    - [6.Available Models](https://topepo.github.io/caret/available-models.html)
+
+* [Vignette](https://cran.r-project.org/web/packages/caret/vignettes/caret.html)
+
+* [Cheat Sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/caret.pdf)
+
+
+Ejemplo regresión con KNN:
+
+
+```r
+# caret
+data(Boston, package = "MASS")
+
+library(caret)
+# Partición
+set.seed(1)
+itrain <- createDataPartition(Boston$medv, p = 0.8, list = FALSE)
+train <- Boston[itrain, ]
+test <- Boston[-itrain, ]
+# Entrenamiento y selección de hiperparámetros
+set.seed(1)
+knn <- train(medv ~ ., data = train,
+             method = "knn",
+             preProc = c("center", "scale"),
+             tuneGrid = data.frame(k = 1:10),
+             trControl = trainControl(method = "cv", number = 10))
+plot(knn)
+```
+
+<img src="01-introduccion_files/figure-html/unnamed-chunk-23-1.png" width="80%" style="display: block; margin: auto;" />
+
+```r
+ggplot(knn, highlight = TRUE)
+```
+
+<img src="01-introduccion_files/figure-html/unnamed-chunk-23-2.png" width="80%" style="display: block; margin: auto;" />
+
+```r
+knn$bestTune
+```
+
+```
+##   k
+## 3 3
+```
+
+```r
+knn$finalModel
+```
+
+```
+## 3-nearest neighbor regression model
+```
+
+```r
+# Interpretación
+varImp(knn)
+```
+
+```
+## loess r-squared variable importance
+## 
+##         Overall
+## lstat    100.00
+## rm        88.26
+## indus     36.29
+## ptratio   33.27
+## tax       30.58
+## crim      28.33
+## nox       23.44
+## black     21.29
+## age       20.47
+## rad       17.16
+## zn        15.11
+## dis       14.35
+## chas       0.00
+```
+
+```r
+# Evaluación
+postResample(predict(knn, newdata = test), test$medv)
+```
+
+```
+##     RMSE Rsquared      MAE 
+## 4.960971 0.733945 2.724242
+```
+
+Un comentario final:
+
+> "While I'm still supporting caret, the majority of my development effort has gone into the tidyverse modeling packages (called tidymodels)". 
+>
+> --- Max Kuhn, autor del paquete `caret` (actualmente ingeniero de software en RStudio).
+
+Kuhn, M. y Wickham, H. (2020). *Tidymodels: a collection of packages for modeling and machine learning using tidyverse principles*. Version 0.1.1 (2020-07-14). <https://www.tidymodels.org>. 
+
+
