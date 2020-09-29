@@ -37,6 +37,8 @@ Torgo, L. (2011). *Data Mining with R: Learning with Case Studies*. Chapman & Ha
 
 ### Artículos {-}
 
+Agor, J. y Özaltın, O.Y. (2019). Feature selection for classification models via bilevel optimization. *Computers & Operations Research*, 106, 156-168.
+
 Biecek, P. (2018). [DALEX: explainers for complex predictive models in R](http://www.jmlr.org/papers/volume19/18-416/18-416.pdf). *The Journal of Machine Learning Research*, 19(1), 3245-3249.
 
 Breiman, L. (1996). Bagging predictors. *Machine Learning*, 24 (2), 123-140. 
@@ -58,6 +60,9 @@ Kuhn, M. (2008). Building predictive models in R using the caret package. *Journ
 Lauro, C. (1996). Computational statistics or statistical computing, is that the question?, *Computational Statistics & Data Analysis*, 23 (1), 191-193.
 
 Loh, W.Y. (2002). Regression tress with unbiased variable selection and interaction detection. *Statistica Sinica*, 361-386.
+
+Strumbelj, E. y Kononenko, I. (2010). An efficient explanation of individual classifications using game theory. *Journal of Machine Learning Research*, 11, 1-18.
+
 
 <!-- 
 Pendiente: Citar paquetes 

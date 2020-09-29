@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)" />
 
 
-<meta name="date" content="2020-09-24" />
+<meta name="date" content="2020-09-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -115,7 +115,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de Aprendizaje Estadístico</a><ul>
 <li class="chapter" data-level="1.2.1" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#notacion"><i class="fa fa-check"></i><b>1.2.1</b> Notación y terminología</a></li>
-<li class="chapter" data-level="1.2.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#métodos-de-aprendizaje-supervisado-y-paquetes-de-r"><i class="fa fa-check"></i><b>1.2.2</b> Métodos (de aprendizaje supervisado) y paquetes de R</a></li>
+<li class="chapter" data-level="1.2.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#metodos-pkgs"><i class="fa fa-check"></i><b>1.2.2</b> Métodos (de aprendizaje supervisado) y paquetes de R</a></li>
 </ul></li>
 <li class="chapter" data-level="1.3" data-path="const-eval.html"><a href="const-eval.html"><i class="fa fa-check"></i><b>1.3</b> Construcción y evaluación de los modelos</a><ul>
 <li class="chapter" data-level="1.3.1" data-path="const-eval.html"><a href="const-eval.html#bias-variance"><i class="fa fa-check"></i><b>1.3.1</b> Equilibrio entre sesgo y varianza: infraajuste y sobreajuste</a></li>
@@ -169,16 +169,155 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="caret" class="section level2">
 <h2><span class="header-section-number">1.6</span> Introducción al paquete <code>caret</code></h2>
-<p>En preparación…</p>
-<p>The caret package (short for Classification And REgression Training)…</p>
+<p>Como ya se comentó en la Sección <a href="métodos-de-aprendizaje-estadístico.html#metodos-pkgs">1.2.2</a>, el paquete <code>caret</code> (abreviatura de <em>Classification And REgression Training</em>) proporciona una interfaz unificada que simplifica el proceso de modelado empleando la mayoría de los métodos de AE implementados en R (actualmente admite 238 métodos; ver el <a href="https://topepo.github.io/caret/available-models.html">Capítulo 6</a> del <a href="https://topepo.github.io/caret">manual</a> de este paquete). Además de proporcionar rutinas para los principales pasos del proceso, incluye también numerosas funciones auxiliares que permitirían implementar nuevos procedimientos.</p>
 <p>Enlaces:</p>
 <ul>
-<li><p><a href="https://topepo.github.io/caret">Documentación</a></p>
+<li><p><a href="https://topepo.github.io/caret">Manual</a></p>
 <ul>
-<li><a href="https://topepo.github.io/caret/available-models.html">6.Available Models</a></li>
+<li><p><a href="https://topepo.github.io/caret/pre-processing.html">3. Pre-Processing</a></p></li>
+<li><p><a href="https://topepo.github.io/caret/model-training-and-tuning.html">5. Model Training and Tuning</a></p></li>
+<li><p><a href="https://topepo.github.io/caret/available-models.html">6. Available Models</a></p></li>
+<li><p><a href="https://topepo.github.io/caret/measuring-performance.html">17. Measuring Performance</a></p></li>
 </ul></li>
 <li><p><a href="https://cran.r-project.org/web/packages/caret/vignettes/caret.html">Vignette</a></p></li>
 <li><p><a href="https://raw.githubusercontent.com/rstudio/cheatsheets/master/caret.pdf">Cheat Sheet</a></p></li>
+</ul>
+<p>La función principal es <code>train()</code> (descrita más adelante), que incluye un parámetro <code>method</code> que permite establecer el modelo mediante una cadena de texto. Podemos obtener información sobre los modelos disponibles con las funciones <code>getModelInfo()</code> y <code>modelLookup()</code> (puede haber varias implementaciones del mismo método con distintas configuraciones de hiperparámetros; también se pueden definir nuevos modelos, ver el <a href="https://topepo.github.io/caret/using-your-own-model-in-train.html">Capítulo 13</a> del <a href="https://topepo.github.io/caret">manual</a>).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(caret)
+<span class="kw">names</span>(<span class="kw">getModelInfo</span>()) <span class="co"># Listado de todos los métodos disponibles</span></code></pre></div>
+<pre><code>##   [1] &quot;ada&quot;                 &quot;AdaBag&quot;              &quot;AdaBoost.M1&quot;        
+##   [4] &quot;adaboost&quot;            &quot;amdai&quot;               &quot;ANFIS&quot;              
+##   [7] &quot;avNNet&quot;              &quot;awnb&quot;                &quot;awtan&quot;              
+##  [10] &quot;bag&quot;                 &quot;bagEarth&quot;            &quot;bagEarthGCV&quot;        
+##  [13] &quot;bagFDA&quot;              &quot;bagFDAGCV&quot;           &quot;bam&quot;                
+##  [16] &quot;bartMachine&quot;         &quot;bayesglm&quot;            &quot;binda&quot;              
+##  [19] &quot;blackboost&quot;          &quot;blasso&quot;              &quot;blassoAveraged&quot;     
+##  [22] &quot;bridge&quot;              &quot;brnn&quot;                &quot;BstLm&quot;              
+##  [25] &quot;bstSm&quot;               &quot;bstTree&quot;             &quot;C5.0&quot;               
+##  [28] &quot;C5.0Cost&quot;            &quot;C5.0Rules&quot;           &quot;C5.0Tree&quot;           
+##  [31] &quot;cforest&quot;             &quot;chaid&quot;               &quot;CSimca&quot;             
+##  [34] &quot;ctree&quot;               &quot;ctree2&quot;              &quot;cubist&quot;             
+##  [37] &quot;dda&quot;                 &quot;deepboost&quot;           &quot;DENFIS&quot;             
+##  [40] &quot;dnn&quot;                 &quot;dwdLinear&quot;           &quot;dwdPoly&quot;            
+##  [43] &quot;dwdRadial&quot;           &quot;earth&quot;               &quot;elm&quot;                
+##  [46] &quot;enet&quot;                &quot;evtree&quot;              &quot;extraTrees&quot;         
+##  [49] &quot;fda&quot;                 &quot;FH.GBML&quot;             &quot;FIR.DM&quot;             
+##  [52] &quot;foba&quot;                &quot;FRBCS.CHI&quot;           &quot;FRBCS.W&quot;            
+##  [55] &quot;FS.HGD&quot;              &quot;gam&quot;                 &quot;gamboost&quot;           
+##  [58] &quot;gamLoess&quot;            &quot;gamSpline&quot;           &quot;gaussprLinear&quot;      
+##  [61] &quot;gaussprPoly&quot;         &quot;gaussprRadial&quot;       &quot;gbm_h2o&quot;            
+##  [64] &quot;gbm&quot;                 &quot;gcvEarth&quot;            &quot;GFS.FR.MOGUL&quot;       
+##  [67] &quot;GFS.LT.RS&quot;           &quot;GFS.THRIFT&quot;          &quot;glm.nb&quot;             
+##  [70] &quot;glm&quot;                 &quot;glmboost&quot;            &quot;glmnet_h2o&quot;         
+##  [73] &quot;glmnet&quot;              &quot;glmStepAIC&quot;          &quot;gpls&quot;               
+##  [76] &quot;hda&quot;                 &quot;hdda&quot;                &quot;hdrda&quot;              
+##  [79] &quot;HYFIS&quot;               &quot;icr&quot;                 &quot;J48&quot;                
+##  [82] &quot;JRip&quot;                &quot;kernelpls&quot;           &quot;kknn&quot;               
+##  [85] &quot;knn&quot;                 &quot;krlsPoly&quot;            &quot;krlsRadial&quot;         
+##  [88] &quot;lars&quot;                &quot;lars2&quot;               &quot;lasso&quot;              
+##  [91] &quot;lda&quot;                 &quot;lda2&quot;                &quot;leapBackward&quot;       
+##  [94] &quot;leapForward&quot;         &quot;leapSeq&quot;             &quot;Linda&quot;              
+##  [97] &quot;lm&quot;                  &quot;lmStepAIC&quot;           &quot;LMT&quot;                
+## [100] &quot;loclda&quot;              &quot;logicBag&quot;            &quot;LogitBoost&quot;         
+## [103] &quot;logreg&quot;              &quot;lssvmLinear&quot;         &quot;lssvmPoly&quot;          
+## [106] &quot;lssvmRadial&quot;         &quot;lvq&quot;                 &quot;M5&quot;                 
+## [109] &quot;M5Rules&quot;             &quot;manb&quot;                &quot;mda&quot;                
+## [112] &quot;Mlda&quot;                &quot;mlp&quot;                 &quot;mlpKerasDecay&quot;      
+## [115] &quot;mlpKerasDecayCost&quot;   &quot;mlpKerasDropout&quot;     &quot;mlpKerasDropoutCost&quot;
+## [118] &quot;mlpML&quot;               &quot;mlpSGD&quot;              &quot;mlpWeightDecay&quot;     
+## [121] &quot;mlpWeightDecayML&quot;    &quot;monmlp&quot;              &quot;msaenet&quot;            
+## [124] &quot;multinom&quot;            &quot;mxnet&quot;               &quot;mxnetAdam&quot;          
+## [127] &quot;naive_bayes&quot;         &quot;nb&quot;                  &quot;nbDiscrete&quot;         
+## [130] &quot;nbSearch&quot;            &quot;neuralnet&quot;           &quot;nnet&quot;               
+## [133] &quot;nnls&quot;                &quot;nodeHarvest&quot;         &quot;null&quot;               
+## [136] &quot;OneR&quot;                &quot;ordinalNet&quot;          &quot;ordinalRF&quot;          
+## [139] &quot;ORFlog&quot;              &quot;ORFpls&quot;              &quot;ORFridge&quot;           
+## [142] &quot;ORFsvm&quot;              &quot;ownn&quot;                &quot;pam&quot;                
+## [145] &quot;parRF&quot;               &quot;PART&quot;                &quot;partDSA&quot;            
+## [148] &quot;pcaNNet&quot;             &quot;pcr&quot;                 &quot;pda&quot;                
+## [151] &quot;pda2&quot;                &quot;penalized&quot;           &quot;PenalizedLDA&quot;       
+## [154] &quot;plr&quot;                 &quot;pls&quot;                 &quot;plsRglm&quot;            
+## [157] &quot;polr&quot;                &quot;ppr&quot;                 &quot;PRIM&quot;               
+## [160] &quot;protoclass&quot;          &quot;qda&quot;                 &quot;QdaCov&quot;             
+## [163] &quot;qrf&quot;                 &quot;qrnn&quot;                &quot;randomGLM&quot;          
+## [166] &quot;ranger&quot;              &quot;rbf&quot;                 &quot;rbfDDA&quot;             
+## [169] &quot;Rborist&quot;             &quot;rda&quot;                 &quot;regLogistic&quot;        
+## [172] &quot;relaxo&quot;              &quot;rf&quot;                  &quot;rFerns&quot;             
+## [175] &quot;RFlda&quot;               &quot;rfRules&quot;             &quot;ridge&quot;              
+## [178] &quot;rlda&quot;                &quot;rlm&quot;                 &quot;rmda&quot;               
+## [181] &quot;rocc&quot;                &quot;rotationForest&quot;      &quot;rotationForestCp&quot;   
+## [184] &quot;rpart&quot;               &quot;rpart1SE&quot;            &quot;rpart2&quot;             
+## [187] &quot;rpartCost&quot;           &quot;rpartScore&quot;          &quot;rqlasso&quot;            
+## [190] &quot;rqnc&quot;                &quot;RRF&quot;                 &quot;RRFglobal&quot;          
+## [193] &quot;rrlda&quot;               &quot;RSimca&quot;              &quot;rvmLinear&quot;          
+## [196] &quot;rvmPoly&quot;             &quot;rvmRadial&quot;           &quot;SBC&quot;                
+## [199] &quot;sda&quot;                 &quot;sdwd&quot;                &quot;simpls&quot;             
+## [202] &quot;SLAVE&quot;               &quot;slda&quot;                &quot;smda&quot;               
+## [205] &quot;snn&quot;                 &quot;sparseLDA&quot;           &quot;spikeslab&quot;          
+## [208] &quot;spls&quot;                &quot;stepLDA&quot;             &quot;stepQDA&quot;            
+## [211] &quot;superpc&quot;             &quot;svmBoundrangeString&quot; &quot;svmExpoString&quot;      
+## [214] &quot;svmLinear&quot;           &quot;svmLinear2&quot;          &quot;svmLinear3&quot;         
+## [217] &quot;svmLinearWeights&quot;    &quot;svmLinearWeights2&quot;   &quot;svmPoly&quot;            
+## [220] &quot;svmRadial&quot;           &quot;svmRadialCost&quot;       &quot;svmRadialSigma&quot;     
+## [223] &quot;svmRadialWeights&quot;    &quot;svmSpectrumString&quot;   &quot;tan&quot;                
+## [226] &quot;tanSearch&quot;           &quot;treebag&quot;             &quot;vbmpRadial&quot;         
+## [229] &quot;vglmAdjCat&quot;          &quot;vglmContRatio&quot;       &quot;vglmCumulative&quot;     
+## [232] &quot;widekernelpls&quot;       &quot;WM&quot;                  &quot;wsrf&quot;               
+## [235] &quot;xgbDART&quot;             &quot;xgbLinear&quot;           &quot;xgbTree&quot;            
+## [238] &quot;xyf&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># str(getModelInfo(&quot;knn&quot;, regex = TRUE)) # Por defecto devuelve coincidencias parciales</span>
+<span class="kw">modelLookup</span>(<span class="st">&quot;knn&quot;</span>)  <span class="co"># Información sobre hiperparámetros</span></code></pre></div>
+<pre><code>##   model parameter      label forReg forClass probModel
+## 1   knn         k #Neighbors   TRUE     TRUE      TRUE</code></pre>
+<p>Este paquete permite, entre otras cosas:</p>
+<ul>
+<li><p>Partición de los datos</p>
+<ul>
+<li><p><code>createDataPartition(y, p = 0.5, list = TRUE, ...)</code>: crea particiones balanceadas de los datos.</p>
+<ul>
+<li><p>En el caso de que la respuesta <code>y</code> sea categórica realiza el muestreo en cada clase. Para respuestas numéricas emplea cuantiles (definidos por el argumento <code>groups = min(5, length(y))</code>).</p></li>
+<li><p><code>p</code>: proporción de datos en la muestra de entrenamiento.</p></li>
+<li><p><code>list</code>: lógico; determina si el resultado es una lista con las muestras o un vector (o matriz) de índices</p></li>
+</ul></li>
+<li><p>Funciones auxiliares: <code>createFolds()</code>, <code>createMultiFolds()</code>, <code>groupKFold()</code>, <code>createResample()</code>, <code>createTimeSlices()</code></p></li>
+</ul></li>
+<li><p>Análisis descriptivo: <code>featurePlot()</code></p></li>
+<li><p>Preprocesado de los datos:</p>
+<ul>
+<li><p>La función principal es <code>preProcess(x, method = c(&quot;center&quot;, &quot;scale&quot;), ...)</code>, aunque se puede integrar en el entrenamiento (función <code>train()</code>) para estimar los parámetros de las transformaciones a partir de la muestra de entrenamiento y posteriormente aplicarlas automáticamente al hacer nuevas predicciones (p.e. en la muestra de test).</p></li>
+<li><p>El parámetro <code>method</code> permite establecer una lista de procesados:</p>
+<ul>
+<li><p>Imputación: <code>&quot;knnImpute&quot;</code>, <code>&quot;bagImpute&quot;</code> o <code>&quot;medianImpute&quot;</code></p></li>
+<li><p>Creación y transformación de variables explicativas: <code>&quot;center&quot;</code>, <code>&quot;scale&quot;</code>, <code>&quot;range&quot;</code>, <code>&quot;BoxCox&quot;</code>, <code>&quot;YeoJohnson&quot;</code>, <code>&quot;expoTrans&quot;</code>, <code>&quot;spatialSign&quot;</code></p>
+<p>Funciones auxiliares: <code>dummyVars()</code>…</p></li>
+<li><p>Selección de predictores y extracción de componentes: <code>&quot;corr&quot;</code>, <code>&quot;nzv&quot;</code>, <code>&quot;zv&quot;</code>, <code>&quot;conditionalX&quot;</code>, <code>&quot;pca&quot;</code>, <code>&quot;ica&quot;</code></p>
+<p>Funciones auxiliares: <code>rfe()</code>…</p></li>
+</ul></li>
+</ul></li>
+<li><p>Entrenamiento y selección de los hiperparámetros del modelo:</p>
+<ul>
+<li><p>La función principal es <code>train(formula, data, method = &quot;rf&quot;, trControl = trainControl(), tuneGrid = NULL, tuneLength = 3, ...)</code></p>
+<ul>
+<li><p><code>trControl</code>: permite establecer el método de remuestreo para la evaluación de los hiperparámetros y el método para seleccionar el óptimo, incluyendo las medidas de precisión. Por ejemplo <code>trControl = trainControl(method = &quot;cv&quot;, number = 10, selectionFunction = &quot;oneSE&quot;)</code>.</p>
+<p>Los métodos disponibles son: <code>&quot;boot&quot;</code>, <code>&quot;boot632&quot;</code>, <code>&quot;optimism_boot&quot;</code>, <code>&quot;boot_all&quot;</code>, <code>&quot;cv&quot;</code>, <code>&quot;repeatedcv&quot;</code>, <code>&quot;LOOCV&quot;</code>, <code>&quot;LGOCV&quot;</code>, <code>&quot;timeslice&quot;</code>, <code>&quot;adaptive_cv&quot;</code>, <code>&quot;adaptive_boot&quot;</code> o <code>&quot;adaptive_LGOCV&quot;</code></p></li>
+<li><p><code>tuneLength</code> y <code>tuneGrid</code>: permite establecer cuantos hiperparámetros serán evaluados (por defecto 3) o una rejilla con las combinaciones de hiperparámetros.</p></li>
+<li><p><code>...</code> permite establecer opciones específicas de los métodos.</p></li>
+</ul></li>
+<li><p>También admite matrices <code>x</code>, <code>y</code> en lugar de fórmulas (o <em>recetas</em>: <code>recipe()</code>).</p></li>
+<li><p>Si se imputan datos en el preprocesado será necesario establecer <code>na.action = na.pass</code>.</p></li>
+</ul></li>
+<li><p>Evaluación de los modelos</p>
+<ul>
+<li><p><code>postResample(pred, obs, ...)</code>: regresión</p></li>
+<li><p><code>confusionMatrix(pred, obs, ...)</code>: clasificación</p>
+<ul>
+<li>Funciones auxiliares: <code>twoClassSummary()</code>, <code>prSummary()</code>…</li>
+</ul></li>
+</ul></li>
+<li><p>Analisis de la importancia de los predictores:</p>
+<ul>
+<li><code>varImp()</code>: interfaz a las medidas específicas de los métodos de aprendizaje supervisado (<a href="https://topepo.github.io/caret/variable-importance.html#model-specific-metrics">Sección 15.1</a>) o medidas genéricas (<a href="https://topepo.github.io/caret/variable-importance.html#model-independent-metrics">Sección 15.2</a>).</li>
+</ul></li>
 </ul>
 <p>Ejemplo regresión con KNN:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># caret</span>
@@ -198,9 +337,9 @@ knn &lt;-<span class="st"> </span><span class="kw">train</span>(medv <span class
              <span class="dt">tuneGrid =</span> <span class="kw">data.frame</span>(<span class="dt">k =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>),
              <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="dt">number =</span> <span class="dv">10</span>))
 <span class="kw">plot</span>(knn)</code></pre></div>
-<p><img src="01-introduccion_files/figure-html/unnamed-chunk-23-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><img src="01-introduccion_files/figure-html/unnamed-chunk-24-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(knn, <span class="dt">highlight =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<p><img src="01-introduccion_files/figure-html/unnamed-chunk-23-2.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><img src="01-introduccion_files/figure-html/unnamed-chunk-24-2.png" width="80%" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knn<span class="op">$</span>bestTune</code></pre></div>
 <pre><code>##   k
 ## 3 3</code></pre>

@@ -210,7 +210,7 @@ Traspuesta al estilo de JSS
 -->
     
 
-### Métodos (de aprendizaje supervisado) y paquetes de R
+### Métodos (de aprendizaje supervisado) y paquetes de R {#metodos-pkgs}
 
 Hay una gran cantidad de métodos de aprendizaje supervisado implementados en centenares de paquetes de `R` (ver por ejemplo [CRAN Task View: Machine Learning & Statistical Learning](https://cran.r-project.org/web/views/MachineLearning.html)).
 A continuación se muestran los principales métodos y algunos de los paquetes de R que los implementan (muchos son válidos para regresión y clasificación, como por ejemplo los basados en árboles, aunque aquí aparecen en su aplicación habitual).
@@ -778,17 +778,20 @@ Por ejemplo, dos de las más utilizadas son la tasa de verdaderos positivos y la
 
 La precisión global o tasa de aciertos (*accuracy*; ACC) sería:
 $$ACC = \frac{TP + TN}{P + N} = \frac{TP+TN}{TP+TN+FP+FN}$$
-Sin embargo hay que tener cuidado con esta medida cuando las clases no están balanceadas^[También hay que tener cuidado las medidas que utilizan la prevalencia estimada a partir de la muestra de test, como el índice predictivo positivo y negativo, si la muestra de test no refleja lo que ocurre en la población (por ejemplo si la clase de interés está sobrerrepresentada en la muestra).].
+Sin embargo hay que tener cuidado con esta medida cuando las clases no están balanceadas.
 Otras medidas de la precisión global que tratan de evitar este problema son la *precisión balanceada* (*balanced accuracy*, BA):
 $$BA = \frac{TPR + TNR}{2}$$
-(media aritmética de TPR y TNR) o la *puntuación F1* (*F1 score*; media armónica de TPR y TNR):
+(media aritmética de TPR y TNR) o la *puntuación F1* (*F1 score*; media armónica de TPR y el valor predictivo positivo, PPV, descrito más adelante):
 $$F_1 = \frac{2TP}{2TP+FP+FN}$$
 Otra medida global es el coeficiente kappa de Cohen, que compara la tasa de aciertos con la obtenida en una clasificación al azar
 (un valor de 1 indicaría máxima precisión y 0 que la precisión es igual a la que obtendríamos clasificando al azar; empleando la tasa de positivos, denominada *prevalencia*, para predecir positivo).
 
-NOTA: La precisión global (ACC) no debe ser confundida con el índice predictivo positivo (*precision*, *positive predictive value*; PPV):
-$PPV = TP/(TP+FP)$. 
-<!-- $PPV = \frac{TP}{TP+FP}$ -->
+También hay que tener cuidado las medidas que utilizan como estimación de la probabilidad de positivo (*prevalencia*) la tasa de positivos en la muestra de test, como el valor (o índice) predictivo positivo (*precision*, *positive predictive value*; PPV):
+$$PPV = \frac{TP}{TP+FP}$$
+(que no debe ser confundido con la precisión global ACC) y el valor predictivo negativo negativo (NPV):
+$$NPV = \frac{TN}{TN+FN},$$ 
+si la muestra de test no refleja lo que ocurre en la población (por ejemplo si la clase de interés está sobrerrepresentada en la muestra).
+En estos casos habrá que recalcularlos empleando estimaciones válidas de las probabilidades de la clases (por ejemplo, en estos casos, la función `caret::confusionMatrix()` permite establecer estimaciones válidas mediante el argumento `prevalence`).
 
 Como ejemplo emplearemos los datos anteriores de valoraciones de viviendas y estatus de la población, considerando como respuesta una nueva variable `fmedv` que clasifica las valoraciones en "Bajo" o "Alto" dependiendo de si `medv > 25`.
 
@@ -1184,7 +1187,7 @@ Esto puede presentar serias dificultades especialmente en modelos complejos en l
 
 La mayoría de los métodos de aprendizaje supervisado permiten obtener medidas de la importancia de las variables explicativas en la predicción (ver p.e. la [ayuda](https://topepo.github.io/caret/variable-importance.html) de la función `caret::varImp()`; algunos, como los basados en árboles, incluso de las no incluidas en el modelo final).
 Muchos de los métodos de clasificación, en lugar de proporcionar medidas globales, calculan medidas para cada categoría.
-Alternativamente también se pueden obtener medidas independientes del modelo empleado, pero suelen requerir de mucho más tiempo de computación (ver p.e. [Molnar, 2020](https://christophm.github.io/interpretable-ml-book), [Capítulo 5](https://christophm.github.io/interpretable-ml-book/agnostic.htm)).
+Alternativamente también se pueden obtener medidas de la importancia de las variables mediante procedimientos generales (en el sentido de que se pueden aplicar a cualquier modelo), pero suelen requerir de mucho más tiempo de computación (ver p.e. [Molnar, 2020](https://christophm.github.io/interpretable-ml-book), [Capítulo 5](https://christophm.github.io/interpretable-ml-book/agnostic.htm)).
 
 En algunos de los métodos se modela explícitamente los efectos de los distintos predictores y estos se pueden analizar con (mas o menos) facilidad. 
 Hay que tener en cuenta que, al margen de las interacciones, la colinealidad/concurvidad dificulta notablemente el estudio de los efectos de las variables explicativas.
@@ -1192,6 +1195,8 @@ Otros métodos son más del tipo "caja negra" (*black box*) y precisan de aproxi
 Estos métodos^[Similares a los gráficos parciales de residuos de los modelos lineales o aditivos (ver p.e. las funciones `termplot()`, `car::crPlots()` o `car::avPlots()`).] tratan de estimar el efecto marginal de las variables explicativas, es decir, la variación en la predicción a medida que varía una variable explicativa manteniendo constantes el resto.
 La principal diferencia entre ambas aproximaciones es que los gráficos PDP muestran una única curva con el promedio de la respuesta mientras que las curvas ICE muestran una curva para cada observación (para más detalles ver las referencias anteriores).
 
+En problemas de clasificación también se están empleando la teoría de juegos cooperativos y las técnicas de optimización de Investigación Operativa para evaluar la importancia de las variables predictoras y determinar las más influyentes. 
+Por citar algunos, Strumbelj y Kononenko (2010) propusieron un procedimiento general basado en el valor de Shapley de juegos cooperativos, y en Agor y Özaltın (2019) se propone el uso de algoritmos genéticos para determinar los predictores más influyentes.
 
 Paquetes y funciones de R:
 
@@ -1214,19 +1219,191 @@ En los siguientes capítulos se mostrarán ejemplos empleando algunas de estas h
 
 ## Introducción al paquete `caret` {#caret}    
 
-En preparación...
-
-The caret package (short for Classification And REgression Training)...
+Como ya se comentó en la Sección \@ref(metodos-pkgs), el paquete `caret` (abreviatura de *Classification And REgression Training*) proporciona una interfaz unificada que simplifica el proceso de modelado empleando la mayoría de los métodos de AE implementados en R (actualmente admite 238 métodos; ver el [Capítulo 6](https://topepo.github.io/caret/available-models.html) del [manual](https://topepo.github.io/caret) de este paquete). 
+Además de proporcionar rutinas para los principales pasos del proceso, incluye también numerosas funciones auxiliares que permitirían implementar nuevos procedimientos.
 
 Enlaces:
 
-* [Documentación](https://topepo.github.io/caret)
+* [Manual](https://topepo.github.io/caret)
 
-    - [6.Available Models](https://topepo.github.io/caret/available-models.html)
+    - [3. Pre-Processing](https://topepo.github.io/caret/pre-processing.html)
+
+    - [5. Model Training and Tuning](https://topepo.github.io/caret/model-training-and-tuning.html)
+    
+    - [6. Available Models](https://topepo.github.io/caret/available-models.html)
+    
+    - [17. Measuring Performance](https://topepo.github.io/caret/measuring-performance.html)
+    
 
 * [Vignette](https://cran.r-project.org/web/packages/caret/vignettes/caret.html)
 
 * [Cheat Sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/caret.pdf)
+
+
+La función principal es `train()` (descrita más adelante), que incluye un parámetro `method` que permite establecer el modelo mediante una cadena de texto.
+Podemos obtener información sobre los modelos disponibles con las funciones `getModelInfo()` y `modelLookup()` (puede haber varias implementaciones del mismo método con distintas configuraciones de hiperparámetros; también se pueden definir nuevos modelos, ver el [Capítulo 13](https://topepo.github.io/caret/using-your-own-model-in-train.html) del [manual](https://topepo.github.io/caret)).
+
+
+```r
+library(caret)
+names(getModelInfo()) # Listado de todos los métodos disponibles
+```
+
+```
+##   [1] "ada"                 "AdaBag"              "AdaBoost.M1"        
+##   [4] "adaboost"            "amdai"               "ANFIS"              
+##   [7] "avNNet"              "awnb"                "awtan"              
+##  [10] "bag"                 "bagEarth"            "bagEarthGCV"        
+##  [13] "bagFDA"              "bagFDAGCV"           "bam"                
+##  [16] "bartMachine"         "bayesglm"            "binda"              
+##  [19] "blackboost"          "blasso"              "blassoAveraged"     
+##  [22] "bridge"              "brnn"                "BstLm"              
+##  [25] "bstSm"               "bstTree"             "C5.0"               
+##  [28] "C5.0Cost"            "C5.0Rules"           "C5.0Tree"           
+##  [31] "cforest"             "chaid"               "CSimca"             
+##  [34] "ctree"               "ctree2"              "cubist"             
+##  [37] "dda"                 "deepboost"           "DENFIS"             
+##  [40] "dnn"                 "dwdLinear"           "dwdPoly"            
+##  [43] "dwdRadial"           "earth"               "elm"                
+##  [46] "enet"                "evtree"              "extraTrees"         
+##  [49] "fda"                 "FH.GBML"             "FIR.DM"             
+##  [52] "foba"                "FRBCS.CHI"           "FRBCS.W"            
+##  [55] "FS.HGD"              "gam"                 "gamboost"           
+##  [58] "gamLoess"            "gamSpline"           "gaussprLinear"      
+##  [61] "gaussprPoly"         "gaussprRadial"       "gbm_h2o"            
+##  [64] "gbm"                 "gcvEarth"            "GFS.FR.MOGUL"       
+##  [67] "GFS.LT.RS"           "GFS.THRIFT"          "glm.nb"             
+##  [70] "glm"                 "glmboost"            "glmnet_h2o"         
+##  [73] "glmnet"              "glmStepAIC"          "gpls"               
+##  [76] "hda"                 "hdda"                "hdrda"              
+##  [79] "HYFIS"               "icr"                 "J48"                
+##  [82] "JRip"                "kernelpls"           "kknn"               
+##  [85] "knn"                 "krlsPoly"            "krlsRadial"         
+##  [88] "lars"                "lars2"               "lasso"              
+##  [91] "lda"                 "lda2"                "leapBackward"       
+##  [94] "leapForward"         "leapSeq"             "Linda"              
+##  [97] "lm"                  "lmStepAIC"           "LMT"                
+## [100] "loclda"              "logicBag"            "LogitBoost"         
+## [103] "logreg"              "lssvmLinear"         "lssvmPoly"          
+## [106] "lssvmRadial"         "lvq"                 "M5"                 
+## [109] "M5Rules"             "manb"                "mda"                
+## [112] "Mlda"                "mlp"                 "mlpKerasDecay"      
+## [115] "mlpKerasDecayCost"   "mlpKerasDropout"     "mlpKerasDropoutCost"
+## [118] "mlpML"               "mlpSGD"              "mlpWeightDecay"     
+## [121] "mlpWeightDecayML"    "monmlp"              "msaenet"            
+## [124] "multinom"            "mxnet"               "mxnetAdam"          
+## [127] "naive_bayes"         "nb"                  "nbDiscrete"         
+## [130] "nbSearch"            "neuralnet"           "nnet"               
+## [133] "nnls"                "nodeHarvest"         "null"               
+## [136] "OneR"                "ordinalNet"          "ordinalRF"          
+## [139] "ORFlog"              "ORFpls"              "ORFridge"           
+## [142] "ORFsvm"              "ownn"                "pam"                
+## [145] "parRF"               "PART"                "partDSA"            
+## [148] "pcaNNet"             "pcr"                 "pda"                
+## [151] "pda2"                "penalized"           "PenalizedLDA"       
+## [154] "plr"                 "pls"                 "plsRglm"            
+## [157] "polr"                "ppr"                 "PRIM"               
+## [160] "protoclass"          "qda"                 "QdaCov"             
+## [163] "qrf"                 "qrnn"                "randomGLM"          
+## [166] "ranger"              "rbf"                 "rbfDDA"             
+## [169] "Rborist"             "rda"                 "regLogistic"        
+## [172] "relaxo"              "rf"                  "rFerns"             
+## [175] "RFlda"               "rfRules"             "ridge"              
+## [178] "rlda"                "rlm"                 "rmda"               
+## [181] "rocc"                "rotationForest"      "rotationForestCp"   
+## [184] "rpart"               "rpart1SE"            "rpart2"             
+## [187] "rpartCost"           "rpartScore"          "rqlasso"            
+## [190] "rqnc"                "RRF"                 "RRFglobal"          
+## [193] "rrlda"               "RSimca"              "rvmLinear"          
+## [196] "rvmPoly"             "rvmRadial"           "SBC"                
+## [199] "sda"                 "sdwd"                "simpls"             
+## [202] "SLAVE"               "slda"                "smda"               
+## [205] "snn"                 "sparseLDA"           "spikeslab"          
+## [208] "spls"                "stepLDA"             "stepQDA"            
+## [211] "superpc"             "svmBoundrangeString" "svmExpoString"      
+## [214] "svmLinear"           "svmLinear2"          "svmLinear3"         
+## [217] "svmLinearWeights"    "svmLinearWeights2"   "svmPoly"            
+## [220] "svmRadial"           "svmRadialCost"       "svmRadialSigma"     
+## [223] "svmRadialWeights"    "svmSpectrumString"   "tan"                
+## [226] "tanSearch"           "treebag"             "vbmpRadial"         
+## [229] "vglmAdjCat"          "vglmContRatio"       "vglmCumulative"     
+## [232] "widekernelpls"       "WM"                  "wsrf"               
+## [235] "xgbDART"             "xgbLinear"           "xgbTree"            
+## [238] "xyf"
+```
+
+```r
+# str(getModelInfo("knn", regex = TRUE)) # Por defecto devuelve coincidencias parciales
+modelLookup("knn")  # Información sobre hiperparámetros
+```
+
+```
+##   model parameter      label forReg forClass probModel
+## 1   knn         k #Neighbors   TRUE     TRUE      TRUE
+```
+
+Este paquete permite, entre otras cosas:
+
+* Partición de los datos
+
+     - `createDataPartition(y, p = 0.5, list = TRUE, ...)`: crea particiones balanceadas de los datos.
+  
+        * En el caso de que la respuesta `y` sea categórica realiza el muestreo en cada clase. Para respuestas numéricas emplea cuantiles (definidos por el argumento `groups = min(5, length(y))`).
+        
+        * `p`: proporción de datos en la muestra de entrenamiento.
+        
+        * `list`: lógico; determina si el resultado es una lista con las muestras o un vector (o matriz) de índices
+  
+     - Funciones auxiliares: `createFolds()`, `createMultiFolds()`, `groupKFold()`, `createResample()`, `createTimeSlices()`
+     
+* Análisis descriptivo: `featurePlot()`
+
+* Preprocesado de los datos: 
+
+     - La función principal es `preProcess(x, method = c("center", "scale"), ...)`, aunque se puede integrar en el entrenamiento (función `train()`) para estimar los parámetros de las transformaciones a partir de la muestra de entrenamiento y posteriormente aplicarlas automáticamente al hacer nuevas predicciones (p.e. en la muestra de test).
+     
+     - El parámetro `method` permite establecer una lista de procesados:
+
+         * Imputación: `"knnImpute"`, `"bagImpute"` o `"medianImpute"`
+         
+         * Creación y transformación de variables explicativas: `"center"`, `"scale"`, `"range"`, 	`"BoxCox"`, `"YeoJohnson"`, `"expoTrans"`, `"spatialSign"` 
+         
+               Funciones auxiliares: `dummyVars()`...
+      
+         * Selección de predictores y extracción de componentes: `"corr"`, `"nzv"`, `"zv"`, `"conditionalX"`, `"pca"`, `"ica"`  
+
+               Funciones auxiliares: `rfe()`...
+     
+* Entrenamiento y selección de los hiperparámetros del modelo:
+
+    - La función principal es `train(formula, data, method = "rf", trControl = trainControl(), tuneGrid = NULL, tuneLength = 3, ...)`
+    
+        * `trControl`: permite establecer el método de remuestreo para la evaluación de los hiperparámetros y el método para seleccionar el óptimo, incluyendo las medidas de precisión. Por ejemplo `trControl = trainControl(method = "cv", number = 10, selectionFunction = "oneSE")`.
+        
+             Los métodos disponibles son: `"boot"`, `"boot632"`, `"optimism_boot"`, `"boot_all"`, `"cv"`, `"repeatedcv"`, `"LOOCV"`, `"LGOCV"`, `"timeslice"`, `"adaptive_cv"`, `"adaptive_boot"` o `"adaptive_LGOCV"`
+    
+        * `tuneLength` y `tuneGrid`: permite establecer cuantos hiperparámetros serán evaluados (por defecto 3) o una rejilla con las combinaciones de hiperparámetros. 
+        
+        * `...` permite establecer opciones específicas de los métodos.
+        
+    - También admite matrices `x`, `y` en lugar de fórmulas (o *recetas*: `recipe()`).
+    
+    - Si se imputan datos en el preprocesado será necesario establecer `na.action = na.pass`.
+
+
+* Evaluación de los modelos
+
+    - `postResample(pred, obs, ...)`: regresión
+
+    - `confusionMatrix(pred, obs, ...)`: clasificación
+    
+        * Funciones auxiliares: `twoClassSummary()`, `prSummary()`...  
+
+* Analisis de la importancia de los predictores: 
+
+    - `varImp()`: interfaz a las medidas específicas de los métodos de aprendizaje supervisado ([Sección 15.1](https://topepo.github.io/caret/variable-importance.html#model-specific-metrics)) o medidas genéricas ([Sección 15.2](https://topepo.github.io/caret/variable-importance.html#model-independent-metrics)).
+
+
 
 
 Ejemplo regresión con KNN:
@@ -1252,13 +1429,13 @@ knn <- train(medv ~ ., data = train,
 plot(knn)
 ```
 
-<img src="01-introduccion_files/figure-html/unnamed-chunk-23-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="01-introduccion_files/figure-html/unnamed-chunk-24-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 ggplot(knn, highlight = TRUE)
 ```
 
-<img src="01-introduccion_files/figure-html/unnamed-chunk-23-2.png" width="80%" style="display: block; margin: auto;" />
+<img src="01-introduccion_files/figure-html/unnamed-chunk-24-2.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 knn$bestTune
@@ -1310,6 +1487,9 @@ postResample(predict(knn, newdata = test), test$medv)
 ##     RMSE Rsquared      MAE 
 ## 4.960971 0.733945 2.724242
 ```
+
+
+
 
 Un comentario final:
 

@@ -1403,21 +1403,24 @@ balanceadas\footnote{También hay que tener cuidado las medidas que
   utilizan la prevalencia estimada a partir de la muestra de test, como
   el índice predictivo positivo y negativo, si la muestra de test no
   refleja lo que ocurre en la población (por ejemplo si la clase de
-  interés está sobrerrepresentada en la muestra).}. Otras medidas de la
-precisión global que tratan de evitar este problema son la
-\emph{precisión balanceada} (\emph{balanced accuracy}, BA):
+  interés está sobrerrepresentada en la muestra).}.
+
+La precisión global (ACC) no debe ser confundida con el valor predictivo
+positivo (\emph{precision}, \emph{positive predictive value}; PPV):
+\(PPV = \frac{TP}{TP+FP}\)
+
+valor predictivo negativo NPV \(NPV = \frac{TN}{TN+FN}\)
+
+Otras medidas de la precisión global que tratan de evitar este problema
+son la \emph{precisión balanceada} (\emph{balanced accuracy}, BA):
 \[BA = \frac{TPR + TNR}{2}\] (media aritmética de TPR y TNR) o la
-\emph{puntuación F1} (\emph{F1 score}; media armónica de TPR y TNR):
+\emph{puntuación F1} (\emph{F1 score}; media armónica de TPR y PPV):
 \[F_1 = \frac{2TP}{2TP+FP+FN}\] Otra medida global es el coeficiente
 kappa de Cohen, que compara la tasa de aciertos con la obtenida en una
 clasificación al azar (un valor de 1 indicaría máxima precisión y 0 que
 la precisión es igual a la que obtendríamos clasificando al azar;
 empleando la tasa de positivos, denominada \emph{prevalencia}, para
 predecir positivo).
-
-NOTA: La precisión global (ACC) no debe ser confundida con el índice
-predictivo positivo (\emph{precision}, \emph{positive predictive value};
-PPV): \(PPV = TP/(TP+FP)\).
 
 Como ejemplo emplearemos los datos anteriores de valoraciones de
 viviendas y estatus de la población, considerando como respuesta una
