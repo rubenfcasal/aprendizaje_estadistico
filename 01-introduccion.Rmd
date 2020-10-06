@@ -470,7 +470,7 @@ cv.lm0 <- function(formula, datos) {
 }
 ```
 
-La función anterior no es muy eficiente, pero podría modificarse fácilmente para emplear otros métodos de regresión. 
+La función anterior no es muy eficiente, pero podría modificarse fácilmente para emplear otros métodos de regresión^[También puede ser de interés la función `cv.glm()` del paquete `boot`.]. 
 En el caso de regresión lineal múltiple (y de otros modelos lineales), se pueden obtener fácilmente las predicciones eliminando una de las observaciones a partir del ajuste con todos los datos.
 Por ejemplo, en lugar de la anterior sería preferible emplear la siguiente función (ver `?rstandard`):
 
@@ -721,7 +721,7 @@ histogram(~ p.est | obs, xlab = "Probabilidad estimada de 'Alto'")
 ```
 
 
-Para evaluar las estimaciones de las probabilidades se suele emplear la curva ROC (*receiver operating characteristics*, característica operativa del receptor; diseñada inicialmente en el campo de la deteccción de señales).
+Para evaluar las estimaciones de las probabilidades se suele emplear la curva ROC (*receiver operating characteristics*, característica operativa del receptor; diseñada inicialmente en el campo de la detección de señales).
 Como ya se comentó, normalmente se emplea $c = 0.5$ como punto de corte para clasificar en la categoría de interés (es lo que se conoce como *regla de Bayes*), aunque se podrían considerar otros valores (por ejemplo para mejorar la clasificación en una de las categorías, a costa de empeorar la precisión global).
 En la curva ROC se representa la sensibilidad (TPR) frente a la tasa de falsos negativos (FNR = 1 - TNR = 1 - especificidad) para distintos valores de corte.
 Para ello se puede emplear el paquete `pROC`:
@@ -862,7 +862,7 @@ Como conclusión, en el caso multidimensional habrá que tratar de emplear méto
 El análisis e interpretación de modelos es un campo muy activo en AE/ML, para el que recientemente se ha acuñado el término de *interpretable machine learning* (IML). 
 A continuación se resumen brevemente algunas de las principales ideas, para más detalles ver por ejemplo [Molnar (2020)](https://christophm.github.io/interpretable-ml-book).
 
-Como ya se comentó, a medida que aumenta la complejidad de los modelos normalmente disminuye su interpretabilidad, por lo que normalmente interesa encontrar el modelo más simple posible que resulte de utilidad para los objetivos propuestos.
+Como ya se comentó, a medida que aumenta la complejidad de los modelos generalmente disminuye su interpretabilidad, por lo que normalmente interesa encontrar el modelo más simple posible que resulte de utilidad para los objetivos propuestos.
 Aunque el principal objetivo sea la predicción, una vez obtenido el modelo final suele interesar medir la importancia de cada predictor en el modelo y si es posible como influyen en la predicción de la respuesta, es decir, estudiar el efecto de las variables explicativas.
 Esto puede presentar serias dificultades especialmente en modelos complejos en los que hay interacciones entre los predictores (el efecto de una variable explicativa depende de los valores de otras).
 

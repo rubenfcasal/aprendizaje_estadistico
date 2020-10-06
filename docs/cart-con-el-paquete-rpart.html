@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)" />
 
 
-<meta name="date" content="2020-09-29" />
+<meta name="date" content="2020-10-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -169,7 +169,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="cart-con-el-paquete-rpart" class="section level2">
 <h2><span class="header-section-number">2.3</span> CART con el paquete <code>rpart</code></h2>
-<p>La metodología CART está implementada en el paquete <a href="https://CRAN.R-project.org/package=rpart"><code>rpart</code></a> (Recursive PARTitioning)<a href="#fn11" class="footnoteRef" id="fnref11"><sup>11</sup></a>. La función principal es <code>rpart()</code> y habitualmente se emplea de la forma:</p>
+<p>La metodología CART está implementada en el paquete <a href="https://CRAN.R-project.org/package=rpart"><code>rpart</code></a> (Recursive PARTitioning)<a href="#fn12" class="footnoteRef" id="fnref12"><sup>12</sup></a>. La función principal es <code>rpart()</code> y habitualmente se emplea de la forma:</p>
 <p><code>rpart(formula, data, method, parms, control, ...)</code></p>
 <ul>
 <li><p><code>formula</code>: permite especificar la respuesta y las variables predictoras de la forma habitual, se suele establecer de la forma <code>respuesta ~ .</code> para incluir todas las posibles variables explicativas.</p></li>
@@ -179,7 +179,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><p><code>control</code>: lista de opciones que controlan el algoritmo de partición, por defecto se seleccionan mediante la función <code>rpart.control</code>, aunque también se pueden establecer en la llamada a la función principal, y los principales parámetros son:</p>
 <p><code>rpart.control(minsplit = 20, minbucket = round(minsplit/3), cp = 0.01, xval = 10, maxdepth = 30, ...)</code></p>
 <ul>
-<li><p><code>cp</code> es el parámetro de complejidad para la poda del árbol. Es la proporción mínima de reducción del error que debe producir una nueva partición para que se incorpore al modelo (valores más grandes simplifican el modelo y reducen el tiempo de computación; estableciéndolo a 0 se obtiene un árbol de profundidad máxima)</p></li>
+<li><p><code>cp</code> es el parámetro de complejidad <span class="math inline">\(\tilde \alpha\)</span> para la poda del árbol, de forma que un valor de 1 se corresponde con un árbol sin divisiones y un valor de 0 con un árbol de profundidad máxima. Adicionalmente, para reducir el tiempo de computación, el algoritmo empleado no realiza una partición si la proporción de reducción del error es inferior a este valor (valores más grandes simplifican el modelo y reducen el tiempo de computación).</p></li>
 <li><p><code>maxdepth</code> es la profundidad máxima del árbol (la profundidad de la raíz sería 0).</p></li>
 <li><p><code>minsplit</code> y <code>minbucket</code> son, respectivamente, los números mínimos de observaciones en un nodo intermedio para particionarlo y en un nodo terminal.</p></li>
 <li><p><code>xval</code> es el número de grupos (folds) para validación cruzada.</p></li>
@@ -300,9 +300,9 @@ test &lt;-<span class="st"> </span>winequality[<span class="op">-</span>itrain, 
 ## 
 ## quality is 6.6 when
 ##     alcohol &gt;= 12</code></pre>
-<p>Por defecto se poda el arbol considerando <code>cp = 0.01</code>, que puede ser adecuado en muchos casos. Sin embargo, para seleccionar el valor óptimo de este (hiper)parámetro se puede emplear validación cruzada. En primer lugar habría que establecer <code>cp = 0</code> para construir el árbol completo, a la profundidad máxima (determinada por los valores de <code>minsplit</code> y <code>minbucket</code>, que se podrían seleccionar “a mano” dependiendo del número de observaciones o también considerándolos como hiperparámetos; esto último no está implementado en <code>rpart</code>, ni en principio en <code>caret</code>)<a href="#fn12" class="footnoteRef" id="fnref12"><sup>12</sup></a>.</p>
+<p>Por defecto se poda el arbol considerando <code>cp = 0.01</code>, que puede ser adecuado en muchos casos. Sin embargo, para seleccionar el valor óptimo de este (hiper)parámetro se puede emplear validación cruzada. En primer lugar habría que establecer <code>cp = 0</code> para construir el árbol completo, a la profundidad máxima (determinada por los valores de <code>minsplit</code> y <code>minbucket</code>, que se podrían seleccionar “a mano” dependiendo del número de observaciones o también considerándolos como hiperparámetos; esto último no está implementado en <code>rpart</code>, ni en principio en <code>caret</code>)<a href="#fn13" class="footnoteRef" id="fnref13"><sup>13</sup></a>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tree &lt;-<span class="st"> </span><span class="kw">rpart</span>(quality <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train, <span class="dt">cp =</span> <span class="dv">0</span>)</code></pre></div>
-<p>Posteriormente podemos emplear las funciones <code>printcp()</code> (o <code>plotcp()</code>) para obtener (representar) los valores de CP para los árboles (óptimos) de menor tamaño junto con su error de validación cruzada <code>xerror</code> (reescalado de forma que el máximo es 1):</p>
+<p>Posteriormente podemos emplear las funciones <code>printcp()</code> (o <code>plotcp()</code>) para obtener (representar) los valores de CP para los árboles (óptimos) de menor tamaño junto con su error de validación cruzada <code>xerror</code> (reescalado de forma que el máximo de <code>rel error</code> es 1):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">printcp</span>(tree)</code></pre></div>
 <pre><code>## 
 ## Regression tree:
@@ -592,7 +592,7 @@ test &lt;-<span class="st"> </span>winetaste[<span class="op">-</span>itrain, ]<
 ##     volatile.acidity &lt; 0.29
 ##     fixed.acidity &gt;= 7.5
 ##     total.sulfur.dioxide &lt; 150</code></pre>
-<p>Al igual que en el caso anterior, para seleccionar un valor óptimo del (hiper)parámetro de complejidad, se puede construir un árbol de decisión completo y emplear validación cruzada para podarlo. Además, si el número de observaciones es grande y las clases están más o menos balanceadas, se podría aumentar los valores mínimos de observaciones en los nodos intermedios y terminales<a href="#fn13" class="footnoteRef" id="fnref13"><sup>13</sup></a>, por ejemplo:</p>
+<p>Al igual que en el caso anterior, para seleccionar un valor óptimo del (hiper)parámetro de complejidad, se puede construir un árbol de decisión completo y emplear validación cruzada para podarlo. Además, si el número de observaciones es grande y las clases están más o menos balanceadas, se podría aumentar los valores mínimos de observaciones en los nodos intermedios y terminales<a href="#fn14" class="footnoteRef" id="fnref14"><sup>14</sup></a>, por ejemplo:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tree &lt;-<span class="st"> </span><span class="kw">rpart</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train, <span class="dt">cp =</span> <span class="dv">0</span>, <span class="dt">minsplit =</span> <span class="dv">30</span>, <span class="dt">minbucket =</span> <span class="dv">10</span>)</code></pre></div>
 <p>En este caso mantenemos el resto de valores por defecto:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tree &lt;-<span class="st"> </span><span class="kw">rpart</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train, <span class="dt">cp =</span> <span class="dv">0</span>)</code></pre></div>
@@ -811,10 +811,10 @@ caret.rpart<span class="op">$</span>finalModel
 </div>
 <div class="footnotes">
 <hr />
-<ol start="11">
-<li id="fn11"><p>El paquete <a href="https://CRAN.R-project.org/package=tree"><code>tree</code></a> es una traducción del original en S.<a href="cart-con-el-paquete-rpart.html#fnref11">↩</a></p></li>
-<li id="fn12"><p>Los parámetros <code>maxsurrogate</code>, <code>usesurrogate</code> y <code>surrogatestyle</code> serían de utilidad si hay datos faltantes.<a href="cart-con-el-paquete-rpart.html#fnref12">↩</a></p></li>
-<li id="fn13"><p>Otra opción, más interesante para regresión, sería considerar estos valores como hiperparámetros.<a href="cart-con-el-paquete-rpart.html#fnref13">↩</a></p></li>
+<ol start="12">
+<li id="fn12"><p>El paquete <a href="https://CRAN.R-project.org/package=tree"><code>tree</code></a> es una traducción del original en S.<a href="cart-con-el-paquete-rpart.html#fnref12">↩</a></p></li>
+<li id="fn13"><p>Los parámetros <code>maxsurrogate</code>, <code>usesurrogate</code> y <code>surrogatestyle</code> serían de utilidad si hay datos faltantes.<a href="cart-con-el-paquete-rpart.html#fnref13">↩</a></p></li>
+<li id="fn14"><p>Otra opción, más interesante para regresión, sería considerar estos valores como hiperparámetros.<a href="cart-con-el-paquete-rpart.html#fnref14">↩</a></p></li>
 </ol>
 </div>
             </section>

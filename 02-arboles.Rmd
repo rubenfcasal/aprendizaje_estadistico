@@ -36,6 +36,13 @@ reg <- c(expression(R[1]), expression(R[2]), expression(R[3]), expression(R[4]))
 text(x[leaves], y[leaves] - 0.5 * cxy[2], adj = 0.5, reg)
 ```
 
+<!-- 
+Pendiente:
+Incluir figuras en dos columnas? 
+fig.cap="Izquierda: ejemplo de un árbol obtenido al realizar una partición binaria recursiva de un espacio bidimensional. Derecha: superficie de predicción correspondiente."
+-->
+
+
 Al final de este proceso iterativo el espacio predictor se ha particionado en regiones de forma rectangular en la que la predicción de la respuesta es constante. 
 Si la relación entre las variables predictoras y la variable respuesta no se puede describir adecuadamente mediante rectángulos, la calidad predictiva del árbol será limitada. 
 Como vemos, la simplicidad del modelo es su principal argumento, pero también su talón de Aquiles.
@@ -96,7 +103,7 @@ respuestas $y_i$ (de la muestra de entrenamiento) en la región $R_j$,
 a la que llamaremos $\widehat y_{R_j}$.
 Por tanto, se deben seleccionar las regiones $R_1, R_2, \ldots, R_J$ que minimicen 
 
-$$\sum_{j=1}^{J} \sum_{i\in R_j} (y_i - \widehat y_{R_j})^2$$ 
+$$RSS = \sum_{j=1}^{J} \sum_{i\in R_j} (y_i - \widehat y_{R_j})^2$$ 
 (Obsérvese el abuso de notación $i\in R_j$, que significa las observaciones 
 $i\in N$ que verifican $x_i \in R_j$).
 
@@ -160,7 +167,10 @@ Dado un subárbol $T$ con $R_1, R_2, \ldots, R_t$ nodos terminales, consideramos
 medida del error el RSS más una penalización que depende de un hiperparámetro 
 no negativo $\alpha \ge 0$
 
-$$\sum_{j=1}^t \sum_{i\in R_j} (y_i - \widehat y_{R_j})^2 + \alpha t$$
+\begin{equation} 
+RSS_{\alpha} = \sum_{j=1}^t \sum_{i\in R_j} (y_i - \widehat y_{R_j})^2 + \alpha t
+(\#eq:rss-alpha)
+\end{equation} 
 
 Para cada valor del parámetro $\alpha$ existe un único subárbol *más pequeño* 
 que minimiza este error (obsérvese que aunque hay un continuo de valores 
@@ -188,6 +198,13 @@ se puede utilizar directamente el valor que minimice el error; o se puede forzar
 que el modelo sea un poco más sencillo con la regla *one-standard-error*, que selecciona 
 el árbol más pequeño que esté a una distancia de un error estándar del árbol obtenido 
 mediante la opción anterior.
+
+
+También es habitual escribir la Ecuación \@ref(eq:rss-alpha) reescalando el parámetro de complejidad como $\tilde \alpha = \alpha / RSS_0$, siendo $RSS_0 = \sum_{i=1}^{n} (y_i - \bar y)^2$ la variabilidad total (la suma de cuadrados residual del árbol sin divisiones):
+$$RSS_{\tilde \alpha}=RSS + \tilde \alpha RSS_0 t$$
+
+De esta forma se podría interpretar el hiperparámetro $\tilde \alpha$ como una penalización en la proporción de variabilidad explicada, ya que dividiendo la expresión anterior por $RSS_0$ obtendríamos:
+$$R^2_{\tilde \alpha}=R^2+ \tilde \alpha  t$$
 
 
 ## Árboles de clasificación CART
@@ -252,10 +269,8 @@ La función principal es `rpart()` y habitualmente se emplea de la forma:
   
     `rpart.control(minsplit = 20, minbucket = round(minsplit/3), cp = 0.01, xval = 10, maxdepth = 30, ...)`
   
-    - `cp` es el parámetro de complejidad para la poda del árbol.
-      Es la proporción mínima de reducción del error que debe producir una nueva partición para que se incorpore al modelo
-      (valores más grandes simplifican el modelo y reducen el tiempo de computación; 
-      estableciéndolo a 0 se obtiene un árbol de profundidad máxima)
+    - `cp` es el parámetro de complejidad $\tilde \alpha$ para la poda del árbol, de forma que un valor de 1 se corresponde con un árbol sin divisiones y un valor de 0 con un árbol de profundidad máxima. 
+      Adicionalmente, para reducir el tiempo de computación, el algoritmo empleado no realiza una partición si la proporción de reducción del error es inferior a este valor (valores más grandes simplifican el modelo y reducen el tiempo de computación).
       
     - `maxdepth` es la profundidad máxima del árbol (la profundidad de la raíz sería 0).
     
@@ -337,7 +352,7 @@ tree <- rpart(quality ~ ., data = train, cp = 0)
 
 Posteriormente podemos emplear las funciones `printcp()` (o `plotcp()`) para obtener (representar) 
 los valores de CP para los árboles (óptimos) de menor tamaño junto con su error de validación cruzada 
-`xerror` (reescalado de forma que el máximo es 1):
+`xerror` (reescalado de forma que el máximo de `rel error` es 1):
 
 ```{r }
 printcp(tree)

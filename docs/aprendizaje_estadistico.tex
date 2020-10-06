@@ -146,7 +146,7 @@
 (\href{mailto:ruben.fcasal@udc.es}{\nolinkurl{ruben.fcasal@udc.es}}),
 Julián Costa
 (\href{mailto:julian.costa@udc.es}{\nolinkurl{julian.costa@udc.es}})}
-\date{2020-09-24}
+\date{2020-10-06}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Teorema}[chapter]
@@ -599,7 +599,7 @@ contra todos''). En este caso típicamente:
 \[\hat G \left(\mathbf{x} \right) = \underset{k}{\operatorname{argmax}} \left\{ \hat p_k(\mathbf{x}) : k = 1, 2, \ldots, K \right\}.\]
 
 \subsection{Métodos (de aprendizaje supervisado) y paquetes de
-R}\label{muxe9todos-de-aprendizaje-supervisado-y-paquetes-de-r}
+R}\label{metodos-pkgs}
 
 Hay una gran cantidad de métodos de aprendizaje supervisado
 implementados en centenares de paquetes de \texttt{R} (ver por ejemplo
@@ -1063,12 +1063,13 @@ demás observaciones:
 \end{Shaded}
 
 La función anterior no es muy eficiente, pero podría modificarse
-fácilmente para emplear otros métodos de regresión. En el caso de
-regresión lineal múltiple (y de otros modelos lineales), se pueden
-obtener fácilmente las predicciones eliminando una de las observaciones
-a partir del ajuste con todos los datos. Por ejemplo, en lugar de la
-anterior sería preferible emplear la siguiente función (ver
-\texttt{?rstandard}):
+fácilmente para emplear otros métodos de regresión\footnote{También
+  puede ser de interés la función \texttt{cv.glm()} del paquete
+  \texttt{boot}.}. En el caso de regresión lineal múltiple (y de otros
+modelos lineales), se pueden obtener fácilmente las predicciones
+eliminando una de las observaciones a partir del ajuste con todos los
+datos. Por ejemplo, en lugar de la anterior sería preferible emplear la
+siguiente función (ver \texttt{?rstandard}):
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1399,28 +1400,31 @@ de acierto en positivos y negativos), también denominadas
 La precisión global o tasa de aciertos (\emph{accuracy}; ACC) sería:
 \[ACC = \frac{TP + TN}{P + N} = \frac{TP+TN}{TP+TN+FP+FN}\] Sin embargo
 hay que tener cuidado con esta medida cuando las clases no están
-balanceadas\footnote{También hay que tener cuidado las medidas que
-  utilizan la prevalencia estimada a partir de la muestra de test, como
-  el índice predictivo positivo y negativo, si la muestra de test no
-  refleja lo que ocurre en la población (por ejemplo si la clase de
-  interés está sobrerrepresentada en la muestra).}.
-
-La precisión global (ACC) no debe ser confundida con el valor predictivo
-positivo (\emph{precision}, \emph{positive predictive value}; PPV):
-\(PPV = \frac{TP}{TP+FP}\)
-
-valor predictivo negativo NPV \(NPV = \frac{TN}{TN+FN}\)
-
-Otras medidas de la precisión global que tratan de evitar este problema
-son la \emph{precisión balanceada} (\emph{balanced accuracy}, BA):
-\[BA = \frac{TPR + TNR}{2}\] (media aritmética de TPR y TNR) o la
-\emph{puntuación F1} (\emph{F1 score}; media armónica de TPR y PPV):
+balanceadas. Otras medidas de la precisión global que tratan de evitar
+este problema son la \emph{precisión balanceada} (\emph{balanced
+accuracy}, BA): \[BA = \frac{TPR + TNR}{2}\] (media aritmética de TPR y
+TNR) o la \emph{puntuación F1} (\emph{F1 score}; media armónica de TPR y
+el valor predictivo positivo, PPV, descrito más adelante):
 \[F_1 = \frac{2TP}{2TP+FP+FN}\] Otra medida global es el coeficiente
 kappa de Cohen, que compara la tasa de aciertos con la obtenida en una
 clasificación al azar (un valor de 1 indicaría máxima precisión y 0 que
 la precisión es igual a la que obtendríamos clasificando al azar;
 empleando la tasa de positivos, denominada \emph{prevalencia}, para
 predecir positivo).
+
+También hay que tener cuidado las medidas que utilizan como estimación
+de la probabilidad de positivo (\emph{prevalencia}) la tasa de positivos
+en la muestra de test, como el valor (o índice) predictivo positivo
+(\emph{precision}, \emph{positive predictive value}; PPV):
+\[PPV = \frac{TP}{TP+FP}\] (que no debe ser confundido con la precisión
+global ACC) y el valor predictivo negativo negativo (NPV):
+\[NPV = \frac{TN}{TN+FN},\] si la muestra de test no refleja lo que
+ocurre en la población (por ejemplo si la clase de interés está
+sobrerrepresentada en la muestra). En estos casos habrá que
+recalcularlos empleando estimaciones válidas de las probabilidades de la
+clases (por ejemplo, en estos casos, la función
+\texttt{caret::confusionMatrix()} permite establecer estimaciones
+válidas mediante el argumento \texttt{prevalence}).
 
 Como ejemplo emplearemos los datos anteriores de valoraciones de
 viviendas y estatus de la población, considerando como respuesta una
@@ -1618,7 +1622,7 @@ de test:
 Para evaluar las estimaciones de las probabilidades se suele emplear la
 curva ROC (\emph{receiver operating characteristics}, característica
 operativa del receptor; diseñada inicialmente en el campo de la
-deteccción de señales). Como ya se comentó, normalmente se emplea
+detección de señales). Como ya se comentó, normalmente se emplea
 \(c = 0.5\) como punto de corte para clasificar en la categoría de
 interés (es lo que se conoce como \emph{regla de Bayes}), aunque se
 podrían considerar otros valores (por ejemplo para mejorar la
@@ -1954,7 +1958,7 @@ ejemplo \href{https://christophm.github.io/interpretable-ml-book}{Molnar
 (2020)}.
 
 Como ya se comentó, a medida que aumenta la complejidad de los modelos
-normalmente disminuye su interpretabilidad, por lo que normalmente
+generalmente disminuye su interpretabilidad, por lo que normalmente
 interesa encontrar el modelo más simple posible que resulte de utilidad
 para los objetivos propuestos. Aunque el principal objetivo sea la
 predicción, una vez obtenido el modelo final suele interesar medir la
@@ -1973,8 +1977,10 @@ la función \texttt{caret::varImp()}; algunos, como los basados en
 árboles, incluso de las no incluidas en el modelo final). Muchos de los
 métodos de clasificación, en lugar de proporcionar medidas globales,
 calculan medidas para cada categoría. Alternativamente también se pueden
-obtener medidas independientes del modelo empleado, pero suelen requerir
-de mucho más tiempo de computación (ver p.e.
+obtener medidas de la importancia de las variables mediante
+procedimientos generales (en el sentido de que se pueden aplicar a
+cualquier modelo), pero suelen requerir de mucho más tiempo de
+computación (ver p.e.
 \href{https://christophm.github.io/interpretable-ml-book}{Molnar, 2020},
 \href{https://christophm.github.io/interpretable-ml-book/agnostic.htm}{Capítulo
 5}).
@@ -2000,6 +2006,15 @@ principal diferencia entre ambas aproximaciones es que los gráficos PDP
 muestran una única curva con el promedio de la respuesta mientras que
 las curvas ICE muestran una curva para cada observación (para más
 detalles ver las referencias anteriores).
+
+En problemas de clasificación también se están empleando la teoría de
+juegos cooperativos y las técnicas de optimización de Investigación
+Operativa para evaluar la importancia de las variables predictoras y
+determinar las más influyentes. Por citar algunos, Strumbelj y Kononenko
+(2010) propusieron un procedimiento general basado en el valor de
+Shapley de juegos cooperativos, y en Agor y Özaltın (2019) se propone el
+uso de algoritmos genéticos para determinar los predictores más
+influyentes.
 
 Paquetes y funciones de R:
 
@@ -2031,28 +2046,286 @@ estas herramientas.
 \section{\texorpdfstring{Introducción al paquete
 \texttt{caret}}{Introducción al paquete caret}}\label{caret}
 
-En preparación\ldots{}
-
-The caret package (short for Classification And REgression
-Training)\ldots{}
+Como ya se comentó en la Sección \ref{metodos-pkgs}, el paquete
+\texttt{caret} (abreviatura de \emph{Classification And REgression
+Training}) proporciona una interfaz unificada que simplifica el proceso
+de modelado empleando la mayoría de los métodos de AE implementados en R
+(actualmente admite 238 métodos; ver el
+\href{https://topepo.github.io/caret/available-models.html}{Capítulo 6}
+del \href{https://topepo.github.io/caret}{manual} de este paquete).
+Además de proporcionar rutinas para los principales pasos del proceso,
+incluye también numerosas funciones auxiliares que permitirían
+implementar nuevos procedimientos.
 
 Enlaces:
 
 \begin{itemize}
 \item
-  \href{https://topepo.github.io/caret}{Documentación}
+  \href{https://topepo.github.io/caret}{Manual}
 
   \begin{itemize}
-  \tightlist
   \item
-    \href{https://topepo.github.io/caret/available-models.html}{6.Available
-    Models}
+    \href{https://topepo.github.io/caret/pre-processing.html}{3.
+    Pre-Processing}
+  \item
+    \href{https://topepo.github.io/caret/model-training-and-tuning.html}{5.
+    Model Training and Tuning}
+  \item
+    \href{https://topepo.github.io/caret/available-models.html}{6.
+    Available Models}
+  \item
+    \href{https://topepo.github.io/caret/measuring-performance.html}{17.
+    Measuring Performance}
   \end{itemize}
 \item
   \href{https://cran.r-project.org/web/packages/caret/vignettes/caret.html}{Vignette}
 \item
   \href{https://raw.githubusercontent.com/rstudio/cheatsheets/master/caret.pdf}{Cheat
   Sheet}
+\end{itemize}
+
+La función principal es \texttt{train()} (descrita más adelante), que
+incluye un parámetro \texttt{method} que permite establecer el modelo
+mediante una cadena de texto. Podemos obtener información sobre los
+modelos disponibles con las funciones \texttt{getModelInfo()} y
+\texttt{modelLookup()} (puede haber varias implementaciones del mismo
+método con distintas configuraciones de hiperparámetros; también se
+pueden definir nuevos modelos, ver el
+\href{https://topepo.github.io/caret/using-your-own-model-in-train.html}{Capítulo
+13} del \href{https://topepo.github.io/caret}{manual}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(caret)}
+\KeywordTok{names}\NormalTok{(}\KeywordTok{getModelInfo}\NormalTok{()) }\CommentTok{# Listado de todos los métodos disponibles}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   [1] "ada"                 "AdaBag"              "AdaBoost.M1"        
+##   [4] "adaboost"            "amdai"               "ANFIS"              
+##   [7] "avNNet"              "awnb"                "awtan"              
+##  [10] "bag"                 "bagEarth"            "bagEarthGCV"        
+##  [13] "bagFDA"              "bagFDAGCV"           "bam"                
+##  [16] "bartMachine"         "bayesglm"            "binda"              
+##  [19] "blackboost"          "blasso"              "blassoAveraged"     
+##  [22] "bridge"              "brnn"                "BstLm"              
+##  [25] "bstSm"               "bstTree"             "C5.0"               
+##  [28] "C5.0Cost"            "C5.0Rules"           "C5.0Tree"           
+##  [31] "cforest"             "chaid"               "CSimca"             
+##  [34] "ctree"               "ctree2"              "cubist"             
+##  [37] "dda"                 "deepboost"           "DENFIS"             
+##  [40] "dnn"                 "dwdLinear"           "dwdPoly"            
+##  [43] "dwdRadial"           "earth"               "elm"                
+##  [46] "enet"                "evtree"              "extraTrees"         
+##  [49] "fda"                 "FH.GBML"             "FIR.DM"             
+##  [52] "foba"                "FRBCS.CHI"           "FRBCS.W"            
+##  [55] "FS.HGD"              "gam"                 "gamboost"           
+##  [58] "gamLoess"            "gamSpline"           "gaussprLinear"      
+##  [61] "gaussprPoly"         "gaussprRadial"       "gbm_h2o"            
+##  [64] "gbm"                 "gcvEarth"            "GFS.FR.MOGUL"       
+##  [67] "GFS.LT.RS"           "GFS.THRIFT"          "glm.nb"             
+##  [70] "glm"                 "glmboost"            "glmnet_h2o"         
+##  [73] "glmnet"              "glmStepAIC"          "gpls"               
+##  [76] "hda"                 "hdda"                "hdrda"              
+##  [79] "HYFIS"               "icr"                 "J48"                
+##  [82] "JRip"                "kernelpls"           "kknn"               
+##  [85] "knn"                 "krlsPoly"            "krlsRadial"         
+##  [88] "lars"                "lars2"               "lasso"              
+##  [91] "lda"                 "lda2"                "leapBackward"       
+##  [94] "leapForward"         "leapSeq"             "Linda"              
+##  [97] "lm"                  "lmStepAIC"           "LMT"                
+## [100] "loclda"              "logicBag"            "LogitBoost"         
+## [103] "logreg"              "lssvmLinear"         "lssvmPoly"          
+## [106] "lssvmRadial"         "lvq"                 "M5"                 
+## [109] "M5Rules"             "manb"                "mda"                
+## [112] "Mlda"                "mlp"                 "mlpKerasDecay"      
+## [115] "mlpKerasDecayCost"   "mlpKerasDropout"     "mlpKerasDropoutCost"
+## [118] "mlpML"               "mlpSGD"              "mlpWeightDecay"     
+## [121] "mlpWeightDecayML"    "monmlp"              "msaenet"            
+## [124] "multinom"            "mxnet"               "mxnetAdam"          
+## [127] "naive_bayes"         "nb"                  "nbDiscrete"         
+## [130] "nbSearch"            "neuralnet"           "nnet"               
+## [133] "nnls"                "nodeHarvest"         "null"               
+## [136] "OneR"                "ordinalNet"          "ordinalRF"          
+## [139] "ORFlog"              "ORFpls"              "ORFridge"           
+## [142] "ORFsvm"              "ownn"                "pam"                
+## [145] "parRF"               "PART"                "partDSA"            
+## [148] "pcaNNet"             "pcr"                 "pda"                
+## [151] "pda2"                "penalized"           "PenalizedLDA"       
+## [154] "plr"                 "pls"                 "plsRglm"            
+## [157] "polr"                "ppr"                 "PRIM"               
+## [160] "protoclass"          "qda"                 "QdaCov"             
+## [163] "qrf"                 "qrnn"                "randomGLM"          
+## [166] "ranger"              "rbf"                 "rbfDDA"             
+## [169] "Rborist"             "rda"                 "regLogistic"        
+## [172] "relaxo"              "rf"                  "rFerns"             
+## [175] "RFlda"               "rfRules"             "ridge"              
+## [178] "rlda"                "rlm"                 "rmda"               
+## [181] "rocc"                "rotationForest"      "rotationForestCp"   
+## [184] "rpart"               "rpart1SE"            "rpart2"             
+## [187] "rpartCost"           "rpartScore"          "rqlasso"            
+## [190] "rqnc"                "RRF"                 "RRFglobal"          
+## [193] "rrlda"               "RSimca"              "rvmLinear"          
+## [196] "rvmPoly"             "rvmRadial"           "SBC"                
+## [199] "sda"                 "sdwd"                "simpls"             
+## [202] "SLAVE"               "slda"                "smda"               
+## [205] "snn"                 "sparseLDA"           "spikeslab"          
+## [208] "spls"                "stepLDA"             "stepQDA"            
+## [211] "superpc"             "svmBoundrangeString" "svmExpoString"      
+## [214] "svmLinear"           "svmLinear2"          "svmLinear3"         
+## [217] "svmLinearWeights"    "svmLinearWeights2"   "svmPoly"            
+## [220] "svmRadial"           "svmRadialCost"       "svmRadialSigma"     
+## [223] "svmRadialWeights"    "svmSpectrumString"   "tan"                
+## [226] "tanSearch"           "treebag"             "vbmpRadial"         
+## [229] "vglmAdjCat"          "vglmContRatio"       "vglmCumulative"     
+## [232] "widekernelpls"       "WM"                  "wsrf"               
+## [235] "xgbDART"             "xgbLinear"           "xgbTree"            
+## [238] "xyf"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# str(getModelInfo("knn", regex = TRUE)) # Por defecto devuelve coincidencias parciales}
+\KeywordTok{modelLookup}\NormalTok{(}\StringTok{"knn"}\NormalTok{)  }\CommentTok{# Información sobre hiperparámetros}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   model parameter      label forReg forClass probModel
+## 1   knn         k #Neighbors   TRUE     TRUE      TRUE
+\end{verbatim}
+
+Este paquete permite, entre otras cosas:
+
+\begin{itemize}
+\item
+  Partición de los datos
+
+  \begin{itemize}
+  \item
+    \texttt{createDataPartition(y,\ p\ =\ 0.5,\ list\ =\ TRUE,\ ...)}:
+    crea particiones balanceadas de los datos.
+
+    \begin{itemize}
+    \item
+      En el caso de que la respuesta \texttt{y} sea categórica realiza
+      el muestreo en cada clase. Para respuestas numéricas emplea
+      cuantiles (definidos por el argumento
+      \texttt{groups\ =\ min(5,\ length(y))}).
+    \item
+      \texttt{p}: proporción de datos en la muestra de entrenamiento.
+    \item
+      \texttt{list}: lógico; determina si el resultado es una lista con
+      las muestras o un vector (o matriz) de índices
+    \end{itemize}
+  \item
+    Funciones auxiliares: \texttt{createFolds()},
+    \texttt{createMultiFolds()}, \texttt{groupKFold()},
+    \texttt{createResample()}, \texttt{createTimeSlices()}
+  \end{itemize}
+\item
+  Análisis descriptivo: \texttt{featurePlot()}
+\item
+  Preprocesado de los datos:
+
+  \begin{itemize}
+  \item
+    La función principal es
+    \texttt{preProcess(x,\ method\ =\ c("center",\ "scale"),\ ...)},
+    aunque se puede integrar en el entrenamiento (función
+    \texttt{train()}) para estimar los parámetros de las
+    transformaciones a partir de la muestra de entrenamiento y
+    posteriormente aplicarlas automáticamente al hacer nuevas
+    predicciones (p.e. en la muestra de test).
+  \item
+    El parámetro \texttt{method} permite establecer una lista de
+    procesados:
+
+    \begin{itemize}
+    \item
+      Imputación: \texttt{"knnImpute"}, \texttt{"bagImpute"} o
+      \texttt{"medianImpute"}
+    \item
+      Creación y transformación de variables explicativas:
+      \texttt{"center"}, \texttt{"scale"}, \texttt{"range"},
+      \texttt{"BoxCox"}, \texttt{"YeoJohnson"}, \texttt{"expoTrans"},
+      \texttt{"spatialSign"}
+
+      Funciones auxiliares: \texttt{dummyVars()}\ldots{}
+    \item
+      Selección de predictores y extracción de componentes:
+      \texttt{"corr"}, \texttt{"nzv"}, \texttt{"zv"},
+      \texttt{"conditionalX"}, \texttt{"pca"}, \texttt{"ica"}
+
+      Funciones auxiliares: \texttt{rfe()}\ldots{}
+    \end{itemize}
+  \end{itemize}
+\item
+  Entrenamiento y selección de los hiperparámetros del modelo:
+
+  \begin{itemize}
+  \item
+    La función principal es
+    \texttt{train(formula,\ data,\ method\ =\ "rf",\ trControl\ =\ trainControl(),\ tuneGrid\ =\ NULL,\ tuneLength\ =\ 3,\ ...)}
+
+    \begin{itemize}
+    \item
+      \texttt{trControl}: permite establecer el método de remuestreo
+      para la evaluación de los hiperparámetros y el método para
+      seleccionar el óptimo, incluyendo las medidas de precisión. Por
+      ejemplo
+      \texttt{trControl\ =\ trainControl(method\ =\ "cv",\ number\ =\ 10,\ selectionFunction\ =\ "oneSE")}.
+
+      Los métodos disponibles son: \texttt{"boot"}, \texttt{"boot632"},
+      \texttt{"optimism\_boot"}, \texttt{"boot\_all"}, \texttt{"cv"},
+      \texttt{"repeatedcv"}, \texttt{"LOOCV"}, \texttt{"LGOCV"},
+      \texttt{"timeslice"}, \texttt{"adaptive\_cv"},
+      \texttt{"adaptive\_boot"} o \texttt{"adaptive\_LGOCV"}
+    \item
+      \texttt{tuneLength} y \texttt{tuneGrid}: permite establecer
+      cuantos hiperparámetros serán evaluados (por defecto 3) o una
+      rejilla con las combinaciones de hiperparámetros.
+    \item
+      \texttt{...} permite establecer opciones específicas de los
+      métodos.
+    \end{itemize}
+  \item
+    También admite matrices \texttt{x}, \texttt{y} en lugar de fórmulas
+    (o \emph{recetas}: \texttt{recipe()}).
+  \item
+    Si se imputan datos en el preprocesado será necesario establecer
+    \texttt{na.action\ =\ na.pass}.
+  \end{itemize}
+\item
+  Evaluación de los modelos
+
+  \begin{itemize}
+  \item
+    \texttt{postResample(pred,\ obs,\ ...)}: regresión
+  \item
+    \texttt{confusionMatrix(pred,\ obs,\ ...)}: clasificación
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Funciones auxiliares: \texttt{twoClassSummary()},
+      \texttt{prSummary()}\ldots{}
+    \end{itemize}
+  \end{itemize}
+\item
+  Analisis de la importancia de los predictores:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{varImp()}: interfaz a las medidas específicas de los métodos
+    de aprendizaje supervisado
+    (\href{https://topepo.github.io/caret/variable-importance.html\#model-specific-metrics}{Sección
+    15.1}) o medidas genéricas
+    (\href{https://topepo.github.io/caret/variable-importance.html\#model-independent-metrics}{Sección
+    15.2}).
+  \end{itemize}
 \end{itemize}
 
 Ejemplo regresión con KNN:
@@ -2079,7 +2352,7 @@ Ejemplo regresión con KNN:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/unnamed-chunk-23-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/unnamed-chunk-24-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2087,7 +2360,7 @@ Ejemplo regresión con KNN:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/unnamed-chunk-23-2} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/unnamed-chunk-24-2} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2276,9 +2549,9 @@ en la región \(R_j\), a la que llamaremos \(\widehat y_{R_j}\). Por
 tanto, se deben seleccionar las regiones \(R_1, R_2, \ldots, R_J\) que
 minimicen
 
-\[\sum_{j=1}^{J} \sum_{i\in R_j} (y_i - \widehat y_{R_j})^2\] (Obsérvese
-el abuso de notación \(i\in R_j\), que significa las observaciones
-\(i\in N\) que verifican \(x_i \in R_j\)).
+\[RSS = \sum_{j=1}^{J} \sum_{i\in R_j} (y_i - \widehat y_{R_j})^2\]
+(Obsérvese el abuso de notación \(i\in R_j\), que significa las
+observaciones \(i\in N\) que verifican \(x_i \in R_j\)).
 
 Pero este problema es, en la práctica, intratable y vamos a tener que
 simplificarlo. El método CART busca un compromiso entre rendimiento, por
@@ -2356,7 +2629,10 @@ Dado un subárbol \(T\) con \(R_1, R_2, \ldots, R_t\) nodos terminales,
 consideramos como medida del error el RSS más una penalización que
 depende de un hiperparámetro no negativo \(\alpha \ge 0\)
 
-\[\sum_{j=1}^t \sum_{i\in R_j} (y_i - \widehat y_{R_j})^2 + \alpha t\]
+\begin{equation} 
+RSS_{\alpha} = \sum_{j=1}^t \sum_{i\in R_j} (y_i - \widehat y_{R_j})^2 + \alpha t
+\label{eq:rss-alpha}
+\end{equation}
 
 Para cada valor del parámetro \(\alpha\) existe un único subárbol
 \emph{más pequeño} que minimiza este error (obsérvese que aunque hay un
@@ -2392,6 +2668,17 @@ error; o se puede forzar que el modelo sea un poco más sencillo con la
 regla \emph{one-standard-error}, que selecciona el árbol más pequeño que
 esté a una distancia de un error estándar del árbol obtenido mediante la
 opción anterior.
+
+También es habitual escribir la Ecuación \eqref{eq:rss-alpha} reescalando
+el parámetro de complejidad como \(\tilde \alpha = \alpha / RSS_0\),
+siendo \(RSS_0 = \sum_{i=1}^{n} (y_i - \bar y)^2\) la variabilidad total
+(la suma de cuadrados residual del árbol sin divisiones):
+\[RSS_{\tilde \alpha}=RSS + \tilde \alpha RSS_0 t\]
+
+De esta forma se podría interpretar el hiperparámetro \(\tilde \alpha\)
+como una penalización en la proporción de variabilidad explicada, ya que
+dividiendo la expresión anterior por \(RSS_0\) obtendríamos:
+\[R^2_{\tilde \alpha}=R^2+ \tilde \alpha  t\]
 
 \section{Árboles de clasificación
 CART}\label{uxe1rboles-de-clasificaciuxf3n-cart}
@@ -2481,11 +2768,13 @@ La metodología CART está implementada en el paquete
 
   \begin{itemize}
   \item
-    \texttt{cp} es el parámetro de complejidad para la poda del árbol.
-    Es la proporción mínima de reducción del error que debe producir una
-    nueva partición para que se incorpore al modelo (valores más grandes
-    simplifican el modelo y reducen el tiempo de computación;
-    estableciéndolo a 0 se obtiene un árbol de profundidad máxima)
+    \texttt{cp} es el parámetro de complejidad \(\tilde \alpha\) para la
+    poda del árbol, de forma que un valor de 1 se corresponde con un
+    árbol sin divisiones y un valor de 0 con un árbol de profundidad
+    máxima. Adicionalmente, para reducir el tiempo de computación, el
+    algoritmo empleado no realiza una partición si la proporción de
+    reducción del error es inferior a este valor (valores más grandes
+    simplifican el modelo y reducen el tiempo de computación).
   \item
     \texttt{maxdepth} es la profundidad máxima del árbol (la profundidad
     de la raíz sería 0).
@@ -2719,7 +3008,8 @@ considerándolos como hiperparámetos; esto último no está implementado en
 Posteriormente podemos emplear las funciones \texttt{printcp()} (o
 \texttt{plotcp()}) para obtener (representar) los valores de CP para los
 árboles (óptimos) de menor tamaño junto con su error de validación
-cruzada \texttt{xerror} (reescalado de forma que el máximo es 1):
+cruzada \texttt{xerror} (reescalado de forma que el máximo de
+\texttt{rel\ error} es 1):
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3676,6 +3966,10 @@ Chapman \& Hall/CRC Press.
 \subsection*{Artículos}\label{artuxedculos}
 \addcontentsline{toc}{subsection}{Artículos}
 
+Agor, J. y Özaltın, O.Y. (2019). Feature selection for classification
+models via bilevel optimization. \emph{Computers \& Operations
+Research}, 106, 156-168.
+
 Biecek, P. (2018).
 \href{http://www.jmlr.org/papers/volume19/18-416/18-416.pdf}{DALEX:
 explainers for complex predictive models in R}. \emph{The Journal of
@@ -3717,6 +4011,10 @@ that the question?, \emph{Computational Statistics \& Data Analysis}, 23
 
 Loh, W.Y. (2002). Regression tress with unbiased variable selection and
 interaction detection. \emph{Statistica Sinica}, 361-386.
+
+Strumbelj, E. y Kononenko, I. (2010). An efficient explanation of
+individual classifications using game theory. \emph{Journal of Machine
+Learning Research}, 11, 1-18.
 
 \bibliography{book.bib,packages.bib}
 

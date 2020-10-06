@@ -28,10 +28,14 @@ Podríamos definir la Ciencia de Datos como el conjunto de conocimientos y herra
 
 Aunque esta ciencia incluiría también la gestión (sin olvidarnos del proceso de obtención) y la manipulación de los datos.
 
-<div class="figure" style="text-align: center">
-<img src="images/esquema2.png" alt="Etapas del proceso" width="80%" />
-<p class="caption">(\#fig:esquema)Etapas del proceso</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{images/esquema2} 
+
+}
+
+\caption{Etapas del proceso}(\#fig:esquema)
+\end{figure}
 
 Una de estas etapas (que están interrelacionadas) es la construcción de modelos a partir de los datos para aprender y predecir. Podríamos decir que el Aprendizaje Estadístico (AE) se encarga de este problema desde el punto de vista estadístico.
 
@@ -309,10 +313,14 @@ legend("topright", legend = c("Verdadero", "Ajuste con grado 1",
        lty = c(1, 1, 2, 3), lwd = c(2, 1, 1, 1))
 ```
 
-<div class="figure" style="text-align: center">
-<img src="01-introduccion_files/figure-html/polyfit-1.png" alt="Muestra (simulada) y ajustes polinómicos con distinta complejidad." width="80%" />
-<p class="caption">(\#fig:polyfit)Muestra (simulada) y ajustes polinómicos con distinta complejidad.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/polyfit-1} 
+
+}
+
+\caption{Muestra (simulada) y ajustes polinómicos con distinta complejidad.}(\#fig:polyfit)
+\end{figure}
 
 Como se observa en la Figura \@ref(fig:polyfit) al aumentar la complejidad del modelo se consigue un mejor ajuste a los datos observados (empleados en el entrenamiento), a costa de un incremento en la variabilidad de las predicciones, lo que puede producir un mal comportamiento del modelo a ser empleado en un conjunto de datos distinto del observado. 
 
@@ -326,11 +334,18 @@ knitr::kable(t(sapply(list(fit1 = fit1, fit2 = fit2, fit3 = fit3),
                         c(MSE = mean(residuals^2), R2 = r.squared, R2adj = adj.r.squared)))), digits = 2)
 ```
 
-         MSE     R2   R2adj
------  -----  -----  ------
-fit1    1.22   0.20    0.17
-fit2    0.19   0.87    0.85
-fit3    0.07   0.95    0.84
+
+\begin{tabular}{l|r|r|r}
+\hline
+  & MSE & R2 & R2adj\\
+\hline
+fit1 & 1.22 & 0.20 & 0.17\\
+\hline
+fit2 & 0.19 & 0.87 & 0.85\\
+\hline
+fit3 & 0.07 & 0.95 & 0.84\\
+\hline
+\end{tabular}
 
 Por ejemplo, si generamos nuevas respuestas de este proceso, la precisión del modelo más complejo empeorará considerablemente:
 
@@ -348,10 +363,14 @@ legend("topright", legend = c("Verdadero", "Muestra", "Ajuste con grado 1", "Aju
        lty = c(1, NA, 1, 2, 3, NA), lwd = c(2, NA, 1, 1, 1, NA), pch = c(NA, 1, NA, NA, NA, 2))
 ```
 
-<div class="figure" style="text-align: center">
-<img src="01-introduccion_files/figure-html/polyfit2-1.png" alt="Muestra con ajustes polinómicos con distinta complejidad y nuevas observaciones." width="80%" />
-<p class="caption">(\#fig:polyfit2)Muestra con ajustes polinómicos con distinta complejidad y nuevas observaciones.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/polyfit2-1} 
+
+}
+
+\caption{Muestra con ajustes polinómicos con distinta complejidad y nuevas observaciones.}(\#fig:polyfit2)
+\end{figure}
 
 ```r
 MSEP <- sapply(list(fit1 = fit1, fit2 = fit2, fit3 = fit3), 
@@ -400,10 +419,14 @@ abline(v = 4, lty = 3)
 legend("topright", legend = c("Muestras", "Nuevas observaciones"), lty = c(1, 2))
 ```
 
-<div class="figure" style="text-align: center">
-<img src="01-introduccion_files/figure-html/polyfitsim-1.png" alt="Precisiones (errores cuadráticos medios) de ajustes polinómicos variando la complejidad, en las muestras empleadas en el ajuste y en nuevas observaciones (simulados)." width="80%" />
-<p class="caption">(\#fig:polyfitsim)Precisiones (errores cuadráticos medios) de ajustes polinómicos variando la complejidad, en las muestras empleadas en el ajuste y en nuevas observaciones (simulados).</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/polyfitsim-1} 
+
+}
+
+\caption{Precisiones (errores cuadráticos medios) de ajustes polinómicos variando la complejidad, en las muestras empleadas en el ajuste y en nuevas observaciones (simulados).}(\#fig:polyfitsim)
+\end{figure}
 
 
 Como se puede observar en la Figura \@ref(fig:polyfitsim) los errores de entrenamiento disminuyen a medida que aumenta la complejidad del modelo.
@@ -489,7 +512,9 @@ Al igual que se hizo en la Sección \@ref(bias-variance), consideraremos el grad
 plot(medv ~ lstat, data = train)
 ```
 
-<img src="01-introduccion_files/figure-html/unnamed-chunk-4-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/unnamed-chunk-4-1} \end{center}
 
 Podríamos emplear la siguiente función que devuelve para cada observación (fila) de una muestra de entrenamiento, el error de predicción en esa observación ajustando un modelo lineal con todas las demás observaciones:
 
@@ -507,7 +532,7 @@ cv.lm0 <- function(formula, datos) {
 }
 ```
 
-La función anterior no es muy eficiente, pero podría modificarse fácilmente para emplear otros métodos de regresión. 
+La función anterior no es muy eficiente, pero podría modificarse fácilmente para emplear otros métodos de regresión^[También puede ser de interés la función `cv.glm()` del paquete `boot`.]. 
 En el caso de regresión lineal múltiple (y de otros modelos lineales), se pueden obtener fácilmente las predicciones eliminando una de las observaciones a partir del ajuste con todos los datos.
 Por ejemplo, en lugar de la anterior sería preferible emplear la siguiente función (ver `?rstandard`):
 
@@ -540,7 +565,9 @@ grado.op <- grados[imin.mse]
 points(grado.op, cv.mse[imin.mse], pch = 16)
 ```
 
-<img src="01-introduccion_files/figure-html/unnamed-chunk-7-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/unnamed-chunk-7-1} \end{center}
 
 ```r
 grado.op
@@ -567,7 +594,9 @@ grado.1se <- grados[imin.1se]
 points(grado.1se, cv.mse[imin.1se], pch = 16)
 ```
 
-<img src="01-introduccion_files/figure-html/unnamed-chunk-8-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/unnamed-chunk-8-1} \end{center}
 
 ```r
 grado.1se
@@ -590,7 +619,9 @@ legend("topright", legend = c(paste("Grado óptimo:", grado.op), paste("oneSE ru
        lty = c(1, 2))
 ```
 
-<img src="01-introduccion_files/figure-html/unnamed-chunk-9-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/unnamed-chunk-9-1} \end{center}
 
 
 ### Evaluación de un método de regresión {#eval-reg}
@@ -613,7 +644,9 @@ res <- lm(obs ~ pred)
 abline(res, lty = 2)
 ```
 
-<img src="01-introduccion_files/figure-html/obs-pred-plot-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/obs-pred-plot-1} \end{center}
 
 También es habitual calcular distintas medidas de error. 
 Por ejemplo, podríamos emplear la función `postResample()` del paquete `caret`: 
@@ -814,7 +847,9 @@ caret::featurePlot(datos$lstat, datos$fmedv, plot = "density",
             labels = c("lstat", "Density"), auto.key = TRUE)
 ```
 
-<img src="01-introduccion_files/figure-html/unnamed-chunk-14-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/unnamed-chunk-14-1} \end{center}
 
 El siguiente código realiza la partición de los datos y posteriormente ajusta un modelo de regresión logística en la muestra de entrenamiento considerando `lstat` como única variable explicativa (en el Capítulo 5 se darán más detalles sobre este tipo de modelos):
 
@@ -955,10 +990,12 @@ library(lattice)
 histogram(~ p.est | obs, xlab = "Probabilidad estimada de 'Alto'")
 ```
 
-<img src="01-introduccion_files/figure-html/unnamed-chunk-19-1.png" width="80%" style="display: block; margin: auto;" />
 
 
-Para evaluar las estimaciones de las probabilidades se suele emplear la curva ROC (*receiver operating characteristics*, característica operativa del receptor; diseñada inicialmente en el campo de la deteccción de señales).
+\begin{center}\includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/unnamed-chunk-19-1} \end{center}
+
+
+Para evaluar las estimaciones de las probabilidades se suele emplear la curva ROC (*receiver operating characteristics*, característica operativa del receptor; diseñada inicialmente en el campo de la detección de señales).
 Como ya se comentó, normalmente se emplea $c = 0.5$ como punto de corte para clasificar en la categoría de interés (es lo que se conoce como *regla de Bayes*), aunque se podrían considerar otros valores (por ejemplo para mejorar la clasificación en una de las categorías, a costa de empeorar la precisión global).
 En la curva ROC se representa la sensibilidad (TPR) frente a la tasa de falsos negativos (FNR = 1 - TNR = 1 - especificidad) para distintos valores de corte.
 Para ello se puede emplear el paquete `pROC`:
@@ -971,10 +1008,14 @@ roc_glm <- roc(response = obs, predictor = p.est)
 plot(roc_glm)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="01-introduccion_files/figure-html/ROC-curve-1.png" alt="Curva ROC correspondiente al modelo de regresión logística." width="80%" />
-<p class="caption">(\#fig:ROC-curve)Curva ROC correspondiente al modelo de regresión logística.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/ROC-curve-1} 
+
+}
+
+\caption{Curva ROC correspondiente al modelo de regresión logística.}(\#fig:ROC-curve)
+\end{figure}
 
 ```r
 # plot(roc_glm, legacy.axes = TRUE)
@@ -1106,10 +1147,14 @@ plot(x, y)
 lines(x, mu, lwd = 2, col = "lightgray")
 ```
 
-<div class="figure" style="text-align: center">
-<img src="01-introduccion_files/figure-html/simdat100-1.png" alt="Muestra simulada y tendencia teórica." width="80%" />
-<p class="caption">(\#fig:simdat100)Muestra simulada y tendencia teórica.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/simdat100-1} 
+
+}
+
+\caption{Muestra simulada y tendencia teórica.}(\#fig:simdat100)
+\end{figure}
 
 Cuando el número de datos es más o menos grande podríamos pensar en predecir la respuesta a partir de lo que ocurre en las observaciones cercanas a la posición de predicción, esta es la idea de los métodos locales (Capítulo 6).
 Uno de los métodos de este tipo más conocidos es el de los *k-vecinos más cercanos* (*k-nearest neighbors*; KNN). 
@@ -1140,10 +1185,14 @@ legend("topright", legend = c("Verdadero", "5-NN", "10-NN", "20-NN"),
        lty = c(1, 3, 2, 1), lwd = 2, col = c("lightgray", 1, 1, 1))
 ```
 
-<div class="figure" style="text-align: center">
-<img src="01-introduccion_files/figure-html/knnfit2-1.png" alt="Predicciones con el método KNN y distintos vecindarios" width="80%" />
-<p class="caption">(\#fig:knnfit2)Predicciones con el método KNN y distintos vecindarios</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/knnfit2-1} 
+
+}
+
+\caption{Predicciones con el método KNN y distintos vecindarios}(\#fig:knnfit2)
+\end{figure}
 
 A medida que aumenta $k$ disminuye la complejidad del modelo y se observa un incremento del efecto frontera.
 Habría que seleccionar un valor óptimo de $k$ (buscando un equilibro entre sesgo y varianza, como se mostró en la Sección \@ref(bias-variance) y se ilustrará en la última sección de este capítulo empleando este método con el paquete `caret`), que dependerá de la tendencia teórica y del número de datos.
@@ -1161,7 +1210,9 @@ legend("bottomright", title = "Rango en cada dimensión", legend = c("10%" , "5%
        lty = c(1, 2, 3))
 ```
 
-<img src="01-introduccion_files/figure-html/unnamed-chunk-22-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/unnamed-chunk-22-1} \end{center}
 
 Desde otro punto de vista, suponiendo que los predictores se distribuyen de forma uniforme, la densidad de las observaciones es proporcional a $n^{1/d}$, siendo $n$ el tamaño muestral. 
 Por lo que si consideramos que una muestra de tamaño $n=100$ es suficientemente densa en una dimensión, para obtener la misma densidad muestral en 10 dimensiones tendríamos que disponer de un tamaño muestral de $n = 100^{10} = 10^{20}$.
@@ -1181,7 +1232,7 @@ Como conclusión, en el caso multidimensional habrá que tratar de emplear méto
 El análisis e interpretación de modelos es un campo muy activo en AE/ML, para el que recientemente se ha acuñado el término de *interpretable machine learning* (IML). 
 A continuación se resumen brevemente algunas de las principales ideas, para más detalles ver por ejemplo [Molnar (2020)](https://christophm.github.io/interpretable-ml-book).
 
-Como ya se comentó, a medida que aumenta la complejidad de los modelos normalmente disminuye su interpretabilidad, por lo que normalmente interesa encontrar el modelo más simple posible que resulte de utilidad para los objetivos propuestos.
+Como ya se comentó, a medida que aumenta la complejidad de los modelos generalmente disminuye su interpretabilidad, por lo que normalmente interesa encontrar el modelo más simple posible que resulte de utilidad para los objetivos propuestos.
 Aunque el principal objetivo sea la predicción, una vez obtenido el modelo final suele interesar medir la importancia de cada predictor en el modelo y si es posible como influyen en la predicción de la respuesta, es decir, estudiar el efecto de las variables explicativas.
 Esto puede presentar serias dificultades especialmente en modelos complejos en los que hay interacciones entre los predictores (el efecto de una variable explicativa depende de los valores de otras).
 
@@ -1429,13 +1480,17 @@ knn <- train(medv ~ ., data = train,
 plot(knn)
 ```
 
-<img src="01-introduccion_files/figure-html/unnamed-chunk-24-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/unnamed-chunk-24-1} \end{center}
 
 ```r
 ggplot(knn, highlight = TRUE)
 ```
 
-<img src="01-introduccion_files/figure-html/unnamed-chunk-24-2.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{01-introduccion_files/figure-latex/unnamed-chunk-24-2} \end{center}
 
 ```r
 knn$bestTune

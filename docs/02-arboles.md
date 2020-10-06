@@ -12,13 +12,22 @@ Se parte de un nodo inicial que representa a toda la muestra (se utiliza la mues
 Este proceso se repite un número finito de veces hasta obtener las hojas del árbol, es decir, los nodos terminales, que son los que se utilizan para realizar la predicción.
 Una vez construido el árbol, la predicción se realizará en cada nodo terminal utilizando, típicamente, la media en un problema de regresión y la moda en un problema de clasificación. 
 
-<img src="02-arboles_files/figure-html/unnamed-chunk-2-1.png" width="80%" style="display: block; margin: auto;" />
+
+\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-2-1} \end{center}
+
+<!-- 
+Pendiente:
+Incluir figuras en dos columnas? 
+fig.cap="Izquierda: ejemplo de un árbol obtenido al realizar una partición binaria recursiva de un espacio bidimensional. Derecha: superficie de predicción correspondiente."
+-->
+
 
 Al final de este proceso iterativo el espacio predictor se ha particionado en regiones de forma rectangular en la que la predicción de la respuesta es constante. 
 Si la relación entre las variables predictoras y la variable respuesta no se puede describir adecuadamente mediante rectángulos, la calidad predictiva del árbol será limitada. 
 Como vemos, la simplicidad del modelo es su principal argumento, pero también su talón de Aquiles.
 
-<img src="02-arboles_files/figure-html/unnamed-chunk-3-1.png" width="80%" style="display: block; margin: auto;" />
+
+\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-3-1} \end{center}
 
 Como se ha dicho antes, cada nodo padre se divide, a través de dos ramas, en dos nodos hijos. 
 Esto se hace seleccionando una variable predictora y dando respuesta a una pregunta dicotómica sobre ella.
@@ -70,7 +79,7 @@ respuestas $y_i$ (de la muestra de entrenamiento) en la región $R_j$,
 a la que llamaremos $\widehat y_{R_j}$.
 Por tanto, se deben seleccionar las regiones $R_1, R_2, \ldots, R_J$ que minimicen 
 
-$$\sum_{j=1}^{J} \sum_{i\in R_j} (y_i - \widehat y_{R_j})^2$$ 
+$$RSS = \sum_{j=1}^{J} \sum_{i\in R_j} (y_i - \widehat y_{R_j})^2$$ 
 (Obsérvese el abuso de notación $i\in R_j$, que significa las observaciones 
 $i\in N$ que verifican $x_i \in R_j$).
 
@@ -134,7 +143,10 @@ Dado un subárbol $T$ con $R_1, R_2, \ldots, R_t$ nodos terminales, consideramos
 medida del error el RSS más una penalización que depende de un hiperparámetro 
 no negativo $\alpha \ge 0$
 
-$$\sum_{j=1}^t \sum_{i\in R_j} (y_i - \widehat y_{R_j})^2 + \alpha t$$
+\begin{equation} 
+RSS_{\alpha} = \sum_{j=1}^t \sum_{i\in R_j} (y_i - \widehat y_{R_j})^2 + \alpha t
+(\#eq:rss-alpha)
+\end{equation} 
 
 Para cada valor del parámetro $\alpha$ existe un único subárbol *más pequeño* 
 que minimiza este error (obsérvese que aunque hay un continuo de valores 
@@ -162,6 +174,13 @@ se puede utilizar directamente el valor que minimice el error; o se puede forzar
 que el modelo sea un poco más sencillo con la regla *one-standard-error*, que selecciona 
 el árbol más pequeño que esté a una distancia de un error estándar del árbol obtenido 
 mediante la opción anterior.
+
+
+También es habitual escribir la Ecuación \@ref(eq:rss-alpha) reescalando el parámetro de complejidad como $\tilde \alpha = \alpha / RSS_0$, siendo $RSS_0 = \sum_{i=1}^{n} (y_i - \bar y)^2$ la variabilidad total (la suma de cuadrados residual del árbol sin divisiones):
+$$RSS_{\tilde \alpha}=RSS + \tilde \alpha RSS_0 t$$
+
+De esta forma se podría interpretar el hiperparámetro $\tilde \alpha$ como una penalización en la proporción de variabilidad explicada, ya que dividiendo la expresión anterior por $RSS_0$ obtendríamos:
+$$R^2_{\tilde \alpha}=R^2+ \tilde \alpha  t$$
 
 
 ## Árboles de clasificación CART
@@ -226,10 +245,8 @@ La función principal es `rpart()` y habitualmente se emplea de la forma:
   
     `rpart.control(minsplit = 20, minbucket = round(minsplit/3), cp = 0.01, xval = 10, maxdepth = 30, ...)`
   
-    - `cp` es el parámetro de complejidad para la poda del árbol.
-      Es la proporción mínima de reducción del error que debe producir una nueva partición para que se incorpore al modelo
-      (valores más grandes simplifican el modelo y reducen el tiempo de computación; 
-      estableciéndolo a 0 se obtiene un árbol de profundidad máxima)
+    - `cp` es el parámetro de complejidad $\tilde \alpha$ para la poda del árbol, de forma que un valor de 1 se corresponde con un árbol sin divisiones y un valor de 0 con un árbol de profundidad máxima. 
+      Adicionalmente, para reducir el tiempo de computación, el algoritmo empleado no realiza una partición si la proporción de reducción del error es inferior a este valor (valores más grandes simplifican el modelo y reducen el tiempo de computación).
       
     - `maxdepth` es la profundidad máxima del árbol (la profundidad de la raíz sería 0).
     
@@ -274,7 +291,9 @@ str(winequality)
 barplot(table(winequality$quality))
 ```
 
-<img src="02-arboles_files/figure-html/unnamed-chunk-4-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-4-1} \end{center}
 
 En primer lugar se selecciona el 80\% de los datos como muestra de entrenamiento y el 20\% restante como muestra de test:
 
@@ -338,7 +357,9 @@ plot(tree)
 text(tree)
 ```
 
-<img src="02-arboles_files/figure-html/unnamed-chunk-8-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-8-1} \end{center}
 
 Pero puede ser preferible emplear el paquete [`rpart.plot`](https://CRAN.R-project.org/package=rpart.plot)
 
@@ -348,7 +369,9 @@ library(rpart.plot)
 rpart.plot(tree, main="Regresion tree winequality")  
 ```
 
-<img src="02-arboles_files/figure-html/unnamed-chunk-9-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-9-1} \end{center}
 
 Nos interesa como se clasificaría a una nueva observación en los nodos terminales (en los nodos intermedios solo nos interesarían las condiciones, y el orden de las variables consideradas, hasta llegar a las hojas) y las correspondientes predicciones (la media de la respuesta en el correspondiente nodo terminal).
 Para ello, puede ser de utilidad imprimir las reglas:
@@ -424,7 +447,7 @@ tree <- rpart(quality ~ ., data = train, cp = 0)
 
 Posteriormente podemos emplear las funciones `printcp()` (o `plotcp()`) para obtener (representar) 
 los valores de CP para los árboles (óptimos) de menor tamaño junto con su error de validación cruzada 
-`xerror` (reescalado de forma que el máximo es 1):
+`xerror` (reescalado de forma que el máximo de `rel error` es 1):
 
 
 ```r
@@ -513,7 +536,9 @@ printcp(tree)
 plotcp(tree)
 ```
 
-<img src="02-arboles_files/figure-html/unnamed-chunk-12-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-12-1} \end{center}
 
 La tabla con los valores de las podas (óptimas, dependiendo del parámetro de complejidad) 
 está almacenada en la componente `$cptable`:
@@ -568,7 +593,9 @@ tree <- prune(tree, cp = cp)
 rpart.plot(tree, main="Regresion tree winequality") 
 ```
 
-<img src="02-arboles_files/figure-html/unnamed-chunk-15-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-15-1} \end{center}
 
 Podríamos estudiar el modelo final, por ejemplo mediante el método `summary()`, que entre otras cosas muestra una medida (en porcentaje) de la importancia de las variables explicativas para la predicción de la respuesta (teniendo en cuenta todas las particiones, principales y secundarias, en las que se emplea cada variable explicativa). 
 Alternativamente podríamos emplear el siguiente código:
@@ -604,7 +631,9 @@ plot(pred, obs, main = "Observado frente a predicciones (quality)",
 abline(a = 0, b = 1)
 ```
 
-<img src="02-arboles_files/figure-html/unnamed-chunk-17-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-17-1} \end{center}
 
 ```r
 # Empleando el paquete caret 
@@ -745,7 +774,9 @@ library(rpart.plot)
 rpart.plot(tree, main="Classification tree winetaste") # Alternativa: rattle::fancyRpartPlot
 ```
 
-<img src="02-arboles_files/figure-html/unnamed-chunk-22-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-22-1} \end{center}
 
 ```r
 rpart.plot(tree, main="Classification tree winetaste",
@@ -756,7 +787,9 @@ rpart.plot(tree, main="Classification tree winetaste",
            nn = TRUE)            # display the node numbers 
 ```
 
-<img src="02-arboles_files/figure-html/unnamed-chunk-22-2.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-22-2} \end{center}
 
 Nos interesa como se clasificaría a una nueva observación (como se llega a los nodos terminales) y su probabilidad estimada (la frecuencia relativa de la clase más frecuente en el correspondiente nodo terminal).
 Al igual que en el caso de regresión, puede ser de utilidad imprimir las reglas:
@@ -854,7 +887,9 @@ Representamos los errores (reescalados) de validación cruzada:
 plotcp(tree)
 ```
 
-<img src="02-arboles_files/figure-html/unnamed-chunk-26-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-26-1} \end{center}
 
 Para obtener el modelo final, seleccionamos el valor óptimo de complejidad siguiendo el criterio de un error estándar de Breiman et al. (1984) y podamos el arbol:
 
@@ -875,7 +910,9 @@ tree <- prune(tree, cp = cp)
 rpart.plot(tree, main="Classification tree winetaste")
 ```
 
-<img src="02-arboles_files/figure-html/unnamed-chunk-27-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-27-1} \end{center}
 
 El último paso sería evaluarlo en la muestra de test siguiendo los pasos descritos en la Sección \@ref(eval-class).
 El método `predict()` por defecto (`type = "prob"`) devuelve una matriz con las probabilidades de cada clase, habrá que establecer `type = "class"` (para más detalles consultar la ayuda de `predic.rpart()`).
@@ -1006,7 +1043,9 @@ caret.rpart
 ggplot(caret.rpart)
 ```
 
-<img src="02-arboles_files/figure-html/unnamed-chunk-29-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-29-1} \end{center}
 
 ```r
 caret.rpart$finalModel
@@ -1045,7 +1084,9 @@ caret.rpart$finalModel
 rpart.plot(caret.rpart$finalModel, main="Classification tree winetaste")
 ```
 
-<img src="02-arboles_files/figure-html/unnamed-chunk-29-2.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-29-2} \end{center}
 
 Para utilizar la regla de "un error estándar" se puede añadir `selectionFunction = "oneSE"`
 
@@ -1119,14 +1160,18 @@ caret.rpart$finalModel
 rpart.plot(caret.rpart$finalModel, main = "Classification tree winetaste")
 ```
 
-<img src="02-arboles_files/figure-html/unnamed-chunk-30-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-30-1} \end{center}
 
 ```r
 var.imp <- varImp(caret.rpart)
 plot(var.imp)
 ```
 
-<img src="02-arboles_files/figure-html/unnamed-chunk-30-2.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-30-2} \end{center}
 
 En principio también se podría utilizar la regla de "un error estándar" seleccionando `method = "rpart1SE"` (pero implementa internamente este método y en ocasiones no se obtienen los resultados esperados).
 
@@ -1203,5 +1248,7 @@ tree2 <- ctree(taste ~ ., data = train)
 plot(tree2)
 ```
 
-<img src="02-arboles_files/figure-html/unnamed-chunk-32-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-32-1} \end{center}
 

@@ -1,7 +1,7 @@
 --- 
 title: "Aprendizaje Estadístico"
 author: "Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)"
-date: "2020-09-29"
+date: "2020-10-06"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
@@ -42,7 +42,8 @@ install.packages(setdiff(pkgs, installed.packages()[,"Package"]), dependencies =
 Para generar el libro (compilar) serán necesarios paquetes adicionales, 
 para lo que se recomendaría consultar el libro de ["Escritura de libros con bookdown" ](https://rubenfcasal.github.io/bookdown_intro) en castellano.
 
-<img src="images/by-nc-nd-88x31.png" width="44" />
+
+\includegraphics[width=1.22in]{images/by-nc-nd-88x31} 
 
 Este obra está bajo una licencia de [Creative Commons Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.es_ES) 
 (esperamos poder liberarlo bajo una licencia menos restrictiva más adelante...).
