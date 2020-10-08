@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)" />
 
 
-<meta name="date" content="2020-10-06" />
+<meta name="date" content="2020-10-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -176,7 +176,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Otra opción es CHAID (CHi-squared Automated Interaction Detection, Kass, 1980), que se basa en una idea diferente. Es un método de construcción de árboles de clasificación que se utiliza cuando las variables predictoras son cualitativas o discretas; en caso contrario deben ser categorizadas previamente. Y se basa en el contraste chi-cuadrado de independencia para tablas de contingencia.</p>
 <p>Para cada par <span class="math inline">\((X_i, Y)\)</span>, se considera su tabla de contingencia y se calcula el p-valor del contraste chi-cuadrado, seleccionándose la variable predictora que tenga un p-valor más pequeño, ya que se asume que las variables predictoreas más relacionadas con la respuesta <span class="math inline">\(Y\)</span> son las que van a tener p-valores más pequeños y darán lugar a mejores predicciones. Se divide el nodo de acuerdo con los distintos valores de la variable predictora seleccionada, y se repite el proceso mientras haya variables <em>significativas</em>. Como el método exige que el p-valor sea menor que 0.05 (o el nivel de significación que se elija), y hay que hacer muchas comparaciones es necesario aplicar una corrección para comparaciones múltiples, por ejemplo la de Bonferroni.</p>
 <p>Lo que acabamos de explicar daría lugar a árboles no necesariamente binarios. Como se desea trabajar con árboles binarios (si se admite que de un nodo salga cualquier número de ramas, con muy pocos niveles de profundidad del árbol ya nos quedaríamos sin datos), es necesario hacer algo más: forzar a que las variables predictoras tengan sólo dos categorías mediante un proceso de fusión. Se van haciendo pruebas chi-cuadrado entre pares de categorías y la variable respuesta, y se fusiona el par con el p-valor más alto, ya que se trata de fusionar las categorías que sean más similares.</p>
-<p>Para árboles de regresión hay metodologías que, al igual que CHAID, se basan en el cálculo de p-valores, en este caso de contrastes de igualdes de medias. Una de las más utilizadas son los <em>conditional inference trees</em> (Hothorn <em>et al.</em>, 2006)<a href="#fn15" class="footnoteRef" id="fnref15"><sup>15</sup></a>, implementada en la función <code>ctree()</code> del paquete <a href="https://CRAN.R-project.org/package=party"><code>party</code></a>.</p>
+<p>Para árboles de regresión hay metodologías que, al igual que CHAID, se basan en el cálculo de p-valores, en este caso de contrastes de igualdes de medias. Una de las más utilizadas son los <em>conditional inference trees</em> (Hothorn <em>et al.</em>, 2006)<a href="#fn16" class="footnoteRef" id="fnref16"><sup>16</sup></a>, implementada en la función <code>ctree()</code> del paquete <a href="https://CRAN.R-project.org/package=party"><code>party</code></a>.</p>
 <p>Un problema conocido de los árboles CART es que sufren un sesgo de selección de variables: los predictores con más valores distintos son favorecidos. Esta es una de las motivaciones de utilizar estos métodos basados en contrastes de hipótesis. Por otra parte hay que ser conscientes de que los contrastes de hipótesis y la calidad predictiva son cosas distintas.</p>
 <div id="ejemplo" class="section level3">
 <h3><span class="header-section-number">2.4.1</span> Ejemplo</h3>
@@ -190,8 +190,8 @@ tree2 &lt;-<span class="st"> </span><span class="kw">ctree</span>(taste <span cl
 <!-- </div> -->
 <div class="footnotes">
 <hr />
-<ol start="15">
-<li id="fn15"><p>Otra alternativa es GUIDE (Generalized, Unbiased, Interaction Detection and Estimation; Loh, 2002).<a href="alternativas-a-los-árboles-cart.html#fnref15">↩</a></p></li>
+<ol start="16">
+<li id="fn16"><p>Otra alternativa es GUIDE (Generalized, Unbiased, Interaction Detection and Estimation; Loh, 2002).<a href="alternativas-a-los-árboles-cart.html#fnref16">↩</a></p></li>
 </ol>
 </div>
             </section>

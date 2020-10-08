@@ -146,7 +146,7 @@
 (\href{mailto:ruben.fcasal@udc.es}{\nolinkurl{ruben.fcasal@udc.es}}),
 Julián Costa
 (\href{mailto:julian.costa@udc.es}{\nolinkurl{julian.costa@udc.es}})}
-\date{2020-10-06}
+\date{2020-10-08}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Teorema}[chapter]
@@ -2706,17 +2706,50 @@ utilizan tres medidas distintas del error en la región:
 \item
   Índice de Gini: \[\sum_{k=1}^K \widehat p_{k} (1 - \widehat p_{k})\]
 \item
-  Entropía (\emph{cross-entropy}):
+  Entropía\footnote{La entropía es un concepto básico de la teoría de la
+    información (Shannon, 1948) y se mide en \emph{bits} (cuando en la
+    definición se utilizan \(log_2\)).} (\emph{cross-entropy}):
   \[- \sum_{k=1}^K \widehat p_{k} \text{log}(\widehat p_{k})\]
 \end{itemize}
 
 Aunque la proporción de errores de clasificación es la medida del error
-más intuitiva, en la práctica sólo se utiliza para la fase de poda. Para
-la fase de crecimiento se utilizan indistintamente el índice de Gini o
-la entropía. Cuando nos interesa el error no en una única región sino en
-varias (al romper un nodo en dos, o al considerar todos los nodos
-terminales), se suman los errores de cada región previa ponderación por
-el número de observaciones que hay en cada una de ellas.
+más intuitiva, en la práctica sólo se utiliza para la fase de poda.
+Fijémonos que en el cálculo de esta medida sólo interviene
+\(max_{k} (\widehat p_{k})\), mientras que en las medidas alternativas
+intervienen las proporciones \(\widehat p_{k}\) de todas las categorías.
+Para la fase de crecimiento se utilizan indistintamente el índice de
+Gini o la entropía. Cuando nos interesa el error no en una única región
+sino en varias (al romper un nodo en dos, o al considerar todos los
+nodos terminales), se suman los errores de cada región previa
+ponderación por el número de observaciones que hay en cada una de ellas.
+
+En la introducción de este tema se comentó que los árboles de decisión
+admiten tanto variables predictoras numéricas como categóricas, y esto
+es cierto tanto para árboles de regresión como para árboles de
+clasificación. Veamos brevemente como se tratarían los predictores
+categóricos a la hora de incorporarlos al árbol. El problema radica en
+qué se entiende por hacer un corte si las categorías del predictor no
+están ordenadas. Hay dos soluciones básicas:
+
+\begin{itemize}
+\item
+  Definir variables predictoras \emph{dummy}. Se trata de variables
+  indicadoras, una por cada una de las categorías que tiene el
+  predictor. Este criterio de \emph{uno contra todos} tiene la ventaja
+  de que estas variables son fácilmente interpretables, pero tiene el
+  inconveniente de que puede aumentar mucho el número de variables
+  predictoras.
+\item
+  Ordenar las categorías de la variable predictora. Lo ideal sería
+  considerar todas las ordenaciones posibles, pero eso es desde luego
+  poco práctico: el incremento es factorial. El truco consiste en
+  utilizar un único órden basado en algún criterio \emph{greedy}. Por
+  ejemplo, si la variable respuesta \(Y\) también es categórica, se
+  puede seleccionar una de sus categorías que resulte especialmente
+  interesante y ordenar las categorías del predictor según su proporción
+  en la categoría de \(Y\). Este enfoque no añade complejidad al modelo,
+  pero puede dar lugar a resultados de difícil interpretación.
+\end{itemize}
 
 \section{\texorpdfstring{CART con el paquete
 \texttt{rpart}}{CART con el paquete rpart}}\label{cart-con-el-paquete-rpart}
@@ -4011,6 +4044,9 @@ that the question?, \emph{Computational Statistics \& Data Analysis}, 23
 
 Loh, W.Y. (2002). Regression tress with unbiased variable selection and
 interaction detection. \emph{Statistica Sinica}, 361-386.
+
+Shannon C (1948). A Mathematical Theory of Communication. \emph{The Bell
+System Technical Journal}, 27, 379--423.
 
 Strumbelj, E. y Kononenko, I. (2010). An efficient explanation of
 individual classifications using game theory. \emph{Journal of Machine

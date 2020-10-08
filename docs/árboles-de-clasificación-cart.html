@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)" />
 
 
-<meta name="date" content="2020-10-06" />
+<meta name="date" content="2020-10-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -174,9 +174,20 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <ul>
 <li><p>Proporción de errores de clasificación: <span class="math display">\[1 - max_{k} (\widehat p_{k})\]</span></p></li>
 <li><p>Índice de Gini: <span class="math display">\[\sum_{k=1}^K \widehat p_{k} (1 - \widehat p_{k})\]</span></p></li>
-<li><p>Entropía (<em>cross-entropy</em>): <span class="math display">\[- \sum_{k=1}^K \widehat p_{k} \text{log}(\widehat p_{k})\]</span></p></li>
+<li><p>Entropía<a href="#fn12" class="footnoteRef" id="fnref12"><sup>12</sup></a> (<em>cross-entropy</em>): <span class="math display">\[- \sum_{k=1}^K \widehat p_{k} \text{log}(\widehat p_{k})\]</span></p></li>
 </ul>
-<p>Aunque la proporción de errores de clasificación es la medida del error más intuitiva, en la práctica sólo se utiliza para la fase de poda. Para la fase de crecimiento se utilizan indistintamente el índice de Gini o la entropía. Cuando nos interesa el error no en una única región sino en varias (al romper un nodo en dos, o al considerar todos los nodos terminales), se suman los errores de cada región previa ponderación por el número de observaciones que hay en cada una de ellas.</p>
+<p>Aunque la proporción de errores de clasificación es la medida del error más intuitiva, en la práctica sólo se utiliza para la fase de poda. Fijémonos que en el cálculo de esta medida sólo interviene <span class="math inline">\(max_{k} (\widehat p_{k})\)</span>, mientras que en las medidas alternativas intervienen las proporciones <span class="math inline">\(\widehat p_{k}\)</span> de todas las categorías. Para la fase de crecimiento se utilizan indistintamente el índice de Gini o la entropía. Cuando nos interesa el error no en una única región sino en varias (al romper un nodo en dos, o al considerar todos los nodos terminales), se suman los errores de cada región previa ponderación por el número de observaciones que hay en cada una de ellas.</p>
+<p>En la introducción de este tema se comentó que los árboles de decisión admiten tanto variables predictoras numéricas como categóricas, y esto es cierto tanto para árboles de regresión como para árboles de clasificación. Veamos brevemente como se tratarían los predictores categóricos a la hora de incorporarlos al árbol. El problema radica en qué se entiende por hacer un corte si las categorías del predictor no están ordenadas. Hay dos soluciones básicas:</p>
+<ul>
+<li><p>Definir variables predictoras <em>dummy</em>. Se trata de variables indicadoras, una por cada una de las categorías que tiene el predictor. Este criterio de <em>uno contra todos</em> tiene la ventaja de que estas variables son fácilmente interpretables, pero tiene el inconveniente de que puede aumentar mucho el número de variables predictoras.</p></li>
+<li><p>Ordenar las categorías de la variable predictora. Lo ideal sería considerar todas las ordenaciones posibles, pero eso es desde luego poco práctico: el incremento es factorial. El truco consiste en utilizar un único órden basado en algún criterio <em>greedy</em>. Por ejemplo, si la variable respuesta <span class="math inline">\(Y\)</span> también es categórica, se puede seleccionar una de sus categorías que resulte especialmente interesante y ordenar las categorías del predictor según su proporción en la categoría de <span class="math inline">\(Y\)</span>. Este enfoque no añade complejidad al modelo, pero puede dar lugar a resultados de difícil interpretación.</p></li>
+</ul>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="12">
+<li id="fn12"><p>La entropía es un concepto básico de la teoría de la información (Shannon, 1948) y se mide en <em>bits</em> (cuando en la definición se utilizan <span class="math inline">\(log_2\)</span>).<a href="árboles-de-clasificación-cart.html#fnref12">↩</a></p></li>
+</ol>
 </div>
             </section>
 

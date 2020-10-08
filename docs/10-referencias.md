@@ -61,6 +61,8 @@ Lauro, C. (1996). Computational statistics or statistical computing, is that the
 
 Loh, W.Y. (2002). Regression tress with unbiased variable selection and interaction detection. *Statistica Sinica*, 361-386.
 
+Shannon C (1948). A Mathematical Theory of Communication. *The Bell System Technical Journal*, 27, 379–423.
+
 Strumbelj, E. y Kononenko, I. (2010). An efficient explanation of individual classifications using game theory. *Journal of Machine Learning Research*, 11, 1-18.
 
 

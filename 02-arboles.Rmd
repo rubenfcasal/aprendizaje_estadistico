@@ -230,15 +230,16 @@ Se utilizan tres medidas distintas del error en la región:
 - Índice de Gini:
     $$\sum_{k=1}^K \widehat p_{k} (1 - \widehat p_{k})$$
 
-- Entropía (*cross-entropy*):
+- Entropía^[La entropía es un concepto básico de la teoría de la información (Shannon, 1948) y se mide en *bits* (cuando en la definición se utilizan $log_2$).] (*cross-entropy*):
     $$- \sum_{k=1}^K \widehat p_{k} \text{log}(\widehat p_{k})$$
 
-Aunque la proporción de errores de clasificación es la medida del error más intuitiva, 
-en la práctica sólo se utiliza para la fase de poda. Para la fase de crecimiento se 
-utilizan indistintamente el índice de Gini o la entropía. Cuando nos interesa el error 
-no en una única región sino en varias (al romper un nodo en dos, o al considerar todos 
-los nodos terminales), se suman los errores de cada región previa ponderación por el 
-número de observaciones que hay en cada una de ellas.
+Aunque la proporción de errores de clasificación es la medida del error más intuitiva, en la práctica sólo se utiliza para la fase de poda. Fijémonos que en el cálculo de esta medida sólo interviene $max_{k} (\widehat p_{k})$, mientras que en las medidas alternativas intervienen las proporciones $\widehat p_{k}$ de todas las categorías. Para la fase de crecimiento se utilizan indistintamente el índice de Gini o la entropía. Cuando nos interesa el error no en una única región sino en varias (al romper un nodo en dos, o al considerar todos los nodos terminales), se suman los errores de cada región previa ponderación por el número de observaciones que hay en cada una de ellas.
+
+En la introducción de este tema se comentó que los árboles de decisión admiten tanto variables predictoras numéricas como categóricas, y esto es cierto tanto para árboles de regresión como para árboles de clasificación. Veamos brevemente como se tratarían los predictores categóricos a la hora de incorporarlos al árbol. El problema radica en qué se entiende por hacer un corte si las categorías del predictor no están ordenadas. Hay dos soluciones básicas:
+
+- Definir variables predictoras *dummy*. Se trata de variables indicadoras, una por cada una de las categorías que tiene el predictor. Este criterio de *uno contra todos* tiene la ventaja de que estas variables son fácilmente interpretables, pero tiene el inconveniente de que puede aumentar mucho el número de variables predictoras.
+
+- Ordenar las categorías de la variable predictora. Lo ideal sería considerar todas las ordenaciones posibles, pero eso es desde luego poco práctico: el incremento es factorial. El truco consiste en utilizar un único órden basado en algún criterio *greedy*. Por ejemplo, si la variable respuesta $Y$ también es categórica, se puede seleccionar una de sus categorías que resulte especialmente interesante y ordenar las categorías del predictor según su proporción en la categoría de $Y$. Este enfoque no añade complejidad al modelo, pero puede dar lugar a resultados de difícil interpretación.
 
 ## CART con el paquete `rpart`
 
