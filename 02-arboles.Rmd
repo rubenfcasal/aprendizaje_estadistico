@@ -404,7 +404,9 @@ El último paso sería evaluarlo en la muestra de test siguiendo los pasos descr
 obs <- test$quality
 pred <- predict(tree, newdata = test)
 
-plot(pred, obs, main = "Observado frente a predicciones (quality)",
+# plot(pred, obs, main = "Observado frente a predicciones (quality)",
+#      xlab = "Predicción", ylab = "Observado")
+plot(jitter(pred), jitter(obs), main = "Observado frente a predicciones (quality)",
      xlab = "Predicción", ylab = "Observado")
 abline(a = 0, b = 1)
 
@@ -434,7 +436,7 @@ accuracy(pred, test$quality)
 ```
 
 
-### Ejemplo: modelo de clasificación
+### Ejemplo: modelo de clasificación {#class-rpart}
 
 Para ilustrar los árboles de clasificación CART, podemos emplear los datos anteriores de calidad de vino, considerando como respuesta una nueva variable `taste` que clasifica los vinos en "good" o "bad" dependiendo de si `winequality$quality >= 5` (este conjunto de datos está almacenado en el archivo *winetaste.RData*).
 
@@ -535,7 +537,7 @@ head(predict(tree, newdata = test))
 pred <- predict(tree, newdata = test, type = "class")
 table(obs, pred)
 
-caret::confusionMatrix(obs, pred)
+caret::confusionMatrix(pred, obs)
 ```
 
 
@@ -579,7 +581,15 @@ var.imp <- varImp(caret.rpart)
 plot(var.imp)
 ```
 
-En principio también se podría utilizar la regla de "un error estándar" seleccionando `method = "rpart1SE"` (pero implementa internamente este método y en ocasiones no se obtienen los resultados esperados).
+Para calcular las predicciones (o las estimaciones de las probabilidades) podemos emplear el método `predict.train()` y posteriormente `confusionMatrix()` para evaluar su precisión:
+
+```{r}
+pred <- predict(caret.rpart, newdata = test)
+# p.est <- predict(caret.rpart, newdata = test, type = "prob")
+confusionMatrix(pred, test$taste)
+```
+
+NOTA: En principio también se podría utilizar la regla de "un error estándar" seleccionando `method = "rpart1SE"` (pero `caret` implementa internamente este método y en ocasiones no se obtienen los resultados esperados).
 
 ```{r eval=FALSE}
 set.seed(1)
@@ -624,7 +634,7 @@ de independencia para tablas de contingencia.
 
 Para cada par $(X_i, Y)$, se considera su tabla de contingencia y se calcula el p-valor 
 del contraste chi-cuadrado, seleccionándose la variable predictora que tenga un p-valor 
-más pequeño, ya que se asume que las variables predictoreas más relacionadas con la 
+más pequeño, ya que se asume que las variables predictoras más relacionadas con la 
 respuesta $Y$ son las que van a tener p-valores más pequeños y darán lugar a mejores 
 predicciones. Se divide el nodo de acuerdo con los distintos valores de la variable 
 predictora seleccionada, y se repite el proceso mientras haya variables *significativas*. 

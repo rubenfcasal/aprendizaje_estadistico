@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)" />
 
 
-<meta name="date" content="2020-10-08" />
+<meta name="date" content="2020-10-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -50,6 +50,14 @@
 
 
 
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.13/datatables.js"></script>
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
 
 
 <style type="text/css">
@@ -133,12 +141,23 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.2" data-path="árboles-de-clasificación-cart.html"><a href="árboles-de-clasificación-cart.html"><i class="fa fa-check"></i><b>2.2</b> Árboles de clasificación CART</a></li>
 <li class="chapter" data-level="2.3" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html"><i class="fa fa-check"></i><b>2.3</b> CART con el paquete <code>rpart</code></a><ul>
 <li class="chapter" data-level="2.3.1" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#ejemplo-regresión"><i class="fa fa-check"></i><b>2.3.1</b> Ejemplo: regresión</a></li>
-<li class="chapter" data-level="2.3.2" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#ejemplo-modelo-de-clasificación"><i class="fa fa-check"></i><b>2.3.2</b> Ejemplo: modelo de clasificación</a></li>
+<li class="chapter" data-level="2.3.2" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#class-rpart"><i class="fa fa-check"></i><b>2.3.2</b> Ejemplo: modelo de clasificación</a></li>
 <li class="chapter" data-level="2.3.3" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#interfaz-de-caret"><i class="fa fa-check"></i><b>2.3.3</b> Interfaz de <code>caret</code></a></li>
 </ul></li>
 <li class="chapter" data-level="2.4" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html"><i class="fa fa-check"></i><b>2.4</b> Alternativas a los árboles CART</a><ul>
 <li class="chapter" data-level="2.4.1" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html#ejemplo"><i class="fa fa-check"></i><b>2.4.1</b> Ejemplo</a></li>
 </ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="bagging-boosting.html"><a href="bagging-boosting.html"><i class="fa fa-check"></i><b>3</b> Bagging y Boosting</a><ul>
+<li class="chapter" data-level="3.1" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>3.1</b> Bagging</a></li>
+<li class="chapter" data-level="3.2" data-path="bosques-aleatorios.html"><a href="bosques-aleatorios.html"><i class="fa fa-check"></i><b>3.2</b> Bosques aleatorios</a></li>
+<li class="chapter" data-level="3.3" data-path="bagging-y-bosques-aleatorios-en-r.html"><a href="bagging-y-bosques-aleatorios-en-r.html"><i class="fa fa-check"></i><b>3.3</b> Bagging y bosques aleatorios en R</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="bagging-y-bosques-aleatorios-en-r.html"><a href="bagging-y-bosques-aleatorios-en-r.html#ejemplo-clasificación-con-bagging"><i class="fa fa-check"></i><b>3.3.1</b> Ejemplo: Clasificación con bagging</a></li>
+<li class="chapter" data-level="3.3.2" data-path="bagging-y-bosques-aleatorios-en-r.html"><a href="bagging-y-bosques-aleatorios-en-r.html#ejemplo-clasificación-con-bosques-aleatorios"><i class="fa fa-check"></i><b>3.3.2</b> Ejemplo: Clasificación con bosques aleatorios</a></li>
+<li class="chapter" data-level="3.3.3" data-path="bagging-y-bosques-aleatorios-en-r.html"><a href="bagging-y-bosques-aleatorios-en-r.html#ejemplo-bosques-aleatorios-con-caret"><i class="fa fa-check"></i><b>3.3.3</b> Ejemplo: bosques aleatorios con <code>caret</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="boosting.html"><a href="boosting.html"><i class="fa fa-check"></i><b>3.4</b> Boosting</a></li>
+<li class="chapter" data-level="3.5" data-path="boosting-en-r.html"><a href="boosting-en-r.html"><i class="fa fa-check"></i><b>3.5</b> Boosting en R</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
 <li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
@@ -169,7 +188,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="bibliografía-básica" class="section level2 unnumbered">
 <h2>Bibliografía básica</h2>
-<p>James, G., Witten, D., Hastie, T. y Tibshirani, R. (2017). <em><a href="http://faculty.marshall.usc.edu/gareth-james/ISL">An Introduction to Statistical Learning: with Aplications in R</a></em>. Springer.</p>
+<p>James, G., Witten, D., Hastie, T. y Tibshirani, R. (2013). <em><a href="http://faculty.marshall.usc.edu/gareth-james/ISL">An Introduction to Statistical Learning: with Aplications in R</a></em>. Springer.</p>
 <p>Kuhn, M. y Johnson, K. (2013). <em><a href="http://appliedpredictivemodeling.com">Applied predictive modeling</a></em>. Springer.</p>
 <p>Williams, G. (2011). <em>Data Mining with Rattle and R</em>. Springer.</p>
 </div>

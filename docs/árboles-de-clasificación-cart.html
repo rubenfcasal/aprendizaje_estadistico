@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)" />
 
 
-<meta name="date" content="2020-10-08" />
+<meta name="date" content="2020-10-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -50,6 +50,14 @@
 
 
 
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.13/datatables.js"></script>
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
 
 
 <style type="text/css">
@@ -133,12 +141,23 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.2" data-path="árboles-de-clasificación-cart.html"><a href="árboles-de-clasificación-cart.html"><i class="fa fa-check"></i><b>2.2</b> Árboles de clasificación CART</a></li>
 <li class="chapter" data-level="2.3" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html"><i class="fa fa-check"></i><b>2.3</b> CART con el paquete <code>rpart</code></a><ul>
 <li class="chapter" data-level="2.3.1" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#ejemplo-regresión"><i class="fa fa-check"></i><b>2.3.1</b> Ejemplo: regresión</a></li>
-<li class="chapter" data-level="2.3.2" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#ejemplo-modelo-de-clasificación"><i class="fa fa-check"></i><b>2.3.2</b> Ejemplo: modelo de clasificación</a></li>
+<li class="chapter" data-level="2.3.2" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#class-rpart"><i class="fa fa-check"></i><b>2.3.2</b> Ejemplo: modelo de clasificación</a></li>
 <li class="chapter" data-level="2.3.3" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#interfaz-de-caret"><i class="fa fa-check"></i><b>2.3.3</b> Interfaz de <code>caret</code></a></li>
 </ul></li>
 <li class="chapter" data-level="2.4" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html"><i class="fa fa-check"></i><b>2.4</b> Alternativas a los árboles CART</a><ul>
 <li class="chapter" data-level="2.4.1" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html#ejemplo"><i class="fa fa-check"></i><b>2.4.1</b> Ejemplo</a></li>
 </ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="bagging-boosting.html"><a href="bagging-boosting.html"><i class="fa fa-check"></i><b>3</b> Bagging y Boosting</a><ul>
+<li class="chapter" data-level="3.1" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>3.1</b> Bagging</a></li>
+<li class="chapter" data-level="3.2" data-path="bosques-aleatorios.html"><a href="bosques-aleatorios.html"><i class="fa fa-check"></i><b>3.2</b> Bosques aleatorios</a></li>
+<li class="chapter" data-level="3.3" data-path="bagging-y-bosques-aleatorios-en-r.html"><a href="bagging-y-bosques-aleatorios-en-r.html"><i class="fa fa-check"></i><b>3.3</b> Bagging y bosques aleatorios en R</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="bagging-y-bosques-aleatorios-en-r.html"><a href="bagging-y-bosques-aleatorios-en-r.html#ejemplo-clasificación-con-bagging"><i class="fa fa-check"></i><b>3.3.1</b> Ejemplo: Clasificación con bagging</a></li>
+<li class="chapter" data-level="3.3.2" data-path="bagging-y-bosques-aleatorios-en-r.html"><a href="bagging-y-bosques-aleatorios-en-r.html#ejemplo-clasificación-con-bosques-aleatorios"><i class="fa fa-check"></i><b>3.3.2</b> Ejemplo: Clasificación con bosques aleatorios</a></li>
+<li class="chapter" data-level="3.3.3" data-path="bagging-y-bosques-aleatorios-en-r.html"><a href="bagging-y-bosques-aleatorios-en-r.html#ejemplo-bosques-aleatorios-con-caret"><i class="fa fa-check"></i><b>3.3.3</b> Ejemplo: bosques aleatorios con <code>caret</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="boosting.html"><a href="boosting.html"><i class="fa fa-check"></i><b>3.4</b> Boosting</a></li>
+<li class="chapter" data-level="3.5" data-path="boosting-en-r.html"><a href="boosting-en-r.html"><i class="fa fa-check"></i><b>3.5</b> Boosting en R</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
 <li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
@@ -174,7 +193,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <ul>
 <li><p>Proporción de errores de clasificación: <span class="math display">\[1 - max_{k} (\widehat p_{k})\]</span></p></li>
 <li><p>Índice de Gini: <span class="math display">\[\sum_{k=1}^K \widehat p_{k} (1 - \widehat p_{k})\]</span></p></li>
-<li><p>Entropía<a href="#fn12" class="footnoteRef" id="fnref12"><sup>12</sup></a> (<em>cross-entropy</em>): <span class="math display">\[- \sum_{k=1}^K \widehat p_{k} \text{log}(\widehat p_{k})\]</span></p></li>
+<li><p>Entropía<a href="#fn13" class="footnoteRef" id="fnref13"><sup>13</sup></a> (<em>cross-entropy</em>): <span class="math display">\[- \sum_{k=1}^K \widehat p_{k} \text{log}(\widehat p_{k})\]</span></p></li>
 </ul>
 <p>Aunque la proporción de errores de clasificación es la medida del error más intuitiva, en la práctica sólo se utiliza para la fase de poda. Fijémonos que en el cálculo de esta medida sólo interviene <span class="math inline">\(max_{k} (\widehat p_{k})\)</span>, mientras que en las medidas alternativas intervienen las proporciones <span class="math inline">\(\widehat p_{k}\)</span> de todas las categorías. Para la fase de crecimiento se utilizan indistintamente el índice de Gini o la entropía. Cuando nos interesa el error no en una única región sino en varias (al romper un nodo en dos, o al considerar todos los nodos terminales), se suman los errores de cada región previa ponderación por el número de observaciones que hay en cada una de ellas.</p>
 <p>En la introducción de este tema se comentó que los árboles de decisión admiten tanto variables predictoras numéricas como categóricas, y esto es cierto tanto para árboles de regresión como para árboles de clasificación. Veamos brevemente como se tratarían los predictores categóricos a la hora de incorporarlos al árbol. El problema radica en qué se entiende por hacer un corte si las categorías del predictor no están ordenadas. Hay dos soluciones básicas:</p>
@@ -185,8 +204,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div class="footnotes">
 <hr />
-<ol start="12">
-<li id="fn12"><p>La entropía es un concepto básico de la teoría de la información (Shannon, 1948) y se mide en <em>bits</em> (cuando en la definición se utilizan <span class="math inline">\(log_2\)</span>).<a href="árboles-de-clasificación-cart.html#fnref12">↩</a></p></li>
+<ol start="13">
+<li id="fn13"><p>La entropía es un concepto básico de la teoría de la información (Shannon, 1948) y se mide en <em>bits</em> (cuando en la definición se utilizan <span class="math inline">\(log_2\)</span>).<a href="árboles-de-clasificación-cart.html#fnref13">↩</a></p></li>
 </ol>
 </div>
             </section>

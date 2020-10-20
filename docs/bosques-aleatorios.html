@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2.1 Árboles de regresión CART | Aprendizaje Estadístico</title>
+  <title>3.2 Bosques aleatorios | Aprendizaje Estadístico</title>
   <meta name="description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
   <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2.1 Árboles de regresión CART | Aprendizaje Estadístico" />
+  <meta property="og:title" content="3.2 Bosques aleatorios | Aprendizaje Estadístico" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="rubenfcasal/aprendizaje_estadistico" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2.1 Árboles de regresión CART | Aprendizaje Estadístico" />
+  <meta name="twitter:title" content="3.2 Bosques aleatorios | Aprendizaje Estadístico" />
   
   <meta name="twitter:description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="trees.html"/>
-<link rel="next" href="árboles-de-clasificación-cart.html"/>
+<link rel="prev" href="bagging.html"/>
+<link rel="next" href="bagging-y-bosques-aleatorios-en-r.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -186,43 +186,38 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="árboles-de-regresión-cart" class="section level2">
-<h2><span class="header-section-number">2.1</span> Árboles de regresión CART</h2>
-<p>Como ya se comentó, la construcción del modelo se hace a partir de la muestra de entrenamiento, y consiste en la partición del espacio predictor en <span class="math inline">\(J\)</span> regiones <span class="math inline">\(R_1, R_2, \ldots, R_J\)</span>, para cada una de las cuales se va a calcular una constante: la media de la variable respuesta <span class="math inline">\(Y\)</span> para las observaciones de entranamiento que caen en la región. Estas constantes son las que se van a utilizar para la predicción de nuevas observaciones; para ello solo hay que comprobar cuál es la región que le corresponde.</p>
-<p>La cuestión clave es cómo se elige la partición del espacio predictor, para lo que vamos a utilizar como criterio de error el RSS (suma de los residuos al cuadrado). Como hemos dicho, vamos a modelizar la respuesta en cada región como una constante, por tanto en la región <span class="math inline">\(R_j\)</span> nos interesa el <span class="math inline">\(min_{c_j} \sum_{i\in R_j} (y_i - c_j)^2\)</span>, que se alcanza en la media de las respuestas <span class="math inline">\(y_i\)</span> (de la muestra de entrenamiento) en la región <span class="math inline">\(R_j\)</span>, a la que llamaremos <span class="math inline">\(\widehat y_{R_j}\)</span>. Por tanto, se deben seleccionar las regiones <span class="math inline">\(R_1, R_2, \ldots, R_J\)</span> que minimicen</p>
-<p><span class="math display">\[RSS = \sum_{j=1}^{J} \sum_{i\in R_j} (y_i - \widehat y_{R_j})^2\]</span> (Obsérvese el abuso de notación <span class="math inline">\(i\in R_j\)</span>, que significa las observaciones <span class="math inline">\(i\in N\)</span> que verifican <span class="math inline">\(x_i \in R_j\)</span>).</p>
-<p>Pero este problema es, en la práctica, intratable y vamos a tener que simplificarlo. El método CART busca un compromiso entre rendimiento, por una parte, y sencillez e interpretabilidad, por otra, y por ello en lugar de hacer una búsqueda por todas las particiones posibles sigue un proceso iterativo (recursivo) en el que va realizando cortes binarios. En la primera iteración se trabaja con todos los datos:</p>
+<div id="bosques-aleatorios" class="section level2">
+<h2><span class="header-section-number">3.2</span> Bosques aleatorios</h2>
+<p>Los bosques aleatorios (<em>random forest</em>) son una variante de bagging específicamente diseñados para trabajar con árboles de decisión. Las muestras bootstrap que se generan al hacer bagging introducen un elemento de aleatoriedad que en la práctica provoca que todos los árboles sean distintos, pero en ocasiones no son lo <em>suficientemente</em> distintos. Es decir, suele ocurrir que los árboles tengan estructuras muy similares, especialmente en la parte alta, aunque después se vayan diferenciando según se desciende por ellos. Esta característica se conoce como correlación entre árboles y se da cuando el árbol es un modelo adecuado para describir la relación ente los predictores y la respuesta, y también cuándo uno de los predictores es muy fuerte, es decir, es especialmente relevante, con lo cual casi siempre va a estar en el primer corte. Esta correlación entre árboles se va a traducir en una correlación entre sus predicciones (más formalmente, entre los predictores).</p>
+<p>Promediar variables altamente correladas produce una reducción de la varianza mucho menor que si promediamos variables incorreladas. La solución pasa por añadir aleatoriedad al proceso de construcción de los árboles, para que estos dejen de estar correlados. Hubo varios intentos, entre los que destaca Dietterich (2000) al proponer la idea de introducir aleatorieadad en la selección de las variables de cada corte. Breiman (2001) propuso un algoritmo unificado al que llamó bosques aleatorios. En la construcción de cada uno de los árboles que finalmente constituirán el bosque, se van haciendo cortes binarios, y para cada corte hay que seleccionar una variable predictora. La modificación introducida fue que antes de hacer cada uno de los cortes, de todas las <span class="math inline">\(p\)</span> variables predictoras, se seleccionan al azar <span class="math inline">\(m &lt; p\)</span> predictores que van a ser los candidatos para el corte.</p>
+<p>El hiperparámetro de los bosques aleatorios es <span class="math inline">\(m\)</span>, y se puede seleccionar mediante las técnicas habituales. Como puntos de partida razonables se pueden considerar <span class="math inline">\(m = \sqrt{p}\)</span> (para problemas de clasificación) y <span class="math inline">\(m = p/3\)</span> (para problemas de regresión). El número de árboles que van a constituir el bosque también puede tratarse como un hiperparámetro, aunque es más frecuente tratarlo como un problema de convergencia. En general, van a hacer falta más árboles que en bagging.</p>
+<!-- Posible hiperparámetro: nodesize: Minimum size of terminal nodes. -->
+<p>Los bosques aleatorios son computacionalmente más eficientes que bagging porque, aunque como acabamos de decir requieren más árboles, la construcción de cada árbol es mucho más rápida al evaluarse sólo unos pocos predictores en cada corte.</p>
+<p>Este método también puede ser empleado para aprendizaje no supervisado, por ejemplo se puede construir una matriz de proximidad entre observaciones a partir de la proporción de veces que están en un mismo nodo terminal (para más detalles ver <a href="https://www.r-project.org/doc/Rnews/Rnews_2002-3.pdf">Liaw y Wiener, 2002</a>).</p>
+<p>En resumen:</p>
 <ul>
-<li><p>Una variable explicativa <span class="math inline">\(X_j\)</span> y un punto de corte <span class="math inline">\(s\)</span> definen dos hiperplanos <span class="math inline">\(R_1 = \{ X \mid X_j \le s \}\)</span> y <span class="math inline">\(R_2 = \{ X \mid X_j &gt; s \}\)</span>.</p></li>
-<li><p>Se seleccionan los valores de <span class="math inline">\(j\)</span> y <span class="math inline">\(s\)</span> que minimizen</p></li>
-</ul>
-<p><span class="math display">\[ \sum_{i\in R_1} (y_i - \widehat y_{R_1})^2 + \sum_{i\in R_2} (y_i - \widehat y_{R_2})^2\]</span></p>
-<p>A diferencia del problema original, este se soluciona de forma muy rápida. A continuación se repite el proceso en cada una de las dos regiones <span class="math inline">\(R_1\)</span> y <span class="math inline">\(R_2\)</span>, y así sucesivamente hasta alcanzar un criterio de parada.</p>
-<p>Fijémonos en que este método hace dos concesiones importantes: no solo restringe la forma que pueden adoptar las particiones, sino que además sigue un criterio de error <em>greedy</em>: en cada iteración busca minimizar el RSS de las dos regiones resultantes, sin preocuparse del error que se va a cometer en iteraciones sucesivas. Y fijémonos también en que este proceso se puede representar en forma de árbol binario (en el sentido de que de cada nodo salen dos ramas, o ninguna cuando se llega al final), de ahí la terminología de <em>hacer crecer</em> el árbol.</p>
-<p>¿Y cuándo paramos? Se puede parar cuando se alcance una profundidad máxima, aunque lo más habitual es, para dividir un nodo (es decir, una región), exigirle un número mínimo de observaciones.</p>
+<li><p>Los bosques aleatorios son una modificación del bagging para el caso de árboles de decisión.</p></li>
+<li><p>También se introduce aleatoriedad en las variables, no sólo en las observaciones.</p></li>
+<li><p>Para evitar dependencias, los posibles predictores se seleccionan al azar en cada nodo (e.g. <span class="math inline">\(m=\sqrt{p}\)</span>).</p></li>
+<li><p>Se utilizan árboles sin podar.</p></li>
+<li><p>Estos métodos dificultan la interpretación.</p></li>
+<li><p>Se puede medir la importancia de las variables (índices de importancia).</p>
 <ul>
-<li><p>Si el árbol resultante es demasiado grande, va a ser un modelo demasiado complejo, por tanto va a ser difícil de interpretar y, sobre todo, va a provocar un sobreajuste de los datos. Cuando se evalúe el rendimiento utilizando la muestra de validación, los resultados van a ser malos. Dicho de otra manera, tendremos un modelo con poco sesgo pero con mucha varianza y en consecuencia inestable (pequeños cambios en los datos darán lugar a modelos muy distintos). Más adelante veremos que esto justifica la utilización del <em>bagging</em> como técnica para reducir la varianza.</p></li>
-<li><p>Si el árbol es demasiado pequeño, va a tener menos varianza (menos inestable) a costa de más sesgo. Más adelante veremos que esto justifica la utilización del <em>boosting</em>. Los árboles pequeños son más fáciles de interpretar ya que permiten identificar las variables explicativas que más influyen en la predicción.</p></li>
+<li><p>Por ejemplo, para cada árbol se suman las reducciones en el índice de Gini correspondientes a las divisiones de un predictor y posteriormente se promedian los valores de todos los árboles.</p></li>
+<li><p>Alternativamente (Breiman, 2001) se puede medir el incremento en el error de predicción OOB al permutar aleatoriamente los valores de la variable explicativa en las muestras OOB (manteniendo el resto sin cambios).</p></li>
+</ul></li>
 </ul>
-<p>Sin entrar por ahora en métodos combinados (métodos <em>ensemble</em>, tipo <em>bagging</em> o <em>boosting</em>), vamos a explicar cómo encontrar un equilibrio entre sesgo y varianza. Lo que se hace es construir un árbol grande para a continuación empezar a <em>podarlo</em>. Podar un árbol significa colapsar cualquier cantidad de sus nodos internos (no terminales), dando lugar a otro árbol más pequeño al que llamaremos <em>subárbol</em> del árbol original. Sabemos que el árbol completo es el que va a tener menor error si utilizamos la muestra de entrenamiento, pero lo que realmente nos interesa es encontrar el subárbol con un menor error al utilizar la muestra de validación. Lamentablemente, no es una buena estrategia el evaluar todos los subárboles: simplemente, hay demasiados. Lo que se hace es, mediante un hiperparámetro (<em>tuning parameter</em> o parámetro de ajuste) controlar el tamaño del árbol, es decir, la complejidad del modelo, seleccionando el subárbol <em>optimo</em> (para los datos de los que disponemos, claro). Veamos la idea.</p>
-<p>Dado un subárbol <span class="math inline">\(T\)</span> con <span class="math inline">\(R_1, R_2, \ldots, R_t\)</span> nodos terminales, consideramos como medida del error el RSS más una penalización que depende de un hiperparámetro no negativo <span class="math inline">\(\alpha \ge 0\)</span></p>
-<span class="math display" id="eq:rss-alpha">\[\begin{equation} 
-RSS_{\alpha} = \sum_{j=1}^t \sum_{i\in R_j} (y_i - \widehat y_{R_j})^2 + \alpha t
-\tag{2.1}
-\end{equation}\]</span>
-<p>Para cada valor del parámetro <span class="math inline">\(\alpha\)</span> existe un único subárbol <em>más pequeño</em> que minimiza este error (obsérvese que aunque hay un continuo de valores distinos de <span class="math inline">\(\alpha\)</span>, sólo hay una cantidad finita de subárboles). Evidentemente, cuando <span class="math inline">\(\alpha = 0\)</span>, ese subárbol será el árbol completo, algo que no nos interesa. Pero a medida que se incrementa <span class="math inline">\(\alpha\)</span> se penalizan los subárboles con muchos nodos terminales, dando lugar a una solución más pequeña. Encontrarla puede parecer muy costoso computacionalmente, pero lo cierto es que no lo es. El algoritmo consistente en ir colapsando nodos de forma sucesiva, de cada vez el nodo que produzca el menor incremento en el RSS (corregido por un factor que depende del tamaño), da lugar a una sucesión finita de subárboles que contiene, para todo <span class="math inline">\(\alpha\)</span>, la solución.</p>
-<p>Para finalizar, sólo resta seleccionar un valor de <span class="math inline">\(\alpha\)</span>. Para ello, como se comentó en la Sección <a href="const-eval.html#entrenamiento-test">1.3.2</a>, se podría dividir la muestra en tres subconjuntos: datos de entrenamiento, de validación y de test. Para cada valor del parámetro de complejidad <span class="math inline">\(\alpha\)</span> hemos utilizado la muestra de entrenamiento para obtener un árbol (en la jerga, para cada valor del hiperparámetro <span class="math inline">\(\alpha\)</span> se entrena un modelo). Se emplea la muestra independiente de validación para seleccionar el valor de <span class="math inline">\(\alpha\)</span> (y por tanto el árbol) con el que nos quedamos. Y por último emplearemos la muestra de test (independiente de las otras dos) para evaluar el rendimiento del árbol seleccionado. No obstante, lo más habitual para seleccionar el valor del hiperparámetro <span class="math inline">\(\alpha\)</span> es emplear validación cruzada (o otro tipo de remuestreo) en la muestra de entrenamiento en lugar de considerar una muestra adicional de validación.</p>
-<p>Hay dos opciones muy utilizadas en la práctica para seleccionar el valor de <span class="math inline">\(\alpha\)</span>: se puede utilizar directamente el valor que minimice el error; o se puede forzar que el modelo sea un poco más sencillo con la regla <em>one-standard-error</em>, que selecciona el árbol más pequeño que esté a una distancia de un error estándar del árbol obtenido mediante la opción anterior.</p>
-<p>También es habitual escribir la Ecuación <a href="árboles-de-regresión-cart.html#eq:rss-alpha">(2.1)</a> reescalando el parámetro de complejidad como <span class="math inline">\(\tilde \alpha = \alpha / RSS_0\)</span>, siendo <span class="math inline">\(RSS_0 = \sum_{i=1}^{n} (y_i - \bar y)^2\)</span> la variabilidad total (la suma de cuadrados residual del árbol sin divisiones): <span class="math display">\[RSS_{\tilde \alpha}=RSS + \tilde \alpha RSS_0 t\]</span></p>
-<p>De esta forma se podría interpretar el hiperparámetro <span class="math inline">\(\tilde \alpha\)</span> como una penalización en la proporción de variabilidad explicada, ya que dividiendo la expresión anterior por <span class="math inline">\(RSS_0\)</span> obtendríamos: <span class="math display">\[R^2_{\tilde \alpha}=R^2+ \tilde \alpha  t\]</span></p>
+<!-- 
+Breiman (2001): "My approach is that each time a categorical variable is selected to split on at a node, to select a random subset of the categories of the variable, and define a substitute variable that is one when the categorical value of the variable is in the subset and zero outside".
+-->
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="trees.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="árboles-de-clasificación-cart.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="bagging.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="bagging-y-bosques-aleatorios-en-r.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -253,7 +248,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rubenfcasal/aprendizaje_estadistico/edit/master/02-arboles.Rmd",
+"link": "https://github.com/rubenfcasal/aprendizaje_estadistico/edit/master/03-bagging_boosting.Rmd",
 "text": "Edit"
 },
 "history": {

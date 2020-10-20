@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)" />
 
 
-<meta name="date" content="2020-10-08" />
+<meta name="date" content="2020-10-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -50,6 +50,14 @@
 
 
 
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.13/datatables.js"></script>
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
 
 
 <style type="text/css">
@@ -133,12 +141,23 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.2" data-path="árboles-de-clasificación-cart.html"><a href="árboles-de-clasificación-cart.html"><i class="fa fa-check"></i><b>2.2</b> Árboles de clasificación CART</a></li>
 <li class="chapter" data-level="2.3" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html"><i class="fa fa-check"></i><b>2.3</b> CART con el paquete <code>rpart</code></a><ul>
 <li class="chapter" data-level="2.3.1" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#ejemplo-regresión"><i class="fa fa-check"></i><b>2.3.1</b> Ejemplo: regresión</a></li>
-<li class="chapter" data-level="2.3.2" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#ejemplo-modelo-de-clasificación"><i class="fa fa-check"></i><b>2.3.2</b> Ejemplo: modelo de clasificación</a></li>
+<li class="chapter" data-level="2.3.2" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#class-rpart"><i class="fa fa-check"></i><b>2.3.2</b> Ejemplo: modelo de clasificación</a></li>
 <li class="chapter" data-level="2.3.3" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#interfaz-de-caret"><i class="fa fa-check"></i><b>2.3.3</b> Interfaz de <code>caret</code></a></li>
 </ul></li>
 <li class="chapter" data-level="2.4" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html"><i class="fa fa-check"></i><b>2.4</b> Alternativas a los árboles CART</a><ul>
 <li class="chapter" data-level="2.4.1" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html#ejemplo"><i class="fa fa-check"></i><b>2.4.1</b> Ejemplo</a></li>
 </ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="bagging-boosting.html"><a href="bagging-boosting.html"><i class="fa fa-check"></i><b>3</b> Bagging y Boosting</a><ul>
+<li class="chapter" data-level="3.1" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>3.1</b> Bagging</a></li>
+<li class="chapter" data-level="3.2" data-path="bosques-aleatorios.html"><a href="bosques-aleatorios.html"><i class="fa fa-check"></i><b>3.2</b> Bosques aleatorios</a></li>
+<li class="chapter" data-level="3.3" data-path="bagging-y-bosques-aleatorios-en-r.html"><a href="bagging-y-bosques-aleatorios-en-r.html"><i class="fa fa-check"></i><b>3.3</b> Bagging y bosques aleatorios en R</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="bagging-y-bosques-aleatorios-en-r.html"><a href="bagging-y-bosques-aleatorios-en-r.html#ejemplo-clasificación-con-bagging"><i class="fa fa-check"></i><b>3.3.1</b> Ejemplo: Clasificación con bagging</a></li>
+<li class="chapter" data-level="3.3.2" data-path="bagging-y-bosques-aleatorios-en-r.html"><a href="bagging-y-bosques-aleatorios-en-r.html#ejemplo-clasificación-con-bosques-aleatorios"><i class="fa fa-check"></i><b>3.3.2</b> Ejemplo: Clasificación con bosques aleatorios</a></li>
+<li class="chapter" data-level="3.3.3" data-path="bagging-y-bosques-aleatorios-en-r.html"><a href="bagging-y-bosques-aleatorios-en-r.html#ejemplo-bosques-aleatorios-con-caret"><i class="fa fa-check"></i><b>3.3.3</b> Ejemplo: bosques aleatorios con <code>caret</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="boosting.html"><a href="boosting.html"><i class="fa fa-check"></i><b>3.4</b> Boosting</a></li>
+<li class="chapter" data-level="3.5" data-path="boosting-en-r.html"><a href="boosting-en-r.html"><i class="fa fa-check"></i><b>3.5</b> Boosting en R</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
 <li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
@@ -169,7 +188,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="cart-con-el-paquete-rpart" class="section level2">
 <h2><span class="header-section-number">2.3</span> CART con el paquete <code>rpart</code></h2>
-<p>La metodología CART está implementada en el paquete <a href="https://CRAN.R-project.org/package=rpart"><code>rpart</code></a> (Recursive PARTitioning)<a href="#fn13" class="footnoteRef" id="fnref13"><sup>13</sup></a>. La función principal es <code>rpart()</code> y habitualmente se emplea de la forma:</p>
+<p>La metodología CART está implementada en el paquete <a href="https://CRAN.R-project.org/package=rpart"><code>rpart</code></a> (Recursive PARTitioning)<a href="#fn14" class="footnoteRef" id="fnref14"><sup>14</sup></a>. La función principal es <code>rpart()</code> y habitualmente se emplea de la forma:</p>
 <p><code>rpart(formula, data, method, parms, control, ...)</code></p>
 <ul>
 <li><p><code>formula</code>: permite especificar la respuesta y las variables predictoras de la forma habitual, se suele establecer de la forma <code>respuesta ~ .</code> para incluir todas las posibles variables explicativas.</p></li>
@@ -300,7 +319,7 @@ test &lt;-<span class="st"> </span>winequality[<span class="op">-</span>itrain, 
 ## 
 ## quality is 6.6 when
 ##     alcohol &gt;= 12</code></pre>
-<p>Por defecto se poda el arbol considerando <code>cp = 0.01</code>, que puede ser adecuado en muchos casos. Sin embargo, para seleccionar el valor óptimo de este (hiper)parámetro se puede emplear validación cruzada. En primer lugar habría que establecer <code>cp = 0</code> para construir el árbol completo, a la profundidad máxima (determinada por los valores de <code>minsplit</code> y <code>minbucket</code>, que se podrían seleccionar “a mano” dependiendo del número de observaciones o también considerándolos como hiperparámetos; esto último no está implementado en <code>rpart</code>, ni en principio en <code>caret</code>)<a href="#fn14" class="footnoteRef" id="fnref14"><sup>14</sup></a>.</p>
+<p>Por defecto se poda el arbol considerando <code>cp = 0.01</code>, que puede ser adecuado en muchos casos. Sin embargo, para seleccionar el valor óptimo de este (hiper)parámetro se puede emplear validación cruzada. En primer lugar habría que establecer <code>cp = 0</code> para construir el árbol completo, a la profundidad máxima (determinada por los valores de <code>minsplit</code> y <code>minbucket</code>, que se podrían seleccionar “a mano” dependiendo del número de observaciones o también considerándolos como hiperparámetos; esto último no está implementado en <code>rpart</code>, ni en principio en <code>caret</code>)<a href="#fn15" class="footnoteRef" id="fnref15"><sup>15</sup></a>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tree &lt;-<span class="st"> </span><span class="kw">rpart</span>(quality <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train, <span class="dt">cp =</span> <span class="dv">0</span>)</code></pre></div>
 <p>Posteriormente podemos emplear las funciones <code>printcp()</code> (o <code>plotcp()</code>) para obtener (representar) los valores de CP para los árboles (óptimos) de menor tamaño junto con su error de validación cruzada <code>xerror</code> (reescalado de forma que el máximo de <code>rel error</code> es 1):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">printcp</span>(tree)</code></pre></div>
@@ -426,7 +445,9 @@ importance[importance <span class="op">&gt;=</span><span class="st"> </span><spa
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">obs &lt;-<span class="st"> </span>test<span class="op">$</span>quality
 pred &lt;-<span class="st"> </span><span class="kw">predict</span>(tree, <span class="dt">newdata =</span> test)
 
-<span class="kw">plot</span>(pred, obs, <span class="dt">main =</span> <span class="st">&quot;Observado frente a predicciones (quality)&quot;</span>,
+<span class="co"># plot(pred, obs, main = &quot;Observado frente a predicciones (quality)&quot;,</span>
+<span class="co">#      xlab = &quot;Predicción&quot;, ylab = &quot;Observado&quot;)</span>
+<span class="kw">plot</span>(<span class="kw">jitter</span>(pred), <span class="kw">jitter</span>(obs), <span class="dt">main =</span> <span class="st">&quot;Observado frente a predicciones (quality)&quot;</span>,
      <span class="dt">xlab =</span> <span class="st">&quot;Predicción&quot;, ylab = &quot;</span>Observado<span class="st">&quot;)</span>
 <span class="st">abline(a = 0, b = 1)</span></code></pre></div>
 <p><img src="02-arboles_files/figure-html/unnamed-chunk-17-1.png" width="80%" style="display: block; margin: auto;" /></p>
@@ -457,7 +478,7 @@ accuracy &lt;-<span class="st"> </span><span class="cf">function</span>(pred, ob
 <pre><code>##           me         rmse          mae          mpe         mape    r.squared 
 ## -0.001269398  0.814561435  0.657426365 -1.952342173 11.576716037  0.192007721</code></pre>
 </div>
-<div id="ejemplo-modelo-de-clasificación" class="section level3">
+<div id="class-rpart" class="section level3">
 <h3><span class="header-section-number">2.3.2</span> Ejemplo: modelo de clasificación</h3>
 <p>Para ilustrar los árboles de clasificación CART, podemos emplear los datos anteriores de calidad de vino, considerando como respuesta una nueva variable <code>taste</code> que clasifica los vinos en “good” o “bad” dependiendo de si <code>winequality$quality &gt;= 5</code> (este conjunto de datos está almacenado en el archivo <em>winetaste.RData</em>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># load(&quot;data/winetaste.RData&quot;)</span>
@@ -592,7 +613,7 @@ test &lt;-<span class="st"> </span>winetaste[<span class="op">-</span>itrain, ]<
 ##     volatile.acidity &lt; 0.29
 ##     fixed.acidity &gt;= 7.5
 ##     total.sulfur.dioxide &lt; 150</code></pre>
-<p>Al igual que en el caso anterior, para seleccionar un valor óptimo del (hiper)parámetro de complejidad, se puede construir un árbol de decisión completo y emplear validación cruzada para podarlo. Además, si el número de observaciones es grande y las clases están más o menos balanceadas, se podría aumentar los valores mínimos de observaciones en los nodos intermedios y terminales<a href="#fn15" class="footnoteRef" id="fnref15"><sup>15</sup></a>, por ejemplo:</p>
+<p>Al igual que en el caso anterior, para seleccionar un valor óptimo del (hiper)parámetro de complejidad, se puede construir un árbol de decisión completo y emplear validación cruzada para podarlo. Además, si el número de observaciones es grande y las clases están más o menos balanceadas, se podría aumentar los valores mínimos de observaciones en los nodos intermedios y terminales<a href="#fn16" class="footnoteRef" id="fnref16"><sup>16</sup></a>, por ejemplo:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tree &lt;-<span class="st"> </span><span class="kw">rpart</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train, <span class="dt">cp =</span> <span class="dv">0</span>, <span class="dt">minsplit =</span> <span class="dv">30</span>, <span class="dt">minbucket =</span> <span class="dv">10</span>)</code></pre></div>
 <p>En este caso mantenemos el resto de valores por defecto:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tree &lt;-<span class="st"> </span><span class="kw">rpart</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train, <span class="dt">cp =</span> <span class="dv">0</span>)</code></pre></div>
@@ -631,31 +652,31 @@ tree &lt;-<span class="st"> </span><span class="kw">prune</span>(tree, <span cla
 ## obs    good bad
 ##   good  153  13
 ##   bad    54  30</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">caret<span class="op">::</span><span class="kw">confusionMatrix</span>(obs, pred)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">caret<span class="op">::</span><span class="kw">confusionMatrix</span>(pred, obs)</code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
 ## Prediction good bad
-##       good  153  13
-##       bad    54  30
+##       good  153  54
+##       bad    13  30
 ##                                           
 ##                Accuracy : 0.732           
 ##                  95% CI : (0.6725, 0.7859)
-##     No Information Rate : 0.828           
-##     P-Value [Acc &gt; NIR] : 0.9999          
+##     No Information Rate : 0.664           
+##     P-Value [Acc &gt; NIR] : 0.01247         
 ##                                           
 ##                   Kappa : 0.3171          
 ##                                           
 ##  Mcnemar&#39;s Test P-Value : 1.025e-06       
 ##                                           
-##             Sensitivity : 0.7391          
-##             Specificity : 0.6977          
-##          Pos Pred Value : 0.9217          
-##          Neg Pred Value : 0.3571          
-##              Prevalence : 0.8280          
+##             Sensitivity : 0.9217          
+##             Specificity : 0.3571          
+##          Pos Pred Value : 0.7391          
+##          Neg Pred Value : 0.6977          
+##              Prevalence : 0.6640          
 ##          Detection Rate : 0.6120          
-##    Detection Prevalence : 0.6640          
-##       Balanced Accuracy : 0.7184          
+##    Detection Prevalence : 0.8280          
+##       Balanced Accuracy : 0.6394          
 ##                                           
 ##        &#39;Positive&#39; Class : good            
 ## </code></pre>
@@ -799,7 +820,38 @@ caret.rpart<span class="op">$</span>finalModel</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">var.imp &lt;-<span class="st"> </span><span class="kw">varImp</span>(caret.rpart)
 <span class="kw">plot</span>(var.imp)</code></pre></div>
 <p><img src="02-arboles_files/figure-html/unnamed-chunk-30-2.png" width="80%" style="display: block; margin: auto;" /></p>
-<p>En principio también se podría utilizar la regla de “un error estándar” seleccionando <code>method = &quot;rpart1SE&quot;</code> (pero implementa internamente este método y en ocasiones no se obtienen los resultados esperados).</p>
+<p>Para calcular las predicciones (o las estimaciones de las probabilidades) podemos emplear el método <code>predict.train()</code> y posteriormente <code>confusionMatrix()</code> para evaluar su precisión:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pred &lt;-<span class="st"> </span><span class="kw">predict</span>(caret.rpart, <span class="dt">newdata =</span> test)
+<span class="co"># p.est &lt;- predict(caret.rpart, newdata = test, type = &quot;prob&quot;)</span>
+<span class="kw">confusionMatrix</span>(pred, test<span class="op">$</span>taste)</code></pre></div>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction good bad
+##       good  153  54
+##       bad    13  30
+##                                           
+##                Accuracy : 0.732           
+##                  95% CI : (0.6725, 0.7859)
+##     No Information Rate : 0.664           
+##     P-Value [Acc &gt; NIR] : 0.01247         
+##                                           
+##                   Kappa : 0.3171          
+##                                           
+##  Mcnemar&#39;s Test P-Value : 1.025e-06       
+##                                           
+##             Sensitivity : 0.9217          
+##             Specificity : 0.3571          
+##          Pos Pred Value : 0.7391          
+##          Neg Pred Value : 0.6977          
+##              Prevalence : 0.6640          
+##          Detection Rate : 0.6120          
+##    Detection Prevalence : 0.8280          
+##       Balanced Accuracy : 0.6394          
+##                                           
+##        &#39;Positive&#39; Class : good            
+## </code></pre>
+<p>NOTA: En principio también se podría utilizar la regla de “un error estándar” seleccionando <code>method = &quot;rpart1SE&quot;</code> (pero <code>caret</code> implementa internamente este método y en ocasiones no se obtienen los resultados esperados).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
 caret.rpart &lt;-<span class="st"> </span><span class="kw">train</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">method =</span> <span class="st">&quot;rpart1SE&quot;</span>, <span class="dt">data =</span> train) 
 caret.rpart
@@ -811,10 +863,10 @@ caret.rpart<span class="op">$</span>finalModel
 </div>
 <div class="footnotes">
 <hr />
-<ol start="13">
-<li id="fn13"><p>El paquete <a href="https://CRAN.R-project.org/package=tree"><code>tree</code></a> es una traducción del original en S.<a href="cart-con-el-paquete-rpart.html#fnref13">↩</a></p></li>
-<li id="fn14"><p>Los parámetros <code>maxsurrogate</code>, <code>usesurrogate</code> y <code>surrogatestyle</code> serían de utilidad si hay datos faltantes.<a href="cart-con-el-paquete-rpart.html#fnref14">↩</a></p></li>
-<li id="fn15"><p>Otra opción, más interesante para regresión, sería considerar estos valores como hiperparámetros.<a href="cart-con-el-paquete-rpart.html#fnref15">↩</a></p></li>
+<ol start="14">
+<li id="fn14"><p>El paquete <a href="https://CRAN.R-project.org/package=tree"><code>tree</code></a> es una traducción del original en S.<a href="cart-con-el-paquete-rpart.html#fnref14">↩</a></p></li>
+<li id="fn15"><p>Los parámetros <code>maxsurrogate</code>, <code>usesurrogate</code> y <code>surrogatestyle</code> serían de utilidad si hay datos faltantes.<a href="cart-con-el-paquete-rpart.html#fnref15">↩</a></p></li>
+<li id="fn16"><p>Otra opción, más interesante para regresión, sería considerar estos valores como hiperparámetros.<a href="cart-con-el-paquete-rpart.html#fnref16">↩</a></p></li>
 </ol>
 </div>
             </section>

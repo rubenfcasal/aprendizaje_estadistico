@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)" />
 
 
-<meta name="date" content="2020-10-08" />
+<meta name="date" content="2020-10-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="cart-con-el-paquete-rpart.html"/>
-<link rel="next" href="referencias.html"/>
+<link rel="next" href="bagging-boosting.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -50,6 +50,14 @@
 
 
 
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.13/datatables.js"></script>
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
 
 
 <style type="text/css">
@@ -133,12 +141,23 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.2" data-path="árboles-de-clasificación-cart.html"><a href="árboles-de-clasificación-cart.html"><i class="fa fa-check"></i><b>2.2</b> Árboles de clasificación CART</a></li>
 <li class="chapter" data-level="2.3" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html"><i class="fa fa-check"></i><b>2.3</b> CART con el paquete <code>rpart</code></a><ul>
 <li class="chapter" data-level="2.3.1" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#ejemplo-regresión"><i class="fa fa-check"></i><b>2.3.1</b> Ejemplo: regresión</a></li>
-<li class="chapter" data-level="2.3.2" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#ejemplo-modelo-de-clasificación"><i class="fa fa-check"></i><b>2.3.2</b> Ejemplo: modelo de clasificación</a></li>
+<li class="chapter" data-level="2.3.2" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#class-rpart"><i class="fa fa-check"></i><b>2.3.2</b> Ejemplo: modelo de clasificación</a></li>
 <li class="chapter" data-level="2.3.3" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#interfaz-de-caret"><i class="fa fa-check"></i><b>2.3.3</b> Interfaz de <code>caret</code></a></li>
 </ul></li>
 <li class="chapter" data-level="2.4" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html"><i class="fa fa-check"></i><b>2.4</b> Alternativas a los árboles CART</a><ul>
 <li class="chapter" data-level="2.4.1" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html#ejemplo"><i class="fa fa-check"></i><b>2.4.1</b> Ejemplo</a></li>
 </ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="bagging-boosting.html"><a href="bagging-boosting.html"><i class="fa fa-check"></i><b>3</b> Bagging y Boosting</a><ul>
+<li class="chapter" data-level="3.1" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>3.1</b> Bagging</a></li>
+<li class="chapter" data-level="3.2" data-path="bosques-aleatorios.html"><a href="bosques-aleatorios.html"><i class="fa fa-check"></i><b>3.2</b> Bosques aleatorios</a></li>
+<li class="chapter" data-level="3.3" data-path="bagging-y-bosques-aleatorios-en-r.html"><a href="bagging-y-bosques-aleatorios-en-r.html"><i class="fa fa-check"></i><b>3.3</b> Bagging y bosques aleatorios en R</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="bagging-y-bosques-aleatorios-en-r.html"><a href="bagging-y-bosques-aleatorios-en-r.html#ejemplo-clasificación-con-bagging"><i class="fa fa-check"></i><b>3.3.1</b> Ejemplo: Clasificación con bagging</a></li>
+<li class="chapter" data-level="3.3.2" data-path="bagging-y-bosques-aleatorios-en-r.html"><a href="bagging-y-bosques-aleatorios-en-r.html#ejemplo-clasificación-con-bosques-aleatorios"><i class="fa fa-check"></i><b>3.3.2</b> Ejemplo: Clasificación con bosques aleatorios</a></li>
+<li class="chapter" data-level="3.3.3" data-path="bagging-y-bosques-aleatorios-en-r.html"><a href="bagging-y-bosques-aleatorios-en-r.html#ejemplo-bosques-aleatorios-con-caret"><i class="fa fa-check"></i><b>3.3.3</b> Ejemplo: bosques aleatorios con <code>caret</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="boosting.html"><a href="boosting.html"><i class="fa fa-check"></i><b>3.4</b> Boosting</a></li>
+<li class="chapter" data-level="3.5" data-path="boosting-en-r.html"><a href="boosting-en-r.html"><i class="fa fa-check"></i><b>3.5</b> Boosting en R</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
 <li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
@@ -174,24 +193,24 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>La motivación detrás de M5 es que, si la predicción que aporta un nodo terminal se limita a un único número (como hace la metodología CART), entonces el modelo va a predecir muy mal los valores que <em>realmente</em> son muy extremos, ya que el número de posibles valores predichos está limitado por el número de nodos terminales, y en cada uno de ellos se utiliza una media. Por ello M5 le asocia a cada nodo un modelo de regresión lineal, para cuyo ajuste se utilizan los datos del nodo y todas las variables que están en la ruta del nodo. Para evaluar los posibles cortes que conducen al siguiente nodo, se utilizan los propios modelos lineales para calcular la medida del error.</p>
 <p>Una vez se ha construido todo el árbol, para realizar la predicción se puede utilizar el modelo lineal que está en el nodo terminal correspondiente, pero funciona mejor si se utiliza una combinación lineal del modelo del nodo terminal y de todos sus nodos ascendientes (es decir, los que están en su camino).</p>
 <p>Otra opción es CHAID (CHi-squared Automated Interaction Detection, Kass, 1980), que se basa en una idea diferente. Es un método de construcción de árboles de clasificación que se utiliza cuando las variables predictoras son cualitativas o discretas; en caso contrario deben ser categorizadas previamente. Y se basa en el contraste chi-cuadrado de independencia para tablas de contingencia.</p>
-<p>Para cada par <span class="math inline">\((X_i, Y)\)</span>, se considera su tabla de contingencia y se calcula el p-valor del contraste chi-cuadrado, seleccionándose la variable predictora que tenga un p-valor más pequeño, ya que se asume que las variables predictoreas más relacionadas con la respuesta <span class="math inline">\(Y\)</span> son las que van a tener p-valores más pequeños y darán lugar a mejores predicciones. Se divide el nodo de acuerdo con los distintos valores de la variable predictora seleccionada, y se repite el proceso mientras haya variables <em>significativas</em>. Como el método exige que el p-valor sea menor que 0.05 (o el nivel de significación que se elija), y hay que hacer muchas comparaciones es necesario aplicar una corrección para comparaciones múltiples, por ejemplo la de Bonferroni.</p>
+<p>Para cada par <span class="math inline">\((X_i, Y)\)</span>, se considera su tabla de contingencia y se calcula el p-valor del contraste chi-cuadrado, seleccionándose la variable predictora que tenga un p-valor más pequeño, ya que se asume que las variables predictoras más relacionadas con la respuesta <span class="math inline">\(Y\)</span> son las que van a tener p-valores más pequeños y darán lugar a mejores predicciones. Se divide el nodo de acuerdo con los distintos valores de la variable predictora seleccionada, y se repite el proceso mientras haya variables <em>significativas</em>. Como el método exige que el p-valor sea menor que 0.05 (o el nivel de significación que se elija), y hay que hacer muchas comparaciones es necesario aplicar una corrección para comparaciones múltiples, por ejemplo la de Bonferroni.</p>
 <p>Lo que acabamos de explicar daría lugar a árboles no necesariamente binarios. Como se desea trabajar con árboles binarios (si se admite que de un nodo salga cualquier número de ramas, con muy pocos niveles de profundidad del árbol ya nos quedaríamos sin datos), es necesario hacer algo más: forzar a que las variables predictoras tengan sólo dos categorías mediante un proceso de fusión. Se van haciendo pruebas chi-cuadrado entre pares de categorías y la variable respuesta, y se fusiona el par con el p-valor más alto, ya que se trata de fusionar las categorías que sean más similares.</p>
-<p>Para árboles de regresión hay metodologías que, al igual que CHAID, se basan en el cálculo de p-valores, en este caso de contrastes de igualdes de medias. Una de las más utilizadas son los <em>conditional inference trees</em> (Hothorn <em>et al.</em>, 2006)<a href="#fn16" class="footnoteRef" id="fnref16"><sup>16</sup></a>, implementada en la función <code>ctree()</code> del paquete <a href="https://CRAN.R-project.org/package=party"><code>party</code></a>.</p>
+<p>Para árboles de regresión hay metodologías que, al igual que CHAID, se basan en el cálculo de p-valores, en este caso de contrastes de igualdes de medias. Una de las más utilizadas son los <em>conditional inference trees</em> (Hothorn <em>et al.</em>, 2006)<a href="#fn17" class="footnoteRef" id="fnref17"><sup>17</sup></a>, implementada en la función <code>ctree()</code> del paquete <a href="https://CRAN.R-project.org/package=party"><code>party</code></a>.</p>
 <p>Un problema conocido de los árboles CART es que sufren un sesgo de selección de variables: los predictores con más valores distintos son favorecidos. Esta es una de las motivaciones de utilizar estos métodos basados en contrastes de hipótesis. Por otra parte hay que ser conscientes de que los contrastes de hipótesis y la calidad predictiva son cosas distintas.</p>
 <div id="ejemplo" class="section level3">
 <h3><span class="header-section-number">2.4.1</span> Ejemplo</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(party)
 tree2 &lt;-<span class="st"> </span><span class="kw">ctree</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train) 
 <span class="kw">plot</span>(tree2)</code></pre></div>
-<p><img src="02-arboles_files/figure-html/unnamed-chunk-32-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><img src="02-arboles_files/figure-html/unnamed-chunk-33-1.png" width="80%" style="display: block; margin: auto;" /></p>
 
 </div>
 </div>
 <!-- </div> -->
 <div class="footnotes">
 <hr />
-<ol start="16">
-<li id="fn16"><p>Otra alternativa es GUIDE (Generalized, Unbiased, Interaction Detection and Estimation; Loh, 2002).<a href="alternativas-a-los-árboles-cart.html#fnref16">↩</a></p></li>
+<ol start="17">
+<li id="fn17"><p>Otra alternativa es GUIDE (Generalized, Unbiased, Interaction Detection and Estimation; Loh, 2002).<a href="alternativas-a-los-árboles-cart.html#fnref17">↩</a></p></li>
 </ol>
 </div>
             </section>
@@ -200,7 +219,7 @@ tree2 &lt;-<span class="st"> </span><span class="kw">ctree</span>(taste <span cl
         </div>
       </div>
 <a href="cart-con-el-paquete-rpart.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="referencias.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="bagging-boosting.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

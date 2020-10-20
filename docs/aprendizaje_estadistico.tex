@@ -146,7 +146,7 @@
 (\href{mailto:ruben.fcasal@udc.es}{\nolinkurl{ruben.fcasal@udc.es}}),
 Julián Costa
 (\href{mailto:julian.costa@udc.es}{\nolinkurl{julian.costa@udc.es}})}
-\date{2020-10-08}
+\date{2020-10-20}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Teorema}[chapter]
@@ -2097,96 +2097,17 @@ pueden definir nuevos modelos, ver el
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(caret)}
-\KeywordTok{names}\NormalTok{(}\KeywordTok{getModelInfo}\NormalTok{()) }\CommentTok{# Listado de todos los métodos disponibles}
+\KeywordTok{str}\NormalTok{(}\KeywordTok{names}\NormalTok{(}\KeywordTok{getModelInfo}\NormalTok{())) }\CommentTok{# Listado de todos los métodos disponibles}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-##   [1] "ada"                 "AdaBag"              "AdaBoost.M1"        
-##   [4] "adaboost"            "amdai"               "ANFIS"              
-##   [7] "avNNet"              "awnb"                "awtan"              
-##  [10] "bag"                 "bagEarth"            "bagEarthGCV"        
-##  [13] "bagFDA"              "bagFDAGCV"           "bam"                
-##  [16] "bartMachine"         "bayesglm"            "binda"              
-##  [19] "blackboost"          "blasso"              "blassoAveraged"     
-##  [22] "bridge"              "brnn"                "BstLm"              
-##  [25] "bstSm"               "bstTree"             "C5.0"               
-##  [28] "C5.0Cost"            "C5.0Rules"           "C5.0Tree"           
-##  [31] "cforest"             "chaid"               "CSimca"             
-##  [34] "ctree"               "ctree2"              "cubist"             
-##  [37] "dda"                 "deepboost"           "DENFIS"             
-##  [40] "dnn"                 "dwdLinear"           "dwdPoly"            
-##  [43] "dwdRadial"           "earth"               "elm"                
-##  [46] "enet"                "evtree"              "extraTrees"         
-##  [49] "fda"                 "FH.GBML"             "FIR.DM"             
-##  [52] "foba"                "FRBCS.CHI"           "FRBCS.W"            
-##  [55] "FS.HGD"              "gam"                 "gamboost"           
-##  [58] "gamLoess"            "gamSpline"           "gaussprLinear"      
-##  [61] "gaussprPoly"         "gaussprRadial"       "gbm_h2o"            
-##  [64] "gbm"                 "gcvEarth"            "GFS.FR.MOGUL"       
-##  [67] "GFS.LT.RS"           "GFS.THRIFT"          "glm.nb"             
-##  [70] "glm"                 "glmboost"            "glmnet_h2o"         
-##  [73] "glmnet"              "glmStepAIC"          "gpls"               
-##  [76] "hda"                 "hdda"                "hdrda"              
-##  [79] "HYFIS"               "icr"                 "J48"                
-##  [82] "JRip"                "kernelpls"           "kknn"               
-##  [85] "knn"                 "krlsPoly"            "krlsRadial"         
-##  [88] "lars"                "lars2"               "lasso"              
-##  [91] "lda"                 "lda2"                "leapBackward"       
-##  [94] "leapForward"         "leapSeq"             "Linda"              
-##  [97] "lm"                  "lmStepAIC"           "LMT"                
-## [100] "loclda"              "logicBag"            "LogitBoost"         
-## [103] "logreg"              "lssvmLinear"         "lssvmPoly"          
-## [106] "lssvmRadial"         "lvq"                 "M5"                 
-## [109] "M5Rules"             "manb"                "mda"                
-## [112] "Mlda"                "mlp"                 "mlpKerasDecay"      
-## [115] "mlpKerasDecayCost"   "mlpKerasDropout"     "mlpKerasDropoutCost"
-## [118] "mlpML"               "mlpSGD"              "mlpWeightDecay"     
-## [121] "mlpWeightDecayML"    "monmlp"              "msaenet"            
-## [124] "multinom"            "mxnet"               "mxnetAdam"          
-## [127] "naive_bayes"         "nb"                  "nbDiscrete"         
-## [130] "nbSearch"            "neuralnet"           "nnet"               
-## [133] "nnls"                "nodeHarvest"         "null"               
-## [136] "OneR"                "ordinalNet"          "ordinalRF"          
-## [139] "ORFlog"              "ORFpls"              "ORFridge"           
-## [142] "ORFsvm"              "ownn"                "pam"                
-## [145] "parRF"               "PART"                "partDSA"            
-## [148] "pcaNNet"             "pcr"                 "pda"                
-## [151] "pda2"                "penalized"           "PenalizedLDA"       
-## [154] "plr"                 "pls"                 "plsRglm"            
-## [157] "polr"                "ppr"                 "PRIM"               
-## [160] "protoclass"          "qda"                 "QdaCov"             
-## [163] "qrf"                 "qrnn"                "randomGLM"          
-## [166] "ranger"              "rbf"                 "rbfDDA"             
-## [169] "Rborist"             "rda"                 "regLogistic"        
-## [172] "relaxo"              "rf"                  "rFerns"             
-## [175] "RFlda"               "rfRules"             "ridge"              
-## [178] "rlda"                "rlm"                 "rmda"               
-## [181] "rocc"                "rotationForest"      "rotationForestCp"   
-## [184] "rpart"               "rpart1SE"            "rpart2"             
-## [187] "rpartCost"           "rpartScore"          "rqlasso"            
-## [190] "rqnc"                "RRF"                 "RRFglobal"          
-## [193] "rrlda"               "RSimca"              "rvmLinear"          
-## [196] "rvmPoly"             "rvmRadial"           "SBC"                
-## [199] "sda"                 "sdwd"                "simpls"             
-## [202] "SLAVE"               "slda"                "smda"               
-## [205] "snn"                 "sparseLDA"           "spikeslab"          
-## [208] "spls"                "stepLDA"             "stepQDA"            
-## [211] "superpc"             "svmBoundrangeString" "svmExpoString"      
-## [214] "svmLinear"           "svmLinear2"          "svmLinear3"         
-## [217] "svmLinearWeights"    "svmLinearWeights2"   "svmPoly"            
-## [220] "svmRadial"           "svmRadialCost"       "svmRadialSigma"     
-## [223] "svmRadialWeights"    "svmSpectrumString"   "tan"                
-## [226] "tanSearch"           "treebag"             "vbmpRadial"         
-## [229] "vglmAdjCat"          "vglmContRatio"       "vglmCumulative"     
-## [232] "widekernelpls"       "WM"                  "wsrf"               
-## [235] "xgbDART"             "xgbLinear"           "xgbTree"            
-## [238] "xyf"
+##  chr [1:238] "ada" "AdaBag" "AdaBoost.M1" "adaboost" "amdai" "ANFIS" ...
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# str(getModelInfo("knn", regex = TRUE)) # Por defecto devuelve coincidencias parciales}
+\CommentTok{# names(getModelInfo("knn", regex = TRUE)) # Por defecto devuelve coincidencias parciales}
 \KeywordTok{modelLookup}\NormalTok{(}\StringTok{"knn"}\NormalTok{)  }\CommentTok{# Información sobre hiperparámetros}
 \end{Highlighting}
 \end{Shaded}
@@ -2297,6 +2218,20 @@ Este paquete permite, entre otras cosas:
     Si se imputan datos en el preprocesado será necesario establecer
     \texttt{na.action\ =\ na.pass}.
   \end{itemize}
+\item
+  Predicción: Una de las ventajas es que incorpora un único método
+  \texttt{predict()} para objetos de tipo \texttt{train} con dos únicas
+  opciones\footnote{En lugar de la variedad de opciones que emplean los
+    distintos paquetes (e.g.: \texttt{type\ =\ "response"},
+    \texttt{"class"}, \texttt{"posterior"},
+    \texttt{"probability"}\ldots{} ).}
+  \texttt{type\ =\ c("raw",\ "prob")}, la primera para obtener
+  predicciones de la respuesta y la segunda para obtener estimaciones de
+  las probabilidades (en los métodos de clasificación que lo admitan).
+
+  Además, si se incluyo un preprocesado en el entrenamiento, se
+  emplearán las mismas transformaciones en un nuevo conjunto de datos
+  \texttt{newdata}.
 \item
   Evaluación de los modelos
 
@@ -3235,7 +3170,9 @@ descritos en la Sección \ref{eval-reg}:
 \NormalTok{obs <-}\StringTok{ }\NormalTok{test}\OperatorTok{$}\NormalTok{quality}
 \NormalTok{pred <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(tree, }\DataTypeTok{newdata =}\NormalTok{ test)}
 
-\KeywordTok{plot}\NormalTok{(pred, obs, }\DataTypeTok{main =} \StringTok{"Observado frente a predicciones (quality)"}\NormalTok{,}
+\CommentTok{# plot(pred, obs, main = "Observado frente a predicciones (quality)",}
+\CommentTok{#      xlab = "Predicción", ylab = "Observado")}
+\KeywordTok{plot}\NormalTok{(}\KeywordTok{jitter}\NormalTok{(pred), }\KeywordTok{jitter}\NormalTok{(obs), }\DataTypeTok{main =} \StringTok{"Observado frente a predicciones (quality)"}\NormalTok{,}
      \DataTypeTok{xlab =} \StringTok{"Predicción", ylab = "}\NormalTok{Observado}\StringTok{")}
 \StringTok{abline(a = 0, b = 1)}
 \end{Highlighting}
@@ -3285,8 +3222,7 @@ descritos en la Sección \ref{eval-reg}:
 ## -0.001269398  0.814561435  0.657426365 -1.952342173 11.576716037  0.192007721
 \end{verbatim}
 
-\subsection{Ejemplo: modelo de
-clasificación}\label{ejemplo-modelo-de-clasificaciuxf3n}
+\subsection{Ejemplo: modelo de clasificación}\label{class-rpart}
 
 Para ilustrar los árboles de clasificación CART, podemos emplear los
 datos anteriores de calidad de vino, considerando como respuesta una
@@ -3597,7 +3533,7 @@ probabilidades de cada clase, habrá que establecer
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{caret}\OperatorTok{::}\KeywordTok{confusionMatrix}\NormalTok{(obs, pred)}
+\NormalTok{caret}\OperatorTok{::}\KeywordTok{confusionMatrix}\NormalTok{(pred, obs)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3606,26 +3542,26 @@ probabilidades de cada clase, habrá que establecer
 ## 
 ##           Reference
 ## Prediction good bad
-##       good  153  13
-##       bad    54  30
+##       good  153  54
+##       bad    13  30
 ##                                           
 ##                Accuracy : 0.732           
 ##                  95% CI : (0.6725, 0.7859)
-##     No Information Rate : 0.828           
-##     P-Value [Acc > NIR] : 0.9999          
+##     No Information Rate : 0.664           
+##     P-Value [Acc > NIR] : 0.01247         
 ##                                           
 ##                   Kappa : 0.3171          
 ##                                           
 ##  Mcnemar's Test P-Value : 1.025e-06       
 ##                                           
-##             Sensitivity : 0.7391          
-##             Specificity : 0.6977          
-##          Pos Pred Value : 0.9217          
-##          Neg Pred Value : 0.3571          
-##              Prevalence : 0.8280          
+##             Sensitivity : 0.9217          
+##             Specificity : 0.3571          
+##          Pos Pred Value : 0.7391          
+##          Neg Pred Value : 0.6977          
+##              Prevalence : 0.6640          
 ##          Detection Rate : 0.6120          
-##    Detection Prevalence : 0.6640          
-##       Balanced Accuracy : 0.7184          
+##    Detection Prevalence : 0.8280          
+##       Balanced Accuracy : 0.6394          
 ##                                           
 ##        'Positive' Class : good            
 ## 
@@ -3836,10 +3772,52 @@ Para utilizar la regla de ``un error estándar'' se puede añadir
 
 \begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-30-2} \end{center}
 
-En principio también se podría utilizar la regla de ``un error
-estándar'' seleccionando \texttt{method\ =\ "rpart1SE"} (pero implementa
-internamente este método y en ocasiones no se obtienen los resultados
-esperados).
+Para calcular las predicciones (o las estimaciones de las
+probabilidades) podemos emplear el método \texttt{predict.train()} y
+posteriormente \texttt{confusionMatrix()} para evaluar su precisión:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pred <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(caret.rpart, }\DataTypeTok{newdata =}\NormalTok{ test)}
+\CommentTok{# p.est <- predict(caret.rpart, newdata = test, type = "prob")}
+\KeywordTok{confusionMatrix}\NormalTok{(pred, test}\OperatorTok{$}\NormalTok{taste)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction good bad
+##       good  153  54
+##       bad    13  30
+##                                           
+##                Accuracy : 0.732           
+##                  95% CI : (0.6725, 0.7859)
+##     No Information Rate : 0.664           
+##     P-Value [Acc > NIR] : 0.01247         
+##                                           
+##                   Kappa : 0.3171          
+##                                           
+##  Mcnemar's Test P-Value : 1.025e-06       
+##                                           
+##             Sensitivity : 0.9217          
+##             Specificity : 0.3571          
+##          Pos Pred Value : 0.7391          
+##          Neg Pred Value : 0.6977          
+##              Prevalence : 0.6640          
+##          Detection Rate : 0.6120          
+##    Detection Prevalence : 0.8280          
+##       Balanced Accuracy : 0.6394          
+##                                           
+##        'Positive' Class : good            
+## 
+\end{verbatim}
+
+NOTA: En principio también se podría utilizar la regla de ``un error
+estándar'' seleccionando \texttt{method\ =\ "rpart1SE"} (pero
+\texttt{caret} implementa internamente este método y en ocasiones no se
+obtienen los resultados esperados).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3897,7 +3875,7 @@ independencia para tablas de contingencia.
 Para cada par \((X_i, Y)\), se considera su tabla de contingencia y se
 calcula el p-valor del contraste chi-cuadrado, seleccionándose la
 variable predictora que tenga un p-valor más pequeño, ya que se asume
-que las variables predictoreas más relacionadas con la respuesta \(Y\)
+que las variables predictoras más relacionadas con la respuesta \(Y\)
 son las que van a tener p-valores más pequeños y darán lugar a mejores
 predicciones. Se divide el nodo de acuerdo con los distintos valores de
 la variable predictora seleccionada, y se repite el proceso mientras
@@ -3941,7 +3919,870 @@ son cosas distintas.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-32-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-33-1} \end{center}
+
+\chapter{Bagging y Boosting}\label{bagging-boosting}
+
+Tanto el \emph{bagging} como el \emph{boosting} son procedimientos
+generales para la reducción de la varianza de un método estadístico de
+aprendizaje.
+
+La idea básica consiste en combinar métodos de predicción sencillos
+(débiles), es decir, con poca capacidad predictiva, para obtener un
+método de predicción muy potente (y robusto). Estas ideas se pueden
+aplicar tanto a problemas de regresión como de clasificación.
+
+Son muy empleados con árboles de decisión: son predictores débiles y se
+generan de forma rápida. Lo que se hace es construir muchos modelos
+(crecer muchos árboles) que luego se combinan para producir predicciones
+(promediando o por consenso).
+
+\section{Bagging}\label{bagging}
+
+En la década de 1990 empiezan a utilizarse los métodos \emph{ensemble}
+(métodos combinados), esto es, métodos predictivos que se basan en
+combinar las predicciones de cientos de modelos. Uno de los primeros
+métodos combinados que se utilizó fue el \emph{bagging} (nombre que
+viene de \emph{bootstrap aggregation}), propuesto en Breiman (1996). Es
+un método general de reducción de la varianza que se basa en la
+utilización del bootstrap junto con un modelo de regresión o de
+clasificación, como puede ser un árbol de decisión.
+
+La idea es muy sencilla. Si disponemos de muchas muestras de
+entrenamiento, podemos utilizar cada una de ellas para entrenar un
+modelo que después nos servirá para hacer una predicción. De este modo
+tendremos tantas predicciones como modelos y por tanto tantas
+predicciones como muestras de entrenamiento. El procedimiento
+consistente en promediar todas las predicciones anteriores tiene dos
+ventajas importantes: simplifica la solución y reduce mucho la varianza.
+
+El problema es que en la práctica no suele disponerse más que de una
+única muestra de entrenamiento. Aquí es donde entra en juego el
+bootstrap, técnica especialmente útil para estimar varianzas, pero que
+en esta aplicación se utiliza para reducir la varianza. Lo que se hace
+es generar cientos o miles de muestras bootstrap a partir de la muestra
+de entrenamiento, y después utilizar cada una de estas muestras
+bootstrap como una muestra de entrenamiento (\emph{bootstrapped training
+data set}).
+
+Para un modelo que tenga intrínsecamente poca variabilidad, como puede
+ser una regresión lineal, aplicar bagging puede ser poco interesante, ya
+que hay poco márgen para mejorar el rendimiento. Por contra, es un
+método muy importante para los árboles de decisión, porque un árbol con
+mucha profundidad (sin podar) tiene mucha variabilidad: si modificamos
+ligeramente los datos de entrenamiento es muy posible que se obtenga un
+nuevo árbol completamente distinto al anterior; y esto se ve como un
+inconveniente. Por esa razón, en este contexto encaja perfectamente la
+metodología bagging.
+
+Así, para árboles de regresión se hacen crecer muchos árboles (sin poda)
+y se calcula la media de las predicciones. En el caso de los árboles de
+clasificación lo más sencillo es sustituir la media por la moda y
+utilizar el criterio del voto mayoritario: cada modelo tiene el mismo
+peso y por tanto cada modelo aporta un voto. Además, la proporción de
+votos de cada categoría es una estimación de su probabilidad.
+
+Una ventaja adicional del bagging es que permite estimar el error de la
+predicción de forma directa, sin necesidad de utilizar una muestra de
+test o de aplicar validación cruzada u, otra vez, remuestreo, y se
+obtiene un resultado similar al que obtendríamos con estos métodos. Es
+bien sabido que una muestra bootstrap va a contener muchas observaciones
+repetidas y que, en promedio, sólo utiliza aproximadamente dos tercios
+de los datos (para ser más precisos,
+\(1 - (1 - 1/n)^n \approx 1 - e^{-1} = 0.6321\) al aumentar el tamaño
+del conjunto de datos de entrenamiento). Un dato que no es utilizado
+para construir un árbol se denomina un dato \emph{out-of-bag} (OOB). De
+este modo, para cada observación se pueden utilizar los árboles para los
+que esa observación es \emph{out-of-bag} (aproximadamente una tercera
+parte de los árboles construidos) para generar una única predicción para
+ella. Repitiendo el proceso para todas las observaciones se obtiene una
+medida del error.
+
+Una decisión que hay que tomar es cuántas muestras bootstrap se toman (o
+lo que es lo mismo, cuántos árboles se construyen). Realmente se trata
+de una aproximación Monte Carlo, por lo que típicamente se estudia
+gráficamente la convergencia del error OOB al aumentar el número de
+árboles (para más detalles ver p.e. Fernández-Casal y Cao, 2020,
+\href{https://rubenfcasal.github.io/simbook/convergencia.html}{Sección
+4.1}). Si aparentemente hay convergencia con unos pocos cientos de
+árboles, no va a variar mucho el nivel de error al aumentar el número.
+Por tanto aumentar mucho el número de árboles no mejora las
+predicciones, aunque tampoco aumenta el riesgo de sobreajuste. Los
+costes computacionales aumentan con el número de árboles, pero la
+construcción y evaluación del modelo son fácilmente paralelizables
+(aunque pueden llegar a requerir mucha memoria si el conjunto de datos
+es muy grande). Por otra parte si el número de árboles es demasiado
+pequeño puede que se obtengan pocas (o incluso ninguna) predicciones OOB
+para alguna de las observaciones de la muestra de entrenamiento.
+
+Una ventaja que ya sabemos que tienen los árboles de decisión es su
+fácil interpretabilidad. En un árbol resulta evidente cuales son los
+predictores más influyentes. Al utilizar bagging se mejora (mucho) la
+predicción, pero se pierde la interpretabilidad. Aún así, hay formas de
+calcular la importancia de los predictores. Por ejemplo, si fijamos un
+predictor y una medida del error podemos, para cada uno de los árboles,
+medir la reducción del error que se consigue cada vez que hay un corte
+que utilice ese predictor particular. Promediando sobre todos los
+árboles bagging se obtiene una medida global de la importancia: un valor
+alto en la reducción del error sugiere que el predictor es importante.
+
+En resumen:
+
+\begin{itemize}
+\item
+  Se remuestrea repetidamente el conjunto de datos de entrenamiento.
+\item
+  Con cada conjunto de datos se entrena un modelo.
+\item
+  Las predicciones se obtienen promediando las predicciones de los
+  modelos (la decisión mayoritaria en el caso de clasificación).
+\item
+  Se puede estimar la precisión de las predicciones con el error OOB
+  (out-of-bag).
+\end{itemize}
+
+\section{Bosques aleatorios}\label{bosques-aleatorios}
+
+Los bosques aleatorios (\emph{random forest}) son una variante de
+bagging específicamente diseñados para trabajar con árboles de decisión.
+Las muestras bootstrap que se generan al hacer bagging introducen un
+elemento de aleatoriedad que en la práctica provoca que todos los
+árboles sean distintos, pero en ocasiones no son lo
+\emph{suficientemente} distintos. Es decir, suele ocurrir que los
+árboles tengan estructuras muy similares, especialmente en la parte
+alta, aunque después se vayan diferenciando según se desciende por
+ellos. Esta característica se conoce como correlación entre árboles y se
+da cuando el árbol es un modelo adecuado para describir la relación ente
+los predictores y la respuesta, y también cuándo uno de los predictores
+es muy fuerte, es decir, es especialmente relevante, con lo cual casi
+siempre va a estar en el primer corte. Esta correlación entre árboles se
+va a traducir en una correlación entre sus predicciones (más
+formalmente, entre los predictores).
+
+Promediar variables altamente correladas produce una reducción de la
+varianza mucho menor que si promediamos variables incorreladas. La
+solución pasa por añadir aleatoriedad al proceso de construcción de los
+árboles, para que estos dejen de estar correlados. Hubo varios intentos,
+entre los que destaca Dietterich (2000) al proponer la idea de
+introducir aleatorieadad en la selección de las variables de cada corte.
+Breiman (2001) propuso un algoritmo unificado al que llamó bosques
+aleatorios. En la construcción de cada uno de los árboles que finalmente
+constituirán el bosque, se van haciendo cortes binarios, y para cada
+corte hay que seleccionar una variable predictora. La modificación
+introducida fue que antes de hacer cada uno de los cortes, de todas las
+\(p\) variables predictoras, se seleccionan al azar \(m < p\)
+predictores que van a ser los candidatos para el corte.
+
+El hiperparámetro de los bosques aleatorios es \(m\), y se puede
+seleccionar mediante las técnicas habituales. Como puntos de partida
+razonables se pueden considerar \(m = \sqrt{p}\) (para problemas de
+clasificación) y \(m = p/3\) (para problemas de regresión). El número de
+árboles que van a constituir el bosque también puede tratarse como un
+hiperparámetro, aunque es más frecuente tratarlo como un problema de
+convergencia. En general, van a hacer falta más árboles que en bagging.
+
+Los bosques aleatorios son computacionalmente más eficientes que bagging
+porque, aunque como acabamos de decir requieren más árboles, la
+construcción de cada árbol es mucho más rápida al evaluarse sólo unos
+pocos predictores en cada corte.
+
+Este método también puede ser empleado para aprendizaje no supervisado,
+por ejemplo se puede construir una matriz de proximidad entre
+observaciones a partir de la proporción de veces que están en un mismo
+nodo terminal (para más detalles ver
+\href{https://www.r-project.org/doc/Rnews/Rnews_2002-3.pdf}{Liaw y
+Wiener, 2002}).
+
+En resumen:
+
+\begin{itemize}
+\item
+  Los bosques aleatorios son una modificación del bagging para el caso
+  de árboles de decisión.
+\item
+  También se introduce aleatoriedad en las variables, no sólo en las
+  observaciones.
+\item
+  Para evitar dependencias, los posibles predictores se seleccionan al
+  azar en cada nodo (e.g. \(m=\sqrt{p}\)).
+\item
+  Se utilizan árboles sin podar.
+\item
+  Estos métodos dificultan la interpretación.
+\item
+  Se puede medir la importancia de las variables (índices de
+  importancia).
+
+  \begin{itemize}
+  \item
+    Por ejemplo, para cada árbol se suman las reducciones en el índice
+    de Gini correspondientes a las divisiones de un predictor y
+    posteriormente se promedian los valores de todos los árboles.
+  \item
+    Alternativamente (Breiman, 2001) se puede medir el incremento en el
+    error de predicción OOB al permutar aleatoriamente los valores de la
+    variable explicativa en la muestra OOB (manteniendo el resto sin
+    cambios).
+  \end{itemize}
+\end{itemize}
+
+\section{Bagging y bosques aleatorios en
+R}\label{bagging-y-bosques-aleatorios-en-r}
+
+Estos algoritmos son de los más populares en AE y están implementados en
+numerosos paquetes de R, aunque la referencia es el paquete
+\href{https://CRAN.R-project.org/package=randomForest}{\texttt{randomForest}}
+(que emplea el código Fortran desarrollado por Leo Breiman y Adele
+Cutler). La función principal es \texttt{randomForest()} y se suele
+emplear de la forma:
+
+\texttt{randomForest(formula,\ data,\ ntree,\ mtry,\ nodesize,\ ...)}
+
+\begin{itemize}
+\item
+  \texttt{formula} y \texttt{data} (opcional): permiten especificar la
+  respuesta y las variables predictoras de la forma habitual
+  (típicamente \texttt{respuesta\ \textasciitilde{}\ .}), aunque si el
+  conjunto de datos es muy grande puede ser preferible emplear una
+  matriz o un data.frame para establecer los predictores y un vector
+  para la respuesta (sustituyendo estos argumentos por \texttt{x} e
+  \texttt{y}).
+\item
+  \texttt{ntree}: número de árboles que se crecerán; por defecto 500.
+\item
+  \texttt{mtry}: número de predictores seleccionados al azar en cada
+  división; por defecto \texttt{max(floor(p/3),\ 1)} en el caso de
+  regresión y \texttt{floor(sqrt(p))} en clasificación, siendo
+  \texttt{p\ =\ ncol(x)\ =\ ncol(data)\ -\ 1} el número de predictores.
+\item
+  \texttt{nodesize}: número mínimo de observaciones en un nodo terminal;
+  por defecto 1 en clasificación y 5 en regresión (puede ser
+  recomendable incrementarlo si el conjunto de datos es muy grande, para
+  evitar posibles problemas de sobreajuste, dismunir el tiempo de
+  computación y los requerimientos de memoria; también podría ser
+  considerado como un hiperparámetro).
+\end{itemize}
+
+Otros argumentos que pueden ser de interés\footnote{Si se quiere
+  minimizar el uso de memoria, por ejemplo mientras se seleccionan
+  hiperparámetros, se puede establecer \texttt{keep.forest=FALSE}.} son:
+
+\begin{itemize}
+\item
+  \texttt{maxnodes}: número máximo de nodos terminales (como alternativa
+  para la establecer la complejidad).
+\item
+  \texttt{importance\ =\ TRUE}: permite obtener medidas adicionales de
+  importancia.
+\item
+  \texttt{proximity\ =\ TRUE}: permite obtener una matriz de
+  proximidades (componente \texttt{\$proximity}) entre las observaciones
+  (frecuencia con la que los pares de observaciones están en el mismo
+  nodo terminal).
+\item
+  \texttt{na.action\ =\ na.fail}: por defecto no admite datos faltantes
+  con la interfaz de fórmulas. Si los hubiese, se podrían imputar
+  estableciento \texttt{na.action\ =\ na.roughfix} (empleando medias o
+  modas) o llamando previamente a \texttt{rfImpute()} (que emplea
+  proximidades obtenidas con un bosque aleatorio).
+\end{itemize}
+
+Más detalles en la ayuda de esta función o en
+\href{https://www.r-project.org/doc/Rnews/Rnews_2002-3.pdf}{Liaw y
+Wiener (2002)}.
+
+Entre las numerosas alternativas, además de las implementadas en
+paquetes que integran colecciones de métodos como \texttt{h2o} o
+\texttt{RWeka}, una de las más utilizadas son los bosques aleatorios con
+\emph{conditional inference trees}, implementada en la función
+\texttt{cforest()} del paquete
+\href{https://CRAN.R-project.org/package=party}{\texttt{party}}.
+
+\subsection{Ejemplo: Clasificación con
+bagging}\label{ejemplo-clasificaciuxf3n-con-bagging}
+
+Como ejemplo consideraremos el conjunto de datos de calidad de vino
+empleado en la Sección \ref{class-rpart} (para hacer comparaciones con
+el ajuste de un único árbol).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{load}\NormalTok{(}\StringTok{"data/winetaste.RData"}\NormalTok{)}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{df <-}\StringTok{ }\NormalTok{winetaste}
+\NormalTok{nobs <-}\StringTok{ }\KeywordTok{nrow}\NormalTok{(df)}
+\NormalTok{itrain <-}\StringTok{ }\KeywordTok{sample}\NormalTok{(nobs, }\FloatTok{0.8} \OperatorTok{*}\StringTok{ }\NormalTok{nobs)}
+\NormalTok{train <-}\StringTok{ }\NormalTok{df[itrain, ]}
+\NormalTok{test <-}\StringTok{ }\NormalTok{df[}\OperatorTok{-}\NormalTok{itrain, ]}
+\end{Highlighting}
+\end{Shaded}
+
+Al ser bagging con árboles un caso particular de bosques aleatorios
+cuando \(m = p\), también podemos emplear \texttt{randomForest}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(randomForest)}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{4}\NormalTok{) }\CommentTok{# NOTA: Fijamos esta semilla para ilustrar dependencia}
+\NormalTok{bagtrees <-}\StringTok{ }\KeywordTok{randomForest}\NormalTok{(taste }\OperatorTok{~}\StringTok{ }\NormalTok{., }\DataTypeTok{data =}\NormalTok{ train, }\DataTypeTok{mtry =} \KeywordTok{ncol}\NormalTok{(train) }\OperatorTok{-}\StringTok{ }\DecValTok{1}\NormalTok{)}
+\NormalTok{bagtrees}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+##  randomForest(formula = taste ~ ., data = train, mtry = ncol(train) -      1) 
+##                Type of random forest: classification
+##                      Number of trees: 500
+## No. of variables tried at each split: 11
+## 
+##         OOB estimate of  error rate: 23.5%
+## Confusion matrix:
+##      good bad class.error
+## good  565  97   0.1465257
+## bad   138 200   0.4082840
+\end{verbatim}
+
+Con el método \texttt{plot()} podemos examinar la convergencia del error
+en la muestra OOB (simplemente emplea \texttt{matplot()} para
+representar la componente \texttt{\$err.rate}):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(bagtrees, }\DataTypeTok{main =} \StringTok{"Tasas de error"}\NormalTok{)}
+\KeywordTok{legend}\NormalTok{(}\StringTok{"topright"}\NormalTok{, }\KeywordTok{colnames}\NormalTok{(bagtrees}\OperatorTok{$}\NormalTok{err.rate), }\DataTypeTok{lty =} \DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{, }\DataTypeTok{col =} \DecValTok{1}\OperatorTok{:}\DecValTok{6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/unnamed-chunk-4-1} \end{center}
+
+Como vemos que los errores se estabilizan podríamos pensar que
+aparentemente hay convergencia (aunque situaciones de alta dependencia
+entre los áboles dificultarían su interpretación).
+
+Con la función \texttt{getTree()} podemos extraer los árboles
+individuales. Por ejemplo el siguiente código permite extraer la
+variable seleccionada para la primera división:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# View(getTree(bagtrees, 1, labelVar=TRUE))}
+\NormalTok{split_var_}\DecValTok{1}\NormalTok{ <-}\StringTok{ }\KeywordTok{sapply}\NormalTok{(}\KeywordTok{seq_len}\NormalTok{(bagtrees}\OperatorTok{$}\NormalTok{ntree),}
+                      \ControlFlowTok{function}\NormalTok{(i) }\KeywordTok{getTree}\NormalTok{(bagtrees, i, }\DataTypeTok{labelVar=}\OtherTok{TRUE}\NormalTok{)[}\DecValTok{1}\NormalTok{, }\StringTok{"split var"}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+En este caso concreto podemos observar que siempre es la misma, lo que
+indicaría una alta dependencia entre los distintos árboles:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{table}\NormalTok{(split_var_}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## split_var_1
+##              alcohol            chlorides          citric.acid 
+##                  500                    0                    0 
+##              density        fixed.acidity  free.sulfur.dioxide 
+##                    0                    0                    0 
+##                   pH       residual.sugar            sulphates 
+##                    0                    0                    0 
+## total.sulfur.dioxide     volatile.acidity 
+##                    0                    0
+\end{verbatim}
+
+Por último evaluamos la precisión en la muestra de test:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pred <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(bagtrees, }\DataTypeTok{newdata =}\NormalTok{ test)}
+\NormalTok{caret}\OperatorTok{::}\KeywordTok{confusionMatrix}\NormalTok{(pred, test}\OperatorTok{$}\NormalTok{taste)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction good bad
+##       good  145  42
+##       bad    21  42
+##                                           
+##                Accuracy : 0.748           
+##                  95% CI : (0.6894, 0.8006)
+##     No Information Rate : 0.664           
+##     P-Value [Acc > NIR] : 0.002535        
+##                                           
+##                   Kappa : 0.3981          
+##                                           
+##  Mcnemar's Test P-Value : 0.011743        
+##                                           
+##             Sensitivity : 0.8735          
+##             Specificity : 0.5000          
+##          Pos Pred Value : 0.7754          
+##          Neg Pred Value : 0.6667          
+##              Prevalence : 0.6640          
+##          Detection Rate : 0.5800          
+##    Detection Prevalence : 0.7480          
+##       Balanced Accuracy : 0.6867          
+##                                           
+##        'Positive' Class : good            
+## 
+\end{verbatim}
+
+\subsection{Ejemplo: Clasificación con bosques
+aleatorios}\label{ejemplo-clasificaciuxf3n-con-bosques-aleatorios}
+
+Como ejemplo llamamos a la función \texttt{randomForest()} con las
+opciones por defecto:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# load("data/winetaste.RData")}
+\CommentTok{# set.seed(1)}
+\CommentTok{# df <- winetaste}
+\CommentTok{# nobs <- nrow(df)}
+\CommentTok{# itrain <- sample(nobs, 0.8 * nobs)}
+\CommentTok{# train <- df[itrain, ]}
+\CommentTok{# test <- df[-itrain, ]}
+
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{rf <-}\StringTok{ }\KeywordTok{randomForest}\NormalTok{(taste }\OperatorTok{~}\StringTok{ }\NormalTok{., }\DataTypeTok{data =}\NormalTok{ train)}
+\NormalTok{rf}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+##  randomForest(formula = taste ~ ., data = train) 
+##                Type of random forest: classification
+##                      Number of trees: 500
+## No. of variables tried at each split: 3
+## 
+##         OOB estimate of  error rate: 22%
+## Confusion matrix:
+##      good bad class.error
+## good  578  84   0.1268882
+## bad   136 202   0.4023669
+\end{verbatim}
+
+En este caso también observamos que aparentemente hay convergencia y
+tampoco sería necesario incrementar el número de árboles:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(rf, }\DataTypeTok{main =} \StringTok{"Tasas de error"}\NormalTok{)}
+\KeywordTok{legend}\NormalTok{(}\StringTok{"topright"}\NormalTok{, }\KeywordTok{colnames}\NormalTok{(rf}\OperatorTok{$}\NormalTok{err.rate), }\DataTypeTok{lty =} \DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{, }\DataTypeTok{col =} \DecValTok{1}\OperatorTok{:}\DecValTok{6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/unnamed-chunk-9-1} \end{center}
+
+Podemos mostrar la importancia de las variables predictoras con la
+función \texttt{importance()} o representarlas con
+\texttt{varImpPlot()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{importance}\NormalTok{(rf)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                      MeanDecreaseGini
+## fixed.acidity                37.77155
+## volatile.acidity             43.99769
+## citric.acid                  41.50069
+## residual.sugar               36.79932
+## chlorides                    33.62100
+## free.sulfur.dioxide          42.29122
+## total.sulfur.dioxide         39.63738
+## density                      45.38724
+## pH                           32.31442
+## sulphates                    30.32322
+## alcohol                      63.89185
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{varImpPlot}\NormalTok{(rf)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/unnamed-chunk-10-1} \end{center}
+
+Si evaluamos la precisión en la muestra de test podemos observar un
+ligero incremento en la precisión en comparación con el método anterior:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pred <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(rf, }\DataTypeTok{newdata =}\NormalTok{ test)}
+\NormalTok{caret}\OperatorTok{::}\KeywordTok{confusionMatrix}\NormalTok{(pred, test}\OperatorTok{$}\NormalTok{taste)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction good bad
+##       good  153  43
+##       bad    13  41
+##                                           
+##                Accuracy : 0.776           
+##                  95% CI : (0.7192, 0.8261)
+##     No Information Rate : 0.664           
+##     P-Value [Acc > NIR] : 7.227e-05       
+##                                           
+##                   Kappa : 0.4494          
+##                                           
+##  Mcnemar's Test P-Value : 0.0001065       
+##                                           
+##             Sensitivity : 0.9217          
+##             Specificity : 0.4881          
+##          Pos Pred Value : 0.7806          
+##          Neg Pred Value : 0.7593          
+##              Prevalence : 0.6640          
+##          Detection Rate : 0.6120          
+##    Detection Prevalence : 0.7840          
+##       Balanced Accuracy : 0.7049          
+##                                           
+##        'Positive' Class : good            
+## 
+\end{verbatim}
+
+Debida a que en este caso la dependencia entre los árboles es menor:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{split_var_}\DecValTok{1}\NormalTok{ <-}\StringTok{ }\KeywordTok{sapply}\NormalTok{(}\KeywordTok{seq_len}\NormalTok{(rf}\OperatorTok{$}\NormalTok{ntree),}
+                      \ControlFlowTok{function}\NormalTok{(i) }\KeywordTok{getTree}\NormalTok{(rf, i, }\DataTypeTok{labelVar=}\OtherTok{TRUE}\NormalTok{)[}\DecValTok{1}\NormalTok{, }\StringTok{"split var"}\NormalTok{])}
+\KeywordTok{table}\NormalTok{(split_var_}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## split_var_1
+##              alcohol            chlorides          citric.acid 
+##                  150                   49                   38 
+##              density        fixed.acidity  free.sulfur.dioxide 
+##                  114                   23                   20 
+##                   pH       residual.sugar            sulphates 
+##                   11                    0                    5 
+## total.sulfur.dioxide     volatile.acidity 
+##                   49                   41
+\end{verbatim}
+
+\subsection{\texorpdfstring{Ejemplo: bosques aleatorios con
+\texttt{caret}}{Ejemplo: bosques aleatorios con caret}}\label{ejemplo-bosques-aleatorios-con-caret}
+
+En paquete \texttt{caret} hay varias implementaciones de bagging y
+bosques aleatorios\footnote{Se puede hacer una búsqueda en la tabla del
+  \href{https://topepo.github.io/caret/available-models.html}{Capítulo
+  6: Available Models} del manual.}, incluyendo el algoritmo del paquete
+\texttt{randomForest} considerando como hiperparámetro el número de
+predictores seleccionados al azar en cada división \texttt{mtry}. Para
+ajustar este modelo a una muestra de entrenamiento hay que establecer
+\texttt{method\ =\ "rf"} en la llamada a \texttt{train()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(caret)}
+\CommentTok{# str(getModelInfo("rf", regex = FALSE))}
+\KeywordTok{modelLookup}\NormalTok{(}\StringTok{"rf"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   model parameter                         label forReg forClass probModel
+## 1    rf      mtry #Randomly Selected Predictors   TRUE     TRUE      TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# load("data/winetaste.RData")}
+\CommentTok{# set.seed(1)}
+\CommentTok{# df <- winetaste}
+\CommentTok{# nobs <- nrow(df)}
+\CommentTok{# itrain <- sample(nobs, 0.8 * nobs)}
+\CommentTok{# train <- df[itrain, ]}
+\CommentTok{# test <- df[-itrain, ]}
+\end{Highlighting}
+\end{Shaded}
+
+Con las opciones por defecto únicamente evalúa tres valores posibles del
+hiperparámetro (se podría aumentar el número con \texttt{tuneLength} o
+especificarlos con \texttt{tuneGrid}), pero aún así el tiempo de
+computación puede ser alto (puede ser recomendable reducir el valor de
+\texttt{nodesize} o paralelizar los cálculos; otras implementaciones
+pueden ser más eficientes).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{rf.caret <-}\StringTok{ }\KeywordTok{train}\NormalTok{(taste }\OperatorTok{~}\StringTok{ }\NormalTok{., }\DataTypeTok{data =}\NormalTok{ train, }\DataTypeTok{method =} \StringTok{"rf"}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(rf.caret)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/unnamed-chunk-14-1} \end{center}
+
+Breiman (2001) sugiere emplear el valor por defecto, la mitad y el
+doble:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mtry.class <-}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{ncol}\NormalTok{(train) }\OperatorTok{-}\StringTok{ }\DecValTok{1}\NormalTok{)}
+\NormalTok{tuneGrid <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{mtry =} \KeywordTok{floor}\NormalTok{(}\KeywordTok{c}\NormalTok{(mtry.class}\OperatorTok{/}\DecValTok{2}\NormalTok{, mtry.class, }\DecValTok{2}\OperatorTok{*}\NormalTok{mtry.class)))}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{rf.caret <-}\StringTok{ }\KeywordTok{train}\NormalTok{(taste }\OperatorTok{~}\StringTok{ }\NormalTok{., }\DataTypeTok{data =}\NormalTok{ train,}
+                  \DataTypeTok{method =} \StringTok{"rf"}\NormalTok{, }\DataTypeTok{tuneGrid =}\NormalTok{ tuneGrid)}
+\KeywordTok{plot}\NormalTok{(rf.caret)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/unnamed-chunk-15-1} \end{center}
+
+\section{Boosting}\label{boosting}
+
+La metodología \emph{boosting} es una metodología general de aprendizaje
+lento en la que se combinan muchos modelos obtenidos mediante un método
+con poca capacidad predictiva para, \emph{impulsados}, dar lugar a un
+mejor predictor. Los árboles de decisión pequeños (construidos con poca
+profundidad) resultan perfectos para esta tarea, al ser realmente malos
+predictores (\emph{weak learners}), fáciles de combinar y generarse de
+forma muy rápida.
+
+El boosting nació en el contexto de los problemas de clasificación y
+tardó varios años en poderse extender a los problemas de regresión. Por
+ese motivo vamos a empezar viendo el boosting en clasificación.
+
+La idea del boosting la desarrollaron Valiant (1984) y Kearns y Valiant
+(1989), pero encontrar una implementación efectiva fue una tarea difícil
+que no se resolvió satisfactoriamente hasta que Freund y Schapire (1996)
+presentaron el algoritmo \emph{AdaBoost}, que rápidamente se convirtió
+en un éxito.
+
+Veamos, de forma muy esquemática, en que consiste el algoritmo AdaBoost
+para un problema de clasificación en el que sólo hay dos categorías y en
+el que se utiliza como clasificador débil un árbol de decisión con pocos
+nodos terminales, sólo marginalmente superior a un clasificador
+aleatorio. En este caso resulta más cómodo recodificar la variable
+indicadora \(Y\) como 1 si éxito y -1 si fracaso.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Seleccionar \(B\), número de iteraciones.
+\item
+  Se les asigna el mismo peso a todas las observaciones de la muestra de
+  entrenamiento (\(1/n\)).
+\item
+  Para \(b = 1, 2,\ldots, B\), repetir:
+
+  \begin{enumerate}
+  \def\labelenumii{\alph{enumii}.}
+  \item
+    Ajustar el árbol utilizando las observaciones ponderadas.
+  \item
+    Calcular la proporción de errores en la clasificación \(e_b\).
+  \item
+    Calcular \(s_b = \text{log}((1 - e_b)/e_b)\).
+  \item
+    Actualizar los pesos de las observaciones. Los pesos de las
+    observaciones correctamente clasificadas no cambian; se les da más
+    peso a las observaciones incorrectamente clasificadas, multiplicando
+    su peso anterior por \((1 - e_b)/e_b\).
+  \end{enumerate}
+\item
+  Dada una observación \(\mathbf{x}\), si denotamos por
+  \(\hat y_b ( \mathbf{x} )\) su clasificación utilizando árbol
+  \(b\)-ésimo, entonces
+  \(\hat y( \mathbf{x} ) = signo \left( \sum_b s_b \hat y_b ( \mathbf{x} ) \right)\)
+  (si la suma es positiva, se clasifica la observación como
+  perteneciente a la clase +1, en caso contrario a la clase -1).
+\end{enumerate}
+
+Vemos que el algoritmo AdaBoost no combina árboles independientes (como
+sería el caso de los bosques aleatorios, por ejemplo), sino que estos se
+van generando en una secuencia en la que cada árbol depende del
+anterior. Se utiliza siempre el mismo conjunto de datos (de
+entrenamiento), pero a estos datos se les van poniendo unos pesos en
+cada iteración que dependen de lo que ha ocurrido en la iteración
+anterior: se les da más peso a las observaciones mal clasificadas para
+que en sucesivas iteraciones se clasifiquen bien. Finalmente, la
+combinación de los árboles se hace mediante una suma ponderada de las
+\(B\) clasificaciones realizadas. Los pesos de esta suma son los valores
+\(s_b\). Un árbol que clasifique de forma aleatoria \(e_b = 0.5\) va a
+tener un peso \(s_b = 0\) y cuando mejor clasifique el árbol mayor será
+su peso. Al estar utilizando clasificadores débiles (árboles pequeños)
+es de esperar que los pesos sean en general próximos a cero.
+
+El siguiente hito fue la aparición del método \emph{gradient boosting
+machine} (Friedman, 2001), perteneciente a la familia de los métodos
+iterativos de descenso de gradientes. Entre otras muchas ventajas, este
+método permitió resolver no sólo problemas de clasificación sino también
+de regresión; y permitió la conexión con lo que se estaba haciendo en
+otros campos próximos como pueden ser los modelos aditivos o la
+regresión logística. La idea es encontrar un modelo aditivo que minimice
+una función de perdida utilizando predictores débiles (por ejemplo
+árboles).
+
+Si como función de pérdida se utiliza RSS, entonces la pérdida de
+utilizar \(m(x)\) para predecir \(y\) en los datos de entrenamiento es
+\[L(m) = \sum_{i=1}^n L(y_i, m(x_i)) = \sum_{i=1}^n (y_i - m(x_i))^2\].
+
+Se desea minimizar \(L(m)\) con respecto a \(m\) mediante el método de
+los gradientes, pero estos son precisamente los residuos: si
+\(L(m)= \frac{1}{2} (y_i - m(x_i))^2\), entonces
+\[- \frac{\partial L(y_i, m(x_i))} {\partial m(x_i)} = y_i - m(x_i) = r_i\]
+Una ventaja de esta aproximación es que puede extenderse a otras
+funciones de pérdida, por ejemplo si hay valores atípicos se puede
+considerar como función de pérdida el error absoluto.
+
+Veamos el algoritmo para un problema de regresión utilizando árboles de
+decisión. Es un proceso iterativo en el que lo que se \emph{ataca} no
+son los datos directamente, sino los residuos (gradientes) que van
+quedando con los sucesivos ajustes, siguiendo una idea greedy (la
+optimización se resuelve en cada iteración, no globalmente).
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Seleccionar el número de iteraciones \(B\), el parámetro de
+  regularización \(\lambda\) y el número de cortes de cada árbol \(d\).
+\item
+  Establecer una predicción inicial constante y calcular los residuos de
+  los datos \(i\) de la muestra de entrenamiento:
+  \[\hat m (x) = 0, \ r_i = y_i\]
+\item
+  Para \(b = 1, 2,\ldots, B\), repetir:
+
+  \begin{enumerate}
+  \def\labelenumii{\alph{enumii}.}
+  \item
+    Ajustar un árbol de regresión \(\hat m^b\) con \(d\) cortes
+    utilizando los residuos como respuesta: \((X, r)\).
+  \item
+    Calcular la versión regularizada del árbol: \[\lambda \hat m^b (x)\]
+  \item
+    Actualizar los residuos:
+    \[r_i \leftarrow r_i - \lambda \hat m^b (x_i)\]
+  \end{enumerate}
+\item
+  Calcular el modelo boosting:
+  \[\hat m (x) = \sum_{b=1}^{B} \lambda \hat m^b (x)\]
+\end{enumerate}
+
+Comprobamos que este método depende de 3 hiperparámetros, \(B\), \(d\) y
+\(\lambda\), susceptibles de ser seleccionados de forma \emph{óptima}:
+
+\begin{itemize}
+\item
+  \(B\) es el número de árboles. Un valor muy grande podría llegar a
+  provocar un sobreajuste (algo que no ocurre ni con bagging ni con
+  bosques aleatorios, ya que estos son métodos en los que se construyen
+  árboles independientes). En cada iteración, el objetivo es ajustar de
+  forma óptima el gradiente (en nuestro caso, los residuos), pero este
+  enfoque greedy no garantiza el óptimo global y puede dar lugar a
+  sobreajustes.
+\item
+  Al ser necesario que el aprendizaje sea lento se utilizan árboles muy
+  pequeños. Esto consigue que poco a poco se vayan cubriendo las zonas
+  en las que es más difícil predecir bien. En muchas situaciones
+  funciona bien utilizar \(d = 1\), es decir, con un único corte. En
+  este caso en cada \(\hat m^b\) interviene una única variable, y por
+  tanto \(\hat m\) es un ajuste de un modelo aditivo. Si \(d>1\) se
+  puede interpretar como un parámetro que mide el órden de interacción
+  entre las variables.
+\item
+  \(0 < \lambda < 1\), parámetro de regularización. Las primeras
+  versiones del algorimo utilizaban un \(\lambda = 1\), pero no
+  funcionaba bien del todo. Se mejoró mucho el rendimiento
+  \emph{ralentizando} aún más el aprendizaje al incorporar al modelo el
+  parámetro \(\lambda\), que se puede interpretar como una proporción de
+  aprendizaje (la velocidad a la que aprende, \emph{learning rate}).
+  Valores pequeños de \(\lambda\) evitan el problema del sobreajuste,
+  siendo habitual utilizar \(\lambda = 0.01\) o \(\lambda = 0.001\).
+  Como ya se ha dicho, lo ideal es seleccionar su valor utilizando, por
+  ejemplo, validación cruzada. Por supuesto, cuanto más pequeño sea el
+  valor de \(\lambda\), más lento va a ser el proceso de aprendizaje y
+  serán necesarias más iteraciones, lo cual incrementa los tiempos de
+  cómputo.
+\end{itemize}
+
+El propio Friedman propuso una mejora de su algoritmo, inspirado por la
+técnica bagging de Breiman. Esta variante, conocida como
+\emph{stochastic gradient boosting}, es a día de hoy una de las más
+utilizadas. La única diferencia respecto al algoritmo anterior es en la
+primera línea dentro del bucle: al hacer el ajuste de \((X, r)\), no se
+considera toda la muestra de entrenamiento, sino que se selecciona al
+azar un subconjunto. Esto incorpora un nuevo hiperparámetro a la
+metodología, la fracción que se utiliza de los datos. Lo ideal es
+seleccionar un valor por algún método automático (\emph{tunearlo}) tipo
+validación cruzada; una selección manual típica es 0.5. Hay otras
+variantes, como por ejemplo la selección aleatoria de predictores antes
+de crecer cada árbol o antes de cada corte (ver por ejemplo la
+documentación de
+\texttt{{[}h2o::gbm{]}(http://docs.h2o.ai/h2o/latest-stable/h2o-docs/data-science/gbm.html)}).
+
+Este sería un ejemplo de un método con muchos hiperparámetros y diseñar
+una buena estrategia para ajustarlos (\emph{tunearlos}) puede resultar
+mucho más complicado (puede haber problemas de mínimos locales,
+problemas computacionales, etc.).
+
+\emph{Stochastic gradient boosting} incorpora dos ventajas importantes:
+reduce la varianza y reduce los tiempos de cómputo. En terminos de
+rendimiento tanto el método \emph{stochastic gradient boosting} como
+\emph{random forest} son muy competitivos, y por tanto son muy
+utilizando en la práctica. Los bosques aleatorios tienen la ventaja de
+que, al construir árboles de forma independiente, es paralelizable y eso
+puede reducir los tiempos de cómputo.
+
+Otro método reciente que está ganando popularidad es \emph{extreme
+gradient boosting}, también conocido como \emph{XGBoost} (Chen y
+Guestrin, 2016). Es un metodo más complejo que el anterior que, entre
+otras modificaciones, utiliza una función de pérdida con una
+penalización por complejidad y, para evitar el sobreajuste, regulariza
+utilizando la hessiana de la función de pérdida (necesita calcular las
+derivadas parciales de primer y de segundo orden), e incorpora
+parámetros de regularización adicionales para evitar el sobreajuste.
+
+Por último, la importancia de las variables se puede medir de forma
+similar a lo que ya hemos visto en otros métodos: dentro de cada árbol
+se sumas las reducciones del error que consigue cada predictor, y se
+promedia entre todos los árboles utilizados.
+
+En resumen:
+
+\begin{itemize}
+\item
+  La idea es hacer un ``aprendizaje lento''.
+\item
+  Los arboles se crecen de forma secuencial, se trata de mejorar la
+  clasificación anterior.
+\item
+  Se utilizan arboles pequeños.
+\item
+  A diferencia de bagging y bosques aleatorios puede haber problemas de
+  sobreajuste (si el número de árboles es grande y la tasa de
+  aprendizaje es alta).
+\item
+  Se puede pensar que se ponderan las observaciones iterativamente, se
+  asigna más peso a las que resultaron más difíciles de clasificar.
+\item
+  El modelo final es un modelo aditivo (media ponderada de los árboles).
+\end{itemize}
+
+\section{Boosting en R}\label{boosting-en-r}
+
+En preparación\ldots{}
+
+ada, adabag, mboost, gbm, xgboost
 
 \chapter*{Referencias}\label{referencias}
 \addcontentsline{toc}{chapter}{Referencias}
@@ -3949,7 +4790,7 @@ son cosas distintas.
 \section*{Bibliografía básica}\label{bibliografuxeda-buxe1sica}
 \addcontentsline{toc}{section}{Bibliografía básica}
 
-James, G., Witten, D., Hastie, T. y Tibshirani, R. (2017).
+James, G., Witten, D., Hastie, T. y Tibshirani, R. (2013).
 \emph{\href{http://faculty.marshall.usc.edu/gareth-james/ISL}{An
 Introduction to Statistical Learning: with Aplications in R}}. Springer.
 
@@ -3972,11 +4813,17 @@ University Press.
 Burger, S.V. (2018). \emph{Introduction to machine learning with R:
 Rigorous mathematical analysis}. O'Reilly.
 
+Breiman, L., Friedman, J., Stone, C.J. y Olshen, R.A. (1984).
+\emph{Classification and regression trees}. CRC press.
+
 Efron, B. y Hastie, T. (2016).
 \emph{\href{http://web.stanford.edu/~hastie/CASI/}{Computer age
 statistical inference}}. Cambridge University Press.
 
-Hastie, T., Tibshirani, R. y Friedman, J. (2017).
+Fernández-Casal, R. y Cao, R. (2020). \emph{Simulación Estadística}.
+\url{https://rubenfcasal.github.io/simbook}.
+
+Hastie, T., Tibshirani, R. y Friedman, J. (2009).
 \emph{\href{https://web.stanford.edu/~hastie/ElemStatLearn}{The Elements
 of Statistical Learning: Data Mining, Inference, and Prediction}}.
 Springer.
@@ -4008,12 +4855,19 @@ Biecek, P. (2018).
 explainers for complex predictive models in R}. \emph{The Journal of
 Machine Learning Research}, 19(1), 3245-3249.
 
-Breiman, L. (1996). Bagging predictors. \emph{Machine Learning}, 24 (2),
+Breiman, L. (1996). Bagging predictors. \emph{Machine Learning}, 24(2),
 123-140.
+
+Breiman, L. (2001). Random Forests. \emph{Machine Learning}, 45(1),
+5--32.
 
 Breiman, L. (2001). Statistical Modeling: The Two Cultures (with
 comments and a rejoinder by the author). \emph{Statistical Science}, 16,
 199-231.
+
+Dietterich, T.G. (2000). An Experimental Comparison of Three Methods for
+Constructing Ensembles of Decision Trees: Bagging, Boosting, and
+Randomization. \emph{Machine Learning}, 40(2), 139--158.
 
 Dunson D.B. (2018). Statistics in the big data era: Failures of the
 machine. \emph{Statistics and Probability Letters}, 136, 4-9.
@@ -4021,9 +4875,15 @@ machine. \emph{Statistics and Probability Letters}, 136, 4-9.
 Fisher, R.A. (1936). The use of multiple measurements in taxonomic
 problems. \emph{Annals of Eugenics}, 7(2), 179-188.
 
+Freund, Y. y Schapire, R. (1996). Experiments with a New Boosting
+Algorithm. \emph{Machine Learning: Proceedings of the Thirteenth
+International Conference}, 148--156.
+
+Friedman, J.H. (2001). Greedy Function Approximation: A Gradient
+Boosting Machine. \emph{Annals of Statistics}, 29, 1189--1232.
+
 Friedman, J.H. y Popescu, B.E. (2008). Predictive learning via rule
 ensembles. \emph{The Annals of Applied Statistics}, 2(3), 916-954.
-
 Goldstein, A., Kapelner, A., Bleich, J. y Pitkin, E. (2015).
 \href{https://doi.org/10.1080/10618600.2014.907095}{Peeking inside the
 black box: Visualizing statistical learning with plots of individual
@@ -4035,12 +4895,20 @@ Greenwell, B.M. (2017).
 An R Package for Constructing Partial Dependence Plots}. \emph{The R
 Journal}, 9(1), 421-436.
 
+Kearns, M. y Valiant, L. (1989). Cryptographic Limitations on Learning
+Boolean Formulae and Finite Automata. \emph{Proceedings of the
+Twenty-First Annual ACM Symposium on Theory of Computing}.
+
 Kuhn, M. (2008). Building predictive models in R using the caret
-package. \emph{Journal of Statistical Software}, 28 (5), 1-26.
+package. \emph{Journal of Statistical Software}, 28(5), 1-26.
 
 Lauro, C. (1996). Computational statistics or statistical computing, is
 that the question?, \emph{Computational Statistics \& Data Analysis}, 23
 (1), 191-193.
+
+Liaw, A. y Wiener, M. (2002).
+\href{https://www.r-project.org/doc/Rnews/Rnews_2002-3.pdf}{Classification
+and regression by randomForest}. \emph{R News}, 2(3), 18-22.
 
 Loh, W.Y. (2002). Regression tress with unbiased variable selection and
 interaction detection. \emph{Statistica Sinica}, 361-386.
@@ -4051,6 +4919,9 @@ System Technical Journal}, 27, 379--423.
 Strumbelj, E. y Kononenko, I. (2010). An efficient explanation of
 individual classifications using game theory. \emph{Journal of Machine
 Learning Research}, 11, 1-18.
+
+Valiant, L. (1984). A Theory of the Learnable. \emph{Communications of
+the ACM}, 27, 1134--1142.
 
 \bibliography{book.bib,packages.bib}
 

@@ -926,10 +926,29 @@ Podemos obtener información sobre los modelos disponibles con las funciones `ge
 
 ```{r}
 library(caret)
-names(getModelInfo()) # Listado de todos los métodos disponibles
-# str(getModelInfo("knn", regex = TRUE)) # Por defecto devuelve coincidencias parciales
+str(names(getModelInfo())) # Listado de todos los métodos disponibles
+# names(getModelInfo("knn", regex = TRUE)) # Por defecto devuelve coincidencias parciales
 modelLookup("knn")  # Información sobre hiperparámetros
 ```
+
+
+```{r methods-caret, echo=FALSE, eval=is_html(), fig.cap="Listado de los métodos disponiles en `caret::train()`."}
+
+mods <- getModelInfo()
+
+model_info <- data.frame(model = names(mods), t(sapply(mods, function(x) { # x <- mods[[1]]
+  num_param <- paste(as.character(x$param$parameter), sep = "", collapse = ", ")
+  if(num_param == "parameter") num_param <- "None"
+  type <- paste(sort(x$type), sep = "", collapse = ", ")
+  libraries <- paste(x$library, sep = "", collapse = ", ")
+  return(c(name = x$label, type = type, libraries = libraries, num_param = num_param))
+})))
+
+DT::datatable(model_info, rownames = FALSE,  
+          colnames = c("`method`", "Modelo", "Tipo", "Librerías", "Hiperparámetros"),
+          options = list(scrollX = TRUE))
+```
+
 
 Este paquete permite, entre otras cosas:
 
@@ -980,6 +999,11 @@ Este paquete permite, entre otras cosas:
     - Si se imputan datos en el preprocesado será necesario establecer `na.action = na.pass`.
 
 
+* Predicción: Una de las ventajas es que incorpora un único método `predict()` para objetos de tipo `train` con dos únicas opciones^[En lugar de la variedad de opciones que emplean los distintos paquetes (e.g.: `type = "response"`, `"class"`, `"posterior"`, `"probability"`...  ).] `type = c("raw", "prob")`, la primera para obtener predicciones de la respuesta y la segunda para obtener estimaciones de las probabilidades (en los métodos de clasificación que lo admitan).
+
+    Además, si se incluyo un preprocesado en el entrenamiento, se emplearán las mismas transformaciones en un nuevo conjunto de datos `newdata`. 
+
+
 * Evaluación de los modelos
 
     - `postResample(pred, obs, ...)`: regresión
@@ -1023,8 +1047,6 @@ varImp(knn)
 # Evaluación
 postResample(predict(knn, newdata = test), test$medv)
 ```
-
-
 
 
 Un comentario final:
