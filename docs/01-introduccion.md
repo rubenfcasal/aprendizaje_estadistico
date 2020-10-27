@@ -1176,7 +1176,7 @@ Incluso si las variables añadidas resultan de interés, si el número de observ
 Como conclusión, en el caso multidimensional habrá que tratar de emplear métodos que minimicen estos problemas.
 
 
-## Análisis e interpretación de los modelos 
+## Análisis e interpretación de los modelos {#analisis-modelos}
 
 El análisis e interpretación de modelos es un campo muy activo en AE/ML, para el que recientemente se ha acuñado el término de *interpretable machine learning* (IML). 
 A continuación se resumen brevemente algunas de las principales ideas, para más detalles ver por ejemplo [Molnar (2020)](https://christophm.github.io/interpretable-ml-book).

@@ -132,7 +132,7 @@ Breiman (2001): "My approach is that each time a categorical variable is selecte
 -->
 
 
-## Bagging y bosques aleatorios en R
+## Bagging y bosques aleatorios en R {#bagging-rf-r}
 
 <!-- 
 Búsquedas en caret: bag, forest 
@@ -145,12 +145,13 @@ La función principal es `randomForest()` y se suele emplear de la forma:
 `randomForest(formula, data, ntree, mtry, nodesize, ...)`  
 
 * `formula` y `data` (opcional): permiten especificar la respuesta y las variables predictoras de la forma habitual (típicamente `respuesta ~ .`), aunque si el conjunto de datos es muy grande puede ser preferible emplear una matriz o un data.frame para establecer los predictores y un vector para la respuesta (sustituyendo estos argumentos por `x` e `y`). 
+Si la respuesta es un factor asumirá que se trata de un problema de clasificación y de regresión en caso contrario.
 
 * `ntree`: número de árboles que se crecerán; por defecto 500.
 
 * `mtry`: número de predictores seleccionados al azar en cada división; por defecto  `max(floor(p/3), 1)` en el caso de regresión y  `floor(sqrt(p))` en clasificación, siendo `p = ncol(x) = ncol(data) - 1` el número de predictores.
 
-* `nodesize`: número mínimo de observaciones en un nodo terminal; por defecto 1 en clasificación y 5 en regresión (puede ser recomendable incrementarlo si el conjunto de datos es muy grande, para evitar posibles problemas de sobreajuste, dismunir el tiempo de computación y los requerimientos de memoria; también podría ser considerado como un hiperparámetro).
+* `nodesize`: número mínimo de observaciones en un nodo terminal; por defecto 1 en clasificación y 5 en regresión (puede ser recomendable incrementarlo si el conjunto de datos es muy grande, para evitar posibles problemas de sobreajuste, disminuir el tiempo de computación y los requerimientos de memoria; también podría ser considerado como un hiperparámetro).
 
 Otros argumentos que pueden ser de interés^[Si se quiere minimizar el uso de memoria, por ejemplo mientras se seleccionan hiperparámetros, se puede establecer `keep.forest=FALSE`.] son:
 
@@ -419,6 +420,36 @@ table(split_var_1)
 ##                   49                   41
 ```
 
+El análisis e interpretación del modelo puede resultar más complicado en este tipo de métodos.
+Por ejemplo, podemos emplear alguna de las herramientas mostradas en la Sección \@ref(analisis-modelos):
+
+
+```r
+# install.packages("pdp")
+library(pdp)
+pdp1 <- partial(rf, "alcohol")
+plotPartial(pdp1)
+```
+
+<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-13-1.png" width="80%" style="display: block; margin: auto;" />
+
+```r
+pdp2 <- partial(rf, c("alcohol", "density"))
+plotPartial(pdp2)
+```
+
+<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-13-2.png" width="80%" style="display: block; margin: auto;" />
+
+En este caso también puede ser de utilidad el paquete [`randomForestExplainer`](https://modeloriented.github.io/randomForestExplainer)).
+
+<!-- 
+Pendiente: Análisis e interpretación del modelo
+# install.packages("randomForestExplainer")
+library(randomForestExplainer)
+plot_min_depth_distribution(rf)
+plot_min_depth_interactions(rf, k = 5) # solo 5 mejores iteracione-->
+
+
 ### Ejemplo: bosques aleatorios con `caret`
 
 En paquete `caret` hay varias implementaciones de bagging y bosques aleatorios^[Se puede hacer una búsqueda en la tabla del [Capítulo 6: Available Models](https://topepo.github.io/caret/available-models.html) del manual.], incluyendo el algoritmo del paquete `randomForest` considerando como hiperparámetro el número de predictores seleccionados al azar en cada división `mtry`.
@@ -456,7 +487,7 @@ rf.caret <- train(taste ~ ., data = train, method = "rf")
 plot(rf.caret)
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-14-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-15-1.png" width="80%" style="display: block; margin: auto;" />
 
 Breiman (2001) sugiere emplear el valor por defecto, la mitad y el doble:
 
@@ -470,9 +501,12 @@ rf.caret <- train(taste ~ ., data = train,
 plot(rf.caret)
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-15-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-16-1.png" width="80%" style="display: block; margin: auto;" />
 
-<!-- Pendiente: crear un método "rf2" en `caret` que incluya `nodesize` como hiperparámetro (para evitar posibles problemas de sobreajuste y dismunir el tiempo de computación en la evaluación y requerimientos de memoria cuando el conjunto de datos es muy grande). Puede ser más cómodo hacerlo al margen de `caret`... -->
+<!-- 
+Pendiente: 
+crear un método "rf2" en `caret` que incluya `nodesize` como hiperparámetro (para evitar posibles problemas de sobreajuste, disminuir el tiempo de computación en la evaluación y los requerimientos de memoria cuando el conjunto de datos es muy grande). Puede ser más cómodo hacerlo al margen de `caret`... 
+-->
 
 
 ## Boosting
@@ -504,11 +538,13 @@ En este caso resulta más cómodo recodificar la variable indicadora $Y$ como 1 
     
 1. Dada una observación $\mathbf{x}$, si denotamos por $\hat y_b ( \mathbf{x} )$ su clasificación utilizando árbol $b$-ésimo, entonces $\hat y( \mathbf{x} ) = signo \left( \sum_b s_b \hat y_b ( \mathbf{x} ) \right)$ (si la suma es positiva, se clasifica la observación como perteneciente a la clase +1, en caso contrario a la clase -1).
 
-<!-- Pendiente: Aproximación de las probabilidades -->
+<!-- Pendiente: Aproximación de las probabilidades: Real AdaBoost -->
 
 Vemos que el algoritmo AdaBoost no combina árboles independientes (como sería el caso de los bosques aleatorios, por ejemplo), sino que estos se van generando en una secuencia en la que cada árbol depende del anterior. Se utiliza siempre el mismo conjunto de datos (de entrenamiento), pero a estos datos se les van poniendo unos pesos en cada iteración que dependen de lo que ha ocurrido en la iteración anterior: se les da más peso a las observaciones mal clasificadas para que en sucesivas iteraciones se clasifiquen bien. Finalmente, la combinación de los árboles se hace mediante una suma ponderada de las $B$ clasificaciones realizadas. Los pesos de esta suma son los valores $s_b$. Un árbol que clasifique de forma aleatoria $e_b = 0.5$ va a tener un peso $s_b = 0$ y cuando mejor clasifique el árbol mayor será su peso. Al estar utilizando clasificadores débiles (árboles pequeños) es de esperar que los pesos sean en general próximos a cero.
 
-El siguiente hito fue la aparición del método *gradient boosting machine* (Friedman, 2001), perteneciente a la familia de los métodos iterativos de descenso de gradientes. Entre otras muchas ventajas, este método permitió resolver no sólo problemas de clasificación sino también de regresión; y permitió la conexión con lo que se estaba haciendo en otros campos próximos como pueden ser los modelos aditivos o la regresión logística. La idea es encontrar un modelo aditivo que minimice una función de perdida utilizando predictores débiles (por ejemplo árboles). 
+El siguiente hito fue la aparición del método *gradient boosting machine* ([Friedman, 2001](https://projecteuclid.org/euclid.aos/1013203451)), perteneciente a la familia de los métodos iterativos de descenso de gradientes. 
+Entre otras muchas ventajas, este método permitió resolver no sólo problemas de clasificación sino también de regresión; y permitió la conexión con lo que se estaba haciendo en otros campos próximos como pueden ser los modelos aditivos o la regresión logística. 
+La idea es encontrar un modelo aditivo que minimice una función de perdida utilizando predictores débiles (por ejemplo árboles). 
 
 Si como función de pérdida se utiliza RSS, entonces la pérdida de utilizar $m(x)$ para predecir $y$ en los datos de entrenamiento es $$L(m) = \sum_{i=1}^n L(y_i, m(x_i)) = \sum_{i=1}^n (y_i - m(x_i))^2$$.
 
@@ -543,16 +579,16 @@ Comprobamos que este método depende de 3 hiperparámetros, $B$, $d$ y $\lambda$
 
 - $0 < \lambda < 1$, parámetro de regularización. Las primeras versiones del algorimo utilizaban un $\lambda = 1$, pero no funcionaba bien del todo. Se mejoró mucho el rendimiento *ralentizando* aún más el aprendizaje al incorporar al modelo el parámetro $\lambda$, que se puede interpretar como una proporción de aprendizaje (la velocidad a la que aprende, *learning rate*). Valores pequeños de $\lambda$ evitan el problema del sobreajuste, siendo habitual utilizar $\lambda = 0.01$ o $\lambda = 0.001$. Como ya se ha dicho, lo ideal es seleccionar su valor utilizando, por ejemplo, validación cruzada. Por supuesto, cuanto más pequeño sea el valor de $\lambda$, más lento va a ser el proceso de aprendizaje y serán necesarias más iteraciones, lo cual incrementa los tiempos de cómputo.
 
-El propio Friedman propuso una mejora de su algoritmo, inspirado por la técnica bagging de Breiman. Esta variante, conocida como *stochastic gradient boosting*, es a día de hoy una de las más utilizadas. 
+El propio Friedman propuso una mejora de su algoritmo ([Friedman, 2002](https://www.sciencedirect.com/science/article/pii/S0167947301000652)), inspirado por la técnica bagging de Breiman. Esta variante, conocida como *stochastic gradient boosting* (SGB), es a día de hoy una de las más utilizadas. 
 La única diferencia respecto al algoritmo anterior es en la primera línea dentro del bucle: al hacer el ajuste de $(X, r)$, no se considera toda la muestra de entrenamiento, sino que se selecciona al azar un subconjunto. 
 Esto incorpora un nuevo hiperparámetro a la metodología, la fracción que se utiliza de los datos. 
 Lo ideal es seleccionar un valor por algún método automático (*tunearlo*) tipo validación cruzada; una selección manual típica es 0.5.
-Hay otras variantes, como por ejemplo la selección aleatoria de predictores antes de crecer cada árbol o antes de cada corte (ver por ejemplo la documentación de `[h2o::gbm](http://docs.h2o.ai/h2o/latest-stable/h2o-docs/data-science/gbm.html)`).
+Hay otras variantes, como por ejemplo la selección aleatoria de predictores antes de crecer cada árbol o antes de cada corte (ver por ejemplo la documentación de [`h2o::gbm`](http://docs.h2o.ai/h2o/latest-stable/h2o-docs/data-science/gbm.html)).
 
 Este sería un ejemplo de un método con muchos hiperparámetros y diseñar una buena estrategia para ajustarlos (*tunearlos*) puede resultar mucho más complicado (puede haber problemas de mínimos locales, problemas computacionales, etc.).
 
-*Stochastic gradient boosting* incorpora dos ventajas importantes: reduce la varianza y reduce los tiempos de cómputo.
-En terminos de rendimiento tanto el método *stochastic gradient boosting* como *random forest* son muy competitivos, y por tanto son muy utilizando en la práctica. 
+SGB incorpora dos ventajas importantes: reduce la varianza y reduce los tiempos de cómputo.
+En terminos de rendimiento tanto el método SGB como *random forest* son muy competitivos, y por tanto son muy utilizando en la práctica. 
 Los bosques aleatorios tienen la ventaja de que, al construir árboles de forma independiente, es paralelizable y eso puede reducir los tiempos de cómputo.
 
 Otro método reciente que está ganando popularidad es *extreme gradient boosting*, también conocido como *XGBoost* (Chen y Guestrin, 2016). 
@@ -580,12 +616,897 @@ En resumen:
 
 ## Boosting en R
 
-En preparación...
-
-Paquetes: [`ada`](https://CRAN.R-project.org/package=ada), [`adabag`](https://CRAN.R-project.org/package=adabag), [`mboost`](https://CRAN.R-project.org/package=mboost), [`gbm`](https://CRAN.R-project.org/package=gbm), [`xgboost`](https://CRAN.R-project.org/package=xgboost)...
-
 <!-- 
 Búsquedas en caret: boost 
 Ver [CRAN Task View: Machine Learning & Statistical Learning](https://cran.r-project.org/web/views/MachineLearning.html))
 -->
+
+Estos métodos son también de los más populares en AE y están implementados en numerosos paquetes de R: [`ada`](https://CRAN.R-project.org/package=ada), [`adabag`](https://CRAN.R-project.org/package=adabag), [`mboost`](https://CRAN.R-project.org/package=mboost), [`gbm`](https://CRAN.R-project.org/package=gbm), [`xgboost`](https://github.com/dmlc/xgboost/tree/master/R-package)...
+
+
+### Ejemplo: clasificación con el paquete `ada`
+
+La función `ada()` del paquete [`ada`](https://CRAN.R-project.org/package=ada) ([Culp *et al*., 2006](https://www.jstatsoft.org/article/view/v017i02)) implementa diversos métodos boosting (incluyendo el algoritmo original AdaBoost). 
+Emplea `rpart` para la construcción de los árboles, aunque solo admite respuestas dicotómicas y dos funciones de pérdida (exponencial y logística).
+Además, un posible problema al emplear esta función es que ordena alfabéticamente los niveles del factor, lo que puede llevar a una mala interpretación de los resultados.
+
+Los principales parámetros son los siguientes:
+
+```r
+ada(formula, data, loss = c("exponential", "logistic"),
+    type = c("discrete", "real", "gentle"), iter = 50, 
+    nu = 0.1, bag.frac = 0.5, ...)
+```
+
+* `formula` y `data` (opcional): permiten especificar la respuesta y las variables predictoras de la forma habitual (típicamente `respuesta ~ .`; también admite matrices `x` e `y` en lugar de fórmulas).
+
+* `loss`: función de pérdida; por defecto `"exponential"` (algoritmo AdaBoost).
+
+* `type`: algoritmo boosting; por defecto `"discrete"` que implementa el algoritmo AdaBoost original que predice la variable respuesta. Otras alternativas son `"real"`, que implementa el algoritmo *Real AdaBoost* (Friedman *et al*., 2000) que permite estimar las probabilidades, y `"gentle"` , versión modificada del anterior que emplea un método Newton de optimización por pasos (en lugar de optimización exacta).
+
+* `iter`: número de iteraciones boosting; por defecto 50.
+
+* `nu`: parámetro de regularización $\lambda$; por defecto 0.1 (disminuyendo este parámetro es de esperar que se obtenga una mejora en la precisión de las predicciones pero requería aumentar `iter` aumentando notablemente el tiempo de computación y los requerimientos de memoria).
+
+* `bag.frac`: proporción de observaciones seleccionadas al azar para crecer cada árbol; por defecto 0.5.
+
+* `...`: argumentos adicionales para `rpart.control`; por defecto `rpart.control(maxdepth = 1, cp = -1, minsplit = 0, xval = 0)`.
+
+Como ejemplo consideraremos el conjunto de datos de calidad de vino empleado en las secciones \@ref(class-rpart) y \@ref(bagging-rf-r), pero para evitar problemas reordenamos alfabéticamente los niveles de la respuesta.
+
+
+```r
+load("data/winetaste.RData")
+# Reordenar alfabéticamente los niveles de winetaste$taste
+# winetaste$taste <- factor(winetaste$taste, sort(levels(winetaste$taste)))
+winetaste$taste <- factor(as.character(winetaste$taste))
+# Partición de los datos
+set.seed(1)
+df <- winetaste
+nobs <- nrow(df)
+itrain <- sample(nobs, 0.8 * nobs)
+train <- df[itrain, ]
+test <- df[-itrain, ]
+```
+
+Por ejemplo, el siguiente código llama a la función `ada()` con la opción para estimar probabilidades (`type = "real"`, Real AdaBoost), considerando interacciones (de orden 2) entre los predictores (`maxdepth = 2`), disminuyendo ligeramente el valor del parámetro de aprendizaje y aumentando el número de iteraciones:
+
+
+```r
+library(ada)
+ada.boost <- ada(taste ~ ., data = train, type = "real",
+             control = rpart.control(maxdepth = 2, cp = 0, minsplit = 10, xval = 0),
+             iter = 100, nu = 0.05)
+ada.boost
+```
+
+```
+## Call:
+## ada(taste ~ ., data = train, type = "real", control = rpart.control(maxdepth = 2, 
+##     cp = 0, minsplit = 10, xval = 0), iter = 100, nu = 0.05)
+## 
+## Loss: exponential Method: real   Iteration: 100 
+## 
+## Final Confusion Matrix for Data:
+##           Final Prediction
+## True value bad good
+##       bad  162  176
+##       good  46  616
+## 
+## Train Error: 0.222 
+## 
+## Out-Of-Bag Error:  0.233  iteration= 99 
+## 
+## Additional Estimates of number of iterations:
+## 
+## train.err1 train.kap1 
+##         93         93
+```
+
+Con el método `plot()` podemos representar la evolución del error de clasificación al aumentar el número de iteraciones:
+
+
+```r
+plot(ada.boost)
+```
+
+<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-20-1.png" width="80%" style="display: block; margin: auto;" />
+
+<!-- 
+Con la función `varplot()` podemos representar la importancia de las variables (y almacenarla empleando `type = "scores"`): 
+
+
+```r
+res <- varplot(ada.boost, type = "scores")
+```
+
+<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-21-1.png" width="80%" style="display: block; margin: auto;" />
+
+```r
+res
+```
+
+```
+##              density total.sulfur.dioxide            chlorides 
+##           0.07518301           0.06886369           0.06586297 
+##                   pH       residual.sugar        fixed.acidity 
+##           0.06048902           0.05672229           0.05605724 
+##          citric.acid     volatile.acidity            sulphates 
+##           0.05551034           0.05074925           0.04915199 
+##  free.sulfur.dioxide              alcohol 
+##           0.04799147           0.04522676
+```
+-->
+
+Podemos evaluar la precisión en la muestra de test empleando el procedimiento habitual:
+
+
+```r
+pred <- predict(ada.boost, newdata = test)
+caret::confusionMatrix(pred, test$taste)
+```
+
+```
+## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction bad good
+##       bad   34   16
+##       good  50  150
+##                                           
+##                Accuracy : 0.736           
+##                  95% CI : (0.6768, 0.7895)
+##     No Information Rate : 0.664           
+##     P-Value [Acc > NIR] : 0.008615        
+##                                           
+##                   Kappa : 0.3426          
+##                                           
+##  Mcnemar's Test P-Value : 4.865e-05       
+##                                           
+##             Sensitivity : 0.4048          
+##             Specificity : 0.9036          
+##          Pos Pred Value : 0.6800          
+##          Neg Pred Value : 0.7500          
+##              Prevalence : 0.3360          
+##          Detection Rate : 0.1360          
+##    Detection Prevalence : 0.2000          
+##       Balanced Accuracy : 0.6542          
+##                                           
+##        'Positive' Class : bad             
+## 
+```
+
+Para obtener las estimaciones de las probabilidades, habría que establecer `type = "probs"` al predecir (devolverá una matriz con columnas correspondientes a los niveles):
+
+
+```r
+p.est <- predict(ada.boost, newdata = test, type = "probs")
+head(p.est)
+```
+
+```
+##          [,1]      [,2]
+## 1  0.49877103 0.5012290
+## 4  0.30922187 0.6907781
+## 9  0.02774336 0.9722566
+## 10 0.04596187 0.9540381
+## 12 0.44274407 0.5572559
+## 16 0.37375910 0.6262409
+```
+
+Este procedimiento también está implementado en el paquete `caret` seleccionando el método `"ada"`, que considera como hiperparámetros:
+
+```r
+library(caret)
+modelLookup("ada")
+```
+
+```
+##   model parameter          label forReg forClass probModel
+## 1   ada      iter         #Trees  FALSE     TRUE      TRUE
+## 2   ada  maxdepth Max Tree Depth  FALSE     TRUE      TRUE
+## 3   ada        nu  Learning Rate  FALSE     TRUE      TRUE
+```
+
+Aunque por defecto la función `train()` solo considera nueve combinaciones de hiperparámetros:
+
+
+```r
+set.seed(1)
+caret.ada0 <- train(taste ~ ., method = "ada", data = train,
+                   trControl = trainControl(method = "cv", number = 5))
+caret.ada0
+```
+
+```
+## Boosted Classification Trees 
+## 
+## 1000 samples
+##   11 predictor
+##    2 classes: 'bad', 'good' 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (5 fold) 
+## Summary of sample sizes: 800, 801, 800, 800, 799 
+## Resampling results across tuning parameters:
+## 
+##   maxdepth  iter  Accuracy   Kappa    
+##   1          50   0.7100121  0.2403486
+##   1         100   0.7220322  0.2824931
+##   1         150   0.7360322  0.3346624
+##   2          50   0.7529774  0.3872880
+##   2         100   0.7539673  0.4019619
+##   2         150   0.7559673  0.4142035
+##   3          50   0.7570024  0.4112842
+##   3         100   0.7550323  0.4150030
+##   3         150   0.7650024  0.4408835
+## 
+## Tuning parameter 'nu' was held constant at a value of 0.1
+## Accuracy was used to select the optimal model using the largest value.
+## The final values used for the model were iter = 150, maxdepth = 3 and nu = 0.1.
+```
+
+```r
+confusionMatrix(predict(caret.ada0, newdata = test), test$taste)
+```
+
+```
+## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction bad good
+##       bad   37   22
+##       good  47  144
+##                                           
+##                Accuracy : 0.724           
+##                  95% CI : (0.6641, 0.7785)
+##     No Information Rate : 0.664           
+##     P-Value [Acc > NIR] : 0.024724        
+##                                           
+##                   Kappa : 0.3324          
+##                                           
+##  Mcnemar's Test P-Value : 0.003861        
+##                                           
+##             Sensitivity : 0.4405          
+##             Specificity : 0.8675          
+##          Pos Pred Value : 0.6271          
+##          Neg Pred Value : 0.7539          
+##              Prevalence : 0.3360          
+##          Detection Rate : 0.1480          
+##    Detection Prevalence : 0.2360          
+##       Balanced Accuracy : 0.6540          
+##                                           
+##        'Positive' Class : bad             
+## 
+```
+
+Se puede aumentar el número de combinaciones empleando `tuneLength` o `tuneGrid` pero la búsqueda en una rejilla completa puede incrementar considerablemente el tiempo de computación. 
+Por este motivo se suelen seguir distintos procedimientos de búsqueda. Por ejemplo, fijar la tasa de aprendizaje (inicialmente a un valor alto) para seleccionar primero un número de interaciones y la complejidad del árbol, y posteriormente fijar estos valores para seleccionar una nueva tasa de aprendizaje (repitiendo el proceso, si es necesario, hasta convergencia).
+
+
+```r
+set.seed(1)
+caret.ada1 <- train(taste ~ ., method = "ada", data = train,
+                    tuneGrid = data.frame(iter =  50, maxdepth = 1,
+                                 nu = c(0.3, 0.1, 0.05, 0.01, 0.005)),
+                   trControl = trainControl(method = "cv", number = 5))
+caret.ada1
+```
+
+```
+## Boosted Classification Trees 
+## 
+## 1000 samples
+##   11 predictor
+##    2 classes: 'bad', 'good' 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (5 fold) 
+## Summary of sample sizes: 800, 801, 800, 800, 799 
+## Resampling results across tuning parameters:
+## 
+##   nu     Accuracy   Kappa     
+##   0.005  0.6790316  0.32800074
+##   0.010  0.6660117  0.16369520
+##   0.050  0.6780120  0.08776567
+##   0.100  0.6989822  0.18862836
+##   0.300  0.7430322  0.36176383
+## 
+## Tuning parameter 'iter' was held constant at a value of 50
+## Tuning
+##  parameter 'maxdepth' was held constant at a value of 1
+## Accuracy was used to select the optimal model using the largest value.
+## The final values used for the model were iter = 50, maxdepth = 1 and nu = 0.3.
+```
+
+```r
+confusionMatrix(predict(caret.ada1, newdata = test), test$taste)
+```
+
+```
+## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction bad good
+##       bad   35   16
+##       good  49  150
+##                                          
+##                Accuracy : 0.74           
+##                  95% CI : (0.681, 0.7932)
+##     No Information Rate : 0.664          
+##     P-Value [Acc > NIR] : 0.005841       
+##                                          
+##                   Kappa : 0.3547         
+##                                          
+##  Mcnemar's Test P-Value : 7.214e-05      
+##                                          
+##             Sensitivity : 0.4167         
+##             Specificity : 0.9036         
+##          Pos Pred Value : 0.6863         
+##          Neg Pred Value : 0.7538         
+##              Prevalence : 0.3360         
+##          Detection Rate : 0.1400         
+##    Detection Prevalence : 0.2040         
+##       Balanced Accuracy : 0.6601         
+##                                          
+##        'Positive' Class : bad            
+## 
+```
+
+
+### Ejemplo: regresión con el paquete `gbm`
+
+El paquete [`gbm`](https://CRAN.R-project.org/package=gbm) implementa el algoritmo SGB de Friedman (2002) y admite varios tipos de respuesta considerando distintas funciones de pérdida (aunque en el caso de variables dicotómicas éstas deben tomar valores en $\{0, 1\}$^[Se puede evitar este inconveniente empleando la interfaz de `caret`.]).
+La función principal es `gbm()` y se suelen considerar los siguientes argumentos:
+
+```r
+gbm( formula, distribution = "bernoulli", data, n.trees = 100, 
+     interaction.depth = 1, n.minobsinnode = 10,
+     shrinkage = 0.1, bag.fraction = 0.5, 
+     cv.folds = 0, n.cores = NULL)
+```
+
+* `formula` y `data` (opcional): permiten especificar la respuesta y las variables predictoras de la forma habitual (típicamente `respuesta ~ .`; también está disponible una interfaz con matrices `gbm.fit()`).
+
+* `distribution` (opcional): texto con el nombre de la distribución (o lista con el nombre en `name` y parámetros adicionales en los demás componentes) que determina la función de pérdida.
+Si se omite se establecerá a partir del tipo de la respuesta: `"bernouilli"` (regresión logística) si es una variable dicotómica 0/1, `"multinomial"` (regresión multinomial) si es un factor (no se recomienda) y `"gaussian"` (error cuadrático) en caso contrario.
+Otras opciones que pueden ser de interés son: `"laplace"` (error absoluto), `"adaboost"` (pérdida exponencial para respuestas dicotómicas 0/1), `"huberized"` (pérdida de Huber para respuestas dicotómicas), `"poisson"` y `"quantile"`.
+
+* `ntrees`: iteraciones/número de árboles que se crecerán; por defecto 100 (se puede emplear la función `gbm.perf()` para seleccionar un valor "óptimo").
+
+* `interaction.depth`: profundidad de los árboles; por defecto 1 (modelo aditivo).
+
+* `n.minobsinnode`: número mínimo de observaciones en un nodo terminal; por defecto 10.
+
+* `shrinkage`: parámetro de regularización $\lambda$; por defecto 0.1.
+
+* `bag.fraction`: proporción de observaciones seleccionadas al azar para crecer cada árbol; por defecto 0.5.
+
+* `cv.folds`: número grupos para validación cruzada; por defecto 0 (no se hace validación cruzada). Si se asigna un valor mayor que 1 se realizará validación cruzada y se devolverá el error en la componente `$cv.error` (se puede emplear para seleccionar hiperparámetros).
+
+* `n.cores`: número de núcleos para el procesamiento en paralelo.
+
+
+Como ejemplo consideraremos el conjunto de datos *winequality.RData*:
+
+
+```r
+load("data/winequality.RData")
+set.seed(1)
+df <- winequality
+nobs <- nrow(df)
+itrain <- sample(nobs, 0.8 * nobs)
+train <- df[itrain, ]
+test <- df[-itrain, ]
+
+library(gbm)
+gbm.fit <- gbm(quality ~ ., data = train)
+```
+
+```
+## Distribution not specified, assuming gaussian ...
+```
+
+```r
+gbm.fit
+```
+
+```
+## gbm(formula = quality ~ ., data = train)
+## A gradient boosted model with gaussian loss function.
+## 100 iterations were performed.
+## There were 11 predictors of which 11 had non-zero influence.
+```
+
+El método `summary()` calcula las medidas de influencia de los predictores y las representa gráficamente:
+
+
+```r
+summary(gbm.fit)
+```
+
+<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-29-1.png" width="80%" style="display: block; margin: auto;" />
+
+```
+##                                       var   rel.inf
+## alcohol                           alcohol 40.907998
+## volatile.acidity         volatile.acidity 13.839083
+## free.sulfur.dioxide   free.sulfur.dioxide 11.488262
+## fixed.acidity               fixed.acidity  7.914742
+## citric.acid                   citric.acid  6.765875
+## total.sulfur.dioxide total.sulfur.dioxide  4.808308
+## residual.sugar             residual.sugar  4.758566
+## chlorides                       chlorides  3.424537
+## sulphates                       sulphates  3.086036
+## density                           density  1.918442
+## pH                                     pH  1.088152
+```
+
+Para estudiar el efecto de un predictor se pueden gererar gráficos parciales de residuos mediante el método `plot()`:
+
+
+```r
+plot(gbm.fit, i = "alcohol")
+```
+
+<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-30-1.png" width="80%" style="display: block; margin: auto;" />
+
+Finalmente podemos evaluar la precisión en la muestra de test empleando el código habitual:
+
+
+```r
+pred <- predict(gbm.fit, newdata = test)
+obs <- test$quality
+
+# Con el paquete caret
+caret::postResample(pred, obs)
+```
+
+```
+##      RMSE  Rsquared       MAE 
+## 0.7586208 0.3001401 0.6110442
+```
+
+```r
+# Con la función accuracy()
+accuracy <- function(pred, obs, na.rm = FALSE,
+                     tol = sqrt(.Machine$double.eps)) {
+  err <- obs - pred     # Errores
+  if(na.rm) {
+    is.a <- !is.na(err)
+    err <- err[is.a]
+    obs <- obs[is.a]
+  }
+  perr <- 100*err/pmax(obs, tol)  # Errores porcentuales
+  return(c(
+    me = mean(err),           # Error medio
+    rmse = sqrt(mean(err^2)), # Raíz del error cuadrático medio
+    mae = mean(abs(err)),     # Error absoluto medio
+    mpe = mean(perr),         # Error porcentual medio
+    mape = mean(abs(perr)),   # Error porcentual absoluto medio
+    r.squared = 1 - sum(err^2)/sum((obs - mean(obs))^2)
+  ))
+}
+accuracy(pred, obs)
+```
+
+```
+##          me        rmse         mae         mpe        mape   r.squared 
+## -0.01463661  0.75862081  0.61104421 -2.00702056 10.69753668  0.29917590
+```
+
+
+<!-- 
+Pendiente: ejercicio regresión con el conjunto de datos Boston empleando error absoluto para evitar la influencia de datos atípicos. 
+-->
+
+Este procedimiento también está implementado en el paquete `caret` seleccionando el método `"gbm"`, que considera como hiperparámetros:
+
+```r
+library(caret)
+modelLookup("gbm")
+```
+
+```
+##   model         parameter                   label forReg forClass probModel
+## 1   gbm           n.trees   # Boosting Iterations   TRUE     TRUE      TRUE
+## 2   gbm interaction.depth          Max Tree Depth   TRUE     TRUE      TRUE
+## 3   gbm         shrinkage               Shrinkage   TRUE     TRUE      TRUE
+## 4   gbm    n.minobsinnode Min. Terminal Node Size   TRUE     TRUE      TRUE
+```
+
+Aunque por defecto la función `train()` solo considera nueve combinaciones de hiperparámetros. Para hacer una búsqueda más completa se podría seguir un procedimiento análogo al empleado con el método anterior:
+
+
+```r
+set.seed(1)
+caret.gbm0 <- train(quality ~ ., method = "gbm", data = train,
+                   trControl = trainControl(method = "cv", number = 5))
+```
+
+
+```r
+caret.gbm0
+```
+
+```
+## Stochastic Gradient Boosting 
+## 
+## 1000 samples
+##   11 predictor
+## 
+## No pre-processing
+## Resampling: Cross-Validated (5 fold) 
+## Summary of sample sizes: 800, 801, 800, 800, 799 
+## Resampling results across tuning parameters:
+## 
+##   interaction.depth  n.trees  RMSE       Rsquared   MAE      
+##   1                   50      0.7464098  0.2917796  0.5949686
+##   1                  100      0.7258319  0.3171046  0.5751816
+##   1                  150      0.7247246  0.3197241  0.5719404
+##   2                   50      0.7198195  0.3307665  0.5712468
+##   2                  100      0.7175006  0.3332903  0.5647409
+##   2                  150      0.7258174  0.3222006  0.5713116
+##   3                   50      0.7241661  0.3196365  0.5722590
+##   3                  100      0.7272094  0.3191252  0.5754363
+##   3                  150      0.7311429  0.3152905  0.5784988
+## 
+## Tuning parameter 'shrinkage' was held constant at a value of 0.1
+## 
+## Tuning parameter 'n.minobsinnode' was held constant at a value of 10
+## RMSE was used to select the optimal model using the smallest value.
+## The final values used for the model were n.trees = 100, interaction.depth =
+##  2, shrinkage = 0.1 and n.minobsinnode = 10.
+```
+
+
+```r
+caret.gbm1 <- train(quality ~ ., method = "gbm", data = train,
+   tuneGrid = data.frame(n.trees =  100, interaction.depth = 2, 
+                        shrinkage = c(0.3, 0.1, 0.05, 0.01, 0.005),
+                        n.minobsinnode = 10),
+   trControl = trainControl(method = "cv", number = 5))
+```
+
+
+```r
+caret.gbm1
+```
+
+```
+## Stochastic Gradient Boosting 
+## 
+## 1000 samples
+##   11 predictor
+## 
+## No pre-processing
+## Resampling: Cross-Validated (5 fold) 
+## Summary of sample sizes: 800, 800, 801, 799, 800 
+## Resampling results across tuning parameters:
+## 
+##   shrinkage  RMSE       Rsquared   MAE      
+##   0.005      0.8154916  0.2419131  0.6245818
+##   0.010      0.7844257  0.2602989  0.6128582
+##   0.050      0.7206972  0.3275463  0.5707273
+##   0.100      0.7124838  0.3407642  0.5631748
+##   0.300      0.7720844  0.2613835  0.6091765
+## 
+## Tuning parameter 'n.trees' was held constant at a value of 100
+## Tuning
+##  parameter 'interaction.depth' was held constant at a value of 2
+## 
+## Tuning parameter 'n.minobsinnode' was held constant at a value of 10
+## RMSE was used to select the optimal model using the smallest value.
+## The final values used for the model were n.trees = 100, interaction.depth =
+##  2, shrinkage = 0.1 and n.minobsinnode = 10.
+```
+
+```r
+varImp(caret.gbm1)
+```
+
+```
+## gbm variable importance
+## 
+##                       Overall
+## alcohol              100.0000
+## volatile.acidity      28.4909
+## free.sulfur.dioxide   24.5158
+## residual.sugar        16.8406
+## fixed.acidity         12.5623
+## density               10.1917
+## citric.acid            9.1542
+## total.sulfur.dioxide   7.2659
+## chlorides              4.5106
+## pH                     0.1096
+## sulphates              0.0000
+```
+
+```r
+postResample(predict(caret.gbm1, newdata = test), test$quality)
+```
+
+```
+##      RMSE  Rsquared       MAE 
+## 0.7403768 0.3329751 0.6017281
+```
+
+
+
+### Ejemplo: XGBoost con el paquete `caret`
+
+El método boosting implementado en el paquete [`xgboost`](https://github.com/dmlc/xgboost/tree/master/R-package) es uno de los más populares hoy en día. 
+Esta implementación proporciona parámetros adicionales de regularización para controlar la complejidad del modelo y tratar de evitar el sobreajuste. 
+También incluye criterios de parada, para detener la evaluación del modelo cuando los árboles adicionales no ofrecen ninguna mejora.
+Dispone de una interfaz simple `xgboost()` y otra más avanzada `xgb.train()`, que admite funciones de pérdida y evaluación personalizadas.
+Normalmente es necesario un preprocesado de los datos antes de llamar a estas funciones, ya que requieren de una matriz para los predictores y de un vector para la respuesta (además en el caso de que sea dicotómica debe tomar valores en $\{0, 1\}$). Por tanto es necesario recodificar las variables categóricas como numéricas. 
+Por este motivo puede ser preferible emplear la interfaz de `caret`.
+
+El algoritmo estándar *XGBoost*, que emplea árboles como modelo base, está implementado en el método `"xgbTree"` de `caret`^[Otras alternativas son: `"xgbDART"` que también emplean árboles como modelo base, pero incluye el método DART (Vinayak y Gilad-Bachrach, 2015) para evitar sobreajuste (básicamente descarta árboles al azar en la secuencia), y`"xgbLinear"` que emplea modelos lineales.].
+
+
+```r
+library(caret)
+# names(getModelInfo("xgb"))
+modelLookup("xgbTree")
+```
+
+```
+##     model        parameter                          label forReg forClass
+## 1 xgbTree          nrounds          # Boosting Iterations   TRUE     TRUE
+## 2 xgbTree        max_depth                 Max Tree Depth   TRUE     TRUE
+## 3 xgbTree              eta                      Shrinkage   TRUE     TRUE
+## 4 xgbTree            gamma         Minimum Loss Reduction   TRUE     TRUE
+## 5 xgbTree colsample_bytree     Subsample Ratio of Columns   TRUE     TRUE
+## 6 xgbTree min_child_weight Minimum Sum of Instance Weight   TRUE     TRUE
+## 7 xgbTree        subsample           Subsample Percentage   TRUE     TRUE
+##   probModel
+## 1      TRUE
+## 2      TRUE
+## 3      TRUE
+## 4      TRUE
+## 5      TRUE
+## 6      TRUE
+## 7      TRUE
+```
+
+Este método considera los siguientes hiperparámetros:
+
+* `"nrounds"`: número de iteraciones boosting.
+
+* `"max_depth"`: profundidad máxima del árbol; por defecto 6.
+
+* `"eta"`: parámetro de regularización $\lambda$; por defecto 0.3.
+
+* `"gamma"`: mínima reducción de la pérdida para hacer una partición adicional en un nodo del árbol; por defecto 0.
+
+* `"colsample_bytree"`: proporción de predictores seleccionados al azar para crecer cada árbol; por defecto 1.
+
+* `"min_child_weight"`: suma mínima de peso (hessiana) para hacer una partición adicional en un nodo del árbol; por defecto 1.
+
+* `"subsample"`: proporción de observaciones seleccionadas al azar en cada iteración boosting; por defecto 1.
+
+Para más información sobre parámetros adicionales se puede consultar la ayuda de `xgboost::xgboost()` o la lista detallada disponible en la Sección [XGBoost Parameters](https://xgboost.readthedocs.io/en/latest/parameter.html) del [Manual de XGBoost](https://xgboost.readthedocs.io).
+
+Como ejemplo consideraremos el problema de clasificación empleando el conjunto de datos de calidad de vino:
+
+
+```r
+load("data/winetaste.RData")
+set.seed(1)
+df <- winetaste
+nobs <- nrow(df)
+itrain <- sample(nobs, 0.8 * nobs)
+train <- df[itrain, ]
+test <- df[-itrain, ]
+```
+
+
+En este caso la función `train()` considera por defecto 108 combinaciones de hiperparámetros y el tiempo de computación puede ser excesivo. 
+
+
+```r
+caret.xgb <- train(taste ~ ., method = "xgbTree", data = train,
+                   trControl = trainControl(method = "cv", number = 5))
+caret.xgb
+```
+
+```
+## eXtreme Gradient Boosting 
+## 
+## 1000 samples
+##   11 predictor
+##    2 classes: 'good', 'bad' 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (5 fold) 
+## Summary of sample sizes: 799, 801, 801, 799, 800 
+## Resampling results across tuning parameters:
+## 
+##   eta  max_depth  colsample_bytree  subsample  nrounds  Accuracy   Kappa    
+##   0.3  1          0.6               0.50        50      0.7270047  0.3456824
+##   0.3  1          0.6               0.50       100      0.7400300  0.3856840
+##   0.3  1          0.6               0.50       150      0.7380249  0.3849720
+##   0.3  1          0.6               0.75        50      0.7429749  0.3833619
+##   0.3  1          0.6               0.75       100      0.7369147  0.3839315
+##   0.3  1          0.6               0.75       150      0.7409547  0.3994590
+##   0.3  1          0.6               1.00        50      0.7429599  0.3774907
+##   0.3  1          0.6               1.00       100      0.7469350  0.4004720
+##   0.3  1          0.6               1.00       150      0.7429749  0.3922574
+##   0.3  1          0.8               0.50        50      0.7449400  0.3928409
+##   0.3  1          0.8               0.50       100      0.7269846  0.3594183
+##   0.3  1          0.8               0.50       150      0.7319947  0.3667027
+##   0.3  1          0.8               0.75        50      0.7359497  0.3727139
+##   0.3  1          0.8               0.75       100      0.7409747  0.3949485
+##   0.3  1          0.8               0.75       150      0.7329645  0.3759044
+##   0.3  1          0.8               1.00        50      0.7429449  0.3799009
+##   0.3  1          0.8               1.00       100      0.7469450  0.3978185
+##   0.3  1          0.8               1.00       150      0.7509350  0.4094308
+##   0.3  2          0.6               0.50        50      0.7399448  0.3879917
+##   0.3  2          0.6               0.50       100      0.7349197  0.3871037
+##   0.3  2          0.6               0.50       150      0.7269546  0.3737454
+##   0.3  2          0.6               0.75        50      0.7409597  0.3945359
+##   0.3  2          0.6               0.75       100      0.7399998  0.3941711
+##   0.3  2          0.6               0.75       150      0.7339997  0.3877357
+##   0.3  2          0.6               1.00        50      0.7499299  0.4101402
+##   0.3  2          0.6               1.00       100      0.7399147  0.3904076
+##   0.3  2          0.6               1.00       150      0.7479700  0.4167337
+##   0.3  2          0.8               0.50        50      0.7580353  0.4210483
+##   0.3  2          0.8               0.50       100      0.7509800  0.4177512
+##   0.3  2          0.8               0.50       150      0.7389548  0.3907023
+##   0.3  2          0.8               0.75        50      0.7429748  0.4030924
+##   0.3  2          0.8               0.75       100      0.7469849  0.4152931
+##   0.3  2          0.8               0.75       150      0.7510300  0.4267509
+##   0.3  2          0.8               1.00        50      0.7520050  0.4166915
+##   0.3  2          0.8               1.00       100      0.7520151  0.4249264
+##   0.3  2          0.8               1.00       150      0.7589952  0.4401835
+##   0.3  3          0.6               0.50        50      0.7380496  0.3916075
+##   0.3  3          0.6               0.50       100      0.7540151  0.4330095
+##   0.3  3          0.6               0.50       150      0.7369746  0.3892166
+##   0.3  3          0.6               0.75        50      0.7589451  0.4350590
+##   0.3  3          0.6               0.75       100      0.7500400  0.4217787
+##   0.3  3          0.6               0.75       150      0.7519848  0.4246740
+##   0.3  3          0.6               1.00        50      0.7529350  0.4162968
+##   0.3  3          0.6               1.00       100      0.7589451  0.4391310
+##   0.3  3          0.6               1.00       150      0.7499649  0.4215876
+##   0.3  3          0.8               0.50        50      0.7649753  0.4550539
+##   0.3  3          0.8               0.50       100      0.7569902  0.4351073
+##   0.3  3          0.8               0.50       150      0.7499250  0.4210503
+##   0.3  3          0.8               0.75        50      0.7589802  0.4396966
+##   0.3  3          0.8               0.75       100      0.7599901  0.4439201
+##   0.3  3          0.8               0.75       150      0.7559950  0.4396551
+##   0.3  3          0.8               1.00        50      0.7529700  0.4270112
+##   0.3  3          0.8               1.00       100      0.7589401  0.4432280
+##   0.3  3          0.8               1.00       150      0.7569302  0.4368301
+##   0.4  1          0.6               0.50        50      0.7389297  0.3852019
+##   0.4  1          0.6               0.50       100      0.7449749  0.4067440
+##   0.4  1          0.6               0.50       150      0.7539900  0.4274551
+##   0.4  1          0.6               0.75        50      0.7419399  0.3947505
+##   0.4  1          0.6               0.75       100      0.7359697  0.3832840
+##   0.4  1          0.6               0.75       150      0.7289397  0.3685824
+##   0.4  1          0.6               1.00        50      0.7429399  0.3894412
+##   0.4  1          0.6               1.00       100      0.7499700  0.4103344
+##   0.4  1          0.6               1.00       150      0.7429999  0.3981893
+##   0.4  1          0.8               0.50        50      0.7359897  0.3856013
+##   0.4  1          0.8               0.50       100      0.7420099  0.4048545
+##   0.4  1          0.8               0.50       150      0.7400048  0.4005212
+##   0.4  1          0.8               0.75        50      0.7549702  0.4186415
+##   0.4  1          0.8               0.75       100      0.7449700  0.4070417
+##   0.4  1          0.8               0.75       150      0.7470200  0.4082903
+##   0.4  1          0.8               1.00        50      0.7479300  0.3966813
+##   0.4  1          0.8               1.00       100      0.7429648  0.3938550
+##   0.4  1          0.8               1.00       150      0.7489650  0.4097744
+##   0.4  2          0.6               0.50        50      0.7339647  0.3818445
+##   0.4  2          0.6               0.50       100      0.7369097  0.3959654
+##   0.4  2          0.6               0.50       150      0.7309445  0.3806622
+##   0.4  2          0.6               0.75        50      0.7379998  0.3948626
+##   0.4  2          0.6               0.75       100      0.7449999  0.4075786
+##   0.4  2          0.6               0.75       150      0.7500052  0.4207846
+##   0.4  2          0.6               1.00        50      0.7519450  0.4182109
+##   0.4  2          0.6               1.00       100      0.7420148  0.4036651
+##   0.4  2          0.6               1.00       150      0.7529999  0.4280194
+##   0.4  2          0.8               0.50        50      0.7460450  0.4127948
+##   0.4  2          0.8               0.50       100      0.7579951  0.4452801
+##   0.4  2          0.8               0.50       150      0.7509600  0.4277173
+##   0.4  2          0.8               0.75        50      0.7480299  0.4171753
+##   0.4  2          0.8               0.75       100      0.7550400  0.4406821
+##   0.4  2          0.8               0.75       150      0.7460399  0.4215027
+##   0.4  2          0.8               1.00        50      0.7599751  0.4401484
+##   0.4  2          0.8               1.00       100      0.7580353  0.4406080
+##   0.4  2          0.8               1.00       150      0.7719806  0.4720566
+##   0.4  3          0.6               0.50        50      0.7409748  0.4100874
+##   0.4  3          0.6               0.50       100      0.7419948  0.4128674
+##   0.4  3          0.6               0.50       150      0.7399998  0.4069074
+##   0.4  3          0.6               0.75        50      0.7419649  0.4073670
+##   0.4  3          0.6               0.75       100      0.7459499  0.4210145
+##   0.4  3          0.6               0.75       150      0.7599252  0.4472654
+##   0.4  3          0.6               1.00        50      0.7529949  0.4349779
+##   0.4  3          0.6               1.00       100      0.7589702  0.4437452
+##   0.4  3          0.6               1.00       150      0.7559600  0.4383594
+##   0.4  3          0.8               0.50        50      0.7489800  0.4177928
+##   0.4  3          0.8               0.50       100      0.7379797  0.4051258
+##   0.4  3          0.8               0.50       150      0.7439547  0.4159864
+##   0.4  3          0.8               0.75        50      0.7449899  0.4186248
+##   0.4  3          0.8               0.75       100      0.7459549  0.4144890
+##   0.4  3          0.8               0.75       150      0.7539601  0.4334041
+##   0.4  3          0.8               1.00        50      0.7570301  0.4344584
+##   0.4  3          0.8               1.00       100      0.7570152  0.4356542
+##   0.4  3          0.8               1.00       150      0.7570201  0.4392371
+## 
+## Tuning parameter 'gamma' was held constant at a value of 0
+## Tuning
+##  parameter 'min_child_weight' was held constant at a value of 1
+## Accuracy was used to select the optimal model using the largest value.
+## The final values used for the model were nrounds = 150, max_depth = 2, eta
+##  = 0.4, gamma = 0, colsample_bytree = 0.8, min_child_weight = 1 and subsample
+##  = 1.
+```
+
+```r
+caret.xgb$bestTune
+```
+
+```
+##    nrounds max_depth eta gamma colsample_bytree min_child_weight subsample
+## 90     150         2 0.4     0              0.8                1         1
+```
+
+```r
+varImp(caret.xgb)
+```
+
+```
+## xgbTree variable importance
+## 
+##                      Overall
+## alcohol              100.000
+## density               41.572
+## citric.acid           39.002
+## residual.sugar        33.656
+## free.sulfur.dioxide   33.142
+## volatile.acidity      31.888
+## fixed.acidity         17.278
+## total.sulfur.dioxide  14.832
+## sulphates              7.958
+## pH                     5.857
+## chlorides              0.000
+```
+
+```r
+confusionMatrix(predict(caret.xgb, newdata = test), test$taste)
+```
+
+```
+## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction good bad
+##       good  145  43
+##       bad    21  41
+##                                           
+##                Accuracy : 0.744           
+##                  95% CI : (0.6852, 0.7969)
+##     No Information Rate : 0.664           
+##     P-Value [Acc > NIR] : 0.003886        
+##                                           
+##                   Kappa : 0.3866          
+##                                           
+##  Mcnemar's Test P-Value : 0.008665        
+##                                           
+##             Sensitivity : 0.8735          
+##             Specificity : 0.4881          
+##          Pos Pred Value : 0.7713          
+##          Neg Pred Value : 0.6613          
+##              Prevalence : 0.6640          
+##          Detection Rate : 0.5800          
+##    Detection Prevalence : 0.7520          
+##       Balanced Accuracy : 0.6808          
+##                                           
+##        'Positive' Class : good            
+## 
+```
+
+Se podría seguir una estrategia de búsqueda similar a la empleada en los métodos anteriores.
+
+
 

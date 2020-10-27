@@ -51,6 +51,8 @@ Breiman, L. (2001). Random Forests. *Machine Learning*, 45(1), 5–32.
 
 Breiman, L. (2001). Statistical Modeling: The Two Cultures (with comments and a rejoinder by the author). *Statistical Science*, 16, 199-231.
 
+Culp, M., Johnson, K. y Michailidis, G. (2006). [ada: an R Package for Stochastic Boosting](https://www.jstatsoft.org/article/view/v017i02). *Journal of Statistical Software*, 17(2), 1-27.
+
 Dietterich, T.G. (2000). An Experimental Comparison of Three Methods for Constructing Ensembles of Decision Trees: Bagging, Boosting, and Randomization. *Machine Learning*, 40(2), 139–158.
 
 Dunson D.B. (2018). Statistics in the big data era: Failures of the machine. *Statistics and Probability Letters*, 136, 4-9.
@@ -59,7 +61,11 @@ Fisher, R.A. (1936). The use of multiple measurements in taxonomic problems. *An
 
 Freund, Y. y Schapire, R. (1996). Experiments with a New Boosting Algorithm. *Machine Learning: Proceedings of the Thirteenth International Conference*, 148–156.
 
-Friedman, J.H. (2001). Greedy Function Approximation: A Gradient Boosting Machine. *Annals of Statistics*, 29, 1189–1232.
+Friedman, J.H. (2001). [Greedy Function Approximation: A Gradient Boosting Machine](https://projecteuclid.org/euclid.aos/1013203451). *Annals of Statistics*, 29, 1189–1232.
+
+Friedman, J.H. (2002). [Stochastic Gradient Boosting](https://www.sciencedirect.com/science/article/pii/S0167947301000652). *Computational Statistics and Data Analysis*, 38(4), 367-378. 
+
+Friedman, J., Hastie, T. y Tibshirani, R. (2000). Additive Logistic Regression: A statistical view of boosting. *Annals of Statistics*, 28(2), 337-374. 
 
 Friedman, J.H. y Popescu, B.E. (2008). Predictive learning via rule ensembles. *The Annals of Applied Statistics*, 2(3), 916-954. 
 Goldstein, A., Kapelner, A., Bleich, J. y Pitkin, E. (2015). [Peeking inside the black box: Visualizing statistical learning with plots of individual conditional expectation](https://doi.org/10.1080/10618600.2014.907095). *Journal of Computational and Graphical Statistics*, 24(1), 44-65.
@@ -81,6 +87,8 @@ Shannon C (1948). A Mathematical Theory of Communication. *The Bell System Techn
 Strumbelj, E. y Kononenko, I. (2010). An efficient explanation of individual classifications using game theory. *Journal of Machine Learning Research*, 11, 1-18.
 
 Valiant, L. (1984). A Theory of the Learnable. *Communications of the ACM*, 27, 1134–1142.
+
+Vinayak, R.K. y Gilad-Bachrach, R. (2015). Dart: Dropouts meet multiple additive regression trees. *Proceedings of Machine Learning Research*, 38, 489-497.
 
 
 <!-- 
