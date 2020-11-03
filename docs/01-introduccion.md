@@ -200,13 +200,21 @@ Lo anterior se puede generalizar para el caso de múltiples categorías, conside
 $$\hat G \left(\mathbf{x} \right) = \underset{k}{\operatorname{argmax}} \left\{ \hat p_k(\mathbf{x}) : k = 1, 2, \ldots, K \right\}.$$
 
 <!-- 
+Pendiente:
+
+Múltiples categorías:
+
+  Estrategia "uno contra uno"
+  
+  Otros métodos (árboles de decisión) permiten la estimación directa de las probabilidades de cada clase.
+
+
 Otra notación:
 
-$\mathcal{G}$ conjunto de posibles categorías
-
-Matrices en mayúsculas y negrita/caligráfico? 
-Mayúsculas y negrita/caligráfico con subíndice para referirse al vector columna? 
-Traspuesta al estilo de JSS 
+  $\mathcal{G}$ conjunto de posibles categorías
+  Matrices en mayúsculas y negrita/caligráfico? 
+  Mayúsculas y negrita/caligráfico con subíndice para referirse al vector columna? 
+  Traspuesta al estilo de JSS 
 -->
     
 

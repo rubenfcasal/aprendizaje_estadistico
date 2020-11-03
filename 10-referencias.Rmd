@@ -65,7 +65,7 @@ Friedman, J.H. (2001). [Greedy Function Approximation: A Gradient Boosting Machi
 
 Friedman, J.H. (2002). [Stochastic Gradient Boosting](https://www.sciencedirect.com/science/article/pii/S0167947301000652). *Computational Statistics and Data Analysis*, 38(4), 367-378. 
 
-Friedman, J., Hastie, T. y Tibshirani, R. (2000). Additive Logistic Regression: A statistical view of boosting. *Annals of Statistics*, 28(2), 337-374. 
+Friedman, J., Hastie, T. y Tibshirani, R. (2000). [Additive Logistic Regression: A statistical view of boosting](https://projecteuclid.org/euclid.aos/1016218223). *Annals of Statistics*, 28(2), 337-374. 
 
 Friedman, J.H. y Popescu, B.E. (2008). Predictive learning via rule ensembles. *The Annals of Applied Statistics*, 2(3), 916-954. 
 Goldstein, A., Kapelner, A., Bleich, J. y Pitkin, E. (2015). [Peeking inside the black box: Visualizing statistical learning with plots of individual conditional expectation](https://doi.org/10.1080/10618600.2014.907095). *Journal of Computational and Graphical Statistics*, 24(1), 44-65.

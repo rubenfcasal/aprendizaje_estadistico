@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)" />
 
 
-<meta name="date" content="2020-10-27" />
+<meta name="date" content="2020-11-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -207,7 +207,7 @@ Ver [CRAN Task View: Machine Learning & Statistical Learning](https://cran.r-pro
 <ul>
 <li><p><code>formula</code> y <code>data</code> (opcional): permiten especificar la respuesta y las variables predictoras de la forma habitual (típicamente <code>respuesta ~ .</code>; también admite matrices <code>x</code> e <code>y</code> en lugar de fórmulas).</p></li>
 <li><p><code>loss</code>: función de pérdida; por defecto <code>&quot;exponential&quot;</code> (algoritmo AdaBoost).</p></li>
-<li><p><code>type</code>: algoritmo boosting; por defecto <code>&quot;discrete&quot;</code> que implementa el algoritmo AdaBoost original que predice la variable respuesta. Otras alternativas son <code>&quot;real&quot;</code>, que implementa el algoritmo <em>Real AdaBoost</em> (Friedman <em>et al</em>., 2000) que permite estimar las probabilidades, y <code>&quot;gentle&quot;</code> , versión modificada del anterior que emplea un método Newton de optimización por pasos (en lugar de optimización exacta).</p></li>
+<li><p><code>type</code>: algoritmo boosting; por defecto <code>&quot;discrete&quot;</code> que implementa el algoritmo AdaBoost original que predice la variable respuesta. Otras alternativas son <code>&quot;real&quot;</code>, que implementa el algoritmo <em>Real AdaBoost</em> (<a href="https://projecteuclid.org/euclid.aos/1016218223">Friedman <em>et al</em>., 2000</a>) que permite estimar las probabilidades, y <code>&quot;gentle&quot;</code> , versión modificada del anterior que emplea un método Newton de optimización por pasos (en lugar de optimización exacta).</p></li>
 <li><p><code>iter</code>: número de iteraciones boosting; por defecto 50.</p></li>
 <li><p><code>nu</code>: parámetro de regularización <span class="math inline">\(\lambda\)</span>; por defecto 0.1 (disminuyendo este parámetro es de esperar que se obtenga una mejora en la precisión de las predicciones pero requería aumentar <code>iter</code> aumentando notablemente el tiempo de computación y los requerimientos de memoria).</p></li>
 <li><p><code>bag.frac</code>: proporción de observaciones seleccionadas al azar para crecer cada árbol; por defecto 0.5.</p></li>
@@ -281,7 +281,7 @@ res
 -->
 <p>Podemos evaluar la precisión en la muestra de test empleando el procedimiento habitual:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pred &lt;-<span class="st"> </span><span class="kw">predict</span>(ada.boost, <span class="dt">newdata =</span> test)
-caret<span class="op">::</span><span class="kw">confusionMatrix</span>(pred, test<span class="op">$</span>taste)</code></pre></div>
+caret<span class="op">::</span><span class="kw">confusionMatrix</span>(pred, test<span class="op">$</span>taste, <span class="dt">positive =</span> <span class="st">&quot;good&quot;</span>)</code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -298,16 +298,16 @@ caret<span class="op">::</span><span class="kw">confusionMatrix</span>(pred, tes
 ##                                           
 ##  Mcnemar&#39;s Test P-Value : 4.865e-05       
 ##                                           
-##             Sensitivity : 0.4048          
-##             Specificity : 0.9036          
-##          Pos Pred Value : 0.6800          
-##          Neg Pred Value : 0.7500          
-##              Prevalence : 0.3360          
-##          Detection Rate : 0.1360          
-##    Detection Prevalence : 0.2000          
+##             Sensitivity : 0.9036          
+##             Specificity : 0.4048          
+##          Pos Pred Value : 0.7500          
+##          Neg Pred Value : 0.6800          
+##              Prevalence : 0.6640          
+##          Detection Rate : 0.6000          
+##    Detection Prevalence : 0.8000          
 ##       Balanced Accuracy : 0.6542          
 ##                                           
-##        &#39;Positive&#39; Class : bad             
+##        &#39;Positive&#39; Class : good            
 ## </code></pre>
 <p>Para obtener las estimaciones de las probabilidades, habría que establecer <code>type = &quot;probs&quot;</code> al predecir (devolverá una matriz con columnas correspondientes a los niveles):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p.est &lt;-<span class="st"> </span><span class="kw">predict</span>(ada.boost, <span class="dt">newdata =</span> test, <span class="dt">type =</span> <span class="st">&quot;probs&quot;</span>)
@@ -356,7 +356,7 @@ caret.ada0</code></pre></div>
 ## Tuning parameter &#39;nu&#39; was held constant at a value of 0.1
 ## Accuracy was used to select the optimal model using the largest value.
 ## The final values used for the model were iter = 150, maxdepth = 3 and nu = 0.1.</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">confusionMatrix</span>(<span class="kw">predict</span>(caret.ada0, <span class="dt">newdata =</span> test), test<span class="op">$</span>taste)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">confusionMatrix</span>(<span class="kw">predict</span>(caret.ada0, <span class="dt">newdata =</span> test), test<span class="op">$</span>taste, <span class="dt">positive =</span> <span class="st">&quot;good&quot;</span>)</code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -373,21 +373,21 @@ caret.ada0</code></pre></div>
 ##                                           
 ##  Mcnemar&#39;s Test P-Value : 0.003861        
 ##                                           
-##             Sensitivity : 0.4405          
-##             Specificity : 0.8675          
-##          Pos Pred Value : 0.6271          
-##          Neg Pred Value : 0.7539          
-##              Prevalence : 0.3360          
-##          Detection Rate : 0.1480          
-##    Detection Prevalence : 0.2360          
+##             Sensitivity : 0.8675          
+##             Specificity : 0.4405          
+##          Pos Pred Value : 0.7539          
+##          Neg Pred Value : 0.6271          
+##              Prevalence : 0.6640          
+##          Detection Rate : 0.5760          
+##    Detection Prevalence : 0.7640          
 ##       Balanced Accuracy : 0.6540          
 ##                                           
-##        &#39;Positive&#39; Class : bad             
+##        &#39;Positive&#39; Class : good            
 ## </code></pre>
 <p>Se puede aumentar el número de combinaciones empleando <code>tuneLength</code> o <code>tuneGrid</code> pero la búsqueda en una rejilla completa puede incrementar considerablemente el tiempo de computación. Por este motivo se suelen seguir distintos procedimientos de búsqueda. Por ejemplo, fijar la tasa de aprendizaje (inicialmente a un valor alto) para seleccionar primero un número de interaciones y la complejidad del árbol, y posteriormente fijar estos valores para seleccionar una nueva tasa de aprendizaje (repitiendo el proceso, si es necesario, hasta convergencia).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
 caret.ada1 &lt;-<span class="st"> </span><span class="kw">train</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">method =</span> <span class="st">&quot;ada&quot;</span>, <span class="dt">data =</span> train,
-                    <span class="dt">tuneGrid =</span> <span class="kw">data.frame</span>(<span class="dt">iter =</span>  <span class="dv">50</span>, <span class="dt">maxdepth =</span> <span class="dv">1</span>,
+                    <span class="dt">tuneGrid =</span> <span class="kw">data.frame</span>(<span class="dt">iter =</span>  <span class="dv">150</span>, <span class="dt">maxdepth =</span> <span class="dv">3</span>,
                                  <span class="dt">nu =</span> <span class="kw">c</span>(<span class="fl">0.3</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>, <span class="fl">0.01</span>, <span class="fl">0.005</span>)),
                    <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="dt">number =</span> <span class="dv">5</span>))
 caret.ada1</code></pre></div>
@@ -402,45 +402,45 @@ caret.ada1</code></pre></div>
 ## Summary of sample sizes: 800, 801, 800, 800, 799 
 ## Resampling results across tuning parameters:
 ## 
-##   nu     Accuracy   Kappa     
-##   0.005  0.6790316  0.32800074
-##   0.010  0.6660117  0.16369520
-##   0.050  0.6780120  0.08776567
-##   0.100  0.6989822  0.18862836
-##   0.300  0.7430322  0.36176383
+##   nu     Accuracy   Kappa    
+##   0.005  0.7439722  0.3723405
+##   0.010  0.7439822  0.3725968
+##   0.050  0.7559773  0.4116753
+##   0.100  0.7619774  0.4365242
+##   0.300  0.7580124  0.4405127
 ## 
-## Tuning parameter &#39;iter&#39; was held constant at a value of 50
+## Tuning parameter &#39;iter&#39; was held constant at a value of 150
 ## Tuning
-##  parameter &#39;maxdepth&#39; was held constant at a value of 1
+##  parameter &#39;maxdepth&#39; was held constant at a value of 3
 ## Accuracy was used to select the optimal model using the largest value.
-## The final values used for the model were iter = 50, maxdepth = 1 and nu = 0.3.</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">confusionMatrix</span>(<span class="kw">predict</span>(caret.ada1, <span class="dt">newdata =</span> test), test<span class="op">$</span>taste)</code></pre></div>
+## The final values used for the model were iter = 150, maxdepth = 3 and nu = 0.1.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">confusionMatrix</span>(<span class="kw">predict</span>(caret.ada1, <span class="dt">newdata =</span> test), test<span class="op">$</span>taste, <span class="dt">positive =</span> <span class="st">&quot;good&quot;</span>)</code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
 ## Prediction bad good
-##       bad   35   16
-##       good  49  150
+##       bad   40   21
+##       good  44  145
 ##                                          
 ##                Accuracy : 0.74           
 ##                  95% CI : (0.681, 0.7932)
 ##     No Information Rate : 0.664          
 ##     P-Value [Acc &gt; NIR] : 0.005841       
 ##                                          
-##                   Kappa : 0.3547         
+##                   Kappa : 0.375          
 ##                                          
-##  Mcnemar&#39;s Test P-Value : 7.214e-05      
+##  Mcnemar&#39;s Test P-Value : 0.006357       
 ##                                          
-##             Sensitivity : 0.4167         
-##             Specificity : 0.9036         
-##          Pos Pred Value : 0.6863         
-##          Neg Pred Value : 0.7538         
-##              Prevalence : 0.3360         
-##          Detection Rate : 0.1400         
-##    Detection Prevalence : 0.2040         
-##       Balanced Accuracy : 0.6601         
+##             Sensitivity : 0.8735         
+##             Specificity : 0.4762         
+##          Pos Pred Value : 0.7672         
+##          Neg Pred Value : 0.6557         
+##              Prevalence : 0.6640         
+##          Detection Rate : 0.5800         
+##    Detection Prevalence : 0.7560         
+##       Balanced Accuracy : 0.6748         
 ##                                          
-##        &#39;Positive&#39; Class : bad            
+##        &#39;Positive&#39; Class : good           
 ## </code></pre>
 </div>
 <div id="ejemplo-regresión-con-el-paquete-gbm" class="section level3">
@@ -452,7 +452,7 @@ caret.ada1</code></pre></div>
      <span class="dt">cv.folds =</span> <span class="dv">0</span>, <span class="dt">n.cores =</span> <span class="ot">NULL</span>)</code></pre></div>
 <ul>
 <li><p><code>formula</code> y <code>data</code> (opcional): permiten especificar la respuesta y las variables predictoras de la forma habitual (típicamente <code>respuesta ~ .</code>; también está disponible una interfaz con matrices <code>gbm.fit()</code>).</p></li>
-<li><p><code>distribution</code> (opcional): texto con el nombre de la distribución (o lista con el nombre en <code>name</code> y parámetros adicionales en los demás componentes) que determina la función de pérdida. Si se omite se establecerá a partir del tipo de la respuesta: <code>&quot;bernouilli&quot;</code> (regresión logística) si es una variable dicotómica 0/1, <code>&quot;multinomial&quot;</code> (regresión multinomial) si es un factor (no se recomienda) y <code>&quot;gaussian&quot;</code> (error cuadrático) en caso contrario. Otras opciones que pueden ser de interés son: <code>&quot;laplace&quot;</code> (error absoluto), <code>&quot;adaboost&quot;</code> (pérdida exponencial para respuestas dicotómicas 0/1), <code>&quot;huberized&quot;</code> (pérdida de Huber para respuestas dicotómicas), <code>&quot;poisson&quot;</code> y <code>&quot;quantile&quot;</code>.</p></li>
+<li><p><code>distribution</code> (opcional): texto con el nombre de la distribución (o lista con el nombre en <code>name</code> y parámetros adicionales en los demás componentes) que determina la función de pérdida. Si se omite se establecerá a partir del tipo de la respuesta: <code>&quot;bernouilli&quot;</code> (regresión logística) si es una variable dicotómica 0/1, <code>&quot;multinomial&quot;</code> (regresión multinomial) si es un factor (no se recomienda) y <code>&quot;gaussian&quot;</code> (error cuadrático) en caso contrario. Otras opciones que pueden ser de interés son: <code>&quot;laplace&quot;</code> (error absoluto), <code>&quot;adaboost&quot;</code> (pérdida exponencial para respuestas dicotómicas 0/1), <code>&quot;huberized&quot;</code> (pérdida de Huber para respuestas dicotómicas 0/1), <code>&quot;poisson&quot;</code> (regresión de Poisson) y <code>&quot;quantile&quot;</code> (regresión cuantil).</p></li>
 <li><p><code>ntrees</code>: iteraciones/número de árboles que se crecerán; por defecto 100 (se puede emplear la función <code>gbm.perf()</code> para seleccionar un valor “óptimo”).</p></li>
 <li><p><code>interaction.depth</code>: profundidad de los árboles; por defecto 1 (modelo aditivo).</p></li>
 <li><p><code>n.minobsinnode</code>: número mínimo de observaciones en un nodo terminal; por defecto 10.</p></li>
@@ -493,7 +493,7 @@ gbm.fit &lt;-<span class="st"> </span><span class="kw">gbm</span>(quality <span 
 ## sulphates                       sulphates  3.086036
 ## density                           density  1.918442
 ## pH                                     pH  1.088152</code></pre>
-<p>Para estudiar el efecto de un predictor se pueden gererar gráficos parciales de residuos mediante el método <code>plot()</code>:</p>
+<p>Para estudiar el efecto de un predictor se pueden gererar gráficos de los efectos parciales mediante el método <code>plot()</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(gbm.fit, <span class="dt">i =</span> <span class="st">&quot;alcohol&quot;</span>)</code></pre></div>
 <p><img src="03-bagging_boosting_files/figure-html/unnamed-chunk-30-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>Finalmente podemos evaluar la precisión en la muestra de test empleando el código habitual:</p>

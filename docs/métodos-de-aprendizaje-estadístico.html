@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)" />
 
 
-<meta name="date" content="2020-10-27" />
+<meta name="date" content="2020-11-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -229,13 +229,21 @@ En regresión consideraremos como base el siguiente modelo general (podría ser 
 <p>Resulta claro que el modelo base general <a href="métodos-de-aprendizaje-estadístico.html#eq:modelogeneral">(1.1)</a> puede no ser adecuado para modelar variables indicadoras (o probabilidades). Muchos de los métodos de AE emplean <a href="métodos-de-aprendizaje-estadístico.html#eq:modelogeneral">(1.1)</a> para una variable auxiliar numérica (denominada puntuación o <em>score</em>) que se transforma a escala de probabilidades mediante la función logística (denominada función sigmoidal, <em>sigmoid function</em>, en ML)<a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a>: <span class="math display">\[p(s) = \frac{1}{1 + e^{-s}},\]</span> cuya inversa es la <em>función logit</em>: <span class="math display">\[\operatorname{logit}(p)=\log\left( \frac{p}{1-p} \right).\]</span></p>
 <p>Lo anterior se puede generalizar para el caso de múltiples categorías, considerando variables indicadoras de cada categoría <span class="math inline">\(Y_1, \ldots, Y_K\)</span> (es lo que se conoce como la estrategia de “uno contra todos”). En este caso típicamente: <span class="math display">\[\hat G \left(\mathbf{x} \right) = \underset{k}{\operatorname{argmax}} \left\{ \hat p_k(\mathbf{x}) : k = 1, 2, \ldots, K \right\}.\]</span></p>
 <!-- 
+Pendiente:
+
+Múltiples categorías:
+
+  Estrategia "uno contra uno"
+  
+  Otros métodos (árboles de decisión) permiten la estimación directa de las probabilidades de cada clase.
+
+
 Otra notación:
 
-$\mathcal{G}$ conjunto de posibles categorías
-
-Matrices en mayúsculas y negrita/caligráfico? 
-Mayúsculas y negrita/caligráfico con subíndice para referirse al vector columna? 
-Traspuesta al estilo de JSS 
+  $\mathcal{G}$ conjunto de posibles categorías
+  Matrices en mayúsculas y negrita/caligráfico? 
+  Mayúsculas y negrita/caligráfico con subíndice para referirse al vector columna? 
+  Traspuesta al estilo de JSS 
 -->
 </div>
 <div id="metodos-pkgs" class="section level3">

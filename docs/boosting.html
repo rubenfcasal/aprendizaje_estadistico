@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)" />
 
 
-<meta name="date" content="2020-10-27" />
+<meta name="date" content="2020-11-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -209,15 +209,22 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ol></li>
 <li><p>Dada una observación <span class="math inline">\(\mathbf{x}\)</span>, si denotamos por <span class="math inline">\(\hat y_b ( \mathbf{x} )\)</span> su clasificación utilizando árbol <span class="math inline">\(b\)</span>-ésimo, entonces <span class="math inline">\(\hat y( \mathbf{x} ) = signo \left( \sum_b s_b \hat y_b ( \mathbf{x} ) \right)\)</span> (si la suma es positiva, se clasifica la observación como perteneciente a la clase +1, en caso contrario a la clase -1).</p></li>
 </ol>
-<!-- Pendiente: Aproximación de las probabilidades: Real AdaBoost -->
+<!-- 
+Pendiente: 
+Añadir referencia: https://projecteuclid.org/euclid.aos/1016218223
+Aproximación de las probabilidades: Real AdaBoost -->
 <p>Vemos que el algoritmo AdaBoost no combina árboles independientes (como sería el caso de los bosques aleatorios, por ejemplo), sino que estos se van generando en una secuencia en la que cada árbol depende del anterior. Se utiliza siempre el mismo conjunto de datos (de entrenamiento), pero a estos datos se les van poniendo unos pesos en cada iteración que dependen de lo que ha ocurrido en la iteración anterior: se les da más peso a las observaciones mal clasificadas para que en sucesivas iteraciones se clasifiquen bien. Finalmente, la combinación de los árboles se hace mediante una suma ponderada de las <span class="math inline">\(B\)</span> clasificaciones realizadas. Los pesos de esta suma son los valores <span class="math inline">\(s_b\)</span>. Un árbol que clasifique de forma aleatoria <span class="math inline">\(e_b = 0.5\)</span> va a tener un peso <span class="math inline">\(s_b = 0\)</span> y cuando mejor clasifique el árbol mayor será su peso. Al estar utilizando clasificadores débiles (árboles pequeños) es de esperar que los pesos sean en general próximos a cero.</p>
 <p>El siguiente hito fue la aparición del método <em>gradient boosting machine</em> (<a href="https://projecteuclid.org/euclid.aos/1013203451">Friedman, 2001</a>), perteneciente a la familia de los métodos iterativos de descenso de gradientes. Entre otras muchas ventajas, este método permitió resolver no sólo problemas de clasificación sino también de regresión; y permitió la conexión con lo que se estaba haciendo en otros campos próximos como pueden ser los modelos aditivos o la regresión logística. La idea es encontrar un modelo aditivo que minimice una función de perdida utilizando predictores débiles (por ejemplo árboles).</p>
-<p>Si como función de pérdida se utiliza RSS, entonces la pérdida de utilizar <span class="math inline">\(m(x)\)</span> para predecir <span class="math inline">\(y\)</span> en los datos de entrenamiento es <span class="math display">\[L(m) = \sum_{i=1}^n L(y_i, m(x_i)) = \sum_{i=1}^n (y_i - m(x_i))^2\]</span>.</p>
+<p>Si como función de pérdida se utiliza RSS, entonces la pérdida de utilizar <span class="math inline">\(m(x)\)</span> para predecir <span class="math inline">\(y\)</span> en los datos de entrenamiento es <span class="math display">\[L(m) = \sum_{i=1}^n L(y_i, m(x_i)) = \sum_{i=1}^n (y_i - m(x_i))^2\]</span></p>
+<!-- Cambiar m por \hat m? -->
 <p>Se desea minimizar <span class="math inline">\(L(m)\)</span> con respecto a <span class="math inline">\(m\)</span> mediante el método de los gradientes, pero estos son precisamente los residuos: si <span class="math inline">\(L(m)= \frac{1}{2} (y_i - m(x_i))^2\)</span>, entonces <span class="math display">\[- \frac{\partial L(y_i, m(x_i))} {\partial m(x_i)} = y_i - m(x_i) = r_i\]</span> Una ventaja de esta aproximación es que puede extenderse a otras funciones de pérdida, por ejemplo si hay valores atípicos se puede considerar como función de pérdida el error absoluto.</p>
 <p>Veamos el algoritmo para un problema de regresión utilizando árboles de decisión. Es un proceso iterativo en el que lo que se <em>ataca</em> no son los datos directamente, sino los residuos (gradientes) que van quedando con los sucesivos ajustes, siguiendo una idea greedy (la optimización se resuelve en cada iteración, no globalmente).</p>
 <ol style="list-style-type: decimal">
 <li><p>Seleccionar el número de iteraciones <span class="math inline">\(B\)</span>, el parámetro de regularización <span class="math inline">\(\lambda\)</span> y el número de cortes de cada árbol <span class="math inline">\(d\)</span>.</p></li>
 <li><p>Establecer una predicción inicial constante y calcular los residuos de los datos <span class="math inline">\(i\)</span> de la muestra de entrenamiento: <span class="math display">\[\hat m (x) = 0, \ r_i = y_i\]</span></p></li>
+</ol>
+<!-- Pendiente:  $$\hat m (x) = \bar y, \ r_i = y_i - \bar y$$-->
+<ol style="list-style-type: decimal">
 <li><p>Para <span class="math inline">\(b = 1, 2,\ldots, B\)</span>, repetir:</p>
 <ol style="list-style-type: lower-alpha">
 <li><p>Ajustar un árbol de regresión <span class="math inline">\(\hat m^b\)</span> con <span class="math inline">\(d\)</span> cortes utilizando los residuos como respuesta: <span class="math inline">\((X, r)\)</span>.</p></li>

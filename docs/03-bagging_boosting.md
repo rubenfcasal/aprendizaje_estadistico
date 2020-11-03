@@ -440,7 +440,7 @@ plotPartial(pdp2)
 
 <img src="03-bagging_boosting_files/figure-html/unnamed-chunk-13-2.png" width="80%" style="display: block; margin: auto;" />
 
-En este caso también puede ser de utilidad el paquete [`randomForestExplainer`](https://modeloriented.github.io/randomForestExplainer)).
+En este caso también puede ser de utilidad el paquete [`randomForestExplainer`](https://modeloriented.github.io/randomForestExplainer).
 
 <!-- 
 Pendiente: Análisis e interpretación del modelo
@@ -538,7 +538,10 @@ En este caso resulta más cómodo recodificar la variable indicadora $Y$ como 1 
     
 1. Dada una observación $\mathbf{x}$, si denotamos por $\hat y_b ( \mathbf{x} )$ su clasificación utilizando árbol $b$-ésimo, entonces $\hat y( \mathbf{x} ) = signo \left( \sum_b s_b \hat y_b ( \mathbf{x} ) \right)$ (si la suma es positiva, se clasifica la observación como perteneciente a la clase +1, en caso contrario a la clase -1).
 
-<!-- Pendiente: Aproximación de las probabilidades: Real AdaBoost -->
+<!-- 
+Pendiente: 
+Añadir referencia: https://projecteuclid.org/euclid.aos/1016218223
+Aproximación de las probabilidades: Real AdaBoost -->
 
 Vemos que el algoritmo AdaBoost no combina árboles independientes (como sería el caso de los bosques aleatorios, por ejemplo), sino que estos se van generando en una secuencia en la que cada árbol depende del anterior. Se utiliza siempre el mismo conjunto de datos (de entrenamiento), pero a estos datos se les van poniendo unos pesos en cada iteración que dependen de lo que ha ocurrido en la iteración anterior: se les da más peso a las observaciones mal clasificadas para que en sucesivas iteraciones se clasifiquen bien. Finalmente, la combinación de los árboles se hace mediante una suma ponderada de las $B$ clasificaciones realizadas. Los pesos de esta suma son los valores $s_b$. Un árbol que clasifique de forma aleatoria $e_b = 0.5$ va a tener un peso $s_b = 0$ y cuando mejor clasifique el árbol mayor será su peso. Al estar utilizando clasificadores débiles (árboles pequeños) es de esperar que los pesos sean en general próximos a cero.
 
@@ -546,7 +549,9 @@ El siguiente hito fue la aparición del método *gradient boosting machine* ([Fr
 Entre otras muchas ventajas, este método permitió resolver no sólo problemas de clasificación sino también de regresión; y permitió la conexión con lo que se estaba haciendo en otros campos próximos como pueden ser los modelos aditivos o la regresión logística. 
 La idea es encontrar un modelo aditivo que minimice una función de perdida utilizando predictores débiles (por ejemplo árboles). 
 
-Si como función de pérdida se utiliza RSS, entonces la pérdida de utilizar $m(x)$ para predecir $y$ en los datos de entrenamiento es $$L(m) = \sum_{i=1}^n L(y_i, m(x_i)) = \sum_{i=1}^n (y_i - m(x_i))^2$$.
+Si como función de pérdida se utiliza RSS, entonces la pérdida de utilizar $m(x)$ para predecir $y$ en los datos de entrenamiento es $$L(m) = \sum_{i=1}^n L(y_i, m(x_i)) = \sum_{i=1}^n (y_i - m(x_i))^2$$
+
+<!-- Cambiar m por \hat m? -->
 
 Se desea minimizar $L(m)$ con respecto a $m$ mediante el método de los gradientes, pero estos son precisamente los residuos: si $L(m)= \frac{1}{2} (y_i - m(x_i))^2$, entonces 
 $$- \frac{\partial L(y_i, m(x_i))} {\partial m(x_i)} = y_i - m(x_i) = r_i$$
@@ -557,6 +562,8 @@ Veamos el algoritmo para un problema de regresión utilizando árboles de decisi
 1. Seleccionar el número de iteraciones $B$, el parámetro de regularización $\lambda$ y el número de cortes de cada árbol $d$.
 
 1. Establecer una predicción inicial constante y calcular los residuos de los datos $i$ de la muestra de entrenamiento: $$\hat m (x) = 0, \ r_i = y_i$$
+
+<!-- Pendiente:  $$\hat m (x) = \bar y, \ r_i = y_i - \bar y$$-->
 
 1. Para $b = 1, 2,\ldots, B$, repetir:
 
@@ -642,7 +649,7 @@ ada(formula, data, loss = c("exponential", "logistic"),
 
 * `loss`: función de pérdida; por defecto `"exponential"` (algoritmo AdaBoost).
 
-* `type`: algoritmo boosting; por defecto `"discrete"` que implementa el algoritmo AdaBoost original que predice la variable respuesta. Otras alternativas son `"real"`, que implementa el algoritmo *Real AdaBoost* (Friedman *et al*., 2000) que permite estimar las probabilidades, y `"gentle"` , versión modificada del anterior que emplea un método Newton de optimización por pasos (en lugar de optimización exacta).
+* `type`: algoritmo boosting; por defecto `"discrete"` que implementa el algoritmo AdaBoost original que predice la variable respuesta. Otras alternativas son `"real"`, que implementa el algoritmo *Real AdaBoost* ([Friedman *et al*., 2000](https://projecteuclid.org/euclid.aos/1016218223)) que permite estimar las probabilidades, y `"gentle"` , versión modificada del anterior que emplea un método Newton de optimización por pasos (en lugar de optimización exacta).
 
 * `iter`: número de iteraciones boosting; por defecto 50.
 
@@ -743,7 +750,7 @@ Podemos evaluar la precisión en la muestra de test empleando el procedimiento h
 
 ```r
 pred <- predict(ada.boost, newdata = test)
-caret::confusionMatrix(pred, test$taste)
+caret::confusionMatrix(pred, test$taste, positive = "good")
 ```
 
 ```
@@ -763,16 +770,16 @@ caret::confusionMatrix(pred, test$taste)
 ##                                           
 ##  Mcnemar's Test P-Value : 4.865e-05       
 ##                                           
-##             Sensitivity : 0.4048          
-##             Specificity : 0.9036          
-##          Pos Pred Value : 0.6800          
-##          Neg Pred Value : 0.7500          
-##              Prevalence : 0.3360          
-##          Detection Rate : 0.1360          
-##    Detection Prevalence : 0.2000          
+##             Sensitivity : 0.9036          
+##             Specificity : 0.4048          
+##          Pos Pred Value : 0.7500          
+##          Neg Pred Value : 0.6800          
+##              Prevalence : 0.6640          
+##          Detection Rate : 0.6000          
+##    Detection Prevalence : 0.8000          
 ##       Balanced Accuracy : 0.6542          
 ##                                           
-##        'Positive' Class : bad             
+##        'Positive' Class : good            
 ## 
 ```
 
@@ -847,7 +854,7 @@ caret.ada0
 ```
 
 ```r
-confusionMatrix(predict(caret.ada0, newdata = test), test$taste)
+confusionMatrix(predict(caret.ada0, newdata = test), test$taste, positive = "good")
 ```
 
 ```
@@ -867,16 +874,16 @@ confusionMatrix(predict(caret.ada0, newdata = test), test$taste)
 ##                                           
 ##  Mcnemar's Test P-Value : 0.003861        
 ##                                           
-##             Sensitivity : 0.4405          
-##             Specificity : 0.8675          
-##          Pos Pred Value : 0.6271          
-##          Neg Pred Value : 0.7539          
-##              Prevalence : 0.3360          
-##          Detection Rate : 0.1480          
-##    Detection Prevalence : 0.2360          
+##             Sensitivity : 0.8675          
+##             Specificity : 0.4405          
+##          Pos Pred Value : 0.7539          
+##          Neg Pred Value : 0.6271          
+##              Prevalence : 0.6640          
+##          Detection Rate : 0.5760          
+##    Detection Prevalence : 0.7640          
 ##       Balanced Accuracy : 0.6540          
 ##                                           
-##        'Positive' Class : bad             
+##        'Positive' Class : good            
 ## 
 ```
 
@@ -887,7 +894,7 @@ Por este motivo se suelen seguir distintos procedimientos de búsqueda. Por ejem
 ```r
 set.seed(1)
 caret.ada1 <- train(taste ~ ., method = "ada", data = train,
-                    tuneGrid = data.frame(iter =  50, maxdepth = 1,
+                    tuneGrid = data.frame(iter =  150, maxdepth = 3,
                                  nu = c(0.3, 0.1, 0.05, 0.01, 0.005)),
                    trControl = trainControl(method = "cv", number = 5))
 caret.ada1
@@ -905,22 +912,22 @@ caret.ada1
 ## Summary of sample sizes: 800, 801, 800, 800, 799 
 ## Resampling results across tuning parameters:
 ## 
-##   nu     Accuracy   Kappa     
-##   0.005  0.6790316  0.32800074
-##   0.010  0.6660117  0.16369520
-##   0.050  0.6780120  0.08776567
-##   0.100  0.6989822  0.18862836
-##   0.300  0.7430322  0.36176383
+##   nu     Accuracy   Kappa    
+##   0.005  0.7439722  0.3723405
+##   0.010  0.7439822  0.3725968
+##   0.050  0.7559773  0.4116753
+##   0.100  0.7619774  0.4365242
+##   0.300  0.7580124  0.4405127
 ## 
-## Tuning parameter 'iter' was held constant at a value of 50
+## Tuning parameter 'iter' was held constant at a value of 150
 ## Tuning
-##  parameter 'maxdepth' was held constant at a value of 1
+##  parameter 'maxdepth' was held constant at a value of 3
 ## Accuracy was used to select the optimal model using the largest value.
-## The final values used for the model were iter = 50, maxdepth = 1 and nu = 0.3.
+## The final values used for the model were iter = 150, maxdepth = 3 and nu = 0.1.
 ```
 
 ```r
-confusionMatrix(predict(caret.ada1, newdata = test), test$taste)
+confusionMatrix(predict(caret.ada1, newdata = test), test$taste, positive = "good")
 ```
 
 ```
@@ -928,28 +935,28 @@ confusionMatrix(predict(caret.ada1, newdata = test), test$taste)
 ## 
 ##           Reference
 ## Prediction bad good
-##       bad   35   16
-##       good  49  150
+##       bad   40   21
+##       good  44  145
 ##                                          
 ##                Accuracy : 0.74           
 ##                  95% CI : (0.681, 0.7932)
 ##     No Information Rate : 0.664          
 ##     P-Value [Acc > NIR] : 0.005841       
 ##                                          
-##                   Kappa : 0.3547         
+##                   Kappa : 0.375          
 ##                                          
-##  Mcnemar's Test P-Value : 7.214e-05      
+##  Mcnemar's Test P-Value : 0.006357       
 ##                                          
-##             Sensitivity : 0.4167         
-##             Specificity : 0.9036         
-##          Pos Pred Value : 0.6863         
-##          Neg Pred Value : 0.7538         
-##              Prevalence : 0.3360         
-##          Detection Rate : 0.1400         
-##    Detection Prevalence : 0.2040         
-##       Balanced Accuracy : 0.6601         
+##             Sensitivity : 0.8735         
+##             Specificity : 0.4762         
+##          Pos Pred Value : 0.7672         
+##          Neg Pred Value : 0.6557         
+##              Prevalence : 0.6640         
+##          Detection Rate : 0.5800         
+##    Detection Prevalence : 0.7560         
+##       Balanced Accuracy : 0.6748         
 ##                                          
-##        'Positive' Class : bad            
+##        'Positive' Class : good           
 ## 
 ```
 
@@ -970,7 +977,7 @@ gbm( formula, distribution = "bernoulli", data, n.trees = 100,
 
 * `distribution` (opcional): texto con el nombre de la distribución (o lista con el nombre en `name` y parámetros adicionales en los demás componentes) que determina la función de pérdida.
 Si se omite se establecerá a partir del tipo de la respuesta: `"bernouilli"` (regresión logística) si es una variable dicotómica 0/1, `"multinomial"` (regresión multinomial) si es un factor (no se recomienda) y `"gaussian"` (error cuadrático) en caso contrario.
-Otras opciones que pueden ser de interés son: `"laplace"` (error absoluto), `"adaboost"` (pérdida exponencial para respuestas dicotómicas 0/1), `"huberized"` (pérdida de Huber para respuestas dicotómicas), `"poisson"` y `"quantile"`.
+Otras opciones que pueden ser de interés son: `"laplace"` (error absoluto), `"adaboost"` (pérdida exponencial para respuestas dicotómicas 0/1), `"huberized"` (pérdida de Huber para respuestas dicotómicas 0/1), `"poisson"` (regresión de Poisson) y `"quantile"` (regresión cuantil).
 
 * `ntrees`: iteraciones/número de árboles que se crecerán; por defecto 100 (se puede emplear la función `gbm.perf()` para seleccionar un valor "óptimo").
 
@@ -1042,7 +1049,7 @@ summary(gbm.fit)
 ## pH                                     pH  1.088152
 ```
 
-Para estudiar el efecto de un predictor se pueden gererar gráficos parciales de residuos mediante el método `plot()`:
+Para estudiar el efecto de un predictor se pueden gererar gráficos de los efectos parciales mediante el método `plot()`:
 
 
 ```r
