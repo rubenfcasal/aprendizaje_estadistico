@@ -1049,7 +1049,7 @@ summary(gbm.fit)
 ## pH                                     pH  1.088152
 ```
 
-Para estudiar el efecto de un predictor se pueden gererar gráficos de los efectos parciales mediante el método `plot()`:
+Para estudiar el efecto de un predictor se pueden generar gráficos de los efectos parciales mediante el método `plot()`:
 
 
 ```r

@@ -38,6 +38,10 @@ Molnar, C. (2020). [Interpretable Machine Learning. A Guide for Making Black Box
 
 Torgo, L. (2011). *Data Mining with R: Learning with Case Studies*. Chapman & Hall/CRC Press.    
 
+Vapnik, V. (1998). *Statistical Learning Theory*. Wiley.
+
+Vapnik, V. (2010). *The Nature of Statistical Learning Theory*. Springer.
+
 
 ### Artículos {-}
 
@@ -45,15 +49,21 @@ Agor, J. y Özaltın, O.Y. (2019). Feature selection for classification models v
 
 Biecek, P. (2018). [DALEX: explainers for complex predictive models in R](http://www.jmlr.org/papers/volume19/18-416/18-416.pdf). *The Journal of Machine Learning Research*, 19(1), 3245-3249.
 
+Boser, B., Guyon, I. y Vapnik, V. (1992). A Training Algorithm for Optimal Margin Classifiers. *Proceedings of the Fifth Annual Workshop on Computational Learning Theory*, 144–152.
+
 Breiman, L. (1996). Bagging predictors. *Machine Learning*, 24(2), 123-140. 
 
 Breiman, L. (2001). Random Forests. *Machine Learning*, 45(1), 5–32.
 
 Breiman, L. (2001). Statistical Modeling: The Two Cultures (with comments and a rejoinder by the author). *Statistical Science*, 16, 199-231.
 
+Cortes, C. y Vapnik, V. (1995). Support–Vector Networks. *Machine Learning*, 20(3), 273–297.
+
 Culp, M., Johnson, K. y Michailidis, G. (2006). [ada: an R Package for Stochastic Boosting](https://www.jstatsoft.org/article/view/v017i02). *Journal of Statistical Software*, 17(2), 1-27.
 
 Dietterich, T.G. (2000). An Experimental Comparison of Three Methods for Constructing Ensembles of Decision Trees: Bagging, Boosting, and Randomization. *Machine Learning*, 40(2), 139–158.
+
+Drucker, H., Burges, C., Kaufman, L., Smola, A. y Vapnik, V. (1997). Support Vector Regression Machines. *Advances in Neural Information Processing Systems*, 155–161.
 
 Dunson D.B. (2018). Statistics in the big data era: Failures of the machine. *Statistics and Probability Letters*, 136, 4-9.
 
@@ -71,6 +81,8 @@ Friedman, J.H. y Popescu, B.E. (2008). Predictive learning via rule ensembles. *
 Goldstein, A., Kapelner, A., Bleich, J. y Pitkin, E. (2015). [Peeking inside the black box: Visualizing statistical learning with plots of individual conditional expectation](https://doi.org/10.1080/10618600.2014.907095). *Journal of Computational and Graphical Statistics*, 24(1), 44-65.
 
 Greenwell, B.M. (2017). [pdp: An R Package for Constructing Partial Dependence Plots](https://journal.r-project.org/archive/2017/RJ-2017-016/index.html). *The R Journal*, 9(1), 421-436.
+
+Hastie, T., Rosset, S., Tibshirani, R. y Zhu, J. (2004). [The entire regularization path for the support vector machine](https://www.jmlr.org/papers/v5/hastie04a.html). *Journal of Machine Learning Research*, 5, 1391-1415.
 
 Kearns, M. y Valiant, L. (1989). Cryptographic Limitations on Learning Boolean Formulae and Finite Automata. *Proceedings of the Twenty-First Annual ACM Symposium on Theory of Computing*.
 

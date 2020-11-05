@@ -1,0 +1,236 @@
+# Máquinas de soporte vectorial {#svm}
+
+```{r , child = '_global_options.Rmd'}
+```
+
+Las máquinas de soporte vectorial (*support vector machines*, SVM) son métodos estadísticos que Vladimir Vapnik empezó a desarrollar a mediados de 1960, inicialmente para problemas de clasificación binaria (problemas de clasificación con dos categorias), basados en la idea de separar los datos mediante hiperplanos. Actualmente existen extensiones dentro de esta metodología para clasificación con más de dos categorías, para regresión y para detección de datos atípicos. El nombre proviene de la utilización de vectores que hacen de soporte para maximizar la separación entre los datos y el hiperplano.
+
+La popularidad de las máquinas de soporte vectorial creció a partir de los años 90 cuando los incorpora la comunidad informática. Se considera una metodología muy flexible y con buen rendimiento en un amplio abanico de situaciones, aunque por lo general no es la que consigue los mejores rendimientos. Dos referencias ya clásicas son Vapnik (1998) y Vapnik (2010).
+
+Siguiendo a James *et al.* (2013) distinguiremos en nuestra exposición entre clasificadores de máximo margen (*maximal margin classifiers*), clasificadores de soporte vectorial (*support vector classifiers*) y máquinas de soporte vectorial (*support vector machines*).
+
+
+## Clasificadores de máximo margen 
+
+Los clasificadores de máximo margen (*maximal margin classifiers*; también denominados *hard margin classifiers*) son un método de clasificación binaria que se utiliza cuando hay una frontera lineal que separa perfectamente los datos de entrenamiento de una categoría de los de la otra. Por conveniencia, etiquetamos las dos categorías como +1/-1, es decir, los valores de la variable respuesta $Y \in \{-1, 1\}$. Y suponemos que existe un hiperplano
+\[ \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_p X_p = 0,\]
+donde $p$ es el número de variables predictoras, que tiene la propiedad de separar los datos de entrenamiento según la categoría a la que pertenecen, es decir, 
+\[ y_i(\beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \ldots + \beta_p x_{pi}) > 0\]
+para todo $i = 1, 2, \ldots, n$, siendo $n$ el número de datos de entrenamiento.
+
+Una vez tenemos el hiperplano, clasificar una nueva observación $\mathbf{x}$ se reduce a calcular el signo de
+\[m(\mathbf{x}) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \ldots + \beta_p x_p\]
+Si el signo es positivo, se clasifica como perteneciente a la categoría +1, y si es negativo a la categoría -1. Además, el valor absoluto de $m(\mathbf{x})$ nos da una idea de la distancia entre la observación y la frontera que define el hiperplano. En concreto 
+$$\frac{y_i}{\sqrt {\sum_{j=1}^p \beta_j^2}}(\beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \ldots + \beta_p x_{pi})$$
+sería la distancia de la observación $i$-ésima al hiperplano.
+Por supuesto, aunque clasifique los datos de entrenamiento sin error, no hay ninguna garantía de que clasifique bien nuevas observaciones, por ejemplo los datos de test. De hecho, si $p$ es grande es fácil que haya un sobreajuste.
+
+Realmente, si existe al menos un hiperplano que separa perfectamente los datos de entrenamiento de las dos categorías, entonces va a haber infinitos. El objetivo es seleccionar un hiperplano. Para ello, dado un hiperplano, se calculan sus distancias a todos los datos de entrenamiento y se define el *margen* como la menor de esas distancias. El método *maximal margin classifier* lo que hace es seleccinar, de los infinitos hiperplanos, aquel que tiene el mayor margen. Fijémonos en que siempre va a haber varias observaciones que equidistan del hiperplano de máximo márgen, y cuya distancia es precisamente el margen. Esas observaciones reciben el nombre de *vectores soporte* y son las que dan nombre a esta metodología.
+
+```{r echo=FALSE}
+abcline <- function(a, b, c, ...) abline(-c/b, -a/b, ...)
+
+plot_SMC <- function (n = 100, rho = 0.7, cost = 100, ...) {
+  # NOTA: cost en este caso C, equivalente a 1/K
+  # n = 100; rho = 0.7; cost = 100
+  # Se simula una normal bidimensional con dependencia
+  set.seed(1)
+  x1 <- rnorm(n)
+  x2 <- rho*x1 + sqrt(1 - rho^2)*rnorm(n)
+  # Respuesta -1/1
+  y = sample(c(-1, 1), n, replace = TRUE)
+  # Se "descentran" las clases
+  x1 <- x1 - y
+  x2 <- x2 + y
+  data <- data.frame(x1 = x1, x2 = x2, y = y)
+  # SVM
+  sv <- e1071::svm(y ~ ., data = data, kernel = "linear",
+                   scale = FALSE, type = "C-classification",
+                   cost = cost)
+  coef <- with(sv, c(colSums(drop(coefs)*SV), -rho))
+  # Representar
+  plot(x1, x2, col = factor(y),
+       xlab = expression(X[1]), ylab = expression(X[2]), ...)
+  abcline(coef[1], coef[2], coef[3], lwd = 2)
+  abcline(coef[1], coef[2], coef[3] - 1, lty = 2)
+  abcline(coef[1], coef[2], coef[3] + 1, lty = 2)
+  # index <- sv$index
+  index <- with(sv, index[abs(coefs) < cost])
+  points(x1[index], x2[index], col = factor(y[index]), pch = 19)
+}
+plot_SMC()
+```
+
+Matemáticamente, dadas las $n$ observaciones de entrenamiento $\mathbf{x_1}, \mathbf{x_2}, \ldots, \mathbf{x_n}$, el clasificador de máximo margen es la solución del problema de optimización
+\[max_{\beta_0, \beta_1,\ldots, \beta_p} M\]
+sujeto a
+\[\sum_{j=1}^p \beta_j^2 = 1\]
+\[ y_i(\beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \ldots + \beta_p x_{pi}) \ge M \ \ \forall i\]
+
+Si, como estamos suponiendo en esta sección, los datos de entrenamiento son perfectamente separables mediante un hiperplano, entonces el problema anterior va a tener solución con $M>0$, y $M$ va a ser el margen. 
+
+Una forma equivalente (y mas conveniente) de formular el problema anterior, utilizando $M = 1/\lVert \boldsymbol{\beta} \rVert$ con $\boldsymbol{\beta} = (\beta_1, \beta_2, \ldots, \beta_p)$, es
+\[\mbox{min}_{\beta_0, \boldsymbol{\beta}} \lVert \boldsymbol{\beta} \rVert\]
+sujeto a
+\[ y_i(\beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \ldots + \beta_p x_{pi}) \ge 1 \ \ \forall i\]
+El problema anterior de optimización es convexo (función objetivo cuadrática con restricciones lineales).
+
+Hay una característica de este método que es de destacar: así como en otros métodos, si se modifica cualquiera de los datos se modifica también el modelo, en este caso el modelo solo depende de los (pocos) datos que son vector soporte, y la modificación de cualquier otro dato no afecta a la construcción del modelo (siempre que, al *moverse* el dato, no cambie el margen).
+
+
+## Clasificadores de soporte vectorial 
+
+Los clasificadores de soporte vectorial (*support vector classifiers*; también denominados *soft margin classifiers*) fueron introducidos en Costes y Vapnik (1995). Son una extensión del problema anterior que se utiliza cuando se desea clasificar mediante un hiperplano pero no existe ninguno que separe perfectamente los datos de entrenamiento según su categoría. En este caso no queda más remedio que admitir errores en la clasificación de algunos datos de entrenamiento (como hemos visto que pasa con todas las metodologías), que van a estar en el lado equivocado del hiperplano. Y en lugar de hablar de un margen se habla de un margen débil (*soft margin*).
+
+Este enfoque, consistente en aceptar que algunos datos de entrenamiento van a estar mal clasificados, puede ser preferible aunque exista un hiperplano que resuelva el problema de la sección anterior, ya que los clasificadores de soporte vectorial son más robustos que los clasificadores de máximo margen.
+
+Veamos la formulación matemática del problema: 
+\[\mbox{max}_{\beta_0, \beta_1,\ldots, \beta_p, \epsilon_1,\ldots, \epsilon_n} M\]
+sujeto a
+\[\sum_{j=1}^p \beta_j^2 = 1\]
+\[ y_i(\beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \ldots + \beta_p x_{pi}) \ge M(1 - \epsilon_i) \ \ \forall i\]
+\[\sum_{i=1}^n \epsilon_i \le K\]
+\[\epsilon_i \ge 0 \ \ \forall i\]
+
+Las variables $\epsilon_i$ son las variables de holgura (*slack variables*). Quizás resultase más intuitivo introducir las holguras en términos absolutos, como $M -\epsilon_i$, pero eso daría lugar a un problema no convexo, mientras que escribiendo la restricción en términos relativos como $M(1 - \epsilon_i)$ el problema pasa a ser convexo. Pero en esta formulación el elemento clave es la introducción del hiperparámetro $K$, necesariamente no negativo, que se puede interpretar como la tolerancia al error. De hecho, es fácil ver que no puede haber más de $K$ datos de entrenamiento incorrectamente clasificados, ya que si un dato está mal clasificado entonces $\epsilon_i > 1$. En el caso extremo de utilizar $K = 0$, estaríamos en el caso de un *hard margin classifier*. La elección del valor de $K$ también se puede interpretar como una penalización por la complejidad del modelo, y por tanto en términos del balance entre el sesgo y la varianza: valores pequeños van a dar lugar a modelos muy complejos, con mucha varianza y poco sesgo (con el consiguiente riesgo de sobreajuste); y valores grandes a modelos con mucho sesgo y poca varianza. El hiperparámetro $K$ se puede seleccionar de modo óptimo por los procedimientos ya conocidos, tipo bootstrap o validación cruzada.
+
+Una forma equivalente de formular el problema (cuadrático con restricciones lineales) es
+\[\mbox{min}_{\beta_0, \boldsymbol{\beta}} \lVert \boldsymbol{\beta} \rVert\]
+sujeto a
+\[ y_i(\beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \ldots + \beta_p x_{pi}) \ge 1 - \epsilon_i \ \ \forall i\]
+\[\sum_{i=1}^n \epsilon_i \le K\]
+\[\epsilon_i \ge 0 \ \ \forall i\]
+
+En la práctica, por una conveniencia de cálculo, se utiliza la siguiente formulación, también equivalente,
+\[\mbox{min}_{\beta_0, \boldsymbol{\beta}} \frac{1}{2}\lVert \boldsymbol{\beta} \rVert^2 + C \sum_{i=1}^n \epsilon_i\]
+sujeto a
+\[ y_i(\beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \ldots + \beta_p x_{pi}) \ge 1 - \epsilon_i \ \ \forall i\]
+\[\epsilon_i \ge 0 \ \ \forall i\]
+
+Aunque el problema a resolver es el mismo, y por tanto también la solución, hay que tener cuidado con la interpretación, pues el hiperparámetro $K$ se ha sustituido por $C$. Este nuevo parámetro es el que nos vamos a encontrar en los ejercicios prácticos y tiene una interpretación inversa a $K$. El parámetro $C$ es la penalización por mala clasificación (coste que supone que un dato de entrenamiento esté mal clasificado), y por tanto el *hard margin classifier* se obtiene para valores muy grandes ($C = \infty$ se corresponde con $K = 0$). Esto es algo confuso, ya que no se corresponde con la interpretación habitual de *penalización por complejidad*.
+
+```{r echo=FALSE, fig.height=6, fig.width=12, out.width = "90%"}
+old.par <- par(mfrow = c(1, 2))
+plot_SMC(rho = 0.4, cost = 0.01,  main = "C pequeño")
+plot_SMC(rho = 0.4, main = "C grande")
+par(old.par)
+```
+
+En este contexto, los vectores soporte van a ser no solo los datos de entrenamiento que están (correctamente clasificados) a una distancia $M$ del hiperplano, sino también aquellos que están incorrectamente clasificados e incluso los que están a una distancia inferior a $M$. Como se comentó en la sección anterior, estos son los datos que definen el modelo, que es por tanto robusto a las observaciones que están lejos del hiperplano.
+
+Aunque no vamos a entrar en detalles sobre como se obtiene la solución del problema de optimización, sí resulta interesante destacar que el clasificador de soporte vectorial
+\[m(\mathbf{x}) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \ldots + \beta_p x_p\]
+puede representarse como
+\[m(\mathbf{x}) = \beta_0 + \sum_{i=1}^n \alpha_i \mathbf{x}^t \mathbf{x_i}\]
+donde $\mathbf{x}^t \mathbf{x_i}$ es el producto escalar entre el vector $\mathbf{x}$ del dato a clasificar y el vector $\mathbf{x_i}$ del dato de entrenamiento $i$-ésimo. Asimismo, los coeficientes $\beta_0, \alpha_1, \ldots, \alpha_n$ se obtienen (exclusivamente) a partir de los productos escalares $\mathbf{x_i}^t \mathbf{x_j}$ de los distintos pares de datos de entrenamiento y de las respuestas $y_i$. Y más aún, el sumatorio anterior se puede reducir a los índices que corresponden a vectores soporte ($i\in S$), al ser los demás coeficientes nulos:
+\[m(\mathbf{x}) = \beta_0 + \sum_{i\in S} \alpha_i \mathbf{x}^t \mathbf{x_i}\]
+
+## Máquinas de soporte vectorial
+
+De la misma manera que en el capítulo dedicado a árboles se comentó que estos serán efectivos en la medida en la que los datos se separen adecuadamente utilizando particiones basadas en rectángulos, los dos métodos de clasificación que hemos visto hasta ahora serán efectivos si hay una frontera lineal que separe los datos de las dos categorías. En caso contrario, un clasificador de soporte vectorial resultará inadecuado. Una solución natural es sustituir el hiperplano, lineal en esencia, por otra función que dependa de las variables predictoras $X_1,X_2, \ldots, X_n$, utilizando por ejemplo una expresión polinómica o incluso una expresión que no sea aditiva en los predictores. Pero esta solución puede resultar muy compleja computacionalmente. 
+
+En Boser *et al.* (1992) se propuso sustituir, en todos los cálculos que conducen a la expresión
+\[m(\mathbf{x}) = \beta_0 + \sum_{i\in S} \alpha_i \mathbf{x}^t \mathbf{x_i}\]
+los productos escalares $\mathbf{x}^t \mathbf{x_i}$, $\mathbf{x_i}^t \mathbf{x_j}$ por funciones alternativas de los datos que reciben el nombre de funciones *kernel*, obteniendo la máquina de soporte vectorial 
+\[m(\mathbf{x}) = \beta_0 + \sum_{i\in S} \alpha_i K(\mathbf{x}, \mathbf{x_i})\]
+
+Algunas de las funciones kernel más utilizadas son:
+
+- Kernel lineal
+    \[K(\mathbf{x}, \mathbf{y}) = \mathbf{x}^t \mathbf{y}\]
+
+- Kernel polinómico
+    \[K(\mathbf{x}, \mathbf{y}) = (1 + \gamma \mathbf{x}^t \mathbf{y})^d\]
+
+- Kernel radial
+    \[K(\mathbf{x}, \mathbf{y}) = \mbox{exp} (-\gamma \| \mathbf{x} - \mathbf{y} \|^2)\]
+
+- Tangente hiperbólica
+    \[K(\mathbf{x}, \mathbf{y}) = \mbox{tanh} (1 + \gamma \mathbf{x}^t \mathbf{y})\]
+
+Antes de construir el modelo, es recomendable centrar y reescalar los datos para evitar que los valores grandes *ahoguen* al resto de los datos. Por supuesto, tiene que hacerse la misma transformación a todos los datos, incluidos los datos de test. La posibilidad de utilizar distintos kernels da mucha flexibilidad a esta metodología, pero es muy importante seleccionar adecuadamente los parámetros de la función kernel ($\gamma,d$) y el parámetro $C$ para evitar sobreajustes.
+
+```{r echo=FALSE, fig.height=12, fig.width=12, out.width = "90%"}
+plot_SvM <- function (n = 100, rho = 0.4, cost = 100, gamma = 0.5, ...) {
+  # n = 100; rho = 0.4; cost = 1; gamma = 1
+  # Se simula una normal bidimensional con dependencia
+  set.seed(1)
+  x1 <- rnorm(n)
+  x2 <- rho*x1 + sqrt(1 - rho^2)*rnorm(n)
+  # Respuesta -1/1
+  y = sample(c(-1, 1), n, replace = TRUE)
+  # Se "descentran" las clases
+  x1 <- x1 - y
+  x2 <- x2 + y
+  data <- data.frame(x1 = x1, x2 = x2, y = y)
+  # SVM
+  sv <- e1071::svm(y ~ ., data = data, kernel = "radial",
+                   gamma = gamma, cost = cost,
+                   scale = FALSE, type = "C-classification")
+  ngrid <- 200
+  x1.new <- seq(min(x1), max(x1), len = ngrid)
+  x2.new <- seq(min(x2), max(x2), len = ngrid)
+  z <- predict(sv, newdata = expand.grid(x1 = x1.new, x2 = x2.new),
+               decision.values = TRUE)
+  z <- matrix(attr(z, "decision.values"), nrow = ngrid)
+  lines <- contourLines(x1.new, x2.new, z,
+                        levels = c(-1, 0, 1))
+  plot(x1, x2, col = factor(y),
+       xlab = expression(X[1]), ylab = expression(X[2]), ...)
+  lapply(lines, function(l) 
+    if(l$level == 0) lines(l, lwd = 2) else lines(l, lty = 2))
+  # index <- sv$index
+  index <- with(sv, index[abs(coefs) < cost])
+  points(x1[index], x2[index], col = factor(y[index]), pch = 19)
+}
+
+
+old.par <- par(mfrow = c(2, 2))
+plot_SvM(cost = 1, gamma = 0.1, main = bquote(gamma~"pequeño, C pequeño"))
+plot_SvM(cost = 1, gamma = 1, main = bquote(gamma~"grande, C pequeño"))
+plot_SvM(cost = 100, gamma = 0.1, main = bquote(gamma~"pequeño, C grande"))
+plot_SvM(cost = 100, gamma = 1, main = bquote(gamma~"grande, C grande"))
+par(old.par)
+```
+
+## Clasificación con más de dos categorías
+
+La metodología *support vector machine* está específicamente diseñada para clasificar cuando hay exactamente dos categorías. En la literatura se pueden encontrar varias propuestas para extenderla al caso de más de dos categorías, aunque las dos más populares son también las más sencillas.
+
+La primera opción consiste en construir tantos modelos como parejas de categorías hay, en un enfoque de *uno contra uno*. Dada una nueva observación a clasificar, se mira en cada uno de los modelos en que categoría la clasifica. Finalmente se hace un recuento y gana la categoría con más *votos*.
+
+La alternativa es llevar a cabo un enfoque de *uno contra todos*. Para cada categoría se contruye el modelo que considera esa categoría frente a todas las demás agrupadas como una sola y, para la observación a clasificar, se considera su distancia con la frontera. Se clasifica la observación como perteneciente a la categoría con mayor distancia.
+
+
+## Regresión
+
+Aunque la metodología SVM está concebida para problemas de clasificación, ha habido varios intentos de adaptar su filosofía a problemas de regresión. En esta sección vamos a comentar muy por encima el enfoque seguido en Drucker *et al.* (1997), con un fuerte enfoque en la robustez. Recordemos que, en el contexto de la clasificación, el modelo SVM va a depender de unos pocos datos: los vectores soporte. En regresión, si se utiliza RSS como criterio de error, todos los datos van a influir en el modelo y además, al estar los errores al cuadrado, los valores atípicos van a tener mucha influencia, muy superior a la que se tendría si se utilizase, por ejemplo, el valor absoluto. Una alternativa, poco intuitiva pero efectiva, es fijar los hiperparámetros $\epsilon,c > 0$ como umbral y  coste, respectivamente, y definir la función de pérdidas 
+\[
+L_{\epsilon,c} (x) = \left\{ \begin{array}{ll}
+  0 & \mbox{si } |x|< \epsilon \\
+  (|x| - \epsilon)c & \mbox{en otro caso}
+  \end{array}
+  \right.
+\]
+
+En un problema de regresión lineal, SVM estima los parámetros del modelo
+\[m(\mathbf{x}) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \ldots + \beta_p x_p\]
+minimizando
+\[\sum_{i=1}^n L_{\epsilon,c} (y_i - \hat y_i) + \sum_{j=1}^p \beta_j^2\]
+
+Para hacer las cosas aún más confusas, hay autores que utilizan una formulación, equivalente, en la que el parámetro aparece en el segundo sumando como $\lambda = 1/c$. En la práctica, es habitual fijar el valor de $\epsilon$ y seleccionar el valor de $c$ (equivalentemente, $\lambda$) por validación cruzada, por ejemplo.
+
+El modelo puede escribirse en función de los vectores soporte, que son aquellas observaciones cuyo residuo excede el umbral $\epsilon$:
+\[m(\mathbf{x}) = \beta_0 + \sum_{i\in S} \alpha_i \mathbf{x}^t \mathbf{x_i}\]
+
+Un problema de este planteamiento es que hay que estimar tantos parámetros como datos hay en el conjunto de entrenamiento, aunque finalmente la mayoría de ellos se anularán.
+
+Finalmente, utilizando una función kernel, el modelo de regresión SVM es
+\[m(\mathbf{x}) = \beta_0 + \sum_{i\in S} \alpha_i K(\mathbf{x}, \mathbf{x_i})\]
+
+
+
+## SVM con el paquete `kernlab`
+
+En preparación...
+

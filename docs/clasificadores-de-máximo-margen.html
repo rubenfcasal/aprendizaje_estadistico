@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>1.4 La maldición de la dimensionalidad | Aprendizaje Estadístico</title>
+  <title>4.1 Clasificadores de máximo margen | Aprendizaje Estadístico</title>
   <meta name="description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
   <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="1.4 La maldición de la dimensionalidad | Aprendizaje Estadístico" />
+  <meta property="og:title" content="4.1 Clasificadores de máximo margen | Aprendizaje Estadístico" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="rubenfcasal/aprendizaje_estadistico" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="1.4 La maldición de la dimensionalidad | Aprendizaje Estadístico" />
+  <meta name="twitter:title" content="4.1 Clasificadores de máximo margen | Aprendizaje Estadístico" />
   
   <meta name="twitter:description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="const-eval.html"/>
-<link rel="next" href="analisis-modelos.html"/>
+<link rel="prev" href="svm.html"/>
+<link rel="next" href="clasificadores-de-soporte-vectorial.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -198,75 +198,24 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="la-maldición-de-la-dimensionalidad" class="section level2">
-<h2><span class="header-section-number">1.4</span> La maldición de la dimensionalidad</h2>
-<p>Podríamos pensar que al aumentar el número de variables explicativas se mejora la capacidad predictiva de los modelos. Lo cual, en general, sería cierto si realmente los predictores fuesen de utilidad para explicar la respuesta. Sin embargo, al aumentar el número de dimensiones se pueden agravar notablemente muchos de los problemas que ya pueden aparecer en dimensiones menores, esto es lo que se conoce como la <em>maldición de la dimensionalidad</em> (<em>curse of dimensionality</em>, Bellman, 1961).</p>
-<p>Uno de estos problemas es el denominado <em>efecto frontera</em> que ya puede aparecer en una dimensión, especialmente al trabajar con modelos flexibles (como ajustes polinómicos con grados altos o los métodos locales que trataremos en el Capítulo 6). La idea es que en la “frontera” del rango de valores de una variable explicativa vamos a disponer de pocos datos y los errores de predicción van a tener gran variabilidad (se están haciendo extrapolaciones de los datos, más que interpolaciones, y van a ser menos fiables).</p>
-<p>Como ejemplo consideraremos un problema de regresión simple, con un conjunto de datos simulados (del proceso ya considerado en la Sección <a href="const-eval.html#bias-variance">1.3.1</a>) con 100 observaciones (que ya podríamos considerar que no es muy pequeño).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Simulación datos</span>
-n &lt;-<span class="st"> </span><span class="dv">100</span>
-x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">length =</span> n)
-mu &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">4</span><span class="op">*</span>(<span class="dv">5</span><span class="op">*</span>x <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)<span class="op">*</span>(<span class="dv">4</span><span class="op">*</span>x <span class="op">-</span><span class="st"> </span><span class="dv">2</span>)<span class="op">*</span>(x <span class="op">-</span><span class="st"> </span><span class="fl">0.8</span>)<span class="op">^</span><span class="dv">2</span> <span class="co"># grado 4</span>
-sd &lt;-<span class="st"> </span><span class="fl">0.5</span>
-<span class="kw">set.seed</span>(<span class="dv">1</span>)
-y &lt;-<span class="st"> </span>mu <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dv">0</span>, sd)
-datos &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)
-<span class="kw">plot</span>(x, y) 
-<span class="kw">lines</span>(x, mu, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;lightgray&quot;</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:simdat100"></span>
-<img src="01-introduccion_files/figure-html/simdat100-1.png" alt="Muestra simulada y tendencia teórica." width="80%" />
-<p class="caption">
-Figura 1.6: Muestra simulada y tendencia teórica.
-</p>
-</div>
-<p>Cuando el número de datos es más o menos grande podríamos pensar en predecir la respuesta a partir de lo que ocurre en las observaciones cercanas a la posición de predicción, esta es la idea de los métodos locales (Capítulo 6). Uno de los métodos de este tipo más conocidos es el de los <em>k-vecinos más cercanos</em> (<em>k-nearest neighbors</em>; KNN). Se trata de un método muy simple, pero que puede ser muy efectivo, que se basa en la idea de que localmente la media condicional (la predicción óptima) es constante. Concretamente, dados un entero <span class="math inline">\(k\)</span> (hiperparámetro) y un conjunto de entrenamiento <span class="math inline">\(\mathcal{T}\)</span>, para obtener la predicción correspondiente a un vector de valores de las variables explicativas <span class="math inline">\(\mathbf{x}\)</span>, el método de regresión<a href="#fn10" class="footnoteRef" id="fnref10"><sup>10</sup></a> KNN promedia las obsevaciones en un vecindario <span class="math inline">\(\mathcal{N}_k(\mathbf{x}, \mathcal{T})\)</span> formado por las <span class="math inline">\(k\)</span> observaciones más cercanas a <span class="math inline">\(\mathbf{x}\)</span>: <span class="math display">\[\hat{Y}(\mathbf{x}) = \hat{m}(\mathbf{x}) = \frac{1}{k} \sum_{i \in \mathcal{N}_k(\mathbf{x}, \mathcal{T})} Y_i\]</span> (sería necesario definir una distancia, normalmente la distancia euclídea de los predictores estandarizados).</p>
-<p>Este método está implementado en numerosos paquetes, por ejemplo en la función <code>knnreg()</code> del paquete <code>caret</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(caret)
-
-<span class="co"># Ajuste de los modelos</span>
-fit1 &lt;-<span class="st"> </span><span class="kw">knnreg</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> datos, <span class="dt">k =</span> <span class="dv">5</span>) <span class="co"># 5 observaciones más cercanas (5% de los datos)</span>
-fit2 &lt;-<span class="st"> </span><span class="kw">knnreg</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> datos, <span class="dt">k =</span> <span class="dv">10</span>)
-fit3 &lt;-<span class="st"> </span><span class="kw">knnreg</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> datos, <span class="dt">k =</span> <span class="dv">20</span>)
-
-<span class="kw">plot</span>(x, y) 
-<span class="kw">lines</span>(x, mu, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;lightgray&quot;</span>)
-newdata &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> x)
-<span class="kw">lines</span>(x, <span class="kw">predict</span>(fit1, newdata), <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">3</span>)
-<span class="kw">lines</span>(x, <span class="kw">predict</span>(fit2, newdata), <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
-<span class="kw">lines</span>(x, <span class="kw">predict</span>(fit3, newdata), <span class="dt">lwd =</span> <span class="dv">2</span>)
-<span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Verdadero&quot;</span>, <span class="st">&quot;5-NN&quot;</span>, <span class="st">&quot;10-NN&quot;</span>, <span class="st">&quot;20-NN&quot;</span>), 
-       <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>), <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;lightgray&quot;</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>))</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:knnfit2"></span>
-<img src="01-introduccion_files/figure-html/knnfit2-1.png" alt="Predicciones con el método KNN y distintos vecindarios" width="80%" />
-<p class="caption">
-Figura 1.7: Predicciones con el método KNN y distintos vecindarios
-</p>
-</div>
-<p>A medida que aumenta <span class="math inline">\(k\)</span> disminuye la complejidad del modelo y se observa un incremento del efecto frontera. Habría que seleccionar un valor óptimo de <span class="math inline">\(k\)</span> (buscando un equilibro entre sesgo y varianza, como se mostró en la Sección <a href="const-eval.html#bias-variance">1.3.1</a> y se ilustrará en la última sección de este capítulo empleando este método con el paquete <code>caret</code>), que dependerá de la tendencia teórica y del número de datos. En este caso, para <span class="math inline">\(k=5\)</span>, podríamos pensar que el efecto frontera aparece en el 10% más externo del rango de la variable explicativa (con un número mayor de datos podría bajar al 1%). Al aumentar el número de variables explicativas, considerando que el 10% más externo del rango de cada una de ellas constituye la “frontera” de los datos, tendríamos que la proporción de frontera sería <span class="math inline">\(1-0.9^d\)</span>, siendo <span class="math inline">\(d\)</span> el número de dimensiones. Lo que se traduce que con <span class="math inline">\(d = 10\)</span> el 65% del espacio predictivo sería frontera y en torno al 88% para <span class="math inline">\(d=20\)</span>, es decir, al aumentar el número de dimensiones el problema del efecto frontera será generalizado.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">curve</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="fl">0.9</span><span class="op">^</span>x, <span class="dv">0</span>, <span class="dv">200</span>, <span class="dt">ylab =</span> <span class="st">&#39;Proporción de &quot;frontera&quot;&#39;</span>, <span class="dt">xlab =</span> <span class="st">&#39;Número de dimensiones&#39;</span>)
-<span class="kw">curve</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="fl">0.95</span><span class="op">^</span>x, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)
-<span class="kw">curve</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="fl">0.99</span><span class="op">^</span>x, <span class="dt">lty =</span> <span class="dv">3</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)
-<span class="kw">abline</span>(<span class="dt">h =</span> <span class="fl">0.5</span>, <span class="dt">col =</span> <span class="st">&quot;lightgray&quot;</span>)
-<span class="kw">legend</span>(<span class="st">&quot;bottomright&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Rango en cada dimensión&quot;, legend = c(&quot;</span><span class="dv">10</span><span class="op">%&quot; , &quot;5%</span><span class="st">&quot;, &quot;</span><span class="dv">1</span>%<span class="st">&quot;), </span>
-<span class="st">       lty = c(1, 2, 3))</span></code></pre></div>
-<p><img src="01-introduccion_files/figure-html/unnamed-chunk-22-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<p>Desde otro punto de vista, suponiendo que los predictores se distribuyen de forma uniforme, la densidad de las observaciones es proporcional a <span class="math inline">\(n^{1/d}\)</span>, siendo <span class="math inline">\(n\)</span> el tamaño muestral. Por lo que si consideramos que una muestra de tamaño <span class="math inline">\(n=100\)</span> es suficientemente densa en una dimensión, para obtener la misma densidad muestral en 10 dimensiones tendríamos que disponer de un tamaño muestral de <span class="math inline">\(n = 100^{10} = 10^{20}\)</span>. Por tanto, cuando el número de dimensiones es grande no va a haber muchas observaciones en el entorno de la posición de predicción y puede haber serios problemas de sobreajuste si se pretende emplear un modelo demasiado flexible (por ejemplo KNN con <span class="math inline">\(k\)</span> pequeño). Hay que tener en cuenta que, en general, fijado el tamaño muestral, la flexibilidad de los modelos aumenta al aumentar el número de dimensiones del espacio predictivo.</p>
-<p>Para concluir, otro de los problemas que se agravan notablemente al aumentar el número de dimensiones es el de colinealidad (o concurvidad) que puede producir que muchos métodos (como los modelos lineales o las redes neuronales) sean muy poco eficientes o inestables (llegando incluso a que no se puedan aplicar), además de que complica notablemente la interpretación de cualquier método. Esto está relacionado también con la dificultad para determinar que variables son de interés para predecir la respuesta (i.e. no son ruido). Debido a la aleatoriedad, predictores que realmente no están relacionados con la respuesta pueden ser tenidos en cuenta por el modelo con mayor facilidad (KNN con las opciones habituales tiene en cuenta todos los predictores con el mismo peso). Lo que resulta claro es que si se agrega ruido se producirá un incremento en el error de predicción. Incluso si las variables añadidas resultan de interés, si el número de observaciones es pequeño en comparación, el incremento en la variabilidad de las predicciones puede no compensar la disminución del sesgo de predicción.</p>
-<p>Como conclusión, en el caso multidimensional habrá que tratar de emplear métodos que minimicen estos problemas.</p>
-</div>
-<div class="footnotes">
-<hr />
-<ol start="10">
-<li id="fn10"><p>En el caso de clasificación se considerarían las variables indicadoras de las categorías y se obtendrían las frecuencias relativas en el vecindario como estimaciones de las probabilidades de las clases.<a href="la-maldición-de-la-dimensionalidad.html#fnref10">↩</a></p></li>
-</ol>
+<div id="clasificadores-de-máximo-margen" class="section level2">
+<h2><span class="header-section-number">4.1</span> Clasificadores de máximo margen</h2>
+<p>Los clasificadores de máximo margen (<em>maximal margin classifiers</em>; también denominados <em>hard margin classifiers</em>) son un método de clasificación binaria que se utiliza cuando hay una frontera lineal que separa perfectamente los datos de entrenamiento de una categoría de los de la otra. Por conveniencia, etiquetamos las dos categorías como +1/-1, es decir, los valores de la variable respuesta <span class="math inline">\(Y \in \{-1, 1\}\)</span>. Y suponemos que existe un hiperplano <span class="math display">\[ \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_p X_p = 0,\]</span> donde <span class="math inline">\(p\)</span> es el número de variables predictoras, que tiene la propiedad de separar los datos de entrenamiento según la categoría a la que pertenecen, es decir, <span class="math display">\[ y_i(\beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \ldots + \beta_p x_{pi}) &gt; 0\]</span> para todo <span class="math inline">\(i = 1, 2, \ldots, n\)</span>, siendo <span class="math inline">\(n\)</span> el número de datos de entrenamiento.</p>
+<p>Una vez tenemos el hiperplano, clasificar una nueva observación <span class="math inline">\(\mathbf{x}\)</span> se reduce a calcular el signo de <span class="math display">\[m(\mathbf{x}) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \ldots + \beta_p x_p\]</span> Si el signo es positivo, se clasifica como perteneciente a la categoría +1, y si es negativo a la categoría -1. Además, el valor absoluto de <span class="math inline">\(m(\mathbf{x})\)</span> nos da una idea de la distancia entre la observación y la frontera que define el hiperplano. En concreto <span class="math display">\[\frac{y_i}{\sqrt {\sum_{j=1}^p \beta_j^2}}(\beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \ldots + \beta_p x_{pi})\]</span> sería la distancia de la observación <span class="math inline">\(i\)</span>-ésima al hiperplano. Por supuesto, aunque clasifique los datos de entrenamiento sin error, no hay ninguna garantía de que clasifique bien nuevas observaciones, por ejemplo los datos de test. De hecho, si <span class="math inline">\(p\)</span> es grande es fácil que haya un sobreajuste.</p>
+<p>Realmente, si existe al menos un hiperplano que separa perfectamente los datos de entrenamiento de las dos categorías, entonces va a haber infinitos. El objetivo es seleccionar un hiperplano. Para ello, dado un hiperplano, se calculan sus distancias a todos los datos de entrenamiento y se define el <em>margen</em> como la menor de esas distancias. El método <em>maximal margin classifier</em> lo que hace es seleccinar, de los infinitos hiperplanos, aquel que tiene el mayor margen. Fijémonos en que siempre va a haber varias observaciones que equidistan del hiperplano de máximo márgen, y cuya distancia es precisamente el margen. Esas observaciones reciben el nombre de <em>vectores soporte</em> y son las que dan nombre a esta metodología.</p>
+<p><img src="04-svm_files/figure-html/unnamed-chunk-2-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>Matemáticamente, dadas las <span class="math inline">\(n\)</span> observaciones de entrenamiento <span class="math inline">\(\mathbf{x_1}, \mathbf{x_2}, \ldots, \mathbf{x_n}\)</span>, el clasificador de máximo margen es la solución del problema de optimización <span class="math display">\[max_{\beta_0, \beta_1,\ldots, \beta_p} M\]</span> sujeto a <span class="math display">\[\sum_{j=1}^p \beta_j^2 = 1\]</span> <span class="math display">\[ y_i(\beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \ldots + \beta_p x_{pi}) \ge M \ \ \forall i\]</span></p>
+<p>Si, como estamos suponiendo en esta sección, los datos de entrenamiento son perfectamente separables mediante un hiperplano, entonces el problema anterior va a tener solución con <span class="math inline">\(M&gt;0\)</span>, y <span class="math inline">\(M\)</span> va a ser el margen.</p>
+<p>Una forma equivalente (y mas conveniente) de formular el problema anterior, utilizando <span class="math inline">\(M = 1/\lVert \boldsymbol{\beta} \rVert\)</span> con <span class="math inline">\(\boldsymbol{\beta} = (\beta_1, \beta_2, \ldots, \beta_p)\)</span>, es <span class="math display">\[\mbox{min}_{\beta_0, \boldsymbol{\beta}} \lVert \boldsymbol{\beta} \rVert\]</span> sujeto a <span class="math display">\[ y_i(\beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \ldots + \beta_p x_{pi}) \ge 1 \ \ \forall i\]</span> El problema anterior de optimización es convexo (función objetivo cuadrática con restricciones lineales).</p>
+<p>Hay una característica de este método que es de destacar: así como en otros métodos, si se modifica cualquiera de los datos se modifica también el modelo, en este caso el modelo solo depende de los (pocos) datos que son vector soporte, y la modificación de cualquier otro dato no afecta a la construcción del modelo (siempre que, al <em>moverse</em> el dato, no cambie el margen).</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="const-eval.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="analisis-modelos.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="svm.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="clasificadores-de-soporte-vectorial.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -297,7 +246,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rubenfcasal/aprendizaje_estadistico/edit/master/01-introduccion.Rmd",
+"link": "https://github.com/rubenfcasal/aprendizaje_estadistico/edit/master/04-svm.Rmd",
 "text": "Edit"
 },
 "history": {
