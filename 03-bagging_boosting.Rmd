@@ -28,7 +28,7 @@ El problema es que en la práctica no suele disponerse más que de una única mu
 Aquí es donde entra en juego el bootstrap, técnica especialmente útil para estimar varianzas, pero que en esta aplicación se utiliza para reducir la varianza. 
 Lo que se hace es generar cientos o miles de muestras bootstrap a partir de la muestra de entrenamiento, y después utilizar cada una de estas muestras bootstrap como una muestra de entrenamiento (*bootstrapped training data set*). 
 
-Para un modelo que tenga intrínsecamente poca variabilidad, como puede ser una regresión lineal, aplicar bagging puede ser poco interesante, ya que hay poco márgen para mejorar el rendimiento. 
+Para un modelo que tenga intrínsecamente poca variabilidad, como puede ser una regresión lineal, aplicar bagging puede ser poco interesante, ya que hay poco margen para mejorar el rendimiento. 
 Por contra, es un método muy importante para los árboles de decisión, porque un árbol con mucha profundidad (sin podar) tiene mucha variabilidad: si modificamos ligeramente los datos de entrenamiento es muy posible que se obtenga un nuevo árbol completamente distinto al anterior; y esto se ve como un inconveniente. 
 Por esa razón, en este contexto encaja perfectamente la metodología bagging.
 
@@ -161,7 +161,7 @@ Otros argumentos que pueden ser de interés^[Si se quiere minimizar el uso de me
 
 * `proximity = TRUE`: permite obtener una matriz de proximidades (componente `$proximity`) entre las observaciones (frecuencia con la que los pares de observaciones están en el mismo nodo terminal).
 
-* `na.action = na.fail`: por defecto no admite datos faltantes con la interfaz de fórmulas. Si los hubiese, se podrían imputar estableciento `na.action = na.roughfix` (empleando medias o modas) o llamando previamente a `rfImpute()` (que emplea proximidades obtenidas con un bosque aleatorio).
+* `na.action = na.fail`: por defecto no admite datos faltantes con la interfaz de fórmulas. Si los hubiese, se podrían imputar estableciendo `na.action = na.roughfix` (empleando medias o modas) o llamando previamente a `rfImpute()` (que emplea proximidades obtenidas con un bosque aleatorio).
 
 Más detalles en la ayuda de esta función o en [Liaw y Wiener (2002)](https://www.r-project.org/doc/Rnews/Rnews_2002-3.pdf).
 
@@ -201,7 +201,7 @@ Con el método `plot()` podemos examinar la convergencia del error en las muestr
 plot(bagtrees, main = "Tasas de error")
 legend("topright", colnames(bagtrees$err.rate), lty = 1:5, col = 1:6)
 ```
-Como vemos que los errores se estabilizan podríamos pensar que aparentemente hay convergencia (aunque situaciones de alta dependencia entre los áboles dificultarían su interpretación).
+Como vemos que los errores se estabilizan podríamos pensar que aparentemente hay convergencia (aunque situaciones de alta dependencia entre los árboles dificultarían su interpretación).
 
 Con la función `getTree()` podemos extraer los árboles individuales.
 Por ejemplo el siguiente código permite extraer la variable seleccionada para la primera división:

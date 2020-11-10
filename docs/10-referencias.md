@@ -84,6 +84,8 @@ Greenwell, B.M. (2017). [pdp: An R Package for Constructing Partial Dependence P
 
 Hastie, T., Rosset, S., Tibshirani, R. y Zhu, J. (2004). [The entire regularization path for the support vector machine](https://www.jmlr.org/papers/v5/hastie04a.html). *Journal of Machine Learning Research*, 5, 1391-1415.
 
+Karatzoglou, A., Smola, A., Hornik, K. y Zeileis, A. (2004). [kernlab-an S4 package for kernel methods in R](http://www.jstatsoft.org/v11/i09). *Journal of Statistical Software*, 11(9), 1-20.
+
 Kearns, M. y Valiant, L. (1989). Cryptographic Limitations on Learning Boolean Formulae and Finite Automata. *Proceedings of the Twenty-First Annual ACM Symposium on Theory of Computing*.
 
 Kuhn, M. (2008). Building predictive models in R using the caret package. *Journal of Statistical Software*, 28(5), 1-26.

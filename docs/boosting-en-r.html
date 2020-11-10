@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)" />
 
 
-<meta name="date" content="2020-11-05" />
+<meta name="date" content="2020-11-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -61,41 +61,68 @@
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -117,9 +144,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prólogo</a></li>
 <li class="chapter" data-level="1" data-path="intro-AE.html"><a href="intro-AE.html"><i class="fa fa-check"></i><b>1</b> Introducción al Aprendizaje Estadístico</a><ul>
 <li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje Estadístico vs. Aprendizaje Automático</a><ul>
-<li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
+<li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
 <li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#las-dos-culturas-breiman-2001"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas (Breiman, 2001)</a></li>
-<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.estadística-dunson-2018"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística (Dunson, 2018)</a></li>
+<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-estadística-dunson-2018"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística (Dunson, 2018)</a></li>
 </ul></li>
 <li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de Aprendizaje Estadístico</a><ul>
 <li class="chapter" data-level="1.2.1" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#notacion"><i class="fa fa-check"></i><b>1.2.1</b> Notación y terminología</a></li>
@@ -166,10 +193,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>4</b> Máquinas de soporte vectorial</a><ul>
 <li class="chapter" data-level="4.1" data-path="clasificadores-de-máximo-margen.html"><a href="clasificadores-de-máximo-margen.html"><i class="fa fa-check"></i><b>4.1</b> Clasificadores de máximo margen</a></li>
 <li class="chapter" data-level="4.2" data-path="clasificadores-de-soporte-vectorial.html"><a href="clasificadores-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>4.2</b> Clasificadores de soporte vectorial</a></li>
-<li class="chapter" data-level="4.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>4.3</b> Máquinas de soporte vectorial</a></li>
-<li class="chapter" data-level="4.4" data-path="clasificación-con-más-de-dos-categorías.html"><a href="clasificación-con-más-de-dos-categorías.html"><i class="fa fa-check"></i><b>4.4</b> Clasificación con más de dos categorías</a></li>
-<li class="chapter" data-level="4.5" data-path="regresión.html"><a href="regresión.html"><i class="fa fa-check"></i><b>4.5</b> Regresión</a></li>
-<li class="chapter" data-level="4.6" data-path="svm-con-el-paquete-kernlab.html"><a href="svm-con-el-paquete-kernlab.html"><i class="fa fa-check"></i><b>4.6</b> SVM con el paquete <code>kernlab</code></a></li>
+<li class="chapter" data-level="4.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>4.3</b> Máquinas de soporte vectorial</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#clasificación-con-más-de-dos-categorías"><i class="fa fa-check"></i><b>4.3.1</b> Clasificación con más de dos categorías</a></li>
+<li class="chapter" data-level="4.3.2" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#regresión"><i class="fa fa-check"></i><b>4.3.2</b> Regresión</a></li>
+<li class="chapter" data-level="4.3.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#ventajas-e-incovenientes"><i class="fa fa-check"></i><b>4.3.3</b> Ventajas e incovenientes</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="svm-con-el-paquete-kernlab.html"><a href="svm-con-el-paquete-kernlab.html"><i class="fa fa-check"></i><b>4.4</b> SVM con el paquete <code>kernlab</code></a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
 <li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
@@ -207,38 +236,40 @@ Ver [CRAN Task View: Machine Learning & Statistical Learning](https://cran.r-pro
 <p>Estos métodos son también de los más populares en AE y están implementados en numerosos paquetes de R: <a href="https://CRAN.R-project.org/package=ada"><code>ada</code></a>, <a href="https://CRAN.R-project.org/package=adabag"><code>adabag</code></a>, <a href="https://CRAN.R-project.org/package=mboost"><code>mboost</code></a>, <a href="https://CRAN.R-project.org/package=gbm"><code>gbm</code></a>, <a href="https://github.com/dmlc/xgboost/tree/master/R-package"><code>xgboost</code></a>…</p>
 <div id="ejemplo-clasificación-con-el-paquete-ada" class="section level3">
 <h3><span class="header-section-number">3.5.1</span> Ejemplo: clasificación con el paquete <code>ada</code></h3>
-<p>La función <code>ada()</code> del paquete <a href="https://CRAN.R-project.org/package=ada"><code>ada</code></a> (<a href="https://www.jstatsoft.org/article/view/v017i02">Culp <em>et al</em>., 2006</a>) implementa diversos métodos boosting (incluyendo el algoritmo original AdaBoost). Emplea <code>rpart</code> para la construcción de los árboles, aunque solo admite respuestas dicotómicas y dos funciones de pérdida (exponencial y logística). Además, un posible problema al emplear esta función es que ordena alfabéticamente los niveles del factor, lo que puede llevar a una mala interpretación de los resultados.</p>
+<p>La función <code>ada()</code> del paquete <a href="https://CRAN.R-project.org/package=ada"><code>ada</code></a> (<a href="https://www.jstatsoft.org/article/view/v017i02">Culp <em>et al</em>., 2006</a>) implementa diversos métodos boosting (incluyendo el algoritmo original AdaBoost).
+Emplea <code>rpart</code> para la construcción de los árboles, aunque solo admite respuestas dicotómicas y dos funciones de pérdida (exponencial y logística).
+Además, un posible problema al emplear esta función es que ordena alfabéticamente los niveles del factor, lo que puede llevar a una mala interpretación de los resultados.</p>
 <p>Los principales parámetros son los siguientes:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ada</span>(formula, data, <span class="dt">loss =</span> <span class="kw">c</span>(<span class="st">&quot;exponential&quot;</span>, <span class="st">&quot;logistic&quot;</span>),
-    <span class="dt">type =</span> <span class="kw">c</span>(<span class="st">&quot;discrete&quot;</span>, <span class="st">&quot;real&quot;</span>, <span class="st">&quot;gentle&quot;</span>), <span class="dt">iter =</span> <span class="dv">50</span>, 
-    <span class="dt">nu =</span> <span class="fl">0.1</span>, <span class="dt">bag.frac =</span> <span class="fl">0.5</span>, ...)</code></pre></div>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="boosting-en-r.html#cb165-1"></a><span class="kw">ada</span>(formula, data, <span class="dt">loss =</span> <span class="kw">c</span>(<span class="st">&quot;exponential&quot;</span>, <span class="st">&quot;logistic&quot;</span>),</span>
+<span id="cb165-2"><a href="boosting-en-r.html#cb165-2"></a>    <span class="dt">type =</span> <span class="kw">c</span>(<span class="st">&quot;discrete&quot;</span>, <span class="st">&quot;real&quot;</span>, <span class="st">&quot;gentle&quot;</span>), <span class="dt">iter =</span> <span class="dv">50</span>, </span>
+<span id="cb165-3"><a href="boosting-en-r.html#cb165-3"></a>    <span class="dt">nu =</span> <span class="fl">0.1</span>, <span class="dt">bag.frac =</span> <span class="fl">0.5</span>, ...)</span></code></pre></div>
 <ul>
 <li><p><code>formula</code> y <code>data</code> (opcional): permiten especificar la respuesta y las variables predictoras de la forma habitual (típicamente <code>respuesta ~ .</code>; también admite matrices <code>x</code> e <code>y</code> en lugar de fórmulas).</p></li>
-<li><p><code>loss</code>: función de pérdida; por defecto <code>&quot;exponential&quot;</code> (algoritmo AdaBoost).</p></li>
-<li><p><code>type</code>: algoritmo boosting; por defecto <code>&quot;discrete&quot;</code> que implementa el algoritmo AdaBoost original que predice la variable respuesta. Otras alternativas son <code>&quot;real&quot;</code>, que implementa el algoritmo <em>Real AdaBoost</em> (<a href="https://projecteuclid.org/euclid.aos/1016218223">Friedman <em>et al</em>., 2000</a>) que permite estimar las probabilidades, y <code>&quot;gentle&quot;</code> , versión modificada del anterior que emplea un método Newton de optimización por pasos (en lugar de optimización exacta).</p></li>
+<li><p><code>loss</code>: función de pérdida; por defecto <code>"exponential"</code> (algoritmo AdaBoost).</p></li>
+<li><p><code>type</code>: algoritmo boosting; por defecto <code>"discrete"</code> que implementa el algoritmo AdaBoost original que predice la variable respuesta. Otras alternativas son <code>"real"</code>, que implementa el algoritmo <em>Real AdaBoost</em> (<a href="https://projecteuclid.org/euclid.aos/1016218223">Friedman <em>et al</em>., 2000</a>) que permite estimar las probabilidades, y <code>"gentle"</code> , versión modificada del anterior que emplea un método Newton de optimización por pasos (en lugar de optimización exacta).</p></li>
 <li><p><code>iter</code>: número de iteraciones boosting; por defecto 50.</p></li>
 <li><p><code>nu</code>: parámetro de regularización <span class="math inline">\(\lambda\)</span>; por defecto 0.1 (disminuyendo este parámetro es de esperar que se obtenga una mejora en la precisión de las predicciones pero requería aumentar <code>iter</code> aumentando notablemente el tiempo de computación y los requerimientos de memoria).</p></li>
 <li><p><code>bag.frac</code>: proporción de observaciones seleccionadas al azar para crecer cada árbol; por defecto 0.5.</p></li>
 <li><p><code>...</code>: argumentos adicionales para <code>rpart.control</code>; por defecto <code>rpart.control(maxdepth = 1, cp = -1, minsplit = 0, xval = 0)</code>.</p></li>
 </ul>
 <p>Como ejemplo consideraremos el conjunto de datos de calidad de vino empleado en las secciones <a href="cart-con-el-paquete-rpart.html#class-rpart">2.3.2</a> y <a href="bagging-rf-r.html#bagging-rf-r">3.3</a>, pero para evitar problemas reordenamos alfabéticamente los niveles de la respuesta.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="st">&quot;data/winetaste.RData&quot;</span>)
-<span class="co"># Reordenar alfabéticamente los niveles de winetaste$taste</span>
-<span class="co"># winetaste$taste &lt;- factor(winetaste$taste, sort(levels(winetaste$taste)))</span>
-winetaste<span class="op">$</span>taste &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">as.character</span>(winetaste<span class="op">$</span>taste))
-<span class="co"># Partición de los datos</span>
-<span class="kw">set.seed</span>(<span class="dv">1</span>)
-df &lt;-<span class="st"> </span>winetaste
-nobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(df)
-itrain &lt;-<span class="st"> </span><span class="kw">sample</span>(nobs, <span class="fl">0.8</span> <span class="op">*</span><span class="st"> </span>nobs)
-train &lt;-<span class="st"> </span>df[itrain, ]
-test &lt;-<span class="st"> </span>df[<span class="op">-</span>itrain, ]</code></pre></div>
-<p>Por ejemplo, el siguiente código llama a la función <code>ada()</code> con la opción para estimar probabilidades (<code>type = &quot;real&quot;</code>, Real AdaBoost), considerando interacciones (de orden 2) entre los predictores (<code>maxdepth = 2</code>), disminuyendo ligeramente el valor del parámetro de aprendizaje y aumentando el número de iteraciones:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ada)
-ada.boost &lt;-<span class="st"> </span><span class="kw">ada</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train, <span class="dt">type =</span> <span class="st">&quot;real&quot;</span>,
-             <span class="dt">control =</span> <span class="kw">rpart.control</span>(<span class="dt">maxdepth =</span> <span class="dv">2</span>, <span class="dt">cp =</span> <span class="dv">0</span>, <span class="dt">minsplit =</span> <span class="dv">10</span>, <span class="dt">xval =</span> <span class="dv">0</span>),
-             <span class="dt">iter =</span> <span class="dv">100</span>, <span class="dt">nu =</span> <span class="fl">0.05</span>)
-ada.boost</code></pre></div>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="boosting-en-r.html#cb166-1"></a><span class="kw">load</span>(<span class="st">&quot;data/winetaste.RData&quot;</span>)</span>
+<span id="cb166-2"><a href="boosting-en-r.html#cb166-2"></a><span class="co"># Reordenar alfabéticamente los niveles de winetaste$taste</span></span>
+<span id="cb166-3"><a href="boosting-en-r.html#cb166-3"></a><span class="co"># winetaste$taste &lt;- factor(winetaste$taste, sort(levels(winetaste$taste)))</span></span>
+<span id="cb166-4"><a href="boosting-en-r.html#cb166-4"></a>winetaste<span class="op">$</span>taste &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">as.character</span>(winetaste<span class="op">$</span>taste))</span>
+<span id="cb166-5"><a href="boosting-en-r.html#cb166-5"></a><span class="co"># Partición de los datos</span></span>
+<span id="cb166-6"><a href="boosting-en-r.html#cb166-6"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb166-7"><a href="boosting-en-r.html#cb166-7"></a>df &lt;-<span class="st"> </span>winetaste</span>
+<span id="cb166-8"><a href="boosting-en-r.html#cb166-8"></a>nobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(df)</span>
+<span id="cb166-9"><a href="boosting-en-r.html#cb166-9"></a>itrain &lt;-<span class="st"> </span><span class="kw">sample</span>(nobs, <span class="fl">0.8</span> <span class="op">*</span><span class="st"> </span>nobs)</span>
+<span id="cb166-10"><a href="boosting-en-r.html#cb166-10"></a>train &lt;-<span class="st"> </span>df[itrain, ]</span>
+<span id="cb166-11"><a href="boosting-en-r.html#cb166-11"></a>test &lt;-<span class="st"> </span>df[<span class="op">-</span>itrain, ]</span></code></pre></div>
+<p>Por ejemplo, el siguiente código llama a la función <code>ada()</code> con la opción para estimar probabilidades (<code>type = "real"</code>, Real AdaBoost), considerando interacciones (de orden 2) entre los predictores (<code>maxdepth = 2</code>), disminuyendo ligeramente el valor del parámetro de aprendizaje y aumentando el número de iteraciones:</p>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="boosting-en-r.html#cb167-1"></a><span class="kw">library</span>(ada)</span>
+<span id="cb167-2"><a href="boosting-en-r.html#cb167-2"></a>ada.boost &lt;-<span class="st"> </span><span class="kw">ada</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train, <span class="dt">type =</span> <span class="st">&quot;real&quot;</span>,</span>
+<span id="cb167-3"><a href="boosting-en-r.html#cb167-3"></a>             <span class="dt">control =</span> <span class="kw">rpart.control</span>(<span class="dt">maxdepth =</span> <span class="dv">2</span>, <span class="dt">cp =</span> <span class="dv">0</span>, <span class="dt">minsplit =</span> <span class="dv">10</span>, <span class="dt">xval =</span> <span class="dv">0</span>),</span>
+<span id="cb167-4"><a href="boosting-en-r.html#cb167-4"></a>             <span class="dt">iter =</span> <span class="dv">100</span>, <span class="dt">nu =</span> <span class="fl">0.05</span>)</span>
+<span id="cb167-5"><a href="boosting-en-r.html#cb167-5"></a>ada.boost</span></code></pre></div>
 <pre><code>## Call:
 ## ada(taste ~ ., data = train, type = &quot;real&quot;, control = rpart.control(maxdepth = 2, 
 ##     cp = 0, minsplit = 10, xval = 0), iter = 100, nu = 0.05)
@@ -260,7 +291,7 @@ ada.boost</code></pre></div>
 ## train.err1 train.kap1 
 ##         93         93</code></pre>
 <p>Con el método <code>plot()</code> podemos representar la evolución del error de clasificación al aumentar el número de iteraciones:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(ada.boost)</code></pre></div>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="boosting-en-r.html#cb169-1"></a><span class="kw">plot</span>(ada.boost)</span></code></pre></div>
 <p><img src="03-bagging_boosting_files/figure-html/unnamed-chunk-20-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <!-- 
 Con la función `varplot()` podemos representar la importancia de las variables (y almacenarla empleando `type = "scores"`): 
@@ -288,8 +319,8 @@ res
 ```
 -->
 <p>Podemos evaluar la precisión en la muestra de test empleando el procedimiento habitual:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pred &lt;-<span class="st"> </span><span class="kw">predict</span>(ada.boost, <span class="dt">newdata =</span> test)
-caret<span class="op">::</span><span class="kw">confusionMatrix</span>(pred, test<span class="op">$</span>taste, <span class="dt">positive =</span> <span class="st">&quot;good&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="boosting-en-r.html#cb170-1"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(ada.boost, <span class="dt">newdata =</span> test)</span>
+<span id="cb170-2"><a href="boosting-en-r.html#cb170-2"></a>caret<span class="op">::</span><span class="kw">confusionMatrix</span>(pred, test<span class="op">$</span>taste, <span class="dt">positive =</span> <span class="st">&quot;good&quot;</span>)</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -317,9 +348,9 @@ caret<span class="op">::</span><span class="kw">confusionMatrix</span>(pred, tes
 ##                                           
 ##        &#39;Positive&#39; Class : good            
 ## </code></pre>
-<p>Para obtener las estimaciones de las probabilidades, habría que establecer <code>type = &quot;probs&quot;</code> al predecir (devolverá una matriz con columnas correspondientes a los niveles):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p.est &lt;-<span class="st"> </span><span class="kw">predict</span>(ada.boost, <span class="dt">newdata =</span> test, <span class="dt">type =</span> <span class="st">&quot;probs&quot;</span>)
-<span class="kw">head</span>(p.est)</code></pre></div>
+<p>Para obtener las estimaciones de las probabilidades, habría que establecer <code>type = "probs"</code> al predecir (devolverá una matriz con columnas correspondientes a los niveles):</p>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="boosting-en-r.html#cb172-1"></a>p.est &lt;-<span class="st"> </span><span class="kw">predict</span>(ada.boost, <span class="dt">newdata =</span> test, <span class="dt">type =</span> <span class="st">&quot;probs&quot;</span>)</span>
+<span id="cb172-2"><a href="boosting-en-r.html#cb172-2"></a><span class="kw">head</span>(p.est)</span></code></pre></div>
 <pre><code>##          [,1]      [,2]
 ## 1  0.49877103 0.5012290
 ## 4  0.30922187 0.6907781
@@ -327,18 +358,18 @@ caret<span class="op">::</span><span class="kw">confusionMatrix</span>(pred, tes
 ## 10 0.04596187 0.9540381
 ## 12 0.44274407 0.5572559
 ## 16 0.37375910 0.6262409</code></pre>
-<p>Este procedimiento también está implementado en el paquete <code>caret</code> seleccionando el método <code>&quot;ada&quot;</code>, que considera como hiperparámetros:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(caret)
-<span class="kw">modelLookup</span>(<span class="st">&quot;ada&quot;</span>)</code></pre></div>
+<p>Este procedimiento también está implementado en el paquete <code>caret</code> seleccionando el método <code>"ada"</code>, que considera como hiperparámetros:</p>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="boosting-en-r.html#cb174-1"></a><span class="kw">library</span>(caret)</span>
+<span id="cb174-2"><a href="boosting-en-r.html#cb174-2"></a><span class="kw">modelLookup</span>(<span class="st">&quot;ada&quot;</span>)</span></code></pre></div>
 <pre><code>##   model parameter          label forReg forClass probModel
 ## 1   ada      iter         #Trees  FALSE     TRUE      TRUE
 ## 2   ada  maxdepth Max Tree Depth  FALSE     TRUE      TRUE
 ## 3   ada        nu  Learning Rate  FALSE     TRUE      TRUE</code></pre>
 <p>Aunque por defecto la función <code>train()</code> solo considera nueve combinaciones de hiperparámetros:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
-caret.ada0 &lt;-<span class="st"> </span><span class="kw">train</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">method =</span> <span class="st">&quot;ada&quot;</span>, <span class="dt">data =</span> train,
-                   <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="dt">number =</span> <span class="dv">5</span>))
-caret.ada0</code></pre></div>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="boosting-en-r.html#cb176-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb176-2"><a href="boosting-en-r.html#cb176-2"></a>caret.ada0 &lt;-<span class="st"> </span><span class="kw">train</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">method =</span> <span class="st">&quot;ada&quot;</span>, <span class="dt">data =</span> train,</span>
+<span id="cb176-3"><a href="boosting-en-r.html#cb176-3"></a>                   <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="dt">number =</span> <span class="dv">5</span>))</span>
+<span id="cb176-4"><a href="boosting-en-r.html#cb176-4"></a>caret.ada0</span></code></pre></div>
 <pre><code>## Boosted Classification Trees 
 ## 
 ## 1000 samples
@@ -364,7 +395,7 @@ caret.ada0</code></pre></div>
 ## Tuning parameter &#39;nu&#39; was held constant at a value of 0.1
 ## Accuracy was used to select the optimal model using the largest value.
 ## The final values used for the model were iter = 150, maxdepth = 3 and nu = 0.1.</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">confusionMatrix</span>(<span class="kw">predict</span>(caret.ada0, <span class="dt">newdata =</span> test), test<span class="op">$</span>taste, <span class="dt">positive =</span> <span class="st">&quot;good&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="boosting-en-r.html#cb178-1"></a><span class="kw">confusionMatrix</span>(<span class="kw">predict</span>(caret.ada0, <span class="dt">newdata =</span> test), test<span class="op">$</span>taste, <span class="dt">positive =</span> <span class="st">&quot;good&quot;</span>)</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -392,13 +423,14 @@ caret.ada0</code></pre></div>
 ##                                           
 ##        &#39;Positive&#39; Class : good            
 ## </code></pre>
-<p>Se puede aumentar el número de combinaciones empleando <code>tuneLength</code> o <code>tuneGrid</code> pero la búsqueda en una rejilla completa puede incrementar considerablemente el tiempo de computación. Por este motivo se suelen seguir distintos procedimientos de búsqueda. Por ejemplo, fijar la tasa de aprendizaje (inicialmente a un valor alto) para seleccionar primero un número de interaciones y la complejidad del árbol, y posteriormente fijar estos valores para seleccionar una nueva tasa de aprendizaje (repitiendo el proceso, si es necesario, hasta convergencia).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
-caret.ada1 &lt;-<span class="st"> </span><span class="kw">train</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">method =</span> <span class="st">&quot;ada&quot;</span>, <span class="dt">data =</span> train,
-                    <span class="dt">tuneGrid =</span> <span class="kw">data.frame</span>(<span class="dt">iter =</span>  <span class="dv">150</span>, <span class="dt">maxdepth =</span> <span class="dv">3</span>,
-                                 <span class="dt">nu =</span> <span class="kw">c</span>(<span class="fl">0.3</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>, <span class="fl">0.01</span>, <span class="fl">0.005</span>)),
-                   <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="dt">number =</span> <span class="dv">5</span>))
-caret.ada1</code></pre></div>
+<p>Se puede aumentar el número de combinaciones empleando <code>tuneLength</code> o <code>tuneGrid</code> pero la búsqueda en una rejilla completa puede incrementar considerablemente el tiempo de computación.
+Por este motivo se suelen seguir distintos procedimientos de búsqueda. Por ejemplo, fijar la tasa de aprendizaje (inicialmente a un valor alto) para seleccionar primero un número de interaciones y la complejidad del árbol, y posteriormente fijar estos valores para seleccionar una nueva tasa de aprendizaje (repitiendo el proceso, si es necesario, hasta convergencia).</p>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="boosting-en-r.html#cb180-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb180-2"><a href="boosting-en-r.html#cb180-2"></a>caret.ada1 &lt;-<span class="st"> </span><span class="kw">train</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">method =</span> <span class="st">&quot;ada&quot;</span>, <span class="dt">data =</span> train,</span>
+<span id="cb180-3"><a href="boosting-en-r.html#cb180-3"></a>                    <span class="dt">tuneGrid =</span> <span class="kw">data.frame</span>(<span class="dt">iter =</span>  <span class="dv">150</span>, <span class="dt">maxdepth =</span> <span class="dv">3</span>,</span>
+<span id="cb180-4"><a href="boosting-en-r.html#cb180-4"></a>                                 <span class="dt">nu =</span> <span class="kw">c</span>(<span class="fl">0.3</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>, <span class="fl">0.01</span>, <span class="fl">0.005</span>)),</span>
+<span id="cb180-5"><a href="boosting-en-r.html#cb180-5"></a>                   <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="dt">number =</span> <span class="dv">5</span>))</span>
+<span id="cb180-6"><a href="boosting-en-r.html#cb180-6"></a>caret.ada1</span></code></pre></div>
 <pre><code>## Boosted Classification Trees 
 ## 
 ## 1000 samples
@@ -422,7 +454,7 @@ caret.ada1</code></pre></div>
 ##  parameter &#39;maxdepth&#39; was held constant at a value of 3
 ## Accuracy was used to select the optimal model using the largest value.
 ## The final values used for the model were iter = 150, maxdepth = 3 and nu = 0.1.</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">confusionMatrix</span>(<span class="kw">predict</span>(caret.ada1, <span class="dt">newdata =</span> test), test<span class="op">$</span>taste, <span class="dt">positive =</span> <span class="st">&quot;good&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="boosting-en-r.html#cb182-1"></a><span class="kw">confusionMatrix</span>(<span class="kw">predict</span>(caret.ada1, <span class="dt">newdata =</span> test), test<span class="op">$</span>taste, <span class="dt">positive =</span> <span class="st">&quot;good&quot;</span>)</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -453,14 +485,17 @@ caret.ada1</code></pre></div>
 </div>
 <div id="ejemplo-regresión-con-el-paquete-gbm" class="section level3">
 <h3><span class="header-section-number">3.5.2</span> Ejemplo: regresión con el paquete <code>gbm</code></h3>
-<p>El paquete <a href="https://CRAN.R-project.org/package=gbm"><code>gbm</code></a> implementa el algoritmo SGB de Friedman (2002) y admite varios tipos de respuesta considerando distintas funciones de pérdida (aunque en el caso de variables dicotómicas éstas deben tomar valores en <span class="math inline">\(\{0, 1\}\)</span><a href="#fn20" class="footnoteRef" id="fnref20"><sup>20</sup></a>). La función principal es <code>gbm()</code> y se suelen considerar los siguientes argumentos:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">gbm</span>( formula, <span class="dt">distribution =</span> <span class="st">&quot;bernoulli&quot;</span>, data, <span class="dt">n.trees =</span> <span class="dv">100</span>, 
-     <span class="dt">interaction.depth =</span> <span class="dv">1</span>, <span class="dt">n.minobsinnode =</span> <span class="dv">10</span>,
-     <span class="dt">shrinkage =</span> <span class="fl">0.1</span>, <span class="dt">bag.fraction =</span> <span class="fl">0.5</span>, 
-     <span class="dt">cv.folds =</span> <span class="dv">0</span>, <span class="dt">n.cores =</span> <span class="ot">NULL</span>)</code></pre></div>
+<p>El paquete <a href="https://CRAN.R-project.org/package=gbm"><code>gbm</code></a> implementa el algoritmo SGB de Friedman (2002) y admite varios tipos de respuesta considerando distintas funciones de pérdida (aunque en el caso de variables dicotómicas éstas deben tomar valores en <span class="math inline">\(\{0, 1\}\)</span><a href="#fn20" class="footnote-ref" id="fnref20"><sup>20</sup></a>).
+La función principal es <code>gbm()</code> y se suelen considerar los siguientes argumentos:</p>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="boosting-en-r.html#cb184-1"></a><span class="kw">gbm</span>( formula, <span class="dt">distribution =</span> <span class="st">&quot;bernoulli&quot;</span>, data, <span class="dt">n.trees =</span> <span class="dv">100</span>, </span>
+<span id="cb184-2"><a href="boosting-en-r.html#cb184-2"></a>     <span class="dt">interaction.depth =</span> <span class="dv">1</span>, <span class="dt">n.minobsinnode =</span> <span class="dv">10</span>,</span>
+<span id="cb184-3"><a href="boosting-en-r.html#cb184-3"></a>     <span class="dt">shrinkage =</span> <span class="fl">0.1</span>, <span class="dt">bag.fraction =</span> <span class="fl">0.5</span>, </span>
+<span id="cb184-4"><a href="boosting-en-r.html#cb184-4"></a>     <span class="dt">cv.folds =</span> <span class="dv">0</span>, <span class="dt">n.cores =</span> <span class="ot">NULL</span>)</span></code></pre></div>
 <ul>
 <li><p><code>formula</code> y <code>data</code> (opcional): permiten especificar la respuesta y las variables predictoras de la forma habitual (típicamente <code>respuesta ~ .</code>; también está disponible una interfaz con matrices <code>gbm.fit()</code>).</p></li>
-<li><p><code>distribution</code> (opcional): texto con el nombre de la distribución (o lista con el nombre en <code>name</code> y parámetros adicionales en los demás componentes) que determina la función de pérdida. Si se omite se establecerá a partir del tipo de la respuesta: <code>&quot;bernouilli&quot;</code> (regresión logística) si es una variable dicotómica 0/1, <code>&quot;multinomial&quot;</code> (regresión multinomial) si es un factor (no se recomienda) y <code>&quot;gaussian&quot;</code> (error cuadrático) en caso contrario. Otras opciones que pueden ser de interés son: <code>&quot;laplace&quot;</code> (error absoluto), <code>&quot;adaboost&quot;</code> (pérdida exponencial para respuestas dicotómicas 0/1), <code>&quot;huberized&quot;</code> (pérdida de Huber para respuestas dicotómicas 0/1), <code>&quot;poisson&quot;</code> (regresión de Poisson) y <code>&quot;quantile&quot;</code> (regresión cuantil).</p></li>
+<li><p><code>distribution</code> (opcional): texto con el nombre de la distribución (o lista con el nombre en <code>name</code> y parámetros adicionales en los demás componentes) que determina la función de pérdida.
+Si se omite se establecerá a partir del tipo de la respuesta: <code>"bernouilli"</code> (regresión logística) si es una variable dicotómica 0/1, <code>"multinomial"</code> (regresión multinomial) si es un factor (no se recomienda) y <code>"gaussian"</code> (error cuadrático) en caso contrario.
+Otras opciones que pueden ser de interés son: <code>"laplace"</code> (error absoluto), <code>"adaboost"</code> (pérdida exponencial para respuestas dicotómicas 0/1), <code>"huberized"</code> (pérdida de Huber para respuestas dicotómicas 0/1), <code>"poisson"</code> (regresión de Poisson) y <code>"quantile"</code> (regresión cuantil).</p></li>
 <li><p><code>ntrees</code>: iteraciones/número de árboles que se crecerán; por defecto 100 (se puede emplear la función <code>gbm.perf()</code> para seleccionar un valor “óptimo”).</p></li>
 <li><p><code>interaction.depth</code>: profundidad de los árboles; por defecto 1 (modelo aditivo).</p></li>
 <li><p><code>n.minobsinnode</code>: número mínimo de observaciones en un nodo terminal; por defecto 10.</p></li>
@@ -470,24 +505,24 @@ caret.ada1</code></pre></div>
 <li><p><code>n.cores</code>: número de núcleos para el procesamiento en paralelo.</p></li>
 </ul>
 <p>Como ejemplo consideraremos el conjunto de datos <em>winequality.RData</em>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="st">&quot;data/winequality.RData&quot;</span>)
-<span class="kw">set.seed</span>(<span class="dv">1</span>)
-df &lt;-<span class="st"> </span>winequality
-nobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(df)
-itrain &lt;-<span class="st"> </span><span class="kw">sample</span>(nobs, <span class="fl">0.8</span> <span class="op">*</span><span class="st"> </span>nobs)
-train &lt;-<span class="st"> </span>df[itrain, ]
-test &lt;-<span class="st"> </span>df[<span class="op">-</span>itrain, ]
-
-<span class="kw">library</span>(gbm)
-gbm.fit &lt;-<span class="st"> </span><span class="kw">gbm</span>(quality <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train)</code></pre></div>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="boosting-en-r.html#cb185-1"></a><span class="kw">load</span>(<span class="st">&quot;data/winequality.RData&quot;</span>)</span>
+<span id="cb185-2"><a href="boosting-en-r.html#cb185-2"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb185-3"><a href="boosting-en-r.html#cb185-3"></a>df &lt;-<span class="st"> </span>winequality</span>
+<span id="cb185-4"><a href="boosting-en-r.html#cb185-4"></a>nobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(df)</span>
+<span id="cb185-5"><a href="boosting-en-r.html#cb185-5"></a>itrain &lt;-<span class="st"> </span><span class="kw">sample</span>(nobs, <span class="fl">0.8</span> <span class="op">*</span><span class="st"> </span>nobs)</span>
+<span id="cb185-6"><a href="boosting-en-r.html#cb185-6"></a>train &lt;-<span class="st"> </span>df[itrain, ]</span>
+<span id="cb185-7"><a href="boosting-en-r.html#cb185-7"></a>test &lt;-<span class="st"> </span>df[<span class="op">-</span>itrain, ]</span>
+<span id="cb185-8"><a href="boosting-en-r.html#cb185-8"></a></span>
+<span id="cb185-9"><a href="boosting-en-r.html#cb185-9"></a><span class="kw">library</span>(gbm)</span>
+<span id="cb185-10"><a href="boosting-en-r.html#cb185-10"></a>gbm.fit &lt;-<span class="st"> </span><span class="kw">gbm</span>(quality <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train)</span></code></pre></div>
 <pre><code>## Distribution not specified, assuming gaussian ...</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gbm.fit</code></pre></div>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="boosting-en-r.html#cb187-1"></a>gbm.fit</span></code></pre></div>
 <pre><code>## gbm(formula = quality ~ ., data = train)
 ## A gradient boosted model with gaussian loss function.
 ## 100 iterations were performed.
 ## There were 11 predictors of which 11 had non-zero influence.</code></pre>
 <p>El método <code>summary()</code> calcula las medidas de influencia de los predictores y las representa gráficamente:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(gbm.fit)</code></pre></div>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="boosting-en-r.html#cb189-1"></a><span class="kw">summary</span>(gbm.fit)</span></code></pre></div>
 <p><img src="03-bagging_boosting_files/figure-html/unnamed-chunk-29-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <pre><code>##                                       var   rel.inf
 ## alcohol                           alcohol 40.907998
@@ -502,54 +537,54 @@ gbm.fit &lt;-<span class="st"> </span><span class="kw">gbm</span>(quality <span 
 ## density                           density  1.918442
 ## pH                                     pH  1.088152</code></pre>
 <p>Para estudiar el efecto de un predictor se pueden generar gráficos de los efectos parciales mediante el método <code>plot()</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(gbm.fit, <span class="dt">i =</span> <span class="st">&quot;alcohol&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="boosting-en-r.html#cb191-1"></a><span class="kw">plot</span>(gbm.fit, <span class="dt">i =</span> <span class="st">&quot;alcohol&quot;</span>)</span></code></pre></div>
 <p><img src="03-bagging_boosting_files/figure-html/unnamed-chunk-30-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>Finalmente podemos evaluar la precisión en la muestra de test empleando el código habitual:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pred &lt;-<span class="st"> </span><span class="kw">predict</span>(gbm.fit, <span class="dt">newdata =</span> test)
-obs &lt;-<span class="st"> </span>test<span class="op">$</span>quality
-
-<span class="co"># Con el paquete caret</span>
-caret<span class="op">::</span><span class="kw">postResample</span>(pred, obs)</code></pre></div>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="boosting-en-r.html#cb192-1"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(gbm.fit, <span class="dt">newdata =</span> test)</span>
+<span id="cb192-2"><a href="boosting-en-r.html#cb192-2"></a>obs &lt;-<span class="st"> </span>test<span class="op">$</span>quality</span>
+<span id="cb192-3"><a href="boosting-en-r.html#cb192-3"></a></span>
+<span id="cb192-4"><a href="boosting-en-r.html#cb192-4"></a><span class="co"># Con el paquete caret</span></span>
+<span id="cb192-5"><a href="boosting-en-r.html#cb192-5"></a>caret<span class="op">::</span><span class="kw">postResample</span>(pred, obs)</span></code></pre></div>
 <pre><code>##      RMSE  Rsquared       MAE 
 ## 0.7586208 0.3001401 0.6110442</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Con la función accuracy()</span>
-accuracy &lt;-<span class="st"> </span><span class="cf">function</span>(pred, obs, <span class="dt">na.rm =</span> <span class="ot">FALSE</span>,
-                     <span class="dt">tol =</span> <span class="kw">sqrt</span>(.Machine<span class="op">$</span>double.eps)) {
-  err &lt;-<span class="st"> </span>obs <span class="op">-</span><span class="st"> </span>pred     <span class="co"># Errores</span>
-  <span class="cf">if</span>(na.rm) {
-    is.a &lt;-<span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(err)
-    err &lt;-<span class="st"> </span>err[is.a]
-    obs &lt;-<span class="st"> </span>obs[is.a]
-  }
-  perr &lt;-<span class="st"> </span><span class="dv">100</span><span class="op">*</span>err<span class="op">/</span><span class="kw">pmax</span>(obs, tol)  <span class="co"># Errores porcentuales</span>
-  <span class="kw">return</span>(<span class="kw">c</span>(
-    <span class="dt">me =</span> <span class="kw">mean</span>(err),           <span class="co"># Error medio</span>
-    <span class="dt">rmse =</span> <span class="kw">sqrt</span>(<span class="kw">mean</span>(err<span class="op">^</span><span class="dv">2</span>)), <span class="co"># Raíz del error cuadrático medio</span>
-    <span class="dt">mae =</span> <span class="kw">mean</span>(<span class="kw">abs</span>(err)),     <span class="co"># Error absoluto medio</span>
-    <span class="dt">mpe =</span> <span class="kw">mean</span>(perr),         <span class="co"># Error porcentual medio</span>
-    <span class="dt">mape =</span> <span class="kw">mean</span>(<span class="kw">abs</span>(perr)),   <span class="co"># Error porcentual absoluto medio</span>
-    <span class="dt">r.squared =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">sum</span>(err<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span><span class="kw">sum</span>((obs <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(obs))<span class="op">^</span><span class="dv">2</span>)
-  ))
-}
-<span class="kw">accuracy</span>(pred, obs)</code></pre></div>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="boosting-en-r.html#cb194-1"></a><span class="co"># Con la función accuracy()</span></span>
+<span id="cb194-2"><a href="boosting-en-r.html#cb194-2"></a>accuracy &lt;-<span class="st"> </span><span class="cf">function</span>(pred, obs, <span class="dt">na.rm =</span> <span class="ot">FALSE</span>,</span>
+<span id="cb194-3"><a href="boosting-en-r.html#cb194-3"></a>                     <span class="dt">tol =</span> <span class="kw">sqrt</span>(.Machine<span class="op">$</span>double.eps)) {</span>
+<span id="cb194-4"><a href="boosting-en-r.html#cb194-4"></a>  err &lt;-<span class="st"> </span>obs <span class="op">-</span><span class="st"> </span>pred     <span class="co"># Errores</span></span>
+<span id="cb194-5"><a href="boosting-en-r.html#cb194-5"></a>  <span class="cf">if</span>(na.rm) {</span>
+<span id="cb194-6"><a href="boosting-en-r.html#cb194-6"></a>    is.a &lt;-<span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(err)</span>
+<span id="cb194-7"><a href="boosting-en-r.html#cb194-7"></a>    err &lt;-<span class="st"> </span>err[is.a]</span>
+<span id="cb194-8"><a href="boosting-en-r.html#cb194-8"></a>    obs &lt;-<span class="st"> </span>obs[is.a]</span>
+<span id="cb194-9"><a href="boosting-en-r.html#cb194-9"></a>  }</span>
+<span id="cb194-10"><a href="boosting-en-r.html#cb194-10"></a>  perr &lt;-<span class="st"> </span><span class="dv">100</span><span class="op">*</span>err<span class="op">/</span><span class="kw">pmax</span>(obs, tol)  <span class="co"># Errores porcentuales</span></span>
+<span id="cb194-11"><a href="boosting-en-r.html#cb194-11"></a>  <span class="kw">return</span>(<span class="kw">c</span>(</span>
+<span id="cb194-12"><a href="boosting-en-r.html#cb194-12"></a>    <span class="dt">me =</span> <span class="kw">mean</span>(err),           <span class="co"># Error medio</span></span>
+<span id="cb194-13"><a href="boosting-en-r.html#cb194-13"></a>    <span class="dt">rmse =</span> <span class="kw">sqrt</span>(<span class="kw">mean</span>(err<span class="op">^</span><span class="dv">2</span>)), <span class="co"># Raíz del error cuadrático medio</span></span>
+<span id="cb194-14"><a href="boosting-en-r.html#cb194-14"></a>    <span class="dt">mae =</span> <span class="kw">mean</span>(<span class="kw">abs</span>(err)),     <span class="co"># Error absoluto medio</span></span>
+<span id="cb194-15"><a href="boosting-en-r.html#cb194-15"></a>    <span class="dt">mpe =</span> <span class="kw">mean</span>(perr),         <span class="co"># Error porcentual medio</span></span>
+<span id="cb194-16"><a href="boosting-en-r.html#cb194-16"></a>    <span class="dt">mape =</span> <span class="kw">mean</span>(<span class="kw">abs</span>(perr)),   <span class="co"># Error porcentual absoluto medio</span></span>
+<span id="cb194-17"><a href="boosting-en-r.html#cb194-17"></a>    <span class="dt">r.squared =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">sum</span>(err<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span><span class="kw">sum</span>((obs <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(obs))<span class="op">^</span><span class="dv">2</span>)</span>
+<span id="cb194-18"><a href="boosting-en-r.html#cb194-18"></a>  ))</span>
+<span id="cb194-19"><a href="boosting-en-r.html#cb194-19"></a>}</span>
+<span id="cb194-20"><a href="boosting-en-r.html#cb194-20"></a><span class="kw">accuracy</span>(pred, obs)</span></code></pre></div>
 <pre><code>##          me        rmse         mae         mpe        mape   r.squared 
 ## -0.01463661  0.75862081  0.61104421 -2.00702056 10.69753668  0.29917590</code></pre>
 <!-- 
 Pendiente: ejercicio regresión con el conjunto de datos Boston empleando error absoluto para evitar la influencia de datos atípicos. 
 -->
-<p>Este procedimiento también está implementado en el paquete <code>caret</code> seleccionando el método <code>&quot;gbm&quot;</code>, que considera como hiperparámetros:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(caret)
-<span class="kw">modelLookup</span>(<span class="st">&quot;gbm&quot;</span>)</code></pre></div>
+<p>Este procedimiento también está implementado en el paquete <code>caret</code> seleccionando el método <code>"gbm"</code>, que considera como hiperparámetros:</p>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="boosting-en-r.html#cb196-1"></a><span class="kw">library</span>(caret)</span>
+<span id="cb196-2"><a href="boosting-en-r.html#cb196-2"></a><span class="kw">modelLookup</span>(<span class="st">&quot;gbm&quot;</span>)</span></code></pre></div>
 <pre><code>##   model         parameter                   label forReg forClass probModel
 ## 1   gbm           n.trees   # Boosting Iterations   TRUE     TRUE      TRUE
 ## 2   gbm interaction.depth          Max Tree Depth   TRUE     TRUE      TRUE
 ## 3   gbm         shrinkage               Shrinkage   TRUE     TRUE      TRUE
 ## 4   gbm    n.minobsinnode Min. Terminal Node Size   TRUE     TRUE      TRUE</code></pre>
 <p>Aunque por defecto la función <code>train()</code> solo considera nueve combinaciones de hiperparámetros. Para hacer una búsqueda más completa se podría seguir un procedimiento análogo al empleado con el método anterior:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
-caret.gbm0 &lt;-<span class="st"> </span><span class="kw">train</span>(quality <span class="op">~</span><span class="st"> </span>., <span class="dt">method =</span> <span class="st">&quot;gbm&quot;</span>, <span class="dt">data =</span> train,
-                   <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="dt">number =</span> <span class="dv">5</span>))</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">caret.gbm0</code></pre></div>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="boosting-en-r.html#cb198-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb198-2"><a href="boosting-en-r.html#cb198-2"></a>caret.gbm0 &lt;-<span class="st"> </span><span class="kw">train</span>(quality <span class="op">~</span><span class="st"> </span>., <span class="dt">method =</span> <span class="st">&quot;gbm&quot;</span>, <span class="dt">data =</span> train,</span>
+<span id="cb198-3"><a href="boosting-en-r.html#cb198-3"></a>                   <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="dt">number =</span> <span class="dv">5</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="boosting-en-r.html#cb199-1"></a>caret.gbm0</span></code></pre></div>
 <pre><code>## Stochastic Gradient Boosting 
 ## 
 ## 1000 samples
@@ -577,12 +612,12 @@ caret.gbm0 &lt;-<span class="st"> </span><span class="kw">train</span>(quality <
 ## RMSE was used to select the optimal model using the smallest value.
 ## The final values used for the model were n.trees = 100, interaction.depth =
 ##  2, shrinkage = 0.1 and n.minobsinnode = 10.</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">caret.gbm1 &lt;-<span class="st"> </span><span class="kw">train</span>(quality <span class="op">~</span><span class="st"> </span>., <span class="dt">method =</span> <span class="st">&quot;gbm&quot;</span>, <span class="dt">data =</span> train,
-   <span class="dt">tuneGrid =</span> <span class="kw">data.frame</span>(<span class="dt">n.trees =</span>  <span class="dv">100</span>, <span class="dt">interaction.depth =</span> <span class="dv">2</span>, 
-                        <span class="dt">shrinkage =</span> <span class="kw">c</span>(<span class="fl">0.3</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>, <span class="fl">0.01</span>, <span class="fl">0.005</span>),
-                        <span class="dt">n.minobsinnode =</span> <span class="dv">10</span>),
-   <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="dt">number =</span> <span class="dv">5</span>))</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">caret.gbm1</code></pre></div>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="boosting-en-r.html#cb201-1"></a>caret.gbm1 &lt;-<span class="st"> </span><span class="kw">train</span>(quality <span class="op">~</span><span class="st"> </span>., <span class="dt">method =</span> <span class="st">&quot;gbm&quot;</span>, <span class="dt">data =</span> train,</span>
+<span id="cb201-2"><a href="boosting-en-r.html#cb201-2"></a>   <span class="dt">tuneGrid =</span> <span class="kw">data.frame</span>(<span class="dt">n.trees =</span>  <span class="dv">100</span>, <span class="dt">interaction.depth =</span> <span class="dv">2</span>, </span>
+<span id="cb201-3"><a href="boosting-en-r.html#cb201-3"></a>                        <span class="dt">shrinkage =</span> <span class="kw">c</span>(<span class="fl">0.3</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>, <span class="fl">0.01</span>, <span class="fl">0.005</span>),</span>
+<span id="cb201-4"><a href="boosting-en-r.html#cb201-4"></a>                        <span class="dt">n.minobsinnode =</span> <span class="dv">10</span>),</span>
+<span id="cb201-5"><a href="boosting-en-r.html#cb201-5"></a>   <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="dt">number =</span> <span class="dv">5</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="boosting-en-r.html#cb202-1"></a>caret.gbm1</span></code></pre></div>
 <pre><code>## Stochastic Gradient Boosting 
 ## 
 ## 1000 samples
@@ -608,7 +643,7 @@ caret.gbm0 &lt;-<span class="st"> </span><span class="kw">train</span>(quality <
 ## RMSE was used to select the optimal model using the smallest value.
 ## The final values used for the model were n.trees = 100, interaction.depth =
 ##  2, shrinkage = 0.1 and n.minobsinnode = 10.</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">varImp</span>(caret.gbm1)</code></pre></div>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="boosting-en-r.html#cb204-1"></a><span class="kw">varImp</span>(caret.gbm1)</span></code></pre></div>
 <pre><code>## gbm variable importance
 ## 
 ##                       Overall
@@ -623,17 +658,22 @@ caret.gbm0 &lt;-<span class="st"> </span><span class="kw">train</span>(quality <
 ## chlorides              4.5106
 ## pH                     0.1096
 ## sulphates              0.0000</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">postResample</span>(<span class="kw">predict</span>(caret.gbm1, <span class="dt">newdata =</span> test), test<span class="op">$</span>quality)</code></pre></div>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="boosting-en-r.html#cb206-1"></a><span class="kw">postResample</span>(<span class="kw">predict</span>(caret.gbm1, <span class="dt">newdata =</span> test), test<span class="op">$</span>quality)</span></code></pre></div>
 <pre><code>##      RMSE  Rsquared       MAE 
 ## 0.7403768 0.3329751 0.6017281</code></pre>
 </div>
 <div id="ejemplo-xgboost-con-el-paquete-caret" class="section level3">
 <h3><span class="header-section-number">3.5.3</span> Ejemplo: XGBoost con el paquete <code>caret</code></h3>
-<p>El método boosting implementado en el paquete <a href="https://github.com/dmlc/xgboost/tree/master/R-package"><code>xgboost</code></a> es uno de los más populares hoy en día. Esta implementación proporciona parámetros adicionales de regularización para controlar la complejidad del modelo y tratar de evitar el sobreajuste. También incluye criterios de parada, para detener la evaluación del modelo cuando los árboles adicionales no ofrecen ninguna mejora. Dispone de una interfaz simple <code>xgboost()</code> y otra más avanzada <code>xgb.train()</code>, que admite funciones de pérdida y evaluación personalizadas. Normalmente es necesario un preprocesado de los datos antes de llamar a estas funciones, ya que requieren de una matriz para los predictores y de un vector para la respuesta (además en el caso de que sea dicotómica debe tomar valores en <span class="math inline">\(\{0, 1\}\)</span>). Por tanto es necesario recodificar las variables categóricas como numéricas. Por este motivo puede ser preferible emplear la interfaz de <code>caret</code>.</p>
-<p>El algoritmo estándar <em>XGBoost</em>, que emplea árboles como modelo base, está implementado en el método <code>&quot;xgbTree&quot;</code> de <code>caret</code><a href="#fn21" class="footnoteRef" id="fnref21"><sup>21</sup></a>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(caret)
-<span class="co"># names(getModelInfo(&quot;xgb&quot;))</span>
-<span class="kw">modelLookup</span>(<span class="st">&quot;xgbTree&quot;</span>)</code></pre></div>
+<p>El método boosting implementado en el paquete <a href="https://github.com/dmlc/xgboost/tree/master/R-package"><code>xgboost</code></a> es uno de los más populares hoy en día.
+Esta implementación proporciona parámetros adicionales de regularización para controlar la complejidad del modelo y tratar de evitar el sobreajuste.
+También incluye criterios de parada, para detener la evaluación del modelo cuando los árboles adicionales no ofrecen ninguna mejora.
+Dispone de una interfaz simple <code>xgboost()</code> y otra más avanzada <code>xgb.train()</code>, que admite funciones de pérdida y evaluación personalizadas.
+Normalmente es necesario un preprocesado de los datos antes de llamar a estas funciones, ya que requieren de una matriz para los predictores y de un vector para la respuesta (además en el caso de que sea dicotómica debe tomar valores en <span class="math inline">\(\{0, 1\}\)</span>). Por tanto es necesario recodificar las variables categóricas como numéricas.
+Por este motivo puede ser preferible emplear la interfaz de <code>caret</code>.</p>
+<p>El algoritmo estándar <em>XGBoost</em>, que emplea árboles como modelo base, está implementado en el método <code>"xgbTree"</code> de <code>caret</code><a href="#fn21" class="footnote-ref" id="fnref21"><sup>21</sup></a>.</p>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="boosting-en-r.html#cb208-1"></a><span class="kw">library</span>(caret)</span>
+<span id="cb208-2"><a href="boosting-en-r.html#cb208-2"></a><span class="co"># names(getModelInfo(&quot;xgb&quot;))</span></span>
+<span id="cb208-3"><a href="boosting-en-r.html#cb208-3"></a><span class="kw">modelLookup</span>(<span class="st">&quot;xgbTree&quot;</span>)</span></code></pre></div>
 <pre><code>##     model        parameter                          label forReg forClass
 ## 1 xgbTree          nrounds          # Boosting Iterations   TRUE     TRUE
 ## 2 xgbTree        max_depth                 Max Tree Depth   TRUE     TRUE
@@ -652,27 +692,27 @@ caret.gbm0 &lt;-<span class="st"> </span><span class="kw">train</span>(quality <
 ## 7      TRUE</code></pre>
 <p>Este método considera los siguientes hiperparámetros:</p>
 <ul>
-<li><p><code>&quot;nrounds&quot;</code>: número de iteraciones boosting.</p></li>
-<li><p><code>&quot;max_depth&quot;</code>: profundidad máxima del árbol; por defecto 6.</p></li>
-<li><p><code>&quot;eta&quot;</code>: parámetro de regularización <span class="math inline">\(\lambda\)</span>; por defecto 0.3.</p></li>
-<li><p><code>&quot;gamma&quot;</code>: mínima reducción de la pérdida para hacer una partición adicional en un nodo del árbol; por defecto 0.</p></li>
-<li><p><code>&quot;colsample_bytree&quot;</code>: proporción de predictores seleccionados al azar para crecer cada árbol; por defecto 1.</p></li>
-<li><p><code>&quot;min_child_weight&quot;</code>: suma mínima de peso (hessiana) para hacer una partición adicional en un nodo del árbol; por defecto 1.</p></li>
-<li><p><code>&quot;subsample&quot;</code>: proporción de observaciones seleccionadas al azar en cada iteración boosting; por defecto 1.</p></li>
+<li><p><code>"nrounds"</code>: número de iteraciones boosting.</p></li>
+<li><p><code>"max_depth"</code>: profundidad máxima del árbol; por defecto 6.</p></li>
+<li><p><code>"eta"</code>: parámetro de regularización <span class="math inline">\(\lambda\)</span>; por defecto 0.3.</p></li>
+<li><p><code>"gamma"</code>: mínima reducción de la pérdida para hacer una partición adicional en un nodo del árbol; por defecto 0.</p></li>
+<li><p><code>"colsample_bytree"</code>: proporción de predictores seleccionados al azar para crecer cada árbol; por defecto 1.</p></li>
+<li><p><code>"min_child_weight"</code>: suma mínima de peso (hessiana) para hacer una partición adicional en un nodo del árbol; por defecto 1.</p></li>
+<li><p><code>"subsample"</code>: proporción de observaciones seleccionadas al azar en cada iteración boosting; por defecto 1.</p></li>
 </ul>
 <p>Para más información sobre parámetros adicionales se puede consultar la ayuda de <code>xgboost::xgboost()</code> o la lista detallada disponible en la Sección <a href="https://xgboost.readthedocs.io/en/latest/parameter.html">XGBoost Parameters</a> del <a href="https://xgboost.readthedocs.io">Manual de XGBoost</a>.</p>
 <p>Como ejemplo consideraremos el problema de clasificación empleando el conjunto de datos de calidad de vino:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="st">&quot;data/winetaste.RData&quot;</span>)
-<span class="kw">set.seed</span>(<span class="dv">1</span>)
-df &lt;-<span class="st"> </span>winetaste
-nobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(df)
-itrain &lt;-<span class="st"> </span><span class="kw">sample</span>(nobs, <span class="fl">0.8</span> <span class="op">*</span><span class="st"> </span>nobs)
-train &lt;-<span class="st"> </span>df[itrain, ]
-test &lt;-<span class="st"> </span>df[<span class="op">-</span>itrain, ]</code></pre></div>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="boosting-en-r.html#cb210-1"></a><span class="kw">load</span>(<span class="st">&quot;data/winetaste.RData&quot;</span>)</span>
+<span id="cb210-2"><a href="boosting-en-r.html#cb210-2"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb210-3"><a href="boosting-en-r.html#cb210-3"></a>df &lt;-<span class="st"> </span>winetaste</span>
+<span id="cb210-4"><a href="boosting-en-r.html#cb210-4"></a>nobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(df)</span>
+<span id="cb210-5"><a href="boosting-en-r.html#cb210-5"></a>itrain &lt;-<span class="st"> </span><span class="kw">sample</span>(nobs, <span class="fl">0.8</span> <span class="op">*</span><span class="st"> </span>nobs)</span>
+<span id="cb210-6"><a href="boosting-en-r.html#cb210-6"></a>train &lt;-<span class="st"> </span>df[itrain, ]</span>
+<span id="cb210-7"><a href="boosting-en-r.html#cb210-7"></a>test &lt;-<span class="st"> </span>df[<span class="op">-</span>itrain, ]</span></code></pre></div>
 <p>En este caso la función <code>train()</code> considera por defecto 108 combinaciones de hiperparámetros y el tiempo de computación puede ser excesivo.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">caret.xgb &lt;-<span class="st"> </span><span class="kw">train</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">method =</span> <span class="st">&quot;xgbTree&quot;</span>, <span class="dt">data =</span> train,
-                   <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="dt">number =</span> <span class="dv">5</span>))
-caret.xgb</code></pre></div>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="boosting-en-r.html#cb211-1"></a>caret.xgb &lt;-<span class="st"> </span><span class="kw">train</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">method =</span> <span class="st">&quot;xgbTree&quot;</span>, <span class="dt">data =</span> train,</span>
+<span id="cb211-2"><a href="boosting-en-r.html#cb211-2"></a>                   <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="dt">number =</span> <span class="dv">5</span>))</span>
+<span id="cb211-3"><a href="boosting-en-r.html#cb211-3"></a>caret.xgb</span></code></pre></div>
 <pre><code>## eXtreme Gradient Boosting 
 ## 
 ## 1000 samples
@@ -801,10 +841,10 @@ caret.xgb</code></pre></div>
 ## The final values used for the model were nrounds = 150, max_depth = 2, eta
 ##  = 0.4, gamma = 0, colsample_bytree = 0.8, min_child_weight = 1 and subsample
 ##  = 1.</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">caret.xgb<span class="op">$</span>bestTune</code></pre></div>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="boosting-en-r.html#cb213-1"></a>caret.xgb<span class="op">$</span>bestTune</span></code></pre></div>
 <pre><code>##    nrounds max_depth eta gamma colsample_bytree min_child_weight subsample
 ## 90     150         2 0.4     0              0.8                1         1</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">varImp</span>(caret.xgb)</code></pre></div>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="boosting-en-r.html#cb215-1"></a><span class="kw">varImp</span>(caret.xgb)</span></code></pre></div>
 <pre><code>## xgbTree variable importance
 ## 
 ##                      Overall
@@ -819,7 +859,7 @@ caret.xgb</code></pre></div>
 ## sulphates              7.958
 ## pH                     5.857
 ## chlorides              0.000</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">confusionMatrix</span>(<span class="kw">predict</span>(caret.xgb, <span class="dt">newdata =</span> test), test<span class="op">$</span>taste)</code></pre></div>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="boosting-en-r.html#cb217-1"></a><span class="kw">confusionMatrix</span>(<span class="kw">predict</span>(caret.xgb, <span class="dt">newdata =</span> test), test<span class="op">$</span>taste)</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -855,8 +895,8 @@ caret.xgb</code></pre></div>
 <div class="footnotes">
 <hr />
 <ol start="20">
-<li id="fn20"><p>Se puede evitar este inconveniente empleando la interfaz de <code>caret</code>.<a href="boosting-en-r.html#fnref20">↩</a></p></li>
-<li id="fn21"><p>Otras alternativas son: <code>&quot;xgbDART&quot;</code> que también emplean árboles como modelo base, pero incluye el método DART (Vinayak y Gilad-Bachrach, 2015) para evitar sobreajuste (básicamente descarta árboles al azar en la secuencia), y<code>&quot;xgbLinear&quot;</code> que emplea modelos lineales.<a href="boosting-en-r.html#fnref21">↩</a></p></li>
+<li id="fn20"><p>Se puede evitar este inconveniente empleando la interfaz de <code>caret</code>.<a href="boosting-en-r.html#fnref20" class="footnote-back">↩︎</a></p></li>
+<li id="fn21"><p>Otras alternativas son: <code>"xgbDART"</code> que también emplean árboles como modelo base, pero incluye el método DART (Vinayak y Gilad-Bachrach, 2015) para evitar sobreajuste (básicamente descarta árboles al azar en la secuencia), y<code>"xgbLinear"</code> que emplea modelos lineales.<a href="boosting-en-r.html#fnref21" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -920,7 +960,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))

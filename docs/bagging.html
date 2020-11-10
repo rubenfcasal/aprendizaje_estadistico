@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)" />
 
 
-<meta name="date" content="2020-11-05" />
+<meta name="date" content="2020-11-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -61,41 +61,68 @@
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -117,9 +144,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prólogo</a></li>
 <li class="chapter" data-level="1" data-path="intro-AE.html"><a href="intro-AE.html"><i class="fa fa-check"></i><b>1</b> Introducción al Aprendizaje Estadístico</a><ul>
 <li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje Estadístico vs. Aprendizaje Automático</a><ul>
-<li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
+<li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
 <li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#las-dos-culturas-breiman-2001"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas (Breiman, 2001)</a></li>
-<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.estadística-dunson-2018"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística (Dunson, 2018)</a></li>
+<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-estadística-dunson-2018"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística (Dunson, 2018)</a></li>
 </ul></li>
 <li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de Aprendizaje Estadístico</a><ul>
 <li class="chapter" data-level="1.2.1" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#notacion"><i class="fa fa-check"></i><b>1.2.1</b> Notación y terminología</a></li>
@@ -166,10 +193,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>4</b> Máquinas de soporte vectorial</a><ul>
 <li class="chapter" data-level="4.1" data-path="clasificadores-de-máximo-margen.html"><a href="clasificadores-de-máximo-margen.html"><i class="fa fa-check"></i><b>4.1</b> Clasificadores de máximo margen</a></li>
 <li class="chapter" data-level="4.2" data-path="clasificadores-de-soporte-vectorial.html"><a href="clasificadores-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>4.2</b> Clasificadores de soporte vectorial</a></li>
-<li class="chapter" data-level="4.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>4.3</b> Máquinas de soporte vectorial</a></li>
-<li class="chapter" data-level="4.4" data-path="clasificación-con-más-de-dos-categorías.html"><a href="clasificación-con-más-de-dos-categorías.html"><i class="fa fa-check"></i><b>4.4</b> Clasificación con más de dos categorías</a></li>
-<li class="chapter" data-level="4.5" data-path="regresión.html"><a href="regresión.html"><i class="fa fa-check"></i><b>4.5</b> Regresión</a></li>
-<li class="chapter" data-level="4.6" data-path="svm-con-el-paquete-kernlab.html"><a href="svm-con-el-paquete-kernlab.html"><i class="fa fa-check"></i><b>4.6</b> SVM con el paquete <code>kernlab</code></a></li>
+<li class="chapter" data-level="4.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>4.3</b> Máquinas de soporte vectorial</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#clasificación-con-más-de-dos-categorías"><i class="fa fa-check"></i><b>4.3.1</b> Clasificación con más de dos categorías</a></li>
+<li class="chapter" data-level="4.3.2" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#regresión"><i class="fa fa-check"></i><b>4.3.2</b> Regresión</a></li>
+<li class="chapter" data-level="4.3.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#ventajas-e-incovenientes"><i class="fa fa-check"></i><b>4.3.3</b> Ventajas e incovenientes</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="svm-con-el-paquete-kernlab.html"><a href="svm-con-el-paquete-kernlab.html"><i class="fa fa-check"></i><b>4.4</b> SVM con el paquete <code>kernlab</code></a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
 <li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
@@ -200,24 +229,50 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="bagging" class="section level2">
 <h2><span class="header-section-number">3.1</span> Bagging</h2>
-<p>En la década de 1990 empiezan a utilizarse los métodos <em>ensemble</em> (métodos combinados), esto es, métodos predictivos que se basan en combinar las predicciones de cientos de modelos. Uno de los primeros métodos combinados que se utilizó fue el <em>bagging</em> (nombre que viene de <em>bootstrap aggregation</em>), propuesto en Breiman (1996). Es un método general de reducción de la varianza que se basa en la utilización del bootstrap junto con un modelo de regresión o de clasificación, como puede ser un árbol de decisión.</p>
-<p>La idea es muy sencilla. Si disponemos de muchas muestras de entrenamiento, podemos utilizar cada una de ellas para entrenar un modelo que después nos servirá para hacer una predicción. De este modo tendremos tantas predicciones como modelos y por tanto tantas predicciones como muestras de entrenamiento. El procedimiento consistente en promediar todas las predicciones anteriores tiene dos ventajas importantes: simplifica la solución y reduce mucho la varianza.</p>
-<p>El problema es que en la práctica no suele disponerse más que de una única muestra de entrenamiento. Aquí es donde entra en juego el bootstrap, técnica especialmente útil para estimar varianzas, pero que en esta aplicación se utiliza para reducir la varianza. Lo que se hace es generar cientos o miles de muestras bootstrap a partir de la muestra de entrenamiento, y después utilizar cada una de estas muestras bootstrap como una muestra de entrenamiento (<em>bootstrapped training data set</em>).</p>
-<p>Para un modelo que tenga intrínsecamente poca variabilidad, como puede ser una regresión lineal, aplicar bagging puede ser poco interesante, ya que hay poco márgen para mejorar el rendimiento. Por contra, es un método muy importante para los árboles de decisión, porque un árbol con mucha profundidad (sin podar) tiene mucha variabilidad: si modificamos ligeramente los datos de entrenamiento es muy posible que se obtenga un nuevo árbol completamente distinto al anterior; y esto se ve como un inconveniente. Por esa razón, en este contexto encaja perfectamente la metodología bagging.</p>
-<p>Así, para árboles de regresión se hacen crecer muchos árboles (sin poda) y se calcula la media de las predicciones. En el caso de los árboles de clasificación lo más sencillo es sustituir la media por la moda y utilizar el criterio del voto mayoritario: cada modelo tiene el mismo peso y por tanto cada modelo aporta un voto. Además, la proporción de votos de cada categoría es una estimación de su probabilidad.</p>
+<p>En la década de 1990 empiezan a utilizarse los métodos <em>ensemble</em> (métodos combinados), esto es, métodos predictivos que se basan en combinar las predicciones de cientos de modelos.
+Uno de los primeros métodos combinados que se utilizó fue el <em>bagging</em> (nombre que viene de <em>bootstrap aggregation</em>), propuesto en Breiman (1996).
+Es un método general de reducción de la varianza que se basa en la utilización del bootstrap junto con un modelo de regresión o de clasificación, como puede ser un árbol de decisión.</p>
+<p>La idea es muy sencilla.
+Si disponemos de muchas muestras de entrenamiento, podemos utilizar cada una de ellas para entrenar un modelo que después nos servirá para hacer una predicción.
+De este modo tendremos tantas predicciones como modelos y por tanto tantas predicciones como muestras de entrenamiento.
+El procedimiento consistente en promediar todas las predicciones anteriores tiene dos ventajas importantes: simplifica la solución y reduce mucho la varianza.</p>
+<p>El problema es que en la práctica no suele disponerse más que de una única muestra de entrenamiento.
+Aquí es donde entra en juego el bootstrap, técnica especialmente útil para estimar varianzas, pero que en esta aplicación se utiliza para reducir la varianza.
+Lo que se hace es generar cientos o miles de muestras bootstrap a partir de la muestra de entrenamiento, y después utilizar cada una de estas muestras bootstrap como una muestra de entrenamiento (<em>bootstrapped training data set</em>).</p>
+<p>Para un modelo que tenga intrínsecamente poca variabilidad, como puede ser una regresión lineal, aplicar bagging puede ser poco interesante, ya que hay poco margen para mejorar el rendimiento.
+Por contra, es un método muy importante para los árboles de decisión, porque un árbol con mucha profundidad (sin podar) tiene mucha variabilidad: si modificamos ligeramente los datos de entrenamiento es muy posible que se obtenga un nuevo árbol completamente distinto al anterior; y esto se ve como un inconveniente.
+Por esa razón, en este contexto encaja perfectamente la metodología bagging.</p>
+<p>Así, para árboles de regresión se hacen crecer muchos árboles (sin poda) y se calcula la media de las predicciones.
+En el caso de los árboles de clasificación lo más sencillo es sustituir la media por la moda y utilizar el criterio del voto mayoritario: cada modelo tiene el mismo peso y por tanto cada modelo aporta un voto.
+Además, la proporción de votos de cada categoría es una estimación de su probabilidad.</p>
 <!-- 
 Breiman (Using_random_forests_V3.1.pdf): "By a stretch of terminology, we call these class probability estimates. These should not be interpreted as the underlying distributional probabilities. But they contain useful information about the case".
 Algunos algoritmos promedian las estimaciones de las probabilidades.
 Breiman (1996, Sección 6.1): "For such methods, a natural competitor to bagging by voting is to average the -estimated probabilities-  over all bootstrap replications. This estimate was computed in every classification example we worked on. The resulting misclassification rate was always virtually identical to the voting misclassification rate".
 -->
-<p>Una ventaja adicional del bagging es que permite estimar el error de la predicción de forma directa, sin necesidad de utilizar una muestra de test o de aplicar validación cruzada u, otra vez, remuestreo, y se obtiene un resultado similar al que obtendríamos con estos métodos. Es bien sabido que una muestra bootstrap va a contener muchas observaciones repetidas y que, en promedio, sólo utiliza aproximadamente dos tercios de los datos (para ser más precisos, <span class="math inline">\(1 - (1 - 1/n)^n \approx 1 - e^{-1} = 0.6321\)</span> al aumentar el tamaño del conjunto de datos de entrenamiento). Un dato que no es utilizado para construir un árbol se denomina un dato <em>out-of-bag</em> (OOB). De este modo, para cada observación se pueden utilizar los árboles para los que esa observación es <em>out-of-bag</em> (aproximadamente una tercera parte de los árboles construidos) para generar una única predicción para ella. Repitiendo el proceso para todas las observaciones se obtiene una medida del error.</p>
-<p>Una decisión que hay que tomar es cuántas muestras bootstrap se toman (o lo que es lo mismo, cuántos árboles se construyen). Realmente se trata de una aproximación Monte Carlo, por lo que típicamente se estudia gráficamente la convergencia del error OOB al aumentar el número de árboles (para más detalles ver p.e. Fernández-Casal y Cao, 2020, <a href="https://rubenfcasal.github.io/simbook/convergencia.html">Sección 4.1</a>). Si aparentemente hay convergencia con unos pocos cientos de árboles, no va a variar mucho el nivel de error al aumentar el número. Por tanto aumentar mucho el número de árboles no mejora las predicciones, aunque tampoco aumenta el riesgo de sobreajuste. Los costes computacionales aumentan con el número de árboles, pero la construcción y evaluación del modelo son fácilmente paralelizables (aunque pueden llegar a requerir mucha memoria si el conjunto de datos es muy grande). Por otra parte si el número de árboles es demasiado pequeño puede que se obtengan pocas (o incluso ninguna) predicciones OOB para alguna de las observaciones de la muestra de entrenamiento.</p>
-<p>Una ventaja que ya sabemos que tienen los árboles de decisión es su fácil interpretabilidad. En un árbol resulta evidente cuales son los predictores más influyentes. Al utilizar bagging se mejora (mucho) la predicción, pero se pierde la interpretabilidad. Aún así, hay formas de calcular la importancia de los predictores. Por ejemplo, si fijamos un predictor y una medida del error podemos, para cada uno de los árboles, medir la reducción del error que se consigue cada vez que hay un corte que utilice ese predictor particular. Promediando sobre todos los árboles bagging se obtiene una medida global de la importancia: un valor alto en la reducción del error sugiere que el predictor es importante.</p>
+<p>Una ventaja adicional del bagging es que permite estimar el error de la predicción de forma directa, sin necesidad de utilizar una muestra de test o de aplicar validación cruzada u, otra vez, remuestreo, y se obtiene un resultado similar al que obtendríamos con estos métodos.
+Es bien sabido que una muestra bootstrap va a contener muchas observaciones repetidas y que, en promedio, sólo utiliza aproximadamente dos tercios de los datos (para ser más precisos, <span class="math inline">\(1 - (1 - 1/n)^n \approx 1 - e^{-1} = 0.6321\)</span> al aumentar el tamaño del conjunto de datos de entrenamiento).
+Un dato que no es utilizado para construir un árbol se denomina un dato <em>out-of-bag</em> (OOB).
+De este modo, para cada observación se pueden utilizar los árboles para los que esa observación es <em>out-of-bag</em> (aproximadamente una tercera parte de los árboles construidos) para generar una única predicción para ella.
+Repitiendo el proceso para todas las observaciones se obtiene una medida del error.</p>
+<p>Una decisión que hay que tomar es cuántas muestras bootstrap se toman (o lo que es lo mismo, cuántos árboles se construyen).
+Realmente se trata de una aproximación Monte Carlo, por lo que típicamente se estudia gráficamente la convergencia del error OOB al aumentar el número de árboles (para más detalles ver p.e. Fernández-Casal y Cao, 2020, <a href="https://rubenfcasal.github.io/simbook/convergencia.html">Sección 4.1</a>).
+Si aparentemente hay convergencia con unos pocos cientos de árboles, no va a variar mucho el nivel de error al aumentar el número.
+Por tanto aumentar mucho el número de árboles no mejora las predicciones, aunque tampoco aumenta el riesgo de sobreajuste.
+Los costes computacionales aumentan con el número de árboles, pero la construcción y evaluación del modelo son fácilmente paralelizables (aunque pueden llegar a requerir mucha memoria si el conjunto de datos es muy grande).
+Por otra parte si el número de árboles es demasiado pequeño puede que se obtengan pocas (o incluso ninguna) predicciones OOB para alguna de las observaciones de la muestra de entrenamiento.</p>
+<p>Una ventaja que ya sabemos que tienen los árboles de decisión es su fácil interpretabilidad.
+En un árbol resulta evidente cuales son los predictores más influyentes.
+Al utilizar bagging se mejora (mucho) la predicción, pero se pierde la interpretabilidad.
+Aún así, hay formas de calcular la importancia de los predictores.
+Por ejemplo, si fijamos un predictor y una medida del error podemos, para cada uno de los árboles, medir la reducción del error que se consigue cada vez que hay un corte que utilice ese predictor particular.
+Promediando sobre todos los árboles bagging se obtiene una medida global de la importancia: un valor alto en la reducción del error sugiere que el predictor es importante.</p>
 <p>En resumen:</p>
 <ul>
 <li><p>Se remuestrea repetidamente el conjunto de datos de entrenamiento.</p></li>
 <li><p>Con cada conjunto de datos se entrena un modelo.</p></li>
-<li><p>Las predicciones se obtienen promediando las predicciones de los modelos (la decisión mayoritaria en el caso de clasificación).</p></li>
+<li><p>Las predicciones se obtienen promediando las predicciones de los
+modelos (la decisión mayoritaria en el caso de clasificación).</p></li>
 <li><p>Se puede estimar la precisión de las predicciones con el error OOB (out-of-bag).</p></li>
 </ul>
 </div>
@@ -282,7 +337,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))

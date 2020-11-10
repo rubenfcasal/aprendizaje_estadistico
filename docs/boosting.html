@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)" />
 
 
-<meta name="date" content="2020-11-05" />
+<meta name="date" content="2020-11-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -61,41 +61,68 @@
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -117,9 +144,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prólogo</a></li>
 <li class="chapter" data-level="1" data-path="intro-AE.html"><a href="intro-AE.html"><i class="fa fa-check"></i><b>1</b> Introducción al Aprendizaje Estadístico</a><ul>
 <li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje Estadístico vs. Aprendizaje Automático</a><ul>
-<li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
+<li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
 <li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#las-dos-culturas-breiman-2001"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas (Breiman, 2001)</a></li>
-<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.estadística-dunson-2018"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística (Dunson, 2018)</a></li>
+<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-estadística-dunson-2018"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística (Dunson, 2018)</a></li>
 </ul></li>
 <li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de Aprendizaje Estadístico</a><ul>
 <li class="chapter" data-level="1.2.1" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#notacion"><i class="fa fa-check"></i><b>1.2.1</b> Notación y terminología</a></li>
@@ -166,10 +193,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>4</b> Máquinas de soporte vectorial</a><ul>
 <li class="chapter" data-level="4.1" data-path="clasificadores-de-máximo-margen.html"><a href="clasificadores-de-máximo-margen.html"><i class="fa fa-check"></i><b>4.1</b> Clasificadores de máximo margen</a></li>
 <li class="chapter" data-level="4.2" data-path="clasificadores-de-soporte-vectorial.html"><a href="clasificadores-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>4.2</b> Clasificadores de soporte vectorial</a></li>
-<li class="chapter" data-level="4.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>4.3</b> Máquinas de soporte vectorial</a></li>
-<li class="chapter" data-level="4.4" data-path="clasificación-con-más-de-dos-categorías.html"><a href="clasificación-con-más-de-dos-categorías.html"><i class="fa fa-check"></i><b>4.4</b> Clasificación con más de dos categorías</a></li>
-<li class="chapter" data-level="4.5" data-path="regresión.html"><a href="regresión.html"><i class="fa fa-check"></i><b>4.5</b> Regresión</a></li>
-<li class="chapter" data-level="4.6" data-path="svm-con-el-paquete-kernlab.html"><a href="svm-con-el-paquete-kernlab.html"><i class="fa fa-check"></i><b>4.6</b> SVM con el paquete <code>kernlab</code></a></li>
+<li class="chapter" data-level="4.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>4.3</b> Máquinas de soporte vectorial</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#clasificación-con-más-de-dos-categorías"><i class="fa fa-check"></i><b>4.3.1</b> Clasificación con más de dos categorías</a></li>
+<li class="chapter" data-level="4.3.2" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#regresión"><i class="fa fa-check"></i><b>4.3.2</b> Regresión</a></li>
+<li class="chapter" data-level="4.3.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#ventajas-e-incovenientes"><i class="fa fa-check"></i><b>4.3.3</b> Ventajas e incovenientes</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="svm-con-el-paquete-kernlab.html"><a href="svm-con-el-paquete-kernlab.html"><i class="fa fa-check"></i><b>4.4</b> SVM con el paquete <code>kernlab</code></a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
 <li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
@@ -203,7 +232,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>La metodología <em>boosting</em> es una metodología general de aprendizaje lento en la que se combinan muchos modelos obtenidos mediante un método con poca capacidad predictiva para, <em>impulsados</em>, dar lugar a un mejor predictor. Los árboles de decisión pequeños (construidos con poca profundidad) resultan perfectos para esta tarea, al ser realmente malos predictores (<em>weak learners</em>), fáciles de combinar y generarse de forma muy rápida.</p>
 <p>El boosting nació en el contexto de los problemas de clasificación y tardó varios años en poderse extender a los problemas de regresión. Por ese motivo vamos a empezar viendo el boosting en clasificación.</p>
 <p>La idea del boosting la desarrollaron Valiant (1984) y Kearns y Valiant (1989), pero encontrar una implementación efectiva fue una tarea difícil que no se resolvió satisfactoriamente hasta que Freund y Schapire (1996) presentaron el algoritmo <em>AdaBoost</em>, que rápidamente se convirtió en un éxito.</p>
-<p>Veamos, de forma muy esquemática, en que consiste el algoritmo AdaBoost para un problema de clasificación en el que sólo hay dos categorías y en el que se utiliza como clasificador débil un árbol de decisión con pocos nodos terminales, sólo marginalmente superior a un clasificador aleatorio. En este caso resulta más cómodo recodificar la variable indicadora <span class="math inline">\(Y\)</span> como 1 si éxito y -1 si fracaso.</p>
+<p>Veamos, de forma muy esquemática, en que consiste el algoritmo AdaBoost para un problema de clasificación en el que sólo hay dos categorías y en el que se utiliza como clasificador débil un árbol de decisión con pocos nodos terminales, sólo marginalmente superior a un clasificador aleatorio.
+En este caso resulta más cómodo recodificar la variable indicadora <span class="math inline">\(Y\)</span> como 1 si éxito y -1 si fracaso.</p>
 <!-- OJO: Estamos empleando \hat Y_b = +1/-1 como si fuese \hat G en Sección 1.2.1 -->
 <ol style="list-style-type: decimal">
 <li><p>Seleccionar <span class="math inline">\(B\)</span>, número de iteraciones.</p></li>
@@ -222,10 +252,14 @@ Pendiente:
 Añadir referencia: https://projecteuclid.org/euclid.aos/1016218223
 Aproximación de las probabilidades: Real AdaBoost -->
 <p>Vemos que el algoritmo AdaBoost no combina árboles independientes (como sería el caso de los bosques aleatorios, por ejemplo), sino que estos se van generando en una secuencia en la que cada árbol depende del anterior. Se utiliza siempre el mismo conjunto de datos (de entrenamiento), pero a estos datos se les van poniendo unos pesos en cada iteración que dependen de lo que ha ocurrido en la iteración anterior: se les da más peso a las observaciones mal clasificadas para que en sucesivas iteraciones se clasifiquen bien. Finalmente, la combinación de los árboles se hace mediante una suma ponderada de las <span class="math inline">\(B\)</span> clasificaciones realizadas. Los pesos de esta suma son los valores <span class="math inline">\(s_b\)</span>. Un árbol que clasifique de forma aleatoria <span class="math inline">\(e_b = 0.5\)</span> va a tener un peso <span class="math inline">\(s_b = 0\)</span> y cuando mejor clasifique el árbol mayor será su peso. Al estar utilizando clasificadores débiles (árboles pequeños) es de esperar que los pesos sean en general próximos a cero.</p>
-<p>El siguiente hito fue la aparición del método <em>gradient boosting machine</em> (<a href="https://projecteuclid.org/euclid.aos/1013203451">Friedman, 2001</a>), perteneciente a la familia de los métodos iterativos de descenso de gradientes. Entre otras muchas ventajas, este método permitió resolver no sólo problemas de clasificación sino también de regresión; y permitió la conexión con lo que se estaba haciendo en otros campos próximos como pueden ser los modelos aditivos o la regresión logística. La idea es encontrar un modelo aditivo que minimice una función de perdida utilizando predictores débiles (por ejemplo árboles).</p>
+<p>El siguiente hito fue la aparición del método <em>gradient boosting machine</em> (<a href="https://projecteuclid.org/euclid.aos/1013203451">Friedman, 2001</a>), perteneciente a la familia de los métodos iterativos de descenso de gradientes.
+Entre otras muchas ventajas, este método permitió resolver no sólo problemas de clasificación sino también de regresión; y permitió la conexión con lo que se estaba haciendo en otros campos próximos como pueden ser los modelos aditivos o la regresión logística.
+La idea es encontrar un modelo aditivo que minimice una función de perdida utilizando predictores débiles (por ejemplo árboles).</p>
 <p>Si como función de pérdida se utiliza RSS, entonces la pérdida de utilizar <span class="math inline">\(m(x)\)</span> para predecir <span class="math inline">\(y\)</span> en los datos de entrenamiento es <span class="math display">\[L(m) = \sum_{i=1}^n L(y_i, m(x_i)) = \sum_{i=1}^n (y_i - m(x_i))^2\]</span></p>
 <!-- Cambiar m por \hat m? -->
-<p>Se desea minimizar <span class="math inline">\(L(m)\)</span> con respecto a <span class="math inline">\(m\)</span> mediante el método de los gradientes, pero estos son precisamente los residuos: si <span class="math inline">\(L(m)= \frac{1}{2} (y_i - m(x_i))^2\)</span>, entonces <span class="math display">\[- \frac{\partial L(y_i, m(x_i))} {\partial m(x_i)} = y_i - m(x_i) = r_i\]</span> Una ventaja de esta aproximación es que puede extenderse a otras funciones de pérdida, por ejemplo si hay valores atípicos se puede considerar como función de pérdida el error absoluto.</p>
+<p>Se desea minimizar <span class="math inline">\(L(m)\)</span> con respecto a <span class="math inline">\(m\)</span> mediante el método de los gradientes, pero estos son precisamente los residuos: si <span class="math inline">\(L(m)= \frac{1}{2} (y_i - m(x_i))^2\)</span>, entonces
+<span class="math display">\[- \frac{\partial L(y_i, m(x_i))} {\partial m(x_i)} = y_i - m(x_i) = r_i\]</span>
+Una ventaja de esta aproximación es que puede extenderse a otras funciones de pérdida, por ejemplo si hay valores atípicos se puede considerar como función de pérdida el error absoluto.</p>
 <p>Veamos el algoritmo para un problema de regresión utilizando árboles de decisión. Es un proceso iterativo en el que lo que se <em>ataca</em> no son los datos directamente, sino los residuos (gradientes) que van quedando con los sucesivos ajustes, siguiendo una idea greedy (la optimización se resuelve en cada iteración, no globalmente).</p>
 <ol style="list-style-type: decimal">
 <li><p>Seleccionar el número de iteraciones <span class="math inline">\(B\)</span>, el parámetro de regularización <span class="math inline">\(\lambda\)</span> y el número de cortes de cada árbol <span class="math inline">\(d\)</span>.</p></li>
@@ -236,10 +270,13 @@ Aproximación de las probabilidades: Real AdaBoost -->
 <li><p>Para <span class="math inline">\(b = 1, 2,\ldots, B\)</span>, repetir:</p>
 <ol style="list-style-type: lower-alpha">
 <li><p>Ajustar un árbol de regresión <span class="math inline">\(\hat m^b\)</span> con <span class="math inline">\(d\)</span> cortes utilizando los residuos como respuesta: <span class="math inline">\((X, r)\)</span>.</p></li>
-<li><p>Calcular la versión regularizada del árbol: <span class="math display">\[\lambda \hat m^b (x)\]</span></p></li>
-<li><p>Actualizar los residuos: <span class="math display">\[r_i \leftarrow r_i - \lambda \hat m^b (x_i)\]</span></p></li>
+<li><p>Calcular la versión regularizada del árbol:
+<span class="math display">\[\lambda \hat m^b (x)\]</span></p></li>
+<li><p>Actualizar los residuos:
+<span class="math display">\[r_i \leftarrow r_i - \lambda \hat m^b (x_i)\]</span></p></li>
 </ol></li>
-<li><p>Calcular el modelo boosting: <span class="math display">\[\hat m (x) = \sum_{b=1}^{B} \lambda \hat m^b (x)\]</span></p></li>
+<li><p>Calcular el modelo boosting:
+<span class="math display">\[\hat m (x) = \sum_{b=1}^{B} \lambda \hat m^b (x)\]</span></p></li>
 </ol>
 <p>Comprobamos que este método depende de 3 hiperparámetros, <span class="math inline">\(B\)</span>, <span class="math inline">\(d\)</span> y <span class="math inline">\(\lambda\)</span>, susceptibles de ser seleccionados de forma <em>óptima</em>:</p>
 <ul>
@@ -247,19 +284,29 @@ Aproximación de las probabilidades: Real AdaBoost -->
 <li><p>Al ser necesario que el aprendizaje sea lento se utilizan árboles muy pequeños. Esto consigue que poco a poco se vayan cubriendo las zonas en las que es más difícil predecir bien. En muchas situaciones funciona bien utilizar <span class="math inline">\(d = 1\)</span>, es decir, con un único corte. En este caso en cada <span class="math inline">\(\hat m^b\)</span> interviene una única variable, y por tanto <span class="math inline">\(\hat m\)</span> es un ajuste de un modelo aditivo. Si <span class="math inline">\(d&gt;1\)</span> se puede interpretar como un parámetro que mide el órden de interacción entre las variables.</p></li>
 <li><p><span class="math inline">\(0 &lt; \lambda &lt; 1\)</span>, parámetro de regularización. Las primeras versiones del algorimo utilizaban un <span class="math inline">\(\lambda = 1\)</span>, pero no funcionaba bien del todo. Se mejoró mucho el rendimiento <em>ralentizando</em> aún más el aprendizaje al incorporar al modelo el parámetro <span class="math inline">\(\lambda\)</span>, que se puede interpretar como una proporción de aprendizaje (la velocidad a la que aprende, <em>learning rate</em>). Valores pequeños de <span class="math inline">\(\lambda\)</span> evitan el problema del sobreajuste, siendo habitual utilizar <span class="math inline">\(\lambda = 0.01\)</span> o <span class="math inline">\(\lambda = 0.001\)</span>. Como ya se ha dicho, lo ideal es seleccionar su valor utilizando, por ejemplo, validación cruzada. Por supuesto, cuanto más pequeño sea el valor de <span class="math inline">\(\lambda\)</span>, más lento va a ser el proceso de aprendizaje y serán necesarias más iteraciones, lo cual incrementa los tiempos de cómputo.</p></li>
 </ul>
-<p>El propio Friedman propuso una mejora de su algoritmo (<a href="https://www.sciencedirect.com/science/article/pii/S0167947301000652">Friedman, 2002</a>), inspirado por la técnica bagging de Breiman. Esta variante, conocida como <em>stochastic gradient boosting</em> (SGB), es a día de hoy una de las más utilizadas. La única diferencia respecto al algoritmo anterior es en la primera línea dentro del bucle: al hacer el ajuste de <span class="math inline">\((X, r)\)</span>, no se considera toda la muestra de entrenamiento, sino que se selecciona al azar un subconjunto. Esto incorpora un nuevo hiperparámetro a la metodología, la fracción que se utiliza de los datos. Lo ideal es seleccionar un valor por algún método automático (<em>tunearlo</em>) tipo validación cruzada; una selección manual típica es 0.5. Hay otras variantes, como por ejemplo la selección aleatoria de predictores antes de crecer cada árbol o antes de cada corte (ver por ejemplo la documentación de <a href="http://docs.h2o.ai/h2o/latest-stable/h2o-docs/data-science/gbm.html"><code>h2o::gbm</code></a>).</p>
+<p>El propio Friedman propuso una mejora de su algoritmo (<a href="https://www.sciencedirect.com/science/article/pii/S0167947301000652">Friedman, 2002</a>), inspirado por la técnica bagging de Breiman. Esta variante, conocida como <em>stochastic gradient boosting</em> (SGB), es a día de hoy una de las más utilizadas.
+La única diferencia respecto al algoritmo anterior es en la primera línea dentro del bucle: al hacer el ajuste de <span class="math inline">\((X, r)\)</span>, no se considera toda la muestra de entrenamiento, sino que se selecciona al azar un subconjunto.
+Esto incorpora un nuevo hiperparámetro a la metodología, la fracción que se utiliza de los datos.
+Lo ideal es seleccionar un valor por algún método automático (<em>tunearlo</em>) tipo validación cruzada; una selección manual típica es 0.5.
+Hay otras variantes, como por ejemplo la selección aleatoria de predictores antes de crecer cada árbol o antes de cada corte (ver por ejemplo la documentación de <a href="http://docs.h2o.ai/h2o/latest-stable/h2o-docs/data-science/gbm.html"><code>h2o::gbm</code></a>).</p>
 <p>Este sería un ejemplo de un método con muchos hiperparámetros y diseñar una buena estrategia para ajustarlos (<em>tunearlos</em>) puede resultar mucho más complicado (puede haber problemas de mínimos locales, problemas computacionales, etc.).</p>
-<p>SGB incorpora dos ventajas importantes: reduce la varianza y reduce los tiempos de cómputo. En terminos de rendimiento tanto el método SGB como <em>random forest</em> son muy competitivos, y por tanto son muy utilizando en la práctica. Los bosques aleatorios tienen la ventaja de que, al construir árboles de forma independiente, es paralelizable y eso puede reducir los tiempos de cómputo.</p>
-<p>Otro método reciente que está ganando popularidad es <em>extreme gradient boosting</em>, también conocido como <em>XGBoost</em> (Chen y Guestrin, 2016). Es un metodo más complejo que el anterior que, entre otras modificaciones, utiliza una función de pérdida con una penalización por complejidad y, para evitar el sobreajuste, regulariza utilizando la hessiana de la función de pérdida (necesita calcular las derivadas parciales de primer y de segundo orden), e incorpora parámetros de regularización adicionales para evitar el sobreajuste.</p>
+<p>SGB incorpora dos ventajas importantes: reduce la varianza y reduce los tiempos de cómputo.
+En terminos de rendimiento tanto el método SGB como <em>random forest</em> son muy competitivos, y por tanto son muy utilizando en la práctica.
+Los bosques aleatorios tienen la ventaja de que, al construir árboles de forma independiente, es paralelizable y eso puede reducir los tiempos de cómputo.</p>
+<p>Otro método reciente que está ganando popularidad es <em>extreme gradient boosting</em>, también conocido como <em>XGBoost</em> (Chen y Guestrin, 2016).
+Es un metodo más complejo que el anterior que, entre otras modificaciones, utiliza una función de pérdida con una penalización por complejidad y, para evitar el sobreajuste, regulariza utilizando la hessiana de la función de pérdida (necesita calcular las derivadas parciales de primer y de segundo orden), e incorpora parámetros de regularización adicionales para evitar el sobreajuste.</p>
 <p>Por último, la importancia de las variables se puede medir de forma similar a lo que ya hemos visto en otros métodos: dentro de cada árbol se sumas las reducciones del error que consigue cada predictor, y se promedia entre todos los árboles utilizados.</p>
 <p>En resumen:</p>
 <ul>
 <li><p>La idea es hacer un “aprendizaje lento”.</p></li>
-<li><p>Los arboles se crecen de forma secuencial, se trata de mejorar la clasificación anterior.</p></li>
+<li><p>Los arboles se crecen de forma secuencial, se trata de mejorar la
+clasificación anterior.</p></li>
 <li><p>Se utilizan arboles pequeños.</p></li>
 <li><p>A diferencia de bagging y bosques aleatorios puede haber problemas de sobreajuste (si el número de árboles es grande y la tasa de aprendizaje es alta).</p></li>
-<li><p>Se puede pensar que se ponderan las observaciones iterativamente, se asigna más peso a las que resultaron más difíciles de clasificar.</p></li>
-<li><p>El modelo final es un modelo aditivo (media ponderada de los árboles).</p></li>
+<li><p>Se puede pensar que se ponderan las observaciones iterativamente, se
+asigna más peso a las que resultaron más difíciles de clasificar.</p></li>
+<li><p>El modelo final es un modelo aditivo (media ponderada de los
+árboles).</p></li>
 </ul>
 </div>
             </section>
@@ -323,7 +370,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))

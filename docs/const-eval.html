@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)" />
 
 
-<meta name="date" content="2020-11-05" />
+<meta name="date" content="2020-11-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -61,41 +61,68 @@
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -117,9 +144,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prólogo</a></li>
 <li class="chapter" data-level="1" data-path="intro-AE.html"><a href="intro-AE.html"><i class="fa fa-check"></i><b>1</b> Introducción al Aprendizaje Estadístico</a><ul>
 <li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje Estadístico vs. Aprendizaje Automático</a><ul>
-<li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
+<li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
 <li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#las-dos-culturas-breiman-2001"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas (Breiman, 2001)</a></li>
-<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.estadística-dunson-2018"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística (Dunson, 2018)</a></li>
+<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-estadística-dunson-2018"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística (Dunson, 2018)</a></li>
 </ul></li>
 <li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de Aprendizaje Estadístico</a><ul>
 <li class="chapter" data-level="1.2.1" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#notacion"><i class="fa fa-check"></i><b>1.2.1</b> Notación y terminología</a></li>
@@ -166,10 +193,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>4</b> Máquinas de soporte vectorial</a><ul>
 <li class="chapter" data-level="4.1" data-path="clasificadores-de-máximo-margen.html"><a href="clasificadores-de-máximo-margen.html"><i class="fa fa-check"></i><b>4.1</b> Clasificadores de máximo margen</a></li>
 <li class="chapter" data-level="4.2" data-path="clasificadores-de-soporte-vectorial.html"><a href="clasificadores-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>4.2</b> Clasificadores de soporte vectorial</a></li>
-<li class="chapter" data-level="4.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>4.3</b> Máquinas de soporte vectorial</a></li>
-<li class="chapter" data-level="4.4" data-path="clasificación-con-más-de-dos-categorías.html"><a href="clasificación-con-más-de-dos-categorías.html"><i class="fa fa-check"></i><b>4.4</b> Clasificación con más de dos categorías</a></li>
-<li class="chapter" data-level="4.5" data-path="regresión.html"><a href="regresión.html"><i class="fa fa-check"></i><b>4.5</b> Regresión</a></li>
-<li class="chapter" data-level="4.6" data-path="svm-con-el-paquete-kernlab.html"><a href="svm-con-el-paquete-kernlab.html"><i class="fa fa-check"></i><b>4.6</b> SVM con el paquete <code>kernlab</code></a></li>
+<li class="chapter" data-level="4.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>4.3</b> Máquinas de soporte vectorial</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#clasificación-con-más-de-dos-categorías"><i class="fa fa-check"></i><b>4.3.1</b> Clasificación con más de dos categorías</a></li>
+<li class="chapter" data-level="4.3.2" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#regresión"><i class="fa fa-check"></i><b>4.3.2</b> Regresión</a></li>
+<li class="chapter" data-level="4.3.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#ventajas-e-incovenientes"><i class="fa fa-check"></i><b>4.3.3</b> Ventajas e incovenientes</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="svm-con-el-paquete-kernlab.html"><a href="svm-con-el-paquete-kernlab.html"><i class="fa fa-check"></i><b>4.4</b> SVM con el paquete <code>kernlab</code></a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
 <li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
@@ -200,36 +229,43 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="const-eval" class="section level2">
 <h2><span class="header-section-number">1.3</span> Construcción y evaluación de los modelos</h2>
-<p>En Inferencia Estadística clásica el procedimiento habitual es emplear toda la información disponible para construir un modelo válido (que refleje de la forma más fiel posible lo que ocurre en la población) y asumiendo que el modelo es el verdadero (lo que en general sería falso) utilizar métodos de inferencia para evaluar su precisión. Por ejemplo, en el caso de regresión lineal múltiple, el coeficiente de determinación ajustado sería una medida del la precisión del modelo para predecir nuevas observaciones (no se debería emplear el coeficiente de determinación sin ajustar; aunque, en cualquier caso, su validez dependería de la de las suposiciones estructurales del modelo).</p>
+<p>En Inferencia Estadística clásica el procedimiento habitual es emplear toda la información disponible para construir un modelo válido (que refleje de la forma más fiel posible lo que ocurre en la población) y asumiendo que el modelo es el verdadero (lo que en general sería falso) utilizar métodos de inferencia para evaluar su precisión.
+Por ejemplo, en el caso de regresión lineal múltiple, el coeficiente de determinación ajustado sería una medida del la precisión del modelo para predecir nuevas observaciones (no se debería emplear el coeficiente de determinación sin ajustar; aunque, en cualquier caso, su validez dependería de la de las suposiciones estructurales del modelo).</p>
 <p>Alternativamente, en Estadística Computacional es habitual emplear técnicas de remuestreo para evaluar la precisión (entrenando también el modelo con todos los datos disponibles), principalmente validación cruzada (leave-one-out, k-fold), jackniffe o bootstrap.</p>
-<p>Por otra parte, como ya se comentó, algunos de los modelos empleados en AE son muy flexibles (están hiperparametrizados) y pueden aparecer problemas si se permite que se ajusten demasiado bien a las observaciones (podrían llegar a interpolar los datos). En estos casos habrá que controlar el procedimiento de aprendizaje, típicamente a traves de parámetros relacionados con la complejidad del modelo (ver sección siguiente).</p>
-<p>En AE se distingue entre parámetros estructurales, los que van a ser estimados al ajustar el modelo a los datos (en el entrenamiento), e hiperparámetros (<em>tuning parameters</em> o parámetros de ajuste), que imponen restricciones al aprendizaje del modelo (por ejemplo determinando el número de parámetros estructurales). Si los hiperparámetros seleccionados producen un modelo demasiado complejo aparecerán problemas de sobreajuste (<em>overfitting</em>) y en caso contrario de infraajuste (<em>undefitting</em>).</p>
-<p>Hay que tener en cuenta también que al aumentar la complejidad disminuye la interpretabilidad de los modelos. Se trataría entonces de conseguir buenas predicciones (habrá que evaluar la capacidad predictiva) con el modelo más sencillo posible.</p>
+<p>Por otra parte, como ya se comentó, algunos de los modelos empleados en AE son muy flexibles (están hiperparametrizados) y pueden aparecer problemas si se permite que se ajusten demasiado bien a las observaciones (podrían llegar a interpolar los datos).
+En estos casos habrá que controlar el procedimiento de aprendizaje, típicamente a traves de parámetros relacionados con la complejidad del modelo (ver sección siguiente).</p>
+<p>En AE se distingue entre parámetros estructurales, los que van a ser estimados al ajustar el modelo a los datos (en el entrenamiento), e hiperparámetros (<em>tuning parameters</em> o parámetros de ajuste), que imponen restricciones al aprendizaje del modelo (por ejemplo determinando el número de parámetros estructurales).
+Si los hiperparámetros seleccionados producen un modelo demasiado complejo aparecerán problemas de sobreajuste (<em>overfitting</em>) y en caso contrario de infraajuste (<em>undefitting</em>).</p>
+<p>Hay que tener en cuenta también que al aumentar la complejidad disminuye la interpretabilidad de los modelos.
+Se trataría entonces de conseguir buenas predicciones (habrá que evaluar la capacidad predictiva) con el modelo más sencillo posible.</p>
 <!-- Sección \@ref(bias-variance) -->
 <div id="bias-variance" class="section level3">
 <h3><span class="header-section-number">1.3.1</span> Equilibrio entre sesgo y varianza: infraajuste y sobreajuste</h3>
-<p>La idea es que queremos aprender más allá de los datos empleados en el entrenamiento (en Estadística diríamos que queremos hacer inferencia sobre nuevas observaciones). Como ya se comentó, en AE hay que tener especial cuidado con el sobreajuste. Este problema ocurre cuando el modelo se ajusta demasiado bien a los datos de entrenamiento pero falla cuando se utiliza en un nuevo conjunto de datos (nunca antes visto).</p>
-<p>Como ejemplo ilustrativo emplearemos regresión polinómica, considerando el grado del polinomio como un hiperparámetro que determina la complejidad del modelo. En primer lugar simulamos una muestra y ajustamos modelos polinómicos con distintos grados de complejidad.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Simulación datos</span>
-n &lt;-<span class="st"> </span><span class="dv">30</span>
-x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">length =</span> n)
-mu &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">4</span><span class="op">*</span>(<span class="dv">5</span><span class="op">*</span>x <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)<span class="op">*</span>(<span class="dv">4</span><span class="op">*</span>x <span class="op">-</span><span class="st"> </span><span class="dv">2</span>)<span class="op">*</span>(x <span class="op">-</span><span class="st"> </span><span class="fl">0.8</span>)<span class="op">^</span><span class="dv">2</span> <span class="co"># grado 4</span>
-sd &lt;-<span class="st"> </span><span class="fl">0.5</span>
-<span class="kw">set.seed</span>(<span class="dv">1</span>)
-y &lt;-<span class="st"> </span>mu <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dv">0</span>, sd)
-<span class="kw">plot</span>(x, y) 
-<span class="kw">lines</span>(x, mu, <span class="dt">lwd =</span> <span class="dv">2</span>)
-<span class="co"># Ajuste de los modelos</span>
-fit1 &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x)
-<span class="kw">lines</span>(x, <span class="kw">fitted</span>(fit1))
-fit2 &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(x, <span class="dv">4</span>))
-<span class="kw">lines</span>(x, <span class="kw">fitted</span>(fit2), <span class="dt">lty =</span> <span class="dv">2</span>)
-fit3 &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(x, <span class="dv">20</span>)) 
-<span class="co"># NOTA: poly(x, degree, raw = FALSE) tiene un problema de desbordamiento si degree &gt; 25</span>
-<span class="kw">lines</span>(x, <span class="kw">fitted</span>(fit3), <span class="dt">lty =</span> <span class="dv">3</span>)
-<span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Verdadero&quot;</span>, <span class="st">&quot;Ajuste con grado 1&quot;</span>, 
-                              <span class="st">&quot;Ajuste con grado 4&quot;</span>, <span class="st">&quot;Ajuste con grado 20&quot;</span>), 
-       <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">lwd =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>))</code></pre></div>
+<p>La idea es que queremos aprender más allá de los datos empleados en el entrenamiento (en Estadística diríamos que queremos hacer inferencia sobre nuevas observaciones).
+Como ya se comentó, en AE hay que tener especial cuidado con el sobreajuste.
+Este problema ocurre cuando el modelo se ajusta demasiado bien a los datos de entrenamiento pero falla cuando se utiliza en un nuevo conjunto de datos (nunca antes visto).</p>
+<p>Como ejemplo ilustrativo emplearemos regresión polinómica, considerando el grado del polinomio como un hiperparámetro que determina la complejidad del modelo.
+En primer lugar simulamos una muestra y ajustamos modelos polinómicos con distintos grados de complejidad.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="const-eval.html#cb2-1"></a><span class="co"># Simulación datos</span></span>
+<span id="cb2-2"><a href="const-eval.html#cb2-2"></a>n &lt;-<span class="st"> </span><span class="dv">30</span></span>
+<span id="cb2-3"><a href="const-eval.html#cb2-3"></a>x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">length =</span> n)</span>
+<span id="cb2-4"><a href="const-eval.html#cb2-4"></a>mu &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">4</span><span class="op">*</span>(<span class="dv">5</span><span class="op">*</span>x <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)<span class="op">*</span>(<span class="dv">4</span><span class="op">*</span>x <span class="op">-</span><span class="st"> </span><span class="dv">2</span>)<span class="op">*</span>(x <span class="op">-</span><span class="st"> </span><span class="fl">0.8</span>)<span class="op">^</span><span class="dv">2</span> <span class="co"># grado 4</span></span>
+<span id="cb2-5"><a href="const-eval.html#cb2-5"></a>sd &lt;-<span class="st"> </span><span class="fl">0.5</span></span>
+<span id="cb2-6"><a href="const-eval.html#cb2-6"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb2-7"><a href="const-eval.html#cb2-7"></a>y &lt;-<span class="st"> </span>mu <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dv">0</span>, sd)</span>
+<span id="cb2-8"><a href="const-eval.html#cb2-8"></a><span class="kw">plot</span>(x, y) </span>
+<span id="cb2-9"><a href="const-eval.html#cb2-9"></a><span class="kw">lines</span>(x, mu, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb2-10"><a href="const-eval.html#cb2-10"></a><span class="co"># Ajuste de los modelos</span></span>
+<span id="cb2-11"><a href="const-eval.html#cb2-11"></a>fit1 &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x)</span>
+<span id="cb2-12"><a href="const-eval.html#cb2-12"></a><span class="kw">lines</span>(x, <span class="kw">fitted</span>(fit1))</span>
+<span id="cb2-13"><a href="const-eval.html#cb2-13"></a>fit2 &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(x, <span class="dv">4</span>))</span>
+<span id="cb2-14"><a href="const-eval.html#cb2-14"></a><span class="kw">lines</span>(x, <span class="kw">fitted</span>(fit2), <span class="dt">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb2-15"><a href="const-eval.html#cb2-15"></a>fit3 &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(x, <span class="dv">20</span>)) </span>
+<span id="cb2-16"><a href="const-eval.html#cb2-16"></a><span class="co"># NOTA: poly(x, degree, raw = FALSE) tiene un problema de desbordamiento si degree &gt; 25</span></span>
+<span id="cb2-17"><a href="const-eval.html#cb2-17"></a><span class="kw">lines</span>(x, <span class="kw">fitted</span>(fit3), <span class="dt">lty =</span> <span class="dv">3</span>)</span>
+<span id="cb2-18"><a href="const-eval.html#cb2-18"></a><span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Verdadero&quot;</span>, <span class="st">&quot;Ajuste con grado 1&quot;</span>, </span>
+<span id="cb2-19"><a href="const-eval.html#cb2-19"></a>                              <span class="st">&quot;Ajuste con grado 4&quot;</span>, <span class="st">&quot;Ajuste con grado 20&quot;</span>), </span>
+<span id="cb2-20"><a href="const-eval.html#cb2-20"></a>       <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">lwd =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:polyfit"></span>
 <img src="01-introduccion_files/figure-html/polyfit-1.png" alt="Muestra (simulada) y ajustes polinómicos con distinta complejidad." width="80%" />
 <p class="caption">
@@ -237,10 +273,11 @@ Figura 1.2: Muestra (simulada) y ajustes polinómicos con distinta complejidad.
 </p>
 </div>
 <p>Como se observa en la Figura <a href="const-eval.html#fig:polyfit">1.2</a> al aumentar la complejidad del modelo se consigue un mejor ajuste a los datos observados (empleados en el entrenamiento), a costa de un incremento en la variabilidad de las predicciones, lo que puede producir un mal comportamiento del modelo a ser empleado en un conjunto de datos distinto del observado.</p>
-<p>Si calculamos medidas de bondad de ajuste, como el error cuadrático medio (MSE) o el coeficiente de determinación, se obtienen mejores resultados al aumentar la complejidad. Como se trata de modelos lineales, podríamos obtener también el coeficiente de determinación ajustado, que sería preferible (en principio, ya que dependería de la validez de las hipótesis estructurales del modelo) para medir la precisión al emplear los modelos en un nuevo conjunto de datos.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">t</span>(<span class="kw">sapply</span>(<span class="kw">list</span>(<span class="dt">fit1 =</span> fit1, <span class="dt">fit2 =</span> fit2, <span class="dt">fit3 =</span> fit3), 
-       <span class="cf">function</span>(x) <span class="kw">with</span>(<span class="kw">summary</span>(x), 
-                        <span class="kw">c</span>(<span class="dt">MSE =</span> <span class="kw">mean</span>(residuals<span class="op">^</span><span class="dv">2</span>), <span class="dt">R2 =</span> r.squared, <span class="dt">R2adj =</span> adj.r.squared)))), <span class="dt">digits =</span> <span class="dv">2</span>)</code></pre></div>
+<p>Si calculamos medidas de bondad de ajuste, como el error cuadrático medio (MSE) o el coeficiente de determinación, se obtienen mejores resultados al aumentar la complejidad.
+Como se trata de modelos lineales, podríamos obtener también el coeficiente de determinación ajustado, que sería preferible (en principio, ya que dependería de la validez de las hipótesis estructurales del modelo) para medir la precisión al emplear los modelos en un nuevo conjunto de datos.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="const-eval.html#cb3-1"></a>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">t</span>(<span class="kw">sapply</span>(<span class="kw">list</span>(<span class="dt">fit1 =</span> fit1, <span class="dt">fit2 =</span> fit2, <span class="dt">fit3 =</span> fit3), </span>
+<span id="cb3-2"><a href="const-eval.html#cb3-2"></a>       <span class="cf">function</span>(x) <span class="kw">with</span>(<span class="kw">summary</span>(x), </span>
+<span id="cb3-3"><a href="const-eval.html#cb3-3"></a>                        <span class="kw">c</span>(<span class="dt">MSE =</span> <span class="kw">mean</span>(residuals<span class="op">^</span><span class="dv">2</span>), <span class="dt">R2 =</span> r.squared, <span class="dt">R2adj =</span> adj.r.squared)))), <span class="dt">digits =</span> <span class="dv">2</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -272,71 +309,79 @@ Figura 1.2: Muestra (simulada) y ajustes polinómicos con distinta complejidad.
 </tbody>
 </table>
 <p>Por ejemplo, si generamos nuevas respuestas de este proceso, la precisión del modelo más complejo empeorará considerablemente:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y.new &lt;-<span class="st"> </span>mu <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dv">0</span>, sd)
-<span class="kw">plot</span>(x, y) 
-<span class="kw">points</span>(x, y.new, <span class="dt">pch =</span> <span class="dv">2</span>)
-<span class="kw">lines</span>(x, mu, <span class="dt">lwd =</span> <span class="dv">2</span>)
-<span class="kw">lines</span>(x, <span class="kw">fitted</span>(fit1))
-<span class="kw">lines</span>(x, <span class="kw">fitted</span>(fit2), <span class="dt">lty =</span> <span class="dv">2</span>)
-<span class="kw">lines</span>(x, <span class="kw">fitted</span>(fit3), <span class="dt">lty =</span> <span class="dv">3</span>)
-<span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Verdadero&quot;</span>, <span class="st">&quot;Muestra&quot;</span>, <span class="st">&quot;Ajuste con grado 1&quot;</span>, <span class="st">&quot;Ajuste con grado 4&quot;</span>, 
-                              <span class="st">&quot;Ajuste con grado 20&quot;</span>, <span class="st">&quot;Nuevas observaciones&quot;</span>), 
-       <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="ot">NA</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="ot">NA</span>), <span class="dt">lwd =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="ot">NA</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="ot">NA</span>), <span class="dt">pch =</span> <span class="kw">c</span>(<span class="ot">NA</span>, <span class="dv">1</span>, <span class="ot">NA</span>, <span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dv">2</span>))</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="const-eval.html#cb4-1"></a>y.new &lt;-<span class="st"> </span>mu <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dv">0</span>, sd)</span>
+<span id="cb4-2"><a href="const-eval.html#cb4-2"></a><span class="kw">plot</span>(x, y) </span>
+<span id="cb4-3"><a href="const-eval.html#cb4-3"></a><span class="kw">points</span>(x, y.new, <span class="dt">pch =</span> <span class="dv">2</span>)</span>
+<span id="cb4-4"><a href="const-eval.html#cb4-4"></a><span class="kw">lines</span>(x, mu, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb4-5"><a href="const-eval.html#cb4-5"></a><span class="kw">lines</span>(x, <span class="kw">fitted</span>(fit1))</span>
+<span id="cb4-6"><a href="const-eval.html#cb4-6"></a><span class="kw">lines</span>(x, <span class="kw">fitted</span>(fit2), <span class="dt">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb4-7"><a href="const-eval.html#cb4-7"></a><span class="kw">lines</span>(x, <span class="kw">fitted</span>(fit3), <span class="dt">lty =</span> <span class="dv">3</span>)</span>
+<span id="cb4-8"><a href="const-eval.html#cb4-8"></a><span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Verdadero&quot;</span>, <span class="st">&quot;Muestra&quot;</span>, <span class="st">&quot;Ajuste con grado 1&quot;</span>, <span class="st">&quot;Ajuste con grado 4&quot;</span>, </span>
+<span id="cb4-9"><a href="const-eval.html#cb4-9"></a>                              <span class="st">&quot;Ajuste con grado 20&quot;</span>, <span class="st">&quot;Nuevas observaciones&quot;</span>), </span>
+<span id="cb4-10"><a href="const-eval.html#cb4-10"></a>       <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="ot">NA</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="ot">NA</span>), <span class="dt">lwd =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="ot">NA</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="ot">NA</span>), <span class="dt">pch =</span> <span class="kw">c</span>(<span class="ot">NA</span>, <span class="dv">1</span>, <span class="ot">NA</span>, <span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dv">2</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:polyfit2"></span>
 <img src="01-introduccion_files/figure-html/polyfit2-1.png" alt="Muestra con ajustes polinómicos con distinta complejidad y nuevas observaciones." width="80%" />
 <p class="caption">
 Figura 1.3: Muestra con ajustes polinómicos con distinta complejidad y nuevas observaciones.
 </p>
 </div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">MSEP &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span class="kw">list</span>(<span class="dt">fit1 =</span> fit1, <span class="dt">fit2 =</span> fit2, <span class="dt">fit3 =</span> fit3), 
-               <span class="cf">function</span>(x) <span class="kw">mean</span>((y.new <span class="op">-</span><span class="st"> </span><span class="kw">fitted</span>(x))<span class="op">^</span><span class="dv">2</span>))
-MSEP</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="const-eval.html#cb5-1"></a>MSEP &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span class="kw">list</span>(<span class="dt">fit1 =</span> fit1, <span class="dt">fit2 =</span> fit2, <span class="dt">fit3 =</span> fit3), </span>
+<span id="cb5-2"><a href="const-eval.html#cb5-2"></a>               <span class="cf">function</span>(x) <span class="kw">mean</span>((y.new <span class="op">-</span><span class="st"> </span><span class="kw">fitted</span>(x))<span class="op">^</span><span class="dv">2</span>))</span>
+<span id="cb5-3"><a href="const-eval.html#cb5-3"></a>MSEP</span></code></pre></div>
 <pre><code>##      fit1      fit2      fit3 
 ## 1.4983208 0.1711238 0.2621064</code></pre>
 <!-- lines(x, y.new, type = "b", pch = 2, lty = 4, col = "blue") -->
 <p>Como ejemplo adicional, para evitar el efecto de la aleatoriedad de la muestra, en el siguiente código se simulan 100 muestras del proceso anterior a las que se les ajustan modelos polinómicos variando el grado de 1 a 20. Posteriormente se evalua la precisión en la muestra empleada en el ajuste y en un nuevo conjunto de datos procedente de la misma población.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nsim &lt;-<span class="st"> </span><span class="dv">100</span>
-<span class="kw">set.seed</span>(<span class="dv">1</span>)
-grado.max &lt;-<span class="st"> </span><span class="dv">20</span>
-grados &lt;-<span class="st"> </span><span class="kw">seq_len</span>(grado.max) 
-mse &lt;-<span class="st"> </span>mse.new &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">nrow =</span> grado.max, <span class="dt">ncol =</span> nsim) <span class="co"># Error cuadrático medio</span>
-<span class="cf">for</span>(i <span class="cf">in</span> <span class="kw">seq_len</span>(nsim)) {
-  y &lt;-<span class="st"> </span>mu <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dv">0</span>, sd)
-  y.new &lt;-<span class="st"> </span>mu <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dv">0</span>, sd)
-  <span class="cf">for</span> (grado <span class="cf">in</span> grados) { <span class="co"># grado &lt;- 1</span>
-    fit &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(x, grado))
-    mse[grado, i] &lt;-<span class="st"> </span><span class="kw">mean</span>(<span class="kw">residuals</span>(fit)<span class="op">^</span><span class="dv">2</span>)
-    mse.new[grado, i] &lt;-<span class="st"> </span><span class="kw">mean</span>((y.new <span class="op">-</span><span class="st"> </span><span class="kw">fitted</span>(fit))<span class="op">^</span><span class="dv">2</span>)
-  }
-}
-<span class="co"># Simulaciones</span>
-<span class="kw">matplot</span>(grados, mse, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;lightgray&quot;</span>, <span class="dt">lty =</span> <span class="dv">1</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">2</span>),
-        <span class="dt">xlab =</span> <span class="st">&quot;Grado del polinomio (complejidad)&quot;</span>,
-        <span class="dt">ylab =</span> <span class="st">&quot;Error cuadrático medio&quot;</span>)
-<span class="kw">matlines</span>(grados, mse.new, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;lightgray&quot;</span>) 
-<span class="co"># Global</span>
-precision &lt;-<span class="st"> </span><span class="kw">rowMeans</span>(mse)
-precision.new &lt;-<span class="st"> </span><span class="kw">rowMeans</span>(mse.new)
-<span class="kw">lines</span>(grados, precision, <span class="dt">lwd =</span> <span class="dv">2</span>)
-<span class="kw">lines</span>(grados, precision.new, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
-<span class="kw">abline</span>(<span class="dt">h =</span> sd<span class="op">^</span><span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">3</span>)
-<span class="kw">abline</span>(<span class="dt">v =</span> <span class="dv">4</span>, <span class="dt">lty =</span> <span class="dv">3</span>)
-<span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Muestras&quot;</span>, <span class="st">&quot;Nuevas observaciones&quot;</span>), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="const-eval.html#cb7-1"></a>nsim &lt;-<span class="st"> </span><span class="dv">100</span></span>
+<span id="cb7-2"><a href="const-eval.html#cb7-2"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb7-3"><a href="const-eval.html#cb7-3"></a>grado.max &lt;-<span class="st"> </span><span class="dv">20</span></span>
+<span id="cb7-4"><a href="const-eval.html#cb7-4"></a>grados &lt;-<span class="st"> </span><span class="kw">seq_len</span>(grado.max) </span>
+<span id="cb7-5"><a href="const-eval.html#cb7-5"></a>mse &lt;-<span class="st"> </span>mse.new &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">nrow =</span> grado.max, <span class="dt">ncol =</span> nsim) <span class="co"># Error cuadrático medio</span></span>
+<span id="cb7-6"><a href="const-eval.html#cb7-6"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="kw">seq_len</span>(nsim)) {</span>
+<span id="cb7-7"><a href="const-eval.html#cb7-7"></a>  y &lt;-<span class="st"> </span>mu <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dv">0</span>, sd)</span>
+<span id="cb7-8"><a href="const-eval.html#cb7-8"></a>  y.new &lt;-<span class="st"> </span>mu <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dv">0</span>, sd)</span>
+<span id="cb7-9"><a href="const-eval.html#cb7-9"></a>  <span class="cf">for</span> (grado <span class="cf">in</span> grados) { <span class="co"># grado &lt;- 1</span></span>
+<span id="cb7-10"><a href="const-eval.html#cb7-10"></a>    fit &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(x, grado))</span>
+<span id="cb7-11"><a href="const-eval.html#cb7-11"></a>    mse[grado, i] &lt;-<span class="st"> </span><span class="kw">mean</span>(<span class="kw">residuals</span>(fit)<span class="op">^</span><span class="dv">2</span>)</span>
+<span id="cb7-12"><a href="const-eval.html#cb7-12"></a>    mse.new[grado, i] &lt;-<span class="st"> </span><span class="kw">mean</span>((y.new <span class="op">-</span><span class="st"> </span><span class="kw">fitted</span>(fit))<span class="op">^</span><span class="dv">2</span>)</span>
+<span id="cb7-13"><a href="const-eval.html#cb7-13"></a>  }</span>
+<span id="cb7-14"><a href="const-eval.html#cb7-14"></a>}</span>
+<span id="cb7-15"><a href="const-eval.html#cb7-15"></a><span class="co"># Simulaciones</span></span>
+<span id="cb7-16"><a href="const-eval.html#cb7-16"></a><span class="kw">matplot</span>(grados, mse, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;lightgray&quot;</span>, <span class="dt">lty =</span> <span class="dv">1</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">2</span>),</span>
+<span id="cb7-17"><a href="const-eval.html#cb7-17"></a>        <span class="dt">xlab =</span> <span class="st">&quot;Grado del polinomio (complejidad)&quot;</span>,</span>
+<span id="cb7-18"><a href="const-eval.html#cb7-18"></a>        <span class="dt">ylab =</span> <span class="st">&quot;Error cuadrático medio&quot;</span>)</span>
+<span id="cb7-19"><a href="const-eval.html#cb7-19"></a><span class="kw">matlines</span>(grados, mse.new, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;lightgray&quot;</span>) </span>
+<span id="cb7-20"><a href="const-eval.html#cb7-20"></a><span class="co"># Global</span></span>
+<span id="cb7-21"><a href="const-eval.html#cb7-21"></a>precision &lt;-<span class="st"> </span><span class="kw">rowMeans</span>(mse)</span>
+<span id="cb7-22"><a href="const-eval.html#cb7-22"></a>precision.new &lt;-<span class="st"> </span><span class="kw">rowMeans</span>(mse.new)</span>
+<span id="cb7-23"><a href="const-eval.html#cb7-23"></a><span class="kw">lines</span>(grados, precision, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb7-24"><a href="const-eval.html#cb7-24"></a><span class="kw">lines</span>(grados, precision.new, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb7-25"><a href="const-eval.html#cb7-25"></a><span class="kw">abline</span>(<span class="dt">h =</span> sd<span class="op">^</span><span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">3</span>)</span>
+<span id="cb7-26"><a href="const-eval.html#cb7-26"></a><span class="kw">abline</span>(<span class="dt">v =</span> <span class="dv">4</span>, <span class="dt">lty =</span> <span class="dv">3</span>)</span>
+<span id="cb7-27"><a href="const-eval.html#cb7-27"></a><span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Muestras&quot;</span>, <span class="st">&quot;Nuevas observaciones&quot;</span>), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:polyfitsim"></span>
 <img src="01-introduccion_files/figure-html/polyfitsim-1.png" alt="Precisiones (errores cuadráticos medios) de ajustes polinómicos variando la complejidad, en las muestras empleadas en el ajuste y en nuevas observaciones (simulados)." width="80%" />
 <p class="caption">
 Figura 1.4: Precisiones (errores cuadráticos medios) de ajustes polinómicos variando la complejidad, en las muestras empleadas en el ajuste y en nuevas observaciones (simulados).
 </p>
 </div>
-<p>Como se puede observar en la Figura <a href="const-eval.html#fig:polyfitsim">1.4</a> los errores de entrenamiento disminuyen a medida que aumenta la complejidad del modelo. Sin embargo los errores de predicción en nuevas observaciones primero disminuyen hasta alcanzar un mínimo, marcado por la línea de puntos vertical que se corresponde con el modelo de grado 4, y después aumentan (la línea de puntos horizontal es la varianza del proceso; el error cuadrático medio de predicción asintótico). La línea vertical representa el equilibrio entre el sesgo y la varianza. Considerando un valor de complejidad a la izquierda de esa línea tendríamos infraajuste (mayor sesgo y menor varianza) y a la derecha sobreajuste (menor sesgo y mayor varianza).</p>
-<p>Desde un punto de vista más formal, considerando el modelo <a href="métodos-de-aprendizaje-estadístico.html#eq:modelogeneral">(1.1)</a> y una función de pérdidas cuadrática, el predictor óptimo (desconocido) sería la media condicional <span class="math inline">\(m(\mathbf{x}) = E\left( \left. Y\right\vert_{\mathbf{X}=\mathbf{x}} \right)\)</span><a href="#fn6" class="footnoteRef" id="fnref6"><sup>6</sup></a>. Por tanto los predictores serían realmente estimaciones de la función de regresión, <span class="math inline">\(\hat Y(\mathbf{x}) = \hat m(\mathbf{x})\)</span> y podemos expresar la media del error cuadrático de predicción en términos del sesgo y la varianza: <span class="math display">\[
+<p>Como se puede observar en la Figura <a href="const-eval.html#fig:polyfitsim">1.4</a> los errores de entrenamiento disminuyen a medida que aumenta la complejidad del modelo.
+Sin embargo los errores de predicción en nuevas observaciones primero disminuyen hasta alcanzar un mínimo, marcado por la línea de puntos vertical que se corresponde con el modelo de grado 4, y después aumentan (la línea de puntos horizontal es la varianza del proceso; el error cuadrático medio de predicción asintótico).
+La línea vertical representa el equilibrio entre el sesgo y la varianza.
+Considerando un valor de complejidad a la izquierda de esa línea tendríamos infraajuste (mayor sesgo y menor varianza) y a la derecha sobreajuste (menor sesgo y mayor varianza).</p>
+<p>Desde un punto de vista más formal, considerando el modelo <a href="métodos-de-aprendizaje-estadístico.html#eq:modelogeneral">(1.1)</a> y una función de pérdidas cuadrática, el predictor óptimo (desconocido) sería la media condicional <span class="math inline">\(m(\mathbf{x}) = E\left( \left. Y\right\vert_{\mathbf{X}=\mathbf{x}} \right)\)</span><a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>.
+Por tanto los predictores serían realmente estimaciones de la función de regresión, <span class="math inline">\(\hat Y(\mathbf{x}) = \hat m(\mathbf{x})\)</span> y podemos expresar la media del error cuadrático de predicción en términos del sesgo y la varianza:
+<span class="math display">\[
 \begin{aligned}
 E \left( Y(\mathbf{x}_0) - \hat Y(\mathbf{x}_0) \right)^2 &amp; = E \left( m(\mathbf{x}_0) + \varepsilon - \hat m(\mathbf{x}_0) \right)^2 = E \left( m(\mathbf{x}_0) - \hat m(\mathbf{x}_0) \right)^2 + \sigma^2 \\
 &amp; = E^2 \left( m(\mathbf{x}_0) - \hat m(\mathbf{x}_0) \right) + Var\left( \hat m(\mathbf{x}_0) \right) + \sigma^2 \\
 &amp; = \text{sesgo}^2 + \text{varianza} + \text{error irreducible}
 \end{aligned}
-\]</span> donde <span class="math inline">\(\mathbf{x}_0\)</span> hace referencia al vector de valores de las variables explicativas de una nueva observación (no empleada en la construcción del predictor).</p>
-<p>En general, al aumentar la complejidad disminuye el sesgo y aumenta la varianza (y viceversa). Esto es lo que se conoce como el dilema o compromiso entre el sesgo y la varianza (<em>bias-variance tradeoff</em>). La recomendación sería por tanto seleccionar los hiperparámetros (el modelo final) tratando de que haya un equilibrio entre el sesgo y la varianza.</p>
+\]</span>
+donde <span class="math inline">\(\mathbf{x}_0\)</span> hace referencia al vector de valores de las variables explicativas de una nueva observación (no empleada en la construcción del predictor).</p>
+<p>En general, al aumentar la complejidad disminuye el sesgo y aumenta la varianza (y viceversa).
+Esto es lo que se conoce como el dilema o compromiso entre el sesgo y la varianza (<em>bias-variance tradeoff</em>).
+La recomendación sería por tanto seleccionar los hiperparámetros (el modelo final) tratando de que haya un equilibrio entre el sesgo y la varianza.</p>
 <!-- 
 PENDIENTE: 
 Gráfico equilibrio entre sesgo y varianza
@@ -345,130 +390,156 @@ Gráfico equilibrio entre sesgo y varianza
 <div id="entrenamiento-test" class="section level3">
 <h3><span class="header-section-number">1.3.2</span> Datos de entrenamiento y datos de test</h3>
 <p>Como se mostró en la sección anterior hay que tener mucho cuidado si se pretende evaluar la precisión de las predicciones empleando la muestra de entrenamiento.</p>
-<p>Si el número de observaciones no es muy grande, se puede entrenar el modelo con todos los datos y emplear técnicas de remuestreo para evaluar la precisión (típicamente validación cruzada o bootstrap). Habría que asegurase de que el procedimiento de remuestreo empleado es adecuado (por ejemplo, la presencia de dependencia requeriría de métodos más sofisticados).</p>
+<p>Si el número de observaciones no es muy grande, se puede entrenar el modelo con todos los datos y emplear técnicas de remuestreo para evaluar la precisión (típicamente validación cruzada o bootstrap).
+Habría que asegurase de que el procedimiento de remuestreo empleado es adecuado (por ejemplo, la presencia de dependencia requeriría de métodos más sofisticados).</p>
 <p>Sin embargo, si el número de obervaciones es grande, se suele emplear el procedimiento tradicional en ML, que consiste en particionar la base de datos en 2 (o incluso en 3) conjuntos (disjuntos):</p>
 <ul>
 <li><p>Conjunto de datos de entrenamiento (o aprendizaje) para construir los modelos.</p></li>
 <li><p>Conjunto de datos de test para evaluar el rendimiento de los modelos.</p></li>
 </ul>
-<p>Los datos de test deberían utilizarse únicamente para evaluar los modelos finales, no se deberían emplear para seleccionar hiperparámetros. Para seleccionalos se podría volver a particionar los datos de entrenamiento, es decir, dividir la muestra en tres subconjuntos: datos de entrenamiento, de validación y de test (por ejemplo considerando un 70%, 15% y 15% de las observaciones, respectivamente). Para cada combinación de hiperparámetros se ajustaría el correspondiente modelo con los datos de entrenamiento, se emplearían los de validación para evaluarlos y posteriormente seleccionar los valores “óptimos”. Por último, se emplean los datos de test para evaluar el rendimiento del modelo seleccionado. No obstante, lo más habitual es seleccionar los hiperparámetros empleando validación cruzada (o otro tipo de remuestreo) en la muestra de entrenamiento, en lugar de considerar una muestra adicional de validación. En la siguiente sección se describirá esta última aproximación.</p>
-<p>En R se puede realizar el particionamiento de los datos empleando la función <code>sample()</code> del paquete base (otra alternativa sería emplear la función <code>createDataPartition</code> del paquete <code>caret</code> como se describe en la Sección <a href="caret.html#caret">1.6</a>). Típicamente se selecciona el 80% de los datos como muestra de entrenamiento y el 20% restante como muestra de test, aunque esto dependería del número de datos.</p>
-<p>Como ejemplo consideraremos el conjunto de datos <code>Boston</code> del paquete <code>MASS</code> que contiene, entre otros datos, la valoración de las viviendas (<code>medv</code>, mediana de los valores de las viviendas ocupadas, en miles de dólares) y el porcentaje de población con “menor estatus” (<code>lstat</code>) en los suburbios de Boston. Podemos contruir las muestras de entrenamiento (80%) y de test (20%) con el siguiente código:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(Boston, <span class="dt">package =</span> <span class="st">&quot;MASS&quot;</span>)
-<span class="co"># ?Boston</span>
-<span class="kw">set.seed</span>(<span class="dv">1</span>)
-nobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(Boston)
-itrain &lt;-<span class="st"> </span><span class="kw">sample</span>(nobs, <span class="fl">0.8</span> <span class="op">*</span><span class="st"> </span>nobs)
-train &lt;-<span class="st"> </span>Boston[itrain, ]
-test &lt;-<span class="st"> </span>Boston[<span class="op">-</span>itrain, ]</code></pre></div>
+<p>Los datos de test deberían utilizarse únicamente para evaluar los modelos finales, no se deberían emplear para seleccionar hiperparámetros.
+Para seleccionalos se podría volver a particionar los datos de entrenamiento, es decir, dividir la muestra en tres subconjuntos: datos de entrenamiento, de validación y de test (por ejemplo considerando un 70%, 15% y 15% de las observaciones, respectivamente).
+Para cada combinación de hiperparámetros se ajustaría el correspondiente modelo con los datos de entrenamiento, se emplearían los de validación para evaluarlos y posteriormente seleccionar los valores “óptimos”. Por último, se emplean los datos de test para evaluar el rendimiento del modelo seleccionado.
+No obstante, lo más habitual es seleccionar los hiperparámetros empleando validación cruzada (o otro tipo de remuestreo) en la muestra de entrenamiento, en lugar de considerar una muestra adicional de validación.
+En la siguiente sección se describirá esta última aproximación.</p>
+<p>En R se puede realizar el particionamiento de los datos empleando la función <code>sample()</code> del paquete base (otra alternativa sería emplear la función <code>createDataPartition</code> del paquete <code>caret</code> como se describe en la Sección <a href="caret.html#caret">1.6</a>).
+Típicamente se selecciona el 80% de los datos como muestra de entrenamiento y el 20% restante como muestra de test, aunque esto dependería del número de datos.</p>
+<p>Como ejemplo consideraremos el conjunto de datos <code>Boston</code> del paquete <code>MASS</code> que contiene, entre otros datos, la valoración de las viviendas (<code>medv</code>, mediana de los valores de las viviendas ocupadas, en miles de dólares) y el porcentaje de población con “menor estatus” (<code>lstat</code>) en los suburbios de Boston.
+Podemos contruir las muestras de entrenamiento (80%) y de test (20%) con el siguiente código:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="const-eval.html#cb8-1"></a><span class="kw">data</span>(Boston, <span class="dt">package =</span> <span class="st">&quot;MASS&quot;</span>)</span>
+<span id="cb8-2"><a href="const-eval.html#cb8-2"></a><span class="co"># ?Boston</span></span>
+<span id="cb8-3"><a href="const-eval.html#cb8-3"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb8-4"><a href="const-eval.html#cb8-4"></a>nobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(Boston)</span>
+<span id="cb8-5"><a href="const-eval.html#cb8-5"></a>itrain &lt;-<span class="st"> </span><span class="kw">sample</span>(nobs, <span class="fl">0.8</span> <span class="op">*</span><span class="st"> </span>nobs)</span>
+<span id="cb8-6"><a href="const-eval.html#cb8-6"></a>train &lt;-<span class="st"> </span>Boston[itrain, ]</span>
+<span id="cb8-7"><a href="const-eval.html#cb8-7"></a>test &lt;-<span class="st"> </span>Boston[<span class="op">-</span>itrain, ]</span></code></pre></div>
 <!-- Sección \@ref(cv) -->
 </div>
 <div id="cv" class="section level3">
 <h3><span class="header-section-number">1.3.3</span> Validación cruzada</h3>
 <p>Como ya se comentó, una herramienta para evaluar la calidad predictiva de un modelo es la <em>validación cruzada</em>, que permite cuantificar el error de predicción utilizando una única muestra de datos.</p>
-<p>En su versión más simple, validación cruzada dejando uno fuera (<em>Leave-one-out cross-validation</em>, LOOCV), para cada observación de la muestra se realiza un ajuste empleando el resto de observaciones, y se mide el error de predicción en esa observación (único dato no utilizado en el ajuste del modelo). Finalmente, combinando todos los errores individuales se puede obtener medidas globales del error de predicción (o aproximar características de su distribución).</p>
-<p>El método de LOOCV requeriría, en principio (ver comentarios más adelante), el ajuste de un modelo para cada observación por lo que pueden aparecer problemas computacionales si el conjunto de datos es grande. En este caso se suele emplear grupos de observaciones en lugar de observaciones individuales. Si se particiona el conjunto de datos en <em>k</em> grupos, típicamente 10 o 5 grupos, se denomina <em>k-fold cross-validation</em> (LOOCV sería un caso particular considerando un número de grupos igual al número de observaciones). Hay muchas variaciones de este método, entre ellas particionar repetidamente de forma aleatoria los datos en un conjunto de entrenamiento y otro de validación (de esta forma algunas observaciones podrían aparecer repetidas veces y otras ninguna en las muestras de validación).</p>
-<p>Continuando con el ejemplo anterior, supongamos que queremos emplear regresión polinómica para explicar la valoración de las viviendas (<code>medv</code>) a partir del “estatus” de los residentes (<code>lstat</code>). Al igual que se hizo en la Sección <a href="const-eval.html#bias-variance">1.3.1</a>, consideraremos el grado del polinomio como un hiperparámetro.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(medv <span class="op">~</span><span class="st"> </span>lstat, <span class="dt">data =</span> train)</code></pre></div>
+<p>En su versión más simple, validación cruzada dejando uno fuera (<em>Leave-one-out cross-validation</em>, LOOCV), para cada observación de la muestra se realiza un ajuste empleando el resto de observaciones, y se mide el error de predicción en esa observación (único dato no utilizado en el ajuste del modelo).
+Finalmente, combinando todos los errores individuales se puede obtener medidas globales del error de predicción (o aproximar características de su distribución).</p>
+<p>El método de LOOCV requeriría, en principio (ver comentarios más adelante), el ajuste de un modelo para cada observación por lo que pueden aparecer problemas computacionales si el conjunto de datos es grande.
+En este caso se suele emplear grupos de observaciones en lugar de observaciones individuales.
+Si se particiona el conjunto de datos en <em>k</em> grupos, típicamente 10 o 5 grupos, se denomina <em>k-fold cross-validation</em> (LOOCV sería un caso particular considerando un número de grupos igual al número de observaciones).
+Hay muchas variaciones de este método, entre ellas particionar repetidamente de forma aleatoria los datos en un conjunto de entrenamiento y otro de validación (de esta forma algunas observaciones podrían aparecer repetidas veces y otras ninguna en las muestras de validación).</p>
+<p>Continuando con el ejemplo anterior, supongamos que queremos emplear regresión polinómica para explicar la valoración de las viviendas (<code>medv</code>) a partir del “estatus” de los residentes (<code>lstat</code>).
+Al igual que se hizo en la Sección <a href="const-eval.html#bias-variance">1.3.1</a>, consideraremos el grado del polinomio como un hiperparámetro.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="const-eval.html#cb9-1"></a><span class="kw">plot</span>(medv <span class="op">~</span><span class="st"> </span>lstat, <span class="dt">data =</span> train)</span></code></pre></div>
 <p><img src="01-introduccion_files/figure-html/unnamed-chunk-4-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>Podríamos emplear la siguiente función que devuelve para cada observación (fila) de una muestra de entrenamiento, el error de predicción en esa observación ajustando un modelo lineal con todas las demás observaciones:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cv.lm0 &lt;-<span class="st"> </span><span class="cf">function</span>(formula, datos) {
-    n &lt;-<span class="st"> </span><span class="kw">nrow</span>(datos)
-    cv.res &lt;-<span class="st"> </span><span class="kw">numeric</span>(n)
-    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n) {
-        modelo &lt;-<span class="st"> </span><span class="kw">lm</span>(formula, datos[<span class="op">-</span>i, ])
-        cv.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(modelo, <span class="dt">newdata =</span> datos[i, ])
-        cv.res[i] &lt;-<span class="st"> </span>cv.pred <span class="op">-</span><span class="st"> </span>datos[i, ]
-    }
-    <span class="kw">return</span>(cv.res)
-}</code></pre></div>
-<p>La función anterior no es muy eficiente, pero podría modificarse fácilmente para emplear otros métodos de regresión<a href="#fn7" class="footnoteRef" id="fnref7"><sup>7</sup></a>. En el caso de regresión lineal múltiple (y de otros modelos lineales), se pueden obtener fácilmente las predicciones eliminando una de las observaciones a partir del ajuste con todos los datos. Por ejemplo, en lugar de la anterior sería preferible emplear la siguiente función (ver <code>?rstandard</code>):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cv.lm &lt;-<span class="st"> </span><span class="cf">function</span>(formula, datos) {
-    modelo &lt;-<span class="st"> </span><span class="kw">lm</span>(formula, datos)
-    <span class="kw">return</span>(<span class="kw">rstandard</span>(modelo, <span class="dt">type =</span> <span class="st">&quot;predictive&quot;</span>))
-}</code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="const-eval.html#cb10-1"></a>cv.lm0 &lt;-<span class="st"> </span><span class="cf">function</span>(formula, datos) {</span>
+<span id="cb10-2"><a href="const-eval.html#cb10-2"></a>    n &lt;-<span class="st"> </span><span class="kw">nrow</span>(datos)</span>
+<span id="cb10-3"><a href="const-eval.html#cb10-3"></a>    cv.res &lt;-<span class="st"> </span><span class="kw">numeric</span>(n)</span>
+<span id="cb10-4"><a href="const-eval.html#cb10-4"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n) {</span>
+<span id="cb10-5"><a href="const-eval.html#cb10-5"></a>        modelo &lt;-<span class="st"> </span><span class="kw">lm</span>(formula, datos[<span class="op">-</span>i, ])</span>
+<span id="cb10-6"><a href="const-eval.html#cb10-6"></a>        cv.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(modelo, <span class="dt">newdata =</span> datos[i, ])</span>
+<span id="cb10-7"><a href="const-eval.html#cb10-7"></a>        cv.res[i] &lt;-<span class="st"> </span>cv.pred <span class="op">-</span><span class="st"> </span>datos[i, ]</span>
+<span id="cb10-8"><a href="const-eval.html#cb10-8"></a>    }</span>
+<span id="cb10-9"><a href="const-eval.html#cb10-9"></a>    <span class="kw">return</span>(cv.res)</span>
+<span id="cb10-10"><a href="const-eval.html#cb10-10"></a>}</span></code></pre></div>
+<p>La función anterior no es muy eficiente, pero podría modificarse fácilmente para emplear otros métodos de regresión<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a>.
+En el caso de regresión lineal múltiple (y de otros modelos lineales), se pueden obtener fácilmente las predicciones eliminando una de las observaciones a partir del ajuste con todos los datos.
+Por ejemplo, en lugar de la anterior sería preferible emplear la siguiente función (ver <code>?rstandard</code>):</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="const-eval.html#cb11-1"></a>cv.lm &lt;-<span class="st"> </span><span class="cf">function</span>(formula, datos) {</span>
+<span id="cb11-2"><a href="const-eval.html#cb11-2"></a>    modelo &lt;-<span class="st"> </span><span class="kw">lm</span>(formula, datos)</span>
+<span id="cb11-3"><a href="const-eval.html#cb11-3"></a>    <span class="kw">return</span>(<span class="kw">rstandard</span>(modelo, <span class="dt">type =</span> <span class="st">&quot;predictive&quot;</span>))</span>
+<span id="cb11-4"><a href="const-eval.html#cb11-4"></a>}</span></code></pre></div>
 <p>Empleando esta función, podemos calcular una medida del error de predicción de validación cruzada (en este caso el <em>error cuadrático medio</em>) para cada valor del hiperparámetro (grado del ajuste polinómico) y seleccionar el que lo minimiza.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grado.max &lt;-<span class="st"> </span><span class="dv">10</span>
-grados &lt;-<span class="st"> </span><span class="kw">seq_len</span>(grado.max) 
-cv.mse &lt;-<span class="st"> </span>cv.mse.sd &lt;-<span class="st"> </span><span class="kw">numeric</span>(grado.max)
-<span class="cf">for</span>(grado <span class="cf">in</span> grados){
-  cv.res &lt;-<span class="st"> </span><span class="kw">cv.lm</span>(medv <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(lstat, grado), train)
-  se &lt;-<span class="st"> </span>cv.res<span class="op">^</span><span class="dv">2</span>
-  cv.mse[grado] &lt;-<span class="st"> </span><span class="kw">mean</span>(se)
-  cv.mse.sd[grado] &lt;-<span class="st"> </span><span class="kw">sd</span>(se)<span class="op">/</span><span class="kw">sqrt</span>(<span class="kw">length</span>(se))
-}
-<span class="kw">plot</span>(grados, cv.mse, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">25</span>, <span class="dv">45</span>),
-  <span class="dt">xlab =</span> <span class="st">&quot;Grado del polinomio (complejidad)&quot;</span>)
-<span class="co"># Valor óptimo</span>
-imin.mse &lt;-<span class="st"> </span><span class="kw">which.min</span>(cv.mse)
-grado.op &lt;-<span class="st"> </span>grados[imin.mse]
-<span class="kw">points</span>(grado.op, cv.mse[imin.mse], <span class="dt">pch =</span> <span class="dv">16</span>)</code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="const-eval.html#cb12-1"></a>grado.max &lt;-<span class="st"> </span><span class="dv">10</span></span>
+<span id="cb12-2"><a href="const-eval.html#cb12-2"></a>grados &lt;-<span class="st"> </span><span class="kw">seq_len</span>(grado.max) </span>
+<span id="cb12-3"><a href="const-eval.html#cb12-3"></a>cv.mse &lt;-<span class="st"> </span>cv.mse.sd &lt;-<span class="st"> </span><span class="kw">numeric</span>(grado.max)</span>
+<span id="cb12-4"><a href="const-eval.html#cb12-4"></a><span class="cf">for</span>(grado <span class="cf">in</span> grados){</span>
+<span id="cb12-5"><a href="const-eval.html#cb12-5"></a>  cv.res &lt;-<span class="st"> </span><span class="kw">cv.lm</span>(medv <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(lstat, grado), train)</span>
+<span id="cb12-6"><a href="const-eval.html#cb12-6"></a>  se &lt;-<span class="st"> </span>cv.res<span class="op">^</span><span class="dv">2</span></span>
+<span id="cb12-7"><a href="const-eval.html#cb12-7"></a>  cv.mse[grado] &lt;-<span class="st"> </span><span class="kw">mean</span>(se)</span>
+<span id="cb12-8"><a href="const-eval.html#cb12-8"></a>  cv.mse.sd[grado] &lt;-<span class="st"> </span><span class="kw">sd</span>(se)<span class="op">/</span><span class="kw">sqrt</span>(<span class="kw">length</span>(se))</span>
+<span id="cb12-9"><a href="const-eval.html#cb12-9"></a>}</span>
+<span id="cb12-10"><a href="const-eval.html#cb12-10"></a><span class="kw">plot</span>(grados, cv.mse, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">25</span>, <span class="dv">45</span>),</span>
+<span id="cb12-11"><a href="const-eval.html#cb12-11"></a>  <span class="dt">xlab =</span> <span class="st">&quot;Grado del polinomio (complejidad)&quot;</span>)</span>
+<span id="cb12-12"><a href="const-eval.html#cb12-12"></a><span class="co"># Valor óptimo</span></span>
+<span id="cb12-13"><a href="const-eval.html#cb12-13"></a>imin.mse &lt;-<span class="st"> </span><span class="kw">which.min</span>(cv.mse)</span>
+<span id="cb12-14"><a href="const-eval.html#cb12-14"></a>grado.op &lt;-<span class="st"> </span>grados[imin.mse]</span>
+<span id="cb12-15"><a href="const-eval.html#cb12-15"></a><span class="kw">points</span>(grado.op, cv.mse[imin.mse], <span class="dt">pch =</span> <span class="dv">16</span>)</span></code></pre></div>
 <p><img src="01-introduccion_files/figure-html/unnamed-chunk-7-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grado.op</code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="const-eval.html#cb13-1"></a>grado.op</span></code></pre></div>
 <pre><code>## [1] 5</code></pre>
-<p>En lugar de emplear los valores óptimos de los hiperparámetros, Breiman <em>et al.</em> (1984) propusieron la regla de “un error estándar” para seleccionar la complejidad del modelo. La idea es que estamos trabajando con estimaciones de la precisión y pueden presentar variabilidad, por lo que la sugerencia es seleccionar el modelo más simple<a href="#fn8" class="footnoteRef" id="fnref8"><sup>8</sup></a> dentro de un error estándar de la precisión del modelo correspondiente al valor óptimo (se consideraría que no hay diferencias significativas en la precisión; además, se mitigaría el efecto de la variabilidad debida a aleatoriedad/semilla).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(grados, cv.mse, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">25</span>, <span class="dv">45</span>))
-<span class="kw">segments</span>(grados, cv.mse <span class="op">-</span><span class="st"> </span>cv.mse.sd, grados, cv.mse <span class="op">+</span><span class="st"> </span>cv.mse.sd)
-<span class="co"># Límite superior &quot;oneSE rule&quot; y complejidad mínima por debajo de ese valor</span>
-upper.cv.mse &lt;-<span class="st"> </span>cv.mse[imin.mse] <span class="op">+</span><span class="st"> </span>cv.mse.sd[imin.mse]
-<span class="kw">abline</span>(<span class="dt">h =</span> upper.cv.mse, <span class="dt">lty =</span> <span class="dv">2</span>)
-imin.1se &lt;-<span class="st"> </span><span class="kw">min</span>(<span class="kw">which</span>(cv.mse <span class="op">&lt;=</span><span class="st"> </span>upper.cv.mse))
-grado.1se &lt;-<span class="st"> </span>grados[imin.1se]
-<span class="kw">points</span>(grado.1se, cv.mse[imin.1se], <span class="dt">pch =</span> <span class="dv">16</span>)</code></pre></div>
+<p>En lugar de emplear los valores óptimos de los hiperparámetros, Breiman <em>et al.</em> (1984) propusieron la regla de “un error estándar” para seleccionar la complejidad del modelo.
+La idea es que estamos trabajando con estimaciones de la precisión y pueden presentar variabilidad,
+por lo que la sugerencia es seleccionar el modelo más simple<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a> dentro de un error estándar de la precisión del modelo correspondiente al valor óptimo
+(se consideraría que no hay diferencias significativas en la precisión;
+además, se mitigaría el efecto de la variabilidad debida a aleatoriedad/semilla).</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="const-eval.html#cb15-1"></a><span class="kw">plot</span>(grados, cv.mse, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">25</span>, <span class="dv">45</span>))</span>
+<span id="cb15-2"><a href="const-eval.html#cb15-2"></a><span class="kw">segments</span>(grados, cv.mse <span class="op">-</span><span class="st"> </span>cv.mse.sd, grados, cv.mse <span class="op">+</span><span class="st"> </span>cv.mse.sd)</span>
+<span id="cb15-3"><a href="const-eval.html#cb15-3"></a><span class="co"># Límite superior &quot;oneSE rule&quot; y complejidad mínima por debajo de ese valor</span></span>
+<span id="cb15-4"><a href="const-eval.html#cb15-4"></a>upper.cv.mse &lt;-<span class="st"> </span>cv.mse[imin.mse] <span class="op">+</span><span class="st"> </span>cv.mse.sd[imin.mse]</span>
+<span id="cb15-5"><a href="const-eval.html#cb15-5"></a><span class="kw">abline</span>(<span class="dt">h =</span> upper.cv.mse, <span class="dt">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb15-6"><a href="const-eval.html#cb15-6"></a>imin<span class="fl">.1</span>se &lt;-<span class="st"> </span><span class="kw">min</span>(<span class="kw">which</span>(cv.mse <span class="op">&lt;=</span><span class="st"> </span>upper.cv.mse))</span>
+<span id="cb15-7"><a href="const-eval.html#cb15-7"></a>grado<span class="fl">.1</span>se &lt;-<span class="st"> </span>grados[imin<span class="fl">.1</span>se]</span>
+<span id="cb15-8"><a href="const-eval.html#cb15-8"></a><span class="kw">points</span>(grado<span class="fl">.1</span>se, cv.mse[imin<span class="fl">.1</span>se], <span class="dt">pch =</span> <span class="dv">16</span>)</span></code></pre></div>
 <p><img src="01-introduccion_files/figure-html/unnamed-chunk-8-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grado.1se</code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="const-eval.html#cb16-1"></a>grado<span class="fl">.1</span>se</span></code></pre></div>
 <pre><code>## [1] 2</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(medv <span class="op">~</span><span class="st"> </span>lstat, <span class="dt">data =</span> train)
-fit.op &lt;-<span class="st"> </span><span class="kw">lm</span>(medv <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(lstat, grado.op), train)
-fit.1se &lt;-<span class="st"> </span><span class="kw">lm</span>(medv <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(lstat, grado.1se), train)
-newdata &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">lstat =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">40</span>, <span class="dt">len =</span> <span class="dv">100</span>))
-<span class="kw">lines</span>(newdata<span class="op">$</span>lstat, <span class="kw">predict</span>(fit.op, <span class="dt">newdata =</span> newdata))
-<span class="kw">lines</span>(newdata<span class="op">$</span>lstat, <span class="kw">predict</span>(fit.1se, <span class="dt">newdata =</span> newdata), <span class="dt">lty =</span> <span class="dv">2</span>)
-<span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="dt">legend =</span> <span class="kw">c</span>(<span class="kw">paste</span>(<span class="st">&quot;Grado óptimo:&quot;</span>, grado.op), <span class="kw">paste</span>(<span class="st">&quot;oneSE rule:&quot;</span>, grado.1se)), 
-       <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="const-eval.html#cb18-1"></a><span class="kw">plot</span>(medv <span class="op">~</span><span class="st"> </span>lstat, <span class="dt">data =</span> train)</span>
+<span id="cb18-2"><a href="const-eval.html#cb18-2"></a>fit.op &lt;-<span class="st"> </span><span class="kw">lm</span>(medv <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(lstat, grado.op), train)</span>
+<span id="cb18-3"><a href="const-eval.html#cb18-3"></a>fit<span class="fl">.1</span>se &lt;-<span class="st"> </span><span class="kw">lm</span>(medv <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(lstat, grado<span class="fl">.1</span>se), train)</span>
+<span id="cb18-4"><a href="const-eval.html#cb18-4"></a>newdata &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">lstat =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">40</span>, <span class="dt">len =</span> <span class="dv">100</span>))</span>
+<span id="cb18-5"><a href="const-eval.html#cb18-5"></a><span class="kw">lines</span>(newdata<span class="op">$</span>lstat, <span class="kw">predict</span>(fit.op, <span class="dt">newdata =</span> newdata))</span>
+<span id="cb18-6"><a href="const-eval.html#cb18-6"></a><span class="kw">lines</span>(newdata<span class="op">$</span>lstat, <span class="kw">predict</span>(fit<span class="fl">.1</span>se, <span class="dt">newdata =</span> newdata), <span class="dt">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb18-7"><a href="const-eval.html#cb18-7"></a><span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="dt">legend =</span> <span class="kw">c</span>(<span class="kw">paste</span>(<span class="st">&quot;Grado óptimo:&quot;</span>, grado.op), <span class="kw">paste</span>(<span class="st">&quot;oneSE rule:&quot;</span>, grado<span class="fl">.1</span>se)), </span>
+<span id="cb18-8"><a href="const-eval.html#cb18-8"></a>       <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span></code></pre></div>
 <p><img src="01-introduccion_files/figure-html/unnamed-chunk-9-1.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="eval-reg" class="section level3">
 <h3><span class="header-section-number">1.3.4</span> Evaluación de un método de regresión</h3>
-<p>Para estudiar la precisión de las predicciones de un método de regresión se evalúa el modelo en el conjunto de datos de test y se comparan las predicciones frente a los valores reales.</p>
+<p>Para estudiar la precisión de las predicciones de un método de regresión se evalúa el
+modelo en el conjunto de datos de test y se comparan las predicciones frente a los valores reales.</p>
 <p>Si generamos un gráfico de dispersión de observaciones frente a predicciones, los puntos deberían estar en torno a la recta <span class="math inline">\(y=x\)</span> (línea continua).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">obs &lt;-<span class="st"> </span>test<span class="op">$</span>medv
-pred &lt;-<span class="st"> </span><span class="kw">predict</span>(fit.op, <span class="dt">newdata =</span> test)
-
-<span class="kw">plot</span>(pred, obs, <span class="dt">main =</span> <span class="st">&quot;Observado frente a predicciones&quot;</span>,
-     <span class="dt">xlab =</span> <span class="st">&quot;Predicción&quot;, ylab = &quot;</span>Observado<span class="st">&quot;)</span>
-<span class="st">abline(a = 0, b = 1)</span>
-<span class="st">res &lt;- lm(obs ~ pred)</span>
-<span class="st"># summary(res)</span>
-<span class="st">abline(res, lty = 2)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="const-eval.html#cb19-1"></a>obs &lt;-<span class="st"> </span>test<span class="op">$</span>medv</span>
+<span id="cb19-2"><a href="const-eval.html#cb19-2"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(fit.op, <span class="dt">newdata =</span> test)</span>
+<span id="cb19-3"><a href="const-eval.html#cb19-3"></a></span>
+<span id="cb19-4"><a href="const-eval.html#cb19-4"></a><span class="kw">plot</span>(pred, obs, <span class="dt">main =</span> <span class="st">&quot;Observado frente a predicciones&quot;</span>,</span>
+<span id="cb19-5"><a href="const-eval.html#cb19-5"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Predicción&quot;, ylab = &quot;</span>Observado<span class="st">&quot;)</span></span>
+<span id="cb19-6"><a href="const-eval.html#cb19-6"></a><span class="st">abline(a = 0, b = 1)</span></span>
+<span id="cb19-7"><a href="const-eval.html#cb19-7"></a><span class="st">res &lt;- lm(obs ~ pred)</span></span>
+<span id="cb19-8"><a href="const-eval.html#cb19-8"></a><span class="st"># summary(res)</span></span>
+<span id="cb19-9"><a href="const-eval.html#cb19-9"></a><span class="st">abline(res, lty = 2)</span></span></code></pre></div>
 <p><img src="01-introduccion_files/figure-html/obs-pred-plot-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<p>También es habitual calcular distintas medidas de error. Por ejemplo, podríamos emplear la función <code>postResample()</code> del paquete <code>caret</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">caret<span class="op">::</span><span class="kw">postResample</span>(pred, obs)</code></pre></div>
+<p>También es habitual calcular distintas medidas de error.
+Por ejemplo, podríamos emplear la función <code>postResample()</code> del paquete <code>caret</code>:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="const-eval.html#cb20-1"></a>caret<span class="op">::</span><span class="kw">postResample</span>(pred, obs)</span></code></pre></div>
 <pre><code>##      RMSE  Rsquared       MAE 
 ## 4.8526718 0.6259583 3.6671847</code></pre>
-<p>La función anterior, además de las medidas de error habituales (que dependen en su mayoría de la escala de la variable respuesta) calcula un <em>pseudo R-cuadrado</em>. En este paquete (también en <code>rattle</code>) se emplea uno de los más utilizados, el cuadrado del coeficiente de correlación entre las predicciones y los valores observados (que se corresponde con la línea discontinua en la figura anterior). Estos valores se interpretarían como el coeficiente de determinación en regresión lineal, debería ser próximo a 1. Hay otras alternativas (ver Kvålseth, 1985), pero la idea es que deberían medir la proporción de variabilidad de la respuesta explicada por el modelo, algo que en general no es cierto con el anterior<a href="#fn9" class="footnoteRef" id="fnref9"><sup>9</sup></a>. La recomendación sería emplear: <span class="math display">\[\tilde R^2 = 1 - \frac{\sum_{i=1}^n(y_i - \hat y_i)^2}{\sum_{i=1}^n(y_i - \bar y_i)^2}\]</span> implementado junto con otras medidas en la siguiente función:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">accuracy &lt;-<span class="st"> </span><span class="cf">function</span>(pred, obs, <span class="dt">na.rm =</span> <span class="ot">FALSE</span>, 
-                     <span class="dt">tol =</span> <span class="kw">sqrt</span>(.Machine<span class="op">$</span>double.eps)) {
-  err &lt;-<span class="st"> </span>obs <span class="op">-</span><span class="st"> </span>pred     <span class="co"># Errores</span>
-  <span class="cf">if</span>(na.rm) {
-    is.a &lt;-<span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(err)
-    err &lt;-<span class="st"> </span>err[is.a]
-    obs &lt;-<span class="st"> </span>obs[is.a]
-  }  
-  perr &lt;-<span class="st"> </span><span class="dv">100</span><span class="op">*</span>err<span class="op">/</span><span class="kw">pmax</span>(obs, tol)  <span class="co"># Errores porcentuales</span>
-  <span class="kw">return</span>(<span class="kw">c</span>(
-    <span class="dt">me =</span> <span class="kw">mean</span>(err),           <span class="co"># Error medio</span>
-    <span class="dt">rmse =</span> <span class="kw">sqrt</span>(<span class="kw">mean</span>(err<span class="op">^</span><span class="dv">2</span>)), <span class="co"># Raíz del error cuadrático medio </span>
-    <span class="dt">mae =</span> <span class="kw">mean</span>(<span class="kw">abs</span>(err)),     <span class="co"># Error absoluto medio</span>
-    <span class="dt">mpe =</span> <span class="kw">mean</span>(perr),         <span class="co"># Error porcentual medio</span>
-    <span class="dt">mape =</span> <span class="kw">mean</span>(<span class="kw">abs</span>(perr)),   <span class="co"># Error porcentual absoluto medio</span>
-    <span class="dt">r.squared =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">sum</span>(err<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span><span class="kw">sum</span>((obs <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(obs))<span class="op">^</span><span class="dv">2</span>) <span class="co"># Pseudo R-cuadrado</span>
-  ))
-}
-<span class="kw">accuracy</span>(pred, obs)</code></pre></div>
+<p>La función anterior, además de las medidas de error habituales (que dependen en su mayoría de la escala de la variable respuesta) calcula un <em>pseudo R-cuadrado</em>.
+En este paquete (también en <code>rattle</code>) se emplea uno de los más utilizados, el cuadrado del coeficiente de correlación entre las predicciones y los valores observados (que se corresponde con la línea discontinua en la figura anterior).
+Estos valores se interpretarían como el coeficiente de determinación en regresión lineal, debería ser próximo a 1.
+Hay otras alternativas (ver Kvålseth, 1985), pero la idea es que deberían medir la proporción de variabilidad de la respuesta explicada por el modelo, algo que en general no es cierto con el anterior<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>.
+La recomendación sería emplear:
+<span class="math display">\[\tilde R^2 = 1 - \frac{\sum_{i=1}^n(y_i - \hat y_i)^2}{\sum_{i=1}^n(y_i - \bar y_i)^2}\]</span>
+implementado junto con otras medidas en la siguiente función:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="const-eval.html#cb22-1"></a>accuracy &lt;-<span class="st"> </span><span class="cf">function</span>(pred, obs, <span class="dt">na.rm =</span> <span class="ot">FALSE</span>, </span>
+<span id="cb22-2"><a href="const-eval.html#cb22-2"></a>                     <span class="dt">tol =</span> <span class="kw">sqrt</span>(.Machine<span class="op">$</span>double.eps)) {</span>
+<span id="cb22-3"><a href="const-eval.html#cb22-3"></a>  err &lt;-<span class="st"> </span>obs <span class="op">-</span><span class="st"> </span>pred     <span class="co"># Errores</span></span>
+<span id="cb22-4"><a href="const-eval.html#cb22-4"></a>  <span class="cf">if</span>(na.rm) {</span>
+<span id="cb22-5"><a href="const-eval.html#cb22-5"></a>    is.a &lt;-<span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(err)</span>
+<span id="cb22-6"><a href="const-eval.html#cb22-6"></a>    err &lt;-<span class="st"> </span>err[is.a]</span>
+<span id="cb22-7"><a href="const-eval.html#cb22-7"></a>    obs &lt;-<span class="st"> </span>obs[is.a]</span>
+<span id="cb22-8"><a href="const-eval.html#cb22-8"></a>  }  </span>
+<span id="cb22-9"><a href="const-eval.html#cb22-9"></a>  perr &lt;-<span class="st"> </span><span class="dv">100</span><span class="op">*</span>err<span class="op">/</span><span class="kw">pmax</span>(obs, tol)  <span class="co"># Errores porcentuales</span></span>
+<span id="cb22-10"><a href="const-eval.html#cb22-10"></a>  <span class="kw">return</span>(<span class="kw">c</span>(</span>
+<span id="cb22-11"><a href="const-eval.html#cb22-11"></a>    <span class="dt">me =</span> <span class="kw">mean</span>(err),           <span class="co"># Error medio</span></span>
+<span id="cb22-12"><a href="const-eval.html#cb22-12"></a>    <span class="dt">rmse =</span> <span class="kw">sqrt</span>(<span class="kw">mean</span>(err<span class="op">^</span><span class="dv">2</span>)), <span class="co"># Raíz del error cuadrático medio </span></span>
+<span id="cb22-13"><a href="const-eval.html#cb22-13"></a>    <span class="dt">mae =</span> <span class="kw">mean</span>(<span class="kw">abs</span>(err)),     <span class="co"># Error absoluto medio</span></span>
+<span id="cb22-14"><a href="const-eval.html#cb22-14"></a>    <span class="dt">mpe =</span> <span class="kw">mean</span>(perr),         <span class="co"># Error porcentual medio</span></span>
+<span id="cb22-15"><a href="const-eval.html#cb22-15"></a>    <span class="dt">mape =</span> <span class="kw">mean</span>(<span class="kw">abs</span>(perr)),   <span class="co"># Error porcentual absoluto medio</span></span>
+<span id="cb22-16"><a href="const-eval.html#cb22-16"></a>    <span class="dt">r.squared =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">sum</span>(err<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span><span class="kw">sum</span>((obs <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(obs))<span class="op">^</span><span class="dv">2</span>) <span class="co"># Pseudo R-cuadrado</span></span>
+<span id="cb22-17"><a href="const-eval.html#cb22-17"></a>  ))</span>
+<span id="cb22-18"><a href="const-eval.html#cb22-18"></a>}</span>
+<span id="cb22-19"><a href="const-eval.html#cb22-19"></a><span class="kw">accuracy</span>(pred, obs)</span></code></pre></div>
 <pre><code>##         me       rmse        mae        mpe       mape  r.squared 
 ## -0.6731294  4.8526718  3.6671847 -8.2322506 19.7097373  0.6086704</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">accuracy</span>(<span class="kw">predict</span>(fit.1se, <span class="dt">newdata =</span> test), obs)</code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="const-eval.html#cb24-1"></a><span class="kw">accuracy</span>(<span class="kw">predict</span>(fit<span class="fl">.1</span>se, <span class="dt">newdata =</span> test), obs)</span></code></pre></div>
 <pre><code>##         me       rmse        mae        mpe       mape  r.squared 
 ## -0.9236280  5.2797360  4.1252053 -9.0029771 21.6512406  0.5367608</code></pre>
 
@@ -478,23 +549,23 @@ pred &lt;-<span class="st"> </span><span class="kw">predict</span>(fit.op, <span
 
 <p>Considerando de nuevo el ejemplo anterior, particionar la muestra en datos de entrenamiento (70%), de validación (15%) y de test (15%), para entrenar los modelos polinómicos, seleccionar el grado óptimo (el hiperparámetro) y evaluar las predicciones del modelo final, respectivamente.</p>
 <p>Podría ser de utilidad el siguiente código (basado en la aproximación de <code>rattle</code>), que particiona los datos suponiendo que están almacenados en el data.frame <code>df</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span>Boston
-<span class="kw">set.seed</span>(<span class="dv">1</span>)
-nobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(df)
-itrain &lt;-<span class="st"> </span><span class="kw">sample</span>(nobs, <span class="fl">0.7</span> <span class="op">*</span><span class="st"> </span>nobs)
-inotrain &lt;-<span class="st"> </span><span class="kw">setdiff</span>(<span class="kw">seq_len</span>(nobs), itrain)
-ivalidate &lt;-<span class="st"> </span><span class="kw">sample</span>(inotrain, <span class="fl">0.15</span> <span class="op">*</span><span class="st"> </span>nobs)
-itest &lt;-<span class="st"> </span><span class="kw">setdiff</span>(inotrain, ivalidate)
-train &lt;-<span class="st"> </span>df[itrain, ]
-validate &lt;-<span class="st"> </span>df[ivalidate, ]
-test &lt;-<span class="st"> </span>df[itest, ]</code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="const-eval.html#cb26-1"></a>df &lt;-<span class="st"> </span>Boston</span>
+<span id="cb26-2"><a href="const-eval.html#cb26-2"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb26-3"><a href="const-eval.html#cb26-3"></a>nobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(df)</span>
+<span id="cb26-4"><a href="const-eval.html#cb26-4"></a>itrain &lt;-<span class="st"> </span><span class="kw">sample</span>(nobs, <span class="fl">0.7</span> <span class="op">*</span><span class="st"> </span>nobs)</span>
+<span id="cb26-5"><a href="const-eval.html#cb26-5"></a>inotrain &lt;-<span class="st"> </span><span class="kw">setdiff</span>(<span class="kw">seq_len</span>(nobs), itrain)</span>
+<span id="cb26-6"><a href="const-eval.html#cb26-6"></a>ivalidate &lt;-<span class="st"> </span><span class="kw">sample</span>(inotrain, <span class="fl">0.15</span> <span class="op">*</span><span class="st"> </span>nobs)</span>
+<span id="cb26-7"><a href="const-eval.html#cb26-7"></a>itest &lt;-<span class="st"> </span><span class="kw">setdiff</span>(inotrain, ivalidate)</span>
+<span id="cb26-8"><a href="const-eval.html#cb26-8"></a>train &lt;-<span class="st"> </span>df[itrain, ]</span>
+<span id="cb26-9"><a href="const-eval.html#cb26-9"></a>validate &lt;-<span class="st"> </span>df[ivalidate, ]</span>
+<span id="cb26-10"><a href="const-eval.html#cb26-10"></a>test &lt;-<span class="st"> </span>df[itest, ]</span></code></pre></div>
 <p>Alternativamente podríamos emplear la función <code>split()</code> creando un factor que divida aleatoriamente los datos en tres grupos (versión “simplificada” de una propuesta en este <a href="https://stackoverflow.com/questions/36068963/r-how-to-split-a-data-frame-into-training-validation-and-test-sets">post</a>):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
-p &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">train =</span> <span class="fl">0.7</span>, <span class="dt">validate =</span> <span class="fl">0.15</span>, <span class="dt">test =</span> <span class="fl">0.15</span>)
-f &lt;-<span class="st"> </span><span class="kw">sample</span>( <span class="kw">rep</span>(<span class="kw">factor</span>(<span class="kw">seq_along</span>(p), <span class="dt">labels =</span> <span class="kw">names</span>(p)),
-                 <span class="dt">times =</span> <span class="kw">nrow</span>(df)<span class="op">*</span>p<span class="op">/</span><span class="kw">sum</span>(p)) )
-samples &lt;-<span class="st"> </span><span class="kw">suppressWarnings</span>(<span class="kw">split</span>(df, f))
-<span class="kw">str</span>(samples)</code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="const-eval.html#cb27-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb27-2"><a href="const-eval.html#cb27-2"></a>p &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">train =</span> <span class="fl">0.7</span>, <span class="dt">validate =</span> <span class="fl">0.15</span>, <span class="dt">test =</span> <span class="fl">0.15</span>)</span>
+<span id="cb27-3"><a href="const-eval.html#cb27-3"></a>f &lt;-<span class="st"> </span><span class="kw">sample</span>( <span class="kw">rep</span>(<span class="kw">factor</span>(<span class="kw">seq_along</span>(p), <span class="dt">labels =</span> <span class="kw">names</span>(p)),</span>
+<span id="cb27-4"><a href="const-eval.html#cb27-4"></a>                 <span class="dt">times =</span> <span class="kw">nrow</span>(df)<span class="op">*</span>p<span class="op">/</span><span class="kw">sum</span>(p)) )</span>
+<span id="cb27-5"><a href="const-eval.html#cb27-5"></a>samples &lt;-<span class="st"> </span><span class="kw">suppressWarnings</span>(<span class="kw">split</span>(df, f))</span>
+<span id="cb27-6"><a href="const-eval.html#cb27-6"></a><span class="kw">str</span>(samples)</span></code></pre></div>
 <pre><code>## List of 3
 ##  $ train   :&#39;data.frame&#39;:    356 obs. of  14 variables:
 ##   ..$ crim   : num [1:356] 0.00632 0.02731 0.02729 0.02985 0.08829 ...
@@ -545,7 +616,8 @@ samples &lt;-<span class="st"> </span><span class="kw">suppressWarnings</span>(<
 <div id="eval-class" class="section level3">
 <h3><span class="header-section-number">1.3.5</span> Evaluación de un método de clasificación</h3>
 <p>Para estudiar la eficiencia de un método de clasificación supervisada típicamente se obtienen las predicciones para el conjunto de datos de test y se genera una tabla de contingencia, denominada <em>matriz de confusión</em>, con las predicciones frente a los valores reales.</p>
-<p>En primer lugar consideraremos el caso de dos categorías. La matriz de confusión será de la forma:</p>
+<p>En primer lugar consideraremos el caso de dos categorías.
+La matriz de confusión será de la forma:</p>
 <table>
 <thead>
 <tr class="header">
@@ -567,35 +639,51 @@ samples &lt;-<span class="st"> </span><span class="kw">suppressWarnings</span>(<
 </tr>
 </tbody>
 </table>
-<p>A partir de esta tabla se pueden obtener distintas medidas de la precisión de las predicciones. Por ejemplo, dos de las más utilizadas son la tasa de verdaderos positivos y la de verdaderos negativos (tasas de acierto en positivos y negativos), también denominadas <em>sensibilidad</em> y <em>especificidad</em>:</p>
+<p>A partir de esta tabla se pueden obtener distintas medidas de la precisión de las predicciones.
+Por ejemplo, dos de las más utilizadas son la tasa de verdaderos positivos y la de verdaderos negativos (tasas de acierto en positivos y negativos), también denominadas <em>sensibilidad</em> y <em>especificidad</em>:</p>
 <ul>
-<li><p>Sensibilidad (<em>sensitivity</em>, <em>recall</em>, <em>hit rate</em>, <em>true positive rate</em>; TPR): <span class="math display">\[TPR = \frac{TP}{P} = \frac{TP}{TP+FN}\]</span></p></li>
-<li><p>Especificidad (<em>specificity</em>, <em>true negative rate</em>; TNR): <span class="math display">\[TNR = \frac{TN}{TN+FP}\]</span></p></li>
+<li><p>Sensibilidad (<em>sensitivity</em>, <em>recall</em>, <em>hit rate</em>, <em>true positive rate</em>; TPR):
+<span class="math display">\[TPR = \frac{TP}{P} = \frac{TP}{TP+FN}\]</span></p></li>
+<li><p>Especificidad (<em>specificity</em>, <em>true negative rate</em>; TNR):
+<span class="math display">\[TNR = \frac{TN}{TN+FP}\]</span></p></li>
 </ul>
-<p>La precisión global o tasa de aciertos (<em>accuracy</em>; ACC) sería: <span class="math display">\[ACC = \frac{TP + TN}{P + N} = \frac{TP+TN}{TP+TN+FP+FN}\]</span> Sin embargo hay que tener cuidado con esta medida cuando las clases no están balanceadas. Otras medidas de la precisión global que tratan de evitar este problema son la <em>precisión balanceada</em> (<em>balanced accuracy</em>, BA): <span class="math display">\[BA = \frac{TPR + TNR}{2}\]</span> (media aritmética de TPR y TNR) o la <em>puntuación F1</em> (<em>F1 score</em>; media armónica de TPR y el valor predictivo positivo, PPV, descrito más adelante): <span class="math display">\[F_1 = \frac{2TP}{2TP+FP+FN}\]</span> Otra medida global es el coeficiente kappa de Cohen, que compara la tasa de aciertos con la obtenida en una clasificación al azar (un valor de 1 indicaría máxima precisión y 0 que la precisión es igual a la que obtendríamos clasificando al azar; empleando la tasa de positivos, denominada <em>prevalencia</em>, para predecir positivo).</p>
-<p>También hay que tener cuidado las medidas que utilizan como estimación de la probabilidad de positivo (<em>prevalencia</em>) la tasa de positivos en la muestra de test, como el valor (o índice) predictivo positivo (<em>precision</em>, <em>positive predictive value</em>; PPV): <span class="math display">\[PPV = \frac{TP}{TP+FP}\]</span> (que no debe ser confundido con la precisión global ACC) y el valor predictivo negativo negativo (NPV): <span class="math display">\[NPV = \frac{TN}{TN+FN},\]</span> si la muestra de test no refleja lo que ocurre en la población (por ejemplo si la clase de interés está sobrerrepresentada en la muestra). En estos casos habrá que recalcularlos empleando estimaciones válidas de las probabilidades de la clases (por ejemplo, en estos casos, la función <code>caret::confusionMatrix()</code> permite establecer estimaciones válidas mediante el argumento <code>prevalence</code>).</p>
+<p>La precisión global o tasa de aciertos (<em>accuracy</em>; ACC) sería:
+<span class="math display">\[ACC = \frac{TP + TN}{P + N} = \frac{TP+TN}{TP+TN+FP+FN}\]</span>
+Sin embargo hay que tener cuidado con esta medida cuando las clases no están balanceadas.
+Otras medidas de la precisión global que tratan de evitar este problema son la <em>precisión balanceada</em> (<em>balanced accuracy</em>, BA):
+<span class="math display">\[BA = \frac{TPR + TNR}{2}\]</span>
+(media aritmética de TPR y TNR) o la <em>puntuación F1</em> (<em>F1 score</em>; media armónica de TPR y el valor predictivo positivo, PPV, descrito más adelante):
+<span class="math display">\[F_1 = \frac{2TP}{2TP+FP+FN}\]</span>
+Otra medida global es el coeficiente kappa de Cohen, que compara la tasa de aciertos con la obtenida en una clasificación al azar
+(un valor de 1 indicaría máxima precisión y 0 que la precisión es igual a la que obtendríamos clasificando al azar; empleando la tasa de positivos, denominada <em>prevalencia</em>, para predecir positivo).</p>
+<p>También hay que tener cuidado las medidas que utilizan como estimación de la probabilidad de positivo (<em>prevalencia</em>) la tasa de positivos en la muestra de test, como el valor (o índice) predictivo positivo (<em>precision</em>, <em>positive predictive value</em>; PPV):
+<span class="math display">\[PPV = \frac{TP}{TP+FP}\]</span>
+(que no debe ser confundido con la precisión global ACC) y el valor predictivo negativo negativo (NPV):
+<span class="math display">\[NPV = \frac{TN}{TN+FN},\]</span>
+si la muestra de test no refleja lo que ocurre en la población (por ejemplo si la clase de interés está sobrerrepresentada en la muestra).
+En estos casos habrá que recalcularlos empleando estimaciones válidas de las probabilidades de la clases (por ejemplo, en estos casos, la función <code>caret::confusionMatrix()</code> permite establecer estimaciones válidas mediante el argumento <code>prevalence</code>).</p>
 <p>Como ejemplo emplearemos los datos anteriores de valoraciones de viviendas y estatus de la población, considerando como respuesta una nueva variable <code>fmedv</code> que clasifica las valoraciones en “Bajo” o “Alto” dependiendo de si <code>medv &gt; 25</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># data(Boston, package = &quot;MASS&quot;)</span>
-datos &lt;-<span class="st"> </span>Boston
-datos<span class="op">$</span>fmedv &lt;-<span class="st"> </span><span class="kw">factor</span>(datos<span class="op">$</span>medv <span class="op">&gt;</span><span class="st"> </span><span class="dv">25</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Bajo&quot;</span>, <span class="st">&quot;Alto&quot;</span>)) <span class="co"># levels = c(&#39;FALSE&#39;, &#39;TRUE&#39;)</span>
-<span class="co"># En este caso las clases no están balanceadas</span>
-<span class="kw">table</span>(datos<span class="op">$</span>fmedv)</code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="const-eval.html#cb29-1"></a><span class="co"># data(Boston, package = &quot;MASS&quot;)</span></span>
+<span id="cb29-2"><a href="const-eval.html#cb29-2"></a>datos &lt;-<span class="st"> </span>Boston</span>
+<span id="cb29-3"><a href="const-eval.html#cb29-3"></a>datos<span class="op">$</span>fmedv &lt;-<span class="st"> </span><span class="kw">factor</span>(datos<span class="op">$</span>medv <span class="op">&gt;</span><span class="st"> </span><span class="dv">25</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Bajo&quot;</span>, <span class="st">&quot;Alto&quot;</span>)) <span class="co"># levels = c(&#39;FALSE&#39;, &#39;TRUE&#39;)</span></span>
+<span id="cb29-4"><a href="const-eval.html#cb29-4"></a><span class="co"># En este caso las clases no están balanceadas</span></span>
+<span id="cb29-5"><a href="const-eval.html#cb29-5"></a><span class="kw">table</span>(datos<span class="op">$</span>fmedv)</span></code></pre></div>
 <pre><code>## 
 ## Bajo Alto 
 ##  382  124</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">caret<span class="op">::</span><span class="kw">featurePlot</span>(datos<span class="op">$</span>lstat, datos<span class="op">$</span>fmedv, <span class="dt">plot =</span> <span class="st">&quot;density&quot;</span>,
-            <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;lstat&quot;</span>, <span class="st">&quot;Density&quot;</span>), <span class="dt">auto.key =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="const-eval.html#cb31-1"></a>caret<span class="op">::</span><span class="kw">featurePlot</span>(datos<span class="op">$</span>lstat, datos<span class="op">$</span>fmedv, <span class="dt">plot =</span> <span class="st">&quot;density&quot;</span>,</span>
+<span id="cb31-2"><a href="const-eval.html#cb31-2"></a>            <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;lstat&quot;</span>, <span class="st">&quot;Density&quot;</span>), <span class="dt">auto.key =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <p><img src="01-introduccion_files/figure-html/unnamed-chunk-14-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>El siguiente código realiza la partición de los datos y posteriormente ajusta un modelo de regresión logística en la muestra de entrenamiento considerando <code>lstat</code> como única variable explicativa (en el Capítulo 5 se darán más detalles sobre este tipo de modelos):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Particionado de los datos</span>
-<span class="kw">set.seed</span>(<span class="dv">1</span>)
-nobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(datos)
-itrain &lt;-<span class="st"> </span><span class="kw">sample</span>(nobs, <span class="fl">0.8</span> <span class="op">*</span><span class="st"> </span>nobs)
-train &lt;-<span class="st"> </span>datos[itrain, ]
-test &lt;-<span class="st"> </span>datos[<span class="op">-</span>itrain, ]
-<span class="co"># Ajuste modelo</span>
-modelo &lt;-<span class="st"> </span><span class="kw">glm</span>(fmedv <span class="op">~</span><span class="st"> </span>lstat, <span class="dt">family =</span> binomial, <span class="dt">data =</span> train)
-<span class="kw">summary</span>(modelo)</code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="const-eval.html#cb32-1"></a><span class="co"># Particionado de los datos</span></span>
+<span id="cb32-2"><a href="const-eval.html#cb32-2"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb32-3"><a href="const-eval.html#cb32-3"></a>nobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(datos)</span>
+<span id="cb32-4"><a href="const-eval.html#cb32-4"></a>itrain &lt;-<span class="st"> </span><span class="kw">sample</span>(nobs, <span class="fl">0.8</span> <span class="op">*</span><span class="st"> </span>nobs)</span>
+<span id="cb32-5"><a href="const-eval.html#cb32-5"></a>train &lt;-<span class="st"> </span>datos[itrain, ]</span>
+<span id="cb32-6"><a href="const-eval.html#cb32-6"></a>test &lt;-<span class="st"> </span>datos[<span class="op">-</span>itrain, ]</span>
+<span id="cb32-7"><a href="const-eval.html#cb32-7"></a><span class="co"># Ajuste modelo</span></span>
+<span id="cb32-8"><a href="const-eval.html#cb32-8"></a>modelo &lt;-<span class="st"> </span><span class="kw">glm</span>(fmedv <span class="op">~</span><span class="st"> </span>lstat, <span class="dt">family =</span> binomial, <span class="dt">data =</span> train)</span>
+<span id="cb32-9"><a href="const-eval.html#cb32-9"></a><span class="kw">summary</span>(modelo)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = fmedv ~ lstat, family = binomial, data = train)
@@ -618,32 +706,32 @@ modelo &lt;-<span class="st"> </span><span class="kw">glm</span>(fmedv <span cla
 ## AIC: 247.34
 ## 
 ## Number of Fisher Scoring iterations: 7</code></pre>
-<p>En este caso podemos obtener las estimaciones de la probabilidad de la segunda categoría empleando <code>predict()</code> con <code>type = &quot;response&quot;</code>, a partir de las cuales podemos establecer las predicciones como la categoría más probable:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">obs &lt;-<span class="st"> </span>test<span class="op">$</span>fmedv
-p.est &lt;-<span class="st"> </span><span class="kw">predict</span>(modelo, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>, <span class="dt">newdata =</span> test)
-pred &lt;-<span class="st"> </span><span class="kw">factor</span>(p.est <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.5</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Bajo&quot;</span>, <span class="st">&quot;Alto&quot;</span>)) <span class="co"># levels = c(&#39;FALSE&#39;, &#39;TRUE&#39;)</span></code></pre></div>
+<p>En este caso podemos obtener las estimaciones de la probabilidad de la segunda categoría empleando <code>predict()</code> con <code>type = "response"</code>, a partir de las cuales podemos establecer las predicciones como la categoría más probable:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="const-eval.html#cb34-1"></a>obs &lt;-<span class="st"> </span>test<span class="op">$</span>fmedv</span>
+<span id="cb34-2"><a href="const-eval.html#cb34-2"></a>p.est &lt;-<span class="st"> </span><span class="kw">predict</span>(modelo, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>, <span class="dt">newdata =</span> test)</span>
+<span id="cb34-3"><a href="const-eval.html#cb34-3"></a>pred &lt;-<span class="st"> </span><span class="kw">factor</span>(p.est <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.5</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Bajo&quot;</span>, <span class="st">&quot;Alto&quot;</span>)) <span class="co"># levels = c(&#39;FALSE&#39;, &#39;TRUE&#39;)</span></span></code></pre></div>
 <p>Finalmente podemos obtener la matriz de confusión con el siguiente código:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tabla &lt;-<span class="st"> </span><span class="kw">table</span>(obs, pred)
-<span class="co"># addmargins(tabla, FUN = list(Total = sum))</span>
-tabla</code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="const-eval.html#cb35-1"></a>tabla &lt;-<span class="st"> </span><span class="kw">table</span>(obs, pred)</span>
+<span id="cb35-2"><a href="const-eval.html#cb35-2"></a><span class="co"># addmargins(tabla, FUN = list(Total = sum))</span></span>
+<span id="cb35-3"><a href="const-eval.html#cb35-3"></a>tabla</span></code></pre></div>
 <pre><code>##       pred
 ## obs    Bajo Alto
 ##   Bajo   71   11
 ##   Alto    8   12</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Porcentajes respecto al total</span>
-<span class="kw">print</span>(<span class="dv">100</span><span class="op">*</span><span class="kw">prop.table</span>(tabla), <span class="dt">digits =</span> <span class="dv">2</span>) </code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="const-eval.html#cb37-1"></a><span class="co"># Porcentajes respecto al total</span></span>
+<span id="cb37-2"><a href="const-eval.html#cb37-2"></a><span class="kw">print</span>(<span class="dv">100</span><span class="op">*</span><span class="kw">prop.table</span>(tabla), <span class="dt">digits =</span> <span class="dv">2</span>) </span></code></pre></div>
 <pre><code>##       pred
 ## obs    Bajo Alto
 ##   Bajo 69.6 10.8
 ##   Alto  7.8 11.8</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Porcentajes (de aciertos y fallos) por categorías</span>
-<span class="kw">print</span>(<span class="dv">100</span><span class="op">*</span><span class="kw">prop.table</span>(tabla, <span class="dv">1</span>), <span class="dt">digits =</span> <span class="dv">3</span>) </code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="const-eval.html#cb39-1"></a><span class="co"># Porcentajes (de aciertos y fallos) por categorías</span></span>
+<span id="cb39-2"><a href="const-eval.html#cb39-2"></a><span class="kw">print</span>(<span class="dv">100</span><span class="op">*</span><span class="kw">prop.table</span>(tabla, <span class="dv">1</span>), <span class="dt">digits =</span> <span class="dv">3</span>) </span></code></pre></div>
 <pre><code>##       pred
 ## obs    Bajo Alto
 ##   Bajo 86.6 13.4
 ##   Alto 40.0 60.0</code></pre>
 <p>Alternativamente se podría emplear la función <code>confusionMatrix()</code> del paquete <code>caret</code> que permite obtener distintas medidas de la precisión:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">caret<span class="op">::</span><span class="kw">confusionMatrix</span>(pred, obs, <span class="dt">positive =</span> <span class="st">&quot;Alto&quot;</span>, <span class="dt">mode =</span> <span class="st">&quot;everything&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="const-eval.html#cb41-1"></a>caret<span class="op">::</span><span class="kw">confusionMatrix</span>(pred, obs, <span class="dt">positive =</span> <span class="st">&quot;Alto&quot;</span>, <span class="dt">mode =</span> <span class="st">&quot;everything&quot;</span>)</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -674,57 +762,67 @@ tabla</code></pre></div>
 ##                                          
 ##        &#39;Positive&#39; Class : Alto           
 ## </code></pre>
-<p>Si el método de clasificación proporciona estimaciones de las probabilidades de las categorías, disponemos de más información en la clasificación que también podemos emplear en la evaluación del rendimiento. Por ejemplo, se puede realizar un analisis descriptivo de las probabilidades estimadas y las categorías observadas en la muestra de test:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Imitamos la función caret::plotClassProbs()</span>
-<span class="kw">library</span>(lattice) 
-<span class="kw">histogram</span>(<span class="op">~</span><span class="st"> </span>p.est <span class="op">|</span><span class="st"> </span>obs, <span class="dt">xlab =</span> <span class="st">&quot;Probabilidad estimada de &#39;Alto&#39;&quot;</span>)</code></pre></div>
+<p>Si el método de clasificación proporciona estimaciones de las probabilidades de las categorías, disponemos de más información en la clasificación que también podemos emplear en la evaluación del rendimiento.
+Por ejemplo, se puede realizar un analisis descriptivo de las probabilidades estimadas y las categorías observadas en la muestra de test:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="const-eval.html#cb43-1"></a><span class="co"># Imitamos la función caret::plotClassProbs()</span></span>
+<span id="cb43-2"><a href="const-eval.html#cb43-2"></a><span class="kw">library</span>(lattice) </span>
+<span id="cb43-3"><a href="const-eval.html#cb43-3"></a><span class="kw">histogram</span>(<span class="op">~</span><span class="st"> </span>p.est <span class="op">|</span><span class="st"> </span>obs, <span class="dt">xlab =</span> <span class="st">&quot;Probabilidad estimada de &#39;Alto&#39;&quot;</span>)</span></code></pre></div>
 <p><img src="01-introduccion_files/figure-html/unnamed-chunk-19-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<p>Para evaluar las estimaciones de las probabilidades se suele emplear la curva ROC (<em>receiver operating characteristics</em>, característica operativa del receptor; diseñada inicialmente en el campo de la detección de señales). Como ya se comentó, normalmente se emplea <span class="math inline">\(c = 0.5\)</span> como punto de corte para clasificar en la categoría de interés (es lo que se conoce como <em>regla de Bayes</em>), aunque se podrían considerar otros valores (por ejemplo para mejorar la clasificación en una de las categorías, a costa de empeorar la precisión global). En la curva ROC se representa la sensibilidad (TPR) frente a la tasa de falsos negativos (FNR = 1 - TNR = 1 - especificidad) para distintos valores de corte. Para ello se puede emplear el paquete <code>pROC</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(pROC)
-roc_glm &lt;-<span class="st"> </span><span class="kw">roc</span>(<span class="dt">response =</span> obs, <span class="dt">predictor =</span> p.est)
-<span class="co"># View((as.data.frame(roc_glm[2:4])))</span>
-<span class="kw">plot</span>(roc_glm)</code></pre></div>
+<p>Para evaluar las estimaciones de las probabilidades se suele emplear la curva ROC (<em>receiver operating characteristics</em>, característica operativa del receptor; diseñada inicialmente en el campo de la detección de señales).
+Como ya se comentó, normalmente se emplea <span class="math inline">\(c = 0.5\)</span> como punto de corte para clasificar en la categoría de interés (es lo que se conoce como <em>regla de Bayes</em>), aunque se podrían considerar otros valores (por ejemplo para mejorar la clasificación en una de las categorías, a costa de empeorar la precisión global).
+En la curva ROC se representa la sensibilidad (TPR) frente a la tasa de falsos negativos (FNR = 1 - TNR = 1 - especificidad) para distintos valores de corte.
+Para ello se puede emplear el paquete <code>pROC</code>:</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="const-eval.html#cb44-1"></a><span class="kw">library</span>(pROC)</span>
+<span id="cb44-2"><a href="const-eval.html#cb44-2"></a>roc_glm &lt;-<span class="st"> </span><span class="kw">roc</span>(<span class="dt">response =</span> obs, <span class="dt">predictor =</span> p.est)</span>
+<span id="cb44-3"><a href="const-eval.html#cb44-3"></a><span class="co"># View((as.data.frame(roc_glm[2:4])))</span></span>
+<span id="cb44-4"><a href="const-eval.html#cb44-4"></a><span class="kw">plot</span>(roc_glm)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:ROC-curve"></span>
 <img src="01-introduccion_files/figure-html/ROC-curve-1.png" alt="Curva ROC correspondiente al modelo de regresión logística." width="80%" />
 <p class="caption">
 Figura 1.5: Curva ROC correspondiente al modelo de regresión logística.
 </p>
 </div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot(roc_glm, legacy.axes = TRUE)</span></code></pre></div>
-<p>Lo ideal sería que la curva se aproximase a la esquina superior izquierda (máxima sensibilidad y especificidad). La recta diagonal se correspondería con un clasificador aleatorio. Una medida global del rendimiento del clasificador es el área bajo la curva ROC (AUC; equivalente al estadístico U de Mann-Whitney o al índice de Gini). Un clasificador perfecto tendría un valor de 1 y 0.5 uno aleatorio.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># roc_glm$auc</span>
-roc_glm</code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="const-eval.html#cb45-1"></a><span class="co"># plot(roc_glm, legacy.axes = TRUE)</span></span></code></pre></div>
+<p>Lo ideal sería que la curva se aproximase a la esquina superior izquierda (máxima sensibilidad y especificidad).
+La recta diagonal se correspondería con un clasificador aleatorio.
+Una medida global del rendimiento del clasificador es el área bajo la curva ROC (AUC; equivalente al estadístico U de Mann-Whitney o al índice de Gini).
+Un clasificador perfecto tendría un valor de 1 y 0.5 uno aleatorio.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="const-eval.html#cb46-1"></a><span class="co"># roc_glm$auc</span></span>
+<span id="cb46-2"><a href="const-eval.html#cb46-2"></a>roc_glm</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## roc.default(response = obs, predictor = p.est)
 ## 
 ## Data: p.est in 82 controls (obs Bajo) &lt; 20 cases (obs Alto).
 ## Area under the curve: 0.8427</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ci.auc</span>(roc_glm)</code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="const-eval.html#cb48-1"></a><span class="kw">ci.auc</span>(roc_glm)</span></code></pre></div>
 <pre><code>## 95% CI: 0.7428-0.9426 (DeLong)</code></pre>
 <p>Como comentario adicional, aunque se puede modificar el punto de corte para mejorar la clasificación en la categoría de interés (de hecho, algunas herramientas como <code>h2o</code> lo modifican por defecto; en este caso concreto para maximizar <span class="math inline">\(F_1\)</span> en la muestra de entrenamiento), muchos métodos de clasificación (como los basados en árboles descritos en el Capítulo 2) admiten como opción una matriz de pérdidas que se tendrá en cuenta para medir la eficiencia durante el aprendizaje y normalmente esta sería la aproximación recomendada.</p>
-<p>En el caso de más de dos categorías podríamos generar una matriz de confusión de forma análoga, aunque en este caso en principio solo podríamos calcular medidas globales de la precisión como la tasa de aciertos o el coeficiente kappa de Cohen. Podríamos obtener también medidas por clase, como la sensibilidad y la especificidad, siguiendo la estrategia “uno contra todos” descrita en la Sección <a href="métodos-de-aprendizaje-estadístico.html#notacion">1.2.1</a>. Esta aproximación es la que sigue la función <code>confusionMatrix()</code> del paquete <code>caret</code> (devuelve las medidas comparando cada categoría con las restantes en el componente <code>$byClass</code>).</p>
+<p>En el caso de más de dos categorías podríamos generar una matriz de confusión de forma análoga,
+aunque en este caso en principio solo podríamos calcular medidas globales de la precisión como la tasa de aciertos o el coeficiente kappa de Cohen.
+Podríamos obtener también medidas por clase, como la sensibilidad y la especificidad, siguiendo la estrategia “uno contra todos” descrita en la Sección <a href="métodos-de-aprendizaje-estadístico.html#notacion">1.2.1</a>.
+Esta aproximación es la que sigue la función <code>confusionMatrix()</code> del paquete <code>caret</code> (devuelve las medidas comparando cada categoría con las restantes en el componente <code>$byClass</code>).</p>
 <p>Como ejemplo ilustrativo consideraremos el conocido conjunto de datos <code>iris</code> (Fisher, 1936) en el que el objetivo es clasificar flores de lirio en tres especies (<code>Species</code>) a partir del largo y ancho de sépalos y pétalos, aunque en este caso emplearemos un clasificador aleatorio.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(iris)
-<span class="co"># Partición de los datos</span>
-datos &lt;-<span class="st"> </span>iris
-<span class="kw">set.seed</span>(<span class="dv">1</span>)
-nobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(datos)
-itrain &lt;-<span class="st"> </span><span class="kw">sample</span>(nobs, <span class="fl">0.8</span> <span class="op">*</span><span class="st"> </span>nobs)
-train &lt;-<span class="st"> </span>datos[itrain, ]
-test &lt;-<span class="st"> </span>datos[<span class="op">-</span>itrain, ]
-<span class="co"># Entrenamiento </span>
-prevalences &lt;-<span class="st"> </span><span class="kw">table</span>(train<span class="op">$</span>Species)<span class="op">/</span><span class="kw">nrow</span>(train)
-prevalences</code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="const-eval.html#cb50-1"></a><span class="kw">data</span>(iris)</span>
+<span id="cb50-2"><a href="const-eval.html#cb50-2"></a><span class="co"># Partición de los datos</span></span>
+<span id="cb50-3"><a href="const-eval.html#cb50-3"></a>datos &lt;-<span class="st"> </span>iris</span>
+<span id="cb50-4"><a href="const-eval.html#cb50-4"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb50-5"><a href="const-eval.html#cb50-5"></a>nobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(datos)</span>
+<span id="cb50-6"><a href="const-eval.html#cb50-6"></a>itrain &lt;-<span class="st"> </span><span class="kw">sample</span>(nobs, <span class="fl">0.8</span> <span class="op">*</span><span class="st"> </span>nobs)</span>
+<span id="cb50-7"><a href="const-eval.html#cb50-7"></a>train &lt;-<span class="st"> </span>datos[itrain, ]</span>
+<span id="cb50-8"><a href="const-eval.html#cb50-8"></a>test &lt;-<span class="st"> </span>datos[<span class="op">-</span>itrain, ]</span>
+<span id="cb50-9"><a href="const-eval.html#cb50-9"></a><span class="co"># Entrenamiento </span></span>
+<span id="cb50-10"><a href="const-eval.html#cb50-10"></a>prevalences &lt;-<span class="st"> </span><span class="kw">table</span>(train<span class="op">$</span>Species)<span class="op">/</span><span class="kw">nrow</span>(train)</span>
+<span id="cb50-11"><a href="const-eval.html#cb50-11"></a>prevalences</span></code></pre></div>
 <pre><code>## 
 ##     setosa versicolor  virginica 
 ##  0.3250000  0.3166667  0.3583333</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Calculo de las predicciones</span>
-levels &lt;-<span class="st"> </span><span class="kw">names</span>(prevalences) <span class="co"># levels(train$Species)</span>
-f &lt;-<span class="st"> </span><span class="kw">factor</span>(levels, <span class="dt">levels =</span> levels) <span class="co"># factor(levels) valdría en este caso al estar por orden alfabético</span>
-pred.rand &lt;-<span class="st"> </span><span class="kw">sample</span>(f, <span class="kw">nrow</span>(test), <span class="dt">replace =</span> <span class="ot">TRUE</span>, <span class="dt">prob =</span> prevalences)
-<span class="co"># Evaluación</span>
-caret<span class="op">::</span><span class="kw">confusionMatrix</span>(pred.rand, test<span class="op">$</span>Species)</code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="const-eval.html#cb52-1"></a><span class="co"># Calculo de las predicciones</span></span>
+<span id="cb52-2"><a href="const-eval.html#cb52-2"></a>levels &lt;-<span class="st"> </span><span class="kw">names</span>(prevalences) <span class="co"># levels(train$Species)</span></span>
+<span id="cb52-3"><a href="const-eval.html#cb52-3"></a>f &lt;-<span class="st"> </span><span class="kw">factor</span>(levels, <span class="dt">levels =</span> levels) <span class="co"># factor(levels) valdría en este caso al estar por orden alfabético</span></span>
+<span id="cb52-4"><a href="const-eval.html#cb52-4"></a>pred.rand &lt;-<span class="st"> </span><span class="kw">sample</span>(f, <span class="kw">nrow</span>(test), <span class="dt">replace =</span> <span class="ot">TRUE</span>, <span class="dt">prob =</span> prevalences)</span>
+<span id="cb52-5"><a href="const-eval.html#cb52-5"></a><span class="co"># Evaluación</span></span>
+<span id="cb52-6"><a href="const-eval.html#cb52-6"></a>caret<span class="op">::</span><span class="kw">confusionMatrix</span>(pred.rand, test<span class="op">$</span>Species)</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##             Reference
@@ -760,10 +858,10 @@ caret<span class="op">::</span><span class="kw">confusionMatrix</span>(pred.rand
 <div class="footnotes">
 <hr />
 <ol start="6">
-<li id="fn6"><p>Se podrían considerar otras funciones de pérdida, por ejemplo con la distancia <span class="math inline">\(L_1\)</span> sería la mediana condicional, pero las consideraciones serían análogas.<a href="const-eval.html#fnref6">↩</a></p></li>
-<li id="fn7"><p>También puede ser de interés la función <code>cv.glm()</code> del paquete <code>boot</code>.<a href="const-eval.html#fnref7">↩</a></p></li>
-<li id="fn8"><p>Suponiendo que los modelos se pueden ordenar del más simple al más complejo.<a href="const-eval.html#fnref8">↩</a></p></li>
-<li id="fn9"><p>Por ejemplo obtendríamos el mismo valor si desplazamos las predicciones sumando una constante (i.e. no tiene en cuenta el sesgo).<a href="const-eval.html#fnref9">↩</a></p></li>
+<li id="fn6"><p>Se podrían considerar otras funciones de pérdida, por ejemplo con la distancia <span class="math inline">\(L_1\)</span> sería la mediana condicional, pero las consideraciones serían análogas.<a href="const-eval.html#fnref6" class="footnote-back">↩︎</a></p></li>
+<li id="fn7"><p>También puede ser de interés la función <code>cv.glm()</code> del paquete <code>boot</code>.<a href="const-eval.html#fnref7" class="footnote-back">↩︎</a></p></li>
+<li id="fn8"><p>Suponiendo que los modelos se pueden ordenar del más simple al más complejo.<a href="const-eval.html#fnref8" class="footnote-back">↩︎</a></p></li>
+<li id="fn9"><p>Por ejemplo obtendríamos el mismo valor si desplazamos las predicciones sumando una constante (i.e. no tiene en cuenta el sesgo).<a href="const-eval.html#fnref9" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -827,7 +925,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
