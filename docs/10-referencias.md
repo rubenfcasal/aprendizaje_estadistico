@@ -47,6 +47,9 @@ Vapnik, V. (2010). *The Nature of Statistical Learning Theory*. Springer.
 
 Agor, J. y Özaltın, O.Y. (2019). Feature selection for classification models via bilevel optimization. *Computers & Operations Research*, 106, 156-168.
 
+Berntsson, P. y Wold, S. (1986). Comparison Between X-ray Crystallographic Data and Physiochemical  Parameters with Respect to Their Information About the Calcium Channel Antagonist Activity of 4-Phenyl-1,4-
+Dihydropyridines. *Quantitative Structure-Activity Relationships*, 5, 45–50.
+
 Biecek, P. (2018). [DALEX: explainers for complex predictive models in R](http://www.jmlr.org/papers/volume19/18-416/18-416.pdf). *The Journal of Machine Learning Research*, 19(1), 3245-3249.
 
 Boser, B., Guyon, I. y Vapnik, V. (1992). A Training Algorithm for Optimal Margin Classifiers. *Proceedings of the Fifth Annual Workshop on Computational Learning Theory*, 144–152.
@@ -71,6 +74,8 @@ Fisher, R.A. (1936). The use of multiple measurements in taxonomic problems. *An
 
 Freund, Y. y Schapire, R. (1996). Experiments with a New Boosting Algorithm. *Machine Learning: Proceedings of the Thirteenth International Conference*, 148–156.
 
+Friedman, J.H. (1989). Regularized Discriminant Analysis. *Journal of the American Statistical Association*, 84(405), 165–175.
+
 Friedman, J.H. (2001). [Greedy Function Approximation: A Gradient Boosting Machine](https://projecteuclid.org/euclid.aos/1013203451). *Annals of Statistics*, 29, 1189–1232.
 
 Friedman, J.H. (2002). [Stochastic Gradient Boosting](https://www.sciencedirect.com/science/article/pii/S0167947301000652). *Computational Statistics and Data Analysis*, 38(4), 367-378. 
@@ -83,6 +88,8 @@ Goldstein, A., Kapelner, A., Bleich, J. y Pitkin, E. (2015). [Peeking inside the
 Greenwell, B.M. (2017). [pdp: An R Package for Constructing Partial Dependence Plots](https://journal.r-project.org/archive/2017/RJ-2017-016/index.html). *The R Journal*, 9(1), 421-436.
 
 Hastie, T., Rosset, S., Tibshirani, R. y Zhu, J. (2004). [The entire regularization path for the support vector machine](https://www.jmlr.org/papers/v5/hastie04a.html). *Journal of Machine Learning Research*, 5, 1391-1415.
+
+Hastie, T. y Tibshirani, R. (1996). Discriminant Analysis by GaussianMixtures. *Journal of the Royal Statistical Society*, Series B, 155–176.
 
 Karatzoglou, A., Smola, A., Hornik, K. y Zeileis, A. (2004). [kernlab-an S4 package for kernel methods in R](http://www.jstatsoft.org/v11/i09). *Journal of Statistical Software*, 11(9), 1-20.
 
@@ -104,6 +111,7 @@ Valiant, L. (1984). A Theory of the Learnable. *Communications of the ACM*, 27, 
 
 Vinayak, R.K. y Gilad-Bachrach, R. (2015). Dart: Dropouts meet multiple additive regression trees. *Proceedings of Machine Learning Research*, 38, 489-497.
 
+Welch, B. (1939). Note on Discriminant Functions. *Biometrika*, 31, 218–220.
 
 <!-- 
 Pendiente: Citar paquetes 

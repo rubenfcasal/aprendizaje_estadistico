@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4.2 Clasificadores de soporte vectorial | Aprendizaje Estadístico</title>
+  <title>5.3 Naive Bayes | Aprendizaje Estadístico</title>
   <meta name="description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
   <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4.2 Clasificadores de soporte vectorial | Aprendizaje Estadístico" />
+  <meta property="og:title" content="5.3 Naive Bayes | Aprendizaje Estadístico" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="rubenfcasal/aprendizaje_estadistico" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4.2 Clasificadores de soporte vectorial | Aprendizaje Estadístico" />
+  <meta name="twitter:title" content="5.3 Naive Bayes | Aprendizaje Estadístico" />
   
   <meta name="twitter:description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="clasificadores-de-máximo-margen.html"/>
-<link rel="next" href="máquinas-de-soporte-vectorial.html"/>
+<link rel="prev" href="análisis-discriminante-cuadrático.html"/>
+<link rel="next" href="referencias.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -232,46 +232,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="clasificadores-de-soporte-vectorial" class="section level2">
-<h2><span class="header-section-number">4.2</span> Clasificadores de soporte vectorial</h2>
-<p>Los clasificadores de soporte vectorial (<em>support vector classifiers</em>; también denominados <em>soft margin classifiers</em>) fueron introducidos en Costes y Vapnik (1995). Son una extensión del problema anterior que se utiliza cuando se desea clasificar mediante un hiperplano pero no existe ninguno que separe perfectamente los datos de entrenamiento según su categoría. En este caso no queda más remedio que admitir errores en la clasificación de algunos datos de entrenamiento (como hemos visto que pasa con todas las metodologías), que van a estar en el lado equivocado del hiperplano. Y en lugar de hablar de un margen se habla de un margen débil (<em>soft margin</em>).</p>
-<p>Este enfoque, consistente en aceptar que algunos datos de entrenamiento van a estar mal clasificados, puede ser preferible aunque exista un hiperplano que resuelva el problema de la sección anterior, ya que los clasificadores de soporte vectorial son más robustos que los clasificadores de máximo margen.</p>
-<p>Veamos la formulación matemática del problema:
-<span class="math display">\[\mbox{max}_{\beta_0, \beta_1,\ldots, \beta_p, \epsilon_1,\ldots, \epsilon_n} M\]</span>
-sujeto a
-<span class="math display">\[\sum_{j=1}^p \beta_j^2 = 1\]</span>
-<span class="math display">\[ y_i(\beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \ldots + \beta_p x_{pi}) \ge M(1 - \epsilon_i) \ \ \forall i\]</span>
-<span class="math display">\[\sum_{i=1}^n \epsilon_i \le K\]</span>
-<span class="math display">\[\epsilon_i \ge 0 \ \ \forall i\]</span></p>
-<p>Las variables <span class="math inline">\(\epsilon_i\)</span> son las variables de holgura (<em>slack variables</em>). Quizás resultase más intuitivo introducir las holguras en términos absolutos, como <span class="math inline">\(M -\epsilon_i\)</span>, pero eso daría lugar a un problema no convexo, mientras que escribiendo la restricción en términos relativos como <span class="math inline">\(M(1 - \epsilon_i)\)</span> el problema pasa a ser convexo. Pero en esta formulación el elemento clave es la introducción del hiperparámetro <span class="math inline">\(K\)</span>, necesariamente no negativo, que se puede interpretar como la tolerancia al error. De hecho, es fácil ver que no puede haber más de <span class="math inline">\(K\)</span> datos de entrenamiento incorrectamente clasificados, ya que si un dato está mal clasificado entonces <span class="math inline">\(\epsilon_i &gt; 1\)</span>. En el caso extremo de utilizar <span class="math inline">\(K = 0\)</span>, estaríamos en el caso de un <em>hard margin classifier</em>. La elección del valor de <span class="math inline">\(K\)</span> también se puede interpretar como una penalización por la complejidad del modelo, y por tanto en términos del balance entre el sesgo y la varianza: valores pequeños van a dar lugar a modelos muy complejos, con mucha varianza y poco sesgo (con el consiguiente riesgo de sobreajuste); y valores grandes a modelos con mucho sesgo y poca varianza. El hiperparámetro <span class="math inline">\(K\)</span> se puede seleccionar de modo óptimo por los procedimientos ya conocidos, tipo bootstrap o validación cruzada.</p>
-<p>Una forma equivalente de formular el problema (cuadrático con restricciones lineales) es
-<span class="math display">\[\mbox{min}_{\beta_0, \boldsymbol{\beta}} \lVert \boldsymbol{\beta} \rVert\]</span>
-sujeto a
-<span class="math display">\[ y_i(\beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \ldots + \beta_p x_{pi}) \ge 1 - \epsilon_i \ \ \forall i\]</span>
-<span class="math display">\[\sum_{i=1}^n \epsilon_i \le K\]</span>
-<span class="math display">\[\epsilon_i \ge 0 \ \ \forall i\]</span></p>
-<p>En la práctica, por una conveniencia de cálculo, se utiliza la siguiente formulación, también equivalente,
-<span class="math display">\[\mbox{min}_{\beta_0, \boldsymbol{\beta}} \frac{1}{2}\lVert \boldsymbol{\beta} \rVert^2 + C \sum_{i=1}^n \epsilon_i\]</span>
-sujeto a
-<span class="math display">\[ y_i(\beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \ldots + \beta_p x_{pi}) \ge 1 - \epsilon_i \ \ \forall i\]</span>
-<span class="math display">\[\epsilon_i \ge 0 \ \ \forall i\]</span></p>
-<p>Aunque el problema a resolver es el mismo, y por tanto también la solución, hay que tener cuidado con la interpretación, pues el hiperparámetro <span class="math inline">\(K\)</span> se ha sustituido por <span class="math inline">\(C\)</span>. Este nuevo parámetro es el que nos vamos a encontrar en los ejercicios prácticos y tiene una interpretación inversa a <span class="math inline">\(K\)</span>. El parámetro <span class="math inline">\(C\)</span> es la penalización por mala clasificación (coste que supone que un dato de entrenamiento esté mal clasificado), y por tanto el <em>hard margin classifier</em> se obtiene para valores muy grandes (<span class="math inline">\(C = \infty\)</span> se corresponde con <span class="math inline">\(K = 0\)</span>). Esto es algo confuso, ya que no se corresponde con la interpretación habitual de <em>penalización por complejidad</em>.</p>
-<p><img src="04-svm_files/figure-html/unnamed-chunk-3-1.png" width="90%" style="display: block; margin: auto;" /></p>
-<p>En este contexto, los vectores soporte van a ser no solo los datos de entrenamiento que están (correctamente clasificados) a una distancia <span class="math inline">\(M\)</span> del hiperplano, sino también aquellos que están incorrectamente clasificados e incluso los que están a una distancia inferior a <span class="math inline">\(M\)</span>. Como se comentó en la sección anterior, estos son los datos que definen el modelo, que es por tanto robusto a las observaciones que están lejos del hiperplano.</p>
-<p>Aunque no vamos a entrar en detalles sobre como se obtiene la solución del problema de optimización, sí resulta interesante destacar que el clasificador de soporte vectorial
-<span class="math display">\[m(\mathbf{x}) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \ldots + \beta_p x_p\]</span>
-puede representarse como
-<span class="math display">\[m(\mathbf{x}) = \beta_0 + \sum_{i=1}^n \alpha_i \mathbf{x}^t \mathbf{x}_i\]</span>
-donde <span class="math inline">\(\mathbf{x}^t \mathbf{x}_i\)</span> es el producto escalar entre el vector <span class="math inline">\(\mathbf{x}\)</span> del dato a clasificar y el vector <span class="math inline">\(\mathbf{x}_i\)</span> del dato de entrenamiento <span class="math inline">\(i\)</span>-ésimo. Asimismo, los coeficientes <span class="math inline">\(\beta_0, \alpha_1, \ldots, \alpha_n\)</span> se obtienen (exclusivamente) a partir de los productos escalares <span class="math inline">\(\mathbf{x}_i^t \mathbf{x}_j\)</span> de los distintos pares de datos de entrenamiento y de las respuestas <span class="math inline">\(y_i\)</span>. Y más aún, el sumatorio anterior se puede reducir a los índices que corresponden a vectores soporte (<span class="math inline">\(i\in S\)</span>), al ser los demás coeficientes nulos:
-<span class="math display">\[m(\mathbf{x}) = \beta_0 + \sum_{i\in S} \alpha_i \mathbf{x}^t \mathbf{x}_i\]</span></p>
+<div id="naive-bayes" class="section level2">
+<h2><span class="header-section-number">5.3</span> Naive Bayes</h2>
+<p>El modelo naive Bayes simplifica los modelos anteriores asumiendo que las variables predictoras son <em>independientes</em>. Esta es una suposición extremadamente fuerte y en la práctica difícilmente nos encontraremos con un problema en el que las variables sean independientes, pero a cambio se va a reducir mucho la complejidad del modelo. Esta simplicidad del modelo le va a permitir manejar un gran número de predictores, incluso con un tamaño muestral moderado, situaciones en las que puede ser imposible utilizar LDA o QDA. Otra ventaja asociada con su simplicidad es que el cálculo del modelo se va a poder hacer muy rápido incluso para tamaños muestrales muy grandes. Además, y quizás esto sea lo más sorprendente, en ocasiones su rendimiento es muy competitivo.</p>
+<p>Asumiendo normalidad, este modelo no es más que un caso particular de QDA con matrices <span class="math inline">\(\Sigma_k\)</span> diagonales. Cuando las variables predictoras son categóricas, lo más habitual es modelizar naive Bayes utilizando distribuciones multinomiales.</p>
+
 </div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="clasificadores-de-máximo-margen.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="máquinas-de-soporte-vectorial.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="análisis-discriminante-cuadrático.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="referencias.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -302,7 +276,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rubenfcasal/aprendizaje_estadistico/edit/master/04-svm.Rmd",
+"link": "https://github.com/rubenfcasal/aprendizaje_estadistico/edit/master/05-otros_metodos.Rmd",
 "text": "Edit"
 },
 "history": {

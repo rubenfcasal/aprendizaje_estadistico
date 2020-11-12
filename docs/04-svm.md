@@ -201,7 +201,7 @@ ksvm(formula, data, scaled = TRUE, type,
 
 * `class.weights`: vector (con las clases como nombres) con los pesos de una mala clasificación en cada clase.
   
-* `cross`: número grupos para validación cruzada; por defecto 0 (no se hace validación cruzada). Si se asigna un valor mayor que 1 se realizará validación cruzada y se devolverá el error en la componente `$cross` (se puede emplear para seleccionar hiperparámetros).
+* `cross`: número grupos para validación cruzada; por defecto 0 (no se hace validación cruzada). Si se asigna un valor mayor que 1 se realizará validación cruzada y se devolverá el error en la componente `@cross` (se puede acceder con la función `cross()`; y se puede emplear para seleccionar hiperparámetros).
 
 Como ejemplo consideraremos el problema de clasificación con los datos de calidad de vino:
 
@@ -218,7 +218,7 @@ test <- df[-itrain, ]
 
 
 library(kernlab)
-set.seed(1) # Para la selección de sigma = sigest(taste ~ ., data = train)[2]
+set.seed(1) # Para la selección de sigma = mean(sigest(fmedv ~ ., data = train)[-2])
 svm <- ksvm(taste ~ ., data = train,
             kernel = "rbfdot", prob.model = TRUE)
 svm

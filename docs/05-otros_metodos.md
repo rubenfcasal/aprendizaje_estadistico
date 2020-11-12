@@ -1,0 +1,58 @@
+# Otros métodos de clasificación {#class-otros}
+
+
+
+
+En los métodos de clasificación que hemos visto en los capítulos anteriores, uno de los objetivos era estimar la probabilidad a posteriori $P(Y = k | \mathbf{X}=\mathbf{x})$ de que la observación $\mathbf{x}$ pertenezca a la categoría $k$, pero en ningún caso nos preocupábamos por la distribución de las variables predictoras. En la terminología de ML estos métodos se conocen con el nombre de discriminadores (*discriminative methods*). Otro ejemplo de método discriminador es la regresión logística.
+
+En este capítulo vamos a ver métodos que reciben el nombre genérico de métodos generadores (*generative methods*). Se caracterizan porque calculan las probabilidades a posteriori utilizando la distribución conjunta de $(\mathbf{X}, Y)$ y el teorema de Bayes:
+\[P(Y = k | \mathbf{X}=\mathbf{x}) = \frac{P(Y = k) f_k(\mathbf{x})}{\sum_{l=1}^K P(Y = l) f_l(\mathbf{x})}\]
+donde $f_k(\mathbf{x})$ es la función de densidad del vector aleatorio $\mathbf{X}=(X_1, X_2, \ldots, X_p)$ para una observación perteneciente a la clase $k$, es decir, es una forma abreviada de escribir $f(\mathbf{X}=\mathbf{x} | Y = k)$. En la jerga bayesiana a esta función se la conoce como *verosimilitud* (es la función de verosimilitud sin más que considerar que la observación muestral $\mathbf{x}$ es fija y la variable es $k$) y resumen la fórmula anterior como
+\[posterior \propto prior \times verosimilitud\]
+
+Una vez estimadas las probabilidades a priori $P(Y = k)$ y las densidades (verosimilitudes) $f_k(\mathbf{x})$, tenemos las probabilidades a posteriori. Para estimar las funciones de densidad se puede utilizar un método paramétrico o un método no paramétrico. En el primer caso, lo más habitual es modelizar la distribución del vector de variables predictoras como normales multivariantes.
+
+A continuación vamos a ver tres casos particulares de este enfoque, siempre suponiendo normalidad.
+
+## Análisis discriminate lineal 
+
+El análisis lineal discrimintante (LDA) se inicia en Fisher (1936) pero es Welch (1939) quien lo enfoca utilizando el teorema de Bayes. Asumiendo que $X | Y = k \sim N(\mu_k, \Sigma)$, es decir, que todas las categorías comparten la misma matriz $\Sigma$, se obtienen las funciones discriminantes, lineales en $\mathbf{x}$,
+\[\mathbf{x}^t \Sigma^{-1} \mu_k - \frac{1}{2} \mu_k^t \Sigma^{-1} \mu_k + \mbox{log}(P(Y = k))
+\]
+
+La dificultad técnica del método LDA reside en el cálculo de $\Sigma^{-1}$. Cuando hay más variables predictoras que datos, o cuando las variables predictoras están fuertemente correlacionadas, hay un problema. Una solución pasa por aplicar análisis de componentes principales (PCA) para reducir la dimensión y tener predictores incorrelados antes de utilizar LDA. Aunque la solución anterior se utiliza mucho, hay que tener en cuenta que la reducción de la dimensión se lleva a cabo sin tener en cuenta la información de las categorías, es decir, la estructura de los datos en categorías. Una alternativa consiste en utilizar *partial least squares discriminant analysis* (PLSDA, Berntsson y Wold, 1986). La idea consiste en realizar una regresión PLS siendo las categorías la respuesta, con el objetivo de reducir la dimensión a la vez que se maximiza la correlación con las respuestas.
+
+Una generalización de LDA es el *mixture discriminant analysis* (Hastie y Tibshirani, 1996) en el que, siempre con la misma matriz $\Sigma$, se contempla la posibilidad de que dentro de cada categoría haya múltiples subcategorías que unicamente difieren en la media. Las distribuciones dentro de cada clase se agregan mediante una mixtura de las distribuciones multivariantes.
+
+## Análisis discriminante cuadrático
+
+El análisis discriminante cuadrático (QDA) relaja la suposición de que todas las categorías tengan la misma estructura de covarianzas, es decir, $X | Y = k \sim N(\mu_k, \Sigma_k)$, obteniendo como solución
+\[-\frac{1}{2} (\mathbf{x} - \mu_k)^t \Sigma^{-1} (\mathbf{x} - \mu_k) - \frac{1}{2} \mbox{log}(|\Sigma_k|) + \mbox{log}(P(Y = k))
+\]
+
+Vemos que este método da lugar a fronteras discriminantes cuadráticas. 
+
+Si el número de variables predictoras es próximo al tamaño muestral, en la prácticas QDA se vuelve impracticable, ya que el número de variables predictoras tiene que ser menor que el numero de datos en cada una de las categorías. Una recomendación básica es utilizar LDA y QDA únicamente cuando hay muchos más datos que predictores. Y al igual que en LDA, si dentro de las clases los predictores presentan mucha colinealidad el modelo va a funcionar mal.
+
+Al ser QDA una generalización de LDA podemos pensar que siempre va a ser preferible, pero eso no es cierto, ya que QDA requiere estimar muchos más parámetros que LDA y por tanto tiene más riesgo de sobreajustar. Al ser menos flexible, LDA da lugar a modelos más simples: menos varianza pero más sesgo. LDA suele funcionar mejor que QDA cuando hay pocos datos y es por tanto muy importante reducir la varianza. Por el contrario, QDA es recomendable cuando hay muchos datos. 
+
+Una solución intermedia entre LDA y QDA es el análisis discriminante regularizado (RDA, Friedman, 1989), que utiliza el hiperparámetro $\lambda$ para definir la matriz
+\[\Sigma_{k,\lambda}' = \lambda\Sigma_k + (1 - \lambda) \Sigma
+\]
+
+También hay una versión con dos hiperparámetros, $\lambda$ y $\gamma$,
+\[\Sigma_{k,\lambda,\gamma}' = (1 - \gamma) \Sigma_{k,\lambda}' + \gamma \frac{1}{p} \mbox{tr} (\Sigma_{k,\lambda}')I
+\]
+
+
+## Naive Bayes
+
+El modelo naive Bayes simplifica los modelos anteriores asumiendo que las variables predictoras son *independientes*. Esta es una suposición extremadamente fuerte y en la práctica difícilmente nos encontraremos con un problema en el que las variables sean independientes, pero a cambio se va a reducir mucho la complejidad del modelo. Esta simplicidad del modelo le va a permitir manejar un gran número de predictores, incluso con un tamaño muestral moderado, situaciones en las que puede ser imposible utilizar LDA o QDA. Otra ventaja asociada con su simplicidad es que el cálculo del modelo se va a poder hacer muy rápido incluso para tamaños muestrales muy grandes. Además, y quizás esto sea lo más sorprendente, en ocasiones su rendimiento es muy competitivo.
+
+Asumiendo normalidad, este modelo no es más que un caso particular de QDA con matrices $\Sigma_k$ diagonales. Cuando las variables predictoras son categóricas, lo más habitual es modelizar naive Bayes utilizando distribuciones multinomiales.
+
+
+
+
+
+
