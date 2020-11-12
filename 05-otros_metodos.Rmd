@@ -24,6 +24,29 @@ La dificultad técnica del método LDA reside en el cálculo de $\Sigma^{-1}$. C
 
 Una generalización de LDA es el *mixture discriminant analysis* (Hastie y Tibshirani, 1996) en el que, siempre con la misma matriz $\Sigma$, se contempla la posibilidad de que dentro de cada categoría haya múltiples subcategorías que unicamente difieren en la media. Las distribuciones dentro de cada clase se agregan mediante una mixtura de las distribuciones multivariantes.
 
+### Ejemplo `MASS::lda`
+
+```{r}
+load("data/winetaste.RData")
+# Partición de los datos
+set.seed(1)
+df <- winetaste
+nobs <- nrow(df)
+itrain <- sample(nobs, 0.8 * nobs)
+train <- df[itrain, ]
+test <- df[-itrain, ]
+
+library(MASS)
+ld <- lda(taste ~ ., data = train)
+ld
+plot(ld)
+ld.pred <- predict(ld, newdata = test)
+pred <- ld.pred$class
+caret::confusionMatrix(pred, test$taste)
+p.est <-ld.pred$posterior
+```
+
+
 ## Análisis discriminante cuadrático
 
 El análisis discriminante cuadrático (QDA) relaja la suposición de que todas las categorías tengan la misma estructura de covarianzas, es decir, $X | Y = k \sim N(\mu_k, \Sigma_k)$, obteniendo como solución
@@ -45,13 +68,34 @@ También hay una versión con dos hiperparámetros, $\lambda$ y $\gamma$,
 \]
 
 
+### Ejemplo `MASS::qda`
+
+```{r}
+qd <- qda(taste ~ ., data = train)
+qd
+qd.pred <- predict(qd, newdata = test)
+pred <- qd.pred$class
+caret::confusionMatrix(pred, test$taste)
+p.est <-qd.pred$posterior
+```
+
+
 ## Naive Bayes
 
 El modelo naive Bayes simplifica los modelos anteriores asumiendo que las variables predictoras son *independientes*. Esta es una suposición extremadamente fuerte y en la práctica difícilmente nos encontraremos con un problema en el que las variables sean independientes, pero a cambio se va a reducir mucho la complejidad del modelo. Esta simplicidad del modelo le va a permitir manejar un gran número de predictores, incluso con un tamaño muestral moderado, situaciones en las que puede ser imposible utilizar LDA o QDA. Otra ventaja asociada con su simplicidad es que el cálculo del modelo se va a poder hacer muy rápido incluso para tamaños muestrales muy grandes. Además, y quizás esto sea lo más sorprendente, en ocasiones su rendimiento es muy competitivo.
 
 Asumiendo normalidad, este modelo no es más que un caso particular de QDA con matrices $\Sigma_k$ diagonales. Cuando las variables predictoras son categóricas, lo más habitual es modelizar naive Bayes utilizando distribuciones multinomiales.
 
+### Ejemplo `e1071::naiveBayes`
 
+```{r}
+library(e1071)
+nb <- naiveBayes(taste ~ ., data = train)
+nb
+pred <- predict(nb, newdata = test)
+caret::confusionMatrix(pred, test$taste)
+p.est <- predict(nb, newdata = test, type = "raw")
+```
 
 
 

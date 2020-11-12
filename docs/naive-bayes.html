@@ -201,9 +201,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.4" data-path="svm-con-el-paquete-kernlab.html"><a href="svm-con-el-paquete-kernlab.html"><i class="fa fa-check"></i><b>4.4</b> SVM con el paquete <code>kernlab</code></a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="class-otros.html"><a href="class-otros.html"><i class="fa fa-check"></i><b>5</b> Otros métodos de clasificación</a><ul>
-<li class="chapter" data-level="5.1" data-path="análisis-discriminate-lineal.html"><a href="análisis-discriminate-lineal.html"><i class="fa fa-check"></i><b>5.1</b> Análisis discriminate lineal</a></li>
-<li class="chapter" data-level="5.2" data-path="análisis-discriminante-cuadrático.html"><a href="análisis-discriminante-cuadrático.html"><i class="fa fa-check"></i><b>5.2</b> Análisis discriminante cuadrático</a></li>
-<li class="chapter" data-level="5.3" data-path="naive-bayes.html"><a href="naive-bayes.html"><i class="fa fa-check"></i><b>5.3</b> Naive Bayes</a></li>
+<li class="chapter" data-level="5.1" data-path="análisis-discriminate-lineal.html"><a href="análisis-discriminate-lineal.html"><i class="fa fa-check"></i><b>5.1</b> Análisis discriminate lineal</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="análisis-discriminate-lineal.html"><a href="análisis-discriminate-lineal.html#ejemplo-masslda"><i class="fa fa-check"></i><b>5.1.1</b> Ejemplo <code>MASS::lda</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="análisis-discriminante-cuadrático.html"><a href="análisis-discriminante-cuadrático.html"><i class="fa fa-check"></i><b>5.2</b> Análisis discriminante cuadrático</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="análisis-discriminante-cuadrático.html"><a href="análisis-discriminante-cuadrático.html#ejemplo-massqda"><i class="fa fa-check"></i><b>5.2.1</b> Ejemplo <code>MASS::qda</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="naive-bayes.html"><a href="naive-bayes.html"><i class="fa fa-check"></i><b>5.3</b> Naive Bayes</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="naive-bayes.html"><a href="naive-bayes.html#ejemplo-e1071naivebayes"><i class="fa fa-check"></i><b>5.3.1</b> Ejemplo <code>e1071::naiveBayes</code></a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
 <li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
@@ -236,7 +242,109 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">5.3</span> Naive Bayes</h2>
 <p>El modelo naive Bayes simplifica los modelos anteriores asumiendo que las variables predictoras son <em>independientes</em>. Esta es una suposición extremadamente fuerte y en la práctica difícilmente nos encontraremos con un problema en el que las variables sean independientes, pero a cambio se va a reducir mucho la complejidad del modelo. Esta simplicidad del modelo le va a permitir manejar un gran número de predictores, incluso con un tamaño muestral moderado, situaciones en las que puede ser imposible utilizar LDA o QDA. Otra ventaja asociada con su simplicidad es que el cálculo del modelo se va a poder hacer muy rápido incluso para tamaños muestrales muy grandes. Además, y quizás esto sea lo más sorprendente, en ocasiones su rendimiento es muy competitivo.</p>
 <p>Asumiendo normalidad, este modelo no es más que un caso particular de QDA con matrices <span class="math inline">\(\Sigma_k\)</span> diagonales. Cuando las variables predictoras son categóricas, lo más habitual es modelizar naive Bayes utilizando distribuciones multinomiales.</p>
+<div id="ejemplo-e1071naivebayes" class="section level3">
+<h3><span class="header-section-number">5.3.1</span> Ejemplo <code>e1071::naiveBayes</code></h3>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="naive-bayes.html#cb246-1"></a><span class="kw">library</span>(e1071)</span>
+<span id="cb246-2"><a href="naive-bayes.html#cb246-2"></a>nb &lt;-<span class="st"> </span><span class="kw">naiveBayes</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train)</span>
+<span id="cb246-3"><a href="naive-bayes.html#cb246-3"></a>nb</span></code></pre></div>
+<pre><code>## 
+## Naive Bayes Classifier for Discrete Predictors
+## 
+## Call:
+## naiveBayes.default(x = X, y = Y, laplace = laplace)
+## 
+## A-priori probabilities:
+## Y
+##  good   bad 
+## 0.662 0.338 
+## 
+## Conditional probabilities:
+##       fixed.acidity
+## Y          [,1]      [,2]
+##   good 6.726888 0.8175101
+##   bad  7.030030 0.9164467
+## 
+##       volatile.acidity
+## Y           [,1]       [,2]
+##   good 0.2616994 0.08586935
+##   bad  0.3075148 0.11015113
+## 
+##       citric.acid
+## Y           [,1]      [,2]
+##   good 0.3330211 0.1231345
+##   bad  0.3251775 0.1334682
+## 
+##       residual.sugar
+## Y          [,1]     [,2]
+##   good 6.162009 4.945483
+##   bad  6.709024 5.251402
+## 
+##       chlorides
+## Y            [,1]       [,2]
+##   good 0.04420242 0.02237654
+##   bad  0.05075740 0.03001672
+## 
+##       free.sulfur.dioxide
+## Y          [,1]     [,2]
+##   good 34.75831 14.87336
+##   bad  35.41124 19.26304
+## 
+##       total.sulfur.dioxide
+## Y          [,1]     [,2]
+##   good 132.7568 38.05871
+##   bad  147.4615 47.34668
+## 
+##       density
+## Y           [,1]       [,2]
+##   good 0.9935342 0.00285949
+##   bad  0.9950789 0.00256194
+## 
+##       pH
+## Y          [,1]      [,2]
+##   good 3.209668 0.1604529
+##   bad  3.166331 0.1472261
+## 
+##       sulphates
+## Y           [,1]       [,2]
+##   good 0.4999396 0.11564067
+##   bad  0.4763905 0.09623778
+## 
+##       alcohol
+## Y           [,1]      [,2]
+##   good 10.786959 1.2298425
+##   bad   9.845611 0.8710844</code></pre>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="naive-bayes.html#cb248-1"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(nb, <span class="dt">newdata =</span> test)</span>
+<span id="cb248-2"><a href="naive-bayes.html#cb248-2"></a>caret<span class="op">::</span><span class="kw">confusionMatrix</span>(pred, test<span class="op">$</span>taste)</span></code></pre></div>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction good bad
+##       good  136  47
+##       bad    30  37
+##                                           
+##                Accuracy : 0.692           
+##                  95% CI : (0.6307, 0.7486)
+##     No Information Rate : 0.664           
+##     P-Value [Acc &gt; NIR] : 0.19255         
+##                                           
+##                   Kappa : 0.2734          
+##                                           
+##  Mcnemar&#39;s Test P-Value : 0.06825         
+##                                           
+##             Sensitivity : 0.8193          
+##             Specificity : 0.4405          
+##          Pos Pred Value : 0.7432          
+##          Neg Pred Value : 0.5522          
+##              Prevalence : 0.6640          
+##          Detection Rate : 0.5440          
+##    Detection Prevalence : 0.7320          
+##       Balanced Accuracy : 0.6299          
+##                                           
+##        &#39;Positive&#39; Class : good            
+## </code></pre>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="naive-bayes.html#cb250-1"></a>p.est &lt;-<span class="st"> </span><span class="kw">predict</span>(nb, <span class="dt">newdata =</span> test, <span class="dt">type =</span> <span class="st">&quot;raw&quot;</span>)</span></code></pre></div>
 
+</div>
 </div>
 <!-- </div> -->
             </section>

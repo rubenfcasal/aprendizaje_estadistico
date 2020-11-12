@@ -201,9 +201,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.4" data-path="svm-con-el-paquete-kernlab.html"><a href="svm-con-el-paquete-kernlab.html"><i class="fa fa-check"></i><b>4.4</b> SVM con el paquete <code>kernlab</code></a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="class-otros.html"><a href="class-otros.html"><i class="fa fa-check"></i><b>5</b> Otros métodos de clasificación</a><ul>
-<li class="chapter" data-level="5.1" data-path="análisis-discriminate-lineal.html"><a href="análisis-discriminate-lineal.html"><i class="fa fa-check"></i><b>5.1</b> Análisis discriminate lineal</a></li>
-<li class="chapter" data-level="5.2" data-path="análisis-discriminante-cuadrático.html"><a href="análisis-discriminante-cuadrático.html"><i class="fa fa-check"></i><b>5.2</b> Análisis discriminante cuadrático</a></li>
-<li class="chapter" data-level="5.3" data-path="naive-bayes.html"><a href="naive-bayes.html"><i class="fa fa-check"></i><b>5.3</b> Naive Bayes</a></li>
+<li class="chapter" data-level="5.1" data-path="análisis-discriminate-lineal.html"><a href="análisis-discriminate-lineal.html"><i class="fa fa-check"></i><b>5.1</b> Análisis discriminate lineal</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="análisis-discriminate-lineal.html"><a href="análisis-discriminate-lineal.html#ejemplo-masslda"><i class="fa fa-check"></i><b>5.1.1</b> Ejemplo <code>MASS::lda</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="análisis-discriminante-cuadrático.html"><a href="análisis-discriminante-cuadrático.html"><i class="fa fa-check"></i><b>5.2</b> Análisis discriminante cuadrático</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="análisis-discriminante-cuadrático.html"><a href="análisis-discriminante-cuadrático.html#ejemplo-massqda"><i class="fa fa-check"></i><b>5.2.1</b> Ejemplo <code>MASS::qda</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="naive-bayes.html"><a href="naive-bayes.html"><i class="fa fa-check"></i><b>5.3</b> Naive Bayes</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="naive-bayes.html"><a href="naive-bayes.html#ejemplo-e1071naivebayes"><i class="fa fa-check"></i><b>5.3.1</b> Ejemplo <code>e1071::naiveBayes</code></a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
 <li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
@@ -239,6 +245,85 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 \]</span></p>
 <p>La dificultad técnica del método LDA reside en el cálculo de <span class="math inline">\(\Sigma^{-1}\)</span>. Cuando hay más variables predictoras que datos, o cuando las variables predictoras están fuertemente correlacionadas, hay un problema. Una solución pasa por aplicar análisis de componentes principales (PCA) para reducir la dimensión y tener predictores incorrelados antes de utilizar LDA. Aunque la solución anterior se utiliza mucho, hay que tener en cuenta que la reducción de la dimensión se lleva a cabo sin tener en cuenta la información de las categorías, es decir, la estructura de los datos en categorías. Una alternativa consiste en utilizar <em>partial least squares discriminant analysis</em> (PLSDA, Berntsson y Wold, 1986). La idea consiste en realizar una regresión PLS siendo las categorías la respuesta, con el objetivo de reducir la dimensión a la vez que se maximiza la correlación con las respuestas.</p>
 <p>Una generalización de LDA es el <em>mixture discriminant analysis</em> (Hastie y Tibshirani, 1996) en el que, siempre con la misma matriz <span class="math inline">\(\Sigma\)</span>, se contempla la posibilidad de que dentro de cada categoría haya múltiples subcategorías que unicamente difieren en la media. Las distribuciones dentro de cada clase se agregan mediante una mixtura de las distribuciones multivariantes.</p>
+<div id="ejemplo-masslda" class="section level3">
+<h3><span class="header-section-number">5.1.1</span> Ejemplo <code>MASS::lda</code></h3>
+<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="análisis-discriminate-lineal.html#cb235-1"></a><span class="kw">load</span>(<span class="st">&quot;data/winetaste.RData&quot;</span>)</span>
+<span id="cb235-2"><a href="análisis-discriminate-lineal.html#cb235-2"></a><span class="co"># Partición de los datos</span></span>
+<span id="cb235-3"><a href="análisis-discriminate-lineal.html#cb235-3"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb235-4"><a href="análisis-discriminate-lineal.html#cb235-4"></a>df &lt;-<span class="st"> </span>winetaste</span>
+<span id="cb235-5"><a href="análisis-discriminate-lineal.html#cb235-5"></a>nobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(df)</span>
+<span id="cb235-6"><a href="análisis-discriminate-lineal.html#cb235-6"></a>itrain &lt;-<span class="st"> </span><span class="kw">sample</span>(nobs, <span class="fl">0.8</span> <span class="op">*</span><span class="st"> </span>nobs)</span>
+<span id="cb235-7"><a href="análisis-discriminate-lineal.html#cb235-7"></a>train &lt;-<span class="st"> </span>df[itrain, ]</span>
+<span id="cb235-8"><a href="análisis-discriminate-lineal.html#cb235-8"></a>test &lt;-<span class="st"> </span>df[<span class="op">-</span>itrain, ]</span>
+<span id="cb235-9"><a href="análisis-discriminate-lineal.html#cb235-9"></a></span>
+<span id="cb235-10"><a href="análisis-discriminate-lineal.html#cb235-10"></a><span class="kw">library</span>(MASS)</span>
+<span id="cb235-11"><a href="análisis-discriminate-lineal.html#cb235-11"></a>ld &lt;-<span class="st"> </span><span class="kw">lda</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train)</span>
+<span id="cb235-12"><a href="análisis-discriminate-lineal.html#cb235-12"></a>ld</span></code></pre></div>
+<pre><code>## Call:
+## lda(taste ~ ., data = train)
+## 
+## Prior probabilities of groups:
+##  good   bad 
+## 0.662 0.338 
+## 
+## Group means:
+##      fixed.acidity volatile.acidity citric.acid residual.sugar  chlorides
+## good      6.726888        0.2616994   0.3330211       6.162009 0.04420242
+## bad       7.030030        0.3075148   0.3251775       6.709024 0.05075740
+##      free.sulfur.dioxide total.sulfur.dioxide   density       pH sulphates
+## good            34.75831             132.7568 0.9935342 3.209668 0.4999396
+## bad             35.41124             147.4615 0.9950789 3.166331 0.4763905
+##        alcohol
+## good 10.786959
+## bad   9.845611
+## 
+## Coefficients of linear discriminants:
+##                                LD1
+## fixed.acidity        -4.577255e-02
+## volatile.acidity      5.698858e+00
+## citric.acid          -5.894231e-01
+## residual.sugar       -2.838910e-01
+## chlorides            -6.083210e+00
+## free.sulfur.dioxide   1.039366e-03
+## total.sulfur.dioxide -8.952115e-04
+## density               5.642314e+02
+## pH                   -2.103922e+00
+## sulphates            -2.400004e+00
+## alcohol              -1.996112e-01</code></pre>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="análisis-discriminate-lineal.html#cb237-1"></a><span class="kw">plot</span>(ld)</span></code></pre></div>
+<p><img src="05-otros_metodos_files/figure-html/unnamed-chunk-2-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="análisis-discriminate-lineal.html#cb238-1"></a>ld.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(ld, <span class="dt">newdata =</span> test)</span>
+<span id="cb238-2"><a href="análisis-discriminate-lineal.html#cb238-2"></a>pred &lt;-<span class="st"> </span>ld.pred<span class="op">$</span>class</span>
+<span id="cb238-3"><a href="análisis-discriminate-lineal.html#cb238-3"></a>caret<span class="op">::</span><span class="kw">confusionMatrix</span>(pred, test<span class="op">$</span>taste)</span></code></pre></div>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction good bad
+##       good  146  49
+##       bad    20  35
+##                                           
+##                Accuracy : 0.724           
+##                  95% CI : (0.6641, 0.7785)
+##     No Information Rate : 0.664           
+##     P-Value [Acc &gt; NIR] : 0.0247239       
+##                                           
+##                   Kappa : 0.3238          
+##                                           
+##  Mcnemar&#39;s Test P-Value : 0.0007495       
+##                                           
+##             Sensitivity : 0.8795          
+##             Specificity : 0.4167          
+##          Pos Pred Value : 0.7487          
+##          Neg Pred Value : 0.6364          
+##              Prevalence : 0.6640          
+##          Detection Rate : 0.5840          
+##    Detection Prevalence : 0.7800          
+##       Balanced Accuracy : 0.6481          
+##                                           
+##        &#39;Positive&#39; Class : good            
+## </code></pre>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="análisis-discriminate-lineal.html#cb240-1"></a>p.est &lt;-ld.pred<span class="op">$</span>posterior</span></code></pre></div>
+</div>
 </div>
             </section>
 
