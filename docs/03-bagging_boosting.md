@@ -220,7 +220,7 @@ plot(bagtrees, main = "Tasas de error")
 legend("topright", colnames(bagtrees$err.rate), lty = 1:5, col = 1:6)
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-4-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-3-1.png" width="80%" style="display: block; margin: auto;" />
 Como vemos que los errores se estabilizan podríamos pensar que aparentemente hay convergencia (aunque situaciones de alta dependencia entre los árboles dificultarían su interpretación).
 
 Con la función `getTree()` podemos extraer los árboles individuales.
@@ -331,7 +331,7 @@ plot(rf, main = "Tasas de error")
 legend("topright", colnames(rf$err.rate), lty = 1:5, col = 1:6)
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-9-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-7-1.png" width="80%" style="display: block; margin: auto;" />
 
 Podemos mostrar la importancia de las variables predictoras con la función `importance()` o representarlas con `varImpPlot()`:
 
@@ -359,7 +359,7 @@ importance(rf)
 varImpPlot(rf)
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-10-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-8-1.png" width="80%" style="display: block; margin: auto;" />
 
 Si evaluamos la precisión en la muestra de test podemos observar un ligero incremento en la precisión en comparación con el método anterior:
 
@@ -431,14 +431,14 @@ pdp1 <- partial(rf, "alcohol")
 plotPartial(pdp1)
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-13-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-11-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 pdp2 <- partial(rf, c("alcohol", "density"))
 plotPartial(pdp2)
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-13-2.png" width="80%" style="display: block; margin: auto;" />
+<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-11-2.png" width="80%" style="display: block; margin: auto;" />
 
 En este caso también puede ser de utilidad el paquete [`randomForestExplainer`](https://modeloriented.github.io/randomForestExplainer).
 
@@ -487,7 +487,7 @@ rf.caret <- train(taste ~ ., data = train, method = "rf")
 plot(rf.caret)
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-15-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="03-bagging_boosting_files/figure-html/caret-rf-1.png" width="80%" style="display: block; margin: auto;" />
 
 Breiman (2001) sugiere emplear el valor por defecto, la mitad y el doble:
 
@@ -501,7 +501,7 @@ rf.caret <- train(taste ~ ., data = train,
 plot(rf.caret)
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-16-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-13-1.png" width="80%" style="display: block; margin: auto;" />
 
 <!-- 
 Pendiente: 
@@ -717,7 +717,7 @@ Con el método `plot()` podemos representar la evolución del error de clasifica
 plot(ada.boost)
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-20-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-16-1.png" width="80%" style="display: block; margin: auto;" />
 
 <!-- 
 Con la función `varplot()` podemos representar la importancia de las variables (y almacenarla empleando `type = "scores"`): 
@@ -727,7 +727,7 @@ Con la función `varplot()` podemos representar la importancia de las variables 
 res <- varplot(ada.boost, type = "scores")
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-21-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-17-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 res
@@ -1032,7 +1032,7 @@ El método `summary()` calcula las medidas de influencia de los predictores y la
 summary(gbm.fit)
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-29-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-23-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```
 ##                                       var   rel.inf
@@ -1056,7 +1056,7 @@ Para estudiar el efecto de un predictor se pueden generar gráficos de los efect
 plot(gbm.fit, i = "alcohol")
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-30-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-24-1.png" width="80%" style="display: block; margin: auto;" />
 
 Finalmente podemos evaluar la precisión en la muestra de test empleando el código habitual:
 

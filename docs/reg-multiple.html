@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>6.1 Regresión lineal múltiple | Aprendizaje Estadístico</title>
+  <meta name="description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="6.1 Regresión lineal múltiple | Aprendizaje Estadístico" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
+  <meta name="github-repo" content="rubenfcasal/aprendizaje_estadistico" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="6.1 Regresión lineal múltiple | Aprendizaje Estadístico" />
+  
+  <meta name="twitter:description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
+  
+
+<meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)" />
+
+
+<meta name="date" content="2020-11-17" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="modelos-lineales.html"/>
+<link rel="next" href="multicolinealidad.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.13/datatables.js"></script>
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Aprendizaje Estadístico</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prólogo</a></li>
+<li class="chapter" data-level="1" data-path="intro-AE.html"><a href="intro-AE.html"><i class="fa fa-check"></i><b>1</b> Introducción al Aprendizaje Estadístico</a><ul>
+<li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje Estadístico vs. Aprendizaje Automático</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
+<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#las-dos-culturas-breiman-2001"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas (Breiman, 2001)</a></li>
+<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-estadística-dunson-2018"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística (Dunson, 2018)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de Aprendizaje Estadístico</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#notacion"><i class="fa fa-check"></i><b>1.2.1</b> Notación y terminología</a></li>
+<li class="chapter" data-level="1.2.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#metodos-pkgs"><i class="fa fa-check"></i><b>1.2.2</b> Métodos (de aprendizaje supervisado) y paquetes de R</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="const-eval.html"><a href="const-eval.html"><i class="fa fa-check"></i><b>1.3</b> Construcción y evaluación de los modelos</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="const-eval.html"><a href="const-eval.html#bias-variance"><i class="fa fa-check"></i><b>1.3.1</b> Equilibrio entre sesgo y varianza: infraajuste y sobreajuste</a></li>
+<li class="chapter" data-level="1.3.2" data-path="const-eval.html"><a href="const-eval.html#entrenamiento-test"><i class="fa fa-check"></i><b>1.3.2</b> Datos de entrenamiento y datos de test</a></li>
+<li class="chapter" data-level="1.3.3" data-path="const-eval.html"><a href="const-eval.html#cv"><i class="fa fa-check"></i><b>1.3.3</b> Validación cruzada</a></li>
+<li class="chapter" data-level="1.3.4" data-path="const-eval.html"><a href="const-eval.html#eval-reg"><i class="fa fa-check"></i><b>1.3.4</b> Evaluación de un método de regresión</a></li>
+<li class="chapter" data-level="1.3.5" data-path="const-eval.html"><a href="const-eval.html#eval-class"><i class="fa fa-check"></i><b>1.3.5</b> Evaluación de un método de clasificación</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="la-maldición-de-la-dimensionalidad.html"><a href="la-maldición-de-la-dimensionalidad.html"><i class="fa fa-check"></i><b>1.4</b> La maldición de la dimensionalidad</a></li>
+<li class="chapter" data-level="1.5" data-path="analisis-modelos.html"><a href="analisis-modelos.html"><i class="fa fa-check"></i><b>1.5</b> Análisis e interpretación de los modelos</a></li>
+<li class="chapter" data-level="1.6" data-path="caret.html"><a href="caret.html"><i class="fa fa-check"></i><b>1.6</b> Introducción al paquete <code>caret</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="trees.html"><a href="trees.html"><i class="fa fa-check"></i><b>2</b> Árboles de decisión</a><ul>
+<li class="chapter" data-level="2.1" data-path="árboles-de-regresión-cart.html"><a href="árboles-de-regresión-cart.html"><i class="fa fa-check"></i><b>2.1</b> Árboles de regresión CART</a></li>
+<li class="chapter" data-level="2.2" data-path="árboles-de-clasificación-cart.html"><a href="árboles-de-clasificación-cart.html"><i class="fa fa-check"></i><b>2.2</b> Árboles de clasificación CART</a></li>
+<li class="chapter" data-level="2.3" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html"><i class="fa fa-check"></i><b>2.3</b> CART con el paquete <code>rpart</code></a><ul>
+<li class="chapter" data-level="2.3.1" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#ejemplo-regresión"><i class="fa fa-check"></i><b>2.3.1</b> Ejemplo: regresión</a></li>
+<li class="chapter" data-level="2.3.2" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#class-rpart"><i class="fa fa-check"></i><b>2.3.2</b> Ejemplo: modelo de clasificación</a></li>
+<li class="chapter" data-level="2.3.3" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#interfaz-de-caret"><i class="fa fa-check"></i><b>2.3.3</b> Interfaz de <code>caret</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html"><i class="fa fa-check"></i><b>2.4</b> Alternativas a los árboles CART</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html#ejemplo"><i class="fa fa-check"></i><b>2.4.1</b> Ejemplo</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="bagging-boosting.html"><a href="bagging-boosting.html"><i class="fa fa-check"></i><b>3</b> Bagging y Boosting</a><ul>
+<li class="chapter" data-level="3.1" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>3.1</b> Bagging</a></li>
+<li class="chapter" data-level="3.2" data-path="bosques-aleatorios.html"><a href="bosques-aleatorios.html"><i class="fa fa-check"></i><b>3.2</b> Bosques aleatorios</a></li>
+<li class="chapter" data-level="3.3" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html"><i class="fa fa-check"></i><b>3.3</b> Bagging y bosques aleatorios en R</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-clasificación-con-bagging"><i class="fa fa-check"></i><b>3.3.1</b> Ejemplo: Clasificación con bagging</a></li>
+<li class="chapter" data-level="3.3.2" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-clasificación-con-bosques-aleatorios"><i class="fa fa-check"></i><b>3.3.2</b> Ejemplo: Clasificación con bosques aleatorios</a></li>
+<li class="chapter" data-level="3.3.3" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-bosques-aleatorios-con-caret"><i class="fa fa-check"></i><b>3.3.3</b> Ejemplo: bosques aleatorios con <code>caret</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="boosting.html"><a href="boosting.html"><i class="fa fa-check"></i><b>3.4</b> Boosting</a></li>
+<li class="chapter" data-level="3.5" data-path="boosting-en-r.html"><a href="boosting-en-r.html"><i class="fa fa-check"></i><b>3.5</b> Boosting en R</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="boosting-en-r.html"><a href="boosting-en-r.html#ejemplo-clasificación-con-el-paquete-ada"><i class="fa fa-check"></i><b>3.5.1</b> Ejemplo: clasificación con el paquete <code>ada</code></a></li>
+<li class="chapter" data-level="3.5.2" data-path="boosting-en-r.html"><a href="boosting-en-r.html#ejemplo-regresión-con-el-paquete-gbm"><i class="fa fa-check"></i><b>3.5.2</b> Ejemplo: regresión con el paquete <code>gbm</code></a></li>
+<li class="chapter" data-level="3.5.3" data-path="boosting-en-r.html"><a href="boosting-en-r.html#ejemplo-xgboost-con-el-paquete-caret"><i class="fa fa-check"></i><b>3.5.3</b> Ejemplo: XGBoost con el paquete <code>caret</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>4</b> Máquinas de soporte vectorial</a><ul>
+<li class="chapter" data-level="4.1" data-path="clasificadores-de-máximo-margen.html"><a href="clasificadores-de-máximo-margen.html"><i class="fa fa-check"></i><b>4.1</b> Clasificadores de máximo margen</a></li>
+<li class="chapter" data-level="4.2" data-path="clasificadores-de-soporte-vectorial.html"><a href="clasificadores-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>4.2</b> Clasificadores de soporte vectorial</a></li>
+<li class="chapter" data-level="4.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>4.3</b> Máquinas de soporte vectorial</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#clasificación-con-más-de-dos-categorías"><i class="fa fa-check"></i><b>4.3.1</b> Clasificación con más de dos categorías</a></li>
+<li class="chapter" data-level="4.3.2" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#regresión"><i class="fa fa-check"></i><b>4.3.2</b> Regresión</a></li>
+<li class="chapter" data-level="4.3.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#ventajas-e-incovenientes"><i class="fa fa-check"></i><b>4.3.3</b> Ventajas e incovenientes</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="svm-con-el-paquete-kernlab.html"><a href="svm-con-el-paquete-kernlab.html"><i class="fa fa-check"></i><b>4.4</b> SVM con el paquete <code>kernlab</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="class-otros.html"><a href="class-otros.html"><i class="fa fa-check"></i><b>5</b> Otros métodos de clasificación</a><ul>
+<li class="chapter" data-level="5.1" data-path="análisis-discriminate-lineal.html"><a href="análisis-discriminate-lineal.html"><i class="fa fa-check"></i><b>5.1</b> Análisis discriminate lineal</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="análisis-discriminate-lineal.html"><a href="análisis-discriminate-lineal.html#ejemplo-masslda"><i class="fa fa-check"></i><b>5.1.1</b> Ejemplo <code>MASS::lda</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="análisis-discriminante-cuadrático.html"><a href="análisis-discriminante-cuadrático.html"><i class="fa fa-check"></i><b>5.2</b> Análisis discriminante cuadrático</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="análisis-discriminante-cuadrático.html"><a href="análisis-discriminante-cuadrático.html#ejemplo-massqda"><i class="fa fa-check"></i><b>5.2.1</b> Ejemplo <code>MASS::qda</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="naive-bayes.html"><a href="naive-bayes.html"><i class="fa fa-check"></i><b>5.3</b> Naive Bayes</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="naive-bayes.html"><a href="naive-bayes.html#ejemplo-e1071naivebayes"><i class="fa fa-check"></i><b>5.3.1</b> Ejemplo <code>e1071::naiveBayes</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="modelos-lineales.html"><a href="modelos-lineales.html"><i class="fa fa-check"></i><b>6</b> Modelos lineales y extensiones</a><ul>
+<li class="chapter" data-level="6.1" data-path="reg-multiple.html"><a href="reg-multiple.html"><i class="fa fa-check"></i><b>6.1</b> Regresión lineal múltiple</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="reg-multiple.html"><a href="reg-multiple.html#ajuste-función-lm"><i class="fa fa-check"></i><b>6.1.1</b> Ajuste: función <code>lm</code></a></li>
+<li class="chapter" data-level="6.1.2" data-path="reg-multiple.html"><a href="reg-multiple.html#ejemplo-1"><i class="fa fa-check"></i><b>6.1.2</b> Ejemplo</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="multicolinealidad.html"><a href="multicolinealidad.html"><i class="fa fa-check"></i><b>6.2</b> El problema de la multicolinelidad</a></li>
+<li class="chapter" data-level="6.3" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html"><i class="fa fa-check"></i><b>6.3</b> Selección de variables explicativas</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html#búsqueda-exhaustiva"><i class="fa fa-check"></i><b>6.3.1</b> Búsqueda exhaustiva</a></li>
+<li class="chapter" data-level="6.3.2" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html#selección-por-pasos"><i class="fa fa-check"></i><b>6.3.2</b> Selección por pasos</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="análisis-e-interpretación-del-modelo.html"><a href="análisis-e-interpretación-del-modelo.html"><i class="fa fa-check"></i><b>6.4</b> Análisis e interpretación del modelo</a></li>
+<li class="chapter" data-level="6.5" data-path="evaluación-de-la-precisión.html"><a href="evaluación-de-la-precisión.html"><i class="fa fa-check"></i><b>6.5</b> Evaluación de la precisión</a></li>
+<li class="chapter" data-level="6.6" data-path="shrinkage.html"><a href="shrinkage.html"><i class="fa fa-check"></i><b>6.6</b> Métodos de regularización</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="shrinkage.html"><a href="shrinkage.html#implementación-en-r"><i class="fa fa-check"></i><b>6.6.1</b> Implementación en R</a></li>
+<li class="chapter" data-level="6.6.2" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-ridge-regression"><i class="fa fa-check"></i><b>6.6.2</b> Ejemplo: Ridge Regression</a></li>
+<li class="chapter" data-level="6.6.3" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-lasso"><i class="fa fa-check"></i><b>6.6.3</b> Ejemplo: Lasso</a></li>
+<li class="chapter" data-level="6.6.4" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-elastic-net"><i class="fa fa-check"></i><b>6.6.4</b> Ejemplo: Elastic Net</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="pca-pls.html"><a href="pca-pls.html"><i class="fa fa-check"></i><b>6.7</b> Métodos de reducción de la dimensión</a></li>
+<li class="chapter" data-level="6.8" data-path="reg-glm.html"><a href="reg-glm.html"><i class="fa fa-check"></i><b>6.8</b> Modelos lineales generalizados</a><ul>
+<li class="chapter" data-level="6.8.1" data-path="reg-glm.html"><a href="reg-glm.html#ajuste-función-glm"><i class="fa fa-check"></i><b>6.8.1</b> Ajuste: función <code>glm</code></a></li>
+<li class="chapter" data-level="6.8.2" data-path="reg-glm.html"><a href="reg-glm.html#ejemplo-regresión-logística"><i class="fa fa-check"></i><b>6.8.2</b> Ejemplo: Regresión logística</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
+<li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a><ul>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html#libros"><i class="fa fa-check"></i>Libros</a></li>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html#artículos"><i class="fa fa-check"></i>Artículos</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Aprendizaje Estadístico</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="reg-multiple" class="section level2">
+<h2><span class="header-section-number">6.1</span> Regresión lineal múltiple</h2>
+<p>Como ya se comentó, el método tradicional considera el siguiente modelo:
+<span class="math display" id="eq:modelo-rlm">\[\begin{equation} 
+  Y = \beta_{0}+\beta_{1}X_{1}+\beta_{2}X_{2}+\cdots+\beta_{p}X_{p} + \varepsilon,
+  \tag{6.1}
+\end{equation}\]</span>
+donde <span class="math inline">\(\left( \beta_{0},\beta_{1},\ldots,\beta_{p}\right)^t\)</span> es un vector de parámetros (desconocidos) y <span class="math inline">\(\varepsilon\)</span> es un error aleatorio normal de media cero y varianza <span class="math inline">\(\sigma^2\)</span>.</p>
+<p>Por tanto las hipótesis estructurales del modelo son:</p>
+<ul>
+<li><p>Linealidad</p></li>
+<li><p>Homocedasticidad (varianza constante del error)</p></li>
+<li><p>Normalidad (y homogeneidad: ausencia de valores atípicos y/o influyentes)</p></li>
+<li><p>Independencia de los errores</p></li>
+</ul>
+<p>Hipótesis adicional en regresión múltiple:</p>
+<ul>
+<li>Ninguna de las variables explicativas es combinación lineal de las demás.</li>
+</ul>
+<p>En el caso de regresión múltiple es de especial interés el fenómeno de la multicolinealidad (o colinearidad) relacionado con la última de estas hipótesis (que se tratará en la Sección <a href="multicolinealidad.html#multicolinealidad">6.2</a>).
+Además se da por hecho que el número de observaciones disponible es como mínimo el número de parámetros, <span class="math inline">\(n \geq p + 1\)</span>.</p>
+<div id="ajuste-función-lm" class="section level3">
+<h3><span class="header-section-number">6.1.1</span> Ajuste: función <code>lm</code></h3>
+<p>El procedimiento habitual para ajustar un modelo de regresión lineal a un conjunto de datos es emplear mínimos cuadrados (ordinarios):</p>
+<p><span class="math display">\[\mbox{min}_{\beta_{0},\beta_{1},\ldots,\beta_{p}}  \sum\limits_{i=1}^{n}\left(  y_{i} - \beta_0 - \beta_1 x_{1i} - \cdots - \beta_p x_{pi} \right)^{2}\]</span></p>
+<p>En R podemos emplear la función <code>lm</code>:</p>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="reg-multiple.html#cb251-1"></a>ajuste &lt;-<span class="st"> </span><span class="kw">lm</span>(formula, data, subset, weights, na.action)</span></code></pre></div>
+<ul>
+<li><p><code>formula</code>: fórmula que especifica el modelo.</p></li>
+<li><p><code>data</code>: data.frame (opcional) con las variables de la formula.</p></li>
+<li><p><code>subset</code>: vector (opcional) que especifica un subconjunto de observaciones.</p></li>
+<li><p><code>weights</code>: vector (opcional) de pesos (mínimos cuadrados ponderados, WLS).</p></li>
+<li><p><code>na.action</code>: opción para manejar los datos faltantes; por defecto <code>na.omit</code>.</p></li>
+</ul>
+<p>Alternativamente se puede emplear la función <code>biglm()</code> del paquete <a href="https://CRAN.R-project.org/package=biglm"><code>biglm</code></a> para ajustar modelos lineales a grandes conjuntos de datos (especialmente cuando el número de observaciones es muy grande, incluyendo el caso de que los datos excedan la capacidad de memoria del equipo).
+También se podría utilizar la función <code>rlm()</code> del paquete <a href="https://CRAN.R-project.org/package=MASS"><code>MASS</code></a> para ajustar modelos lineales empleando un método robusto cuando hay datos atípicos.</p>
+<!-- 
+Proxeccións demográficas de Galicia 2011-2030. Análise dos resultados. Documentos de Traballo. Análise Económica (IDEGA).  
+-->
+</div>
+<div id="ejemplo-1" class="section level3">
+<h3><span class="header-section-number">6.1.2</span> Ejemplo</h3>
+<p>Como ejemplo consideraremos el conjunto de datos <em>hbat.RData</em> que contiene observaciones de clientes de la compañía de distribución industrial HBAT (Hair <em>et al.</em>, 1998).
+Las variables se pueden clasificar en tres grupos: las 6 primeras (categóricas) son características del comprador, las variables de la 7 a la 19 (numéricas) miden percepciones de HBAT por parte del comprador y las 5 últimas son posibles variables de interés (respuestas).</p>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="reg-multiple.html#cb252-1"></a><span class="kw">load</span>(<span class="st">&quot;data/hbat.RData&quot;</span>)</span>
+<span id="cb252-2"><a href="reg-multiple.html#cb252-2"></a><span class="kw">as.data.frame</span>(<span class="kw">attr</span>(hbat, <span class="st">&quot;variable.labels&quot;</span>))</span></code></pre></div>
+<pre><code>##             attr(hbat, &quot;variable.labels&quot;)
+## empresa                           Empresa
+## tcliente                  Tipo de cliente
+## tindustr                   Tipo Industria
+## tamaño               Tamaño de la empresa
+## region                             Región
+## distrib           Sistema de distribución
+## calidadp              Calidad de producto
+## web      Actividades comercio electrónico
+## soporte                   Soporte técnico
+## quejas               Resolución de quejas
+## publi                          Publicidad
+## producto               Línea de productos
+## imgfvent       Imagen de fuerza de ventas
+## precio                   Nivel de precios
+## garantia         Garantía y reclamaciones
+## nprod                    Nuevos productos
+## facturac            Encargo y facturación
+## flexprec          Flexibilidad de precios
+## velocida             Velocidad de entrega
+## satisfac            Nivel de satisfacción
+## precomen          Propensión a recomendar
+## pcompra              Propensión a comprar
+## fidelida      Porcentaje de compra a HBAT
+## alianza  Consideraría alianza estratégica</code></pre>
+<p>Consideraremos como respuesta la variable <em>fidelida</em> y, por comodidad, únicamente las variables continuas correspondientes a las percepciones de HBAT como variables explicativas (para una introducción al tratamiento de variables predictoras categóricas ver por ejemplo la <a href="https://rubenfcasal.github.io/intror/modelos-lineales.html#regresion-con-variables-categoricas">Sección 8.5</a> de Fernández-Casal <em>et al</em>., 2019).</p>
+<p>Como ya se comentó, se trata de un método clásico de Estadística y el procedimiento habitual es emplear toda la información disponible para construir el modelo y posteriormente (asumiendo que es el verdadero) utilizar métodos de inferencia para evaluar su precisión.
+Sin embargo seguiremos el procedimiento habitual en AE y particionaremos los datos en una muestra de entrenamiento y en otra de test.</p>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="reg-multiple.html#cb254-1"></a>df &lt;-<span class="st"> </span>hbat[, <span class="kw">c</span>(<span class="dv">7</span><span class="op">:</span><span class="dv">19</span>, <span class="dv">23</span>)]  <span class="co"># Nota: realmente no copia el objeto...</span></span>
+<span id="cb254-2"><a href="reg-multiple.html#cb254-2"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb254-3"><a href="reg-multiple.html#cb254-3"></a>nobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(df)</span>
+<span id="cb254-4"><a href="reg-multiple.html#cb254-4"></a>itrain &lt;-<span class="st"> </span><span class="kw">sample</span>(nobs, <span class="fl">0.8</span> <span class="op">*</span><span class="st"> </span>nobs)</span>
+<span id="cb254-5"><a href="reg-multiple.html#cb254-5"></a>train &lt;-<span class="st"> </span>df[itrain, ]</span>
+<span id="cb254-6"><a href="reg-multiple.html#cb254-6"></a>test &lt;-<span class="st"> </span>df[<span class="op">-</span>itrain, ]</span>
+<span id="cb254-7"><a href="reg-multiple.html#cb254-7"></a></span>
+<span id="cb254-8"><a href="reg-multiple.html#cb254-8"></a><span class="co"># plot(train)</span></span>
+<span id="cb254-9"><a href="reg-multiple.html#cb254-9"></a>mcor &lt;-<span class="st"> </span><span class="kw">cor</span>(train)</span>
+<span id="cb254-10"><a href="reg-multiple.html#cb254-10"></a>corrplot<span class="op">::</span><span class="kw">corrplot</span>(mcor, <span class="dt">method =</span> <span class="st">&quot;ellipse&quot;</span>)</span></code></pre></div>
+<p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-4-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="reg-multiple.html#cb255-1"></a><span class="kw">print</span>(mcor, <span class="dt">digits =</span> <span class="dv">1</span>)</span></code></pre></div>
+<pre><code>##          calidadp    web soporte quejas publi producto imgfvent precio garantia
+## calidadp     1.00 -0.088   0.051   0.05 -0.05     0.51    -0.15  -0.43     0.09
+## web         -0.09  1.000  -0.009   0.14  0.53     0.03     0.79   0.20     0.08
+## soporte      0.05 -0.009   1.000   0.17  0.03     0.17     0.04  -0.11     0.84
+## quejas       0.05  0.144   0.172   1.00  0.27     0.53     0.23  -0.06     0.19
+## publi       -0.05  0.534   0.026   0.27  1.00     0.15     0.66   0.10     0.04
+## producto     0.51  0.027   0.166   0.53  0.15     1.00     0.02  -0.48     0.23
+## imgfvent    -0.15  0.787   0.038   0.23  0.66     0.02     1.00   0.20     0.14
+## precio      -0.43  0.196  -0.109  -0.06  0.10    -0.48     0.20   1.00    -0.10
+## garantia     0.09  0.079   0.841   0.19  0.04     0.23     0.14  -0.10     1.00
+## nprod        0.17 -0.049   0.017   0.06  0.05     0.13     0.03  -0.14     0.09
+## facturac     0.04  0.209   0.128   0.74  0.26     0.42     0.30  -0.05     0.20
+## flexprec    -0.51  0.221  -0.005   0.44  0.27    -0.36     0.29   0.45    -0.03
+## velocida     0.04  0.227   0.142   0.88  0.36     0.60     0.29  -0.07     0.18
+## fidelida     0.55  0.219   0.070   0.61  0.27     0.67     0.21  -0.19     0.14
+##          nprod facturac flexprec velocida fidelida
+## calidadp  0.17     0.04   -0.509     0.04     0.55
+## web      -0.05     0.21    0.221     0.23     0.22
+## soporte   0.02     0.13   -0.005     0.14     0.07
+## quejas    0.06     0.74    0.444     0.88     0.61
+## publi     0.05     0.26    0.266     0.36     0.27
+## producto  0.13     0.42   -0.364     0.60     0.67
+## imgfvent  0.03     0.30    0.285     0.29     0.21
+## precio   -0.14    -0.05    0.449    -0.07    -0.19
+## garantia  0.09     0.20   -0.030     0.18     0.14
+## nprod     1.00     0.10    0.015     0.12     0.14
+## facturac  0.10     1.00    0.428     0.77     0.50
+## flexprec  0.01     0.43    1.000     0.52     0.05
+## velocida  0.12     0.77    0.515     1.00     0.68
+## fidelida  0.14     0.50    0.055     0.68     1.00</code></pre>
+<!-- Pendiente: gráfico compacto de correlaciones -->
+<p>En este caso observamos que aparentemente hay una relación (lineal) entre la respuesta y algunas de las variables explicativas (que en principio no parece adecuado suponer que son independientes).
+Si consideramos un modelo de regresión lineal simple, el mejor ajuste se obtendría empleando <code>velocida</code> como variable explicativa:</p>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="reg-multiple.html#cb257-1"></a>modelo &lt;-<span class="st"> </span><span class="kw">lm</span>(fidelida <span class="op">~</span><span class="st"> </span>velocida, train)</span>
+<span id="cb257-2"><a href="reg-multiple.html#cb257-2"></a><span class="kw">summary</span>(modelo)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = fidelida ~ velocida, data = train)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -13.8349  -4.3107   0.3677   4.3413  12.3677 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  27.5486     2.6961   10.22   &lt;2e-16 ***
+## velocida      7.9736     0.6926   11.51   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 6.403 on 158 degrees of freedom
+## Multiple R-squared:  0.4562, Adjusted R-squared:  0.4528 
+## F-statistic: 132.6 on 1 and 158 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="reg-multiple.html#cb259-1"></a><span class="kw">plot</span>(fidelida <span class="op">~</span><span class="st"> </span>velocida, train)</span>
+<span id="cb259-2"><a href="reg-multiple.html#cb259-2"></a><span class="kw">abline</span>(modelo)</span></code></pre></div>
+<p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-5-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>Para calcular predicciones (estimaciones de la media condicionada), también intervalos de confianza o de predicción, se puede emplear la función <code>predict()</code> (consultar la ayuda <code>help(predict.lm)</code> para ver todas las opciones disponibles).</p>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="reg-multiple.html#cb260-1"></a>valores &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">6</span>, <span class="dt">len =</span> <span class="dv">100</span>)</span>
+<span id="cb260-2"><a href="reg-multiple.html#cb260-2"></a>newdata &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">velocida =</span> valores)</span>
+<span id="cb260-3"><a href="reg-multiple.html#cb260-3"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(modelo, <span class="dt">newdata =</span> newdata, <span class="dt">interval =</span> <span class="kw">c</span>(<span class="st">&quot;confidence&quot;</span>))</span>
+<span id="cb260-4"><a href="reg-multiple.html#cb260-4"></a><span class="co"># head(pred)</span></span>
+<span id="cb260-5"><a href="reg-multiple.html#cb260-5"></a><span class="kw">plot</span>(fidelida <span class="op">~</span><span class="st"> </span>velocida, train)</span>
+<span id="cb260-6"><a href="reg-multiple.html#cb260-6"></a><span class="kw">matlines</span>(valores, pred, <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>), <span class="dt">col =</span> <span class="dv">1</span>)</span>
+<span id="cb260-7"><a href="reg-multiple.html#cb260-7"></a>pred2 &lt;-<span class="st"> </span><span class="kw">predict</span>(modelo, <span class="dt">newdata =</span> newdata, <span class="dt">interval =</span> <span class="kw">c</span>(<span class="st">&quot;prediction&quot;</span>))</span>
+<span id="cb260-8"><a href="reg-multiple.html#cb260-8"></a><span class="kw">matlines</span>(valores, pred2[, <span class="dv">-1</span>], <span class="dt">lty =</span> <span class="dv">3</span>, <span class="dt">col =</span> <span class="dv">1</span>)</span>
+<span id="cb260-9"><a href="reg-multiple.html#cb260-9"></a><span class="kw">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Ajuste&quot;</span>, <span class="st">&quot;Int. confianza&quot;</span>, <span class="st">&quot;Int. predicción&quot;), lty = c(1, 2, 3))</span></span></code></pre></div>
+<p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-6-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>Para la extracción de información se pueden acceder a los componentes del modelo ajustado o emplear funciones (genéricas; muchas de ellas válidas para otro tipo de modelos: rlm, glm…).
+Algunas de las más utilizadas son las siguientes:</p>
+<table>
+<colgroup>
+<col width="12%" />
+<col width="87%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Función</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>fitted</code></td>
+<td>valores ajustados</td>
+</tr>
+<tr class="even">
+<td><code>coef</code></td>
+<td>coeficientes estimados (y errores estándar)</td>
+</tr>
+<tr class="odd">
+<td><code>confint</code></td>
+<td>intervalos de confianza para los coeficientes</td>
+</tr>
+<tr class="even">
+<td><code>residuals</code></td>
+<td>residuos</td>
+</tr>
+<tr class="odd">
+<td><code>plot</code></td>
+<td>gráficos de diagnóstico</td>
+</tr>
+<tr class="even">
+<td><code>termplot</code></td>
+<td>gráfico de efectos parciales</td>
+</tr>
+<tr class="odd">
+<td><code>anova</code></td>
+<td>calcula tablas de análisis de varianza (también permite comparar modelos)</td>
+</tr>
+<tr class="even">
+<td><code>influence.measures</code></td>
+<td>calcula medidas de diagnóstico (“dejando uno fuera”; LOOCV)</td>
+</tr>
+<tr class="odd">
+<td><code>update</code></td>
+<td>actualiza un modelo (p.e. eliminando o añadiendo variables)</td>
+</tr>
+</tbody>
+</table>
+<p>Ejemplos (no evaluados):</p>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="reg-multiple.html#cb261-1"></a>modelo2 &lt;-<span class="st"> </span><span class="kw">update</span>(modelo, . <span class="op">~</span><span class="st"> </span>. <span class="op">+</span><span class="st"> </span>calidadp)</span>
+<span id="cb261-2"><a href="reg-multiple.html#cb261-2"></a><span class="kw">summary</span>(modelo2)</span>
+<span id="cb261-3"><a href="reg-multiple.html#cb261-3"></a><span class="kw">confint</span>(modelo2)</span>
+<span id="cb261-4"><a href="reg-multiple.html#cb261-4"></a><span class="kw">anova</span>(modelo2)</span>
+<span id="cb261-5"><a href="reg-multiple.html#cb261-5"></a><span class="kw">anova</span>(modelo, modelo2)</span>
+<span id="cb261-6"><a href="reg-multiple.html#cb261-6"></a>oldpar &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb261-7"><a href="reg-multiple.html#cb261-7"></a><span class="kw">termplot</span>(modelo2, <span class="dt">partial.resid =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb261-8"><a href="reg-multiple.html#cb261-8"></a><span class="kw">par</span>(oldpar)</span></code></pre></div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="modelos-lineales.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="multicolinealidad.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rubenfcasal/aprendizaje_estadistico/edit/master/06-modelos_lineales.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["aprendizaje_estadistico.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -489,6 +489,11 @@ En este caso se suele emplear grupos de observaciones en lugar de observaciones 
 Si se particiona el conjunto de datos en *k* grupos, típicamente 10 o 5 grupos, se denomina *k-fold cross-validation* (LOOCV sería un caso particular considerando un número de grupos igual al número de observaciones).
 Hay muchas variaciones de este método, entre ellas particionar repetidamente de forma aleatoria los datos en un conjunto de entrenamiento y otro de validación (de esta forma algunas observaciones podrían aparecer repetidas veces y otras ninguna en las muestras de validación). 
 
+<!-- 
+La partición en k-fold CV se suele realizar al azar.
+Hay que tener en cuenta la aleatoriedad al emplear k-fold CV, algo que no ocurre con LOOCV. 
+-->
+
 Continuando con el ejemplo anterior, supongamos que queremos emplear regresión polinómica para explicar la valoración de las viviendas (`medv`) a partir del "estatus" de los residentes (`lstat`). 
 Al igual que se hizo en la Sección \@ref(bias-variance), consideraremos el grado del polinomio como un hiperparámetro.
 

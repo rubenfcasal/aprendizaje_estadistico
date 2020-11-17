@@ -25,7 +25,13 @@ Breiman, L., Friedman, J., Stone, C.J. y Olshen, R.A. (1984). *Classification an
 
 Efron, B. y Hastie, T. (2016). *[Computer age statistical inference](http://web.stanford.edu/~hastie/CASI/)*. Cambridge University Press.
 
+Faraway, J.J. (2014). *Linear models with R*. CRC press.
+
 Fernández-Casal, R. y Cao, R. (2020). *Simulación Estadística*. <https://rubenfcasal.github.io/simbook>.
+
+Fernández-Casal, R., Roca-Pardiñas, J. y Costa, J. (2019). *Introducción al Análisis de Datos con R*. <https://rubenfcasal.github.io/intror>.
+
+Hair, J.F., Black, W.C., Babin, B.J., Anderson, R.E. y Tatham, R.L. (1998). *Multivariate data analysis*. Prentice Hall.
 
 Hastie, T., Tibshirani, R. y Friedman, J. (2009).
     *[The Elements of Statistical Learning: Data Mining, Inference, and Prediction](https://web.stanford.edu/~hastie/ElemStatLearn)*. Springer.   
@@ -70,6 +76,8 @@ Drucker, H., Burges, C., Kaufman, L., Smola, A. y Vapnik, V. (1997). Support Vec
 
 Dunson D.B. (2018). Statistics in the big data era: Failures of the machine. *Statistics and Probability Letters*, 136, 4-9.
 
+Efron, B., Hastie, T., Johnstone, I. y Tibshirani, R. (2004). Least Angle Regression. *The Annals of Statistics*, 32(2), 407–499.
+
 Fisher, R.A. (1936). The use of multiple measurements in taxonomic problems. *Annals of Eugenics*, 7(2), 179-188.
 
 Freund, Y. y Schapire, R. (1996). Experiments with a New Boosting Algorithm. *Machine Learning: Proceedings of the Thirteenth International Conference*, 148–156.
@@ -91,6 +99,8 @@ Hastie, T., Rosset, S., Tibshirani, R. y Zhu, J. (2004). [The entire regularizat
 
 Hastie, T. y Tibshirani, R. (1996). Discriminant Analysis by GaussianMixtures. *Journal of the Royal Statistical Society*, Series B, 155–176.
 
+Hoerl, A. (1970). Ridge Regression: Biased Estimation for Nonorthogonal Problems. *Technometrics*, 12(1), 55–67.
+
 Karatzoglou, A., Smola, A., Hornik, K. y Zeileis, A. (2004). [kernlab-an S4 package for kernel methods in R](http://www.jstatsoft.org/v11/i09). *Journal of Statistical Software*, 11(9), 1-20.
 
 Kearns, M. y Valiant, L. (1989). Cryptographic Limitations on Learning Boolean Formulae and Finite Automata. *Proceedings of the Twenty-First Annual ACM Symposium on Theory of Computing*.
@@ -103,6 +113,8 @@ Liaw, A. y Wiener, M. (2002). [Classification and regression by randomForest](ht
 
 Loh, W.Y. (2002). Regression tress with unbiased variable selection and interaction detection. *Statistica Sinica*, 361-386.
 
+Tibshirani, R. (1996). Regression Shrinkage and Selection via the lasso. *Journal of the Royal Statistical Society*, Series B, 58(1), 267–288.
+
 Shannon C (1948). A Mathematical Theory of Communication. *The Bell System Technical Journal*, 27, 379–423.
 
 Strumbelj, E. y Kononenko, I. (2010). An efficient explanation of individual classifications using game theory. *Journal of Machine Learning Research*, 11, 1-18.
@@ -112,6 +124,8 @@ Valiant, L. (1984). A Theory of the Learnable. *Communications of the ACM*, 27, 
 Vinayak, R.K. y Gilad-Bachrach, R. (2015). Dart: Dropouts meet multiple additive regression trees. *Proceedings of Machine Learning Research*, 38, 489-497.
 
 Welch, B. (1939). Note on Discriminant Functions. *Biometrika*, 31, 218–220.
+
+Zou, H. y Hastie, T. (2005). Regularization and Variable Selection via the Elastic Net. *Journal of the Royal Statistical Society*, Series B, 67(2), 301–320.
 
 <!-- 
 Pendiente: Citar paquetes 

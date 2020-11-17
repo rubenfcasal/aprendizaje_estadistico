@@ -188,7 +188,7 @@ Al ser bagging con árboles un caso particular de bosques aleatorios, cuando $m 
 Pendiente: establecer nodesize=5 para reducir tiempos de computación? 
 -->
 
-```{r }
+```{r randomForest-bagging}
 library(randomForest)
 set.seed(4) # NOTA: Fijamos esta semilla para ilustrar dependencia
 bagtrees <- randomForest(taste ~ ., data = train, mtry = ncol(train) - 1)
@@ -229,7 +229,7 @@ caret::confusionMatrix(pred, test$taste)
 
 Continuando con el ejemplo anterior, empleamos la función `randomForest()` con las opciones por defecto para ajustar un bosque aleatorio:
 
-```{r }
+```{r randomForest}
 # load("data/winetaste.RData")
 # set.seed(1)
 # df <- winetaste
@@ -315,7 +315,7 @@ modelLookup("rf")
 Con las opciones por defecto únicamente evalúa tres valores posibles del hiperparámetro (se podría aumentar el número con `tuneLength` o especificarlos con `tuneGrid`), pero aún así el tiempo de computación puede ser alto (puede ser recomendable reducir el valor de `nodesize` o paralelizar los cálculos; otras implementaciones pueden ser más eficientes).
 
 
-```{r }
+```{r caret-rf}
 set.seed(1)
 rf.caret <- train(taste ~ ., data = train, method = "rf")
 plot(rf.caret)
@@ -505,7 +505,7 @@ test <- df[-itrain, ]
 
 Por ejemplo, el siguiente código llama a la función `ada()` con la opción para estimar probabilidades (`type = "real"`, Real AdaBoost), considerando interacciones (de orden 2) entre los predictores (`maxdepth = 2`), disminuyendo ligeramente el valor del parámetro de aprendizaje y aumentando el número de iteraciones:
 
-```{r}
+```{r ada}
 library(ada)
 ada.boost <- ada(taste ~ ., data = train, type = "real",
              control = rpart.control(maxdepth = 2, cp = 0, minsplit = 10, xval = 0),
@@ -561,7 +561,7 @@ confusionMatrix(predict(caret.ada0, newdata = test), test$taste, positive = "goo
 Se puede aumentar el número de combinaciones empleando `tuneLength` o `tuneGrid` pero la búsqueda en una rejilla completa puede incrementar considerablemente el tiempo de computación. 
 Por este motivo se suelen seguir distintos procedimientos de búsqueda. Por ejemplo, fijar la tasa de aprendizaje (inicialmente a un valor alto) para seleccionar primero un número de interaciones y la complejidad del árbol, y posteriormente fijar estos valores para seleccionar una nueva tasa de aprendizaje (repitiendo el proceso, si es necesario, hasta convergencia).
 
-```{r}
+```{r caret-ada}
 set.seed(1)
 caret.ada1 <- train(taste ~ ., method = "ada", data = train,
                     tuneGrid = data.frame(iter =  150, maxdepth = 3,
@@ -606,7 +606,7 @@ Otras opciones que pueden ser de interés son: `"laplace"` (error absoluto), `"a
 
 Como ejemplo consideraremos el conjunto de datos *winequality.RData*:
 
-```{r}
+```{r gbm}
 load("data/winequality.RData")
 set.seed(1)
 df <- winequality
@@ -676,7 +676,7 @@ modelLookup("gbm")
 
 Aunque por defecto la función `train()` solo considera nueve combinaciones de hiperparámetros. Para hacer una búsqueda más completa se podría seguir un procedimiento análogo al empleado con el método anterior:
 
-```{r results='hide'}
+```{r caret-gbm0, results='hide'}
 set.seed(1)
 caret.gbm0 <- train(quality ~ ., method = "gbm", data = train,
                    trControl = trainControl(method = "cv", number = 5))
@@ -686,7 +686,7 @@ caret.gbm0 <- train(quality ~ ., method = "gbm", data = train,
 caret.gbm0
 ```
 
-```{r results='hide'}
+```{r caret-gbm1, results='hide'}
 caret.gbm1 <- train(quality ~ ., method = "gbm", data = train,
    tuneGrid = data.frame(n.trees =  100, interaction.depth = 2, 
                         shrinkage = c(0.3, 0.1, 0.05, 0.01, 0.005),
@@ -752,7 +752,7 @@ test <- df[-itrain, ]
 
 En este caso la función `train()` considera por defecto 108 combinaciones de hiperparámetros y el tiempo de computación puede ser excesivo. 
 
-```{r}
+```{r caret-xgb}
 caret.xgb <- train(taste ~ ., method = "xgbTree", data = train,
                    trControl = trainControl(method = "cv", number = 5))
 caret.xgb
