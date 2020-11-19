@@ -1423,7 +1423,7 @@ También hay numerosos paquetes de R que implementan métodos de este tipo ([`pl
 ### Regresión por componentes principales (PCR)
 
 Una de las aproximaciones tradicionales, cuando se detecta la presencia de multicolinealidad, consiste en aplicar el método de componentes principales a los predictores.
-El análisis de componentes principales (*principal component analysis*, PCA) es un método muy utilizado de aprendizaje no supervisado, que permite reducir el número de dimensiones, tratando de recoger la mayor parte de la variabilidad de los datos originales (en este caso de los predictores; para más detalles sobre PCA ver por ejemplo el Capítulo 10 de James *et al.*, 2013).
+El análisis de componentes principales (*principal component analysis*, PCA) es un método muy utilizado de aprendizaje no supervisado, que permite reducir el número de dimensiones tratando de recoger la mayor parte de la variabilidad de los datos originales (en este caso de los predictores; para más detalles sobre PCA ver por ejemplo el Capítulo 10 de James *et al.*, 2013).
 
 Al aplicar PCA a los predictores $X_1, \ldots, X_p$ se obtienen componentes ordenados según la variabilidad explicada de forma descendente. 
 El primer componente es el que recoge el mayor porcentaje de la variabilidad total (se corresponde con la dirección de mayor variación de las observaciones). 
@@ -1593,7 +1593,7 @@ Al incluir más componentes se aumenta la proporción de variabilidad explicada 
 pero esto no está relacionado con su utilidad para explicar la respuesta.
 No va a haber problemas de multicolinealidad aunque incluyamos muchas componentes, pero se tendrán que estimar más coeficientes y va a disminuir su precisión.
 Sería más razonable obtener las componentes principales y después aplicar un método de selección.
-Por ejemplo podemos combinar el método de preprocesado `"pcr"` de `caret` con un método de selección de variables^[Esta forma de proceder se podría emplear con otros modelos que puedan tener problemas de multicolinealidad, como los lineales generalizados.]:
+Por ejemplo podemos combinar el método de preprocesado `"pca"` de `caret` con un método de selección de variables^[Esta forma de proceder se podría emplear con otros modelos que puedan tener problemas de multicolinealidad, como los lineales generalizados.]:
 
 
 ```r
@@ -1634,12 +1634,20 @@ caret.pcrsel
 ```
 
 ```r
-with(caret.leapSeq, coef(finalModel, bestTune$nvmax))
+ggplot(caret.pcrsel, highlight = TRUE)
+```
+
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-44-1.png" width="80%" style="display: block; margin: auto;" />
+
+```r
+with(caret.pcrsel, coef(finalModel, bestTune$nvmax))
 ```
 
 ```
-## (Intercept)    calidadp         web      precio    velocida 
-##  -5.3610807   3.4712306   1.2471721   0.4190875   7.4382584
+## (Intercept)         PC1         PC2         PC3         PC4         PC5 
+##  58.0375000   2.7256200  -2.0882164   1.5167199  -1.1761229  -0.3588877 
+##         PC6         PC7         PC8         PC9 
+##  -3.3571851   0.8032460  -1.4655909   2.7670125
 ```
 
 ```r
