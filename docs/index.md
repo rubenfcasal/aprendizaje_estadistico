@@ -1,7 +1,7 @@
 --- 
 title: "Aprendizaje Estadístico"
 author: "Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)"
-date: "2020-11-17"
+date: "2020-11-19"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book

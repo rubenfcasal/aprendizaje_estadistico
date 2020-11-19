@@ -550,7 +550,7 @@ modelLookup("ada")
 
 Aunque por defecto la función `train()` solo considera nueve combinaciones de hiperparámetros:
 
-```{r}
+```{r caret-ada0}
 set.seed(1)
 caret.ada0 <- train(taste ~ ., method = "ada", data = train,
                    trControl = trainControl(method = "cv", number = 5))
@@ -561,7 +561,7 @@ confusionMatrix(predict(caret.ada0, newdata = test), test$taste, positive = "goo
 Se puede aumentar el número de combinaciones empleando `tuneLength` o `tuneGrid` pero la búsqueda en una rejilla completa puede incrementar considerablemente el tiempo de computación. 
 Por este motivo se suelen seguir distintos procedimientos de búsqueda. Por ejemplo, fijar la tasa de aprendizaje (inicialmente a un valor alto) para seleccionar primero un número de interaciones y la complejidad del árbol, y posteriormente fijar estos valores para seleccionar una nueva tasa de aprendizaje (repitiendo el proceso, si es necesario, hasta convergencia).
 
-```{r caret-ada}
+```{r caret-ada1}
 set.seed(1)
 caret.ada1 <- train(taste ~ ., method = "ada", data = train,
                     tuneGrid = data.frame(iter =  150, maxdepth = 3,

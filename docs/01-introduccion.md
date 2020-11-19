@@ -990,7 +990,7 @@ plot(roc_glm)
 </div>
 
 ```r
-# plot(roc_glm, legacy.axes = TRUE)
+# plot(roc_glm, legacy.axes = TRUE, print.thres = 0.5)
 ```
 
 Lo ideal sería que la curva se aproximase a la esquina superior izquierda (máxima sensibilidad y especificidad). 

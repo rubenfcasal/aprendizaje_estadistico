@@ -1032,7 +1032,7 @@ El método `summary()` calcula las medidas de influencia de los predictores y la
 summary(gbm.fit)
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-23-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-22-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```
 ##                                       var   rel.inf
@@ -1056,7 +1056,7 @@ Para estudiar el efecto de un predictor se pueden generar gráficos de los efect
 plot(gbm.fit, i = "alcohol")
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-24-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-23-1.png" width="80%" style="display: block; margin: auto;" />
 
 Finalmente podemos evaluar la precisión en la muestra de test empleando el código habitual:
 

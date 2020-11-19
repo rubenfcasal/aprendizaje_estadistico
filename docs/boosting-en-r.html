@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)" />
 
 
-<meta name="date" content="2020-11-17" />
+<meta name="date" content="2020-11-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -221,7 +221,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.3.1" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html#búsqueda-exhaustiva"><i class="fa fa-check"></i><b>6.3.1</b> Búsqueda exhaustiva</a></li>
 <li class="chapter" data-level="6.3.2" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html#selección-por-pasos"><i class="fa fa-check"></i><b>6.3.2</b> Selección por pasos</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="análisis-e-interpretación-del-modelo.html"><a href="análisis-e-interpretación-del-modelo.html"><i class="fa fa-check"></i><b>6.4</b> Análisis e interpretación del modelo</a></li>
+<li class="chapter" data-level="6.4" data-path="analisis-reg-multiple.html"><a href="analisis-reg-multiple.html"><i class="fa fa-check"></i><b>6.4</b> Análisis e interpretación del modelo</a></li>
 <li class="chapter" data-level="6.5" data-path="evaluación-de-la-precisión.html"><a href="evaluación-de-la-precisión.html"><i class="fa fa-check"></i><b>6.5</b> Evaluación de la precisión</a></li>
 <li class="chapter" data-level="6.6" data-path="shrinkage.html"><a href="shrinkage.html"><i class="fa fa-check"></i><b>6.6</b> Métodos de regularización</a><ul>
 <li class="chapter" data-level="6.6.1" data-path="shrinkage.html"><a href="shrinkage.html#implementación-en-r"><i class="fa fa-check"></i><b>6.6.1</b> Implementación en R</a></li>
@@ -229,10 +229,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.6.3" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-lasso"><i class="fa fa-check"></i><b>6.6.3</b> Ejemplo: Lasso</a></li>
 <li class="chapter" data-level="6.6.4" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-elastic-net"><i class="fa fa-check"></i><b>6.6.4</b> Ejemplo: Elastic Net</a></li>
 </ul></li>
-<li class="chapter" data-level="6.7" data-path="pca-pls.html"><a href="pca-pls.html"><i class="fa fa-check"></i><b>6.7</b> Métodos de reducción de la dimensión</a></li>
+<li class="chapter" data-level="6.7" data-path="pca-pls.html"><a href="pca-pls.html"><i class="fa fa-check"></i><b>6.7</b> Métodos de reducción de la dimensión</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-componentes-principales-pcr"><i class="fa fa-check"></i><b>6.7.1</b> Regresión por componentes principales (PCR)</a></li>
+<li class="chapter" data-level="6.7.2" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-mínimos-cuadrados-parciales-plsr"><i class="fa fa-check"></i><b>6.7.2</b> Regresión por mínimos cuadrados parciales (PLSR)</a></li>
+</ul></li>
 <li class="chapter" data-level="6.8" data-path="reg-glm.html"><a href="reg-glm.html"><i class="fa fa-check"></i><b>6.8</b> Modelos lineales generalizados</a><ul>
 <li class="chapter" data-level="6.8.1" data-path="reg-glm.html"><a href="reg-glm.html#ajuste-función-glm"><i class="fa fa-check"></i><b>6.8.1</b> Ajuste: función <code>glm</code></a></li>
 <li class="chapter" data-level="6.8.2" data-path="reg-glm.html"><a href="reg-glm.html#ejemplo-regresión-logística"><i class="fa fa-check"></i><b>6.8.2</b> Ejemplo: Regresión logística</a></li>
+<li class="chapter" data-level="6.8.3" data-path="reg-glm.html"><a href="reg-glm.html#selección-de-variables-explicativas"><i class="fa fa-check"></i><b>6.8.3</b> Selección de variables explicativas</a></li>
+<li class="chapter" data-level="6.8.4" data-path="reg-glm.html"><a href="reg-glm.html#analisis-glm"><i class="fa fa-check"></i><b>6.8.4</b> Análisis e interpretación del modelo</a></li>
+<li class="chapter" data-level="6.8.5" data-path="reg-glm.html"><a href="reg-glm.html#evaluación-de-la-precisión-1"><i class="fa fa-check"></i><b>6.8.5</b> Evaluación de la precisión</a></li>
+<li class="chapter" data-level="6.8.6" data-path="reg-glm.html"><a href="reg-glm.html#extensiones"><i class="fa fa-check"></i><b>6.8.6</b> Extensiones</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
@@ -558,7 +565,7 @@ Otras opciones que pueden ser de interés son: <code>"laplace"</code> (error abs
 ## There were 11 predictors of which 11 had non-zero influence.</code></pre>
 <p>El método <code>summary()</code> calcula las medidas de influencia de los predictores y las representa gráficamente:</p>
 <div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="boosting-en-r.html#cb189-1"></a><span class="kw">summary</span>(gbm.fit)</span></code></pre></div>
-<p><img src="03-bagging_boosting_files/figure-html/unnamed-chunk-23-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><img src="03-bagging_boosting_files/figure-html/unnamed-chunk-22-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <pre><code>##                                       var   rel.inf
 ## alcohol                           alcohol 40.907998
 ## volatile.acidity         volatile.acidity 13.839083
@@ -573,7 +580,7 @@ Otras opciones que pueden ser de interés son: <code>"laplace"</code> (error abs
 ## pH                                     pH  1.088152</code></pre>
 <p>Para estudiar el efecto de un predictor se pueden generar gráficos de los efectos parciales mediante el método <code>plot()</code>:</p>
 <div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="boosting-en-r.html#cb191-1"></a><span class="kw">plot</span>(gbm.fit, <span class="dt">i =</span> <span class="st">&quot;alcohol&quot;</span>)</span></code></pre></div>
-<p><img src="03-bagging_boosting_files/figure-html/unnamed-chunk-24-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><img src="03-bagging_boosting_files/figure-html/unnamed-chunk-23-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>Finalmente podemos evaluar la precisión en la muestra de test empleando el código habitual:</p>
 <div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="boosting-en-r.html#cb192-1"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(gbm.fit, <span class="dt">newdata =</span> test)</span>
 <span id="cb192-2"><a href="boosting-en-r.html#cb192-2"></a>obs &lt;-<span class="st"> </span>test<span class="op">$</span>quality</span>

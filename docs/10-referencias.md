@@ -113,6 +113,10 @@ Liaw, A. y Wiener, M. (2002). [Classification and regression by randomForest](ht
 
 Loh, W.Y. (2002). Regression tress with unbiased variable selection and interaction detection. *Statistica Sinica*, 361-386.
 
+Massy, W. (1965). Principal Components Regression in Exploratory Statistical Research. *Journal of the American Statistical Association*, 60, 234–246.
+
+Mevik, B.H. y Wehrens, R. (2007). [The pls Package: Principal Component and Partial Least Squares Regression in R](https://www.jstatsoft.org/article/view/v018i02). *Journal of Statistical Software*, 18(2), 1-23.
+
 Tibshirani, R. (1996). Regression Shrinkage and Selection via the lasso. *Journal of the Royal Statistical Society*, Series B, 58(1), 267–288.
 
 Shannon C (1948). A Mathematical Theory of Communication. *The Bell System Technical Journal*, 27, 379–423.
@@ -124,6 +128,8 @@ Valiant, L. (1984). A Theory of the Learnable. *Communications of the ACM*, 27, 
 Vinayak, R.K. y Gilad-Bachrach, R. (2015). Dart: Dropouts meet multiple additive regression trees. *Proceedings of Machine Learning Research*, 38, 489-497.
 
 Welch, B. (1939). Note on Discriminant Functions. *Biometrika*, 31, 218–220.
+
+Wold, S., Martens, H. y Wold, H. (1983). The Multivariate Calibration Problem in Chemistry Solved by the PLS Method. *Proceedings from the Conference on Matrix Pencils*. Springer–Verlag.
 
 Zou, H. y Hastie, T. (2005). Regularization and Variable Selection via the Elastic Net. *Journal of the Royal Statistical Society*, Series B, 67(2), 301–320.
 

@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)" />
 
 
-<meta name="date" content="2020-11-17" />
+<meta name="date" content="2020-11-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="multicolinealidad.html"/>
-<link rel="next" href="análisis-e-interpretación-del-modelo.html"/>
+<link rel="next" href="analisis-reg-multiple.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -221,7 +221,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.3.1" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html#búsqueda-exhaustiva"><i class="fa fa-check"></i><b>6.3.1</b> Búsqueda exhaustiva</a></li>
 <li class="chapter" data-level="6.3.2" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html#selección-por-pasos"><i class="fa fa-check"></i><b>6.3.2</b> Selección por pasos</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="análisis-e-interpretación-del-modelo.html"><a href="análisis-e-interpretación-del-modelo.html"><i class="fa fa-check"></i><b>6.4</b> Análisis e interpretación del modelo</a></li>
+<li class="chapter" data-level="6.4" data-path="analisis-reg-multiple.html"><a href="analisis-reg-multiple.html"><i class="fa fa-check"></i><b>6.4</b> Análisis e interpretación del modelo</a></li>
 <li class="chapter" data-level="6.5" data-path="evaluación-de-la-precisión.html"><a href="evaluación-de-la-precisión.html"><i class="fa fa-check"></i><b>6.5</b> Evaluación de la precisión</a></li>
 <li class="chapter" data-level="6.6" data-path="shrinkage.html"><a href="shrinkage.html"><i class="fa fa-check"></i><b>6.6</b> Métodos de regularización</a><ul>
 <li class="chapter" data-level="6.6.1" data-path="shrinkage.html"><a href="shrinkage.html#implementación-en-r"><i class="fa fa-check"></i><b>6.6.1</b> Implementación en R</a></li>
@@ -229,10 +229,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.6.3" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-lasso"><i class="fa fa-check"></i><b>6.6.3</b> Ejemplo: Lasso</a></li>
 <li class="chapter" data-level="6.6.4" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-elastic-net"><i class="fa fa-check"></i><b>6.6.4</b> Ejemplo: Elastic Net</a></li>
 </ul></li>
-<li class="chapter" data-level="6.7" data-path="pca-pls.html"><a href="pca-pls.html"><i class="fa fa-check"></i><b>6.7</b> Métodos de reducción de la dimensión</a></li>
+<li class="chapter" data-level="6.7" data-path="pca-pls.html"><a href="pca-pls.html"><i class="fa fa-check"></i><b>6.7</b> Métodos de reducción de la dimensión</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-componentes-principales-pcr"><i class="fa fa-check"></i><b>6.7.1</b> Regresión por componentes principales (PCR)</a></li>
+<li class="chapter" data-level="6.7.2" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-mínimos-cuadrados-parciales-plsr"><i class="fa fa-check"></i><b>6.7.2</b> Regresión por mínimos cuadrados parciales (PLSR)</a></li>
+</ul></li>
 <li class="chapter" data-level="6.8" data-path="reg-glm.html"><a href="reg-glm.html"><i class="fa fa-check"></i><b>6.8</b> Modelos lineales generalizados</a><ul>
 <li class="chapter" data-level="6.8.1" data-path="reg-glm.html"><a href="reg-glm.html#ajuste-función-glm"><i class="fa fa-check"></i><b>6.8.1</b> Ajuste: función <code>glm</code></a></li>
 <li class="chapter" data-level="6.8.2" data-path="reg-glm.html"><a href="reg-glm.html#ejemplo-regresión-logística"><i class="fa fa-check"></i><b>6.8.2</b> Ejemplo: Regresión logística</a></li>
+<li class="chapter" data-level="6.8.3" data-path="reg-glm.html"><a href="reg-glm.html#selección-de-variables-explicativas"><i class="fa fa-check"></i><b>6.8.3</b> Selección de variables explicativas</a></li>
+<li class="chapter" data-level="6.8.4" data-path="reg-glm.html"><a href="reg-glm.html#analisis-glm"><i class="fa fa-check"></i><b>6.8.4</b> Análisis e interpretación del modelo</a></li>
+<li class="chapter" data-level="6.8.5" data-path="reg-glm.html"><a href="reg-glm.html#evaluación-de-la-precisión-1"><i class="fa fa-check"></i><b>6.8.5</b> Evaluación de la precisión</a></li>
+<li class="chapter" data-level="6.8.6" data-path="reg-glm.html"><a href="reg-glm.html#extensiones"><i class="fa fa-check"></i><b>6.8.6</b> Extensiones</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
@@ -280,16 +287,21 @@ Por defecto, evalúa todos los modelos posibles con un determinado número de
 parámetros (variando desde 1 hasta por defecto un máximo de <code>nvmax = 8</code>)
 y selecciona el mejor (<code>nbest = 1</code>).</p>
 <div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="seleccion-reg-lineal.html#cb278-1"></a><span class="kw">library</span>(leaps)</span>
-<span id="cb278-2"><a href="seleccion-reg-lineal.html#cb278-2"></a>res &lt;-<span class="st"> </span><span class="kw">regsubsets</span>(fidelida <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> train)</span>
-<span id="cb278-3"><a href="seleccion-reg-lineal.html#cb278-3"></a><span class="co"># summary(res)</span></span>
-<span id="cb278-4"><a href="seleccion-reg-lineal.html#cb278-4"></a><span class="co"># names(summary(res))</span></span></code></pre></div>
+<span id="cb278-2"><a href="seleccion-reg-lineal.html#cb278-2"></a>regsel &lt;-<span class="st"> </span><span class="kw">regsubsets</span>(fidelida <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> train)</span>
+<span id="cb278-3"><a href="seleccion-reg-lineal.html#cb278-3"></a><span class="co"># summary(regsel)</span></span>
+<span id="cb278-4"><a href="seleccion-reg-lineal.html#cb278-4"></a><span class="co"># names(summary(regsel))</span></span></code></pre></div>
 <p>Al representar el resultado se obtiene un gráfico con los mejores modelos ordenados
 según el criterio determinado por el argumento <code>scale = c("bic", "Cp", "adjr2", "r2")</code>.
 Por ejemplo, en este caso, empleando el coeficiente de determinación ajustado, obtendríamos:</p>
-<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="seleccion-reg-lineal.html#cb279-1"></a><span class="kw">plot</span>(res, <span class="dt">scale =</span> <span class="st">&quot;adjr2&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="seleccion-reg-lineal.html#cb279-1"></a><span class="kw">plot</span>(regsel, <span class="dt">scale =</span> <span class="st">&quot;adjr2&quot;</span>)</span></code></pre></div>
 <p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-15-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<p>En este caso, considerando que es preferible un modelo más simple que una mejora del 2%, podríamos considerar como modelo final:</p>
-<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="seleccion-reg-lineal.html#cb280-1"></a><span class="kw">lm</span>(fidelida <span class="op">~</span><span class="st"> </span>velocida <span class="op">+</span><span class="st"> </span>calidadp, <span class="dt">data =</span> train)</span></code></pre></div>
+<p>En este caso, considerando que es preferible un modelo más simple que una mejora del 2%, podríamos seleccionar como modelo final el modelo con dos predictores.
+Podríamos obtener los coeficientes:</p>
+<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="seleccion-reg-lineal.html#cb280-1"></a><span class="kw">coef</span>(regsel, <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## (Intercept)    calidadp    velocida 
+##    3.332511    3.204201    7.700260</code></pre>
+<p>pero normalmente nos interesará ajustarlo de nuevo:</p>
+<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="seleccion-reg-lineal.html#cb282-1"></a><span class="kw">lm</span>(fidelida <span class="op">~</span><span class="st"> </span>velocida <span class="op">+</span><span class="st"> </span>calidadp, <span class="dt">data =</span> train)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = fidelida ~ velocida + calidadp, data = train)
@@ -328,10 +340,10 @@ exclusión (forward/backward).</p></li>
 </ul>
 <p>La función <code>stepAIC</code> del paquete <code>MASS</code> permite seleccionar el modelo por pasos, hacia delante o hacia atrás según criterio AIC o BIC (también esta disponible una función <code>step</code> del paquete base <code>stats</code> con menos opciones).
 La función <code>stepwise</code> del paquete <code>RcmdrMisc</code> es una interfaz de <code>stepAIC</code> que facilita su uso:</p>
-<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="seleccion-reg-lineal.html#cb282-1"></a><span class="kw">library</span>(MASS)</span>
-<span id="cb282-2"><a href="seleccion-reg-lineal.html#cb282-2"></a><span class="kw">library</span>(RcmdrMisc)</span>
-<span id="cb282-3"><a href="seleccion-reg-lineal.html#cb282-3"></a>modelo.completo &lt;-<span class="st"> </span><span class="kw">lm</span>(fidelida <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> train)</span>
-<span id="cb282-4"><a href="seleccion-reg-lineal.html#cb282-4"></a>modelo &lt;-<span class="st"> </span><span class="kw">stepwise</span>(modelo.completo, <span class="dt">direction =</span> <span class="st">&quot;forward/backward&quot;</span>, <span class="dt">criterion =</span> <span class="st">&quot;BIC&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="seleccion-reg-lineal.html#cb284-1"></a><span class="kw">library</span>(MASS)</span>
+<span id="cb284-2"><a href="seleccion-reg-lineal.html#cb284-2"></a><span class="kw">library</span>(RcmdrMisc)</span>
+<span id="cb284-3"><a href="seleccion-reg-lineal.html#cb284-3"></a>modelo.completo &lt;-<span class="st"> </span><span class="kw">lm</span>(fidelida <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> train)</span>
+<span id="cb284-4"><a href="seleccion-reg-lineal.html#cb284-4"></a>modelo &lt;-<span class="st"> </span><span class="kw">stepwise</span>(modelo.completo, <span class="dt">direction =</span> <span class="st">&quot;forward/backward&quot;</span>, <span class="dt">criterion =</span> <span class="st">&quot;BIC&quot;</span>)</span></code></pre></div>
 <pre><code>## 
 ## Direction:  forward/backward
 ## Criterion:  BIC 
@@ -411,7 +423,7 @@ La función <code>stepwise</code> del paquete <code>RcmdrMisc</code> es una inte
 ## + publi     1       0.2 3014.3 495.13
 ## - calidadp  1    3409.7 6424.2 606.05
 ## - velocida  1    4370.9 7385.4 628.36</code></pre>
-<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="seleccion-reg-lineal.html#cb284-1"></a><span class="kw">summary</span>(modelo)</span></code></pre></div>
+<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="seleccion-reg-lineal.html#cb286-1"></a><span class="kw">summary</span>(modelo)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = fidelida ~ velocida + calidadp + web, data = train)
@@ -447,7 +459,7 @@ Como ya vimos en capítulos anteriores, en AE interesan algoritmos que puedan de
         </div>
       </div>
 <a href="multicolinealidad.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="análisis-e-interpretación-del-modelo.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="analisis-reg-multiple.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

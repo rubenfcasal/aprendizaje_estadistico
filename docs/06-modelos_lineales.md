@@ -515,9 +515,9 @@ y selecciona el mejor (`nbest = 1`).
 
 ```r
 library(leaps)
-res <- regsubsets(fidelida ~ . , data = train)
-# summary(res)
-# names(summary(res))
+regsel <- regsubsets(fidelida ~ . , data = train)
+# summary(regsel)
+# names(summary(regsel))
 ```
 
 Al representar el resultado se obtiene un gráfico con los mejores modelos ordenados 
@@ -525,12 +525,25 @@ según el criterio determinado por el argumento `scale = c("bic", "Cp", "adjr2",
 Por ejemplo, en este caso, empleando el coeficiente de determinación ajustado, obtendríamos:
 
 ```r
-plot(res, scale = "adjr2")
+plot(regsel, scale = "adjr2")
 ```
 
 <img src="06-modelos_lineales_files/figure-html/unnamed-chunk-15-1.png" width="80%" style="display: block; margin: auto;" />
 
-En este caso, considerando que es preferible un modelo más simple que una mejora del 2%, podríamos considerar como modelo final:
+En este caso, considerando que es preferible un modelo más simple que una mejora del 2%, podríamos seleccionar como modelo final el modelo con dos predictores.
+Podríamos obtener los coeficientes:
+
+
+```r
+coef(regsel, 2)
+```
+
+```
+## (Intercept)    calidadp    velocida 
+##    3.332511    3.204201    7.700260
+```
+pero normalmente nos interesará ajustarlo de nuevo:
+
 
 ```r
 lm(fidelida ~ velocida + calidadp, data = train)
@@ -708,7 +721,7 @@ En la práctica se suele comenzar con modelos aditivos y posteriormente se estud
 Como ya vimos en capítulos anteriores, en AE interesan algoritmos que puedan detectar e incorporar automáticamente efectos de interacción (en el siguiente capítulo veremos extensiones en este sentido).
 
 
-## Análisis e interpretación del modelo
+## Análisis e interpretación del modelo {#analisis-reg-multiple}
 
 Al margen de la multicolinealidad, si no se verifican las otras hipótesis estructurales del modelo (Sección \@ref(reg-multiple)), las conclusiones obtenidas pueden no ser fiables, o incluso totalmente erróneas:
 
@@ -735,7 +748,7 @@ oldpar <- par(mfrow = c(2,2))
 plot(modelo)
 ```
 
-<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-18-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-19-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 par(oldpar)
@@ -777,7 +790,7 @@ library(car)
 crPlots(modelo)
 ```
 
-<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-20-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-21-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 # avPlots(modelo)
@@ -858,7 +871,7 @@ res <- lm(obs ~ pred)
 abline(res, lty = 2)
 ```
 
-<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-22-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-23-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 accuracy <- function(pred, obs, na.rm = FALSE, 
@@ -890,7 +903,7 @@ accuracy(pred, obs)
 De igual forma, los métodos de selección de variables descritos en la Sección \@ref(seleccion-reg-lineal) dependen (en mayor o menor medida) de la validez de las hipótesis estructurales. 
 Por este motivo se podría pensar también en emplear alguno de los procedimientos descritos en la Sección \@ref(const-eval) para evaluar la precisión de los distintos modelos.
 Por ejemplo adaptando adecuadamente el algoritmo de validación cruzada empleado en la Sección \@ref(cv).
-Sin embargo, el procedimiento de selección se debería realizar también en cada uno de los conjuntos de entrenamiento utilizados en la validación.
+Sin embargo, el procedimiento de selección debería realizarse también en cada uno de los conjuntos de entrenamiento utilizados en la validación.
 Esto puede hacerse fácilmente empleando el paquete `caret`.
 
 Por ejemplo, el método de selección por pasos hacia atrás, empleando la función `stepAIC` del paquete `MASS`, está implementado en el método `"lmStepAIC"`:
@@ -955,7 +968,68 @@ accuracy(pred, obs)
 ##  0.3735687  4.1900738  3.3732868 -0.1928986  6.0990996  0.8279217
 ```
 
-También está implementados métodos de selección basados en el paquete `leaps`, considerando el número máximo de predictores `nvmax` como hiperparámetro y empleando búsqueda: hacia atrás (`"leapBackward"`), hacia adelante (`"leapForward"`) y por reemplazamiento secuencial (`"leapSeq"`).
+También está implementados métodos de selección basados en el paquete `leaps`, considerando el número máximo de predictores `nvmax` como hiperparámetro y empleando búsqueda: hacia atrás (`"leapBackward"`), hacia adelante (`"leapForward"`) y por pasos (`"leapSeq"`).
+
+
+```r
+modelLookup("leapSeq")
+```
+
+```
+##     model parameter                        label forReg forClass probModel
+## 1 leapSeq     nvmax Maximum Number of Predictors   TRUE    FALSE     FALSE
+```
+
+```r
+caret.leapSeq <- train(fidelida ~ ., data = train, method = "leapSeq",
+                   trControl = trainControl(method = "cv", number = 10),
+                   tuneGrid = data.frame(nvmax = 1:6))
+caret.leapSeq
+```
+
+```
+## Linear Regression with Stepwise Selection 
+## 
+## 160 samples
+##  13 predictor
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold) 
+## Summary of sample sizes: 143, 144, 144, 143, 144, 145, ... 
+## Resampling results across tuning parameters:
+## 
+##   nvmax  RMSE      Rsquared   MAE     
+##   1      6.811476  0.3880874  5.514825
+##   2      6.082191  0.5061883  4.874637
+##   3      6.023200  0.5124853  4.809341
+##   4      4.339067  0.7594275  3.362703
+##   5      4.538799  0.7390205  3.461429
+##   6      4.604788  0.7356875  3.585628
+## 
+## RMSE was used to select the optimal model using the smallest value.
+## The final value used for the model was nvmax = 4.
+```
+
+```r
+# summary(caret.leapSeq$finalModel)
+with(caret.leapSeq, coef(finalModel, bestTune$nvmax))
+```
+
+```
+## (Intercept)    calidadp         web      precio    velocida 
+##  -5.3610807   3.4712306   1.2471721   0.4190875   7.4382584
+```
+
+```r
+pred <- predict(caret.leapSeq, newdata = test)
+accuracy(pred, obs)
+```
+
+```
+##         me       rmse        mae        mpe       mape  r.squared 
+##  0.2886512  4.1741220  3.2946370 -0.3413883  5.9590279  0.8292294
+```
+
 Además, en el caso de ajustes de modelos de este tipo, puede resultar de interés realizar un preprocesado de los datos para eliminar predictores correlados o con varianza próxima a cero,
 estableciendo por ejemplo `preProc = c("nzv", "corr")` en la llamada a la función `train()`.
 
@@ -996,7 +1070,7 @@ Si $d=0$, la penalización consiste en el número de variables utilizadas, por t
 
 La ventaja de utilizar *lasso* es que va a forzar a que algunos parámetros sean cero, con lo cual también se realiza una selección de las variables más influyentes. 
 Por el contrario, *ridge regression* va a incluir todas las variables predictoras en el modelo final, si bien es cierto que algunas con parámetros muy próximos a cero: de este modo va a reducir el riesgo del sobreajuste, pero no resuelve el problema de la interpretabilidad. 
-Otra ventaja de utilizar *lasso* es que hace un mejor tratamiento de las variables predictoras correlacionadas al tener tendencia a seleccionar una y anular las demás (esto también puede verse como un inconveniente, ya que pequeños cambios en los datos pueden dar lugar a distintos modelos).
+Otra posible ventaja de utilizar *lasso* es que cuando hay variables predictoras correlacionadas tiene tendencia a seleccionar una y anular las demás (esto también se puede ver como un inconveniente, ya que pequeños cambios en los datos pueden dar lugar a distintos modelos), mientras que *ridge* tiende a darles igual peso.
 
 Dos generalizaciones de *lasso* son *least angle regression* (LARS, Efron et al., 2004) y *elastic net* (Zou y Hastie, 2005). 
 *Elastic net* combina las ventajas de *ridge* y *lasso*, minimizando
@@ -1073,7 +1147,7 @@ fit.ridge <- glmnet(x, y, alpha = 0)
 plot(fit.ridge, xvar = "lambda", label = TRUE)
 ```
 
-<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-28-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-30-1.png" width="80%" style="display: block; margin: auto;" />
 
 Podemos obtener el modelo o predicciones para un valor concreto de $\lambda$:
 
@@ -1110,7 +1184,7 @@ cv.ridge <- cv.glmnet(x, y, alpha = 0)
 plot(cv.ridge)
 ```
 
-<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-30-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-32-1.png" width="80%" style="display: block; margin: auto;" />
 
 En este caso el parámetro óptimo (según la regla de un error estándar) sería:
 
@@ -1183,7 +1257,7 @@ cv.lasso <- cv.glmnet(x,y)
 plot(cv.lasso)
 ```
 
-<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-34-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-36-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 plot(cv.lasso$glmnet.fit, xvar = "lambda", label = TRUE) 	
@@ -1191,7 +1265,7 @@ abline(v = log(cv.lasso$lambda.1se), lty = 2)
 abline(v = log(cv.lasso$lambda.min), lty = 3)
 ```
 
-<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-34-2.png" width="80%" style="display: block; margin: auto;" />
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-36-2.png" width="80%" style="display: block; margin: auto;" />
 
 El modelo resultante (oneSE rule) solo contiene 4 variables explicativas:
 
@@ -1306,10 +1380,10 @@ caret.glmnet
 ```
 
 ```r
-ggplot(caret.glmnet)
+ggplot(caret.glmnet, highlight = TRUE)
 ```
 
-<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-37-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-39-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 pred <- predict(caret.glmnet, newdata = test)
@@ -1324,11 +1398,420 @@ accuracy(pred, obs)
 
 ## Métodos de reducción de la dimensión {#pca-pls}
 
-***En preparación...***
+
+Otra alternativa, para tratar de reducir la varianza de los modelos lineales, es transformar los predictores considerando $k < p$ combinaciones lineales:
+$$Z_j = a_{1j}X_{1} + a_{2j}X_{2} + \ldots + a_{pj}X_{p}$$
+con $j = 1, \ldots, k$, denominadas componentes (o variables latentes), 
+y posteriormente ajustar un modelo de regresión lineal empleándolas como nuevos predictores:
+$$Y = \alpha_0 + \alpha_1 Z_1 + \ldots + \alpha_k Z_k + \varepsilon$$
+
+Adicionalmente, si se seleccionan los coeficientes $a_{ji}$ (denominados *cargas* o *pesos*) de forma que 
+$$\sum_{i=1}^p a_{ij}a_{il} = 0, \text{ si } j \neq l,$$
+las componentes serán ortogonales y se evitarán posibles problemas de multicolinealidad.
+De esta forma se reduce la dimensión del problema, pasando de $p + 1$ a $k + 1$ coeficientes a estimar, lo cual en principio reducirá la varianza, especialmente si $p$ es grande en comparación con $n$. 
+Por otra parte, también podríamos expresar el modelo final en función de los predictores originales, con coeficientes:
+$$\beta_i = \sum_{j=1}^k \alpha_j a_{ij}$$
+Es decir, se ajusta un modelo lineal con restricciones, lo que en principio incrementará el sesgo (si $k = p$ sería equivalente a ajustar un modelo lineal sin restricciones).
+Además, podríamos interpretar los coeficientes $\alpha_j$ como los efectos de las componentes del modo tradicional, pero resultaría más complicado interpretar los efectos de los predictores originales. 
+
+También hay que tener en cuenta que al considerar combinaciones lineales, si las hipótesis estructurales de linealidad, homocedasticidad, normalidad o independencia no son asumibles en el modelo original, es de esperar que tampoco lo sean en el modelo transformado (se podrían emplear las herramientas descritas en la Sección \@ref(analisis-reg-multiple) para su análisis).
+
+Hay una gran variedad de algoritmos para obtener estas componentes, en esta sección consideraremos las dos aproximaciones más utilizadas: componentes principales y mínimos cuadrados parciales. 
+También hay numerosos paquetes de R que implementan métodos de este tipo ([`pls`](https://mevik.net/work/software/pls.html), [`plsRglm`](https://github.com/fbertran/plsRglm)...), incluyendo `caret`. 
+
+
+### Regresión por componentes principales (PCR)
+
+Una de las aproximaciones tradicionales, cuando se detecta la presencia de multicolinealidad, consiste en aplicar el método de componentes principales a los predictores.
+El análisis de componentes principales (*principal component analysis*, PCA) es un método muy utilizado de aprendizaje no supervisado, que permite reducir el número de dimensiones, tratando de recoger la mayor parte de la variabilidad de los datos originales (en este caso de los predictores; para más detalles sobre PCA ver por ejemplo el Capítulo 10 de James *et al.*, 2013).
+
+Al aplicar PCA a los predictores $X_1, \ldots, X_p$ se obtienen componentes ordenados según la variabilidad explicada de forma descendente. 
+El primer componente es el que recoge el mayor porcentaje de la variabilidad total (se corresponde con la dirección de mayor variación de las observaciones). 
+Las siguientes componentes se seleccionan entre las direcciones ortogonales a las anteriores y de forma que recojan la mayor parte de la variabilidad restante.
+Además estas componentes son normalizadas, de forma que:
+$$\sum_{i=1}^p a_{ij}^2 = 1$$
+(se busca una transformación lineal ortonormal).
+En la práctica esto puede llevarse a cabo fácilmente a partir de la descomposición espectral de la matriz de covarianzas muestrales, aunque normalmente se estandarizan previamente los datos (i.e., se emplea la matriz de correlaciones).
+Por tanto, si se pretende emplear estas componentes para ajustar un modelo de regresión, habrá que conservar los parámetros de estas transformaciones para poder aplicarlas a nuevas observaciones.
+
+Normalmente se seleccionan las primeras $k$ componentes de forma que expliquen la mayor parte de la variabilidad de los datos (los predictores en este caso).
+En PCR (*principal component regression*; Massy, 1965) se confía en que estas componentes recojan también la mayor parte de la información sobre la respuesta, pero podría no ser el caso.
+
+Como ejemplo continuaremos con los datos de clientes de la compañía de distribución industrial HBAT.
+Aunque podríamos emplear las funciones `printcomp()` y `lm()` del paquete base, emplearemos por comodidad la función `pcr()` del paquete [`pls`](https://mevik.net/work/software/pls.html) (ya que incorpora validación cruzada para seleccionar el número de componentes y facilita el cálculo de nuevas predicciones).
+
+
+```r
+library(pls)
+# pcr(formula, ncomp, data, scale = FALSE, center = TRUE, 
+#     validation = c("none", "CV", "LOO"), segments = 10)
+set.seed(1)
+pcreg <- pcr(fidelida ~ ., data = train, scale = TRUE, validation = "CV")
+summary(pcreg)
+```
+
+```
+## Data: 	X dimension: 160 13 
+## 	Y dimension: 160 1
+## Fit method: svdpc
+## Number of components considered: 13
+## 
+## VALIDATION: RMSEP
+## Cross-validated using 10 random segments.
+##        (Intercept)  1 comps  2 comps  3 comps  4 comps  5 comps  6 comps
+## CV           8.683    6.892    5.960    5.695    5.448    5.525    4.901
+## adjCV        8.683    6.888    5.954    5.630    5.440    5.517    4.846
+##        7 comps  8 comps  9 comps  10 comps  11 comps  12 comps  13 comps
+## CV       4.930    4.880    4.550     4.575     4.555     4.579     4.573
+## adjCV    4.916    4.862    4.535     4.560     4.539     4.561     4.554
+## 
+## TRAINING: % variance explained
+##           1 comps  2 comps  3 comps  4 comps  5 comps  6 comps  7 comps
+## X           29.40    50.38    63.09    75.38    82.93    87.33    91.02
+## fidelida    37.89    53.76    58.84    61.79    61.96    70.56    70.97
+##           8 comps  9 comps  10 comps  11 comps  12 comps  13 comps
+## X           94.14    96.39     97.86     99.00     99.93    100.00
+## fidelida    72.13    75.12     75.12     75.78     76.00     76.14
+```
+
+```r
+validationplot(pcreg, legend = "topright")
+```
+
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-40-1.png" width="80%" style="display: block; margin: auto;" />
+
+Empleando el criterio de menor error de validación cruzada se seleccionaría un número elevado de componentes. 
+El mínimo se alcanzaría con 12 componentes (lo cual sería prácticamente lo mismo que ajustar un modelo lineal con todos los predictores), pero sería razonable emplear 9 ya que la gráfica es prácticamente plana a partir de ese valor.
+
+Los coeficientes de los predictores originales con el modelo seleccionado serían:
+
+
+```r
+coef(pcreg, ncomp = 9, intercept = TRUE)
+```
+
+```
+## , , 9 comps
+## 
+##                fidelida
+## (Intercept) -5.33432555
+## calidadp     4.53450998
+## web          1.36586619
+## soporte     -0.08892573
+## quejas       2.21875583
+## publi        0.16238769
+## producto     1.77457778
+## imgfvent    -0.20518565
+## precio       0.83775389
+## garantia    -0.32313633
+## nprod        0.07569817
+## facturac    -0.45633670
+## flexprec     0.72941138
+## velocida     2.27911181
+```
+
+Finalmente evaluamos su precisión:
+
+
+```r
+pred <- predict (pcreg , test, ncomp = 9)
+accuracy(pred, obs)
+```
+
+```
+##         me       rmse        mae        mpe       mape  r.squared 
+## 0.54240746 4.39581553 3.46755308 0.08093351 6.15004687 0.81060798
+```
+
+Empleando el método `"pcr"` de `caret`:
+
+
+```r
+library(caret)
+modelLookup("pcr")
+```
+
+```
+##   model parameter       label forReg forClass probModel
+## 1   pcr     ncomp #Components   TRUE    FALSE     FALSE
+```
+
+```r
+set.seed(1)
+caret.pcr <- train(fidelida ~ ., data = train, method = "pcr",
+                   preProcess = c("zv", "center", "scale"),
+                   trControl = trainControl(method = "cv", number = 10),
+                   tuneGrid = data.frame(ncomp = 1:10))
+# También se podía haber incluido `selectionFunction = "oneSE"` en `trControl()`
+caret.pcr
+```
+
+```
+## Principal Component Analysis 
+## 
+## 160 samples
+##  13 predictor
+## 
+## Pre-processing: centered (13), scaled (13) 
+## Resampling: Cross-Validated (10 fold) 
+## Summary of sample sizes: 145, 143, 144, 143, 145, 144, ... 
+## Resampling results across tuning parameters:
+## 
+##   ncomp  RMSE      Rsquared   MAE     
+##    1     6.844663  0.3889234  5.680556
+##    2     5.894889  0.5446242  4.795170
+##    3     5.604429  0.5837430  4.588714
+##    4     5.403949  0.6077034  4.374244
+##    5     5.476941  0.5984578  4.392604
+##    6     4.806541  0.6891701  3.772401
+##    7     4.830222  0.6886805  3.780234
+##    8     4.825438  0.6895724  3.736469
+##    9     4.511374  0.7295536  3.371115
+##   10     4.551134  0.7260848  3.405876
+## 
+## RMSE was used to select the optimal model using the smallest value.
+## The final value used for the model was ncomp = 9.
+```
+
+```r
+ggplot(caret.pcr, highlight = TRUE)
+```
+
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-43-1.png" width="80%" style="display: block; margin: auto;" />
+
+```r
+pred <- predict(caret.pcr, newdata = test)
+accuracy(pred, obs)
+```
+
+```
+##         me       rmse        mae        mpe       mape  r.squared 
+## 0.54240746 4.39581553 3.46755308 0.08093351 6.15004687 0.81060798
+```
+
+Al incluir más componentes se aumenta la proporción de variabilidad explicada de los predictores,
+pero esto no está relacionado con su utilidad para explicar la respuesta.
+No va a haber problemas de multicolinealidad aunque incluyamos muchas componentes, pero se tendrán que estimar más coeficientes y va a disminuir su precisión.
+Sería más razonable obtener las componentes principales y después aplicar un método de selección.
+Por ejemplo podemos combinar el método de preprocesado `"pcr"` de `caret` con un método de selección de variables^[Esta forma de proceder se podría emplear con otros modelos que puedan tener problemas de multicolinealidad, como los lineales generalizados.]:
+
+
+```r
+set.seed(1)
+caret.pcrsel <- train(fidelida ~ ., data = train, method = "leapSeq",
+                   preProcess = c("zv", "center", "scale", "pca"),     
+                   trControl = trainControl(method = "cv", number = 10),
+                   tuneGrid = data.frame(nvmax = 1:10))
+caret.pcrsel
+```
+
+```
+## Linear Regression with Stepwise Selection 
+## 
+## 160 samples
+##  13 predictor
+## 
+## Pre-processing: centered (13), scaled (13), principal component
+##  signal extraction (13) 
+## Resampling: Cross-Validated (10 fold) 
+## Summary of sample sizes: 145, 143, 144, 143, 145, 144, ... 
+## Resampling results across tuning parameters:
+## 
+##   nvmax  RMSE      Rsquared   MAE     
+##    1     6.844663  0.3889234  5.680556
+##    2     5.894889  0.5446242  4.795170
+##    3     5.626635  0.5780222  4.614693
+##    4     4.965728  0.6639455  4.041916
+##    5     4.829841  0.6864472  3.782061
+##    6     4.666785  0.7085316  3.558379
+##    7     4.545961  0.7276881  3.437428
+##    8     4.642381  0.7140237  3.518435
+##    9     4.511374  0.7295536  3.371115
+##   10     4.511374  0.7295536  3.371115
+## 
+## RMSE was used to select the optimal model using the smallest value.
+## The final value used for the model was nvmax = 9.
+```
+
+```r
+with(caret.leapSeq, coef(finalModel, bestTune$nvmax))
+```
+
+```
+## (Intercept)    calidadp         web      precio    velocida 
+##  -5.3610807   3.4712306   1.2471721   0.4190875   7.4382584
+```
+
+```r
+pred <- predict(caret.pcrsel, newdata = test)
+accuracy(pred, obs)
+```
+
+```
+##         me       rmse        mae        mpe       mape  r.squared 
+## 0.54240746 4.39581553 3.46755308 0.08093351 6.15004687 0.81060798
+```
+
+
+### Regresión por mínimos cuadrados parciales (PLSR)
+
+Como ya se comentó, en PCR las componentes se determinan con el objetivo de explicar la variabilidad de los predictores, ignorando por completo la respuesta.
+Por el contrario, en PLSR (*partial least squares regression*; Wold *et al.*, 1983) se construyen las componentes $Z_1, \ldots, Z_k$ teniendo en cuenta desde un principio el objetivo final de predecir linealmente la respuesta.
+
+Hay varios procedimientos para seleccionar los pesos $a_{ij}$, pero la idea es asignar mayor peso a los predictores que están más correlacionados con la respuesta (o con los correspondientes residuos al ir obteniendo nuevos componentes), considerando siempre direcciones ortogonales (ver por ejemplo la Sección 6.3.2 de James *et al.*, 2013).
+
+Continuando con el ejemplo anterior, emplearemos en primer lugar la función `plsr()` del paquete `pls` (este paquete implementa distintas proyecciones, ver `help(pls.options)`, o [Mevik y Wehrens, 2007](https://www.jstatsoft.org/article/view/v018i02)):
+
+
+```r
+# plsr(formula, ncomp, data, scale = FALSE, center = TRUE, 
+#      validation = c("none", "CV", "LOO"), segments = 10)
+set.seed(1)
+plsreg <- plsr(fidelida ~ ., data = train, scale = TRUE, validation = "CV")
+summary(plsreg)
+```
+
+```
+## Data: 	X dimension: 160 13 
+## 	Y dimension: 160 1
+## Fit method: kernelpls
+## Number of components considered: 13
+## 
+## VALIDATION: RMSEP
+## Cross-validated using 10 random segments.
+##        (Intercept)  1 comps  2 comps  3 comps  4 comps  5 comps  6 comps
+## CV           8.683    5.439    4.952    4.684    4.588    4.560    4.576
+## adjCV        8.683    5.433    4.945    4.670    4.571    4.542    4.558
+##        7 comps  8 comps  9 comps  10 comps  11 comps  12 comps  13 comps
+## CV       4.572    4.572    4.580     4.563     4.584     4.574     4.573
+## adjCV    4.555    4.554    4.562     4.545     4.564     4.555     4.554
+## 
+## TRAINING: % variance explained
+##           1 comps  2 comps  3 comps  4 comps  5 comps  6 comps  7 comps
+## X           27.32    44.59    56.70    66.70    70.29    79.07    86.27
+## fidelida    62.09    69.84    73.96    75.43    75.89    75.96    76.00
+##           8 comps  9 comps  10 comps  11 comps  12 comps  13 comps
+## X           90.98    93.83     95.23     97.59     98.53    100.00
+## fidelida    76.03    76.04     76.09     76.12     76.14     76.14
+```
+
+```r
+validationplot(plsreg, legend = "topright")
+```
+
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-45-1.png" width="80%" style="display: block; margin: auto;" />
+
+En este caso el mínimo se alcanza con 5 componentes pero 4 sería un valor razonable.
+Podríamos obtener los coeficientes de los predictores del modelo seleccionado:
+
+
+```r
+coef(pcreg, ncomp = 4, intercept = TRUE)
+```
+
+```
+## , , 4 comps
+## 
+##               fidelida
+## (Intercept) 20.7676017
+## calidadp     1.3800150
+## web          0.4380180
+## soporte     -0.4201579
+## quejas       1.4368692
+## publi        0.7988489
+## producto     2.0103817
+## imgfvent     0.4806218
+## precio      -1.2171454
+## garantia    -0.2287305
+## nprod        0.5953945
+## facturac     1.3296997
+## flexprec    -0.3569203
+## velocida     1.5624947
+```
+
+y evaluar su precisión:
+
+
+```r
+pred <- predict(plsreg , test, ncomp = 4)
+accuracy(pred, obs)
+```
+
+```
+##        me      rmse       mae       mpe      mape r.squared 
+## 0.5331010 4.4027291 3.4983343 0.0461853 6.2529706 0.8100118
+```
+
+También se puede emplear el método `"pls"` de `caret`:
+
+
+```r
+modelLookup("pls")
+```
+
+```
+##   model parameter       label forReg forClass probModel
+## 1   pls     ncomp #Components   TRUE     TRUE      TRUE
+```
+
+```r
+set.seed(1)
+caret.pls <- train(fidelida ~ ., data = train, method = "pls",
+                   preProcess = c("zv", "center", "scale"),
+                   trControl = trainControl(method = "cv", number = 10),
+                   tuneGrid = data.frame(ncomp = 1:10))
+caret.pls
+```
+
+```
+## Partial Least Squares 
+## 
+## 160 samples
+##  13 predictor
+## 
+## Pre-processing: centered (13), scaled (13) 
+## Resampling: Cross-Validated (10 fold) 
+## Summary of sample sizes: 145, 143, 144, 143, 145, 144, ... 
+## Resampling results across tuning parameters:
+## 
+##   ncomp  RMSE      Rsquared   MAE     
+##    1     5.385375  0.6130430  4.301648
+##    2     4.902373  0.6765146  3.882695
+##    3     4.630757  0.7151341  3.472635
+##    4     4.516718  0.7278875  3.356058
+##    5     4.480285  0.7320425  3.391015
+##    6     4.490064  0.7314898  3.376068
+##    7     4.478319  0.7323472  3.365828
+##    8     4.490064  0.7312432  3.384096
+##    9     4.492672  0.7308291  3.379606
+##   10     4.483548  0.7316750  3.368064
+## 
+## RMSE was used to select the optimal model using the smallest value.
+## The final value used for the model was ncomp = 7.
+```
+
+```r
+ggplot(caret.pls, highlight = TRUE)
+```
+
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-48-1.png" width="80%" style="display: block; margin: auto;" />
+
+```r
+# Podía ser preferible incluir `trControl(selectionFunction = "oneSE")`
+
+pred <- predict(caret.pls, newdata = test)
+accuracy(pred, obs)
+```
+
+```
+##         me       rmse        mae        mpe       mape  r.squared 
+## 0.52838223 4.32029848 3.46711182 0.08674838 6.18085646 0.81705933
+```
+
+Como comentario final, en la práctica se suelen obtener resultados muy similares empleando PCR, PLSR o *ridge regression*.
+
 
 ## Modelos lineales generalizados {#reg-glm}
-
-***En preparación...***
 
 Como ya se comentó, los modelos lineales generalizados son una extensión de los modelos lineales para el caso de que la distribución condicional de la variable respuesta no sea normal, introduciendo una función de enlace (o link) $g$ de forma que
 $$g\left(E(Y | \mathbf{X} )\right) = \beta_{0}+\beta_{1}X_{1}+\beta_{2}X_{2}+\cdots+\beta_{p}X_{p}$$
@@ -1347,9 +1830,11 @@ Para un tratamiento más completo de los métodos de regresión lineal generaliz
 
 Para el ajuste (estimación de los parámetros) de un modelo lineal generalizado a un conjunto de datos (por máxima verosimilitud) se emplea la función `glm()` (la mayoría de los principales parámetros coinciden con los de la función `lm()`):
 
+
 ```r
 ajuste <- glm(formula, family = gaussian, data, weights, subset, na.action, ...)
 ```
+
 
 El parámetro `family` especifica la distribución y opcionalmente la función de enlace. 
 Por ejemplo:
@@ -1362,8 +1847,10 @@ Por ejemplo:
 
 -   `Gamma(link = "inverse")`
 
-Para cada distribución se toma por defecto una función link (el denominado *enlace canónico*, mostrada en primer lugar en la lista anterior; ver `help(family)` para más detalles).
+Para cada distribución se toma por defecto una función de enlace (el denominado *enlace canónico*, mostrada en primer lugar en la lista anterior; ver `help(family)` para más detalles).
 Por ejemplo, en el caso del modelo logístico bastará con establecer `family = binomial`.
+
+También se podría emplear la función `bigglm()` del paquete [`biglm`](https://CRAN.R-project.org/package=biglm) para ajustar modelos lineales generalizados a grandes conjuntos de datos, aunque en este caso los requerimientos computacionales pueden ser mayores.
 
 Como ya se comentó, muchas de las herramientas y funciones genéricas disponibles para los modelos lineales son válidas también para este tipo de modelos: `summary`, `coef`, `confint`, `predict`, `anova`...
 
@@ -1386,7 +1873,7 @@ test <- df[-itrain, ]
 plot(train, pch = as.numeric(train$alianza), col = as.numeric(train$alianza))
 ```
 
-<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-39-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-50-1.png" width="80%" style="display: block; margin: auto;" />
 
 Como ya se comentó, estableciendo `family = binomial` en la llamada a `glm()` se ajusta un modelo de regresión logística  (por defecto `link = "logit"`):
 
@@ -1491,6 +1978,280 @@ anova(modelo.null, modelo, test = "Chi")
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 
+
+### Selección de variables explicativas
+
+El objetivo sería conseguir un buen ajuste con el menor número de variables explicativas posible.
+
+Para obtener el modelo "óptimo" lo ideal sería evaluar todos los modelos posibles.
+En este caso no se puede emplear la función `regsubsets` del paquete `leaps` (sólo para modelos lineales),
+pero por ejemplo el paquete
+[`bestglm`](https://cran.r-project.org/web/packages/bestglm/vignettes/bestglm.pdf)
+proporciona una herramienta equivalente (`bestglm()`).
+
+En este caso también se podría emplear la función `stepwise` del paquete `RcmdrMisc` (interfaz de `stepAIC` del paquete `MASS`), para seleccionar el modelo por pasos según criterio AIC o BIC:
+
+seguir un proceso interactivo, eliminando o añadiendo variables con la función `update()`,
+
+
+```r
+# library(RcmdrMisc)
+modelo.completo <- glm(alianza ~ ., family = binomial, data = train)
+
+modelo <- stepwise(modelo.completo, direction='forward/backward', criterion='BIC')
+```
+
+```
+## 
+## Direction:  forward/backward
+## Criterion:  BIC 
+## 
+## Start:  AIC=223.27
+## alianza ~ 1
+## 
+##            Df Deviance    AIC
+## + velocida  1   189.38 199.53
+## + calidadp  1   192.15 202.30
+## + facturac  1   193.45 203.60
+## + producto  1   196.91 207.06
+## + quejas    1   198.10 208.25
+## + imgfvent  1   198.80 208.95
+## + web       1   204.40 214.55
+## + publi     1   209.28 219.43
+## + precio    1   211.97 222.12
+## + garantia  1   212.37 222.52
+## <none>          218.19 223.27
+## + nprod     1   213.97 224.12
+## + soporte   1   216.50 226.65
+## + flexprec  1   216.99 227.14
+## 
+## Step:  AIC=199.53
+## alianza ~ velocida
+## 
+##            Df Deviance    AIC
+## + calidadp  1   160.55 175.77
+## + imgfvent  1   178.43 193.65
+## + web       1   181.52 196.74
+## + precio    1   183.38 198.61
+## <none>          189.38 199.53
+## + flexprec  1   185.47 200.69
+## + producto  1   185.54 200.77
+## + nprod     1   186.92 202.14
+## + facturac  1   186.93 202.15
+## + garantia  1   187.02 202.25
+## + publi     1   187.44 202.67
+## + soporte   1   189.06 204.29
+## + quejas    1   189.27 204.50
+## - velocida  1   218.19 223.27
+## 
+## Step:  AIC=175.77
+## alianza ~ velocida + calidadp
+## 
+##            Df Deviance    AIC
+## + imgfvent  1   137.05 157.35
+## + web       1   145.63 165.93
+## <none>          160.55 175.77
+## + publi     1   156.03 176.33
+## + facturac  1   157.35 177.66
+## + flexprec  1   157.44 177.74
+## + producto  1   157.75 178.06
+## + garantia  1   158.97 179.27
+## + nprod     1   160.18 180.47
+## + quejas    1   160.20 180.50
+## + soporte   1   160.37 180.67
+## + precio    1   160.37 180.67
+## - calidadp  1   189.38 199.53
+## - velocida  1   192.15 202.30
+## 
+## Step:  AIC=157.35
+## alianza ~ velocida + calidadp + imgfvent
+## 
+##            Df Deviance    AIC
+## <none>          137.05 157.35
+## + precio    1   134.97 160.35
+## + flexprec  1   135.39 160.77
+## + publi     1   135.65 161.03
+## + producto  1   135.72 161.09
+## + facturac  1   135.81 161.19
+## + garantia  1   136.31 161.69
+## + nprod     1   136.63 162.00
+## + soporte   1   136.79 162.16
+## + quejas    1   136.96 162.33
+## + web       1   137.03 162.40
+## - velocida  1   160.34 175.57
+## - imgfvent  1   160.55 175.77
+## - calidadp  1   178.43 193.65
+```
+
+```r
+summary(modelo)
+```
+
+```
+## 
+## Call:
+## glm(formula = alianza ~ velocida + calidadp + imgfvent, family = binomial, 
+##     data = train)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.6527  -0.6822  -0.1482   0.7631   2.0561  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(>|z|)    
+## (Intercept) -20.5164     3.4593  -5.931 3.02e-09 ***
+## velocida      1.6631     0.3981   4.177 2.95e-05 ***
+## calidadp      1.0469     0.2014   5.197 2.02e-07 ***
+## imgfvent      1.0085     0.2398   4.205 2.61e-05 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 218.19  on 159  degrees of freedom
+## Residual deviance: 137.05  on 156  degrees of freedom
+## AIC: 145.05
+## 
+## Number of Fisher Scoring iterations: 5
+```
+
+### Análisis e interpretación del modelo {#analisis-glm}
+
+Las hipótesis estructurales del modelo son similares al caso de regresión lineal (aunque algunas como la linealidad se suponen en la escala transformada) y si no se verifican los resultados pueden no ser fiables o totalmente erróneos.
+
+Con la función `plot` se pueden generar gráficos de interés para la diagnosis del modelo:
+
+
+```r
+oldpar <- par( mfrow=c(2,2))
+plot(modelo)
+```
+
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-56-1.png" width="80%" style="display: block; margin: auto;" />
+
+```r
+par(oldpar)
+```
+
+Aunque su interpretación difiere un poco de la de los modelos lineales...
+
+Se pueden generar gráficos parciales de residuos (p.e. `crPlots()` del paquete `car`):
+
+
+```r
+# library(car)
+crPlots(modelo)
+```
+
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-57-1.png" width="80%" style="display: block; margin: auto;" />
+
+Se pueden emplear las mismas funciones vistas en los modelos lineales para obtener medidas de diagnosis de interés (Sección \@ref(analisis-reg-multiple)). Por ejemplo:
+
+
+```r
+residuals(model, type = "deviance")
+```
+
+proporcionará los residuos *deviance*.
+
+Por supuesto también pueden aparecer problemas de multicolinealidad, y podemos emplear las mismas herramientas para detectarla:
+
+
+```r
+# library(car)
+vif(modelo)
+```
+
+```
+## velocida calidadp imgfvent 
+## 1.193557 1.656649 1.451237
+```
+
+Si no se satisfacen los supuestos básicos también se pueden intentar distintas alternativas (en este caso se pueden cambiar además la función de enlace y la familia de distribuciones, que puede incluir parámetros para modelar dispersión).
+Por ejemplo, para tratar de corregir la falta de linealidad se pueden considerar ajustes polinómicos o emplear métodos no paramétricos, como la función `gam()` del paquete `mgcv`.
+
+
+### Evaluación de la precisión
+
 Como ya se mostró en la Sección \@ref(eval-class), podemos obtener las estimaciones de la probabilidad de la segunda categoría empleando `predict()` con `type = "response"`:
 
+
+```r
+p.est <- predict(modelo, type = "response", newdata = test)
+pred <- factor(p.est > 0.5, labels = c("No", "Si")) # levels = c('FALSE', 'TRUE')
+```
+
+y las medidas de precisión de la predicción (además de los criterios AIC o BIC tradicionales):
+
+
+```r
+caret::confusionMatrix(pred, test$alianza, positive = "Si", mode = "everything")
+```
+
+```
+## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction No Si
+##         No 19  5
+##         Si  3 13
+##                                           
+##                Accuracy : 0.8             
+##                  95% CI : (0.6435, 0.9095)
+##     No Information Rate : 0.55            
+##     P-Value [Acc > NIR] : 0.0008833       
+##                                           
+##                   Kappa : 0.5918          
+##                                           
+##  Mcnemar's Test P-Value : 0.7236736       
+##                                           
+##             Sensitivity : 0.7222          
+##             Specificity : 0.8636          
+##          Pos Pred Value : 0.8125          
+##          Neg Pred Value : 0.7917          
+##               Precision : 0.8125          
+##                  Recall : 0.7222          
+##                      F1 : 0.7647          
+##              Prevalence : 0.4500          
+##          Detection Rate : 0.3250          
+##    Detection Prevalence : 0.4000          
+##       Balanced Accuracy : 0.7929          
+##                                           
+##        'Positive' Class : Si              
+## 
+```
+
+También podemos emplear `caret`:
+
+
+```r
+# library(caret)
+names(getModelInfo("glm")) # 11 métodos
+```
+
+```
+##  [1] "bayesglm"       "glm.nb"         "glm"            "glmboost"      
+##  [5] "glmnet_h2o"     "glmnet"         "glmStepAIC"     "plsRglm"       
+##  [9] "vglmAdjCat"     "vglmContRatio"  "vglmCumulative"
+```
+
+
+### Extensiones
+
+Se pueden imponer restricciones a las estimaciones de los parámetros de modo análogo al caso de modelos lineales ( y \@ref(pca-pls)).
+Por ejemplo, en los métodos de regularización (*ridge*, *lasso* o *elastic net*; Sección \@ref(shrinkage)) bastaría con cambiar en la función de pérdidas la suma residual de cuadrados por el logaritmo negativo de la función de verosimilitud.
+
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:glmnet"><strong>(\#exr:glmnet) </strong></span>
+Emplear el paquete `glmnet` para ajustar modelos logísticos con penalización *ridge* y *lasso* a la muestra de entrenamiento de los datos de clientes de la compañía de distribución industrial HBAT, considerando como respuesta la variable *alianza* y seleccionando un valor "óptimo" del hiperparámetro $\lambda$.
+Ajustar también un modelo con penalización *elastic net* empleando `caret` (seleccionando los valores óptimos de los hiperparámetros).
+</div>\EndKnitrBlock{exercise}
+
+ 
+El método PCR (Sección \@ref(pca-pls)) se extendería de forma inmediata al caso de modelos generalizados, simplemente cambiando el modelo ajustado.
+También están disponibles métodos PLSR para modelos generalizados.
+
+
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:glm-reduccion"><strong>(\#exr:glm-reduccion) </strong></span>
+Emplear el paquete `caret` para ajustar modelos logísticos con reducción de la dimensión a los datos de clientes de la compañía de distribución industrial HBAT. Comparar el modelo obtenido con preprocesado `"pca"` y el método `"glmStepAIC"`, con el obtenido empleando el método `"plsRglm"`.
+</div>\EndKnitrBlock{exercise}
 

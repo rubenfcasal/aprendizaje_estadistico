@@ -24,14 +24,14 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)" />
 
 
-<meta name="date" content="2020-11-17" />
+<meta name="date" content="2020-11-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="análisis-e-interpretación-del-modelo.html"/>
+<link rel="prev" href="analisis-reg-multiple.html"/>
 <link rel="next" href="shrinkage.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -221,7 +221,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.3.1" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html#búsqueda-exhaustiva"><i class="fa fa-check"></i><b>6.3.1</b> Búsqueda exhaustiva</a></li>
 <li class="chapter" data-level="6.3.2" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html#selección-por-pasos"><i class="fa fa-check"></i><b>6.3.2</b> Selección por pasos</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="análisis-e-interpretación-del-modelo.html"><a href="análisis-e-interpretación-del-modelo.html"><i class="fa fa-check"></i><b>6.4</b> Análisis e interpretación del modelo</a></li>
+<li class="chapter" data-level="6.4" data-path="analisis-reg-multiple.html"><a href="analisis-reg-multiple.html"><i class="fa fa-check"></i><b>6.4</b> Análisis e interpretación del modelo</a></li>
 <li class="chapter" data-level="6.5" data-path="evaluación-de-la-precisión.html"><a href="evaluación-de-la-precisión.html"><i class="fa fa-check"></i><b>6.5</b> Evaluación de la precisión</a></li>
 <li class="chapter" data-level="6.6" data-path="shrinkage.html"><a href="shrinkage.html"><i class="fa fa-check"></i><b>6.6</b> Métodos de regularización</a><ul>
 <li class="chapter" data-level="6.6.1" data-path="shrinkage.html"><a href="shrinkage.html#implementación-en-r"><i class="fa fa-check"></i><b>6.6.1</b> Implementación en R</a></li>
@@ -229,10 +229,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.6.3" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-lasso"><i class="fa fa-check"></i><b>6.6.3</b> Ejemplo: Lasso</a></li>
 <li class="chapter" data-level="6.6.4" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-elastic-net"><i class="fa fa-check"></i><b>6.6.4</b> Ejemplo: Elastic Net</a></li>
 </ul></li>
-<li class="chapter" data-level="6.7" data-path="pca-pls.html"><a href="pca-pls.html"><i class="fa fa-check"></i><b>6.7</b> Métodos de reducción de la dimensión</a></li>
+<li class="chapter" data-level="6.7" data-path="pca-pls.html"><a href="pca-pls.html"><i class="fa fa-check"></i><b>6.7</b> Métodos de reducción de la dimensión</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-componentes-principales-pcr"><i class="fa fa-check"></i><b>6.7.1</b> Regresión por componentes principales (PCR)</a></li>
+<li class="chapter" data-level="6.7.2" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-mínimos-cuadrados-parciales-plsr"><i class="fa fa-check"></i><b>6.7.2</b> Regresión por mínimos cuadrados parciales (PLSR)</a></li>
+</ul></li>
 <li class="chapter" data-level="6.8" data-path="reg-glm.html"><a href="reg-glm.html"><i class="fa fa-check"></i><b>6.8</b> Modelos lineales generalizados</a><ul>
 <li class="chapter" data-level="6.8.1" data-path="reg-glm.html"><a href="reg-glm.html#ajuste-función-glm"><i class="fa fa-check"></i><b>6.8.1</b> Ajuste: función <code>glm</code></a></li>
 <li class="chapter" data-level="6.8.2" data-path="reg-glm.html"><a href="reg-glm.html#ejemplo-regresión-logística"><i class="fa fa-check"></i><b>6.8.2</b> Ejemplo: Regresión logística</a></li>
+<li class="chapter" data-level="6.8.3" data-path="reg-glm.html"><a href="reg-glm.html#selección-de-variables-explicativas"><i class="fa fa-check"></i><b>6.8.3</b> Selección de variables explicativas</a></li>
+<li class="chapter" data-level="6.8.4" data-path="reg-glm.html"><a href="reg-glm.html#analisis-glm"><i class="fa fa-check"></i><b>6.8.4</b> Análisis e interpretación del modelo</a></li>
+<li class="chapter" data-level="6.8.5" data-path="reg-glm.html"><a href="reg-glm.html#evaluación-de-la-precisión-1"><i class="fa fa-check"></i><b>6.8.5</b> Evaluación de la precisión</a></li>
+<li class="chapter" data-level="6.8.6" data-path="reg-glm.html"><a href="reg-glm.html#extensiones"><i class="fa fa-check"></i><b>6.8.6</b> Extensiones</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
@@ -265,7 +272,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="evaluación-de-la-precisión" class="section level2">
 <h2><span class="header-section-number">6.5</span> Evaluación de la precisión</h2>
 <p>Para evaluar la precisión de las predicciones podríamos utilizar el coeficiente de determinación ajustado:</p>
-<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="evaluación-de-la-precisión.html#cb291-1"></a><span class="kw">summary</span>(modelo)<span class="op">$</span>adj.r.squared</span></code></pre></div>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="evaluación-de-la-precisión.html#cb293-1"></a><span class="kw">summary</span>(modelo)<span class="op">$</span>adj.r.squared</span></code></pre></div>
 <pre><code>## [1] 0.7421059</code></pre>
 <p>que estimaría la proporción de variabilidad explicada en una nueva muestra.
 Sin embargo, hay que tener en cuenta que su validez dependería de la de las hipótesis estructurales (especialmente de la linealidad, homocedasticidad e independencia), ya que se obtiene a partir de estimaciones de las varianzas residual y total:</p>
@@ -274,53 +281,53 @@ Sin embargo, hay que tener en cuenta que su validez dependería de la de las hip
 <p>siendo <span class="math inline">\(\hat{S}_{R}^{2}=\sum_{i=1}^{n}(y_{i}-\hat{y}_{i})^{2}/(n - p - 1)\)</span>.
 Algo similar ocurriría con otras medidas de bondad de ajuste, como por ejemplo BIC o AIC.</p>
 <p>Alternativamente, por si no es razonable asumir estas hipótesis, se pueden emplear el procedimiento tradicional en AE (o alguno de los otros descritos en la Sección <a href="const-eval.html#const-eval">1.3</a>):</p>
-<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="evaluación-de-la-precisión.html#cb293-1"></a>obs &lt;-<span class="st"> </span>test<span class="op">$</span>fidelida</span>
-<span id="cb293-2"><a href="evaluación-de-la-precisión.html#cb293-2"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(modelo, <span class="dt">newdata =</span> test)</span>
-<span id="cb293-3"><a href="evaluación-de-la-precisión.html#cb293-3"></a></span>
-<span id="cb293-4"><a href="evaluación-de-la-precisión.html#cb293-4"></a><span class="kw">plot</span>(pred, obs, <span class="dt">main =</span> <span class="st">&quot;Observado frente a predicciones&quot;</span>,</span>
-<span id="cb293-5"><a href="evaluación-de-la-precisión.html#cb293-5"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Predicción&quot;, ylab = &quot;</span>Observado<span class="st">&quot;)</span></span>
-<span id="cb293-6"><a href="evaluación-de-la-precisión.html#cb293-6"></a><span class="st">abline(a = 0, b = 1)</span></span>
-<span id="cb293-7"><a href="evaluación-de-la-precisión.html#cb293-7"></a><span class="st">res &lt;- lm(obs ~ pred)</span></span>
-<span id="cb293-8"><a href="evaluación-de-la-precisión.html#cb293-8"></a><span class="st"># summary(res)</span></span>
-<span id="cb293-9"><a href="evaluación-de-la-precisión.html#cb293-9"></a><span class="st">abline(res, lty = 2)</span></span></code></pre></div>
-<p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-22-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="evaluación-de-la-precisión.html#cb294-1"></a>accuracy &lt;-<span class="st"> </span><span class="cf">function</span>(pred, obs, <span class="dt">na.rm =</span> <span class="ot">FALSE</span>, </span>
-<span id="cb294-2"><a href="evaluación-de-la-precisión.html#cb294-2"></a>                     <span class="dt">tol =</span> <span class="kw">sqrt</span>(.Machine<span class="op">$</span>double.eps)) {</span>
-<span id="cb294-3"><a href="evaluación-de-la-precisión.html#cb294-3"></a>  err &lt;-<span class="st"> </span>obs <span class="op">-</span><span class="st"> </span>pred     <span class="co"># Errores</span></span>
-<span id="cb294-4"><a href="evaluación-de-la-precisión.html#cb294-4"></a>  <span class="cf">if</span>(na.rm) {</span>
-<span id="cb294-5"><a href="evaluación-de-la-precisión.html#cb294-5"></a>    is.a &lt;-<span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(err)</span>
-<span id="cb294-6"><a href="evaluación-de-la-precisión.html#cb294-6"></a>    err &lt;-<span class="st"> </span>err[is.a]</span>
-<span id="cb294-7"><a href="evaluación-de-la-precisión.html#cb294-7"></a>    obs &lt;-<span class="st"> </span>obs[is.a]</span>
-<span id="cb294-8"><a href="evaluación-de-la-precisión.html#cb294-8"></a>  }  </span>
-<span id="cb294-9"><a href="evaluación-de-la-precisión.html#cb294-9"></a>  perr &lt;-<span class="st"> </span><span class="dv">100</span><span class="op">*</span>err<span class="op">/</span><span class="kw">pmax</span>(obs, tol)  <span class="co"># Errores porcentuales</span></span>
-<span id="cb294-10"><a href="evaluación-de-la-precisión.html#cb294-10"></a>  <span class="kw">return</span>(<span class="kw">c</span>(</span>
-<span id="cb294-11"><a href="evaluación-de-la-precisión.html#cb294-11"></a>    <span class="dt">me =</span> <span class="kw">mean</span>(err),           <span class="co"># Error medio</span></span>
-<span id="cb294-12"><a href="evaluación-de-la-precisión.html#cb294-12"></a>    <span class="dt">rmse =</span> <span class="kw">sqrt</span>(<span class="kw">mean</span>(err<span class="op">^</span><span class="dv">2</span>)), <span class="co"># Raíz del error cuadrático medio </span></span>
-<span id="cb294-13"><a href="evaluación-de-la-precisión.html#cb294-13"></a>    <span class="dt">mae =</span> <span class="kw">mean</span>(<span class="kw">abs</span>(err)),     <span class="co"># Error absoluto medio</span></span>
-<span id="cb294-14"><a href="evaluación-de-la-precisión.html#cb294-14"></a>    <span class="dt">mpe =</span> <span class="kw">mean</span>(perr),         <span class="co"># Error porcentual medio</span></span>
-<span id="cb294-15"><a href="evaluación-de-la-precisión.html#cb294-15"></a>    <span class="dt">mape =</span> <span class="kw">mean</span>(<span class="kw">abs</span>(perr)),   <span class="co"># Error porcentual absoluto medio</span></span>
-<span id="cb294-16"><a href="evaluación-de-la-precisión.html#cb294-16"></a>    <span class="dt">r.squared =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">sum</span>(err<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span><span class="kw">sum</span>((obs <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(obs))<span class="op">^</span><span class="dv">2</span>) <span class="co"># Pseudo R-cuadrado</span></span>
-<span id="cb294-17"><a href="evaluación-de-la-precisión.html#cb294-17"></a>  ))</span>
-<span id="cb294-18"><a href="evaluación-de-la-precisión.html#cb294-18"></a>}</span>
-<span id="cb294-19"><a href="evaluación-de-la-precisión.html#cb294-19"></a><span class="kw">accuracy</span>(pred, obs)</span></code></pre></div>
+<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="evaluación-de-la-precisión.html#cb295-1"></a>obs &lt;-<span class="st"> </span>test<span class="op">$</span>fidelida</span>
+<span id="cb295-2"><a href="evaluación-de-la-precisión.html#cb295-2"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(modelo, <span class="dt">newdata =</span> test)</span>
+<span id="cb295-3"><a href="evaluación-de-la-precisión.html#cb295-3"></a></span>
+<span id="cb295-4"><a href="evaluación-de-la-precisión.html#cb295-4"></a><span class="kw">plot</span>(pred, obs, <span class="dt">main =</span> <span class="st">&quot;Observado frente a predicciones&quot;</span>,</span>
+<span id="cb295-5"><a href="evaluación-de-la-precisión.html#cb295-5"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Predicción&quot;, ylab = &quot;</span>Observado<span class="st">&quot;)</span></span>
+<span id="cb295-6"><a href="evaluación-de-la-precisión.html#cb295-6"></a><span class="st">abline(a = 0, b = 1)</span></span>
+<span id="cb295-7"><a href="evaluación-de-la-precisión.html#cb295-7"></a><span class="st">res &lt;- lm(obs ~ pred)</span></span>
+<span id="cb295-8"><a href="evaluación-de-la-precisión.html#cb295-8"></a><span class="st"># summary(res)</span></span>
+<span id="cb295-9"><a href="evaluación-de-la-precisión.html#cb295-9"></a><span class="st">abline(res, lty = 2)</span></span></code></pre></div>
+<p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-23-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="evaluación-de-la-precisión.html#cb296-1"></a>accuracy &lt;-<span class="st"> </span><span class="cf">function</span>(pred, obs, <span class="dt">na.rm =</span> <span class="ot">FALSE</span>, </span>
+<span id="cb296-2"><a href="evaluación-de-la-precisión.html#cb296-2"></a>                     <span class="dt">tol =</span> <span class="kw">sqrt</span>(.Machine<span class="op">$</span>double.eps)) {</span>
+<span id="cb296-3"><a href="evaluación-de-la-precisión.html#cb296-3"></a>  err &lt;-<span class="st"> </span>obs <span class="op">-</span><span class="st"> </span>pred     <span class="co"># Errores</span></span>
+<span id="cb296-4"><a href="evaluación-de-la-precisión.html#cb296-4"></a>  <span class="cf">if</span>(na.rm) {</span>
+<span id="cb296-5"><a href="evaluación-de-la-precisión.html#cb296-5"></a>    is.a &lt;-<span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(err)</span>
+<span id="cb296-6"><a href="evaluación-de-la-precisión.html#cb296-6"></a>    err &lt;-<span class="st"> </span>err[is.a]</span>
+<span id="cb296-7"><a href="evaluación-de-la-precisión.html#cb296-7"></a>    obs &lt;-<span class="st"> </span>obs[is.a]</span>
+<span id="cb296-8"><a href="evaluación-de-la-precisión.html#cb296-8"></a>  }  </span>
+<span id="cb296-9"><a href="evaluación-de-la-precisión.html#cb296-9"></a>  perr &lt;-<span class="st"> </span><span class="dv">100</span><span class="op">*</span>err<span class="op">/</span><span class="kw">pmax</span>(obs, tol)  <span class="co"># Errores porcentuales</span></span>
+<span id="cb296-10"><a href="evaluación-de-la-precisión.html#cb296-10"></a>  <span class="kw">return</span>(<span class="kw">c</span>(</span>
+<span id="cb296-11"><a href="evaluación-de-la-precisión.html#cb296-11"></a>    <span class="dt">me =</span> <span class="kw">mean</span>(err),           <span class="co"># Error medio</span></span>
+<span id="cb296-12"><a href="evaluación-de-la-precisión.html#cb296-12"></a>    <span class="dt">rmse =</span> <span class="kw">sqrt</span>(<span class="kw">mean</span>(err<span class="op">^</span><span class="dv">2</span>)), <span class="co"># Raíz del error cuadrático medio </span></span>
+<span id="cb296-13"><a href="evaluación-de-la-precisión.html#cb296-13"></a>    <span class="dt">mae =</span> <span class="kw">mean</span>(<span class="kw">abs</span>(err)),     <span class="co"># Error absoluto medio</span></span>
+<span id="cb296-14"><a href="evaluación-de-la-precisión.html#cb296-14"></a>    <span class="dt">mpe =</span> <span class="kw">mean</span>(perr),         <span class="co"># Error porcentual medio</span></span>
+<span id="cb296-15"><a href="evaluación-de-la-precisión.html#cb296-15"></a>    <span class="dt">mape =</span> <span class="kw">mean</span>(<span class="kw">abs</span>(perr)),   <span class="co"># Error porcentual absoluto medio</span></span>
+<span id="cb296-16"><a href="evaluación-de-la-precisión.html#cb296-16"></a>    <span class="dt">r.squared =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">sum</span>(err<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span><span class="kw">sum</span>((obs <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(obs))<span class="op">^</span><span class="dv">2</span>) <span class="co"># Pseudo R-cuadrado</span></span>
+<span id="cb296-17"><a href="evaluación-de-la-precisión.html#cb296-17"></a>  ))</span>
+<span id="cb296-18"><a href="evaluación-de-la-precisión.html#cb296-18"></a>}</span>
+<span id="cb296-19"><a href="evaluación-de-la-precisión.html#cb296-19"></a><span class="kw">accuracy</span>(pred, obs)</span></code></pre></div>
 <pre><code>##         me       rmse        mae        mpe       mape  r.squared 
 ##  0.4032996  4.1995208  3.3013714 -0.1410512  5.9553699  0.8271449</code></pre>
 <p>De igual forma, los métodos de selección de variables descritos en la Sección <a href="seleccion-reg-lineal.html#seleccion-reg-lineal">6.3</a> dependen (en mayor o menor medida) de la validez de las hipótesis estructurales.
 Por este motivo se podría pensar también en emplear alguno de los procedimientos descritos en la Sección <a href="const-eval.html#const-eval">1.3</a> para evaluar la precisión de los distintos modelos.
 Por ejemplo adaptando adecuadamente el algoritmo de validación cruzada empleado en la Sección <a href="const-eval.html#cv">1.3.3</a>.
-Sin embargo, el procedimiento de selección se debería realizar también en cada uno de los conjuntos de entrenamiento utilizados en la validación.
+Sin embargo, el procedimiento de selección debería realizarse también en cada uno de los conjuntos de entrenamiento utilizados en la validación.
 Esto puede hacerse fácilmente empleando el paquete <code>caret</code>.</p>
 <p>Por ejemplo, el método de selección por pasos hacia atrás, empleando la función <code>stepAIC</code> del paquete <code>MASS</code>, está implementado en el método <code>"lmStepAIC"</code>:</p>
-<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="evaluación-de-la-precisión.html#cb296-1"></a><span class="kw">library</span>(caret)</span>
-<span id="cb296-2"><a href="evaluación-de-la-precisión.html#cb296-2"></a><span class="co"># names(getModelInfo(&quot;lm&quot;)) # 15 métodos</span></span>
-<span id="cb296-3"><a href="evaluación-de-la-precisión.html#cb296-3"></a><span class="co"># names(getModelInfo(&quot;leap&quot;)) # 3 métodos</span></span>
-<span id="cb296-4"><a href="evaluación-de-la-precisión.html#cb296-4"></a><span class="kw">modelLookup</span>(<span class="st">&quot;lmStepAIC&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="evaluación-de-la-precisión.html#cb298-1"></a><span class="kw">library</span>(caret)</span>
+<span id="cb298-2"><a href="evaluación-de-la-precisión.html#cb298-2"></a><span class="co"># names(getModelInfo(&quot;lm&quot;)) # 15 métodos</span></span>
+<span id="cb298-3"><a href="evaluación-de-la-precisión.html#cb298-3"></a><span class="co"># names(getModelInfo(&quot;leap&quot;)) # 3 métodos</span></span>
+<span id="cb298-4"><a href="evaluación-de-la-precisión.html#cb298-4"></a><span class="kw">modelLookup</span>(<span class="st">&quot;lmStepAIC&quot;</span>) </span></code></pre></div>
 <pre><code>##       model parameter     label forReg forClass probModel
 ## 1 lmStepAIC parameter parameter   TRUE    FALSE     FALSE</code></pre>
-<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="evaluación-de-la-precisión.html#cb298-1"></a>caret.lmStepAIC &lt;-<span class="st"> </span><span class="kw">train</span>(fidelida <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train, <span class="dt">method =</span> <span class="st">&quot;lmStepAIC&quot;</span>,</span>
-<span id="cb298-2"><a href="evaluación-de-la-precisión.html#cb298-2"></a>                   <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="dt">number =</span> <span class="dv">5</span>),</span>
-<span id="cb298-3"><a href="evaluación-de-la-precisión.html#cb298-3"></a>                   <span class="dt">trace =</span> <span class="dv">0</span>) <span class="co"># Opción de MASS::stepAIC para no imprimir output...</span></span>
-<span id="cb298-4"><a href="evaluación-de-la-precisión.html#cb298-4"></a>caret.lmStepAIC</span></code></pre></div>
+<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="evaluación-de-la-precisión.html#cb300-1"></a>caret.lmStepAIC &lt;-<span class="st"> </span><span class="kw">train</span>(fidelida <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train, <span class="dt">method =</span> <span class="st">&quot;lmStepAIC&quot;</span>,</span>
+<span id="cb300-2"><a href="evaluación-de-la-precisión.html#cb300-2"></a>                   <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="dt">number =</span> <span class="dv">5</span>),</span>
+<span id="cb300-3"><a href="evaluación-de-la-precisión.html#cb300-3"></a>                   <span class="dt">trace =</span> <span class="dv">0</span>) <span class="co"># Opción de MASS::stepAIC para no imprimir output...</span></span>
+<span id="cb300-4"><a href="evaluación-de-la-precisión.html#cb300-4"></a>caret.lmStepAIC</span></code></pre></div>
 <pre><code>## Linear Regression with Stepwise Selection 
 ## 
 ## 160 samples
@@ -333,7 +340,7 @@ Esto puede hacerse fácilmente empleando el paquete <code>caret</code>.</p>
 ## 
 ##   RMSE      Rsquared   MAE     
 ##   4.748814  0.7052369  3.615072</code></pre>
-<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="evaluación-de-la-precisión.html#cb300-1"></a>caret.lmStepAIC<span class="op">$</span>finalModel</span></code></pre></div>
+<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="evaluación-de-la-precisión.html#cb302-1"></a>caret.lmStepAIC<span class="op">$</span>finalModel</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = .outcome ~ calidadp + web + precio + flexprec + 
@@ -342,12 +349,47 @@ Esto puede hacerse fácilmente empleando el paquete <code>caret</code>.</p>
 ## Coefficients:
 ## (Intercept)     calidadp          web       precio     flexprec     velocida  
 ##     -3.8487       3.2198       1.2449       0.5979      -0.7551       8.1166</code></pre>
-<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="evaluación-de-la-precisión.html#cb302-1"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(caret.lmStepAIC, <span class="dt">newdata =</span> test)</span>
-<span id="cb302-2"><a href="evaluación-de-la-precisión.html#cb302-2"></a><span class="kw">accuracy</span>(pred, obs)</span></code></pre></div>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="evaluación-de-la-precisión.html#cb304-1"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(caret.lmStepAIC, <span class="dt">newdata =</span> test)</span>
+<span id="cb304-2"><a href="evaluación-de-la-precisión.html#cb304-2"></a><span class="kw">accuracy</span>(pred, obs)</span></code></pre></div>
 <pre><code>##         me       rmse        mae        mpe       mape  r.squared 
 ##  0.3735687  4.1900738  3.3732868 -0.1928986  6.0990996  0.8279217</code></pre>
-<p>También está implementados métodos de selección basados en el paquete <code>leaps</code>, considerando el número máximo de predictores <code>nvmax</code> como hiperparámetro y empleando búsqueda: hacia atrás (<code>"leapBackward"</code>), hacia adelante (<code>"leapForward"</code>) y por reemplazamiento secuencial (<code>"leapSeq"</code>).
-Además, en el caso de ajustes de modelos de este tipo, puede resultar de interés realizar un preprocesado de los datos para eliminar predictores correlados o con varianza próxima a cero,
+<p>También está implementados métodos de selección basados en el paquete <code>leaps</code>, considerando el número máximo de predictores <code>nvmax</code> como hiperparámetro y empleando búsqueda: hacia atrás (<code>"leapBackward"</code>), hacia adelante (<code>"leapForward"</code>) y por pasos (<code>"leapSeq"</code>).</p>
+<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="evaluación-de-la-precisión.html#cb306-1"></a><span class="kw">modelLookup</span>(<span class="st">&quot;leapSeq&quot;</span>)</span></code></pre></div>
+<pre><code>##     model parameter                        label forReg forClass probModel
+## 1 leapSeq     nvmax Maximum Number of Predictors   TRUE    FALSE     FALSE</code></pre>
+<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="evaluación-de-la-precisión.html#cb308-1"></a>caret.leapSeq &lt;-<span class="st"> </span><span class="kw">train</span>(fidelida <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train, <span class="dt">method =</span> <span class="st">&quot;leapSeq&quot;</span>,</span>
+<span id="cb308-2"><a href="evaluación-de-la-precisión.html#cb308-2"></a>                   <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="dt">number =</span> <span class="dv">10</span>),</span>
+<span id="cb308-3"><a href="evaluación-de-la-precisión.html#cb308-3"></a>                   <span class="dt">tuneGrid =</span> <span class="kw">data.frame</span>(<span class="dt">nvmax =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">6</span>))</span>
+<span id="cb308-4"><a href="evaluación-de-la-precisión.html#cb308-4"></a>caret.leapSeq</span></code></pre></div>
+<pre><code>## Linear Regression with Stepwise Selection 
+## 
+## 160 samples
+##  13 predictor
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold) 
+## Summary of sample sizes: 143, 144, 144, 143, 144, 145, ... 
+## Resampling results across tuning parameters:
+## 
+##   nvmax  RMSE      Rsquared   MAE     
+##   1      6.811476  0.3880874  5.514825
+##   2      6.082191  0.5061883  4.874637
+##   3      6.023200  0.5124853  4.809341
+##   4      4.339067  0.7594275  3.362703
+##   5      4.538799  0.7390205  3.461429
+##   6      4.604788  0.7356875  3.585628
+## 
+## RMSE was used to select the optimal model using the smallest value.
+## The final value used for the model was nvmax = 4.</code></pre>
+<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="evaluación-de-la-precisión.html#cb310-1"></a><span class="co"># summary(caret.leapSeq$finalModel)</span></span>
+<span id="cb310-2"><a href="evaluación-de-la-precisión.html#cb310-2"></a><span class="kw">with</span>(caret.leapSeq, <span class="kw">coef</span>(finalModel, bestTune<span class="op">$</span>nvmax))</span></code></pre></div>
+<pre><code>## (Intercept)    calidadp         web      precio    velocida 
+##  -5.3610807   3.4712306   1.2471721   0.4190875   7.4382584</code></pre>
+<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="evaluación-de-la-precisión.html#cb312-1"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(caret.leapSeq, <span class="dt">newdata =</span> test)</span>
+<span id="cb312-2"><a href="evaluación-de-la-precisión.html#cb312-2"></a><span class="kw">accuracy</span>(pred, obs)</span></code></pre></div>
+<pre><code>##         me       rmse        mae        mpe       mape  r.squared 
+##  0.2886512  4.1741220  3.2946370 -0.3413883  5.9590279  0.8292294</code></pre>
+<p>Además, en el caso de ajustes de modelos de este tipo, puede resultar de interés realizar un preprocesado de los datos para eliminar predictores correlados o con varianza próxima a cero,
 estableciendo por ejemplo <code>preProc = c("nzv", "corr")</code> en la llamada a la función <code>train()</code>.</p>
 </div>
             </section>
@@ -355,7 +397,7 @@ estableciendo por ejemplo <code>preProc = c("nzv", "corr")</code> en la llamada 
           </div>
         </div>
       </div>
-<a href="análisis-e-interpretación-del-modelo.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="analisis-reg-multiple.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="shrinkage.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

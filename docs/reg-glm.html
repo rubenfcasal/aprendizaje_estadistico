@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)" />
 
 
-<meta name="date" content="2020-11-17" />
+<meta name="date" content="2020-11-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -221,7 +221,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.3.1" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html#búsqueda-exhaustiva"><i class="fa fa-check"></i><b>6.3.1</b> Búsqueda exhaustiva</a></li>
 <li class="chapter" data-level="6.3.2" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html#selección-por-pasos"><i class="fa fa-check"></i><b>6.3.2</b> Selección por pasos</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="análisis-e-interpretación-del-modelo.html"><a href="análisis-e-interpretación-del-modelo.html"><i class="fa fa-check"></i><b>6.4</b> Análisis e interpretación del modelo</a></li>
+<li class="chapter" data-level="6.4" data-path="analisis-reg-multiple.html"><a href="analisis-reg-multiple.html"><i class="fa fa-check"></i><b>6.4</b> Análisis e interpretación del modelo</a></li>
 <li class="chapter" data-level="6.5" data-path="evaluación-de-la-precisión.html"><a href="evaluación-de-la-precisión.html"><i class="fa fa-check"></i><b>6.5</b> Evaluación de la precisión</a></li>
 <li class="chapter" data-level="6.6" data-path="shrinkage.html"><a href="shrinkage.html"><i class="fa fa-check"></i><b>6.6</b> Métodos de regularización</a><ul>
 <li class="chapter" data-level="6.6.1" data-path="shrinkage.html"><a href="shrinkage.html#implementación-en-r"><i class="fa fa-check"></i><b>6.6.1</b> Implementación en R</a></li>
@@ -229,10 +229,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.6.3" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-lasso"><i class="fa fa-check"></i><b>6.6.3</b> Ejemplo: Lasso</a></li>
 <li class="chapter" data-level="6.6.4" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-elastic-net"><i class="fa fa-check"></i><b>6.6.4</b> Ejemplo: Elastic Net</a></li>
 </ul></li>
-<li class="chapter" data-level="6.7" data-path="pca-pls.html"><a href="pca-pls.html"><i class="fa fa-check"></i><b>6.7</b> Métodos de reducción de la dimensión</a></li>
+<li class="chapter" data-level="6.7" data-path="pca-pls.html"><a href="pca-pls.html"><i class="fa fa-check"></i><b>6.7</b> Métodos de reducción de la dimensión</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-componentes-principales-pcr"><i class="fa fa-check"></i><b>6.7.1</b> Regresión por componentes principales (PCR)</a></li>
+<li class="chapter" data-level="6.7.2" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-mínimos-cuadrados-parciales-plsr"><i class="fa fa-check"></i><b>6.7.2</b> Regresión por mínimos cuadrados parciales (PLSR)</a></li>
+</ul></li>
 <li class="chapter" data-level="6.8" data-path="reg-glm.html"><a href="reg-glm.html"><i class="fa fa-check"></i><b>6.8</b> Modelos lineales generalizados</a><ul>
 <li class="chapter" data-level="6.8.1" data-path="reg-glm.html"><a href="reg-glm.html#ajuste-función-glm"><i class="fa fa-check"></i><b>6.8.1</b> Ajuste: función <code>glm</code></a></li>
 <li class="chapter" data-level="6.8.2" data-path="reg-glm.html"><a href="reg-glm.html#ejemplo-regresión-logística"><i class="fa fa-check"></i><b>6.8.2</b> Ejemplo: Regresión logística</a></li>
+<li class="chapter" data-level="6.8.3" data-path="reg-glm.html"><a href="reg-glm.html#selección-de-variables-explicativas"><i class="fa fa-check"></i><b>6.8.3</b> Selección de variables explicativas</a></li>
+<li class="chapter" data-level="6.8.4" data-path="reg-glm.html"><a href="reg-glm.html#analisis-glm"><i class="fa fa-check"></i><b>6.8.4</b> Análisis e interpretación del modelo</a></li>
+<li class="chapter" data-level="6.8.5" data-path="reg-glm.html"><a href="reg-glm.html#evaluación-de-la-precisión-1"><i class="fa fa-check"></i><b>6.8.5</b> Evaluación de la precisión</a></li>
+<li class="chapter" data-level="6.8.6" data-path="reg-glm.html"><a href="reg-glm.html#extensiones"><i class="fa fa-check"></i><b>6.8.6</b> Extensiones</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
@@ -264,7 +271,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="reg-glm" class="section level2">
 <h2><span class="header-section-number">6.8</span> Modelos lineales generalizados</h2>
-<p><strong><em>En preparación…</em></strong></p>
 <p>Como ya se comentó, los modelos lineales generalizados son una extensión de los modelos lineales para el caso de que la distribución condicional de la variable respuesta no sea normal, introduciendo una función de enlace (o link) <span class="math inline">\(g\)</span> de forma que
 <span class="math display">\[g\left(E(Y | \mathbf{X} )\right) = \beta_{0}+\beta_{1}X_{1}+\beta_{2}X_{2}+\cdots+\beta_{p}X_{p}\]</span>
 y su ajuste en la práctica se realiza empleando el método de máxima verosimilitud (habrá que especificar también una familia de distribuciones para la respuesta).</p>
@@ -278,7 +284,7 @@ Para un tratamiento más completo de los métodos de regresión lineal generaliz
 <div id="ajuste-función-glm" class="section level3">
 <h3><span class="header-section-number">6.8.1</span> Ajuste: función <code>glm</code></h3>
 <p>Para el ajuste (estimación de los parámetros) de un modelo lineal generalizado a un conjunto de datos (por máxima verosimilitud) se emplea la función <code>glm()</code> (la mayoría de los principales parámetros coinciden con los de la función <code>lm()</code>):</p>
-<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="reg-glm.html#cb333-1"></a>ajuste &lt;-<span class="st"> </span><span class="kw">glm</span>(formula, <span class="dt">family =</span> gaussian, data, weights, subset, na.action, ...)</span></code></pre></div>
+<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="reg-glm.html#cb377-1"></a>ajuste &lt;-<span class="st"> </span><span class="kw">glm</span>(formula, <span class="dt">family =</span> gaussian, data, weights, subset, na.action, ...)</span></code></pre></div>
 <p>El parámetro <code>family</code> especifica la distribución y opcionalmente la función de enlace.
 Por ejemplo:</p>
 <ul>
@@ -287,27 +293,28 @@ Por ejemplo:</p>
 <li><p><code>poisson(link = "log")</code></p></li>
 <li><p><code>Gamma(link = "inverse")</code></p></li>
 </ul>
-<p>Para cada distribución se toma por defecto una función link (el denominado <em>enlace canónico</em>, mostrada en primer lugar en la lista anterior; ver <code>help(family)</code> para más detalles).
+<p>Para cada distribución se toma por defecto una función de enlace (el denominado <em>enlace canónico</em>, mostrada en primer lugar en la lista anterior; ver <code>help(family)</code> para más detalles).
 Por ejemplo, en el caso del modelo logístico bastará con establecer <code>family = binomial</code>.</p>
+<p>También se podría emplear la función <code>bigglm()</code> del paquete <a href="https://CRAN.R-project.org/package=biglm"><code>biglm</code></a> para ajustar modelos lineales generalizados a grandes conjuntos de datos, aunque en este caso los requerimientos computacionales pueden ser mayores.</p>
 <p>Como ya se comentó, muchas de las herramientas y funciones genéricas disponibles para los modelos lineales son válidas también para este tipo de modelos: <code>summary</code>, <code>coef</code>, <code>confint</code>, <code>predict</code>, <code>anova</code>…</p>
 </div>
 <div id="ejemplo-regresión-logística" class="section level3">
 <h3><span class="header-section-number">6.8.2</span> Ejemplo: Regresión logística</h3>
 <p>Como ejemplo continuaremos con los datos de clientes de la compañía de distribución industrial HBAT, pero consideraremos como respuesta la variable <em>alianza</em> y como predictores las percepciones de HBAT (al igual que en las secciones anteriores consideraremos únicamente variables explicativas continuas, sin interacciones, por comodidad).</p>
-<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="reg-glm.html#cb334-1"></a><span class="co"># load(&quot;data/hbat.RData&quot;)</span></span>
-<span id="cb334-2"><a href="reg-glm.html#cb334-2"></a><span class="co"># as.data.frame(attr(hbat, &quot;variable.labels&quot;))</span></span>
-<span id="cb334-3"><a href="reg-glm.html#cb334-3"></a>df &lt;-<span class="st"> </span>hbat[, <span class="kw">c</span>(<span class="dv">7</span><span class="op">:</span><span class="dv">19</span>, <span class="dv">24</span>)]  </span>
-<span id="cb334-4"><a href="reg-glm.html#cb334-4"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb334-5"><a href="reg-glm.html#cb334-5"></a>nobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(df)</span>
-<span id="cb334-6"><a href="reg-glm.html#cb334-6"></a>itrain &lt;-<span class="st"> </span><span class="kw">sample</span>(nobs, <span class="fl">0.8</span> <span class="op">*</span><span class="st"> </span>nobs)</span>
-<span id="cb334-7"><a href="reg-glm.html#cb334-7"></a>train &lt;-<span class="st"> </span>df[itrain, ]</span>
-<span id="cb334-8"><a href="reg-glm.html#cb334-8"></a>test &lt;-<span class="st"> </span>df[<span class="op">-</span>itrain, ]</span>
-<span id="cb334-9"><a href="reg-glm.html#cb334-9"></a></span>
-<span id="cb334-10"><a href="reg-glm.html#cb334-10"></a><span class="kw">plot</span>(train, <span class="dt">pch =</span> <span class="kw">as.numeric</span>(train<span class="op">$</span>alianza), <span class="dt">col =</span> <span class="kw">as.numeric</span>(train<span class="op">$</span>alianza))</span></code></pre></div>
-<p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-39-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="reg-glm.html#cb378-1"></a><span class="co"># load(&quot;data/hbat.RData&quot;)</span></span>
+<span id="cb378-2"><a href="reg-glm.html#cb378-2"></a><span class="co"># as.data.frame(attr(hbat, &quot;variable.labels&quot;))</span></span>
+<span id="cb378-3"><a href="reg-glm.html#cb378-3"></a>df &lt;-<span class="st"> </span>hbat[, <span class="kw">c</span>(<span class="dv">7</span><span class="op">:</span><span class="dv">19</span>, <span class="dv">24</span>)]  </span>
+<span id="cb378-4"><a href="reg-glm.html#cb378-4"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb378-5"><a href="reg-glm.html#cb378-5"></a>nobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(df)</span>
+<span id="cb378-6"><a href="reg-glm.html#cb378-6"></a>itrain &lt;-<span class="st"> </span><span class="kw">sample</span>(nobs, <span class="fl">0.8</span> <span class="op">*</span><span class="st"> </span>nobs)</span>
+<span id="cb378-7"><a href="reg-glm.html#cb378-7"></a>train &lt;-<span class="st"> </span>df[itrain, ]</span>
+<span id="cb378-8"><a href="reg-glm.html#cb378-8"></a>test &lt;-<span class="st"> </span>df[<span class="op">-</span>itrain, ]</span>
+<span id="cb378-9"><a href="reg-glm.html#cb378-9"></a></span>
+<span id="cb378-10"><a href="reg-glm.html#cb378-10"></a><span class="kw">plot</span>(train, <span class="dt">pch =</span> <span class="kw">as.numeric</span>(train<span class="op">$</span>alianza), <span class="dt">col =</span> <span class="kw">as.numeric</span>(train<span class="op">$</span>alianza))</span></code></pre></div>
+<p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-50-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>Como ya se comentó, estableciendo <code>family = binomial</code> en la llamada a <code>glm()</code> se ajusta un modelo de regresión logística (por defecto <code>link = "logit"</code>):</p>
-<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="reg-glm.html#cb335-1"></a>modelo &lt;-<span class="st"> </span><span class="kw">glm</span>(alianza <span class="op">~</span><span class="st"> </span>velocida <span class="op">+</span><span class="st"> </span>calidadp, <span class="dt">family =</span> binomial, <span class="dt">data =</span> train)</span>
-<span id="cb335-2"><a href="reg-glm.html#cb335-2"></a>modelo</span></code></pre></div>
+<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="reg-glm.html#cb379-1"></a>modelo &lt;-<span class="st"> </span><span class="kw">glm</span>(alianza <span class="op">~</span><span class="st"> </span>velocida <span class="op">+</span><span class="st"> </span>calidadp, <span class="dt">family =</span> binomial, <span class="dt">data =</span> train)</span>
+<span id="cb379-2"><a href="reg-glm.html#cb379-2"></a>modelo</span></code></pre></div>
 <pre><code>## 
 ## Call:  glm(formula = alianza ~ velocida + calidadp, family = binomial, 
 ##     data = train)
@@ -320,16 +327,16 @@ Por ejemplo, en el caso del modelo logístico bastará con establecer <code>fami
 ## Null Deviance:       218.2 
 ## Residual Deviance: 160.5     AIC: 166.5</code></pre>
 <p>La razón de ventajas (OR) permite cuantificar el efecto de las variables explicativas en la respuesta (incremento proporcional en la razón entre la probabilidad de éxito y la de fracaso, al aumentar una unidad la variable manteniendo las demás fijas):</p>
-<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="reg-glm.html#cb337-1"></a><span class="kw">exp</span>(<span class="kw">coef</span>(modelo))  <span class="co"># Razones de ventajas (&quot;odds ratios&quot;)</span></span></code></pre></div>
+<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="reg-glm.html#cb381-1"></a><span class="kw">exp</span>(<span class="kw">coef</span>(modelo))  <span class="co"># Razones de ventajas (&quot;odds ratios&quot;)</span></span></code></pre></div>
 <pre><code>##  (Intercept)     velocida     calidadp 
 ## 3.646214e-06 5.194162e+00 2.055887e+00</code></pre>
-<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="reg-glm.html#cb339-1"></a><span class="kw">exp</span>(<span class="kw">confint</span>(modelo))</span></code></pre></div>
+<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="reg-glm.html#cb383-1"></a><span class="kw">exp</span>(<span class="kw">confint</span>(modelo))</span></code></pre></div>
 <pre><code>##                    2.5 %       97.5 %
 ## (Intercept) 4.465945e-08 1.593277e-04
 ## velocida    2.766629e+00 1.068554e+01
 ## calidadp    1.557441e+00 2.789897e+00</code></pre>
 <p>Para obtener un resumen más completo del ajuste también se utiliza <code>summary()</code></p>
-<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="reg-glm.html#cb341-1"></a><span class="kw">summary</span>(modelo)</span></code></pre></div>
+<div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="reg-glm.html#cb385-1"></a><span class="kw">summary</span>(modelo)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = alianza ~ velocida + calidadp, family = binomial, 
@@ -358,8 +365,8 @@ Por ejemplo, en el caso del modelo logístico bastará con establecer <code>fami
 La <em>Null deviance</em> se correspondería con un modelo solo con la constante y la <em>Residual deviance</em> con el modelo ajustado.
 En este caso hay una reducción de 57.65 con una pérdida de 2 grados de libertad (una reducción significativa).</p>
 <p>Para contrastar globalmente el efecto de las covariables también podemos emplear:</p>
-<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="reg-glm.html#cb343-1"></a>modelo.null &lt;-<span class="st"> </span><span class="kw">glm</span>(alianza <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, binomial, train)</span>
-<span id="cb343-2"><a href="reg-glm.html#cb343-2"></a><span class="kw">anova</span>(modelo.null, modelo, <span class="dt">test =</span> <span class="st">&quot;Chi&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="reg-glm.html#cb387-1"></a>modelo.null &lt;-<span class="st"> </span><span class="kw">glm</span>(alianza <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, binomial, train)</span>
+<span id="cb387-2"><a href="reg-glm.html#cb387-2"></a><span class="kw">anova</span>(modelo.null, modelo, <span class="dt">test =</span> <span class="st">&quot;Chi&quot;</span>)</span></code></pre></div>
 <pre><code>## Analysis of Deviance Table
 ## 
 ## Model 1: alianza ~ 1
@@ -369,7 +376,214 @@ En este caso hay una reducción de 57.65 con una pérdida de 2 grados de liberta
 ## 2       157     160.55  2   57.646 3.036e-13 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+<div id="selección-de-variables-explicativas" class="section level3">
+<h3><span class="header-section-number">6.8.3</span> Selección de variables explicativas</h3>
+<p>El objetivo sería conseguir un buen ajuste con el menor número de variables explicativas posible.</p>
+<p>Para obtener el modelo “óptimo” lo ideal sería evaluar todos los modelos posibles.
+En este caso no se puede emplear la función <code>regsubsets</code> del paquete <code>leaps</code> (sólo para modelos lineales),
+pero por ejemplo el paquete
+<a href="https://cran.r-project.org/web/packages/bestglm/vignettes/bestglm.pdf"><code>bestglm</code></a>
+proporciona una herramienta equivalente (<code>bestglm()</code>).</p>
+<p>En este caso también se podría emplear la función <code>stepwise</code> del paquete <code>RcmdrMisc</code> (interfaz de <code>stepAIC</code> del paquete <code>MASS</code>), para seleccionar el modelo por pasos según criterio AIC o BIC:</p>
+<p>seguir un proceso interactivo, eliminando o añadiendo variables con la función <code>update()</code>,</p>
+<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="reg-glm.html#cb389-1"></a><span class="co"># library(RcmdrMisc)</span></span>
+<span id="cb389-2"><a href="reg-glm.html#cb389-2"></a>modelo.completo &lt;-<span class="st"> </span><span class="kw">glm</span>(alianza <span class="op">~</span><span class="st"> </span>., <span class="dt">family =</span> binomial, <span class="dt">data =</span> train)</span>
+<span id="cb389-3"><a href="reg-glm.html#cb389-3"></a></span>
+<span id="cb389-4"><a href="reg-glm.html#cb389-4"></a>modelo &lt;-<span class="st"> </span><span class="kw">stepwise</span>(modelo.completo, <span class="dt">direction=</span><span class="st">&#39;forward/backward&#39;</span>, <span class="dt">criterion=</span><span class="st">&#39;BIC&#39;</span>)</span></code></pre></div>
+<pre><code>## 
+## Direction:  forward/backward
+## Criterion:  BIC 
+## 
+## Start:  AIC=223.27
+## alianza ~ 1
+## 
+##            Df Deviance    AIC
+## + velocida  1   189.38 199.53
+## + calidadp  1   192.15 202.30
+## + facturac  1   193.45 203.60
+## + producto  1   196.91 207.06
+## + quejas    1   198.10 208.25
+## + imgfvent  1   198.80 208.95
+## + web       1   204.40 214.55
+## + publi     1   209.28 219.43
+## + precio    1   211.97 222.12
+## + garantia  1   212.37 222.52
+## &lt;none&gt;          218.19 223.27
+## + nprod     1   213.97 224.12
+## + soporte   1   216.50 226.65
+## + flexprec  1   216.99 227.14
+## 
+## Step:  AIC=199.53
+## alianza ~ velocida
+## 
+##            Df Deviance    AIC
+## + calidadp  1   160.55 175.77
+## + imgfvent  1   178.43 193.65
+## + web       1   181.52 196.74
+## + precio    1   183.38 198.61
+## &lt;none&gt;          189.38 199.53
+## + flexprec  1   185.47 200.69
+## + producto  1   185.54 200.77
+## + nprod     1   186.92 202.14
+## + facturac  1   186.93 202.15
+## + garantia  1   187.02 202.25
+## + publi     1   187.44 202.67
+## + soporte   1   189.06 204.29
+## + quejas    1   189.27 204.50
+## - velocida  1   218.19 223.27
+## 
+## Step:  AIC=175.77
+## alianza ~ velocida + calidadp
+## 
+##            Df Deviance    AIC
+## + imgfvent  1   137.05 157.35
+## + web       1   145.63 165.93
+## &lt;none&gt;          160.55 175.77
+## + publi     1   156.03 176.33
+## + facturac  1   157.35 177.66
+## + flexprec  1   157.44 177.74
+## + producto  1   157.75 178.06
+## + garantia  1   158.97 179.27
+## + nprod     1   160.18 180.47
+## + quejas    1   160.20 180.50
+## + soporte   1   160.37 180.67
+## + precio    1   160.37 180.67
+## - calidadp  1   189.38 199.53
+## - velocida  1   192.15 202.30
+## 
+## Step:  AIC=157.35
+## alianza ~ velocida + calidadp + imgfvent
+## 
+##            Df Deviance    AIC
+## &lt;none&gt;          137.05 157.35
+## + precio    1   134.97 160.35
+## + flexprec  1   135.39 160.77
+## + publi     1   135.65 161.03
+## + producto  1   135.72 161.09
+## + facturac  1   135.81 161.19
+## + garantia  1   136.31 161.69
+## + nprod     1   136.63 162.00
+## + soporte   1   136.79 162.16
+## + quejas    1   136.96 162.33
+## + web       1   137.03 162.40
+## - velocida  1   160.34 175.57
+## - imgfvent  1   160.55 175.77
+## - calidadp  1   178.43 193.65</code></pre>
+<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="reg-glm.html#cb391-1"></a><span class="kw">summary</span>(modelo)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = alianza ~ velocida + calidadp + imgfvent, family = binomial, 
+##     data = train)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.6527  -0.6822  -0.1482   0.7631   2.0561  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept) -20.5164     3.4593  -5.931 3.02e-09 ***
+## velocida      1.6631     0.3981   4.177 2.95e-05 ***
+## calidadp      1.0469     0.2014   5.197 2.02e-07 ***
+## imgfvent      1.0085     0.2398   4.205 2.61e-05 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 218.19  on 159  degrees of freedom
+## Residual deviance: 137.05  on 156  degrees of freedom
+## AIC: 145.05
+## 
+## Number of Fisher Scoring iterations: 5</code></pre>
+</div>
+<div id="analisis-glm" class="section level3">
+<h3><span class="header-section-number">6.8.4</span> Análisis e interpretación del modelo</h3>
+<p>Las hipótesis estructurales del modelo son similares al caso de regresión lineal (aunque algunas como la linealidad se suponen en la escala transformada) y si no se verifican los resultados pueden no ser fiables o totalmente erróneos.</p>
+<p>Con la función <code>plot</code> se pueden generar gráficos de interés para la diagnosis del modelo:</p>
+<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb393-1"><a href="reg-glm.html#cb393-1"></a>oldpar &lt;-<span class="st"> </span><span class="kw">par</span>( <span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb393-2"><a href="reg-glm.html#cb393-2"></a><span class="kw">plot</span>(modelo)</span></code></pre></div>
+<p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-56-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="reg-glm.html#cb394-1"></a><span class="kw">par</span>(oldpar)</span></code></pre></div>
+<p>Aunque su interpretación difiere un poco de la de los modelos lineales…</p>
+<p>Se pueden generar gráficos parciales de residuos (p.e. <code>crPlots()</code> del paquete <code>car</code>):</p>
+<div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb395-1"><a href="reg-glm.html#cb395-1"></a><span class="co"># library(car)</span></span>
+<span id="cb395-2"><a href="reg-glm.html#cb395-2"></a><span class="kw">crPlots</span>(modelo)</span></code></pre></div>
+<p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-57-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>Se pueden emplear las mismas funciones vistas en los modelos lineales para obtener medidas de diagnosis de interés (Sección <a href="analisis-reg-multiple.html#analisis-reg-multiple">6.4</a>). Por ejemplo:</p>
+<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="reg-glm.html#cb396-1"></a><span class="kw">residuals</span>(model, <span class="dt">type =</span> <span class="st">&quot;deviance&quot;</span>)</span></code></pre></div>
+<p>proporcionará los residuos <em>deviance</em>.</p>
+<p>Por supuesto también pueden aparecer problemas de multicolinealidad, y podemos emplear las mismas herramientas para detectarla:</p>
+<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb397-1"><a href="reg-glm.html#cb397-1"></a><span class="co"># library(car)</span></span>
+<span id="cb397-2"><a href="reg-glm.html#cb397-2"></a><span class="kw">vif</span>(modelo)</span></code></pre></div>
+<pre><code>## velocida calidadp imgfvent 
+## 1.193557 1.656649 1.451237</code></pre>
+<p>Si no se satisfacen los supuestos básicos también se pueden intentar distintas alternativas (en este caso se pueden cambiar además la función de enlace y la familia de distribuciones, que puede incluir parámetros para modelar dispersión).
+Por ejemplo, para tratar de corregir la falta de linealidad se pueden considerar ajustes polinómicos o emplear métodos no paramétricos, como la función <code>gam()</code> del paquete <code>mgcv</code>.</p>
+</div>
+<div id="evaluación-de-la-precisión-1" class="section level3">
+<h3><span class="header-section-number">6.8.5</span> Evaluación de la precisión</h3>
 <p>Como ya se mostró en la Sección <a href="const-eval.html#eval-class">1.3.5</a>, podemos obtener las estimaciones de la probabilidad de la segunda categoría empleando <code>predict()</code> con <code>type = "response"</code>:</p>
+<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="reg-glm.html#cb399-1"></a>p.est &lt;-<span class="st"> </span><span class="kw">predict</span>(modelo, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>, <span class="dt">newdata =</span> test)</span>
+<span id="cb399-2"><a href="reg-glm.html#cb399-2"></a>pred &lt;-<span class="st"> </span><span class="kw">factor</span>(p.est <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.5</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;No&quot;</span>, <span class="st">&quot;Si&quot;</span>)) <span class="co"># levels = c(&#39;FALSE&#39;, &#39;TRUE&#39;)</span></span></code></pre></div>
+<p>y las medidas de precisión de la predicción (además de los criterios AIC o BIC tradicionales):</p>
+<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="reg-glm.html#cb400-1"></a>caret<span class="op">::</span><span class="kw">confusionMatrix</span>(pred, test<span class="op">$</span>alianza, <span class="dt">positive =</span> <span class="st">&quot;Si&quot;</span>, <span class="dt">mode =</span> <span class="st">&quot;everything&quot;</span>)</span></code></pre></div>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction No Si
+##         No 19  5
+##         Si  3 13
+##                                           
+##                Accuracy : 0.8             
+##                  95% CI : (0.6435, 0.9095)
+##     No Information Rate : 0.55            
+##     P-Value [Acc &gt; NIR] : 0.0008833       
+##                                           
+##                   Kappa : 0.5918          
+##                                           
+##  Mcnemar&#39;s Test P-Value : 0.7236736       
+##                                           
+##             Sensitivity : 0.7222          
+##             Specificity : 0.8636          
+##          Pos Pred Value : 0.8125          
+##          Neg Pred Value : 0.7917          
+##               Precision : 0.8125          
+##                  Recall : 0.7222          
+##                      F1 : 0.7647          
+##              Prevalence : 0.4500          
+##          Detection Rate : 0.3250          
+##    Detection Prevalence : 0.4000          
+##       Balanced Accuracy : 0.7929          
+##                                           
+##        &#39;Positive&#39; Class : Si              
+## </code></pre>
+<p>También podemos emplear <code>caret</code>:</p>
+<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="reg-glm.html#cb402-1"></a><span class="co"># library(caret)</span></span>
+<span id="cb402-2"><a href="reg-glm.html#cb402-2"></a><span class="kw">names</span>(<span class="kw">getModelInfo</span>(<span class="st">&quot;glm&quot;</span>)) <span class="co"># 11 métodos</span></span></code></pre></div>
+<pre><code>##  [1] &quot;bayesglm&quot;       &quot;glm.nb&quot;         &quot;glm&quot;            &quot;glmboost&quot;      
+##  [5] &quot;glmnet_h2o&quot;     &quot;glmnet&quot;         &quot;glmStepAIC&quot;     &quot;plsRglm&quot;       
+##  [9] &quot;vglmAdjCat&quot;     &quot;vglmContRatio&quot;  &quot;vglmCumulative&quot;</code></pre>
+</div>
+<div id="extensiones" class="section level3">
+<h3><span class="header-section-number">6.8.6</span> Extensiones</h3>
+<p>Se pueden imponer restricciones a las estimaciones de los parámetros de modo análogo al caso de modelos lineales ( y <a href="pca-pls.html#pca-pls">6.7</a>).
+Por ejemplo, en los métodos de regularización (<em>ridge</em>, <em>lasso</em> o <em>elastic net</em>; Sección <a href="shrinkage.html#shrinkage">6.6</a>) bastaría con cambiar en la función de pérdidas la suma residual de cuadrados por el logaritmo negativo de la función de verosimilitud.</p>
+
+<div class="exercise">
+<p><span id="exr:glmnet" class="exercise"><strong>Ejercicio 6.1  </strong></span>
+Emplear el paquete <code>glmnet</code> para ajustar modelos logísticos con penalización <em>ridge</em> y <em>lasso</em> a la muestra de entrenamiento de los datos de clientes de la compañía de distribución industrial HBAT, considerando como respuesta la variable <em>alianza</em> y seleccionando un valor “óptimo” del hiperparámetro <span class="math inline">\(\lambda\)</span>.
+Ajustar también un modelo con penalización <em>elastic net</em> empleando <code>caret</code> (seleccionando los valores óptimos de los hiperparámetros).</p>
+</div>
+
+<p>El método PCR (Sección <a href="pca-pls.html#pca-pls">6.7</a>) se extendería de forma inmediata al caso de modelos generalizados, simplemente cambiando el modelo ajustado.
+También están disponibles métodos PLSR para modelos generalizados.</p>
+
+<div class="exercise">
+<p><span id="exr:glm-reduccion" class="exercise"><strong>Ejercicio 6.2  </strong></span>
+Emplear el paquete <code>caret</code> para ajustar modelos logísticos con reducción de la dimensión a los datos de clientes de la compañía de distribución industrial HBAT. Comparar el modelo obtenido con preprocesado <code>"pca"</code> y el método <code>"glmStepAIC"</code>, con el obtenido empleando el método <code>"plsRglm"</code>.</p>
+</div>
+
 
 </div>
 </div>

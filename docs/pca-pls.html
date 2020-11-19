@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)" />
 
 
-<meta name="date" content="2020-11-17" />
+<meta name="date" content="2020-11-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -221,7 +221,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.3.1" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html#búsqueda-exhaustiva"><i class="fa fa-check"></i><b>6.3.1</b> Búsqueda exhaustiva</a></li>
 <li class="chapter" data-level="6.3.2" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html#selección-por-pasos"><i class="fa fa-check"></i><b>6.3.2</b> Selección por pasos</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="análisis-e-interpretación-del-modelo.html"><a href="análisis-e-interpretación-del-modelo.html"><i class="fa fa-check"></i><b>6.4</b> Análisis e interpretación del modelo</a></li>
+<li class="chapter" data-level="6.4" data-path="analisis-reg-multiple.html"><a href="analisis-reg-multiple.html"><i class="fa fa-check"></i><b>6.4</b> Análisis e interpretación del modelo</a></li>
 <li class="chapter" data-level="6.5" data-path="evaluación-de-la-precisión.html"><a href="evaluación-de-la-precisión.html"><i class="fa fa-check"></i><b>6.5</b> Evaluación de la precisión</a></li>
 <li class="chapter" data-level="6.6" data-path="shrinkage.html"><a href="shrinkage.html"><i class="fa fa-check"></i><b>6.6</b> Métodos de regularización</a><ul>
 <li class="chapter" data-level="6.6.1" data-path="shrinkage.html"><a href="shrinkage.html#implementación-en-r"><i class="fa fa-check"></i><b>6.6.1</b> Implementación en R</a></li>
@@ -229,10 +229,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.6.3" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-lasso"><i class="fa fa-check"></i><b>6.6.3</b> Ejemplo: Lasso</a></li>
 <li class="chapter" data-level="6.6.4" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-elastic-net"><i class="fa fa-check"></i><b>6.6.4</b> Ejemplo: Elastic Net</a></li>
 </ul></li>
-<li class="chapter" data-level="6.7" data-path="pca-pls.html"><a href="pca-pls.html"><i class="fa fa-check"></i><b>6.7</b> Métodos de reducción de la dimensión</a></li>
+<li class="chapter" data-level="6.7" data-path="pca-pls.html"><a href="pca-pls.html"><i class="fa fa-check"></i><b>6.7</b> Métodos de reducción de la dimensión</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-componentes-principales-pcr"><i class="fa fa-check"></i><b>6.7.1</b> Regresión por componentes principales (PCR)</a></li>
+<li class="chapter" data-level="6.7.2" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-mínimos-cuadrados-parciales-plsr"><i class="fa fa-check"></i><b>6.7.2</b> Regresión por mínimos cuadrados parciales (PLSR)</a></li>
+</ul></li>
 <li class="chapter" data-level="6.8" data-path="reg-glm.html"><a href="reg-glm.html"><i class="fa fa-check"></i><b>6.8</b> Modelos lineales generalizados</a><ul>
 <li class="chapter" data-level="6.8.1" data-path="reg-glm.html"><a href="reg-glm.html#ajuste-función-glm"><i class="fa fa-check"></i><b>6.8.1</b> Ajuste: función <code>glm</code></a></li>
 <li class="chapter" data-level="6.8.2" data-path="reg-glm.html"><a href="reg-glm.html#ejemplo-regresión-logística"><i class="fa fa-check"></i><b>6.8.2</b> Ejemplo: Regresión logística</a></li>
+<li class="chapter" data-level="6.8.3" data-path="reg-glm.html"><a href="reg-glm.html#selección-de-variables-explicativas"><i class="fa fa-check"></i><b>6.8.3</b> Selección de variables explicativas</a></li>
+<li class="chapter" data-level="6.8.4" data-path="reg-glm.html"><a href="reg-glm.html#analisis-glm"><i class="fa fa-check"></i><b>6.8.4</b> Análisis e interpretación del modelo</a></li>
+<li class="chapter" data-level="6.8.5" data-path="reg-glm.html"><a href="reg-glm.html#evaluación-de-la-precisión-1"><i class="fa fa-check"></i><b>6.8.5</b> Evaluación de la precisión</a></li>
+<li class="chapter" data-level="6.8.6" data-path="reg-glm.html"><a href="reg-glm.html#extensiones"><i class="fa fa-check"></i><b>6.8.6</b> Extensiones</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
@@ -264,7 +271,288 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="pca-pls" class="section level2">
 <h2><span class="header-section-number">6.7</span> Métodos de reducción de la dimensión</h2>
-<p><strong><em>En preparación…</em></strong></p>
+<p>Otra alternativa, para tratar de reducir la varianza de los modelos lineales, es transformar los predictores considerando <span class="math inline">\(k &lt; p\)</span> combinaciones lineales:
+<span class="math display">\[Z_j = a_{1j}X_{1} + a_{2j}X_{2} + \ldots + a_{pj}X_{p}\]</span>
+con <span class="math inline">\(j = 1, \ldots, k\)</span>, denominadas componentes (o variables latentes),
+y posteriormente ajustar un modelo de regresión lineal empleándolas como nuevos predictores:
+<span class="math display">\[Y = \alpha_0 + \alpha_1 Z_1 + \ldots + \alpha_k Z_k + \varepsilon\]</span></p>
+<p>Adicionalmente, si se seleccionan los coeficientes <span class="math inline">\(a_{ji}\)</span> (denominados <em>cargas</em> o <em>pesos</em>) de forma que
+<span class="math display">\[\sum_{i=1}^p a_{ij}a_{il} = 0, \text{ si } j \neq l,\]</span>
+las componentes serán ortogonales y se evitarán posibles problemas de multicolinealidad.
+De esta forma se reduce la dimensión del problema, pasando de <span class="math inline">\(p + 1\)</span> a <span class="math inline">\(k + 1\)</span> coeficientes a estimar, lo cual en principio reducirá la varianza, especialmente si <span class="math inline">\(p\)</span> es grande en comparación con <span class="math inline">\(n\)</span>.
+Por otra parte, también podríamos expresar el modelo final en función de los predictores originales, con coeficientes:
+<span class="math display">\[\beta_i = \sum_{j=1}^k \alpha_j a_{ij}\]</span>
+Es decir, se ajusta un modelo lineal con restricciones, lo que en principio incrementará el sesgo (si <span class="math inline">\(k = p\)</span> sería equivalente a ajustar un modelo lineal sin restricciones).
+Además, podríamos interpretar los coeficientes <span class="math inline">\(\alpha_j\)</span> como los efectos de las componentes del modo tradicional, pero resultaría más complicado interpretar los efectos de los predictores originales.</p>
+<p>También hay que tener en cuenta que al considerar combinaciones lineales, si las hipótesis estructurales de linealidad, homocedasticidad, normalidad o independencia no son asumibles en el modelo original, es de esperar que tampoco lo sean en el modelo transformado (se podrían emplear las herramientas descritas en la Sección <a href="analisis-reg-multiple.html#analisis-reg-multiple">6.4</a> para su análisis).</p>
+<p>Hay una gran variedad de algoritmos para obtener estas componentes, en esta sección consideraremos las dos aproximaciones más utilizadas: componentes principales y mínimos cuadrados parciales.
+También hay numerosos paquetes de R que implementan métodos de este tipo (<a href="https://mevik.net/work/software/pls.html"><code>pls</code></a>, <a href="https://github.com/fbertran/plsRglm"><code>plsRglm</code></a>…), incluyendo <code>caret</code>.</p>
+<div id="regresión-por-componentes-principales-pcr" class="section level3">
+<h3><span class="header-section-number">6.7.1</span> Regresión por componentes principales (PCR)</h3>
+<p>Una de las aproximaciones tradicionales, cuando se detecta la presencia de multicolinealidad, consiste en aplicar el método de componentes principales a los predictores.
+El análisis de componentes principales (<em>principal component analysis</em>, PCA) es un método muy utilizado de aprendizaje no supervisado, que permite reducir el número de dimensiones, tratando de recoger la mayor parte de la variabilidad de los datos originales (en este caso de los predictores; para más detalles sobre PCA ver por ejemplo el Capítulo 10 de James <em>et al.</em>, 2013).</p>
+<p>Al aplicar PCA a los predictores <span class="math inline">\(X_1, \ldots, X_p\)</span> se obtienen componentes ordenados según la variabilidad explicada de forma descendente.
+El primer componente es el que recoge el mayor porcentaje de la variabilidad total (se corresponde con la dirección de mayor variación de las observaciones).
+Las siguientes componentes se seleccionan entre las direcciones ortogonales a las anteriores y de forma que recojan la mayor parte de la variabilidad restante.
+Además estas componentes son normalizadas, de forma que:
+<span class="math display">\[\sum_{i=1}^p a_{ij}^2 = 1\]</span>
+(se busca una transformación lineal ortonormal).
+En la práctica esto puede llevarse a cabo fácilmente a partir de la descomposición espectral de la matriz de covarianzas muestrales, aunque normalmente se estandarizan previamente los datos (i.e., se emplea la matriz de correlaciones).
+Por tanto, si se pretende emplear estas componentes para ajustar un modelo de regresión, habrá que conservar los parámetros de estas transformaciones para poder aplicarlas a nuevas observaciones.</p>
+<p>Normalmente se seleccionan las primeras <span class="math inline">\(k\)</span> componentes de forma que expliquen la mayor parte de la variabilidad de los datos (los predictores en este caso).
+En PCR (<em>principal component regression</em>; Massy, 1965) se confía en que estas componentes recojan también la mayor parte de la información sobre la respuesta, pero podría no ser el caso.</p>
+<p>Como ejemplo continuaremos con los datos de clientes de la compañía de distribución industrial HBAT.
+Aunque podríamos emplear las funciones <code>printcomp()</code> y <code>lm()</code> del paquete base, emplearemos por comodidad la función <code>pcr()</code> del paquete <a href="https://mevik.net/work/software/pls.html"><code>pls</code></a> (ya que incorpora validación cruzada para seleccionar el número de componentes y facilita el cálculo de nuevas predicciones).</p>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="pca-pls.html#cb343-1"></a><span class="kw">library</span>(pls)</span>
+<span id="cb343-2"><a href="pca-pls.html#cb343-2"></a><span class="co"># pcr(formula, ncomp, data, scale = FALSE, center = TRUE, </span></span>
+<span id="cb343-3"><a href="pca-pls.html#cb343-3"></a><span class="co">#     validation = c(&quot;none&quot;, &quot;CV&quot;, &quot;LOO&quot;), segments = 10)</span></span>
+<span id="cb343-4"><a href="pca-pls.html#cb343-4"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb343-5"><a href="pca-pls.html#cb343-5"></a>pcreg &lt;-<span class="st"> </span><span class="kw">pcr</span>(fidelida <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train, <span class="dt">scale =</span> <span class="ot">TRUE</span>, <span class="dt">validation =</span> <span class="st">&quot;CV&quot;</span>)</span>
+<span id="cb343-6"><a href="pca-pls.html#cb343-6"></a><span class="kw">summary</span>(pcreg)</span></code></pre></div>
+<pre><code>## Data:    X dimension: 160 13 
+##  Y dimension: 160 1
+## Fit method: svdpc
+## Number of components considered: 13
+## 
+## VALIDATION: RMSEP
+## Cross-validated using 10 random segments.
+##        (Intercept)  1 comps  2 comps  3 comps  4 comps  5 comps  6 comps
+## CV           8.683    6.892    5.960    5.695    5.448    5.525    4.901
+## adjCV        8.683    6.888    5.954    5.630    5.440    5.517    4.846
+##        7 comps  8 comps  9 comps  10 comps  11 comps  12 comps  13 comps
+## CV       4.930    4.880    4.550     4.575     4.555     4.579     4.573
+## adjCV    4.916    4.862    4.535     4.560     4.539     4.561     4.554
+## 
+## TRAINING: % variance explained
+##           1 comps  2 comps  3 comps  4 comps  5 comps  6 comps  7 comps
+## X           29.40    50.38    63.09    75.38    82.93    87.33    91.02
+## fidelida    37.89    53.76    58.84    61.79    61.96    70.56    70.97
+##           8 comps  9 comps  10 comps  11 comps  12 comps  13 comps
+## X           94.14    96.39     97.86     99.00     99.93    100.00
+## fidelida    72.13    75.12     75.12     75.78     76.00     76.14</code></pre>
+<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="pca-pls.html#cb345-1"></a><span class="kw">validationplot</span>(pcreg, <span class="dt">legend =</span> <span class="st">&quot;topright&quot;</span>)</span></code></pre></div>
+<p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-40-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>Empleando el criterio de menor error de validación cruzada se seleccionaría un número elevado de componentes.
+El mínimo se alcanzaría con 12 componentes (lo cual sería prácticamente lo mismo que ajustar un modelo lineal con todos los predictores), pero sería razonable emplear 9 ya que la gráfica es prácticamente plana a partir de ese valor.</p>
+<p>Los coeficientes de los predictores originales con el modelo seleccionado serían:</p>
+<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="pca-pls.html#cb346-1"></a><span class="kw">coef</span>(pcreg, <span class="dt">ncomp =</span> <span class="dv">9</span>, <span class="dt">intercept =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>## , , 9 comps
+## 
+##                fidelida
+## (Intercept) -5.33432555
+## calidadp     4.53450998
+## web          1.36586619
+## soporte     -0.08892573
+## quejas       2.21875583
+## publi        0.16238769
+## producto     1.77457778
+## imgfvent    -0.20518565
+## precio       0.83775389
+## garantia    -0.32313633
+## nprod        0.07569817
+## facturac    -0.45633670
+## flexprec     0.72941138
+## velocida     2.27911181</code></pre>
+<p>Finalmente evaluamos su precisión:</p>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="pca-pls.html#cb348-1"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span> (pcreg , test, <span class="dt">ncomp =</span> <span class="dv">9</span>)</span>
+<span id="cb348-2"><a href="pca-pls.html#cb348-2"></a><span class="kw">accuracy</span>(pred, obs)</span></code></pre></div>
+<pre><code>##         me       rmse        mae        mpe       mape  r.squared 
+## 0.54240746 4.39581553 3.46755308 0.08093351 6.15004687 0.81060798</code></pre>
+<p>Empleando el método <code>"pcr"</code> de <code>caret</code>:</p>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="pca-pls.html#cb350-1"></a><span class="kw">library</span>(caret)</span>
+<span id="cb350-2"><a href="pca-pls.html#cb350-2"></a><span class="kw">modelLookup</span>(<span class="st">&quot;pcr&quot;</span>)</span></code></pre></div>
+<pre><code>##   model parameter       label forReg forClass probModel
+## 1   pcr     ncomp #Components   TRUE    FALSE     FALSE</code></pre>
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="pca-pls.html#cb352-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb352-2"><a href="pca-pls.html#cb352-2"></a>caret.pcr &lt;-<span class="st"> </span><span class="kw">train</span>(fidelida <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train, <span class="dt">method =</span> <span class="st">&quot;pcr&quot;</span>,</span>
+<span id="cb352-3"><a href="pca-pls.html#cb352-3"></a>                   <span class="dt">preProcess =</span> <span class="kw">c</span>(<span class="st">&quot;zv&quot;</span>, <span class="st">&quot;center&quot;</span>, <span class="st">&quot;scale&quot;</span>),</span>
+<span id="cb352-4"><a href="pca-pls.html#cb352-4"></a>                   <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="dt">number =</span> <span class="dv">10</span>),</span>
+<span id="cb352-5"><a href="pca-pls.html#cb352-5"></a>                   <span class="dt">tuneGrid =</span> <span class="kw">data.frame</span>(<span class="dt">ncomp =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>))</span>
+<span id="cb352-6"><a href="pca-pls.html#cb352-6"></a><span class="co"># También se podía haber incluido `selectionFunction = &quot;oneSE&quot;` en `trControl()`</span></span>
+<span id="cb352-7"><a href="pca-pls.html#cb352-7"></a>caret.pcr</span></code></pre></div>
+<pre><code>## Principal Component Analysis 
+## 
+## 160 samples
+##  13 predictor
+## 
+## Pre-processing: centered (13), scaled (13) 
+## Resampling: Cross-Validated (10 fold) 
+## Summary of sample sizes: 145, 143, 144, 143, 145, 144, ... 
+## Resampling results across tuning parameters:
+## 
+##   ncomp  RMSE      Rsquared   MAE     
+##    1     6.844663  0.3889234  5.680556
+##    2     5.894889  0.5446242  4.795170
+##    3     5.604429  0.5837430  4.588714
+##    4     5.403949  0.6077034  4.374244
+##    5     5.476941  0.5984578  4.392604
+##    6     4.806541  0.6891701  3.772401
+##    7     4.830222  0.6886805  3.780234
+##    8     4.825438  0.6895724  3.736469
+##    9     4.511374  0.7295536  3.371115
+##   10     4.551134  0.7260848  3.405876
+## 
+## RMSE was used to select the optimal model using the smallest value.
+## The final value used for the model was ncomp = 9.</code></pre>
+<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="pca-pls.html#cb354-1"></a><span class="kw">ggplot</span>(caret.pcr, <span class="dt">highlight =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-43-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="pca-pls.html#cb355-1"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(caret.pcr, <span class="dt">newdata =</span> test)</span>
+<span id="cb355-2"><a href="pca-pls.html#cb355-2"></a><span class="kw">accuracy</span>(pred, obs)</span></code></pre></div>
+<pre><code>##         me       rmse        mae        mpe       mape  r.squared 
+## 0.54240746 4.39581553 3.46755308 0.08093351 6.15004687 0.81060798</code></pre>
+<p>Al incluir más componentes se aumenta la proporción de variabilidad explicada de los predictores,
+pero esto no está relacionado con su utilidad para explicar la respuesta.
+No va a haber problemas de multicolinealidad aunque incluyamos muchas componentes, pero se tendrán que estimar más coeficientes y va a disminuir su precisión.
+Sería más razonable obtener las componentes principales y después aplicar un método de selección.
+Por ejemplo podemos combinar el método de preprocesado <code>"pcr"</code> de <code>caret</code> con un método de selección de variables<a href="#fn25" class="footnote-ref" id="fnref25"><sup>25</sup></a>:</p>
+<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="pca-pls.html#cb357-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb357-2"><a href="pca-pls.html#cb357-2"></a>caret.pcrsel &lt;-<span class="st"> </span><span class="kw">train</span>(fidelida <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train, <span class="dt">method =</span> <span class="st">&quot;leapSeq&quot;</span>,</span>
+<span id="cb357-3"><a href="pca-pls.html#cb357-3"></a>                   <span class="dt">preProcess =</span> <span class="kw">c</span>(<span class="st">&quot;zv&quot;</span>, <span class="st">&quot;center&quot;</span>, <span class="st">&quot;scale&quot;</span>, <span class="st">&quot;pca&quot;</span>),     </span>
+<span id="cb357-4"><a href="pca-pls.html#cb357-4"></a>                   <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="dt">number =</span> <span class="dv">10</span>),</span>
+<span id="cb357-5"><a href="pca-pls.html#cb357-5"></a>                   <span class="dt">tuneGrid =</span> <span class="kw">data.frame</span>(<span class="dt">nvmax =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>))</span>
+<span id="cb357-6"><a href="pca-pls.html#cb357-6"></a>caret.pcrsel</span></code></pre></div>
+<pre><code>## Linear Regression with Stepwise Selection 
+## 
+## 160 samples
+##  13 predictor
+## 
+## Pre-processing: centered (13), scaled (13), principal component
+##  signal extraction (13) 
+## Resampling: Cross-Validated (10 fold) 
+## Summary of sample sizes: 145, 143, 144, 143, 145, 144, ... 
+## Resampling results across tuning parameters:
+## 
+##   nvmax  RMSE      Rsquared   MAE     
+##    1     6.844663  0.3889234  5.680556
+##    2     5.894889  0.5446242  4.795170
+##    3     5.626635  0.5780222  4.614693
+##    4     4.965728  0.6639455  4.041916
+##    5     4.829841  0.6864472  3.782061
+##    6     4.666785  0.7085316  3.558379
+##    7     4.545961  0.7276881  3.437428
+##    8     4.642381  0.7140237  3.518435
+##    9     4.511374  0.7295536  3.371115
+##   10     4.511374  0.7295536  3.371115
+## 
+## RMSE was used to select the optimal model using the smallest value.
+## The final value used for the model was nvmax = 9.</code></pre>
+<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="pca-pls.html#cb359-1"></a><span class="kw">with</span>(caret.leapSeq, <span class="kw">coef</span>(finalModel, bestTune<span class="op">$</span>nvmax))</span></code></pre></div>
+<pre><code>## (Intercept)    calidadp         web      precio    velocida 
+##  -5.3610807   3.4712306   1.2471721   0.4190875   7.4382584</code></pre>
+<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="pca-pls.html#cb361-1"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(caret.pcrsel, <span class="dt">newdata =</span> test)</span>
+<span id="cb361-2"><a href="pca-pls.html#cb361-2"></a><span class="kw">accuracy</span>(pred, obs)</span></code></pre></div>
+<pre><code>##         me       rmse        mae        mpe       mape  r.squared 
+## 0.54240746 4.39581553 3.46755308 0.08093351 6.15004687 0.81060798</code></pre>
+</div>
+<div id="regresión-por-mínimos-cuadrados-parciales-plsr" class="section level3">
+<h3><span class="header-section-number">6.7.2</span> Regresión por mínimos cuadrados parciales (PLSR)</h3>
+<p>Como ya se comentó, en PCR las componentes se determinan con el objetivo de explicar la variabilidad de los predictores, ignorando por completo la respuesta.
+Por el contrario, en PLSR (<em>partial least squares regression</em>; Wold <em>et al.</em>, 1983) se construyen las componentes <span class="math inline">\(Z_1, \ldots, Z_k\)</span> teniendo en cuenta desde un principio el objetivo final de predecir linealmente la respuesta.</p>
+<p>Hay varios procedimientos para seleccionar los pesos <span class="math inline">\(a_{ij}\)</span>, pero la idea es asignar mayor peso a los predictores que están más correlacionados con la respuesta (o con los correspondientes residuos al ir obteniendo nuevos componentes), considerando siempre direcciones ortogonales (ver por ejemplo la Sección 6.3.2 de James <em>et al.</em>, 2013).</p>
+<p>Continuando con el ejemplo anterior, emplearemos en primer lugar la función <code>plsr()</code> del paquete <code>pls</code> (este paquete implementa distintas proyecciones, ver <code>help(pls.options)</code>, o <a href="https://www.jstatsoft.org/article/view/v018i02">Mevik y Wehrens, 2007</a>):</p>
+<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="pca-pls.html#cb363-1"></a><span class="co"># plsr(formula, ncomp, data, scale = FALSE, center = TRUE, </span></span>
+<span id="cb363-2"><a href="pca-pls.html#cb363-2"></a><span class="co">#      validation = c(&quot;none&quot;, &quot;CV&quot;, &quot;LOO&quot;), segments = 10)</span></span>
+<span id="cb363-3"><a href="pca-pls.html#cb363-3"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb363-4"><a href="pca-pls.html#cb363-4"></a>plsreg &lt;-<span class="st"> </span><span class="kw">plsr</span>(fidelida <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train, <span class="dt">scale =</span> <span class="ot">TRUE</span>, <span class="dt">validation =</span> <span class="st">&quot;CV&quot;</span>)</span>
+<span id="cb363-5"><a href="pca-pls.html#cb363-5"></a><span class="kw">summary</span>(plsreg)</span></code></pre></div>
+<pre><code>## Data:    X dimension: 160 13 
+##  Y dimension: 160 1
+## Fit method: kernelpls
+## Number of components considered: 13
+## 
+## VALIDATION: RMSEP
+## Cross-validated using 10 random segments.
+##        (Intercept)  1 comps  2 comps  3 comps  4 comps  5 comps  6 comps
+## CV           8.683    5.439    4.952    4.684    4.588    4.560    4.576
+## adjCV        8.683    5.433    4.945    4.670    4.571    4.542    4.558
+##        7 comps  8 comps  9 comps  10 comps  11 comps  12 comps  13 comps
+## CV       4.572    4.572    4.580     4.563     4.584     4.574     4.573
+## adjCV    4.555    4.554    4.562     4.545     4.564     4.555     4.554
+## 
+## TRAINING: % variance explained
+##           1 comps  2 comps  3 comps  4 comps  5 comps  6 comps  7 comps
+## X           27.32    44.59    56.70    66.70    70.29    79.07    86.27
+## fidelida    62.09    69.84    73.96    75.43    75.89    75.96    76.00
+##           8 comps  9 comps  10 comps  11 comps  12 comps  13 comps
+## X           90.98    93.83     95.23     97.59     98.53    100.00
+## fidelida    76.03    76.04     76.09     76.12     76.14     76.14</code></pre>
+<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="pca-pls.html#cb365-1"></a><span class="kw">validationplot</span>(plsreg, <span class="dt">legend =</span> <span class="st">&quot;topright&quot;</span>)</span></code></pre></div>
+<p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-45-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>En este caso el mínimo se alcanza con 5 componentes pero 4 sería un valor razonable.
+Podríamos obtener los coeficientes de los predictores del modelo seleccionado:</p>
+<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="pca-pls.html#cb366-1"></a><span class="kw">coef</span>(pcreg, <span class="dt">ncomp =</span> <span class="dv">4</span>, <span class="dt">intercept =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>## , , 4 comps
+## 
+##               fidelida
+## (Intercept) 20.7676017
+## calidadp     1.3800150
+## web          0.4380180
+## soporte     -0.4201579
+## quejas       1.4368692
+## publi        0.7988489
+## producto     2.0103817
+## imgfvent     0.4806218
+## precio      -1.2171454
+## garantia    -0.2287305
+## nprod        0.5953945
+## facturac     1.3296997
+## flexprec    -0.3569203
+## velocida     1.5624947</code></pre>
+<p>y evaluar su precisión:</p>
+<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="pca-pls.html#cb368-1"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(plsreg , test, <span class="dt">ncomp =</span> <span class="dv">4</span>)</span>
+<span id="cb368-2"><a href="pca-pls.html#cb368-2"></a><span class="kw">accuracy</span>(pred, obs)</span></code></pre></div>
+<pre><code>##        me      rmse       mae       mpe      mape r.squared 
+## 0.5331010 4.4027291 3.4983343 0.0461853 6.2529706 0.8100118</code></pre>
+<p>También se puede emplear el método <code>"pls"</code> de <code>caret</code>:</p>
+<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="pca-pls.html#cb370-1"></a><span class="kw">modelLookup</span>(<span class="st">&quot;pls&quot;</span>)</span></code></pre></div>
+<pre><code>##   model parameter       label forReg forClass probModel
+## 1   pls     ncomp #Components   TRUE     TRUE      TRUE</code></pre>
+<div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb372-1"><a href="pca-pls.html#cb372-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb372-2"><a href="pca-pls.html#cb372-2"></a>caret.pls &lt;-<span class="st"> </span><span class="kw">train</span>(fidelida <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train, <span class="dt">method =</span> <span class="st">&quot;pls&quot;</span>,</span>
+<span id="cb372-3"><a href="pca-pls.html#cb372-3"></a>                   <span class="dt">preProcess =</span> <span class="kw">c</span>(<span class="st">&quot;zv&quot;</span>, <span class="st">&quot;center&quot;</span>, <span class="st">&quot;scale&quot;</span>),</span>
+<span id="cb372-4"><a href="pca-pls.html#cb372-4"></a>                   <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="dt">number =</span> <span class="dv">10</span>),</span>
+<span id="cb372-5"><a href="pca-pls.html#cb372-5"></a>                   <span class="dt">tuneGrid =</span> <span class="kw">data.frame</span>(<span class="dt">ncomp =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>))</span>
+<span id="cb372-6"><a href="pca-pls.html#cb372-6"></a>caret.pls</span></code></pre></div>
+<pre><code>## Partial Least Squares 
+## 
+## 160 samples
+##  13 predictor
+## 
+## Pre-processing: centered (13), scaled (13) 
+## Resampling: Cross-Validated (10 fold) 
+## Summary of sample sizes: 145, 143, 144, 143, 145, 144, ... 
+## Resampling results across tuning parameters:
+## 
+##   ncomp  RMSE      Rsquared   MAE     
+##    1     5.385375  0.6130430  4.301648
+##    2     4.902373  0.6765146  3.882695
+##    3     4.630757  0.7151341  3.472635
+##    4     4.516718  0.7278875  3.356058
+##    5     4.480285  0.7320425  3.391015
+##    6     4.490064  0.7314898  3.376068
+##    7     4.478319  0.7323472  3.365828
+##    8     4.490064  0.7312432  3.384096
+##    9     4.492672  0.7308291  3.379606
+##   10     4.483548  0.7316750  3.368064
+## 
+## RMSE was used to select the optimal model using the smallest value.
+## The final value used for the model was ncomp = 7.</code></pre>
+<div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb374-1"><a href="pca-pls.html#cb374-1"></a><span class="kw">ggplot</span>(caret.pls, <span class="dt">highlight =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-48-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="pca-pls.html#cb375-1"></a><span class="co"># Podía ser preferible incluir `trControl(selectionFunction = &quot;oneSE&quot;)`</span></span>
+<span id="cb375-2"><a href="pca-pls.html#cb375-2"></a></span>
+<span id="cb375-3"><a href="pca-pls.html#cb375-3"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(caret.pls, <span class="dt">newdata =</span> test)</span>
+<span id="cb375-4"><a href="pca-pls.html#cb375-4"></a><span class="kw">accuracy</span>(pred, obs)</span></code></pre></div>
+<pre><code>##         me       rmse        mae        mpe       mape  r.squared 
+## 0.52838223 4.32029848 3.46711182 0.08674838 6.18085646 0.81705933</code></pre>
+<p>Como comentario final, en la práctica se suelen obtener resultados muy similares empleando PCR, PLSR o <em>ridge regression</em>.</p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="25">
+<li id="fn25"><p>Esta forma de proceder se podría emplear con otros modelos que puedan tener problemas de multicolinealidad, como los lineales generalizados.<a href="pca-pls.html#fnref25" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
             </section>
 
