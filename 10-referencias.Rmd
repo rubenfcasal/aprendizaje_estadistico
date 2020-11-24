@@ -23,7 +23,11 @@ Burger, S.V. (2018). *Introduction to machine learning with R: Rigorous mathemat
 
 Breiman, L., Friedman, J., Stone, C.J. y Olshen, R.A. (1984). *Classification and regression trees*. CRC press.
 
+De Boor, C. (1978). *A practical guide to splines*. Springer-Verlag.
+
 Efron, B. y Hastie, T. (2016). *[Computer age statistical inference](http://web.stanford.edu/~hastie/CASI/)*. Cambridge University Press.
+
+Fan, J. y Gijbels, I. (1996). *Local polynomial modelling and its applications*. Chapman & Hall.
 
 Faraway, J.J. (2014). *Linear models with R*. CRC press.
 
@@ -33,11 +37,12 @@ Fernández-Casal, R., Roca-Pardiñas, J. y Costa, J. (2019). *Introducción al A
 
 Hair, J.F., Black, W.C., Babin, B.J., Anderson, R.E. y Tatham, R.L. (1998). *Multivariate data analysis*. Prentice Hall.
 
+Hastie, T.J. y Tibshirani, R.J. (1990). *Generalized Additive Models*. Chapman & Hall.
+
 Hastie, T., Tibshirani, R. y Friedman, J. (2009).
     *[The Elements of Statistical Learning: Data Mining, Inference, and Prediction](https://web.stanford.edu/~hastie/ElemStatLearn)*. Springer.   
     
 Hastie, T., Tibshirani, R. y Wainwright, M. (2015). *Statistical learning with sparsity: the lasso and generalizations*. CRC press.    
-
 Irizarry, R.A. (2019). *[Introduction to Data Science: Data Analysis and Prediction Algorithms with R](https://rafalab.github.io/dsbook)*. CRC Press.
 
 Molnar, C. (2020). [Interpretable Machine Learning. A Guide for Making Black Box Models Explainable](https://christophm.github.io/interpretable-ml-book). Lulu.com.
@@ -47,6 +52,8 @@ Torgo, L. (2011). *Data Mining with R: Learning with Case Studies*. Chapman & Ha
 Vapnik, V. (1998). *Statistical Learning Theory*. Wiley.
 
 Vapnik, V. (2010). *The Nature of Statistical Learning Theory*. Springer.
+
+Wood, S.N. (2017). *Generalized Additive Models: An Introduction with R*. Chapman & Hall/CRC
 
 
 ### Artículos {-}
@@ -68,6 +75,8 @@ Breiman, L. (2001). Statistical Modeling: The Two Cultures (with comments and a 
 
 Cortes, C. y Vapnik, V. (1995). Support–Vector Networks. *Machine Learning*, 20(3), 273–297.
 
+Craven, P. y Wahba, G. (1979). Smoothing Noisy Data with Spline Functions. *Numerische Mathematik*, 31, pp. 377-403.
+
 Culp, M., Johnson, K. y Michailidis, G. (2006). [ada: an R Package for Stochastic Boosting](https://www.jstatsoft.org/article/view/v017i02). *Journal of Statistical Software*, 17(2), 1-27.
 
 Dietterich, T.G. (2000). An Experimental Comparison of Three Methods for Constructing Ensembles of Decision Trees: Bagging, Boosting, and Randomization. *Machine Learning*, 40(2), 139–158.
@@ -78,11 +87,15 @@ Dunson D.B. (2018). Statistics in the big data era: Failures of the machine. *St
 
 Efron, B., Hastie, T., Johnstone, I. y Tibshirani, R. (2004). Least Angle Regression. *The Annals of Statistics*, 32(2), 407–499.
 
+Eilers, P.H.C. y Marx, B.D. (1996). [Flexible smoothing with B-splines and penalties](https://www.jstor.org/stable/pdf/2246049.pdf). *Statistical Science*, 11(2), 89-102.
+
 Fisher, R.A. (1936). The use of multiple measurements in taxonomic problems. *Annals of Eugenics*, 7(2), 179-188.
 
 Freund, Y. y Schapire, R. (1996). Experiments with a New Boosting Algorithm. *Machine Learning: Proceedings of the Thirteenth International Conference*, 148–156.
 
 Friedman, J.H. (1989). Regularized Discriminant Analysis. *Journal of the American Statistical Association*, 84(405), 165–175.
+
+Friedman, J.H. (1991). Multivariate Adaptive Regression Splines. *The Annals of Statistics*, 1–67.
 
 Friedman, J.H. (2001). [Greedy Function Approximation: A Gradient Boosting Machine](https://projecteuclid.org/euclid.aos/1013203451). *Annals of Statistics*, 29, 1189–1232.
 

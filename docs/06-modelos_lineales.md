@@ -1475,13 +1475,18 @@ summary(pcreg)
 ```
 
 ```r
-validationplot(pcreg, legend = "topright")
+# validationplot(pcreg, legend = "topright") 
+rmsep.cv <- RMSEP(pcreg)
+plot(rmsep.cv, legend = "topright")
 ```
 
 <img src="06-modelos_lineales_files/figure-html/unnamed-chunk-40-1.png" width="80%" style="display: block; margin: auto;" />
 
-Empleando el criterio de menor error de validación cruzada se seleccionaría un número elevado de componentes. 
-El mínimo se alcanzaría con 12 componentes (lo cual sería prácticamente lo mismo que ajustar un modelo lineal con todos los predictores), pero sería razonable emplear 9 ya que la gráfica es prácticamente plana a partir de ese valor.
+```r
+ncomp.op <- with(rmsep.cv, comps[which.min(val[2, 1, ])]) # mínimo adjCV RMSEP
+```
+
+Empleando el criterio de menor error de validación cruzada se seleccionaría un número elevado de componentes, el mínimo se alcanzaría con 9 componentes (bastante próximo a ajustar un modelo lineal con todos los predictores).
 
 Los coeficientes de los predictores originales con el modelo seleccionado serían:
 
@@ -1704,10 +1709,16 @@ summary(plsreg)
 ```
 
 ```r
-validationplot(plsreg, legend = "topright")
+# validationplot(plsreg, legend = "topright")
+rmsep.cv <- RMSEP(plsreg)
+plot(rmsep.cv, legend = "topright")
 ```
 
 <img src="06-modelos_lineales_files/figure-html/unnamed-chunk-45-1.png" width="80%" style="display: block; margin: auto;" />
+
+```r
+ncomp.op <- with(rmsep.cv, comps[which.min(val[2, 1, ])]) # mínimo adjCV RMSEP
+```
 
 En este caso el mínimo se alcanza con 5 componentes pero 4 sería un valor razonable.
 Podríamos obtener los coeficientes de los predictores del modelo seleccionado:
