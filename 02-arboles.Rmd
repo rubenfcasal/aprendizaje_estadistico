@@ -353,7 +353,7 @@ tree <- rpart(quality ~ ., data = train, cp = 0)
 
 Posteriormente podemos emplear las funciones `printcp()` (o `plotcp()`) para obtener (representar) 
 los valores de CP para los árboles (óptimos) de menor tamaño junto con su error de validación cruzada 
-`xerror` (reescalado de forma que el máximo de `rel error` es 1):
+`xerror` (reescalado de forma que el máximo de `rel error` es 1)^[Realmente en la tabla de texto se muestra el valor mínimo de CP, ya que se obtendría la misma solución para un rango de valores de CP (desde ese valor hasta el anterior, sin incluirlo), mientras que en el gráfico generado por `plotcp()` se representa la media geométrica de los extremos de ese intervalo.]:
 
 ```{r }
 printcp(tree)

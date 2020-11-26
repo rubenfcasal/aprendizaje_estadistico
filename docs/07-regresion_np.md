@@ -78,13 +78,13 @@ $$\beta_0+\beta_{1}\left(x - x_0\right) + \cdots
 + \beta_{d}\left( x-x_0\right)^{d}$$ 
 por mínimos cuadrados ponderados, con pesos
 $$w_{i} = K_h(x - x_0) = \frac{1}{h}K\left(\frac{x-x_0}{h}\right)$$
-donde $K$ es una función núcleo (normalmente una densidad simétrica en torno al cero) y $h>0$ es una parámetro de suavizado, llamado ventana, que regula el tamaño del entorno que se usa para llevar a cabo el ajuste 
+donde $K$ es una función núcleo (normalmente una densidad simétrica en torno al cero) y $h>0$ es un parámetro de suavizado, llamado ventana, que regula el tamaño del entorno que se usa para llevar a cabo el ajuste 
 (esta ventana también se puede suponer local, $h \equiv h(x_0)$; por ejemplo el método KNN se puede considerar un caso particular, con $d=0$ y $K$ la densidad de una $\mathcal{U}(-1, 1)$). 
+A partir de este ajuste^[Se puede pensar que se están estimando los coeficientes de un desarrollo de Taylor de $m(x_0)$.]:
 
 -   La estimación en $x_0$ es $\hat{m}_{h}(x_0)=\hat{\beta}_0$.
 
--   Adicionalmente^[Se puede pensar que se están estimando los coeficientes de 
-    un desarrollo de Taylor de $m(x_0)$.]: 
+-   Podemos obtener también estimaciones de las derivadas: 
     $\widehat{m_{h}^{(r)}}(x_0) = r!\hat{\beta}_{r}$.
 
 Por tanto, la estimación polinómica local de grado $d$, $\hat{m}_{h}(x)=\hat{\beta}_0$, se obtiene al minimizar:
@@ -187,7 +187,7 @@ accuracy(pred, y)
 ##  8.015429e-01
 ```
 
-El caso multivariante es análogo, aunque habría que considerar una matriz de ventanas simétrica $H$.También hay extensiones para el caso de predictores categóricos (nominales o ordinales) y para el caso de distribuciones de la respuesta distintas de la normal (máxima verosimilitud local).
+El caso multivariante es análogo, aunque habría que considerar una matriz de ventanas simétrica $H$. También hay extensiones para el caso de predictores categóricos (nominales o ordinales) y para el caso de distribuciones de la respuesta distintas de la normal (máxima verosimilitud local).
 
 Otros paquetes de R incluyen más funcionalidades (`sm`, `locfit`, [`npsp`](https://rubenfcasal.github.io/npsp)...), pero hoy en día el paquete [`np`](https://github.com/JeffreyRacine/R-Package-np) es el que se podría considerar más completo.
 
@@ -237,7 +237,7 @@ points(span.cv, cv.error[imin], pch = 16)
 ```r
 # Ajuste con todos los datos
 plot(accel ~ times, data = mcycle, col = 'darkgray')
-fit <- loess(accel ~ times, mcycle, span = span.cv)
+fit <- loess(accel ~ times, mcycle, span = span.cv, family = "symmetric")
 lines(mcycle$times, predict(fit))
 ```
 
@@ -253,7 +253,7 @@ Otra alternativa consiste en trocear los datos en intervalos, fijando unos punto
 De esta forma sin embargo habrá discontinuidades en los puntos de corte, pero podrían añadirse restricciones adicionales de continuidad (o incluso de diferenciabilidad) para evitarlo (e.g. paquete [`segmented`](https://CRAN.R-project.org/package=segmented)).
 
 
-### Regression splines
+### Regression splines {#reg-splines}
 
 Cuando en cada intervalo se ajustan polinomios de orden $d$ y se incluyen restricciones de forma que las derivadas sean continuas hasta el orden $d-1$ se obtienen los denominados splines de regresión (*regression splines*).
 
@@ -276,13 +276,13 @@ fit1 <- lm(y ~ bs(x, knots = knots, degree = 1))
 fit2 <- lm(y ~ bs(x, knots = knots, degree = 2))
 fit3 <- lm(y ~ bs(x, knots = knots)) # degree = 3
 
-plot(x, y)
+plot(x, y, col = 'darkgray')
 newx <- seq(min(x), max(x), len = 200)
 newdata <- data.frame(x = newx)
 lines(newx, predict(fit1, newdata), lty = 3)
 lines(newx, predict(fit2, newdata), lty = 2)
 lines(newx, predict(fit3, newdata))
-abline(v = knots, lty = 3)
+abline(v = knots, lty = 3, col = 'darkgray')
 legend("topright", legend = c("d=1 (df=11)", "d=2 (df=12)", "d=3 (df=13)"), 
        lty = c(3, 2, 1))
 ```
@@ -299,11 +299,11 @@ Por ejemplo, se puede emplear la función `splines::ns()` para ajustar un spline
 
 
 ```r
-plot(x, y)
+plot(x, y, col = 'darkgray')
 fit4 <- lm(y ~ ns(x, knots = knots))
 lines(newx, predict(fit4, newdata))
 lines(newx, predict(fit3, newdata), lty = 2)
-abline(v = knots, lty = 3)
+abline(v = knots, lty = 3, col = 'darkgray')
 legend("topright", legend = c("ns (d=3, df=11)", "bs (d=3, df=13)"), lty = c(1, 2))
 ```
 
@@ -341,7 +341,7 @@ Este método de suavizado está implementado en la función `smooth.spline()` de
 ```r
 sspline.gcv <- smooth.spline(x, y)
 sspline.cv <- smooth.spline(x, y, cv = TRUE)
-plot(x, y)
+plot(x, y, col = 'darkgray')
 lines(sspline.gcv)
 lines(sspline.cv, lty = 2)
 ```
@@ -438,13 +438,13 @@ Algunas posibilidades de uso son las que siguen:
 
 ### Ejemplo
 
-En esta sección utilizaremos como ejemplo el conjunto de datos `Prestige` de la librería `car`. 
+En esta sección utilizaremos como ejemplo el conjunto de datos `Prestige` de la librería `carData`. 
 Se tratará de explicar `prestige` (puntuación de ocupaciones obtenidas a partir de una encuesta) a partir de `income` (media de ingresos en la ocupación) y `education` (media de los años de educación).
 
 
 ```r
+data(Prestige, package = "carData")
 library(mgcv)
-library(car)
 modelo <- gam(prestige ~ s(income) + s(education), data = Prestige)
 summary(modelo)
 ```
@@ -540,7 +540,7 @@ filled.contour(inc, ed, pred, xlab = "Income", ylab = "Education", key.title = t
 Puede ser más cómodo emplear el paquete [`modelr`](https://modelr.tidyverse.org) (emplea gráficos `ggplot2`) para trabajar con modelos y predicciones.
 
 
-### Comparación de modelos
+### Comparación y selección de modelos
 
 Además de las medidas de bondad de ajuste como el coeficiente de determinación ajustado, también se puede emplear la función `anova` para la comparación de modelos (y seleccionar las componentes por pasos de forma interactiva).
 Por ejemplo, viendo el gráfico de los efectos se podría pensar que el efecto de `education` podría ser lineal:
@@ -629,9 +629,87 @@ summary(modelo2)
 
 ```r
 # plot(modelo2, se = FALSE)
+# plot(modelo2, scheme = 2)
 ```
 
 En este caso el coeficiente de determinación ajustado es menor y no sería necesario realizar el contraste.
+
+<!-- 
+También podríamos emplear el criterio `AIC()` (o `BIC()`): 
+
+
+```r
+AIC(modelo)
+```
+
+```
+## [1] 694.222
+```
+
+```r
+AIC(modelo2)
+```
+
+```
+## [1] 700.1994
+```
+-->
+
+Ademas se pueden seleccionar componentes del modelo (mediante regularización) empleando el parámetro `select = TRUE`. 
+
+
+```r
+example(gam.selection)
+```
+
+```
+## 
+## gm.slc> ## an example of automatic model selection via null space penalization
+## gm.slc> library(mgcv)
+## 
+## gm.slc> set.seed(3);n<-200
+## 
+## gm.slc> dat <- gamSim(1,n=n,scale=.15,dist="poisson") ## simulate data
+## Gu & Wahba 4 term additive model
+## 
+## gm.slc> dat$x4 <- runif(n, 0, 1);dat$x5 <- runif(n, 0, 1) ## spurious
+## 
+## gm.slc> b<-gam(y~s(x0)+s(x1)+s(x2)+s(x3)+s(x4)+s(x5),data=dat,
+## gm.slc+          family=poisson,select=TRUE,method="REML")
+## 
+## gm.slc> summary(b)
+## 
+## Family: poisson 
+## Link function: log 
+## 
+## Formula:
+## y ~ s(x0) + s(x1) + s(x2) + s(x3) + s(x4) + s(x5)
+## 
+## Parametric coefficients:
+##             Estimate Std. Error z value Pr(>|z|)    
+## (Intercept)  1.21758    0.04082   29.83   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Approximate significance of smooth terms:
+##             edf Ref.df  Chi.sq p-value    
+## s(x0) 1.7655088      9   5.264  0.0397 *  
+## s(x1) 1.9271040      9  65.356  <2e-16 ***
+## s(x2) 6.1351414      9 156.204  <2e-16 ***
+## s(x3) 0.0002849      9   0.000  0.4068    
+## s(x4) 0.0003044      9   0.000  1.0000    
+## s(x5) 0.1756926      9   0.195  0.2963    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## R-sq.(adj) =  0.545   Deviance explained = 51.6%
+## -REML = 430.78  Scale est. = 1         n = 200
+## 
+## gm.slc> plot(b,pages=1)
+```
+
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-22-1.png" width="80%" style="display: block; margin: auto;" />
+
 
 
 ### Diagnosis del modelo {#mgcv-diagnosis}
@@ -643,7 +721,7 @@ La función `gam.check()` realiza una diagnosis del modelo:
 gam.check(modelo)
 ```
 
-<img src="07-regresion_np_files/figure-html/unnamed-chunk-21-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-23-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```
 ## 
@@ -657,8 +735,8 @@ gam.check(modelo)
 ## indicate that k is too low, especially if edf is close to k'.
 ## 
 ##                k'  edf k-index p-value
-## s(income)    9.00 3.12    0.98    0.43
-## s(education) 9.00 3.18    1.03    0.57
+## s(income)    9.00 3.12    0.98    0.42
+## s(education) 9.00 3.18    1.03    0.54
 ```
 
 Lo ideal sería observar normalidad en los dos gráficos de la izquierda, falta de patrón en el superior derecho, y ajuste a una recta en el inferior derecho. En este caso parece que el modelo se comporta adecuadamente.
@@ -720,25 +798,485 @@ modelLookup("gamLoess")
 
 1. Continuando con los datos de `MASS:mcycle`, emplear `mgcv::gam()` para ajustar un spline penalizado para predecir `accel` a partir de `times` con las opciones por defecto y representar el ajuste obtenido. Comparar el ajuste con el obtenido empleando un spline penalizado adaptativo (`bs="ad"`; ver `?adaptive.smooth`).
 
-2. Empleando el conjunto de datos `airquality`, crear una muestra de entrenamiento y otra de test, buscar un modelo aditivo que resulte adecuado para explicar `log(Ozone)` a partir de `Temp`, `Wind` y `Solar.R`.
-
+2. Empleando el conjunto de datos `airquality`, crear una muestra de entrenamiento y otra de test, buscar un modelo aditivo que resulte adecuado para explicar `sqrt(Ozone)` a partir de `Temp`, `Wind` y `Solar.R`.
+Es preferible suponer que hay una interacción entre `Temp` y `Wind`?
 
 ## Regresión spline adaptativa multivariante {#mars}
 
+La regresión spline adaptativa multivariante, en inglés *multivariate adaptive regression splines* (MARS; Friedman, 1991), es un procedimiento adaptativo para problemas de regresión que puede verse como una generalización tanto de la regresión lineal por pasos (*stepwise linear regression*) como de los árboles de decisión CART. 
+
+El modelo MARS es un spline multivariante lineal:  
+$$m(\mathbf{x}) = \beta_0 + \sum_{m=1}^M \beta_m h_m(\mathbf{x})$$
+(es un modelo lineal en transformaciones $h_m(\mathbf{x})$ de los predictores originales), donde las bases $h_m(\mathbf{x})$ se construyen de forma adaptativa empleando funciones *bisagra* (*hinge functions*)
+$$ h(x) = (x)_+ = \mbox{max}\{0, x\} = \left\{ \begin{array}{ll}
+  x & \mbox{si } x > 0 \\
+  0 & \mbox{si } x \leq 0
+  \end{array}
+  \right.$$
+y considerando como posibles nodos los valores observados de los predictores
+(en el caso univariante se emplean las bases de potencias truncadas con $d=1$ descritas en la Sección \@ref(reg-splines), pero incluyendo también su versión simetrizada).
+
+Vamos a empezar explicando el modelo MARS aditivo (sin interacciones), que funciona de forma muy parecida a los árboles de decisión CART, y después lo extenderemos al caso con interacciones. Asumimos que todas las variables predictoras son numéricas. El proceso de construcción del modelo es un proceso iterativo *hacia delante* (forward) que empieza con el modelo
+$$\hat m(\mathbf{x}) = \hat \beta_0 $$
+donde $\hat \beta_0$ es la media de todas las respuestas, para a continuación considerar todos los puntos de corte (*knots*) posibles $x_{ij}$ con $i = 1, 2, \ldots, n$, $j = 1, 2, \ldots, p$, es decir, todas las observaciones de todas las variables predictoras de la muestra de entrenamiento. Para cada punto de corte $x_{ij}$ se consideran dos bases:
+$$h_1(\mathbf{x}) = h(X_j - x_{ij}) \\
+h_2(\mathbf{x}) = h(x_{ij} - X_j)$$
+y se construye el nuevo modelo 
+$$\hat m(\mathbf{x}) = \hat \beta_0 + \hat \beta_1 h_1(\mathbf{x}) + \hat \beta_2 h_2(\mathbf{x})$$
+La estimación de los parámetros $\beta_0, \beta_1, \beta_2$ se realiza de la forma estándar en regresión lineal, minimizando $\mbox{RSS}$. De este modo se construyen muchos modelos alternativos y entre ellos se selecciona aquel que tenga un menor error de entrenamiento. En la siguiente iteración se conservan $h_1(\mathbf{x})$ y $h_2(\mathbf{x})$ y se añade una pareja de términos nuevos siguiendo el mismo procedimiento. Y así sucesivamente, añadiendo de cada vez dos nuevos términos. Este procedimiento va creando un modelo lineal segmentado (piecewise) donde cada nuevo término modeliza una porción aislada de los datos originales.
+
+El *tamaño* de cada modelo es el número términos (funciones $h_m$) que este incorpora. El proceso iterativo se para cuando se alcanza un modelo de tamaño $M$, que se consigue después de incorporar $M/2$ cortes. Este modelo depende de $M+1$ parámetros $\beta_m$ con $m=0,1,\ldots,M$. El objetivo es alcanzar un modelo lo suficientemente grande para que sobreajuste los datos, para a continuación proceder a su poda en un proceso de eliminación de variables hacia atrás (*backward deletion*) en el que se van eliminando las variables de una en una (no por parejas, como en la construcción). En cada paso de poda se elimina el término que produce el menor incremento en el error. Así, para cada tamaño $\lambda = 0,1,\ldots, M$ se obtiene el mejor modelo estimado $\hat{m}_{\lambda}$. 
+
+La selección *óptima* del valor del hiperparámetro $\lambda$ puede realizarse por los procedimientos habituales tipo validación cruzada. Una alternativa mucho más rápida es utilizar validación cruzada generalizada (GCV) que es una aproximación de la validación cruzada *leave-one-out* mediante la fórmula
+$$\mbox{GCV} (\lambda) = \frac{\mbox{RSS}}{(1-M(\lambda)/n)^2}$$
+donde $M(\lambda)$ es el número de parámetros *efectivos* del modelo, que depende del número de términos más el número de puntos de corte utilizados penalizado por un factor (2 en el caso aditivo que estamos explicando, 3 cuando hay interacciones). 
+
+Hemos explicado una caso particular de MARS: el modelo aditivo. El modelo general sólo se diferencia del caso aditivo en que se permiten iteracciones, es decir, multiplicaciones entre las variables $h_m(\mathbf{x})$. Para ello, en las iteraciones de la fase de construcción del modelo, además de considerar todos los puntos de corte, se consideran también todos los términos incorporados previamente al modelo, a los que se añade $h_0(\mathbf{x}) = 1$. De este modo, si resulta seleccionado un término padre $h_l(\mathbf{x})$, después de analizar todas las posibilidades, al modelo anterior se le agrega
+$$\hat \beta_{m+1} h_l(\mathbf{x}) h(X_j - x_{ij}) + \hat \beta_{m+2} h_l(\mathbf{x}) h(x_{ij} - X_j)$$
+Recordando que en cada caso se vuelven a estimar todos los parámetros $\beta_i$.
+
+Al igual que $\lambda$, también el grado de interacción máxima permitida se considera un hiperparámetro del problema, aunque lo habitual es trabajar con grado 1 (modelo aditivo) o interacción de grado 2. Una restricción adicional que se impone al modelo es que en cada producto no puede aparecer más de una vez la misma variable $X_j$.
+
+Aunque el procedimiento de construcción del modelo realiza búsquedas exhaustivas y en consecuencia puede parecer computacionalmente intratable, en la práctica se realiza de forma razonablemente rápida, al igual que ocurría en CART. Una de las principales ventajas de MARS es que realiza una selección automática de las variables predictoras. Aunque inicialmente pueda haber muchos predictores, y este método es adecuado para problemas de alta dimensión, en el modelo final van a aparecer muchos menos (pueden aparecer más de una vez). Además, si se utiliza un modelo aditivo su interpretación es directa, e incluso permitiendo interacciones de grado 2 el modelo puede ser interpretado. Otra ventaja es que no es necesario realizar un prepocesado de los datos, ni filtrando variables ni transformando los datos. Que haya predictores con correlaciones altas no va a afectar al rendimiento del modelo, aunque sí puede dificultar su interpretación. Aunque hemos supuesto al principio de la explicación que los predictores son numéricos, se pueden incorporar variables predictoras cualitativas siguiendo los procedimientos estándar. Por último, se puede realizar una cuantificación de la importancia de las variables de forma similar a como se hace en CART.
+
+En conclusión, MARS utiliza splines lineales con una selección automática de los puntos de corte mediante un algoritmo avaricioso similar al empleado en los árboles CART, tratando de añadir más puntos de corte donde aparentemente hay más variaciones en la función de regresión y menos puntos donde esta es más estable.
+
+
+### MARS con el paquete `earth`
+
+Actualmente el paquete de referencia para MARS es [`earth`](http://www.milbo.users.sonic.net/earth) (*Enhanced Adaptive Regression Through Hinges*)^[Desarrollado a partir de la función `mda::mars()` de T. Hastie y R. Tibshirani. Utiliza este nombre porque MARS está registrado para un uso comercial por [Salford Systems](https://www.salford-systems.com).].
+
+Su función principal es:
+
+
+```r
+earth(formula, data, glm = NULL, degree = 1, ...) 
+```
+
+donde los parámetros principales son:
+
+* `glm`: lista con los parámetros del ajuste GLM (e.g. `glm = list(family = binomial)`).
+
+* `degree`: grado máximo de interacción; por defecto 1 (modelo aditivo).
+
+Esta función admite respuestas multidimensionales (ajustando un modelo para cada componente) y categóricas (las convierte en multivariantes), también predictores categóricos, aunque no permite datos faltantes.
+
+Otros parámetros que pueden ser de interés (afectan a la complejidad del modelo en el crecimiento, a la selección del modelo final o al tiempo de computación; para más detalles ver `help(earth)`):
+
+* `nk`: número máximo de términos (dimensión de la base $M$) en el crecimiento del modelo; por defecto `min(200, max(20, 2 * ncol(x))) + 1` (puede ser demasiado pequeña si muchos de los predictores influyen en la respuesta).   
+
+* `thresh`: umbral de parada en el crecimiento (se interpretaría como `cp` en los árboles CART); por defecto 0.001.
+
+* `fast.k`: número máximo de términos padre considerados en cada paso durante el crecimiento.
+
+* `linpreds`: índice de variables que se considerarán con efecto lineal.
+
+* `nprune`: número máximo de términos (incluida la intersección) en el modelo final (después de la poda).
+
+* `pmethod`: método empleado para la poda; por defecto `"backward"`. Otras opciones son: `"forward"`, `"seqrep"`, `"exhaustive"` (emplea los métodos de selección implementados en paquete `leaps`), `"cv"` (validación cruzada, empleando `nflod`) y `"none"` para no realizar poda.
+
+* `nfold`: número de grupos de validación cruzada; por defecto 0 (no se hace validación cruzada).
+
+* `varmod.method`: permite seleccionar un método para estimar las varianzas y por ejemplo poder realizar contrastes o construir intervalos de confianza (para más detalles ver `?varmod` o la vignette "Variance models in earth"). 
+
+
+Utilizaremos como ejemplo inicial los datos de `MASS:mcycle`:
+
+
+```r
+# data(mcycle, package = "MASS")
+library(earth)
+mars <- earth(accel ~ times, data = mcycle)
+# mars
+summary(mars)
+```
+
+```
+## Call: earth(formula=accel~times, data=mcycle)
+## 
+##               coefficients
+## (Intercept)     -90.992956
+## h(19.4-times)     8.072585
+## h(times-19.4)     9.249999
+## h(times-31.2)   -10.236495
+## 
+## Selected 4 of 6 terms, and 1 of 1 predictors
+## Termination condition: RSq changed by less than 0.001 at 6 terms
+## Importance: times
+## Number of terms at each degree of interaction: 1 3 (additive model)
+## GCV 1119.813    RSS 133670.3    GRSq 0.5240328    RSq 0.5663192
+```
+
+```r
+plot(mars)
+```
+
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-27-1.png" width="80%" style="display: block; margin: auto;" />
+
+```r
+plot(accel ~ times, data = mcycle, col = 'darkgray')
+lines(mcycle$times, predict(mars))
+```
+
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-27-2.png" width="80%" style="display: block; margin: auto;" />
+
+Como con las opciones por defecto el ajuste no es muy bueno (aunque podría valer...), podríamos forzar la complejidad del modelo en el crecimiento  (`minspan = 1` permite que todas las observaciones sean potenciales nodos): 
+
+
+```r
+mars2 <- earth(accel ~ times, data = mcycle, minspan = 1, thresh = 0)
+summary(mars2)
+```
+
+```
+## Call: earth(formula=accel~times, data=mcycle, minspan=1, thresh=0)
+## 
+##               coefficients
+## (Intercept)      -6.274366
+## h(times-14.6)   -25.333056
+## h(times-19.2)    32.979264
+## h(times-25.4)   153.699248
+## h(times-25.6)  -145.747392
+## h(times-32)     -30.041076
+## h(times-35.2)    13.723887
+## 
+## Selected 7 of 12 terms, and 1 of 1 predictors
+## Termination condition: Reached nk 21
+## Importance: times
+## Number of terms at each degree of interaction: 1 6 (additive model)
+## GCV 623.5209    RSS 67509.03    GRSq 0.7349776    RSq 0.7809732
+```
+
+```r
+plot(accel ~ times, data = mcycle, col = 'darkgray')
+lines(mcycle$times, predict(mars2))
+```
+
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-28-1.png" width="80%" style="display: block; margin: auto;" />
+
+Como siguiente ejemplo consideramos los datos de `carData::Prestige`:
+
+
+```r
+# data(Prestige, package = "carData")
+mars <- earth(prestige ~ education + income + women, data = Prestige,
+              degree = 2, nk = 40)
+summary(mars)
+```
+
+```
+## Call: earth(formula=prestige~education+income+women, data=Prestige, degree=2,
+##             nk=40)
+## 
+##                                coefficients
+## (Intercept)                      19.9845240
+## h(education-9.93)                 5.7683265
+## h(income-3161)                    0.0085297
+## h(income-5795)                   -0.0080222
+## h(women-33.57)                    0.2154367
+## h(income-5299) * h(women-4.14)   -0.0005163
+## h(income-5795) * h(women-4.28)    0.0005409
+## 
+## Selected 7 of 31 terms, and 3 of 3 predictors
+## Termination condition: Reached nk 40
+## Importance: education, income, women
+## Number of terms at each degree of interaction: 1 4 2
+## GCV 53.08737    RSS 3849.355    GRSq 0.8224057    RSq 0.8712393
+```
+
+```r
+plot(mars)
+```
+
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-29-1.png" width="80%" style="display: block; margin: auto;" />
+
+Para representar los efectos de las variables utiliza el paquete `plotmo` (válido también para la mayoría de los modelos tratados en este libro, incluyendo `mgcv::gam()`)
+
+
+```r
+plotmo(mars)
+```
+
+```
+##  plotmo grid:    education income women
+##                      10.54   5930  13.6
+```
+
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-30-1.png" width="80%" style="display: block; margin: auto;" />
+
+Podríamos obtener la importancia de las variables:
+
+
+```r
+varimp <- evimp(mars)
+varimp
+```
+
+```
+##           nsubsets   gcv    rss
+## education        6 100.0  100.0
+## income           5  36.0   40.3
+## women            3  16.3   22.0
+```
+
+```r
+plot(varimp)
+```
+
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-31-1.png" width="80%" style="display: block; margin: auto;" />
+
+Siempre podríamos considerar este modelo de partida para seleccionar componentes de un modelo GAM más flexible:
+
+
+```r
+# library(mgcv)
+gam <- gam(prestige ~ s(education) + s(income) + s(women), data = Prestige, select = TRUE)
+summary(gam)
+```
+
+```
+## 
+## Family: gaussian 
+## Link function: identity 
+## 
+## Formula:
+## prestige ~ s(education) + s(income) + s(women)
+## 
+## Parametric coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  46.8333     0.6461   72.49   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Approximate significance of smooth terms:
+##                edf Ref.df     F  p-value    
+## s(education) 2.349      9 9.926  < 2e-16 ***
+## s(income)    6.289      9 7.420 7.44e-11 ***
+## s(women)     1.964      9 1.309  0.00143 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## R-sq.(adj) =  0.856   Deviance explained = 87.1%
+## GCV = 48.046  Scale est. = 42.58     n = 102
+```
+
+```r
+gam2 <- gam(prestige ~ s(education) + s(income, women), data = Prestige)
+summary(gam2)
+```
+
+```
+## 
+## Family: gaussian 
+## Link function: identity 
+## 
+## Formula:
+## prestige ~ s(education) + s(income, women)
+## 
+## Parametric coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)   46.833      0.679   68.97   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Approximate significance of smooth terms:
+##                   edf Ref.df     F  p-value    
+## s(education)    2.802  3.489 25.09 9.30e-14 ***
+## s(income,women) 4.895  6.286 10.03 4.41e-09 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## R-sq.(adj) =  0.841   Deviance explained = 85.3%
+## GCV = 51.416  Scale est. = 47.032    n = 102
+```
+
+```r
+anova(gam, gam2, test="F")
+```
+
+```
+## Analysis of Deviance Table
+## 
+## Model 1: prestige ~ s(education) + s(income) + s(women)
+## Model 2: prestige ~ s(education) + s(income, women)
+##   Resid. Df Resid. Dev      Df Deviance      F  Pr(>F)   
+## 1    88.325     3849.1                                   
+## 2    91.225     4388.3 -2.9001  -539.16 4.3661 0.00705 **
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+
+```r
+plotmo(gam2)
+```
+
+```
+##  plotmo grid:    education income women
+##                      10.54   5930  13.6
+```
+
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-32-1.png" width="80%" style="display: block; margin: auto;" />
+
+```r
+plot(gam2, scheme = 2, select = 2)
+```
+
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-32-2.png" width="80%" style="display: block; margin: auto;" />
+
+
+### MARS con el paquete `caret`
+
+Emplearemos como ejemplo el conjunto de datos `earth::Ozone1`:
+
+
+```r
+# data(ozone1, package = "earth")
+df <- ozone1  
+set.seed(1)
+nobs <- nrow(df)
+itrain <- sample(nobs, 0.8 * nobs)
+train <- df[itrain, ]
+test <- df[-itrain, ]
+```
+
+`caret` implementa varios métodos basados en `earth`:
+
+
+
+```r
+library(caret)
+# names(getModelInfo("[Ee]arth")) # 4 métodos
+modelLookup("earth")
+```
+
+```
+##   model parameter          label forReg forClass probModel
+## 1 earth    nprune         #Terms   TRUE     TRUE      TRUE
+## 2 earth    degree Product Degree   TRUE     TRUE      TRUE
+```
+
+Consideramos una rejilla de búsqueda personalizada:
+
+
+```r
+tuneGrid <- expand.grid(degree = 1:2, 
+                       nprune = floor(seq(2, 20, len = 10)))
+set.seed(1)
+caret.mars <- train(O3 ~ ., data = train, method = "earth",
+    trControl = trainControl(method = "cv", number = 10),
+    tuneGrid = tuneGrid)
+caret.mars
+```
+
+```
+## Multivariate Adaptive Regression Spline 
+## 
+## 264 samples
+##   9 predictor
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold) 
+## Summary of sample sizes: 238, 238, 238, 236, 237, 239, ... 
+## Resampling results across tuning parameters:
+## 
+##   degree  nprune  RMSE      Rsquared   MAE     
+##   1        2      4.842924  0.6366661  3.803870
+##   1        4      4.558953  0.6834467  3.488040
+##   1        6      4.345781  0.7142046  3.413213
+##   1        8      4.256592  0.7295113  3.220256
+##   1       10      4.158604  0.7436812  3.181941
+##   1       12      4.128416  0.7509562  3.142176
+##   1       14      4.069714  0.7600561  3.061458
+##   1       16      4.058769  0.7609245  3.058843
+##   1       18      4.058769  0.7609245  3.058843
+##   1       20      4.058769  0.7609245  3.058843
+##   2        2      4.842924  0.6366661  3.803870
+##   2        4      4.652783  0.6725979  3.540031
+##   2        6      4.462122  0.7039134  3.394627
+##   2        8      4.188539  0.7358147  3.209399
+##   2       10      3.953353  0.7658754  2.988747
+##   2       12      4.028546  0.7587781  3.040408
+##   2       14      4.084860  0.7514781  3.076990
+##   2       16      4.091340  0.7510666  3.081559
+##   2       18      4.091340  0.7510666  3.081559
+##   2       20      4.091340  0.7510666  3.081559
+## 
+## RMSE was used to select the optimal model using the smallest value.
+## The final values used for the model were nprune = 10 and degree = 2.
+```
+
+```r
+ggplot(caret.mars, highlight = TRUE)
+```
+
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-35-1.png" width="80%" style="display: block; margin: auto;" />
+
+Podemos analizar el modelo final con las herramientas de `earth`:
+
+
+```r
+summary(caret.mars$finalModel)
+```
+
+```
+## Call: earth(x=matrix[264,9], y=c(4,13,16,3,6,2...), keepxy=TRUE, degree=2,
+##             nprune=10)
+## 
+##                             coefficients
+## (Intercept)                   11.6481994
+## h(dpg-15)                     -0.0743900
+## h(ibt-110)                     0.1224848
+## h(17-vis)                     -0.3363332
+## h(vis-17)                     -0.0110360
+## h(101-doy)                    -0.1041604
+## h(doy-101)                    -0.0236813
+## h(wind-3) * h(1046-ibh)       -0.0023406
+## h(humidity-52) * h(15-dpg)    -0.0047940
+## h(60-humidity) * h(ibt-110)   -0.0027632
+## 
+## Selected 10 of 21 terms, and 7 of 9 predictors
+## Termination condition: Reached nk 21
+## Importance: humidity, ibt, dpg, doy, wind, ibh, vis, temp-unused, ...
+## Number of terms at each degree of interaction: 1 6 3
+## GCV 13.84161    RSS 3032.585    GRSq 0.7846289    RSq 0.8199031
+```
+
+```r
+# plotmo(caret.mars$finalModel, caption = 'ozone$O3 (caret "earth" method)')
+plotmo(caret.mars$finalModel, degree2 = 0, caption = 'ozone$O3 (efectos principales)')
+```
+
+```
+##  plotmo grid:    vh wind humidity temp    ibh dpg   ibt vis   doy
+##                5770    5     64.5   62 2046.5  24 169.5 100 213.5
+```
+
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-36-1.png" width="80%" style="display: block; margin: auto;" />
+
+```r
+plotmo(caret.mars$finalModel, degree1 = 0, caption = 'ozone$O3 (interacciones)')
+```
+
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-36-2.png" width="80%" style="display: block; margin: auto;" />
+
+Finalmente medimos la precisión con el procedimiento habitual:
+
+
+```r
+pred <- predict(caret.mars, newdata = test)
+accuracy(pred, test$O3)
+```
+
+```
+##          me        rmse         mae         mpe        mape   r.squared 
+##   0.4817913   4.0952444   3.0764376 -14.1288949  41.2602037   0.7408061
+```
+
+
+
+## Projection pursuit
+
 **En preparación...**
-
-Multivariate adaptive regression splines (MARS; Friedman, 1991)
-
-La idea es emplear splines con selección automática de los nodos, mediante un algoritmo avaricioso similar al empleado en los árboles CART, tratando de añadir más nodos donde aparentemente hay más variaciones en la función de regresión y menos donde es más estable.
-
-> The term "MARS" is trademarked and licensed exclusively to [Salford Systems](https://www.salford-systems.com). 
-> This is why the R package uses the name earth. Although, according to the package documentation, a backronym for "earth" is "Enhanced Adaptive Regression Through Hinges". 
-
-## Otros métodos no paramétricos
-
-**En preparación...**
-
-### Projection pursuit
 
 
 

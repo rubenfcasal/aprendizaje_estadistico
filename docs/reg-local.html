@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)" />
 
 
-<meta name="date" content="2020-11-24" />
+<meta name="date" content="2020-11-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -249,7 +249,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.1.3" data-path="reg-local.html"><a href="reg-local.html#regresión-polinómica-local-robusta"><i class="fa fa-check"></i><b>7.1.3</b> Regresión polinómica local robusta</a></li>
 </ul></li>
 <li class="chapter" data-level="7.2" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>7.2</b> Splines</a><ul>
-<li class="chapter" data-level="7.2.1" data-path="splines.html"><a href="splines.html#regression-splines"><i class="fa fa-check"></i><b>7.2.1</b> Regression splines</a></li>
+<li class="chapter" data-level="7.2.1" data-path="splines.html"><a href="splines.html#reg-splines"><i class="fa fa-check"></i><b>7.2.1</b> Regression splines</a></li>
 <li class="chapter" data-level="7.2.2" data-path="splines.html"><a href="splines.html#smoothing-splines"><i class="fa fa-check"></i><b>7.2.2</b> Smoothing splines</a></li>
 <li class="chapter" data-level="7.2.3" data-path="splines.html"><a href="splines.html#splines-penalizados"><i class="fa fa-check"></i><b>7.2.3</b> Splines penalizados</a></li>
 </ul></li>
@@ -257,15 +257,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.3.1" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#ajuste-función-gam"><i class="fa fa-check"></i><b>7.3.1</b> Ajuste: función <code>gam</code></a></li>
 <li class="chapter" data-level="7.3.2" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#ejemplo-2"><i class="fa fa-check"></i><b>7.3.2</b> Ejemplo</a></li>
 <li class="chapter" data-level="7.3.3" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#superficies-de-predicción"><i class="fa fa-check"></i><b>7.3.3</b> Superficies de predicción</a></li>
-<li class="chapter" data-level="7.3.4" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#comparación-de-modelos"><i class="fa fa-check"></i><b>7.3.4</b> Comparación de modelos</a></li>
+<li class="chapter" data-level="7.3.4" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#comparación-y-selección-de-modelos"><i class="fa fa-check"></i><b>7.3.4</b> Comparación y selección de modelos</a></li>
 <li class="chapter" data-level="7.3.5" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#mgcv-diagnosis"><i class="fa fa-check"></i><b>7.3.5</b> Diagnosis del modelo</a></li>
 <li class="chapter" data-level="7.3.6" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#gam-en-caret"><i class="fa fa-check"></i><b>7.3.6</b> GAM en <code>caret</code></a></li>
 <li class="chapter" data-level="7.3.7" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#ejercicios"><i class="fa fa-check"></i><b>7.3.7</b> Ejercicios</a></li>
 </ul></li>
-<li class="chapter" data-level="7.4" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>7.4</b> Regresión spline adaptativa multivariante</a></li>
-<li class="chapter" data-level="7.5" data-path="otros-métodos-no-paramétricos.html"><a href="otros-métodos-no-paramétricos.html"><i class="fa fa-check"></i><b>7.5</b> Otros métodos no paramétricos</a><ul>
-<li class="chapter" data-level="7.5.1" data-path="otros-métodos-no-paramétricos.html"><a href="otros-métodos-no-paramétricos.html#projection-pursuit"><i class="fa fa-check"></i><b>7.5.1</b> Projection pursuit</a></li>
+<li class="chapter" data-level="7.4" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>7.4</b> Regresión spline adaptativa multivariante</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="mars.html"><a href="mars.html#mars-con-el-paquete-earth"><i class="fa fa-check"></i><b>7.4.1</b> MARS con el paquete <code>earth</code></a></li>
+<li class="chapter" data-level="7.4.2" data-path="mars.html"><a href="mars.html#mars-con-el-paquete-caret"><i class="fa fa-check"></i><b>7.4.2</b> MARS con el paquete <code>caret</code></a></li>
 </ul></li>
+<li class="chapter" data-level="7.5" data-path="projection-pursuit.html"><a href="projection-pursuit.html"><i class="fa fa-check"></i><b>7.5</b> Projection pursuit</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
 <li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
@@ -346,11 +347,12 @@ Este parámetro se puede seleccionar empleando alguno de los métodos descritos 
 + \beta_{d}\left( x-x_0\right)^{d}\]</span>
 por mínimos cuadrados ponderados, con pesos
 <span class="math display">\[w_{i} = K_h(x - x_0) = \frac{1}{h}K\left(\frac{x-x_0}{h}\right)\]</span>
-donde <span class="math inline">\(K\)</span> es una función núcleo (normalmente una densidad simétrica en torno al cero) y <span class="math inline">\(h&gt;0\)</span> es una parámetro de suavizado, llamado ventana, que regula el tamaño del entorno que se usa para llevar a cabo el ajuste
-(esta ventana también se puede suponer local, <span class="math inline">\(h \equiv h(x_0)\)</span>; por ejemplo el método KNN se puede considerar un caso particular, con <span class="math inline">\(d=0\)</span> y <span class="math inline">\(K\)</span> la densidad de una <span class="math inline">\(\mathcal{U}(-1, 1)\)</span>).</p>
+donde <span class="math inline">\(K\)</span> es una función núcleo (normalmente una densidad simétrica en torno al cero) y <span class="math inline">\(h&gt;0\)</span> es un parámetro de suavizado, llamado ventana, que regula el tamaño del entorno que se usa para llevar a cabo el ajuste
+(esta ventana también se puede suponer local, <span class="math inline">\(h \equiv h(x_0)\)</span>; por ejemplo el método KNN se puede considerar un caso particular, con <span class="math inline">\(d=0\)</span> y <span class="math inline">\(K\)</span> la densidad de una <span class="math inline">\(\mathcal{U}(-1, 1)\)</span>).
+A partir de este ajuste<a href="#fn27" class="footnote-ref" id="fnref27"><sup>27</sup></a>:</p>
 <ul>
 <li><p>La estimación en <span class="math inline">\(x_0\)</span> es <span class="math inline">\(\hat{m}_{h}(x_0)=\hat{\beta}_0\)</span>.</p></li>
-<li><p>Adicionalmente<a href="#fn26" class="footnote-ref" id="fnref26"><sup>26</sup></a>:
+<li><p>Podemos obtener también estimaciones de las derivadas:
 <span class="math inline">\(\widehat{m_{h}^{(r)}}(x_0) = r!\hat{\beta}_{r}\)</span>.</p></li>
 </ul>
 <p>Por tanto, la estimación polinómica local de grado <span class="math inline">\(d\)</span>, <span class="math inline">\(\hat{m}_{h}(x)=\hat{\beta}_0\)</span>, se obtiene al minimizar:
@@ -374,7 +376,7 @@ siendo <span class="math inline">\(S\)</span> la matriz de suavizado con <span c
 <li><p><span class="math inline">\(d=0\)</span>: Estimador Nadaraya-Watson.</p></li>
 <li><p><span class="math inline">\(d=1\)</span>: Estimador lineal local.</p></li>
 </ul>
-<p>Desde el punto de vista asintótico ambos estimadores tienen un comportamiento similar<a href="#fn27" class="footnote-ref" id="fnref27"><sup>27</sup></a>, pero en la práctica suele ser preferible el estimador lineal local, sobre todo porque se ve menos afectado por el denominado efecto frontera (Sección <a href="dimen-curse.html#dimen-curse">1.4</a>).</p>
+<p>Desde el punto de vista asintótico ambos estimadores tienen un comportamiento similar<a href="#fn28" class="footnote-ref" id="fnref28"><sup>28</sup></a>, pero en la práctica suele ser preferible el estimador lineal local, sobre todo porque se ve menos afectado por el denominado efecto frontera (Sección <a href="dimen-curse.html#dimen-curse">1.4</a>).</p>
 <p>Aunque el paquete base de <code>R</code> incluye herramientas para la estimación tipo núcleo de la regresión (<code>ksmooth()</code>, <code>loess()</code>), recomiendan el uso del paquete <code>KernSmooth</code> (Wand y Ripley, 2020).</p>
 <p>La ventana <span class="math inline">\(h\)</span> es el (hiper)parámetro de mayor importancia en la predicción y para seleccionarlo se suelen emplear métodos de validación cruzada (Sección <a href="const-eval.html#cv">1.3.3</a>) o tipo plug-in (reemplazando las funciones desconocidas que aparecen en la expresión de la ventana asintóticamente óptima por estimaciones; e.g. función <code>dpill()</code> del paquete <code>KernSmooth</code>).
 Por ejemplo, usando el criterio de validación cruzada dejando uno fuera (LOOCV) se trataría de minimizar:
@@ -387,7 +389,7 @@ siendo <span class="math inline">\(S_{ii}\)</span> el elemento <span class="math
 <span class="math display">\[GCV(h)=\frac{1}{n}\sum_{i=1}^n\left(\frac{y_i-\hat{m}(x_i)}{1 - \frac{1}{n}tr(S)}\right)^2\]</span>
 (sustituyendo <span class="math inline">\(S_{ii}\)</span> por su promedio).
 Además, la traza de la matriz de suavizado <span class="math inline">\(tr(S)\)</span> es lo que se conoce como el <em>número efectivo de parámetros</em> (<span class="math inline">\(n - tr(S)\)</span> sería una aproximación de los grados de libertad del error).</p>
-<p>Continuando con el ejemplo del conjunto de datos <code>MASS::mcycle</code> emplearemos la función <code>locpoly()</code> del paquete <code>KernSmooth</code> para obtener estimaciones lineales locales<a href="#fn28" class="footnote-ref" id="fnref28"><sup>28</sup></a> con una venta seleccionada mediante un método plug-in:</p>
+<p>Continuando con el ejemplo del conjunto de datos <code>MASS::mcycle</code> emplearemos la función <code>locpoly()</code> del paquete <code>KernSmooth</code> para obtener estimaciones lineales locales<a href="#fn29" class="footnote-ref" id="fnref29"><sup>29</sup></a> con una venta seleccionada mediante un método plug-in:</p>
 <div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="reg-local.html#cb408-1"></a><span class="co"># data(mcycle, package = &quot;MASS&quot;)</span></span>
 <span id="cb408-2"><a href="reg-local.html#cb408-2"></a>x &lt;-<span class="st"> </span>mcycle<span class="op">$</span>times</span>
 <span id="cb408-3"><a href="reg-local.html#cb408-3"></a>y &lt;-<span class="st"> </span>mcycle<span class="op">$</span>accel  </span>
@@ -426,7 +428,7 @@ Además, la traza de la matriz de suavizado <span class="math inline">\(tr(S)\)<
 ## -1.457414e-01  2.144568e+01  1.577670e+01 -2.458145e+10  7.556536e+10 
 ##     r.squared 
 ##  8.015429e-01</code></pre>
-<p>El caso multivariante es análogo, aunque habría que considerar una matriz de ventanas simétrica <span class="math inline">\(H\)</span>.También hay extensiones para el caso de predictores categóricos (nominales o ordinales) y para el caso de distribuciones de la respuesta distintas de la normal (máxima verosimilitud local).</p>
+<p>El caso multivariante es análogo, aunque habría que considerar una matriz de ventanas simétrica <span class="math inline">\(H\)</span>. También hay extensiones para el caso de predictores categóricos (nominales o ordinales) y para el caso de distribuciones de la respuesta distintas de la normal (máxima verosimilitud local).</p>
 <p>Otros paquetes de R incluyen más funcionalidades (<code>sm</code>, <code>locfit</code>, <a href="https://rubenfcasal.github.io/npsp"><code>npsp</code></a>…), pero hoy en día el paquete <a href="https://github.com/JeffreyRacine/R-Package-np"><code>np</code></a> es el que se podría considerar más completo.</p>
 </div>
 <div id="regresión-polinómica-local-robusta" class="section level3">
@@ -435,7 +437,7 @@ Además, la traza de la matriz de suavizado <span class="math inline">\(tr(S)\)<
 Estos métodos surgieron en el caso bivariante (<span class="math inline">\(p=1\)</span>), por lo que también se denominan <em>suavizado de diagramas de dispersión</em> (<em>scatterplot smoothing</em>; e.g. función <code>lowess()</code>, <em>locally weighted scatterplot smoothing</em>, del paquete base).
 Posteriormente se extendieron al caso multivariante (e.g. función <code>loess()</code>).</p>
 <p>Son métodos muy empleados en análisis descriptivo (no supervisado) y normalmente se emplean ventanas locales tipo vecinos más cercanos (por ejemplo a través de un parámetro <code>spam</code> que determina la proporción de observaciones empleadas en el ajuste).</p>
-<p>Como ejemplo emplearemos la función <code>loess()</code> con ajuste robusto (habrá que establecer <code>family = "symmetric"</code> para emplear M-estimadores, por defecto con 4 iteraciones, en lugar de mínimos cuadrados ponderados), seleccionando previamente <code>spam</code> por validación cruzada (LOOCV) pero empleando como criterio de error la mediana de los errores en valor absoluto (<em>median absolute deviation</em>, MAD)<a href="#fn29" class="footnote-ref" id="fnref29"><sup>29</sup></a>.</p>
+<p>Como ejemplo emplearemos la función <code>loess()</code> con ajuste robusto (habrá que establecer <code>family = "symmetric"</code> para emplear M-estimadores, por defecto con 4 iteraciones, en lugar de mínimos cuadrados ponderados), seleccionando previamente <code>spam</code> por validación cruzada (LOOCV) pero empleando como criterio de error la mediana de los errores en valor absoluto (<em>median absolute deviation</em>, MAD)<a href="#fn30" class="footnote-ref" id="fnref30"><sup>30</sup></a>.</p>
 <div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="reg-local.html#cb412-1"></a>cv.loess &lt;-<span class="st"> </span><span class="cf">function</span>(formula, datos, span, ...) {</span>
 <span id="cb412-2"><a href="reg-local.html#cb412-2"></a>  n &lt;-<span class="st"> </span><span class="kw">nrow</span>(datos)</span>
 <span id="cb412-3"><a href="reg-local.html#cb412-3"></a>  cv.pred &lt;-<span class="st"> </span><span class="kw">numeric</span>(n)</span>
@@ -464,7 +466,7 @@ Posteriormente se extendieron al caso multivariante (e.g. función <code>loess(
 <p><img src="07-regresion_np_files/figure-html/unnamed-chunk-5-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb413"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb413-1"><a href="reg-local.html#cb413-1"></a><span class="co"># Ajuste con todos los datos</span></span>
 <span id="cb413-2"><a href="reg-local.html#cb413-2"></a><span class="kw">plot</span>(accel <span class="op">~</span><span class="st"> </span>times, <span class="dt">data =</span> mcycle, <span class="dt">col =</span> <span class="st">&#39;darkgray&#39;</span>)</span>
-<span id="cb413-3"><a href="reg-local.html#cb413-3"></a>fit &lt;-<span class="st"> </span><span class="kw">loess</span>(accel <span class="op">~</span><span class="st"> </span>times, mcycle, <span class="dt">span =</span> span.cv)</span>
+<span id="cb413-3"><a href="reg-local.html#cb413-3"></a>fit &lt;-<span class="st"> </span><span class="kw">loess</span>(accel <span class="op">~</span><span class="st"> </span>times, mcycle, <span class="dt">span =</span> span.cv, <span class="dt">family =</span> <span class="st">&quot;symmetric&quot;</span>)</span>
 <span id="cb413-4"><a href="reg-local.html#cb413-4"></a><span class="kw">lines</span>(mcycle<span class="op">$</span>times, <span class="kw">predict</span>(fit))</span></code></pre></div>
 <p><img src="07-regresion_np_files/figure-html/unnamed-chunk-5-2.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>
@@ -472,9 +474,10 @@ Posteriormente se extendieron al caso multivariante (e.g. función <code>loess(
 <div class="footnotes">
 <hr />
 <ol start="27">
-<li id="fn27"><p>Asintóticamente el estimador lineal local tiene un sesgo menor que el de Nadaraya-Watson (pero del mismo orden) y la misma varianza (e.g. Fan and Gijbels, 1996).<a href="reg-local.html#fnref27" class="footnote-back">↩︎</a></p></li>
-<li id="fn28"><p>La función <code>KernSmooth::locpoly()</code> también admite la estimación de derivadas.<a href="reg-local.html#fnref28" class="footnote-back">↩︎</a></p></li>
-<li id="fn29"><p>En este caso habría dependencia entre las observaciones y los criterios habituales como validación cruzada tenderán a seleccionar ventanas pequeñas, i.e. a infrasuavizar.<a href="reg-local.html#fnref29" class="footnote-back">↩︎</a></p></li>
+<li id="fn27"><p>Se puede pensar que se están estimando los coeficientes de un desarrollo de Taylor de <span class="math inline">\(m(x_0)\)</span>.<a href="reg-local.html#fnref27" class="footnote-back">↩︎</a></p></li>
+<li id="fn28"><p>Asintóticamente el estimador lineal local tiene un sesgo menor que el de Nadaraya-Watson (pero del mismo orden) y la misma varianza (e.g. Fan and Gijbels, 1996).<a href="reg-local.html#fnref28" class="footnote-back">↩︎</a></p></li>
+<li id="fn29"><p>La función <code>KernSmooth::locpoly()</code> también admite la estimación de derivadas.<a href="reg-local.html#fnref29" class="footnote-back">↩︎</a></p></li>
+<li id="fn30"><p>En este caso habría dependencia entre las observaciones y los criterios habituales como validación cruzada tenderán a seleccionar ventanas pequeñas, i.e. a infrasuavizar.<a href="reg-local.html#fnref30" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

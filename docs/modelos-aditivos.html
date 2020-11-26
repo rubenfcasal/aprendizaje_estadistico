@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)" />
 
 
-<meta name="date" content="2020-11-24" />
+<meta name="date" content="2020-11-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -249,7 +249,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.1.3" data-path="reg-local.html"><a href="reg-local.html#regresión-polinómica-local-robusta"><i class="fa fa-check"></i><b>7.1.3</b> Regresión polinómica local robusta</a></li>
 </ul></li>
 <li class="chapter" data-level="7.2" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>7.2</b> Splines</a><ul>
-<li class="chapter" data-level="7.2.1" data-path="splines.html"><a href="splines.html#regression-splines"><i class="fa fa-check"></i><b>7.2.1</b> Regression splines</a></li>
+<li class="chapter" data-level="7.2.1" data-path="splines.html"><a href="splines.html#reg-splines"><i class="fa fa-check"></i><b>7.2.1</b> Regression splines</a></li>
 <li class="chapter" data-level="7.2.2" data-path="splines.html"><a href="splines.html#smoothing-splines"><i class="fa fa-check"></i><b>7.2.2</b> Smoothing splines</a></li>
 <li class="chapter" data-level="7.2.3" data-path="splines.html"><a href="splines.html#splines-penalizados"><i class="fa fa-check"></i><b>7.2.3</b> Splines penalizados</a></li>
 </ul></li>
@@ -257,15 +257,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.3.1" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#ajuste-función-gam"><i class="fa fa-check"></i><b>7.3.1</b> Ajuste: función <code>gam</code></a></li>
 <li class="chapter" data-level="7.3.2" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#ejemplo-2"><i class="fa fa-check"></i><b>7.3.2</b> Ejemplo</a></li>
 <li class="chapter" data-level="7.3.3" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#superficies-de-predicción"><i class="fa fa-check"></i><b>7.3.3</b> Superficies de predicción</a></li>
-<li class="chapter" data-level="7.3.4" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#comparación-de-modelos"><i class="fa fa-check"></i><b>7.3.4</b> Comparación de modelos</a></li>
+<li class="chapter" data-level="7.3.4" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#comparación-y-selección-de-modelos"><i class="fa fa-check"></i><b>7.3.4</b> Comparación y selección de modelos</a></li>
 <li class="chapter" data-level="7.3.5" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#mgcv-diagnosis"><i class="fa fa-check"></i><b>7.3.5</b> Diagnosis del modelo</a></li>
 <li class="chapter" data-level="7.3.6" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#gam-en-caret"><i class="fa fa-check"></i><b>7.3.6</b> GAM en <code>caret</code></a></li>
 <li class="chapter" data-level="7.3.7" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#ejercicios"><i class="fa fa-check"></i><b>7.3.7</b> Ejercicios</a></li>
 </ul></li>
-<li class="chapter" data-level="7.4" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>7.4</b> Regresión spline adaptativa multivariante</a></li>
-<li class="chapter" data-level="7.5" data-path="otros-métodos-no-paramétricos.html"><a href="otros-métodos-no-paramétricos.html"><i class="fa fa-check"></i><b>7.5</b> Otros métodos no paramétricos</a><ul>
-<li class="chapter" data-level="7.5.1" data-path="otros-métodos-no-paramétricos.html"><a href="otros-métodos-no-paramétricos.html#projection-pursuit"><i class="fa fa-check"></i><b>7.5.1</b> Projection pursuit</a></li>
+<li class="chapter" data-level="7.4" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>7.4</b> Regresión spline adaptativa multivariante</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="mars.html"><a href="mars.html#mars-con-el-paquete-earth"><i class="fa fa-check"></i><b>7.4.1</b> MARS con el paquete <code>earth</code></a></li>
+<li class="chapter" data-level="7.4.2" data-path="mars.html"><a href="mars.html#mars-con-el-paquete-caret"><i class="fa fa-check"></i><b>7.4.2</b> MARS con el paquete <code>caret</code></a></li>
 </ul></li>
+<li class="chapter" data-level="7.5" data-path="projection-pursuit.html"><a href="projection-pursuit.html"><i class="fa fa-check"></i><b>7.5</b> Projection pursuit</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
 <li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
@@ -344,10 +345,10 @@ Sigue la referencia:</p>
 </div>
 <div id="ejemplo-2" class="section level3">
 <h3><span class="header-section-number">7.3.2</span> Ejemplo</h3>
-<p>En esta sección utilizaremos como ejemplo el conjunto de datos <code>Prestige</code> de la librería <code>car</code>.
+<p>En esta sección utilizaremos como ejemplo el conjunto de datos <code>Prestige</code> de la librería <code>carData</code>.
 Se tratará de explicar <code>prestige</code> (puntuación de ocupaciones obtenidas a partir de una encuesta) a partir de <code>income</code> (media de ingresos en la ocupación) y <code>education</code> (media de los años de educación).</p>
-<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="modelos-aditivos.html#cb422-1"></a><span class="kw">library</span>(mgcv)</span>
-<span id="cb422-2"><a href="modelos-aditivos.html#cb422-2"></a><span class="kw">library</span>(car)</span>
+<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="modelos-aditivos.html#cb422-1"></a><span class="kw">data</span>(Prestige, <span class="dt">package =</span> <span class="st">&quot;carData&quot;</span>)</span>
+<span id="cb422-2"><a href="modelos-aditivos.html#cb422-2"></a><span class="kw">library</span>(mgcv)</span>
 <span id="cb422-3"><a href="modelos-aditivos.html#cb422-3"></a>modelo &lt;-<span class="st"> </span><span class="kw">gam</span>(prestige <span class="op">~</span><span class="st"> </span><span class="kw">s</span>(income) <span class="op">+</span><span class="st"> </span><span class="kw">s</span>(education), <span class="dt">data =</span> Prestige)</span>
 <span id="cb422-4"><a href="modelos-aditivos.html#cb422-4"></a><span class="kw">summary</span>(modelo)</span></code></pre></div>
 <pre><code>## 
@@ -407,8 +408,8 @@ Para generar esta rejilla se puede emplear la función <code>expand.grid(x,y)</c
 <p><img src="07-regresion_np_files/figure-html/unnamed-chunk-18-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>Puede ser más cómodo emplear el paquete <a href="https://modelr.tidyverse.org"><code>modelr</code></a> (emplea gráficos <code>ggplot2</code>) para trabajar con modelos y predicciones.</p>
 </div>
-<div id="comparación-de-modelos" class="section level3">
-<h3><span class="header-section-number">7.3.4</span> Comparación de modelos</h3>
+<div id="comparación-y-selección-de-modelos" class="section level3">
+<h3><span class="header-section-number">7.3.4</span> Comparación y selección de modelos</h3>
 <p>Además de las medidas de bondad de ajuste como el coeficiente de determinación ajustado, también se puede emplear la función <code>anova</code> para la comparación de modelos (y seleccionar las componentes por pasos de forma interactiva).
 Por ejemplo, viendo el gráfico de los efectos se podría pensar que el efecto de <code>education</code> podría ser lineal:</p>
 <div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb430-1"><a href="modelos-aditivos.html#cb430-1"></a><span class="co"># plot(modelo)</span></span>
@@ -471,14 +472,81 @@ Por ejemplo, viendo el gráfico de los efectos se podría pensar que el efecto d
 ## 
 ## R-sq.(adj) =  0.824   Deviance explained = 83.3%
 ## GCV = 55.188  Scale est. = 51.974    n = 102</code></pre>
-<div class="sourceCode" id="cb436"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb436-1"><a href="modelos-aditivos.html#cb436-1"></a><span class="co"># plot(modelo2, se = FALSE)</span></span></code></pre></div>
+<div class="sourceCode" id="cb436"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb436-1"><a href="modelos-aditivos.html#cb436-1"></a><span class="co"># plot(modelo2, se = FALSE)</span></span>
+<span id="cb436-2"><a href="modelos-aditivos.html#cb436-2"></a><span class="co"># plot(modelo2, scheme = 2)</span></span></code></pre></div>
 <p>En este caso el coeficiente de determinación ajustado es menor y no sería necesario realizar el contraste.</p>
+<!-- 
+También podríamos emplear el criterio `AIC()` (o `BIC()`): 
+
+
+```r
+AIC(modelo)
+```
+
+```
+## [1] 694.222
+```
+
+```r
+AIC(modelo2)
+```
+
+```
+## [1] 700.1994
+```
+-->
+<p>Ademas se pueden seleccionar componentes del modelo (mediante regularización) empleando el parámetro <code>select = TRUE</code>.</p>
+<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="modelos-aditivos.html#cb437-1"></a><span class="kw">example</span>(gam.selection)</span></code></pre></div>
+<pre><code>## 
+## gm.slc&gt; ## an example of automatic model selection via null space penalization
+## gm.slc&gt; library(mgcv)
+## 
+## gm.slc&gt; set.seed(3);n&lt;-200
+## 
+## gm.slc&gt; dat &lt;- gamSim(1,n=n,scale=.15,dist=&quot;poisson&quot;) ## simulate data
+## Gu &amp; Wahba 4 term additive model
+## 
+## gm.slc&gt; dat$x4 &lt;- runif(n, 0, 1);dat$x5 &lt;- runif(n, 0, 1) ## spurious
+## 
+## gm.slc&gt; b&lt;-gam(y~s(x0)+s(x1)+s(x2)+s(x3)+s(x4)+s(x5),data=dat,
+## gm.slc+          family=poisson,select=TRUE,method=&quot;REML&quot;)
+## 
+## gm.slc&gt; summary(b)
+## 
+## Family: poisson 
+## Link function: log 
+## 
+## Formula:
+## y ~ s(x0) + s(x1) + s(x2) + s(x3) + s(x4) + s(x5)
+## 
+## Parametric coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)  1.21758    0.04082   29.83   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Approximate significance of smooth terms:
+##             edf Ref.df  Chi.sq p-value    
+## s(x0) 1.7655088      9   5.264  0.0397 *  
+## s(x1) 1.9271040      9  65.356  &lt;2e-16 ***
+## s(x2) 6.1351414      9 156.204  &lt;2e-16 ***
+## s(x3) 0.0002849      9   0.000  0.4068    
+## s(x4) 0.0003044      9   0.000  1.0000    
+## s(x5) 0.1756926      9   0.195  0.2963    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## R-sq.(adj) =  0.545   Deviance explained = 51.6%
+## -REML = 430.78  Scale est. = 1         n = 200
+## 
+## gm.slc&gt; plot(b,pages=1)</code></pre>
+<p><img src="07-regresion_np_files/figure-html/unnamed-chunk-22-1.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="mgcv-diagnosis" class="section level3">
 <h3><span class="header-section-number">7.3.5</span> Diagnosis del modelo</h3>
 <p>La función <code>gam.check()</code> realiza una diagnosis del modelo:</p>
-<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="modelos-aditivos.html#cb437-1"></a><span class="kw">gam.check</span>(modelo)</span></code></pre></div>
-<p><img src="07-regresion_np_files/figure-html/unnamed-chunk-21-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="modelos-aditivos.html#cb439-1"></a><span class="kw">gam.check</span>(modelo)</span></code></pre></div>
+<p><img src="07-regresion_np_files/figure-html/unnamed-chunk-23-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <pre><code>## 
 ## Method: GCV   Optimizer: magic
 ## Smoothing parameter selection converged after 4 iterations.
@@ -490,12 +558,12 @@ Por ejemplo, viendo el gráfico de los efectos se podría pensar que el efecto d
 ## indicate that k is too low, especially if edf is close to k&#39;.
 ## 
 ##                k&#39;  edf k-index p-value
-## s(income)    9.00 3.12    0.98    0.43
-## s(education) 9.00 3.18    1.03    0.57</code></pre>
+## s(income)    9.00 3.12    0.98    0.42
+## s(education) 9.00 3.18    1.03    0.54</code></pre>
 <p>Lo ideal sería observar normalidad en los dos gráficos de la izquierda, falta de patrón en el superior derecho, y ajuste a una recta en el inferior derecho. En este caso parece que el modelo se comporta adecuadamente.
 Como se deduce del resultado anterior, podría ser recomendable modificar la dimensión <code>k</code> de la base utilizada construir la componente no paramétrica, este valor se puede interpretar como el grado máximo de libertad permitido en ese componente, aunque normalmente no influye demasiado en el resultado (puede influir en el tiempo de computación).</p>
 <p>También se podría chequear concurvidad (<em>concurvity</em>; generalización de la multicolinealidad) entre las componentes del modelo:</p>
-<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="modelos-aditivos.html#cb439-1"></a><span class="kw">concurvity</span>(modelo)</span></code></pre></div>
+<div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb441-1"><a href="modelos-aditivos.html#cb441-1"></a><span class="kw">concurvity</span>(modelo)</span></code></pre></div>
 <pre><code>##                  para s(income) s(education)
 ## worst    3.107241e-23 0.5931528    0.5931528
 ## observed 3.107241e-23 0.4065402    0.4398639
@@ -505,14 +573,14 @@ Como se deduce del resultado anterior, podría ser recomendable modificar la dim
 <div id="gam-en-caret" class="section level3">
 <h3><span class="header-section-number">7.3.6</span> GAM en <code>caret</code></h3>
 <p>El soporte de GAM en <code>caret</code> es como poco deficiente…</p>
-<div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb441-1"><a href="modelos-aditivos.html#cb441-1"></a><span class="kw">library</span>(caret)</span>
-<span id="cb441-2"><a href="modelos-aditivos.html#cb441-2"></a><span class="kw">names</span>(<span class="kw">getModelInfo</span>(<span class="st">&quot;gam&quot;</span>)) <span class="co"># 4 métodos</span></span></code></pre></div>
+<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="modelos-aditivos.html#cb443-1"></a><span class="kw">library</span>(caret)</span>
+<span id="cb443-2"><a href="modelos-aditivos.html#cb443-2"></a><span class="kw">names</span>(<span class="kw">getModelInfo</span>(<span class="st">&quot;gam&quot;</span>)) <span class="co"># 4 métodos</span></span></code></pre></div>
 <pre><code>## [1] &quot;gam&quot;       &quot;gamboost&quot;  &quot;gamLoess&quot;  &quot;gamSpline&quot;</code></pre>
-<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="modelos-aditivos.html#cb443-1"></a><span class="kw">modelLookup</span>(<span class="st">&quot;gam&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb445-1"><a href="modelos-aditivos.html#cb445-1"></a><span class="kw">modelLookup</span>(<span class="st">&quot;gam&quot;</span>)</span></code></pre></div>
 <pre><code>##   model parameter             label forReg forClass probModel
 ## 1   gam    select Feature Selection   TRUE     TRUE      TRUE
 ## 2   gam    method            Method   TRUE     TRUE      TRUE</code></pre>
-<div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb445-1"><a href="modelos-aditivos.html#cb445-1"></a><span class="kw">modelLookup</span>(<span class="st">&quot;gamLoess&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb447"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb447-1"><a href="modelos-aditivos.html#cb447-1"></a><span class="kw">modelLookup</span>(<span class="st">&quot;gamLoess&quot;</span>)</span></code></pre></div>
 <pre><code>##      model parameter  label forReg forClass probModel
 ## 1 gamLoess      span   Span   TRUE     TRUE      TRUE
 ## 2 gamLoess    degree Degree   TRUE     TRUE      TRUE</code></pre>
@@ -521,7 +589,8 @@ Como se deduce del resultado anterior, podría ser recomendable modificar la dim
 <h3><span class="header-section-number">7.3.7</span> Ejercicios</h3>
 <ol style="list-style-type: decimal">
 <li><p>Continuando con los datos de <code>MASS:mcycle</code>, emplear <code>mgcv::gam()</code> para ajustar un spline penalizado para predecir <code>accel</code> a partir de <code>times</code> con las opciones por defecto y representar el ajuste obtenido. Comparar el ajuste con el obtenido empleando un spline penalizado adaptativo (<code>bs="ad"</code>; ver <code>?adaptive.smooth</code>).</p></li>
-<li><p>Empleando el conjunto de datos <code>airquality</code>, crear una muestra de entrenamiento y otra de test, buscar un modelo aditivo que resulte adecuado para explicar <code>log(Ozone)</code> a partir de <code>Temp</code>, <code>Wind</code> y <code>Solar.R</code>.</p></li>
+<li><p>Empleando el conjunto de datos <code>airquality</code>, crear una muestra de entrenamiento y otra de test, buscar un modelo aditivo que resulte adecuado para explicar <code>sqrt(Ozone)</code> a partir de <code>Temp</code>, <code>Wind</code> y <code>Solar.R</code>.
+Es preferible suponer que hay una interacción entre <code>Temp</code> y <code>Wind</code>?</p></li>
 </ol>
 </div>
 </div>
