@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)" />
 
 
-<meta name="date" content="2020-11-26" />
+<meta name="date" content="2020-12-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -266,7 +266,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.4.1" data-path="mars.html"><a href="mars.html#mars-con-el-paquete-earth"><i class="fa fa-check"></i><b>7.4.1</b> MARS con el paquete <code>earth</code></a></li>
 <li class="chapter" data-level="7.4.2" data-path="mars.html"><a href="mars.html#mars-con-el-paquete-caret"><i class="fa fa-check"></i><b>7.4.2</b> MARS con el paquete <code>caret</code></a></li>
 </ul></li>
-<li class="chapter" data-level="7.5" data-path="projection-pursuit.html"><a href="projection-pursuit.html"><i class="fa fa-check"></i><b>7.5</b> Projection pursuit</a></li>
+<li class="chapter" data-level="7.5" data-path="projection-pursuit.html"><a href="projection-pursuit.html"><i class="fa fa-check"></i><b>7.5</b> Projection pursuit</a><ul>
+<li class="chapter" data-level="7.5.1" data-path="projection-pursuit.html"><a href="projection-pursuit.html#ppr"><i class="fa fa-check"></i><b>7.5.1</b> Regresión por <em>projection pursuit</em></a></li>
+<li class="chapter" data-level="7.5.2" data-path="projection-pursuit.html"><a href="projection-pursuit.html#implementación-en-r-1"><i class="fa fa-check"></i><b>7.5.2</b> Implementación en R</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="neural-nets.html"><a href="neural-nets.html"><i class="fa fa-check"></i><b>8</b> Redes neuronales</a><ul>
+<li class="chapter" data-level="8.1" data-path="single-hidden-layer-feedforward-network.html"><a href="single-hidden-layer-feedforward-network.html"><i class="fa fa-check"></i><b>8.1</b> Single-hidden-layer feedforward network</a></li>
+<li class="chapter" data-level="8.2" data-path="clasificación-con-ann.html"><a href="clasificación-con-ann.html"><i class="fa fa-check"></i><b>8.2</b> Clasificación con ANN</a></li>
+<li class="chapter" data-level="8.3" data-path="implementación-en-r-2.html"><a href="implementación-en-r-2.html"><i class="fa fa-check"></i><b>8.3</b> Implementación en R</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
 <li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
@@ -301,18 +309,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>El modelo MARS es un spline multivariante lineal:<br />
 <span class="math display">\[m(\mathbf{x}) = \beta_0 + \sum_{m=1}^M \beta_m h_m(\mathbf{x})\]</span>
 (es un modelo lineal en transformaciones <span class="math inline">\(h_m(\mathbf{x})\)</span> de los predictores originales), donde las bases <span class="math inline">\(h_m(\mathbf{x})\)</span> se construyen de forma adaptativa empleando funciones <em>bisagra</em> (<em>hinge functions</em>)
-<span class="math display">\[ h(x) = (x)_+ = \mbox{max}\{0, x\} = \left\{ \begin{array}{ll}
+<span class="math display">\[ h(x) = (x)_+ = \left\{ \begin{array}{ll}
   x &amp; \mbox{si } x &gt; 0 \\
   0 &amp; \mbox{si } x \leq 0
   \end{array}
   \right.\]</span>
 y considerando como posibles nodos los valores observados de los predictores
 (en el caso univariante se emplean las bases de potencias truncadas con <span class="math inline">\(d=1\)</span> descritas en la Sección <a href="splines.html#reg-splines">7.2.1</a>, pero incluyendo también su versión simetrizada).</p>
-<p>Vamos a empezar explicando el modelo MARS aditivo (sin interacciones), que funciona de forma muy parecida a los árboles de decisión CART, y después lo extenderemos al caso con interacciones. Asumimos que todas las variables predictoras son numéricas. El proceso de construcción del modelo es un proceso iterativo <em>hacia delante</em> (forward) que empieza con el modelo
+<p>Vamos a empezar explicando el modelo MARS aditivo (sin interacciones), que funciona de forma muy parecida a los árboles de decisión CART, y después lo extenderemos al caso con interacciones.
+Asumimos que todas las variables predictoras son numéricas. El proceso de construcción del modelo es un proceso iterativo <em>hacia delante</em> (forward) que empieza con el modelo
 <span class="math display">\[\hat m(\mathbf{x}) = \hat \beta_0 \]</span>
-donde <span class="math inline">\(\hat \beta_0\)</span> es la media de todas las respuestas, para a continuación considerar todos los puntos de corte (<em>knots</em>) posibles <span class="math inline">\(x_{ij}\)</span> con <span class="math inline">\(i = 1, 2, \ldots, n\)</span>, <span class="math inline">\(j = 1, 2, \ldots, p\)</span>, es decir, todas las observaciones de todas las variables predictoras de la muestra de entrenamiento. Para cada punto de corte <span class="math inline">\(x_{ij}\)</span> se consideran dos bases:
-<span class="math display">\[h_1(\mathbf{x}) = h(X_j - x_{ij}) \\
-h_2(\mathbf{x}) = h(x_{ij} - X_j)\]</span>
+donde <span class="math inline">\(\hat \beta_0\)</span> es la media de todas las respuestas, para a continuación considerar todos los puntos de corte (<em>knots</em>) posibles <span class="math inline">\(x_{ji}\)</span> con <span class="math inline">\(i = 1, 2, \ldots, n\)</span>, <span class="math inline">\(j = 1, 2, \ldots, p\)</span>, es decir, todas las observaciones de todas las variables predictoras de la muestra de entrenamiento.
+Para cada punto de corte <span class="math inline">\(x_{ji}\)</span> (combinación de variable y observación) se consideran dos bases:
+<span class="math display">\[h_1(\mathbf{x}) = h(x_j - x_{ji}) \\
+h_2(\mathbf{x}) = h(x_{ji} - x_j)\]</span>
 y se construye el nuevo modelo
 <span class="math display">\[\hat m(\mathbf{x}) = \hat \beta_0 + \hat \beta_1 h_1(\mathbf{x}) + \hat \beta_2 h_2(\mathbf{x})\]</span>
 La estimación de los parámetros <span class="math inline">\(\beta_0, \beta_1, \beta_2\)</span> se realiza de la forma estándar en regresión lineal, minimizando <span class="math inline">\(\mbox{RSS}\)</span>. De este modo se construyen muchos modelos alternativos y entre ellos se selecciona aquel que tenga un menor error de entrenamiento. En la siguiente iteración se conservan <span class="math inline">\(h_1(\mathbf{x})\)</span> y <span class="math inline">\(h_2(\mathbf{x})\)</span> y se añade una pareja de términos nuevos siguiendo el mismo procedimiento. Y así sucesivamente, añadiendo de cada vez dos nuevos términos. Este procedimiento va creando un modelo lineal segmentado (piecewise) donde cada nuevo término modeliza una porción aislada de los datos originales.</p>
@@ -320,30 +330,38 @@ La estimación de los parámetros <span class="math inline">\(\beta_0, \beta_1, 
 <p>La selección <em>óptima</em> del valor del hiperparámetro <span class="math inline">\(\lambda\)</span> puede realizarse por los procedimientos habituales tipo validación cruzada. Una alternativa mucho más rápida es utilizar validación cruzada generalizada (GCV) que es una aproximación de la validación cruzada <em>leave-one-out</em> mediante la fórmula
 <span class="math display">\[\mbox{GCV} (\lambda) = \frac{\mbox{RSS}}{(1-M(\lambda)/n)^2}\]</span>
 donde <span class="math inline">\(M(\lambda)\)</span> es el número de parámetros <em>efectivos</em> del modelo, que depende del número de términos más el número de puntos de corte utilizados penalizado por un factor (2 en el caso aditivo que estamos explicando, 3 cuando hay interacciones).</p>
-<p>Hemos explicado una caso particular de MARS: el modelo aditivo. El modelo general sólo se diferencia del caso aditivo en que se permiten iteracciones, es decir, multiplicaciones entre las variables <span class="math inline">\(h_m(\mathbf{x})\)</span>. Para ello, en las iteraciones de la fase de construcción del modelo, además de considerar todos los puntos de corte, se consideran también todos los términos incorporados previamente al modelo, a los que se añade <span class="math inline">\(h_0(\mathbf{x}) = 1\)</span>. De este modo, si resulta seleccionado un término padre <span class="math inline">\(h_l(\mathbf{x})\)</span>, después de analizar todas las posibilidades, al modelo anterior se le agrega
-<span class="math display">\[\hat \beta_{m+1} h_l(\mathbf{x}) h(X_j - x_{ij}) + \hat \beta_{m+2} h_l(\mathbf{x}) h(x_{ij} - X_j)\]</span>
+<p>Hemos explicado una caso particular de MARS: el modelo aditivo. El modelo general sólo se diferencia del caso aditivo en que se permiten interacciones, es decir, multiplicaciones entre las variables <span class="math inline">\(h_m(\mathbf{x})\)</span>.
+Para ello, en cada iteración durante la fase de construcción del modelo, además de considerar todos los puntos de corte, también se consideran todas las combinaciones con los términos incorporados previamente al modelo, denominados términos padre.
+De este modo, si resulta seleccionado un término padre <span class="math inline">\(h_l(\mathbf{x})\)</span> (incluyendo <span class="math inline">\(h_0(\mathbf{x}) = 1\)</span>) y un punto de corte <span class="math inline">\(x_{ji}\)</span>, después de analizar todas las posibilidades, al modelo anterior se le agrega
+<span class="math display">\[\hat \beta_{m+1} h_l(\mathbf{x}) h(x_j - x_{ji}) + \hat \beta_{m+2} h_l(\mathbf{x}) h(x_{ji} - x_j)\]</span>
 Recordando que en cada caso se vuelven a estimar todos los parámetros <span class="math inline">\(\beta_i\)</span>.</p>
 <p>Al igual que <span class="math inline">\(\lambda\)</span>, también el grado de interacción máxima permitida se considera un hiperparámetro del problema, aunque lo habitual es trabajar con grado 1 (modelo aditivo) o interacción de grado 2. Una restricción adicional que se impone al modelo es que en cada producto no puede aparecer más de una vez la misma variable <span class="math inline">\(X_j\)</span>.</p>
-<p>Aunque el procedimiento de construcción del modelo realiza búsquedas exhaustivas y en consecuencia puede parecer computacionalmente intratable, en la práctica se realiza de forma razonablemente rápida, al igual que ocurría en CART. Una de las principales ventajas de MARS es que realiza una selección automática de las variables predictoras. Aunque inicialmente pueda haber muchos predictores, y este método es adecuado para problemas de alta dimensión, en el modelo final van a aparecer muchos menos (pueden aparecer más de una vez). Además, si se utiliza un modelo aditivo su interpretación es directa, e incluso permitiendo interacciones de grado 2 el modelo puede ser interpretado. Otra ventaja es que no es necesario realizar un prepocesado de los datos, ni filtrando variables ni transformando los datos. Que haya predictores con correlaciones altas no va a afectar al rendimiento del modelo, aunque sí puede dificultar su interpretación. Aunque hemos supuesto al principio de la explicación que los predictores son numéricos, se pueden incorporar variables predictoras cualitativas siguiendo los procedimientos estándar. Por último, se puede realizar una cuantificación de la importancia de las variables de forma similar a como se hace en CART.</p>
+<p>Aunque el procedimiento de construcción del modelo realiza búsquedas exhaustivas y en consecuencia puede parecer computacionalmente intratable, en la práctica se realiza de forma razonablemente rápida, al igual que ocurría en CART.
+Una de las principales ventajas de MARS es que realiza una selección automática de las variables predictoras.
+Aunque inicialmente pueda haber muchos predictores, y este método es adecuado para problemas de alta dimensión, en el modelo final van a aparecer muchos menos (pueden aparecer más de una vez).
+Además, si se utiliza un modelo aditivo su interpretación es directa, e incluso permitiendo interacciones de grado 2 el modelo puede ser interpretado.
+Otra ventaja es que no es necesario realizar un prepocesado de los datos, ni filtrando variables ni transformando los datos.
+Que haya predictores con correlaciones altas no va a afectar a la construcción del modelo (normalmente seleccionará el primero), aunque sí puede dificultar su interpretación.
+Aunque hemos supuesto al principio de la explicación que los predictores son numéricos, se pueden incorporar variables predictoras cualitativas siguiendo los procedimientos estándar.
+Por último, se puede realizar una cuantificación de la importancia de las variables de forma similar a como se hace en CART.</p>
 <p>En conclusión, MARS utiliza splines lineales con una selección automática de los puntos de corte mediante un algoritmo avaricioso similar al empleado en los árboles CART, tratando de añadir más puntos de corte donde aparentemente hay más variaciones en la función de regresión y menos puntos donde esta es más estable.</p>
 <div id="mars-con-el-paquete-earth" class="section level3">
 <h3><span class="header-section-number">7.4.1</span> MARS con el paquete <code>earth</code></h3>
 <p>Actualmente el paquete de referencia para MARS es <a href="http://www.milbo.users.sonic.net/earth"><code>earth</code></a> (<em>Enhanced Adaptive Regression Through Hinges</em>)<a href="#fn34" class="footnote-ref" id="fnref34"><sup>34</sup></a>.</p>
-<p>Su función principal es:</p>
+<p>La función principal es <code>earth()</code> y se suelen considerar los siguientes argumentos:</p>
 <div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb449-1"><a href="mars.html#cb449-1"></a><span class="kw">earth</span>(formula, data, <span class="dt">glm =</span> <span class="ot">NULL</span>, <span class="dt">degree =</span> <span class="dv">1</span>, ...) </span></code></pre></div>
-<p>donde los parámetros principales son:</p>
 <ul>
+<li><p><code>formula</code> y <code>data</code> (opcional): permiten especificar la respuesta y las variables predictoras de la forma habitual (e.g. <code>respuesta ~ .</code>; también admite matrices). Admite respuestas multidimensionales (ajustará un modelo para cada componente) y categóricas (las convierte en multivariantes), también predictores categóricos, aunque no permite datos faltantes.</p></li>
 <li><p><code>glm</code>: lista con los parámetros del ajuste GLM (e.g. <code>glm = list(family = binomial)</code>).</p></li>
 <li><p><code>degree</code>: grado máximo de interacción; por defecto 1 (modelo aditivo).</p></li>
 </ul>
-<p>Esta función admite respuestas multidimensionales (ajustando un modelo para cada componente) y categóricas (las convierte en multivariantes), también predictores categóricos, aunque no permite datos faltantes.</p>
 <p>Otros parámetros que pueden ser de interés (afectan a la complejidad del modelo en el crecimiento, a la selección del modelo final o al tiempo de computación; para más detalles ver <code>help(earth)</code>):</p>
 <ul>
-<li><p><code>nk</code>: número máximo de términos (dimensión de la base <span class="math inline">\(M\)</span>) en el crecimiento del modelo; por defecto <code>min(200, max(20, 2 * ncol(x))) + 1</code> (puede ser demasiado pequeña si muchos de los predictores influyen en la respuesta).</p></li>
-<li><p><code>thresh</code>: umbral de parada en el crecimiento (se interpretaría como <code>cp</code> en los árboles CART); por defecto 0.001.</p></li>
-<li><p><code>fast.k</code>: número máximo de términos padre considerados en cada paso durante el crecimiento.</p></li>
+<li><p><code>nk</code>: número máximo de términos en el crecimiento del modelo (dimensión <span class="math inline">\(M\)</span> de la base); por defecto <code>min(200, max(20, 2 * ncol(x))) + 1</code> (puede ser demasiado pequeña si muchos de los predictores influyen en la respuesta).</p></li>
+<li><p><code>thresh</code>: umbral de parada en el crecimiento (se interpretaría como <code>cp</code> en los árboles CART); por defecto 0.001 (si se establece a 0 la única condición de parada será alcanzar el valor máximo de términos <code>nk</code>).</p></li>
+<li><p><code>fast.k</code>: número máximo de términos padre considerados en cada paso durante el crecimiento; por defecto 20, si se establece a 0 no habrá limitación.</p></li>
 <li><p><code>linpreds</code>: índice de variables que se considerarán con efecto lineal.</p></li>
-<li><p><code>nprune</code>: número máximo de términos (incluida la intersección) en el modelo final (después de la poda).</p></li>
+<li><p><code>nprune</code>: número máximo de términos (incluida la intersección) en el modelo final (después de la poda); por defecto no hay límite (se podrían incluir todos los creados durante el crecimiento).</p></li>
 <li><p><code>pmethod</code>: método empleado para la poda; por defecto <code>"backward"</code>. Otras opciones son: <code>"forward"</code>, <code>"seqrep"</code>, <code>"exhaustive"</code> (emplea los métodos de selección implementados en paquete <code>leaps</code>), <code>"cv"</code> (validación cruzada, empleando <code>nflod</code>) y <code>"none"</code> para no realizar poda.</p></li>
 <li><p><code>nfold</code>: número de grupos de validación cruzada; por defecto 0 (no se hace validación cruzada).</p></li>
 <li><p><code>varmod.method</code>: permite seleccionar un método para estimar las varianzas y por ejemplo poder realizar contrastes o construir intervalos de confianza (para más detalles ver <code>?varmod</code> o la vignette “Variance models in earth”).</p></li>
@@ -372,7 +390,7 @@ Recordando que en cada caso se vuelven a estimar todos los parámetros <span cla
 <div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb453-1"><a href="mars.html#cb453-1"></a><span class="kw">plot</span>(accel <span class="op">~</span><span class="st"> </span>times, <span class="dt">data =</span> mcycle, <span class="dt">col =</span> <span class="st">&#39;darkgray&#39;</span>)</span>
 <span id="cb453-2"><a href="mars.html#cb453-2"></a><span class="kw">lines</span>(mcycle<span class="op">$</span>times, <span class="kw">predict</span>(mars))</span></code></pre></div>
 <p><img src="07-regresion_np_files/figure-html/unnamed-chunk-27-2.png" width="80%" style="display: block; margin: auto;" /></p>
-<p>Como con las opciones por defecto el ajuste no es muy bueno (aunque podría valer…), podríamos forzar la complejidad del modelo en el crecimiento (<code>minspan = 1</code> permite que todas las observaciones sean potenciales nodos):</p>
+<p>Como con las opciones por defecto el ajuste no es muy bueno (aunque podría ser suficiente), podríamos forzar la complejidad del modelo en el crecimiento (<code>minspan = 1</code> permite que todas las observaciones sean potenciales nodos):</p>
 <div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="mars.html#cb454-1"></a>mars2 &lt;-<span class="st"> </span><span class="kw">earth</span>(accel <span class="op">~</span><span class="st"> </span>times, <span class="dt">data =</span> mcycle, <span class="dt">minspan =</span> <span class="dv">1</span>, <span class="dt">thresh =</span> <span class="dv">0</span>)</span>
 <span id="cb454-2"><a href="mars.html#cb454-2"></a><span class="kw">summary</span>(mars2)</span></code></pre></div>
 <pre><code>## Call: earth(formula=accel~times, data=mcycle, minspan=1, thresh=0)
@@ -418,7 +436,7 @@ Recordando que en cada caso se vuelven a estimar todos los parámetros <span cla
 ## GCV 53.08737    RSS 3849.355    GRSq 0.8224057    RSq 0.8712393</code></pre>
 <div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb459-1"><a href="mars.html#cb459-1"></a><span class="kw">plot</span>(mars)</span></code></pre></div>
 <p><img src="07-regresion_np_files/figure-html/unnamed-chunk-29-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<p>Para representar los efectos de las variables utiliza el paquete <code>plotmo</code> (válido también para la mayoría de los modelos tratados en este libro, incluyendo <code>mgcv::gam()</code>)</p>
+<p>Para representar los efectos de las variables importa las herramientas del paquete <code>plotmo</code> (del mismo autor; válido también para la mayoría de los modelos tratados en este libro, incluyendo <code>mgcv::gam()</code>).</p>
 <div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="mars.html#cb460-1"></a><span class="kw">plotmo</span>(mars)</span></code></pre></div>
 <pre><code>##  plotmo grid:    education income women
 ##                      10.54   5930  13.6</code></pre>
@@ -483,7 +501,7 @@ Recordando que en cada caso se vuelven a estimar todos los parámetros <span cla
 ## 
 ## R-sq.(adj) =  0.841   Deviance explained = 85.3%
 ## GCV = 51.416  Scale est. = 47.032    n = 102</code></pre>
-<div class="sourceCode" id="cb469"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb469-1"><a href="mars.html#cb469-1"></a><span class="kw">anova</span>(gam, gam2, <span class="dt">test=</span><span class="st">&quot;F&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb469"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb469-1"><a href="mars.html#cb469-1"></a><span class="kw">anova</span>(gam, gam2, <span class="dt">test =</span> <span class="st">&quot;F&quot;</span>)</span></code></pre></div>
 <pre><code>## Analysis of Deviance Table
 ## 
 ## Model 1: prestige ~ s(education) + s(income) + s(women)
@@ -499,6 +517,10 @@ Recordando que en cada caso se vuelven a estimar todos los parámetros <span cla
 <p><img src="07-regresion_np_files/figure-html/unnamed-chunk-32-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb473"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb473-1"><a href="mars.html#cb473-1"></a><span class="kw">plot</span>(gam2, <span class="dt">scheme =</span> <span class="dv">2</span>, <span class="dt">select =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="07-regresion_np_files/figure-html/unnamed-chunk-32-2.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>Pregunta: ¿Observas algo extraño en el contraste ANOVA anterior?
+<!-- 
+anova(gam2, gam, test = "F")
+--></p>
 </div>
 <div id="mars-con-el-paquete-caret" class="section level3">
 <h3><span class="header-section-number">7.4.2</span> MARS con el paquete <code>caret</code></h3>

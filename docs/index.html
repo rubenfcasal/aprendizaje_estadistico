@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)" />
 
 
-<meta name="date" content="2020-11-26" />
+<meta name="date" content="2020-12-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -266,7 +266,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.4.1" data-path="mars.html"><a href="mars.html#mars-con-el-paquete-earth"><i class="fa fa-check"></i><b>7.4.1</b> MARS con el paquete <code>earth</code></a></li>
 <li class="chapter" data-level="7.4.2" data-path="mars.html"><a href="mars.html#mars-con-el-paquete-caret"><i class="fa fa-check"></i><b>7.4.2</b> MARS con el paquete <code>caret</code></a></li>
 </ul></li>
-<li class="chapter" data-level="7.5" data-path="projection-pursuit.html"><a href="projection-pursuit.html"><i class="fa fa-check"></i><b>7.5</b> Projection pursuit</a></li>
+<li class="chapter" data-level="7.5" data-path="projection-pursuit.html"><a href="projection-pursuit.html"><i class="fa fa-check"></i><b>7.5</b> Projection pursuit</a><ul>
+<li class="chapter" data-level="7.5.1" data-path="projection-pursuit.html"><a href="projection-pursuit.html#ppr"><i class="fa fa-check"></i><b>7.5.1</b> Regresión por <em>projection pursuit</em></a></li>
+<li class="chapter" data-level="7.5.2" data-path="projection-pursuit.html"><a href="projection-pursuit.html#implementación-en-r-1"><i class="fa fa-check"></i><b>7.5.2</b> Implementación en R</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="neural-nets.html"><a href="neural-nets.html"><i class="fa fa-check"></i><b>8</b> Redes neuronales</a><ul>
+<li class="chapter" data-level="8.1" data-path="single-hidden-layer-feedforward-network.html"><a href="single-hidden-layer-feedforward-network.html"><i class="fa fa-check"></i><b>8.1</b> Single-hidden-layer feedforward network</a></li>
+<li class="chapter" data-level="8.2" data-path="clasificación-con-ann.html"><a href="clasificación-con-ann.html"><i class="fa fa-check"></i><b>8.2</b> Clasificación con ANN</a></li>
+<li class="chapter" data-level="8.3" data-path="implementación-en-r-2.html"><a href="implementación-en-r-2.html"><i class="fa fa-check"></i><b>8.3</b> Implementación en R</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
 <li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
@@ -298,7 +306,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">Aprendizaje Estadístico</h1>
 <p class="author"><em>Rubén Fernández Casal (<a href="mailto:ruben.fcasal@udc.es" class="email">ruben.fcasal@udc.es</a>), Julián Costa (<a href="mailto:julian.costa@udc.es" class="email">julian.costa@udc.es</a>)</em></p>
-<p class="date"><em>2020-11-26</em></p>
+<p class="date"><em>2020-12-01</em></p>
 </div>
 <div id="prólogo" class="section level1 unnumbered">
 <h1>Prólogo</h1>
@@ -308,10 +316,10 @@ Se puede acceder a la versión en línea a través del siguiente enlace:</p>
 <p><a href="https://rubenfcasal.github.io/aprendizaje_estadistico" class="uri">https://rubenfcasal.github.io/aprendizaje_estadistico</a>.</p>
 <p>donde puede descargarse en formato <a href="https://rubenfcasal.github.io/aprendizaje_estadistico/aprendizaje_estadistico.pdf">pdf</a>.</p>
 <p>Para ejecutar los ejemplos mostrados en el libro sería necesario tener instalados los siguientes paquetes:
-<a href="https://CRAN.R-project.org/package=caret"><code>caret</code></a>, <a href="https://CRAN.R-project.org/package=rattle"><code>rattle</code></a>, <a href="https://CRAN.R-project.org/package=car"><code>car</code></a>, <a href="https://CRAN.R-project.org/package=leaps"><code>leaps</code></a>, <a href="https://CRAN.R-project.org/package=MASS"><code>MASS</code></a>, <a href="https://CRAN.R-project.org/package=RcmdrMisc"><code>RcmdrMisc</code></a>, <a href="https://CRAN.R-project.org/package=lmtest"><code>lmtest</code></a>, <a href="https://CRAN.R-project.org/package=glmnet"><code>glmnet</code></a>, <a href="https://CRAN.R-project.org/package=mgcv"><code>mgcv</code></a>, <a href="https://CRAN.R-project.org/package=AppliedPredictiveModeling"><code>AppliedPredictiveModeling</code></a>, <a href="https://CRAN.R-project.org/package=ISLR"><code>ISLR</code></a>.
+<a href="https://CRAN.R-project.org/package=caret"><code>caret</code></a>, <a href="https://CRAN.R-project.org/package=rattle"><code>rattle</code></a>, <a href="https://CRAN.R-project.org/package=car"><code>car</code></a>, <a href="https://CRAN.R-project.org/package=leaps"><code>leaps</code></a>, <a href="https://CRAN.R-project.org/package=MASS"><code>MASS</code></a>, <a href="https://CRAN.R-project.org/package=RcmdrMisc"><code>RcmdrMisc</code></a>, <a href="https://CRAN.R-project.org/package=lmtest"><code>lmtest</code></a>, <a href="https://CRAN.R-project.org/package=glmnet"><code>glmnet</code></a>, <a href="https://CRAN.R-project.org/package=mgcv"><code>mgcv</code></a>, <a href="https://CRAN.R-project.org/package=np"><code>np</code></a>, <a href="https://CRAN.R-project.org/package=NeuralNetTools"><code>NeuralNetTools</code></a>, <a href="https://CRAN.R-project.org/package=AppliedPredictiveModeling"><code>AppliedPredictiveModeling</code></a>, <a href="https://CRAN.R-project.org/package=ISLR"><code>ISLR</code></a>.
 Por ejemplo mediante los siguientes comandos:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1"></a>pkgs &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;caret&quot;</span>, <span class="st">&quot;rattle&quot;</span>, <span class="st">&quot;car&quot;</span>, <span class="st">&quot;leaps&quot;</span>, <span class="st">&quot;MASS&quot;</span>, <span class="st">&quot;RcmdrMisc&quot;</span>, </span>
-<span id="cb1-2"><a href="index.html#cb1-2"></a>          <span class="st">&quot;lmtest&quot;</span>, <span class="st">&quot;glmnet&quot;</span>, <span class="st">&quot;mgcv&quot;</span>, </span>
+<span id="cb1-2"><a href="index.html#cb1-2"></a>          <span class="st">&quot;lmtest&quot;</span>, <span class="st">&quot;glmnet&quot;</span>, <span class="st">&quot;mgcv&quot;</span>, <span class="st">&quot;np&quot;</span>, <span class="st">&quot;NeuralNetTools&quot;</span>,</span>
 <span id="cb1-3"><a href="index.html#cb1-3"></a>          <span class="st">&quot;AppliedPredictiveModeling&quot;</span>, <span class="st">&quot;ISLR&quot;</span>)</span>
 <span id="cb1-4"><a href="index.html#cb1-4"></a></span>
 <span id="cb1-5"><a href="index.html#cb1-5"></a><span class="kw">install.packages</span>(<span class="kw">setdiff</span>(pkgs, <span class="kw">installed.packages</span>()[,<span class="st">&quot;Package&quot;</span>]), <span class="dt">dependencies =</span> <span class="ot">TRUE</span>)</span>

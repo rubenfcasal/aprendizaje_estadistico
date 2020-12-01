@@ -23,6 +23,8 @@ Burger, S.V. (2018). *Introduction to machine learning with R: Rigorous mathemat
 
 Breiman, L., Friedman, J., Stone, C.J. y Olshen, R.A. (1984). *Classification and regression trees*. CRC press.
 
+Chollet, F. y Allaire, J.J. (2018). *Deep Learning with R*. Manning Publications.
+
 De Boor, C. (1978). *A practical guide to splines*. Springer-Verlag.
 
 Efron, B. y Hastie, T. (2016). *[Computer age statistical inference](http://web.stanford.edu/~hastie/CASI/)*. Cambridge University Press.
@@ -53,6 +55,10 @@ Vapnik, V. (1998). *Statistical Learning Theory*. Wiley.
 
 Vapnik, V. (2010). *The Nature of Statistical Learning Theory*. Springer.
 
+Venables, W.N. y Ripley, B.D. (2002). *Modern applied statistics with S*. Springer.
+
+Werbos, P.J. (1975). *Beyond Regression: New Tools for Prediction and Analysis in the Behavioral Sciences*, Harvard University.
+
 Wood, S.N. (2017). *Generalized Additive Models: An Introduction with R*. Chapman & Hall/CRC
 
 
@@ -73,6 +79,8 @@ Breiman, L. (2001). Random Forests. *Machine Learning*, 45(1), 5–32.
 
 Breiman, L. (2001). Statistical Modeling: The Two Cultures (with comments and a rejoinder by the author). *Statistical Science*, 16, 199-231.
 
+Comon, P. (1994). Independent component analysis, a new concept?. *Signal processing*, 36(3), 287-314.
+
 Cortes, C. y Vapnik, V. (1995). Support–Vector Networks. *Machine Learning*, 20(3), 273–297.
 
 Craven, P. y Wahba, G. (1979). Smoothing Noisy Data with Spline Functions. *Numerische Mathematik*, 31, pp. 377-403.
@@ -85,7 +93,7 @@ Drucker, H., Burges, C., Kaufman, L., Smola, A. y Vapnik, V. (1997). Support Vec
 
 Dunson D.B. (2018). Statistics in the big data era: Failures of the machine. *Statistics and Probability Letters*, 136, 4-9.
 
-Efron, B., Hastie, T., Johnstone, I. y Tibshirani, R. (2004). Least Angle Regression. *The Annals of Statistics*, 32(2), 407–499.
+Efron, B., Hastie, T., Johnstone, I. y Tibshirani, R. (2004). Least Angle Regression. *Annals of Statistics*, 32(2), 407–499.
 
 Eilers, P.H.C. y Marx, B.D. (1996). [Flexible smoothing with B-splines and penalties](https://www.jstor.org/stable/pdf/2246049.pdf). *Statistical Science*, 11(2), 89-102.
 
@@ -95,15 +103,19 @@ Freund, Y. y Schapire, R. (1996). Experiments with a New Boosting Algorithm. *Ma
 
 Friedman, J.H. (1989). Regularized Discriminant Analysis. *Journal of the American Statistical Association*, 84(405), 165–175.
 
-Friedman, J.H. (1991). Multivariate Adaptive Regression Splines. *The Annals of Statistics*, 1–67.
+Friedman, J.H. (1991). [Multivariate Adaptive Regression Splines](https://projecteuclid.org/euclid.aos/1176347963). *Annals of Statistics*, 1–67.
 
 Friedman, J.H. (2001). [Greedy Function Approximation: A Gradient Boosting Machine](https://projecteuclid.org/euclid.aos/1013203451). *Annals of Statistics*, 29, 1189–1232.
 
 Friedman, J.H. (2002). [Stochastic Gradient Boosting](https://www.sciencedirect.com/science/article/pii/S0167947301000652). *Computational Statistics and Data Analysis*, 38(4), 367-378. 
 
 Friedman, J., Hastie, T. y Tibshirani, R. (2000). [Additive Logistic Regression: A statistical view of boosting](https://projecteuclid.org/euclid.aos/1016218223). *Annals of Statistics*, 28(2), 337-374. 
+Friedman, J.H. y Popescu, B.E. (2008). Predictive learning via rule ensembles. *The Annals of Applied Statistics*, 2(3), 916-954.
 
-Friedman, J.H. y Popescu, B.E. (2008). Predictive learning via rule ensembles. *The Annals of Applied Statistics*, 2(3), 916-954. 
+Friedman, J.H. y Stuetzle, W. (1981). Projection Pursuit Regression. *Journal of the American Statistical Association*, 76, 817–823.
+
+Friedman, J.H. y Tukey, J.W. (1974). A Projection Pursuit Algorithm for Exploratory Data Analysis. *IEEE Transactions on Computers, Series C*, 23, 881–890.
+
 Goldstein, A., Kapelner, A., Bleich, J. y Pitkin, E. (2015). [Peeking inside the black box: Visualizing statistical learning with plots of individual conditional expectation](https://doi.org/10.1080/10618600.2014.907095). *Journal of Computational and Graphical Statistics*, 24(1), 44-65.
 
 Greenwell, B.M. (2017). [pdp: An R Package for Constructing Partial Dependence Plots](https://journal.r-project.org/archive/2017/RJ-2017-016/index.html). *The R Journal*, 9(1), 421-436.
@@ -114,9 +126,13 @@ Hastie, T. y Tibshirani, R. (1996). Discriminant Analysis by GaussianMixtures. *
 
 Hoerl, A. (1970). Ridge Regression: Biased Estimation for Nonorthogonal Problems. *Technometrics*, 12(1), 55–67.
 
+Ichimura, H. (1993). Semiparametric least squares (SLS) and weighted SLS estimation of single-index models. *Journal of Econometrics*, 58, 71-120.
+
 Karatzoglou, A., Smola, A., Hornik, K. y Zeileis, A. (2004). [kernlab-an S4 package for kernel methods in R](http://www.jstatsoft.org/v11/i09). *Journal of Statistical Software*, 11(9), 1-20.
 
 Kearns, M. y Valiant, L. (1989). Cryptographic Limitations on Learning Boolean Formulae and Finite Automata. *Proceedings of the Twenty-First Annual ACM Symposium on Theory of Computing*.
+
+Kruskal, J.B. (1969). Toward a practical method which helps uncover the structure of a set of observations by finding the line transformation which optimizes a new “index of condensation”. En Milton, R.C. y Nelder, J.A. (eds.), *Statistical Computation*, Academic Press, 427–440.
 
 Kuhn, M. (2008). Building predictive models in R using the caret package. *Journal of Statistical Software*, 28(5), 1-26.
 
@@ -127,6 +143,8 @@ Liaw, A. y Wiener, M. (2002). [Classification and regression by randomForest](ht
 Loh, W.Y. (2002). Regression tress with unbiased variable selection and interaction detection. *Statistica Sinica*, 361-386.
 
 Massy, W. (1965). Principal Components Regression in Exploratory Statistical Research. *Journal of the American Statistical Association*, 60, 234–246.
+
+McCulloch, W. y Pitts, W. (1943). A Logical Calculus of Ideas Immanent in Nervous Activity. *Bulletin of Mathematical Biophysics*, 5, 115–133.
 
 Mevik, B.H. y Wehrens, R. (2007). [The pls Package: Principal Component and Partial Least Squares Regression in R](https://www.jstatsoft.org/article/view/v018i02). *Journal of Statistical Software*, 18(2), 1-23.
 
@@ -143,6 +161,8 @@ Vinayak, R.K. y Gilad-Bachrach, R. (2015). Dart: Dropouts meet multiple additive
 Welch, B. (1939). Note on Discriminant Functions. *Biometrika*, 31, 218–220.
 
 Wold, S., Martens, H. y Wold, H. (1983). The Multivariate Calibration Problem in Chemistry Solved by the PLS Method. *Proceedings from the Conference on Matrix Pencils*. Springer–Verlag.
+
+Wolpert, D.H. y Macready, W.G. (1997). [No free lunch theorems for optimization](https://ieeexplore.ieee.org/abstract/document/585893?casa_token=IHZIcIuLxFEAAAAA:yKn2cFuhdh2S6Liw1otdqZAhCcVyFFwwk9LxwMEn_deuWO5i2n1uAOvTYdeFbh6cEJuXTPdkDQ). *IEEE Transactions on Evolutionary Computation*, 1(1), 67-82.
 
 Zou, H. y Hastie, T. (2005). Regularization and Variable Selection via the Elastic Net. *Journal of the Royal Statistical Society*, Series B, 67(2), 301–320.
 

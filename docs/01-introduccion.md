@@ -1237,23 +1237,8 @@ En los siguientes capítulos se mostrarán ejemplos empleando algunas de estas h
 Como ya se comentó en la Sección \@ref(metodos-pkgs), el paquete `caret` (abreviatura de *Classification And REgression Training*) proporciona una interfaz unificada que simplifica el proceso de modelado empleando la mayoría de los métodos de AE implementados en R (actualmente admite 238 métodos; ver el [Capítulo 6](https://topepo.github.io/caret/available-models.html) del [manual](https://topepo.github.io/caret) de este paquete). 
 Además de proporcionar rutinas para los principales pasos del proceso, incluye también numerosas funciones auxiliares que permitirían implementar nuevos procedimientos.
 
-Enlaces:
-
-* [Manual](https://topepo.github.io/caret)
-
-    - [3. Pre-Processing](https://topepo.github.io/caret/pre-processing.html)
-
-    - [5. Model Training and Tuning](https://topepo.github.io/caret/model-training-and-tuning.html)
-    
-    - [6. Available Models](https://topepo.github.io/caret/available-models.html)
-    
-    - [17. Measuring Performance](https://topepo.github.io/caret/measuring-performance.html)
-    
-
-* [Vignette](https://cran.r-project.org/web/packages/caret/vignettes/caret.html)
-
-* [Cheat Sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/caret.pdf)
-
+En esta sección se describirán de forma esquemática las principales herramientas disponibles en este paquete, para más detalles se recomendaría consultar el [manual del paquete caret](https://topepo.github.io/caret).
+También está disponible una pequeña introducción en la vignette del paquete: [A Short Introduction to the caret Package](https://cran.r-project.org/web/packages/caret/vignettes/caret.html) y una "chuleta": [Caret Cheat Sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/caret.pdf).
 
 La función principal es `train()` (descrita más adelante), que incluye un parámetro `method` que permite establecer el modelo mediante una cadena de texto.
 Podemos obtener información sobre los modelos disponibles con las funciones `getModelInfo()` y `modelLookup()` (puede haber varias implementaciones del mismo método con distintas configuraciones de hiperparámetros; también se pueden definir nuevos modelos, ver el [Capítulo 13](https://topepo.github.io/caret/using-your-own-model-in-train.html) del [manual](https://topepo.github.io/caret)).
@@ -1278,6 +1263,7 @@ modelLookup("knn")  # Información sobre hiperparámetros
 ## 1   knn         k #Neighbors   TRUE     TRUE      TRUE
 ```
 
+En la siguiente tabla se muestran los métodos actualmente disponibles:
 
 <div class="figure" style="text-align: center">
 <!--html_preserve--><div id="htmlwidget-7bf94cd961c11210a1ca" style="width:100%;height:auto;" class="datatables html-widget"></div>

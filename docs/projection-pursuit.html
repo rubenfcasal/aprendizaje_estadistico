@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)" />
 
 
-<meta name="date" content="2020-11-26" />
+<meta name="date" content="2020-12-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="mars.html"/>
-<link rel="next" href="referencias.html"/>
+<link rel="next" href="neural-nets.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -266,7 +266,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.4.1" data-path="mars.html"><a href="mars.html#mars-con-el-paquete-earth"><i class="fa fa-check"></i><b>7.4.1</b> MARS con el paquete <code>earth</code></a></li>
 <li class="chapter" data-level="7.4.2" data-path="mars.html"><a href="mars.html#mars-con-el-paquete-caret"><i class="fa fa-check"></i><b>7.4.2</b> MARS con el paquete <code>caret</code></a></li>
 </ul></li>
-<li class="chapter" data-level="7.5" data-path="projection-pursuit.html"><a href="projection-pursuit.html"><i class="fa fa-check"></i><b>7.5</b> Projection pursuit</a></li>
+<li class="chapter" data-level="7.5" data-path="projection-pursuit.html"><a href="projection-pursuit.html"><i class="fa fa-check"></i><b>7.5</b> Projection pursuit</a><ul>
+<li class="chapter" data-level="7.5.1" data-path="projection-pursuit.html"><a href="projection-pursuit.html#ppr"><i class="fa fa-check"></i><b>7.5.1</b> Regresión por <em>projection pursuit</em></a></li>
+<li class="chapter" data-level="7.5.2" data-path="projection-pursuit.html"><a href="projection-pursuit.html#implementación-en-r-1"><i class="fa fa-check"></i><b>7.5.2</b> Implementación en R</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="neural-nets.html"><a href="neural-nets.html"><i class="fa fa-check"></i><b>8</b> Redes neuronales</a><ul>
+<li class="chapter" data-level="8.1" data-path="single-hidden-layer-feedforward-network.html"><a href="single-hidden-layer-feedforward-network.html"><i class="fa fa-check"></i><b>8.1</b> Single-hidden-layer feedforward network</a></li>
+<li class="chapter" data-level="8.2" data-path="clasificación-con-ann.html"><a href="clasificación-con-ann.html"><i class="fa fa-check"></i><b>8.2</b> Clasificación con ANN</a></li>
+<li class="chapter" data-level="8.3" data-path="implementación-en-r-2.html"><a href="implementación-en-r-2.html"><i class="fa fa-check"></i><b>8.3</b> Implementación en R</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
 <li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
@@ -297,17 +305,200 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="projection-pursuit" class="section level2">
 <h2><span class="header-section-number">7.5</span> Projection pursuit</h2>
-<p><strong>En preparación…</strong></p>
+<p><em>Projection pursuit</em> (Friedman y Tukey, 1974) es una técnica de análisis exploratorio de datos multivariantes que busca proyecciones lineales de los datos en espacios de dimensión baja, siguiendo una idea originalmente propuesta en Kruskal (1969).
+Inicialmente se presentó como una técnica gráfica y por ese motivo buscaba proyecciones de dimensión 1 o 2 (proyecciones en rectas o planos), resultando que las direcciones interesantes son aquellas con distribución no normal.
+La motivación es que cuando se realizan transformaciones lineales lo habitual es que el resultado tenga la apariencia de una distribución normal (por el teorema central del límite), lo cual oculta las singularidades de los datos originales.
+Se supone que los datos son una trasformación lineal de componentes no gaussianas (variables latentes) y la idea es deshacer esta transformación mediante la optimización de una función objetivo, que en este contexto recibe el nombre de <em>projection index</em>.
+Aunque con orígenes distintos, <em>projection pursuit</em> es muy similar a <em>independent component analysis</em> (Comon, 1994), una técnica de reducción de la dimensión que, en lugar de buscar como es habitual componentes incorreladas (ortogonales), busca componentes independientes y con distribución no normal (ver por ejemplo la documentación del paquete <a href="https://CRAN.R-project.org/package=fastICA"><code>fastICA</code></a>).</p>
+<p>Hay extensiones de <em>projection pursuit</em> para regresión, clasificación, estimación de la función de densidad, etc.</p>
+<div id="ppr" class="section level3">
+<h3><span class="header-section-number">7.5.1</span> Regresión por <em>projection pursuit</em></h3>
+<p>En el método original de <em>projection pursuit regression</em> (PPR; Friedman y Stuetzle, 1981) se considera el siguiente modelo semiparamétrico
+<span class="math display">\[m(\mathbf{x}) = \sum_{m=1}^M g_m (\alpha_{1m}x_1 + \alpha_{2m}x_2 + \ldots + \alpha_{pm}x_p)\]</span>
+siendo <span class="math inline">\(\boldsymbol{\alpha}_m = (\alpha_{1m}, \alpha_{2m}, \ldots, \alpha_{pm})\)</span> vectores de parámetros (desconocidos) de módulo unitario y <span class="math inline">\(g_m\)</span> funciones suaves (desconocidas), denominadas funciones <em>ridge</em>.</p>
+<p>Con esta aproximación se obtiene un modelo muy general que evita los problemas de la maldición de la dimensionalidad.
+De hecho se trata de un <em>aproximador universal</em>, con <span class="math inline">\(M\)</span> suficientemente grande y eligiendo adecuadamente las componentes se podría aproximar cualquier función continua.
+Sin embargo el modelo resultante puede ser muy difícil de interpretar, salvo el caso de <span class="math inline">\(M=1\)</span> que se corresponde con el denominado <em>single index model</em> empleado habitualmente en Econometría, pero que solo es algo más general que el modelo de regresión lineal múltiple.</p>
+<p>El ajuste se este tipo de modelos es en principio un problema muy complejo.
+Hay que estimar las funciones univariantes <span class="math inline">\(g_m\)</span> (utilizando un método de suavizado) y los parámetros <span class="math inline">\(\alpha_{im}\)</span>, utilizando como criterio de error <span class="math inline">\(\mbox{RSS}\)</span>.
+En la práctica se resuelve utilizando un proceso iterativo en el que se van fijando sucesivamente los valores de los parámetros y las funciones <em>ridge</em> (si son estimadas empleando un método que también proporcione estimaciones de su derivada, las actualizaciones de los parámetros se pueden obtener por mínimos cuadrados ponderados).</p>
+<p>También se han desarrollado extensiones del método original para el caso de respuesta multivariante:
+<span class="math display">\[m_i(\mathbf{x}) = \beta_{i0} + \sum_{m=1}^M \beta_{im} g_m (\alpha_{1m}x_1 + \alpha_{2m}x_2 + \ldots + \alpha_{pm}x_p)\]</span>
+reescalando las funciones <em>rigde</em> de forma que tengan media cero y varianza unidad sobre las proyecciones de las observaciones.</p>
+<p>Este procedimiento de regresión está muy relacionado con las redes de neuronas artificiales que se tratarán en el siguiente capítulo y que han sido de mayor objeto de estudio y desarrollo en los último años.</p>
+</div>
+<div id="implementación-en-r-1" class="section level3">
+<h3><span class="header-section-number">7.5.2</span> Implementación en R</h3>
+<p>El método PPR (con respuesta multivariante) está implementado en la función <code>ppr()</code> del paquete base de R<a href="#fn35" class="footnote-ref" id="fnref35"><sup>35</sup></a>, y es empleada por el método <code>"ppr"</code> de <code>caret</code>.
+Esta función:</p>
+<div class="sourceCode" id="cb487"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb487-1"><a href="projection-pursuit.html#cb487-1"></a><span class="kw">ppr</span>(formula, data, nterms, <span class="dt">max.terms =</span> nterms, <span class="dt">optlevel =</span> <span class="dv">2</span>,</span>
+<span id="cb487-2"><a href="projection-pursuit.html#cb487-2"></a>    <span class="dt">sm.method =</span> <span class="kw">c</span>(<span class="st">&quot;supsmu&quot;</span>, <span class="st">&quot;spline&quot;</span>, <span class="st">&quot;gcvspline&quot;</span>),</span>
+<span id="cb487-3"><a href="projection-pursuit.html#cb487-3"></a>    <span class="dt">bass =</span> <span class="dv">0</span>, <span class="dt">span =</span> <span class="dv">0</span>, <span class="dt">df =</span> <span class="dv">5</span>, <span class="dt">gcvpen =</span> <span class="dv">1</span>, ...)</span></code></pre></div>
+<p>va añadiendo términos <em>ridge</em> hasta un máximo de <code>max.terms</code> y posteriormente emplea un método hacia atrás para seleccionar <code>nterms</code> (el argumento <code>optlevel</code> controla como se vuelven a reajustar los términos en cada iteración).
+Por defecto emplea el <em>super suavizador</em> de Friedman (función <code>supsmu()</code>, con parámetros <code>bass</code> y <code>spam</code>), aunque también admite splines (función <code>smooth.spline()</code>, fijando los grados de libertad con <code>df</code> o seleccionándolos mediante GCV).
+Para más detalles ver <code>help(ppr)</code>.</p>
+<p>Continuaremos con el ejemplo del conjunto de datos <code>earth::Ozone1</code>. En primer lugar ajustamos un modelo PPR con dos términos (incrementando el suavizado por defecto de <code>supsmu()</code> siguiendo la recomendación de Venables y Ripley, 2002):</p>
+<div class="sourceCode" id="cb488"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb488-1"><a href="projection-pursuit.html#cb488-1"></a>ppreg &lt;-<span class="st"> </span><span class="kw">ppr</span>(O3 <span class="op">~</span><span class="st"> </span>., <span class="dt">nterms =</span> <span class="dv">2</span>, <span class="dt">data =</span> train, <span class="dt">bass =</span> <span class="dv">2</span>)</span>
+<span id="cb488-2"><a href="projection-pursuit.html#cb488-2"></a><span class="kw">summary</span>(ppreg)</span></code></pre></div>
+<pre><code>## Call:
+## ppr(formula = O3 ~ ., data = train, nterms = 2, bass = 2)
+## 
+## Goodness of fit:
+##  2 terms 
+## 4033.668 
+## 
+## Projection direction vectors (&#39;alpha&#39;):
+##          term 1       term 2      
+## vh       -0.016617786  0.047417127
+## wind     -0.317867945 -0.544266150
+## humidity  0.238454606 -0.786483702
+## temp      0.892051760 -0.012563393
+## ibh      -0.001707214 -0.001794245
+## dpg       0.033476907  0.285956216
+## ibt       0.205536326  0.026984921
+## vis      -0.026255153 -0.014173612
+## doy      -0.044819013 -0.010405236
+## 
+## Coefficients of ridge terms (&#39;beta&#39;):
+##   term 1   term 2 
+## 6.790447 1.531222</code></pre>
+<div class="sourceCode" id="cb490"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb490-1"><a href="projection-pursuit.html#cb490-1"></a>oldpar &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb490-2"><a href="projection-pursuit.html#cb490-2"></a><span class="kw">plot</span>(ppreg)</span></code></pre></div>
+<p><img src="07-regresion_np_files/figure-html/unnamed-chunk-39-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb491"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb491-1"><a href="projection-pursuit.html#cb491-1"></a><span class="kw">par</span>(oldpar)</span></code></pre></div>
+<p>Evaluamos las predicciones en la muestra de test:</p>
+<div class="sourceCode" id="cb492"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb492-1"><a href="projection-pursuit.html#cb492-1"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(ppreg, <span class="dt">newdata =</span> test)</span>
+<span id="cb492-2"><a href="projection-pursuit.html#cb492-2"></a>obs &lt;-<span class="st"> </span>test<span class="op">$</span>O3</span>
+<span id="cb492-3"><a href="projection-pursuit.html#cb492-3"></a><span class="kw">plot</span>(pred, obs, <span class="dt">main =</span> <span class="st">&quot;Observado frente a predicciones&quot;</span>,</span>
+<span id="cb492-4"><a href="projection-pursuit.html#cb492-4"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Predicción&quot;, ylab = &quot;</span>Observado<span class="st">&quot;)</span></span>
+<span id="cb492-5"><a href="projection-pursuit.html#cb492-5"></a><span class="st">abline(a = 0, b = 1)</span></span>
+<span id="cb492-6"><a href="projection-pursuit.html#cb492-6"></a><span class="st">abline(lm(obs ~ pred), lty = 2)</span></span></code></pre></div>
+<p><img src="07-regresion_np_files/figure-html/unnamed-chunk-40-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb493"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb493-1"><a href="projection-pursuit.html#cb493-1"></a><span class="kw">accuracy</span>(pred, obs)</span></code></pre></div>
+<pre><code>##         me       rmse        mae        mpe       mape  r.squared 
+##  0.4819794  3.2330060  2.5941476 -6.1203121 34.8728543  0.8384607</code></pre>
+<p>Empleando el método <code>"ppr"</code> de <code>caret</code> para seleccionar el número de términos:</p>
+<div class="sourceCode" id="cb495"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb495-1"><a href="projection-pursuit.html#cb495-1"></a><span class="kw">library</span>(caret)</span>
+<span id="cb495-2"><a href="projection-pursuit.html#cb495-2"></a><span class="kw">modelLookup</span>(<span class="st">&quot;ppr&quot;</span>)</span></code></pre></div>
+<pre><code>##   model parameter   label forReg forClass probModel
+## 1   ppr    nterms # Terms   TRUE    FALSE     FALSE</code></pre>
+<div class="sourceCode" id="cb497"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb497-1"><a href="projection-pursuit.html#cb497-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb497-2"><a href="projection-pursuit.html#cb497-2"></a>caret.ppr &lt;-<span class="st"> </span><span class="kw">train</span>(O3 <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train, <span class="dt">method =</span> <span class="st">&quot;ppr&quot;</span>, <span class="co"># bass = 2,</span></span>
+<span id="cb497-3"><a href="projection-pursuit.html#cb497-3"></a>    <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="dt">number =</span> <span class="dv">10</span>))</span>
+<span id="cb497-4"><a href="projection-pursuit.html#cb497-4"></a>caret.ppr</span></code></pre></div>
+<pre><code>## Projection Pursuit Regression 
+## 
+## 264 samples
+##   9 predictor
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold) 
+## Summary of sample sizes: 238, 238, 238, 236, 237, 239, ... 
+## Resampling results across tuning parameters:
+## 
+##   nterms  RMSE      Rsquared   MAE     
+##   1       4.366022  0.7069042  3.306658
+##   2       4.479282  0.6914678  3.454853
+##   3       4.624943  0.6644089  3.568929
+## 
+## RMSE was used to select the optimal model using the smallest value.
+## The final value used for the model was nterms = 1.</code></pre>
+<div class="sourceCode" id="cb499"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb499-1"><a href="projection-pursuit.html#cb499-1"></a><span class="kw">ggplot</span>(caret.ppr, <span class="dt">highlight =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p><img src="07-regresion_np_files/figure-html/unnamed-chunk-41-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb500"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb500-1"><a href="projection-pursuit.html#cb500-1"></a><span class="kw">summary</span>(caret.ppr<span class="op">$</span>finalModel)</span></code></pre></div>
+<pre><code>## Call:
+## ppr(x = as.matrix(x), y = y, nterms = param$nterms)
+## 
+## Goodness of fit:
+##  1 terms 
+## 4436.727 
+## 
+## Projection direction vectors (&#39;alpha&#39;):
+##           vh         wind     humidity         temp          ibh          dpg 
+## -0.016091543 -0.167891347  0.351773894  0.907301452 -0.001828865  0.026901492 
+##          ibt          vis          doy 
+##  0.148021198 -0.026470384 -0.035703896 
+## 
+## Coefficients of ridge terms (&#39;beta&#39;):
+##   term 1 
+## 6.853971</code></pre>
+<div class="sourceCode" id="cb502"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb502-1"><a href="projection-pursuit.html#cb502-1"></a><span class="kw">plot</span>(caret.ppr<span class="op">$</span>finalModel)</span></code></pre></div>
+<p><img src="07-regresion_np_files/figure-html/unnamed-chunk-41-2.png" width="80%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb503"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb503-1"><a href="projection-pursuit.html#cb503-1"></a><span class="co"># varImp(caret.ppr) # emplea una medida genérica de importancia</span></span>
+<span id="cb503-2"><a href="projection-pursuit.html#cb503-2"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(caret.ppr, <span class="dt">newdata =</span> test)</span>
+<span id="cb503-3"><a href="projection-pursuit.html#cb503-3"></a><span class="kw">accuracy</span>(pred, obs)</span></code></pre></div>
+<pre><code>##          me        rmse         mae         mpe        mape   r.squared 
+##   0.3135877   3.3652891   2.7061615 -10.7532705  33.8333646   0.8249710</code></pre>
+<p>Para ajustar un modelo <em>single index</em> también se podría emplear la función <code>npindex()</code> del paquete <a href="https://github.com/JeffreyRacine/R-Package-np"><code>np</code></a> (que implementa el método de Ichimura, 1993, considerando un estimador local constante), aunque en este caso ni el tiempo de computación ni el resultado es satisfactorio:</p>
+<div class="sourceCode" id="cb505"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb505-1"><a href="projection-pursuit.html#cb505-1"></a><span class="kw">library</span>(np)</span>
+<span id="cb505-2"><a href="projection-pursuit.html#cb505-2"></a><span class="co"># bw &lt;- npindexbw(O3 ~ ., data = train)</span></span>
+<span id="cb505-3"><a href="projection-pursuit.html#cb505-3"></a><span class="co"># Error in terms.formula(formula): &#39;.&#39; in formula and no &#39;data&#39; argument</span></span>
+<span id="cb505-4"><a href="projection-pursuit.html#cb505-4"></a><span class="co"># formula &lt;- reformulate(setdiff(colnames(train), &quot;O3&quot;), response=&quot;O3&quot;)</span></span>
+<span id="cb505-5"><a href="projection-pursuit.html#cb505-5"></a></span>
+<span id="cb505-6"><a href="projection-pursuit.html#cb505-6"></a>bw &lt;-<span class="st"> </span><span class="kw">npindexbw</span>(O3 <span class="op">~</span><span class="st"> </span>vh <span class="op">+</span><span class="st"> </span>wind <span class="op">+</span><span class="st"> </span>humidity <span class="op">+</span><span class="st"> </span>temp <span class="op">+</span><span class="st"> </span>ibh <span class="op">+</span><span class="st"> </span>dpg <span class="op">+</span><span class="st"> </span>ibt <span class="op">+</span><span class="st"> </span>vis <span class="op">+</span><span class="st"> </span>doy,</span>
+<span id="cb505-7"><a href="projection-pursuit.html#cb505-7"></a>                <span class="dt">data =</span> train, <span class="dt">optim.method =</span> <span class="st">&quot;BFGS&quot;</span>, <span class="dt">nmulti =</span> <span class="dv">1</span>) <span class="co"># Por defecto nmulti = 5</span></span></code></pre></div>
+<pre><code>## Multistart 1 of 1...                    </code></pre>
+<div class="sourceCode" id="cb507"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb507-1"><a href="projection-pursuit.html#cb507-1"></a><span class="kw">summary</span>(bw)</span></code></pre></div>
+<pre><code>## 
+## Single Index Model
+## Regression data (264 observations, 9 variable(s)):
+## 
+##       vh     wind humidity     temp       ibh      dpg      ibt        vis
+## Beta:  1 4.338446 6.146688 10.44244 0.0926648 3.464211 5.017786 -0.5646063
+##             doy
+## Beta: -1.048745
+## Bandwidth:  16.54751
+## Optimisation Method:  BFGS
+## Regression Type: Local-Constant
+## Bandwidth Selection Method: Ichimura
+## Formula: O3 ~ vh + wind + humidity + temp + ibh + dpg + ibt + vis + doy
+## Bandwidth Type: Fixed
+## Objective Function Value: 18.87884 (achieved on multistart 1)
+## 
+## Continuous Kernel Type: Second-Order Gaussian
+## No. Continuous Explanatory Vars.: 1
+## Estimation Time: 7.03 seconds</code></pre>
+<div class="sourceCode" id="cb509"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb509-1"><a href="projection-pursuit.html#cb509-1"></a>sindex &lt;-<span class="st"> </span><span class="kw">npindex</span>(<span class="dt">bws =</span> bw, <span class="dt">gradients =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb509-2"><a href="projection-pursuit.html#cb509-2"></a><span class="kw">summary</span>(sindex)</span></code></pre></div>
+<pre><code>## 
+## Single Index Model
+## Regression Data: 264 training points, in 9 variable(s)
+## 
+##       vh     wind humidity     temp       ibh      dpg      ibt        vis
+## Beta:  1 4.338446 6.146688 10.44244 0.0926648 3.464211 5.017786 -0.5646063
+##             doy
+## Beta: -1.048745
+## Bandwidth: 16.54751
+## Kernel Regression Estimator: Local-Constant
+## 
+## Residual standard error: 3.520037
+## R-squared: 0.806475
+## 
+## Continuous Kernel Type: Second-Order Gaussian
+## No. Continuous Explanatory Vars.: 1</code></pre>
+<div class="sourceCode" id="cb511"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb511-1"><a href="projection-pursuit.html#cb511-1"></a><span class="kw">plot</span>(bw)</span></code></pre></div>
+<p><img src="07-regresion_np_files/figure-html/unnamed-chunk-42-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb512"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb512-1"><a href="projection-pursuit.html#cb512-1"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(sindex, <span class="dt">newdata =</span> test)</span>
+<span id="cb512-2"><a href="projection-pursuit.html#cb512-2"></a><span class="kw">accuracy</span>(pred, obs)</span></code></pre></div>
+<pre><code>##          me        rmse         mae         mpe        mape   r.squared 
+##   0.1712457   4.3725067   3.1789199 -10.2320531  35.2010284   0.7045213</code></pre>
 
 </div>
+</div>
 <!-- </div> -->
+<div class="footnotes">
+<hr />
+<ol start="35">
+<li id="fn35"><p>Basada en la función <code>ppreg()</code> de S-PLUS e implementado en R por B.D. Ripley inicialmente para el paquete <code>MASS</code>.<a href="projection-pursuit.html#fnref35" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
             </section>
 
           </div>
         </div>
       </div>
 <a href="mars.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="referencias.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="neural-nets.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

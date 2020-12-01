@@ -30,11 +30,11 @@ Se puede acceder a la versión en línea a través del siguiente enlace:
 donde puede descargarse en formato [pdf](https://rubenfcasal.github.io/aprendizaje_estadistico/aprendizaje_estadistico.pdf).
 
 Para ejecutar los ejemplos mostrados en el libro sería necesario tener instalados los siguientes paquetes:
-`r citepkgs(c("caret", "rattle", "car", "leaps", "MASS", "RcmdrMisc", "lmtest", "glmnet", "mgcv", "AppliedPredictiveModeling", "ISLR"))`.
+`r citepkgs(c("caret", "rattle", "car", "leaps", "MASS", "RcmdrMisc", "lmtest", "glmnet", "mgcv", "np", "NeuralNetTools", "AppliedPredictiveModeling", "ISLR"))`.
 Por ejemplo mediante los siguientes comandos:
 ```{r eval=FALSE}
 pkgs <- c("caret", "rattle", "car", "leaps", "MASS", "RcmdrMisc", 
-          "lmtest", "glmnet", "mgcv", 
+          "lmtest", "glmnet", "mgcv", "np", "NeuralNetTools",
           "AppliedPredictiveModeling", "ISLR")
 
 install.packages(setdiff(pkgs, installed.packages()[,"Package"]), dependencies = TRUE)

@@ -33,7 +33,7 @@ $$\hat{Y}(\mathbf{x}) = \hat{m}(\mathbf{x}) = \frac{1}{k} \sum_{i \in \mathcal{N
 Se puede emplear la misma idea en el caso de clasificación, las frecuencias relativas en el vecindario serían las estimaciones de las probabilidades de las clases (lo que sería equivalente a considerar las variables indicadoras de las categorías) y normalmente la predicción sería la moda (la clase más probable).
 
 Para seleccionar el vecindario es necesario especificar una distancia, por ejemplo:
-$$d(\mathbf{x}_0, \mathbf{x}_i) = \left( \sum_{j=1}^p \left| x_{0j} - x_{ij}  \right|^d  \right)^{\frac{1}{d}}$$
+$$d(\mathbf{x}_0, \mathbf{x}_i) = \left( \sum_{j=1}^p \left| x_{j0} - x_{ji}  \right|^d  \right)^{\frac{1}{d}}$$
 Normalmente se considera la distancia euclídea ($d=2$) o la de Manhatan ($d=1$) si los predictores son muméricos (también habría distancias diseñadas para predictores categóricos).
 En cualquier caso la recomendación es estandarizar previamente los predictores para que no influya su escala en el cálculo de las distancias.
 
@@ -632,7 +632,7 @@ summary(modelo2)
 # plot(modelo2, scheme = 2)
 ```
 
-En este caso el coeficiente de determinación ajustado es menor y no sería necesario realizar el contraste.
+En este caso el coeficiente de determinación ajustado es menor y ya no tendría sentido realizar el contraste.
 
 <!-- 
 También podríamos emplear el criterio `AIC()` (o `BIC()`): 
@@ -801,6 +801,7 @@ modelLookup("gamLoess")
 2. Empleando el conjunto de datos `airquality`, crear una muestra de entrenamiento y otra de test, buscar un modelo aditivo que resulte adecuado para explicar `sqrt(Ozone)` a partir de `Temp`, `Wind` y `Solar.R`.
 Es preferible suponer que hay una interacción entre `Temp` y `Wind`?
 
+
 ## Regresión spline adaptativa multivariante {#mars}
 
 La regresión spline adaptativa multivariante, en inglés *multivariate adaptive regression splines* (MARS; Friedman, 1991), es un procedimiento adaptativo para problemas de regresión que puede verse como una generalización tanto de la regresión lineal por pasos (*stepwise linear regression*) como de los árboles de decisión CART. 
@@ -808,7 +809,7 @@ La regresión spline adaptativa multivariante, en inglés *multivariate adaptive
 El modelo MARS es un spline multivariante lineal:  
 $$m(\mathbf{x}) = \beta_0 + \sum_{m=1}^M \beta_m h_m(\mathbf{x})$$
 (es un modelo lineal en transformaciones $h_m(\mathbf{x})$ de los predictores originales), donde las bases $h_m(\mathbf{x})$ se construyen de forma adaptativa empleando funciones *bisagra* (*hinge functions*)
-$$ h(x) = (x)_+ = \mbox{max}\{0, x\} = \left\{ \begin{array}{ll}
+$$ h(x) = (x)_+ = \left\{ \begin{array}{ll}
   x & \mbox{si } x > 0 \\
   0 & \mbox{si } x \leq 0
   \end{array}
@@ -816,11 +817,13 @@ $$ h(x) = (x)_+ = \mbox{max}\{0, x\} = \left\{ \begin{array}{ll}
 y considerando como posibles nodos los valores observados de los predictores
 (en el caso univariante se emplean las bases de potencias truncadas con $d=1$ descritas en la Sección \@ref(reg-splines), pero incluyendo también su versión simetrizada).
 
-Vamos a empezar explicando el modelo MARS aditivo (sin interacciones), que funciona de forma muy parecida a los árboles de decisión CART, y después lo extenderemos al caso con interacciones. Asumimos que todas las variables predictoras son numéricas. El proceso de construcción del modelo es un proceso iterativo *hacia delante* (forward) que empieza con el modelo
+Vamos a empezar explicando el modelo MARS aditivo (sin interacciones), que funciona de forma muy parecida a los árboles de decisión CART, y después lo extenderemos al caso con interacciones. 
+Asumimos que todas las variables predictoras son numéricas. El proceso de construcción del modelo es un proceso iterativo *hacia delante* (forward) que empieza con el modelo
 $$\hat m(\mathbf{x}) = \hat \beta_0 $$
-donde $\hat \beta_0$ es la media de todas las respuestas, para a continuación considerar todos los puntos de corte (*knots*) posibles $x_{ij}$ con $i = 1, 2, \ldots, n$, $j = 1, 2, \ldots, p$, es decir, todas las observaciones de todas las variables predictoras de la muestra de entrenamiento. Para cada punto de corte $x_{ij}$ se consideran dos bases:
-$$h_1(\mathbf{x}) = h(X_j - x_{ij}) \\
-h_2(\mathbf{x}) = h(x_{ij} - X_j)$$
+donde $\hat \beta_0$ es la media de todas las respuestas, para a continuación considerar todos los puntos de corte (*knots*) posibles $x_{ji}$ con $i = 1, 2, \ldots, n$, $j = 1, 2, \ldots, p$, es decir, todas las observaciones de todas las variables predictoras de la muestra de entrenamiento. 
+Para cada punto de corte $x_{ji}$ (combinación de variable y observación) se consideran dos bases:
+$$h_1(\mathbf{x}) = h(x_j - x_{ji}) \\
+h_2(\mathbf{x}) = h(x_{ji} - x_j)$$
 y se construye el nuevo modelo 
 $$\hat m(\mathbf{x}) = \hat \beta_0 + \hat \beta_1 h_1(\mathbf{x}) + \hat \beta_2 h_2(\mathbf{x})$$
 La estimación de los parámetros $\beta_0, \beta_1, \beta_2$ se realiza de la forma estándar en regresión lineal, minimizando $\mbox{RSS}$. De este modo se construyen muchos modelos alternativos y entre ellos se selecciona aquel que tenga un menor error de entrenamiento. En la siguiente iteración se conservan $h_1(\mathbf{x})$ y $h_2(\mathbf{x})$ y se añade una pareja de términos nuevos siguiendo el mismo procedimiento. Y así sucesivamente, añadiendo de cada vez dos nuevos términos. Este procedimiento va creando un modelo lineal segmentado (piecewise) donde cada nuevo término modeliza una porción aislada de los datos originales.
@@ -831,13 +834,22 @@ La selección *óptima* del valor del hiperparámetro $\lambda$ puede realizarse
 $$\mbox{GCV} (\lambda) = \frac{\mbox{RSS}}{(1-M(\lambda)/n)^2}$$
 donde $M(\lambda)$ es el número de parámetros *efectivos* del modelo, que depende del número de términos más el número de puntos de corte utilizados penalizado por un factor (2 en el caso aditivo que estamos explicando, 3 cuando hay interacciones). 
 
-Hemos explicado una caso particular de MARS: el modelo aditivo. El modelo general sólo se diferencia del caso aditivo en que se permiten iteracciones, es decir, multiplicaciones entre las variables $h_m(\mathbf{x})$. Para ello, en las iteraciones de la fase de construcción del modelo, además de considerar todos los puntos de corte, se consideran también todos los términos incorporados previamente al modelo, a los que se añade $h_0(\mathbf{x}) = 1$. De este modo, si resulta seleccionado un término padre $h_l(\mathbf{x})$, después de analizar todas las posibilidades, al modelo anterior se le agrega
-$$\hat \beta_{m+1} h_l(\mathbf{x}) h(X_j - x_{ij}) + \hat \beta_{m+2} h_l(\mathbf{x}) h(x_{ij} - X_j)$$
+Hemos explicado una caso particular de MARS: el modelo aditivo. El modelo general sólo se diferencia del caso aditivo en que se permiten interacciones, es decir, multiplicaciones entre las variables $h_m(\mathbf{x})$. 
+Para ello, en cada iteración durante la fase de construcción del modelo, además de considerar todos los puntos de corte, también se consideran todas las combinaciones con los términos incorporados previamente al modelo, denominados términos padre. 
+De este modo, si resulta seleccionado un término padre $h_l(\mathbf{x})$ (incluyendo $h_0(\mathbf{x}) = 1$) y un punto de corte $x_{ji}$, después de analizar todas las posibilidades, al modelo anterior se le agrega
+$$\hat \beta_{m+1} h_l(\mathbf{x}) h(x_j - x_{ji}) + \hat \beta_{m+2} h_l(\mathbf{x}) h(x_{ji} - x_j)$$
 Recordando que en cada caso se vuelven a estimar todos los parámetros $\beta_i$.
 
 Al igual que $\lambda$, también el grado de interacción máxima permitida se considera un hiperparámetro del problema, aunque lo habitual es trabajar con grado 1 (modelo aditivo) o interacción de grado 2. Una restricción adicional que se impone al modelo es que en cada producto no puede aparecer más de una vez la misma variable $X_j$.
 
-Aunque el procedimiento de construcción del modelo realiza búsquedas exhaustivas y en consecuencia puede parecer computacionalmente intratable, en la práctica se realiza de forma razonablemente rápida, al igual que ocurría en CART. Una de las principales ventajas de MARS es que realiza una selección automática de las variables predictoras. Aunque inicialmente pueda haber muchos predictores, y este método es adecuado para problemas de alta dimensión, en el modelo final van a aparecer muchos menos (pueden aparecer más de una vez). Además, si se utiliza un modelo aditivo su interpretación es directa, e incluso permitiendo interacciones de grado 2 el modelo puede ser interpretado. Otra ventaja es que no es necesario realizar un prepocesado de los datos, ni filtrando variables ni transformando los datos. Que haya predictores con correlaciones altas no va a afectar al rendimiento del modelo, aunque sí puede dificultar su interpretación. Aunque hemos supuesto al principio de la explicación que los predictores son numéricos, se pueden incorporar variables predictoras cualitativas siguiendo los procedimientos estándar. Por último, se puede realizar una cuantificación de la importancia de las variables de forma similar a como se hace en CART.
+Aunque el procedimiento de construcción del modelo realiza búsquedas exhaustivas y en consecuencia puede parecer computacionalmente intratable, en la práctica se realiza de forma razonablemente rápida, al igual que ocurría en CART. 
+Una de las principales ventajas de MARS es que realiza una selección automática de las variables predictoras. 
+Aunque inicialmente pueda haber muchos predictores, y este método es adecuado para problemas de alta dimensión, en el modelo final van a aparecer muchos menos (pueden aparecer más de una vez). 
+Además, si se utiliza un modelo aditivo su interpretación es directa, e incluso permitiendo interacciones de grado 2 el modelo puede ser interpretado. 
+Otra ventaja es que no es necesario realizar un prepocesado de los datos, ni filtrando variables ni transformando los datos. 
+Que haya predictores con correlaciones altas no va a afectar a la construcción del modelo (normalmente seleccionará el primero), aunque sí puede dificultar su interpretación. 
+Aunque hemos supuesto al principio de la explicación que los predictores son numéricos, se pueden incorporar variables predictoras cualitativas siguiendo los procedimientos estándar. 
+Por último, se puede realizar una cuantificación de la importancia de las variables de forma similar a como se hace en CART.
 
 En conclusión, MARS utiliza splines lineales con una selección automática de los puntos de corte mediante un algoritmo avaricioso similar al empleado en los árboles CART, tratando de añadir más puntos de corte donde aparentemente hay más variaciones en la función de regresión y menos puntos donde esta es más estable.
 
@@ -846,32 +858,30 @@ En conclusión, MARS utiliza splines lineales con una selección automática de 
 
 Actualmente el paquete de referencia para MARS es [`earth`](http://www.milbo.users.sonic.net/earth) (*Enhanced Adaptive Regression Through Hinges*)^[Desarrollado a partir de la función `mda::mars()` de T. Hastie y R. Tibshirani. Utiliza este nombre porque MARS está registrado para un uso comercial por [Salford Systems](https://www.salford-systems.com).].
 
-Su función principal es:
+
+La función principal es `earth()` y se suelen considerar los siguientes argumentos:
 
 
 ```r
 earth(formula, data, glm = NULL, degree = 1, ...) 
 ```
-
-donde los parámetros principales son:
+* `formula` y `data` (opcional): permiten especificar la respuesta y las variables predictoras de la forma habitual (e.g. `respuesta ~ .`; también admite matrices). Admite respuestas multidimensionales (ajustará un modelo para cada componente) y categóricas (las convierte en multivariantes), también predictores categóricos, aunque no permite datos faltantes.
 
 * `glm`: lista con los parámetros del ajuste GLM (e.g. `glm = list(family = binomial)`).
 
 * `degree`: grado máximo de interacción; por defecto 1 (modelo aditivo).
 
-Esta función admite respuestas multidimensionales (ajustando un modelo para cada componente) y categóricas (las convierte en multivariantes), también predictores categóricos, aunque no permite datos faltantes.
-
 Otros parámetros que pueden ser de interés (afectan a la complejidad del modelo en el crecimiento, a la selección del modelo final o al tiempo de computación; para más detalles ver `help(earth)`):
 
-* `nk`: número máximo de términos (dimensión de la base $M$) en el crecimiento del modelo; por defecto `min(200, max(20, 2 * ncol(x))) + 1` (puede ser demasiado pequeña si muchos de los predictores influyen en la respuesta).   
+* `nk`: número máximo de términos en el crecimiento del modelo (dimensión $M$ de la base); por defecto `min(200, max(20, 2 * ncol(x))) + 1` (puede ser demasiado pequeña si muchos de los predictores influyen en la respuesta). 
 
-* `thresh`: umbral de parada en el crecimiento (se interpretaría como `cp` en los árboles CART); por defecto 0.001.
+* `thresh`: umbral de parada en el crecimiento (se interpretaría como `cp` en los árboles CART); por defecto 0.001 (si se establece a 0 la única condición de parada será alcanzar el valor máximo de términos `nk`).
 
-* `fast.k`: número máximo de términos padre considerados en cada paso durante el crecimiento.
+* `fast.k`: número máximo de términos padre considerados en cada paso durante el crecimiento; por defecto 20, si se establece a 0 no habrá limitación.
 
 * `linpreds`: índice de variables que se considerarán con efecto lineal.
 
-* `nprune`: número máximo de términos (incluida la intersección) en el modelo final (después de la poda).
+* `nprune`: número máximo de términos (incluida la intersección) en el modelo final (después de la poda); por defecto no hay límite (se podrían incluir todos los creados durante el crecimiento).
 
 * `pmethod`: método empleado para la poda; por defecto `"backward"`. Otras opciones son: `"forward"`, `"seqrep"`, `"exhaustive"` (emplea los métodos de selección implementados en paquete `leaps`), `"cv"` (validación cruzada, empleando `nflod`) y `"none"` para no realizar poda.
 
@@ -920,7 +930,7 @@ lines(mcycle$times, predict(mars))
 
 <img src="07-regresion_np_files/figure-html/unnamed-chunk-27-2.png" width="80%" style="display: block; margin: auto;" />
 
-Como con las opciones por defecto el ajuste no es muy bueno (aunque podría valer...), podríamos forzar la complejidad del modelo en el crecimiento  (`minspan = 1` permite que todas las observaciones sean potenciales nodos): 
+Como con las opciones por defecto el ajuste no es muy bueno (aunque podría ser suficiente), podríamos forzar la complejidad del modelo en el crecimiento  (`minspan = 1` permite que todas las observaciones sean potenciales nodos): 
 
 
 ```r
@@ -990,7 +1000,7 @@ plot(mars)
 
 <img src="07-regresion_np_files/figure-html/unnamed-chunk-29-1.png" width="80%" style="display: block; margin: auto;" />
 
-Para representar los efectos de las variables utiliza el paquete `plotmo` (válido también para la mayoría de los modelos tratados en este libro, incluyendo `mgcv::gam()`)
+Para representar los efectos de las variables importa las herramientas del paquete `plotmo` (del mismo autor; válido también para la mayoría de los modelos tratados en este libro, incluyendo `mgcv::gam()`).
 
 
 ```r
@@ -1091,7 +1101,7 @@ summary(gam2)
 ```
 
 ```r
-anova(gam, gam2, test="F")
+anova(gam, gam2, test = "F")
 ```
 
 ```
@@ -1123,6 +1133,10 @@ plot(gam2, scheme = 2, select = 2)
 
 <img src="07-regresion_np_files/figure-html/unnamed-chunk-32-2.png" width="80%" style="display: block; margin: auto;" />
 
+Pregunta: ¿Observas algo extraño en el contraste ANOVA anterior? 
+<!-- 
+anova(gam2, gam, test = "F")
+-->
 
 ### MARS con el paquete `caret`
 
@@ -1273,10 +1287,286 @@ accuracy(pred, test$O3)
 ```
 
 
-
 ## Projection pursuit
 
-**En preparación...**
+*Projection pursuit* (Friedman y Tukey, 1974) es una técnica de análisis exploratorio de datos multivariantes que busca proyecciones lineales de los datos en espacios de dimensión baja, siguiendo una idea originalmente propuesta en Kruskal (1969).
+Inicialmente se presentó como una técnica gráfica y por ese motivo buscaba proyecciones de dimensión 1 o 2 (proyecciones en rectas o planos), resultando que las direcciones interesantes son aquellas con distribución no normal. 
+La motivación es que cuando se realizan transformaciones lineales lo habitual es que el resultado tenga la apariencia de una distribución normal (por el teorema central del límite), lo cual oculta las singularidades de los datos originales. 
+Se supone que los datos son una trasformación lineal de componentes no gaussianas (variables latentes) y la idea es deshacer esta transformación mediante la optimización de una función objetivo, que en este contexto recibe el nombre de *projection index*.
+Aunque con orígenes distintos, *projection pursuit* es muy similar a *independent component analysis* (Comon, 1994), una técnica de reducción de la dimensión que, en lugar de buscar como es habitual componentes incorreladas (ortogonales), busca componentes independientes y con distribución no normal (ver por ejemplo la documentación del paquete [`fastICA`](https://CRAN.R-project.org/package=fastICA)).
+
+Hay extensiones de *projection pursuit* para regresión, clasificación, estimación de la función de densidad, etc.
 
 
+### Regresión por *projection pursuit* {#ppr}
 
+En el método original de *projection pursuit regression* (PPR; Friedman y Stuetzle, 1981) se considera el siguiente modelo semiparamétrico
+$$m(\mathbf{x}) = \sum_{m=1}^M g_m (\alpha_{1m}x_1 + \alpha_{2m}x_2 + \ldots + \alpha_{pm}x_p)$$
+siendo $\boldsymbol{\alpha}_m = (\alpha_{1m}, \alpha_{2m}, \ldots, \alpha_{pm})$ vectores de parámetros (desconocidos) de módulo unitario y $g_m$ funciones suaves (desconocidas), denominadas funciones *ridge*.
+
+Con esta aproximación se obtiene un modelo muy general que evita los problemas de la maldición de la dimensionalidad.
+De hecho se trata de un *aproximador universal*, con $M$ suficientemente grande y eligiendo adecuadamente las componentes se podría aproximar cualquier función continua.
+Sin embargo el modelo resultante puede ser muy difícil de interpretar, salvo el caso de $M=1$ que se corresponde con el denominado *single index model* empleado habitualmente en Econometría, pero que solo es algo más general que el modelo de regresión lineal múltiple.
+
+El ajuste se este tipo de modelos es en principio un problema muy complejo. 
+Hay que estimar las funciones univariantes $g_m$ (utilizando un método de suavizado) y los parámetros $\alpha_{im}$, utilizando como criterio de error $\mbox{RSS}$. 
+En la práctica se resuelve utilizando un proceso iterativo en el que se van fijando sucesivamente los valores de los parámetros y las funciones *ridge* (si son estimadas empleando un método que también proporcione estimaciones de su derivada, las actualizaciones de los parámetros se pueden obtener por mínimos cuadrados ponderados).
+
+También se han desarrollado extensiones del método original para el caso de respuesta multivariante:
+$$m_i(\mathbf{x}) = \beta_{i0} + \sum_{m=1}^M \beta_{im} g_m (\alpha_{1m}x_1 + \alpha_{2m}x_2 + \ldots + \alpha_{pm}x_p)$$
+reescalando las funciones *rigde* de forma que tengan media cero y varianza unidad sobre las proyecciones de las observaciones.
+
+Este procedimiento de regresión está muy relacionado con las redes de neuronas artificiales que se tratarán en el siguiente capítulo y que han sido de mayor objeto de estudio y desarrollo en los último años.
+
+
+### Implementación en R
+
+El método PPR (con respuesta multivariante) está implementado en la función `ppr()` del paquete base de R^[Basada en la función `ppreg()` de S-PLUS e implementado en R por B.D. Ripley inicialmente para el paquete `MASS`.], y es empleada por el método `"ppr"` de `caret`.
+Esta función:
+
+
+```r
+ppr(formula, data, nterms, max.terms = nterms, optlevel = 2,
+    sm.method = c("supsmu", "spline", "gcvspline"),
+    bass = 0, span = 0, df = 5, gcvpen = 1, ...)
+```
+
+va añadiendo términos *ridge* hasta un máximo de `max.terms` y posteriormente emplea un método hacia atrás para seleccionar `nterms` (el argumento `optlevel` controla como se vuelven a reajustar los términos en cada iteración).
+Por defecto emplea el *super suavizador* de Friedman (función `supsmu()`, con parámetros `bass` y `spam`), aunque también admite splines (función `smooth.spline()`, fijando los grados de libertad con `df` o seleccionándolos mediante GCV).
+Para más detalles ver `help(ppr)`.
+
+Continuaremos con el ejemplo del conjunto de datos `earth::Ozone1`. En primer lugar ajustamos un modelo PPR con dos términos (incrementando el suavizado por defecto de `supsmu()` siguiendo la recomendación de Venables y Ripley, 2002):
+
+
+```r
+ppreg <- ppr(O3 ~ ., nterms = 2, data = train, bass = 2)
+summary(ppreg)
+```
+
+```
+## Call:
+## ppr(formula = O3 ~ ., data = train, nterms = 2, bass = 2)
+## 
+## Goodness of fit:
+##  2 terms 
+## 4033.668 
+## 
+## Projection direction vectors ('alpha'):
+##          term 1       term 2      
+## vh       -0.016617786  0.047417127
+## wind     -0.317867945 -0.544266150
+## humidity  0.238454606 -0.786483702
+## temp      0.892051760 -0.012563393
+## ibh      -0.001707214 -0.001794245
+## dpg       0.033476907  0.285956216
+## ibt       0.205536326  0.026984921
+## vis      -0.026255153 -0.014173612
+## doy      -0.044819013 -0.010405236
+## 
+## Coefficients of ridge terms ('beta'):
+##   term 1   term 2 
+## 6.790447 1.531222
+```
+
+```r
+oldpar <- par(mfrow = c(1, 2))
+plot(ppreg)
+```
+
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-39-1.png" width="90%" style="display: block; margin: auto;" />
+
+```r
+par(oldpar)
+```
+
+Evaluamos las predicciones en la muestra de test:
+
+
+```r
+pred <- predict(ppreg, newdata = test)
+obs <- test$O3
+plot(pred, obs, main = "Observado frente a predicciones",
+     xlab = "Predicción", ylab = "Observado")
+abline(a = 0, b = 1)
+abline(lm(obs ~ pred), lty = 2)
+```
+
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-40-1.png" width="80%" style="display: block; margin: auto;" />
+
+```r
+accuracy(pred, obs)
+```
+
+```
+##         me       rmse        mae        mpe       mape  r.squared 
+##  0.4819794  3.2330060  2.5941476 -6.1203121 34.8728543  0.8384607
+```
+
+Empleando el método `"ppr"` de `caret` para seleccionar el número de términos:
+
+
+```r
+library(caret)
+modelLookup("ppr")
+```
+
+```
+##   model parameter   label forReg forClass probModel
+## 1   ppr    nterms # Terms   TRUE    FALSE     FALSE
+```
+
+```r
+set.seed(1)
+caret.ppr <- train(O3 ~ ., data = train, method = "ppr", # bass = 2,
+    trControl = trainControl(method = "cv", number = 10))
+caret.ppr
+```
+
+```
+## Projection Pursuit Regression 
+## 
+## 264 samples
+##   9 predictor
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold) 
+## Summary of sample sizes: 238, 238, 238, 236, 237, 239, ... 
+## Resampling results across tuning parameters:
+## 
+##   nterms  RMSE      Rsquared   MAE     
+##   1       4.366022  0.7069042  3.306658
+##   2       4.479282  0.6914678  3.454853
+##   3       4.624943  0.6644089  3.568929
+## 
+## RMSE was used to select the optimal model using the smallest value.
+## The final value used for the model was nterms = 1.
+```
+
+```r
+ggplot(caret.ppr, highlight = TRUE)
+```
+
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-41-1.png" width="80%" style="display: block; margin: auto;" />
+
+```r
+summary(caret.ppr$finalModel)
+```
+
+```
+## Call:
+## ppr(x = as.matrix(x), y = y, nterms = param$nterms)
+## 
+## Goodness of fit:
+##  1 terms 
+## 4436.727 
+## 
+## Projection direction vectors ('alpha'):
+##           vh         wind     humidity         temp          ibh          dpg 
+## -0.016091543 -0.167891347  0.351773894  0.907301452 -0.001828865  0.026901492 
+##          ibt          vis          doy 
+##  0.148021198 -0.026470384 -0.035703896 
+## 
+## Coefficients of ridge terms ('beta'):
+##   term 1 
+## 6.853971
+```
+
+```r
+plot(caret.ppr$finalModel)
+```
+
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-41-2.png" width="80%" style="display: block; margin: auto;" />
+
+```r
+# varImp(caret.ppr) # emplea una medida genérica de importancia
+pred <- predict(caret.ppr, newdata = test)
+accuracy(pred, obs)
+```
+
+```
+##          me        rmse         mae         mpe        mape   r.squared 
+##   0.3135877   3.3652891   2.7061615 -10.7532705  33.8333646   0.8249710
+```
+
+Para ajustar un modelo *single index* también se podría emplear la función `npindex()` del paquete  [`np`](https://github.com/JeffreyRacine/R-Package-np) (que implementa el método de Ichimura, 1993, considerando un estimador local constante), aunque en este caso ni el tiempo de computación ni el resultado es satisfactorio:
+
+
+```r
+library(np)
+# bw <- npindexbw(O3 ~ ., data = train)
+# Error in terms.formula(formula): '.' in formula and no 'data' argument
+# formula <- reformulate(setdiff(colnames(train), "O3"), response="O3")
+
+bw <- npindexbw(O3 ~ vh + wind + humidity + temp + ibh + dpg + ibt + vis + doy,
+                data = train, optim.method = "BFGS", nmulti = 1) # Por defecto nmulti = 5
+```
+
+```
+## Multistart 1 of 1...                    
+```
+
+```r
+summary(bw)
+```
+
+```
+## 
+## Single Index Model
+## Regression data (264 observations, 9 variable(s)):
+## 
+##       vh     wind humidity     temp       ibh      dpg      ibt        vis
+## Beta:  1 4.338446 6.146688 10.44244 0.0926648 3.464211 5.017786 -0.5646063
+##             doy
+## Beta: -1.048745
+## Bandwidth:  16.54751
+## Optimisation Method:  BFGS
+## Regression Type: Local-Constant
+## Bandwidth Selection Method: Ichimura
+## Formula: O3 ~ vh + wind + humidity + temp + ibh + dpg + ibt + vis + doy
+## Bandwidth Type: Fixed
+## Objective Function Value: 18.87884 (achieved on multistart 1)
+## 
+## Continuous Kernel Type: Second-Order Gaussian
+## No. Continuous Explanatory Vars.: 1
+## Estimation Time: 7.03 seconds
+```
+
+```r
+sindex <- npindex(bws = bw, gradients = TRUE)
+summary(sindex)
+```
+
+```
+## 
+## Single Index Model
+## Regression Data: 264 training points, in 9 variable(s)
+## 
+##       vh     wind humidity     temp       ibh      dpg      ibt        vis
+## Beta:  1 4.338446 6.146688 10.44244 0.0926648 3.464211 5.017786 -0.5646063
+##             doy
+## Beta: -1.048745
+## Bandwidth: 16.54751
+## Kernel Regression Estimator: Local-Constant
+## 
+## Residual standard error: 3.520037
+## R-squared: 0.806475
+## 
+## Continuous Kernel Type: Second-Order Gaussian
+## No. Continuous Explanatory Vars.: 1
+```
+
+```r
+plot(bw)
+```
+
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-42-1.png" width="80%" style="display: block; margin: auto;" />
+
+```r
+pred <- predict(sindex, newdata = test)
+accuracy(pred, obs)
+```
+
+```
+##          me        rmse         mae         mpe        mape   r.squared 
+##   0.1712457   4.3725067   3.1789199 -10.2320531  35.2010284   0.7045213
+```
