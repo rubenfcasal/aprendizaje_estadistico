@@ -1,6 +1,6 @@
 # Aprendizaje Estadístico
 
-## R. Fernández-Casal (ruben.fcasal@udc.es) y J. Costa (julian.costa@udc.es)
+## R. Fernández-Casal (ruben.fcasal@udc.es), J. Costa (julian.costa@udc.es), M. Oviedo (manuel.oviedo@udc.es)
 
 
 Este libro contiene los apuntes de la asignatura de [Aprendizaje Estadístico](http://eamo.usc.es/pub/mte/index.php?option=com_content&view=article&id=74) del [Máster en Técnicas Estadísticas](http://eio.usc.es/pub/mte). 
@@ -15,12 +15,13 @@ donde puede descargarse en formato [pdf](https://rubenfcasal.github.io/aprendiza
 Para instalar los paquetes necesarios para poder ejecutar los ejemplos mostrados en el libro se puede emplear el siguiente comando:
 ```{r eval=FALSE}
 pkgs <- c("caret", "rattle", "car", "leaps", "MASS", "RcmdrMisc", 
-          "lmtest", "glmnet", "mgcv", "AppliedPredictiveModeling", "ISLR")
+          "lmtest", "glmnet", "mgcv", "np", "NeuralNetTools", "pdp", "gbm",
+          "plot3D", "AppliedPredictiveModeling", "ISLR")
 # install.packages(pkgs, dependencies=TRUE)
 install.packages(setdiff(pkgs, installed.packages()[,"Package"]), 
                  dependencies = TRUE)
 
-# Si aparecen errores debidos a incompatibilidades entre las versiones de los paquetes, 
+# Si aparecen errores, debidos a incompatibilidades entre las versiones de los paquetes, 
 # probar a ejecutar en lugar de lo anterior:
 # install.packages(pkgs, dependencies = TRUE) # Instala todos...
 ```

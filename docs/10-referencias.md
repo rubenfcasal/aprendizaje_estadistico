@@ -1,12 +1,12 @@
 # Referencias {-}
 
 <!-- 
-# Referencias {-}
+
 -->
 
 ## Bibliografía básica {-}
 
-James, G., Witten, D., Hastie, T. y Tibshirani, R. (2013). *[An Introduction to Statistical Learning: with Aplications in R](http://faculty.marshall.usc.edu/gareth-james/ISL)*. Springer.
+James, G., Witten, D., Hastie, T. y Tibshirani, R. (2013). *[An Introduction to Statistical Learning: with Aplications in R](https://www.statlearning.com)*. Springer.
 
 Kuhn, M. y Johnson, K. (2013). *[Applied predictive modeling](http://appliedpredictivemodeling.com)*. Springer.
 
@@ -44,7 +44,8 @@ Hastie, T.J. y Tibshirani, R.J. (1990). *Generalized Additive Models*. Chapman &
 Hastie, T., Tibshirani, R. y Friedman, J. (2009).
     *[The Elements of Statistical Learning: Data Mining, Inference, and Prediction](https://web.stanford.edu/~hastie/ElemStatLearn)*. Springer.   
     
-Hastie, T., Tibshirani, R. y Wainwright, M. (2015). *Statistical learning with sparsity: the lasso and generalizations*. CRC press.    
+Hastie, T., Tibshirani, R. y Wainwright, M. (2015). *Statistical learning with sparsity: the lasso and generalizations*. CRC press.   
+
 Irizarry, R.A. (2019). *[Introduction to Data Science: Data Analysis and Prediction Algorithms with R](https://rafalab.github.io/dsbook)*. CRC Press.
 
 Molnar, C. (2020). [Interpretable Machine Learning. A Guide for Making Black Box Models Explainable](https://christophm.github.io/interpretable-ml-book). Lulu.com.
@@ -58,6 +59,8 @@ Vapnik, V. (2010). *The Nature of Statistical Learning Theory*. Springer.
 Venables, W.N. y Ripley, B.D. (2002). *Modern applied statistics with S*. Springer.
 
 Werbos, P.J. (1975). *Beyond Regression: New Tools for Prediction and Analysis in the Behavioral Sciences*, Harvard University.
+
+Wickham, H., y Grolemund, G. (2016). *[R for Data Science](https://r4ds.had.co.nz/)*, O'Reilly.
 
 Wood, S.N. (2017). *Generalized Additive Models: An Introduction with R*. Chapman & Hall/CRC
 

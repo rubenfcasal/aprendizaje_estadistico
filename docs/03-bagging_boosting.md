@@ -220,7 +220,9 @@ plot(bagtrees, main = "Tasas de error")
 legend("topright", colnames(bagtrees$err.rate), lty = 1:5, col = 1:6)
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-3-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/unnamed-chunk-3-1} \end{center}
 Como vemos que los errores se estabilizan podríamos pensar que aparentemente hay convergencia (aunque situaciones de alta dependencia entre los árboles dificultarían su interpretación).
 
 Con la función `getTree()` podemos extraer los árboles individuales.
@@ -331,7 +333,9 @@ plot(rf, main = "Tasas de error")
 legend("topright", colnames(rf$err.rate), lty = 1:5, col = 1:6)
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-7-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/unnamed-chunk-7-1} \end{center}
 
 Podemos mostrar la importancia de las variables predictoras con la función `importance()` o representarlas con `varImpPlot()`:
 
@@ -359,7 +363,9 @@ importance(rf)
 varImpPlot(rf)
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-8-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/unnamed-chunk-8-1} \end{center}
 
 Si evaluamos la precisión en la muestra de test podemos observar un ligero incremento en la precisión en comparación con el método anterior:
 
@@ -431,14 +437,18 @@ pdp1 <- partial(rf, "alcohol")
 plotPartial(pdp1)
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-11-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/unnamed-chunk-11-1} \end{center}
 
 ```r
 pdp2 <- partial(rf, c("alcohol", "density"))
 plotPartial(pdp2)
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-11-2.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/unnamed-chunk-11-2} \end{center}
 
 En este caso también puede ser de utilidad el paquete [`randomForestExplainer`](https://modeloriented.github.io/randomForestExplainer).
 
@@ -487,7 +497,9 @@ rf.caret <- train(taste ~ ., data = train, method = "rf")
 plot(rf.caret)
 ```
 
-<img src="03-bagging_boosting_files/figure-html/caret-rf-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/caret-rf-1} \end{center}
 
 Breiman (2001) sugiere emplear el valor por defecto, la mitad y el doble:
 
@@ -501,7 +513,9 @@ rf.caret <- train(taste ~ ., data = train,
 plot(rf.caret)
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-13-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/unnamed-chunk-13-1} \end{center}
 
 <!-- 
 Pendiente: 
@@ -717,7 +731,9 @@ Con el método `plot()` podemos representar la evolución del error de clasifica
 plot(ada.boost)
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-16-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/unnamed-chunk-16-1} \end{center}
 
 <!-- 
 Con la función `varplot()` podemos representar la importancia de las variables (y almacenarla empleando `type = "scores"`): 
@@ -727,7 +743,9 @@ Con la función `varplot()` podemos representar la importancia de las variables 
 res <- varplot(ada.boost, type = "scores")
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-17-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/unnamed-chunk-17-1} \end{center}
 
 ```r
 res
@@ -1032,7 +1050,9 @@ El método `summary()` calcula las medidas de influencia de los predictores y la
 summary(gbm.fit)
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-22-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/unnamed-chunk-22-1} \end{center}
 
 ```
 ##                                       var   rel.inf
@@ -1056,7 +1076,9 @@ Para estudiar el efecto de un predictor se pueden generar gráficos de los efect
 plot(gbm.fit, i = "alcohol")
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-23-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/unnamed-chunk-23-1} \end{center}
 
 Finalmente podemos evaluar la precisión en la muestra de test empleando el código habitual:
 
@@ -1331,120 +1353,120 @@ caret.xgb
 ## Resampling results across tuning parameters:
 ## 
 ##   eta  max_depth  colsample_bytree  subsample  nrounds  Accuracy   Kappa    
-##   0.3  1          0.6               0.50        50      0.7270047  0.3456824
-##   0.3  1          0.6               0.50       100      0.7400300  0.3856840
-##   0.3  1          0.6               0.50       150      0.7380249  0.3849720
-##   0.3  1          0.6               0.75        50      0.7429749  0.3833619
-##   0.3  1          0.6               0.75       100      0.7369147  0.3839315
-##   0.3  1          0.6               0.75       150      0.7409547  0.3994590
-##   0.3  1          0.6               1.00        50      0.7429599  0.3774907
-##   0.3  1          0.6               1.00       100      0.7469350  0.4004720
-##   0.3  1          0.6               1.00       150      0.7429749  0.3922574
-##   0.3  1          0.8               0.50        50      0.7449400  0.3928409
-##   0.3  1          0.8               0.50       100      0.7269846  0.3594183
-##   0.3  1          0.8               0.50       150      0.7319947  0.3667027
-##   0.3  1          0.8               0.75        50      0.7359497  0.3727139
-##   0.3  1          0.8               0.75       100      0.7409747  0.3949485
-##   0.3  1          0.8               0.75       150      0.7329645  0.3759044
-##   0.3  1          0.8               1.00        50      0.7429449  0.3799009
-##   0.3  1          0.8               1.00       100      0.7469450  0.3978185
-##   0.3  1          0.8               1.00       150      0.7509350  0.4094308
-##   0.3  2          0.6               0.50        50      0.7399448  0.3879917
-##   0.3  2          0.6               0.50       100      0.7349197  0.3871037
-##   0.3  2          0.6               0.50       150      0.7269546  0.3737454
-##   0.3  2          0.6               0.75        50      0.7409597  0.3945359
-##   0.3  2          0.6               0.75       100      0.7399998  0.3941711
-##   0.3  2          0.6               0.75       150      0.7339997  0.3877357
-##   0.3  2          0.6               1.00        50      0.7499299  0.4101402
-##   0.3  2          0.6               1.00       100      0.7399147  0.3904076
-##   0.3  2          0.6               1.00       150      0.7479700  0.4167337
-##   0.3  2          0.8               0.50        50      0.7580353  0.4210483
-##   0.3  2          0.8               0.50       100      0.7509800  0.4177512
-##   0.3  2          0.8               0.50       150      0.7389548  0.3907023
-##   0.3  2          0.8               0.75        50      0.7429748  0.4030924
-##   0.3  2          0.8               0.75       100      0.7469849  0.4152931
-##   0.3  2          0.8               0.75       150      0.7510300  0.4267509
-##   0.3  2          0.8               1.00        50      0.7520050  0.4166915
-##   0.3  2          0.8               1.00       100      0.7520151  0.4249264
-##   0.3  2          0.8               1.00       150      0.7589952  0.4401835
-##   0.3  3          0.6               0.50        50      0.7380496  0.3916075
-##   0.3  3          0.6               0.50       100      0.7540151  0.4330095
-##   0.3  3          0.6               0.50       150      0.7369746  0.3892166
-##   0.3  3          0.6               0.75        50      0.7589451  0.4350590
-##   0.3  3          0.6               0.75       100      0.7500400  0.4217787
-##   0.3  3          0.6               0.75       150      0.7519848  0.4246740
-##   0.3  3          0.6               1.00        50      0.7529350  0.4162968
-##   0.3  3          0.6               1.00       100      0.7589451  0.4391310
-##   0.3  3          0.6               1.00       150      0.7499649  0.4215876
-##   0.3  3          0.8               0.50        50      0.7649753  0.4550539
-##   0.3  3          0.8               0.50       100      0.7569902  0.4351073
-##   0.3  3          0.8               0.50       150      0.7499250  0.4210503
-##   0.3  3          0.8               0.75        50      0.7589802  0.4396966
-##   0.3  3          0.8               0.75       100      0.7599901  0.4439201
-##   0.3  3          0.8               0.75       150      0.7559950  0.4396551
-##   0.3  3          0.8               1.00        50      0.7529700  0.4270112
-##   0.3  3          0.8               1.00       100      0.7589401  0.4432280
-##   0.3  3          0.8               1.00       150      0.7569302  0.4368301
-##   0.4  1          0.6               0.50        50      0.7389297  0.3852019
-##   0.4  1          0.6               0.50       100      0.7449749  0.4067440
-##   0.4  1          0.6               0.50       150      0.7539900  0.4274551
-##   0.4  1          0.6               0.75        50      0.7419399  0.3947505
-##   0.4  1          0.6               0.75       100      0.7359697  0.3832840
-##   0.4  1          0.6               0.75       150      0.7289397  0.3685824
-##   0.4  1          0.6               1.00        50      0.7429399  0.3894412
-##   0.4  1          0.6               1.00       100      0.7499700  0.4103344
-##   0.4  1          0.6               1.00       150      0.7429999  0.3981893
-##   0.4  1          0.8               0.50        50      0.7359897  0.3856013
-##   0.4  1          0.8               0.50       100      0.7420099  0.4048545
-##   0.4  1          0.8               0.50       150      0.7400048  0.4005212
-##   0.4  1          0.8               0.75        50      0.7549702  0.4186415
-##   0.4  1          0.8               0.75       100      0.7449700  0.4070417
-##   0.4  1          0.8               0.75       150      0.7470200  0.4082903
-##   0.4  1          0.8               1.00        50      0.7479300  0.3966813
-##   0.4  1          0.8               1.00       100      0.7429648  0.3938550
-##   0.4  1          0.8               1.00       150      0.7489650  0.4097744
-##   0.4  2          0.6               0.50        50      0.7339647  0.3818445
-##   0.4  2          0.6               0.50       100      0.7369097  0.3959654
-##   0.4  2          0.6               0.50       150      0.7309445  0.3806622
-##   0.4  2          0.6               0.75        50      0.7379998  0.3948626
-##   0.4  2          0.6               0.75       100      0.7449999  0.4075786
-##   0.4  2          0.6               0.75       150      0.7500052  0.4207846
-##   0.4  2          0.6               1.00        50      0.7519450  0.4182109
-##   0.4  2          0.6               1.00       100      0.7420148  0.4036651
-##   0.4  2          0.6               1.00       150      0.7529999  0.4280194
-##   0.4  2          0.8               0.50        50      0.7460450  0.4127948
-##   0.4  2          0.8               0.50       100      0.7579951  0.4452801
-##   0.4  2          0.8               0.50       150      0.7509600  0.4277173
-##   0.4  2          0.8               0.75        50      0.7480299  0.4171753
-##   0.4  2          0.8               0.75       100      0.7550400  0.4406821
-##   0.4  2          0.8               0.75       150      0.7460399  0.4215027
-##   0.4  2          0.8               1.00        50      0.7599751  0.4401484
-##   0.4  2          0.8               1.00       100      0.7580353  0.4406080
-##   0.4  2          0.8               1.00       150      0.7719806  0.4720566
-##   0.4  3          0.6               0.50        50      0.7409748  0.4100874
-##   0.4  3          0.6               0.50       100      0.7419948  0.4128674
-##   0.4  3          0.6               0.50       150      0.7399998  0.4069074
-##   0.4  3          0.6               0.75        50      0.7419649  0.4073670
-##   0.4  3          0.6               0.75       100      0.7459499  0.4210145
-##   0.4  3          0.6               0.75       150      0.7599252  0.4472654
-##   0.4  3          0.6               1.00        50      0.7529949  0.4349779
-##   0.4  3          0.6               1.00       100      0.7589702  0.4437452
-##   0.4  3          0.6               1.00       150      0.7559600  0.4383594
-##   0.4  3          0.8               0.50        50      0.7489800  0.4177928
-##   0.4  3          0.8               0.50       100      0.7379797  0.4051258
-##   0.4  3          0.8               0.50       150      0.7439547  0.4159864
-##   0.4  3          0.8               0.75        50      0.7449899  0.4186248
-##   0.4  3          0.8               0.75       100      0.7459549  0.4144890
-##   0.4  3          0.8               0.75       150      0.7539601  0.4334041
-##   0.4  3          0.8               1.00        50      0.7570301  0.4344584
-##   0.4  3          0.8               1.00       100      0.7570152  0.4356542
-##   0.4  3          0.8               1.00       150      0.7570201  0.4392371
+##   0.3  1          0.6               0.50        50      0.7479499  0.3997718
+##   0.3  1          0.6               0.50       100      0.7509649  0.4226367
+##   0.3  1          0.6               0.50       150      0.7480199  0.4142399
+##   0.3  1          0.6               0.75        50      0.7389498  0.3775707
+##   0.3  1          0.6               0.75       100      0.7499600  0.4178857
+##   0.3  1          0.6               0.75       150      0.7519900  0.4194354
+##   0.3  1          0.6               1.00        50      0.7479450  0.3933223
+##   0.3  1          0.6               1.00       100      0.7439499  0.3946755
+##   0.3  1          0.6               1.00       150      0.7479699  0.4054549
+##   0.3  1          0.8               0.50        50      0.7279446  0.3514309
+##   0.3  1          0.8               0.50       100      0.7379647  0.3901818
+##   0.3  1          0.8               0.50       150      0.7289797  0.3702869
+##   0.3  1          0.8               0.75        50      0.7419548  0.3853122
+##   0.3  1          0.8               0.75       100      0.7419798  0.3939408
+##   0.3  1          0.8               0.75       150      0.7490050  0.4119554
+##   0.3  1          0.8               1.00        50      0.7469399  0.3903359
+##   0.3  1          0.8               1.00       100      0.7469349  0.3994462
+##   0.3  1          0.8               1.00       150      0.7429499  0.3930019
+##   0.3  2          0.6               0.50        50      0.7469800  0.4072389
+##   0.3  2          0.6               0.50       100      0.7560152  0.4315043
+##   0.3  2          0.6               0.50       150      0.7470550  0.4202096
+##   0.3  2          0.6               0.75        50      0.7419347  0.3991878
+##   0.3  2          0.6               0.75       100      0.7419398  0.3985245
+##   0.3  2          0.6               0.75       150      0.7408999  0.4048017
+##   0.3  2          0.6               1.00        50      0.7529250  0.4183744
+##   0.3  2          0.6               1.00       100      0.7559601  0.4332161
+##   0.3  2          0.6               1.00       150      0.7439798  0.4082169
+##   0.3  2          0.8               0.50        50      0.7479801  0.4039828
+##   0.3  2          0.8               0.50       100      0.7439500  0.4017708
+##   0.3  2          0.8               0.50       150      0.7409099  0.4002330
+##   0.3  2          0.8               0.75        50      0.7549701  0.4309398
+##   0.3  2          0.8               0.75       100      0.7469550  0.4077312
+##   0.3  2          0.8               0.75       150      0.7529701  0.4282530
+##   0.3  2          0.8               1.00        50      0.7509800  0.4151042
+##   0.3  2          0.8               1.00       100      0.7479899  0.4164189
+##   0.3  2          0.8               1.00       150      0.7439498  0.4044785
+##   0.3  3          0.6               0.50        50      0.7529851  0.4322174
+##   0.3  3          0.6               0.50       100      0.7479900  0.4200214
+##   0.3  3          0.6               0.50       150      0.7499800  0.4307546
+##   0.3  3          0.6               0.75        50      0.7499550  0.4263366
+##   0.3  3          0.6               0.75       100      0.7519201  0.4321688
+##   0.3  3          0.6               0.75       150      0.7459449  0.4177412
+##   0.3  3          0.6               1.00        50      0.7529251  0.4220849
+##   0.3  3          0.6               1.00       100      0.7519400  0.4237486
+##   0.3  3          0.6               1.00       150      0.7519500  0.4294623
+##   0.3  3          0.8               0.50        50      0.7510299  0.4327919
+##   0.3  3          0.8               0.50       100      0.7519799  0.4405268
+##   0.3  3          0.8               0.50       150      0.7619652  0.4559423
+##   0.3  3          0.8               0.75        50      0.7470501  0.4131934
+##   0.3  3          0.8               0.75       100      0.7479849  0.4129185
+##   0.3  3          0.8               0.75       150      0.7509850  0.4261251
+##   0.3  3          0.8               1.00        50      0.7449099  0.4008981
+##   0.3  3          0.8               1.00       100      0.7610054  0.4422136
+##   0.3  3          0.8               1.00       150      0.7569803  0.4382787
+##   0.4  1          0.6               0.50        50      0.7370397  0.3774680
+##   0.4  1          0.6               0.50       100      0.7340546  0.3874281
+##   0.4  1          0.6               0.50       150      0.7490550  0.4204110
+##   0.4  1          0.6               0.75        50      0.7330097  0.3695029
+##   0.4  1          0.6               0.75       100      0.7269447  0.3595653
+##   0.4  1          0.6               0.75       150      0.7409999  0.3999882
+##   0.4  1          0.6               1.00        50      0.7389548  0.3787453
+##   0.4  1          0.6               1.00       100      0.7479499  0.4061188
+##   0.4  1          0.6               1.00       150      0.7410049  0.3940049
+##   0.4  1          0.8               0.50        50      0.7269246  0.3647893
+##   0.4  1          0.8               0.50       100      0.7459551  0.4088011
+##   0.4  1          0.8               0.50       150      0.7359947  0.3910800
+##   0.4  1          0.8               0.75        50      0.7369797  0.3798786
+##   0.4  1          0.8               0.75       100      0.7329997  0.3808412
+##   0.4  1          0.8               0.75       150      0.7410149  0.4007794
+##   0.4  1          0.8               1.00        50      0.7429449  0.3889734
+##   0.4  1          0.8               1.00       100      0.7549401  0.4194777
+##   0.4  1          0.8               1.00       150      0.7499600  0.4117257
+##   0.4  2          0.6               0.50        50      0.7340497  0.3817464
+##   0.4  2          0.6               0.50       100      0.7330547  0.3836073
+##   0.4  2          0.6               0.50       150      0.7429900  0.4086515
+##   0.4  2          0.6               0.75        50      0.7490100  0.4065411
+##   0.4  2          0.6               0.75       100      0.7399647  0.4013642
+##   0.4  2          0.6               0.75       150      0.7480149  0.4165452
+##   0.4  2          0.6               1.00        50      0.7519601  0.4189103
+##   0.4  2          0.6               1.00       100      0.7559751  0.4326368
+##   0.4  2          0.6               1.00       150      0.7649804  0.4559090
+##   0.4  2          0.8               0.50        50      0.7430148  0.4088033
+##   0.4  2          0.8               0.50       100      0.7459399  0.4110881
+##   0.4  2          0.8               0.50       150      0.7359897  0.3929835
+##   0.4  2          0.8               0.75        50      0.7509801  0.4207733
+##   0.4  2          0.8               0.75       100      0.7399848  0.3993503
+##   0.4  2          0.8               0.75       150      0.7429548  0.4092104
+##   0.4  2          0.8               1.00        50      0.7609753  0.4402344
+##   0.4  2          0.8               1.00       100      0.7669804  0.4572722
+##   0.4  2          0.8               1.00       150      0.7559651  0.4339887
+##   0.4  3          0.6               0.50        50      0.7440298  0.4091740
+##   0.4  3          0.6               0.50       100      0.7559752  0.4388366
+##   0.4  3          0.6               0.50       150      0.7659354  0.4555764
+##   0.4  3          0.6               0.75        50      0.7560301  0.4384091
+##   0.4  3          0.6               0.75       100      0.7540000  0.4330182
+##   0.4  3          0.6               0.75       150      0.7549501  0.4357856
+##   0.4  3          0.6               1.00        50      0.7449599  0.4072659
+##   0.4  3          0.6               1.00       100      0.7569501  0.4386990
+##   0.4  3          0.6               1.00       150      0.7589451  0.4502683
+##   0.4  3          0.8               0.50        50      0.7420546  0.4035922
+##   0.4  3          0.8               0.50       100      0.7489598  0.4278516
+##   0.4  3          0.8               0.50       150      0.7439448  0.4158271
+##   0.4  3          0.8               0.75        50      0.7509599  0.4200445
+##   0.4  3          0.8               0.75       100      0.7459798  0.4164791
+##   0.4  3          0.8               0.75       150      0.7599402  0.4479586
+##   0.4  3          0.8               1.00        50      0.7569851  0.4333259
+##   0.4  3          0.8               1.00       100      0.7439549  0.4063617
+##   0.4  3          0.8               1.00       150      0.7459649  0.4162883
 ## 
 ## Tuning parameter 'gamma' was held constant at a value of 0
 ## Tuning
 ##  parameter 'min_child_weight' was held constant at a value of 1
 ## Accuracy was used to select the optimal model using the largest value.
-## The final values used for the model were nrounds = 150, max_depth = 2, eta
+## The final values used for the model were nrounds = 100, max_depth = 2, eta
 ##  = 0.4, gamma = 0, colsample_bytree = 0.8, min_child_weight = 1 and subsample
 ##  = 1.
 ```
@@ -1455,7 +1477,7 @@ caret.xgb$bestTune
 
 ```
 ##    nrounds max_depth eta gamma colsample_bytree min_child_weight subsample
-## 90     150         2 0.4     0              0.8                1         1
+## 89     100         2 0.4     0              0.8                1         1
 ```
 
 ```r
@@ -1467,16 +1489,16 @@ varImp(caret.xgb)
 ## 
 ##                      Overall
 ## alcohol              100.000
-## density               41.572
-## citric.acid           39.002
-## residual.sugar        33.656
-## free.sulfur.dioxide   33.142
-## volatile.acidity      31.888
-## fixed.acidity         17.278
-## total.sulfur.dioxide  14.832
-## sulphates              7.958
-## pH                     5.857
-## chlorides              0.000
+## volatile.acidity      27.693
+## citric.acid           23.788
+## free.sulfur.dioxide   23.673
+## fixed.acidity         20.393
+## residual.sugar        15.734
+## density               10.956
+## chlorides              8.085
+## sulphates              3.598
+## pH                     2.925
+## total.sulfur.dioxide   0.000
 ```
 
 ```r
@@ -1488,28 +1510,28 @@ confusionMatrix(predict(caret.xgb, newdata = test), test$taste)
 ## 
 ##           Reference
 ## Prediction good bad
-##       good  145  43
-##       bad    21  41
-##                                           
-##                Accuracy : 0.744           
-##                  95% CI : (0.6852, 0.7969)
-##     No Information Rate : 0.664           
-##     P-Value [Acc > NIR] : 0.003886        
-##                                           
-##                   Kappa : 0.3866          
-##                                           
-##  Mcnemar's Test P-Value : 0.008665        
-##                                           
-##             Sensitivity : 0.8735          
-##             Specificity : 0.4881          
-##          Pos Pred Value : 0.7713          
-##          Neg Pred Value : 0.6613          
-##              Prevalence : 0.6640          
-##          Detection Rate : 0.5800          
-##    Detection Prevalence : 0.7520          
-##       Balanced Accuracy : 0.6808          
-##                                           
-##        'Positive' Class : good            
+##       good  147  46
+##       bad    19  38
+##                                          
+##                Accuracy : 0.74           
+##                  95% CI : (0.681, 0.7932)
+##     No Information Rate : 0.664          
+##     P-Value [Acc > NIR] : 0.005841       
+##                                          
+##                   Kappa : 0.3671         
+##                                          
+##  Mcnemar's Test P-Value : 0.001260       
+##                                          
+##             Sensitivity : 0.8855         
+##             Specificity : 0.4524         
+##          Pos Pred Value : 0.7617         
+##          Neg Pred Value : 0.6667         
+##              Prevalence : 0.6640         
+##          Detection Rate : 0.5880         
+##    Detection Prevalence : 0.7720         
+##       Balanced Accuracy : 0.6690         
+##                                          
+##        'Positive' Class : good           
 ## 
 ```
 

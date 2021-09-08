@@ -48,7 +48,7 @@ Hipótesis adicional en regresión múltiple:
 
 - Ninguna de las variables explicativas es combinación lineal de las demás.
 
-En el caso de regresión múltiple es de especial interés el fenómeno de la multicolinealidad (o colinearidad) relacionado con la última de estas hipótesis (que se tratará en la Sección \@ref(multicolinealidad)).
+En el caso de regresión múltiple es de especial interés el fenómeno de la colinealidad (o multicolinealidad) relacionado con la última de estas hipótesis (que se tratará en la Sección \@ref(colinealidad)).
 Además se da por hecho que el número de observaciones disponible es como mínimo el número de parámetros, $n \geq p + 1$.
 
 
@@ -140,7 +140,9 @@ mcor <- cor(train)
 corrplot::corrplot(mcor, method = "ellipse")
 ```
 
-<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-4-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-4-1} \end{center}
 
 ```r
 print(mcor, digits = 1)
@@ -216,7 +218,9 @@ plot(fidelida ~ velocida, train)
 abline(modelo)
 ```
 
-<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-5-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-5-1} \end{center}
 
 Para calcular predicciones (estimaciones de la media condicionada), también intervalos de confianza o de predicción, se puede emplear la función `predict()` (consultar la ayuda `help(predict.lm)` para ver todas las opciones disponibles).
 
@@ -233,7 +237,9 @@ matlines(valores, pred2[, -1], lty = 3, col = 1)
 legend("topleft", c("Ajuste", "Int. confianza", "Int. predicción"), lty = c(1, 2, 3))
 ```
 
-<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-6-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-6-1} \end{center}
 
 Para la extracción de información se pueden acceder a los componentes del modelo ajustado o emplear funciones  (genéricas; muchas de ellas válidas para otro tipo de modelos: rlm, glm...). 
 Algunas de las más utilizadas son las siguientes:
@@ -265,13 +271,13 @@ par(oldpar)
 ```
 
 
-## El problema de la multicolinelidad {#multicolinealidad}
+## El problema de la colinealidad {#colinealidad}
 
-Si alguna de las variables explicativas no aporta información relevante sobre la respuesta puede aparecer el problema de la multicolinealidad. 
+Si alguna de las variables explicativas no aporta información relevante sobre la respuesta puede aparecer el problema de la colinealidad. 
 
 En regresión múltiple se supone que ninguna de las variables explicativas es combinación lineal de las demás.
 Si una de las variables explicativas (variables independientes) es combinación lineal de las otras, no se pueden determinar los parámetros de forma única (sistema singular).
-Sin llegar a esta situación extrema, cuando algunas variables explicativas estén altamente correlacionadas entre sí, tendremos una situación de alta multicolinealidad.
+Sin llegar a esta situación extrema, cuando algunas variables explicativas estén altamente correlacionadas entre sí, tendremos una situación de alta colinealidad.
 En este caso las estimaciones de los parámetros pueden verse seriamente afectadas:
 
 -   Tendrán varianzas muy altas (serán poco eficientes).
@@ -325,7 +331,10 @@ x2.pred <- predict(fit.x2, newdata = data.frame(x1 = x1.range))
 lines3D(z = rep(ylim[1], 2), x = x1.range, y = x2.pred, add = TRUE, colkey = FALSE, col = "black") 
 ```
 
-<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-9-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-9-1} \end{center}
+
 
 Simulación de la respuesta:
 
@@ -352,7 +361,42 @@ for (isim in 1:nsim) {
 }
 ```
 
-<img src="06-modelos_lineales_files/figure-html/multicol-movie.gif" width="80%" style="display: block; margin: auto;" />
+
+
+```r
+sd.err <- 0.25
+oldpar <- par(mfrow = c(2,2))
+
+for (isim in 7:10) {
+  set.seed(isim)
+  y <- y.mean + rnorm(n, 0, sd.err)
+  
+  # Ajuste lineal y superficie de predicción
+  fit <- lm(y ~ x1 + x2)
+  y.pred <- matrix(predict(fit, newdata = xy), nrow = length(x1.grid)) 
+  
+  # Representar
+  fitpoints <- predict(fit) 
+  scatter3D(z = y, x = x1, y = x2, pch = 16, cex = 1.5, clim = ylim, zlim = ylim,
+            theta = -40, phi = 20, ticktype = "detailed", 
+            main = "Modelo ajustado", xlab = "x1", ylab = "x2", zlab = "y", 
+            surf = list(x = x1.grid, y = x2.grid, z = y.pred, 
+                        facets = NA, fit = fitpoints))
+}
+```
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/multicol-movie-latex-1} 
+
+}
+
+\caption{Ejemplo de simulaciones bajo colinelidad.}(\#fig:multicol-movie-latex)
+\end{figure}
+
+```r
+par(oldpar)
+```
 
 Incluso puede ocurrir que el contraste de regresión sea significativo (alto coeficiente de determinación), pero los contrastes individuales sean no significativos. 
 
@@ -409,7 +453,46 @@ for (isim in 1:nsim) {
 }
 ```
 
-<img src="06-modelos_lineales_files/figure-html/indep-movie.gif" width="80%" style="display: block; margin: auto;" />
+
+
+```r
+x2 <- rand.gen(n)
+y.mean <- mapply(model.teor, x1, x2)
+oldpar <- par(mfrow = c(2,2))
+
+for (isim in 7:10) {
+  # Simular respuesta
+  set.seed(isim)
+  y <- y.mean + rnorm(n, 0, sd.err)
+  
+  # Ajuste lineal y superficie de predicción
+  fit2 <- lm(y ~ x1 + x2)
+  y.pred <- matrix(predict(fit2, newdata = xy), nrow = length(x1.grid)) 
+  
+  # Representar
+  fitpoints <- predict(fit2) 
+  scatter3D(z = y, x = x1, y = x2, pch = 16, cex = 1.5, clim = ylim, zlim = ylim,
+            theta = -40, phi = 20, ticktype = "detailed", 
+            main = "Modelo ajustado", xlab = "x1", ylab = "x2", zlab = "y", 
+            surf = list(x = x1.grid, y = x2.grid, z = y.pred, 
+                        facets = NA, fit = fitpoints))
+}
+```
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/indep-movie-latex-1} 
+
+}
+
+\caption{Ejemplo de simulaciones bajo independencia.}(\#fig:indep-movie-latex)
+\end{figure}
+
+```r
+par(oldpar)
+```
+
+
 
 Por ejemplo, en el último ajuste obtendríamos:
 
@@ -439,7 +522,7 @@ summary(fit2)
 ## F-statistic:  46.6 on 2 and 47 DF,  p-value: 7.016e-12
 ```
 
-En la práctica, para la detección de multicolinealidad, se puede emplear la función
+En la práctica, para la detección de colinealidad, se puede emplear la función
 `vif()` del paquete [`car`](https://CRAN.R-project.org/package=car) para calcular los factores de inflación de varianza para las variables del modelo.
 Por ejemplo, en los últimos ajustes obtendríamos:
 
@@ -463,8 +546,8 @@ vif(fit2)
 ```
 La idea de este estadístico es que la varianza de la estimación del efecto en 
 regresión simple (efecto global) es menor que en regresión múltiple (efecto parcial).
-El factor de inflación de la varianza mide el incremento debido a la multicolinealidad.
-Valores grandes, por ejemplo > 10, indican la posible presencia de multicolinealidad.
+El factor de inflación de la varianza mide el incremento debido a la colinealidad.
+Valores grandes, por ejemplo > 10, indican la posible presencia de colinealidad.
 
 Las tolerancias, proporciones de variabilidad no explicada por las demás covariables, se pueden calcular con `1/vif(modelo)`.
 Por ejemplo, los coeficientes de tolerancia de los últimos ajustes serían:
@@ -487,7 +570,7 @@ Por ejemplo, los coeficientes de tolerancia de los últimos ajustes serían:
 ## 0.9998606 0.9998606
 ```
 
-Como ya se comentó en la Sección 1.4, el problema de la multicolinealidad se agrava al aumentar el número de dimensiones (la maldición de la dimensionalidad).
+Como ya se comentó en la Sección 1.4, el problema de la colinealidad se agrava al aumentar el número de dimensiones (la maldición de la dimensionalidad).
 Hay que tener en cuenta también que, además de la dificultad para interpretar el efecto de los predictores, va a resultar más difícil determinar que variables son de interés para predecir la respuesta (i.e. no son ruido). Debido a la aleatoriedad, predictores que realmente no están relacionados con la respuesta pueden ser tenidos en cuenta por el modelo con mayor facilidad, especialmente si se recurre a los contrastes tradicionales para determinar si tienen un efecto significativo. 
 
 <!-- Por ejemplo en el último ajuste, bajo las hipótesis del modelo de regresión lineal múltiple, se aceptaría un efecto lineal significativo de x2... -->
@@ -500,7 +583,7 @@ suele ser especialmente importante determinar cuales de estas deberían ser
 incluidas en el modelo de regresión. Si alguna de las variables no contiene 
 información relevante sobre la respuesta no se debería incluir (se simplificaría 
 la interpretación del modelo, aumentaría la precisión de la estimación y se 
-evitarían problemas como la multicolinealidad). Se trataría entonces de conseguir 
+evitarían problemas como la colinealidad). Se trataría entonces de conseguir 
 un buen ajuste con el menor número de variables explicativas posible.
 
 Para obtener el modelo "óptimo" lo ideal sería evaluar todos los modelos posibles.
@@ -528,7 +611,9 @@ Por ejemplo, en este caso, empleando el coeficiente de determinación ajustado, 
 plot(regsel, scale = "adjr2")
 ```
 
-<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-15-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-15-1} \end{center}
 
 En este caso, considerando que es preferible un modelo más simple que una mejora del 2%, podríamos seleccionar como modelo final el modelo con dos predictores.
 Podríamos obtener los coeficientes:
@@ -723,7 +808,7 @@ Como ya vimos en capítulos anteriores, en AE interesan algoritmos que puedan de
 
 ## Análisis e interpretación del modelo {#analisis-reg-multiple}
 
-Al margen de la multicolinealidad, si no se verifican las otras hipótesis estructurales del modelo (Sección \@ref(reg-multiple)), las conclusiones obtenidas pueden no ser fiables, o incluso totalmente erróneas:
+Al margen de la colinealidad, si no se verifican las otras hipótesis estructurales del modelo (Sección \@ref(reg-multiple)), las conclusiones obtenidas pueden no ser fiables, o incluso totalmente erróneas:
 
 -   La falta de linealidad "invalida" las conclusiones obtenidas
     (cuidado con las extrapolaciones).
@@ -748,7 +833,9 @@ oldpar <- par(mfrow = c(2,2))
 plot(modelo)
 ```
 
-<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-19-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-19-1} \end{center}
 
 ```r
 par(oldpar)
@@ -790,7 +877,9 @@ library(car)
 crPlots(modelo)
 ```
 
-<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-21-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-21-1} \end{center}
 
 ```r
 # avPlots(modelo)
@@ -871,7 +960,9 @@ res <- lm(obs ~ pred)
 abline(res, lty = 2)
 ```
 
-<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-23-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-23-1} \end{center}
 
 ```r
 accuracy <- function(pred, obs, na.rm = FALSE, 
@@ -1147,7 +1238,9 @@ fit.ridge <- glmnet(x, y, alpha = 0)
 plot(fit.ridge, xvar = "lambda", label = TRUE)
 ```
 
-<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-30-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-30-1} \end{center}
 
 Podemos obtener el modelo o predicciones para un valor concreto de $\lambda$:
 
@@ -1157,7 +1250,7 @@ coef(fit.ridge, s = 2) # lambda = 2
 
 ```
 ## 14 x 1 sparse Matrix of class "dgCMatrix"
-##                       1
+##                      s1
 ## (Intercept)  3.56806743
 ## calidadp     2.41027431
 ## web          0.94414628
@@ -1184,7 +1277,9 @@ cv.ridge <- cv.glmnet(x, y, alpha = 0)
 plot(cv.ridge)
 ```
 
-<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-32-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-32-1} \end{center}
 
 En este caso el parámetro óptimo (según la regla de un error estándar) sería:
 
@@ -1210,7 +1305,7 @@ coef(cv.ridge) # s = "lambda.1se"
 
 ```
 ## 14 x 1 sparse Matrix of class "dgCMatrix"
-##                       1
+##                      s1
 ## (Intercept)  8.38314273
 ## calidadp     2.06713538
 ## web          0.84771656
@@ -1257,7 +1352,9 @@ cv.lasso <- cv.glmnet(x,y)
 plot(cv.lasso)
 ```
 
-<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-36-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-36-1} \end{center}
 
 ```r
 plot(cv.lasso$glmnet.fit, xvar = "lambda", label = TRUE) 	
@@ -1265,7 +1362,9 @@ abline(v = log(cv.lasso$lambda.1se), lty = 2)
 abline(v = log(cv.lasso$lambda.min), lty = 3)
 ```
 
-<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-36-2.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-36-2} \end{center}
 
 El modelo resultante (oneSE rule) solo contiene 4 variables explicativas:
 
@@ -1276,7 +1375,7 @@ coef(cv.lasso) # s = "lambda.1se"
 
 ```
 ## 14 x 1 sparse Matrix of class "dgCMatrix"
-##                      1
+##                     s1
 ## (Intercept) 12.0485398
 ## calidadp     2.4673862
 ## web          0.3498592
@@ -1383,7 +1482,9 @@ caret.glmnet
 ggplot(caret.glmnet, highlight = TRUE)
 ```
 
-<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-39-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-39-1} \end{center}
 
 ```r
 pred <- predict(caret.glmnet, newdata = test)
@@ -1407,7 +1508,7 @@ $$Y = \alpha_0 + \alpha_1 Z_1 + \ldots + \alpha_k Z_k + \varepsilon$$
 
 Adicionalmente, si se seleccionan los coeficientes $a_{ji}$ (denominados *cargas* o *pesos*) de forma que 
 $$\sum_{i=1}^p a_{ij}a_{il} = 0, \text{ si } j \neq l,$$
-las componentes serán ortogonales y se evitarán posibles problemas de multicolinealidad.
+las componentes serán ortogonales y se evitarán posibles problemas de colinealidad.
 De esta forma se reduce la dimensión del problema, pasando de $p + 1$ a $k + 1$ coeficientes a estimar, lo cual en principio reducirá la varianza, especialmente si $p$ es grande en comparación con $n$. 
 Por otra parte, también podríamos expresar el modelo final en función de los predictores originales, con coeficientes:
 $$\beta_i = \sum_{j=1}^k \alpha_j a_{ij}$$
@@ -1422,7 +1523,7 @@ También hay numerosos paquetes de R que implementan métodos de este tipo ([`pl
 
 ### Regresión por componentes principales (PCR)
 
-Una de las aproximaciones tradicionales, cuando se detecta la presencia de multicolinealidad, consiste en aplicar el método de componentes principales a los predictores.
+Una de las aproximaciones tradicionales, cuando se detecta la presencia de colinealidad, consiste en aplicar el método de componentes principales a los predictores.
 El análisis de componentes principales (*principal component analysis*, PCA) es un método muy utilizado de aprendizaje no supervisado, que permite reducir el número de dimensiones tratando de recoger la mayor parte de la variabilidad de los datos originales (en este caso de los predictores; para más detalles sobre PCA ver por ejemplo el Capítulo 10 de James *et al.*, 2013).
 
 Al aplicar PCA a los predictores $X_1, \ldots, X_p$ se obtienen componentes ordenados según la variabilidad explicada de forma descendente. 
@@ -1480,7 +1581,9 @@ rmsep.cv <- RMSEP(pcreg)
 plot(rmsep.cv, legend = "topright")
 ```
 
-<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-40-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-40-1} \end{center}
 
 ```r
 ncomp.op <- with(rmsep.cv, comps[which.min(val[2, 1, ])]) # mínimo adjCV RMSEP
@@ -1582,7 +1685,9 @@ caret.pcr
 ggplot(caret.pcr, highlight = TRUE)
 ```
 
-<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-43-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-43-1} \end{center}
 
 ```r
 pred <- predict(caret.pcr, newdata = test)
@@ -1596,9 +1701,9 @@ accuracy(pred, obs)
 
 Al incluir más componentes se aumenta la proporción de variabilidad explicada de los predictores,
 pero esto no está relacionado con su utilidad para explicar la respuesta.
-No va a haber problemas de multicolinealidad aunque incluyamos muchas componentes, pero se tendrán que estimar más coeficientes y va a disminuir su precisión.
+No va a haber problemas de colinealidad aunque incluyamos muchas componentes, pero se tendrán que estimar más coeficientes y va a disminuir su precisión.
 Sería más razonable obtener las componentes principales y después aplicar un método de selección.
-Por ejemplo podemos combinar el método de preprocesado `"pca"` de `caret` con un método de selección de variables^[Esta forma de proceder se podría emplear con otros modelos que puedan tener problemas de multicolinealidad, como los lineales generalizados.]:
+Por ejemplo podemos combinar el método de preprocesado `"pca"` de `caret` con un método de selección de variables^[Esta forma de proceder se podría emplear con otros modelos que puedan tener problemas de colinealidad, como los lineales generalizados.]:
 
 
 ```r
@@ -1642,7 +1747,9 @@ caret.pcrsel
 ggplot(caret.pcrsel, highlight = TRUE)
 ```
 
-<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-44-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-44-1} \end{center}
 
 ```r
 with(caret.pcrsel, coef(finalModel, bestTune$nvmax))
@@ -1714,7 +1821,9 @@ rmsep.cv <- RMSEP(plsreg)
 plot(rmsep.cv, legend = "topright")
 ```
 
-<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-45-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-45-1} \end{center}
 
 ```r
 ncomp.op <- with(rmsep.cv, comps[which.min(val[2, 1, ])]) # mínimo adjCV RMSEP
@@ -1813,7 +1922,9 @@ caret.pls
 ggplot(caret.pls, highlight = TRUE)
 ```
 
-<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-48-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-48-1} \end{center}
 
 ```r
 # Podía ser preferible incluir `trControl(selectionFunction = "oneSE")`
@@ -1892,7 +2003,9 @@ test <- df[-itrain, ]
 plot(train, pch = as.numeric(train$alianza), col = as.numeric(train$alianza))
 ```
 
-<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-50-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-50-1} \end{center}
 
 Como ya se comentó, estableciendo `family = binomial` en la llamada a `glm()` se ajusta un modelo de regresión logística  (por defecto `link = "logit"`):
 
@@ -2146,7 +2259,9 @@ oldpar <- par( mfrow=c(2,2))
 plot(modelo)
 ```
 
-<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-56-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-56-1} \end{center}
 
 ```r
 par(oldpar)
@@ -2162,7 +2277,9 @@ Se pueden generar gráficos parciales de residuos (p.e. `crPlots()` del paquete 
 crPlots(modelo)
 ```
 
-<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-57-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-57-1} \end{center}
 
 Se pueden emplear las mismas funciones vistas en los modelos lineales para obtener medidas de diagnosis de interés (Sección \@ref(analisis-reg-multiple)). Por ejemplo:
 
@@ -2173,7 +2290,7 @@ residuals(model, type = "deviance")
 
 proporcionará los residuos *deviance*.
 
-Por supuesto también pueden aparecer problemas de multicolinealidad, y podemos emplear las mismas herramientas para detectarla:
+Por supuesto también pueden aparecer problemas de colinealidad, y podemos emplear las mismas herramientas para detectarla:
 
 
 ```r
@@ -2260,17 +2377,21 @@ names(getModelInfo("glm")) # 11 métodos
 Se pueden imponer restricciones a las estimaciones de los parámetros de modo análogo al caso de modelos lineales ( y \@ref(pca-pls)).
 Por ejemplo, en los métodos de regularización (*ridge*, *lasso* o *elastic net*; Sección \@ref(shrinkage)) bastaría con cambiar en la función de pérdidas la suma residual de cuadrados por el logaritmo negativo de la función de verosimilitud.
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:glmnet"><strong>(\#exr:glmnet) </strong></span>
+\BeginKnitrBlock{exercise}
+<span class="exercise" id="exr:glmnet"><strong>(\#exr:glmnet) </strong></span>
 Emplear el paquete `glmnet` para ajustar modelos logísticos con penalización *ridge* y *lasso* a la muestra de entrenamiento de los datos de clientes de la compañía de distribución industrial HBAT, considerando como respuesta la variable *alianza* y seleccionando un valor "óptimo" del hiperparámetro $\lambda$.
 Ajustar también un modelo con penalización *elastic net* empleando `caret` (seleccionando los valores óptimos de los hiperparámetros).
-</div>\EndKnitrBlock{exercise}
+
+\EndKnitrBlock{exercise}
 
  
 El método PCR (Sección \@ref(pca-pls)) se extendería de forma inmediata al caso de modelos generalizados, simplemente cambiando el modelo ajustado.
 También están disponibles métodos PLSR para modelos generalizados.
 
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:glm-reduccion"><strong>(\#exr:glm-reduccion) </strong></span>
+\BeginKnitrBlock{exercise}
+<span class="exercise" id="exr:glm-reduccion"><strong>(\#exr:glm-reduccion) </strong></span>
 Emplear el paquete `caret` para ajustar modelos logísticos con reducción de la dimensión a los datos de clientes de la compañía de distribución industrial HBAT. Comparar el modelo obtenido con preprocesado `"pca"` y el método `"glmStepAIC"`, con el obtenido empleando el método `"plsRglm"`.
-</div>\EndKnitrBlock{exercise}
+
+\EndKnitrBlock{exercise}
 

@@ -71,7 +71,7 @@ En esta modelización del problema, hay dos hiperparámetros cuyos valores deben
 
 La extensión natural de este modelo es utilizar más de una capa de nodos (variables ocultas). En cada capa, los nodos están *conectados* con los nodos de la capa precedente.
 
-Observemos que el modelo *single-hidden-layer feedforward network* tiene la misma forma que el de la *projection pursuit regression* (Sección \ref(ppr)), sin más que considerar $\alpha_m = \omega_m/\| \omega_m \|$, con $\omega_m = (\omega_{1m}, \omega_{2m}, \ldots, \omega_{pm})$, y
+Observemos que el modelo *single-hidden-layer feedforward network* tiene la misma forma que el de la *projection pursuit regression* (Sección \@ref(ppr)), sin más que considerar $\alpha_m = \omega_m/\| \omega_m \|$, con $\omega_m = (\omega_{1m}, \omega_{2m}, \ldots, \omega_{pm})$, y
 $$g_m (\alpha_{1m}x_1 + \alpha_{2m}x_2 + \ldots + \alpha_{pm}x_p) = 
 \gamma_m \phi(\omega_{0m} + \omega_{1m} x_1 + \omega_{2m} x_2 + \ldots + \omega_{pm} x_p)$$
 Sin embargo, hay que destacar una diferencia muy importante: en una red neuronal, el analista fija la función $\phi$ (lo más habitual es utilizar la función logística), mientras que las funciones *ridge* $g_m$ se consideran como funciones no paramétricas desconocidas que hay que estimar.

@@ -60,7 +60,7 @@ Cuando pensamos en AE pensamos en:
 
 Por el contrario, muchos de los métodos del AE no se preocupan (o se preocupan poco) por:
 
-- Reproducibilidad.
+- Reproducibilidad/repetibilidad.
 
 - Cuantificación de la incertidumbre (en términos de probabilidad).
 
@@ -177,7 +177,7 @@ En regresión consideraremos como base el siguiente modelo general (podría ser 
   (\#eq:modelogeneral)
 \end{equation}
 donde $m(\mathbf{x}) = E\left( \left. Y\right\vert_{\mathbf{X}=\mathbf{x}} \right)$ es la media condicional, denominada función de regresión (o tendencia), y $\varepsilon$ es un error aleatorio de media cero y varianza $\sigma^2$, independiente de $\mathbf{X}$.
-Este modelo puede generalizarse de diversas formas, por ejemplo, asumiendo que la distribución del error depende de $X$ (considerando $\varepsilon(\mathbf{X})$ en lugar de $\varepsilon$) podríamos incluir dependencia y heterocedasticidad. 
+Este modelo puede generalizarse de diversas formas, por ejemplo, asumiendo que la distribución del error depende de $\mathbf{X}$ (considerando $\varepsilon(\mathbf{X})$ en lugar de $\varepsilon$) podríamos incluir dependencia y heterocedasticidad. 
 En estos casos normalmente se supone que lo hace únicamente a través de la varianza (error heterocedástico independiente), denotando por $\sigma^2(\mathbf{x}) = Var\left( \left. Y\right\vert_{\mathbf{X}=\mathbf{x}} \right)$ la varianza condicional^[Por ejemplo considerando en el modelo base $\sigma(\mathbf{X})\varepsilon$ como termino de error y suponiendo adicionalmente que $\varepsilon$ tiene varianza uno.].
 
 
@@ -187,7 +187,7 @@ Sin embargo, muchos métodos de clasificación emplean variables auxiliares (var
 Por ejemplo, en el caso de dos categorías, se suele definir $Y$ de forma que toma el valor 1 en la categoría de interés (también denominada *éxito* o *resultado positivo*) y 0 en caso contrario (*fracaso* o *resultado negativo*)^[Otra alternativa sería emplear 1 y -1, algo que simplifica las expresiones de algunos métodos.].
 Además, en este caso, los modelos típicamente devuelven estimaciones de la probabilidad de la clase de interés en lugar de predecir directamente la clase, por lo que se empleará $\hat p$ en lugar de $\hat Y$. 
 A partir de esa estimación se obtiene una predicción de la categoría. 
-Normalmente se predice la clase más probable, i.e. "éxito" si $\hat p(\mathbf{x}) > c = 0.5$ y "fracaso" en caso contrario (con probabilidad estimada $1 - \hat p(\mathbf{x})$).
+Normalmente se predice la clase más probable, lo que se conoce como la *regla de Bayes*, i.e. "éxito" si $\hat p(\mathbf{x}) > c = 0.5$ y "fracaso" en caso contrario (con probabilidad estimada $1 - \hat p(\mathbf{x})$).
 
 Resulta claro que el modelo base general \@ref(eq:modelogeneral) puede no ser adecuado para modelar variables indicadoras (o probabilidades).
 Muchos de los métodos de AE emplean \@ref(eq:modelogeneral) para una variable auxiliar numérica (denominada puntuación o *score*) que se transforma a escala de probabilidades mediante la función logística (denominada función sigmoidal, *sigmoid function*, en ML)^[De especial interés en regresión logística y en redes neuronales artificiales.]:
@@ -195,18 +195,16 @@ $$p(s) = \frac{1}{1 + e^{-s}},$$
 cuya inversa es la *función logit*:
 $$\operatorname{logit}(p)=\log\left( \frac{p}{1-p} \right).$$
 
-Lo anterior se puede generalizar para el caso de múltiples categorías, considerando variables indicadoras de cada categoría $Y_1, \ldots, Y_K$ (es lo que se conoce como la estrategia de "uno contra todos"). En este caso típicamente:
+Lo anterior se puede generalizar para el caso de múltiples categorías, considerando variables indicadoras de cada categoría $Y_1, \ldots, Y_K$, lo que se conoce como la estrategia de "uno contra todos" (*One-vs-Rest*, OVR). En este caso típicamente:
 $$\hat G \left(\mathbf{x} \right) = \underset{k}{\operatorname{argmax}} \left\{ \hat p_k(\mathbf{x}) : k = 1, 2, \ldots, K \right\}.$$
+
+Otra posible estrategia es la denominada "uno contra uno" (*One-vs-One*, OVO), que requiere entrenar un clasificador para cada par de categorías (se consideran $K(K-1)/2$ subproblemas de clasificación binaria).
+En este caso se suele seleccionar como predicción la categoría que recibe más votos (la que resultó seleccionada por el mayor número de los clasificadores binarios).
+
+Otros métodos (como por ejemplo los árboles de decisión, que se tratarán en el Tema \@ref(trees)) permiten la estimación directa de las probabilidades de cada clase.
 
 <!-- 
 Pendiente:
-
-Múltiples categorías:
-
-  Estrategia "uno contra uno"
-  
-  Otros métodos (árboles de decisión) permiten la estimación directa de las probabilidades de cada clase.
-
 
 Otra notación:
 
@@ -244,7 +242,7 @@ Métodos de regresión:
     -   Métodos de regularización (Ridge regression, Lasso):
         `glmnet`, `elasticnet`...
 
--   Modelos lineales generalizados: `glm()`, `bigglm`, ..
+-   Modelos lineales generalizados: `glm()`, `bigglm`...
 
 -   Modelos paramétricos no lineales: `nls()`, `nlme`...
 
@@ -321,9 +319,10 @@ Si calculamos medidas de bondad de ajuste, como el error cuadrático medio (MSE)
 Como se trata de modelos lineales, podríamos obtener también el coeficiente de determinación ajustado, que sería preferible (en principio, ya que dependería de la validez de las hipótesis estructurales del modelo) para medir la precisión al emplear los modelos en un nuevo conjunto de datos.
 
 ```{r}
-knitr::kable(t(sapply(list(fit1 = fit1, fit2 = fit2, fit3 = fit3), 
-       function(x) with(summary(x), 
-                        c(MSE = mean(residuals^2), R2 = r.squared, R2adj = adj.r.squared)))), digits = 2)
+knitr::kable(t(sapply(list(Fit1 = fit1, Fit2 = fit2, Fit3 = fit3), 
+    function(x) with(summary(x), 
+        c(MSE = mean(residuals^2), R2 = r.squared, R2adj = adj.r.squared)))), 
+    caption="Medidas de bondad de ajuste de los modelos polinómicos.", digits = 2, position = "!htb")
 ```
 
 Por ejemplo, si generamos nuevas respuestas de este proceso, la precisión del modelo más complejo empeorará considerablemente:
@@ -400,12 +399,13 @@ donde $\mathbf{x}_0$ hace referencia al vector de valores de las variables expli
 
 En general, al aumentar la complejidad disminuye el sesgo y aumenta la varianza (y viceversa).
 Esto es lo que se conoce como el dilema o compromiso entre el sesgo y la varianza (*bias-variance tradeoff*).
-La recomendación sería por tanto seleccionar los hiperparámetros (el modelo final) tratando de que haya un equilibrio entre el sesgo y la varianza.
+La recomendación sería por tanto seleccionar los hiperparámetros (el modelo final) tratando de que haya un equilibrio entre el sesgo y la varianza `r citefig("biasvar")`.
 
-<!-- 
-PENDIENTE: 
-Gráfico equilibrio entre sesgo y varianza
--->
+```{r biasvar, echo=FALSE, out.width="80%", fig.cap="Equilibrio entre sesgo y varianza"}
+knitr::include_graphics("images/Bias-variance_tradeoff.png")
+# https://commons.wikimedia.org/wiki/File:Bias_and_variance_contributing_to_total_error.svg
+```
+
 
 ### Datos de entrenamiento y datos de test {#entrenamiento-test}
 
@@ -414,23 +414,18 @@ Como se mostró en la sección anterior hay que tener mucho cuidado si se preten
 Si el número de observaciones no es muy grande, se puede entrenar el modelo con todos los datos y emplear técnicas de remuestreo para evaluar la precisión (típicamente validación cruzada o bootstrap). 
 Habría que asegurase de que el procedimiento de remuestreo empleado es adecuado (por ejemplo, la presencia de dependencia requeriría de métodos más sofisticados).
 
-Sin embargo, si el número de obervaciones es grande, se suele emplear el procedimiento tradicional en ML, que consiste en particionar la base de datos en 2 (o incluso en 3) conjuntos (disjuntos):
+Sin embargo, si el número de observaciones es grande, se suele emplear el procedimiento tradicional en ML, que consiste en particionar la base de datos en 2 (o incluso en 3) conjuntos (disjuntos):
 
 -   Conjunto de datos de entrenamiento (o aprendizaje) para construir los modelos.
 
--   Conjunto de datos de test para evaluar el rendimiento de los modelos.
+-   Conjunto de datos de test para evaluar el rendimiento de los modelos (los errores observados en esta muestra servirán para aproximar lo que ocurriría con nuevas observaciones).
 
-Los datos de test deberían utilizarse únicamente para evaluar los modelos finales, no se deberían emplear para seleccionar hiperparámetros. 
-Para seleccionalos se podría volver a particionar los datos de entrenamiento, es decir, dividir la muestra en tres subconjuntos: datos de entrenamiento, de validación y de test (por ejemplo considerando un 70\%, 15\% y 15\% de las observaciones, respectivamente). 
-Para cada combinación de hiperparámetros se ajustaría el correspondiente modelo con los datos de entrenamiento, se emplearían los de validación para evaluarlos y posteriormente seleccionar los valores "óptimos". Por último, se emplean los datos de test para evaluar el rendimiento del modelo seleccionado. 
-No obstante, lo más habitual es seleccionar los hiperparámetros empleando validación cruzada (o otro tipo de remuestreo) en la muestra de entrenamiento, en lugar de considerar una muestra adicional de validación. 
-En la siguiente sección se describirá esta última aproximación. 
 
+Típicamente se selecciona al azar el 80\% de los datos como muestra de entrenamiento y el 20\% restante como muestra de test, aunque esto dependería del número de datos (los resultados serán aleatorios, aunque su variabilidad dependerá principalmente del tamaño de las muestras).
 En R se puede realizar el particionamiento de los datos empleando la función `sample()` del paquete base (otra alternativa sería emplear la función `createDataPartition` del paquete `caret` como se describe en la Sección \@ref(caret)). 
-Típicamente se selecciona el 80\% de los datos como muestra de entrenamiento y el 20\% restante como muestra de test, aunque esto dependería del número de datos.
 
 Como ejemplo consideraremos el conjunto de datos `Boston` del paquete `MASS` que contiene, entre otros datos, la valoración de las viviendas (`medv`, mediana de los valores de las viviendas ocupadas, en miles de dólares) y el porcentaje de población con "menor estatus" (`lstat`) en los suburbios de Boston.
-Podemos contruir las muestras de entrenamiento (80\%) y de test (20\%) con el siguiente código:
+Podemos construir las muestras de entrenamiento (80\%) y de test (20\%) con el siguiente código:
 
 ```{r}
 data(Boston, package = "MASS")
@@ -441,6 +436,12 @@ itrain <- sample(nobs, 0.8 * nobs)
 train <- Boston[itrain, ]
 test <- Boston[-itrain, ]
 ```
+
+Los datos de test deberían utilizarse únicamente para evaluar los modelos finales, no se deberían emplear para seleccionar hiperparámetros. 
+Para seleccionarlos se podría volver a particionar los datos de entrenamiento, es decir, dividir la muestra en tres subconjuntos: datos de entrenamiento, de validación y de test (por ejemplo considerando un 70\%, 15\% y 15\% de las observaciones, respectivamente). 
+Para cada combinación de hiperparámetros se ajustaría el correspondiente modelo con los datos de entrenamiento, se emplearían los de validación para evaluarlos y posteriormente seleccionar los valores "óptimos". Por último, se emplean los datos de test para evaluar el rendimiento del modelo seleccionado. 
+No obstante, lo más habitual es seleccionar los hiperparámetros empleando validación cruzada (o otro tipo de remuestreo) en la muestra de entrenamiento, en lugar de considerar una muestra adicional de validación. 
+En la siguiente sección se describirá esta última aproximación. 
 
 <!-- Sección \@ref(cv) -->
 
@@ -453,18 +454,13 @@ Finalmente, combinando todos los errores individuales se puede obtener medidas g
 
 El método de LOOCV requeriría, en principio (ver comentarios más adelante), el ajuste de un modelo para cada observación por lo que pueden aparecer problemas computacionales si el conjunto de datos es grande.
 En este caso se suele emplear grupos de observaciones en lugar de observaciones individuales. 
-Si se particiona el conjunto de datos en *k* grupos, típicamente 10 o 5 grupos, se denomina *k-fold cross-validation* (LOOCV sería un caso particular considerando un número de grupos igual al número de observaciones).
+Si se particiona el conjunto de datos en *k* grupos, típicamente 10 o 5 grupos, se denomina *k-fold cross-validation* (LOOCV sería un caso particular considerando un número de grupos igual al número de observaciones)^[La partición en k-fold CV se suele realizar al azar. Hay que tener en cuenta la aleatoriedad al emplear k-fold CV, algo que no ocurre con LOOCV.].
 Hay muchas variaciones de este método, entre ellas particionar repetidamente de forma aleatoria los datos en un conjunto de entrenamiento y otro de validación (de esta forma algunas observaciones podrían aparecer repetidas veces y otras ninguna en las muestras de validación). 
 
-<!-- 
-La partición en k-fold CV se suele realizar al azar.
-Hay que tener en cuenta la aleatoriedad al emplear k-fold CV, algo que no ocurre con LOOCV. 
--->
-
-Continuando con el ejemplo anterior, supongamos que queremos emplear regresión polinómica para explicar la valoración de las viviendas (`medv`) a partir del "estatus" de los residentes (`lstat`). 
+Continuando con el ejemplo anterior, supongamos que queremos emplear regresión polinómica para explicar la valoración de las viviendas a partir del "estatus" de los residentes `r citefig("boston-mass")`. 
 Al igual que se hizo en la Sección \@ref(bias-variance), consideraremos el grado del polinomio como un hiperparámetro.
 
-```{r}
+```{r boston-mass, fig.cap='Gráfico de dispersión de las valoraciones de las viviendas (`medv`) frente al porcentaje de población con "menor estatus" (`lstat`).'}
 plot(medv ~ lstat, data = train)
 ```
 
@@ -496,7 +492,7 @@ cv.lm <- function(formula, datos) {
 
 Empleando esta función, podemos calcular una medida del error de predicción de validación cruzada (en este caso el *error cuadrático medio*) para cada valor del hiperparámetro (grado del ajuste polinómico) y seleccionar el que lo minimiza.
 
-```{r}
+```{r cv-mse, fig.cap="Error cuadrático medio de validación cruzada dependiendo del grado del polinomio (complejidad) y valor óptimo."}
 grado.max <- 10
 grados <- seq_len(grado.max) 
 cv.mse <- cv.mse.sd <- numeric(grado.max)
@@ -507,7 +503,7 @@ for(grado in grados){
   cv.mse.sd[grado] <- sd(se)/sqrt(length(se))
 }
 plot(grados, cv.mse, ylim = c(25, 45),
-  xlab = "Grado del polinomio (complejidad)")
+  xlab = "Grado del polinomio")
 # Valor óptimo
 imin.mse <- which.min(cv.mse)
 grado.op <- grados[imin.mse]
@@ -520,8 +516,9 @@ por lo que la sugerencia es seleccionar el modelo más simple^[Suponiendo que lo
 (se consideraría que no hay diferencias significativas en la precisión; 
 además, se mitigaría el efecto de la variabilidad debida a aleatoriedad/semilla).
 
-```{r}
-plot(grados, cv.mse, ylim = c(25, 45))
+```{r cv-onese, fig.cap="Error cuadrático medio de validación cruzada dependiendo del grado del polinomio (complejidad) y valor seleccionado con el criterio de un error estándar."}
+plot(grados, cv.mse, ylim = c(25, 45),
+  xlab = "Grado del polinomio")
 segments(grados, cv.mse - cv.mse.sd, grados, cv.mse + cv.mse.sd)
 # Límite superior "oneSE rule" y complejidad mínima por debajo de ese valor
 upper.cv.mse <- cv.mse[imin.mse] + cv.mse.sd[imin.mse]
@@ -533,7 +530,7 @@ grado.1se
 ```
 
 
-```{r}
+```{r boston-final, fig.cap='Ajuste de los modelos finales, empleando el valor óptimo y el criterio de un error estándar para seleccionar el grado del polinomio mediante validación cruzada.'}
 plot(medv ~ lstat, data = train)
 fit.op <- lm(medv ~ poly(lstat, grado.op), train)
 fit.1se <- lm(medv ~ poly(lstat, grado.1se), train)
@@ -550,14 +547,17 @@ legend("topright", legend = c(paste("Grado óptimo:", grado.op), paste("oneSE ru
 Para estudiar la precisión de las predicciones de un método de regresión se evalúa el
 modelo en el conjunto de datos de test y se comparan las predicciones frente a los valores reales.
 
-Si generamos un gráfico de dispersión de observaciones frente a predicciones, los puntos deberían estar en torno a la recta $y=x$ (línea continua).
+Si generamos un gráfico de dispersión de observaciones frente a predicciones, los puntos deberían estar en torno a la recta $y=x$ `r citefig("obs-pred-plot")`.
 
-```{r obs-pred-plot, figure.caption="Gráfico"}
+<!-- 
+(ref:obs-pred-caption) Gráfico de dispersión de observaciones frente a predicciones, incluyendo la recta $x=y$ (línea continua) y el ajuste lineal (línea discontinua). 
+-->
+
+```{r obs-pred-plot, fig.cap="Gráfico de dispersión de observaciones frente a predicciones (incluyendo la identidad, línea continua, y el ajuste lineal, línea discontinua)."}
 obs <- test$medv
 pred <- predict(fit.op, newdata = test)
 
-plot(pred, obs, main = "Observado frente a predicciones",
-     xlab = "Predicción", ylab = "Observado")
+plot(pred, obs, xlab = "Predicción", ylab = "Observado")
 abline(a = 0, b = 1)
 res <- lm(obs ~ pred)
 # summary(res)
@@ -573,7 +573,7 @@ caret::postResample(pred, obs)
 La función anterior, además de las medidas de error habituales (que dependen en su mayoría de la escala de la variable respuesta) calcula un *pseudo R-cuadrado*. 
 En este paquete (también en `rattle`) se emplea uno de los más utilizados, el cuadrado del coeficiente de correlación entre las predicciones y los valores observados (que se corresponde con la línea discontinua en la figura anterior). 
 Estos valores se interpretarían como el coeficiente de determinación en regresión lineal, debería ser próximo a 1. 
-Hay otras alternativas (ver Kvålseth, 1985), pero la idea es que deberían medir la proporción de variabilidad de la respuesta explicada por el modelo, algo que en general no es cierto con el anterior^[Por ejemplo obtendríamos el mismo valor si desplazamos las predicciones sumando una constante (i.e. no tiene en cuenta el sesgo).].
+Hay otras alternativas (ver Kvålseth, 1985), pero la idea es que deberían medir la proporción de variabilidad de la respuesta explicada por el modelo, algo que en general no es cierto con el anterior^[Por ejemplo obtendríamos el mismo valor si desplazamos las predicciones sumando una constante (i.e. no tiene en cuenta el sesgo). Lo que interesaría sería medir la proximidad de los puntos a la recta $y=x$.].
 La recomendación sería emplear:
 $$\tilde R^2 = 1 - \frac{\sum_{i=1}^n(y_i - \hat y_i)^2}{\sum_{i=1}^n(y_i - \bar y_i)^2}$$
 implementado junto con otras medidas en la siguiente función:
@@ -630,7 +630,7 @@ p <- c(train = 0.7, validate = 0.15, test = 0.15)
 f <- sample( rep(factor(seq_along(p), labels = names(p)),
                  times = nrow(df)*p/sum(p)) )
 samples <- suppressWarnings(split(df, f))
-str(samples)
+str(samples, 1)
 ```
 
 
@@ -674,7 +674,7 @@ si la muestra de test no refleja lo que ocurre en la población (por ejemplo si 
 En estos casos habrá que recalcularlos empleando estimaciones válidas de las probabilidades de la clases (por ejemplo, en estos casos, la función `caret::confusionMatrix()` permite establecer estimaciones válidas mediante el argumento `prevalence`).
 
 Como ejemplo emplearemos los datos anteriores de valoraciones de viviendas y estatus de la población, considerando como respuesta una nueva variable `fmedv` que clasifica las valoraciones en "Bajo" o "Alto" dependiendo de si `medv > 25`.
-```{r}
+```{r featureplot, fig.cap="Distribución del estatus de la población dependiendo del nivel de valoración de las viviendas."}
 # data(Boston, package = "MASS")
 datos <- Boston
 datos$fmedv <- factor(datos$medv > 25, labels = c("Bajo", "Alto")) # levels = c('FALSE', 'TRUE')
@@ -684,7 +684,7 @@ caret::featurePlot(datos$lstat, datos$fmedv, plot = "density",
             labels = c("lstat", "Density"), auto.key = TRUE)
 ```
 
-El siguiente código realiza la partición de los datos y posteriormente ajusta un modelo de regresión logística en la muestra de entrenamiento considerando `lstat` como única variable explicativa (en el Capítulo 5 se darán más detalles sobre este tipo de modelos):
+El siguiente código realiza la partición de los datos y posteriormente ajusta un modelo de regresión logística en la muestra de entrenamiento considerando `lstat` como única variable explicativa (en la Sección \@ref(reg-glm) se darán más detalles sobre este tipo de modelos):
 
 ```{r}
 # Particionado de los datos
@@ -725,17 +725,17 @@ caret::confusionMatrix(pred, obs, positive = "Alto", mode = "everything")
 ```
 
 Si el método de clasificación proporciona estimaciones de las probabilidades de las categorías, disponemos de más información en la clasificación que también podemos emplear en la evaluación del rendimiento.
-Por ejemplo, se puede realizar un analisis descriptivo de las probabilidades estimadas y las categorías observadas en la muestra de test:
+Por ejemplo, se puede realizar un análisis descriptivo de las probabilidades estimadas y las categorías observadas en la muestra de test:
 
-```{r}
+```{r classprob, fig.cap="Distribución de las probabilidades estimadas de valoración alta de la vivienda dependiendo de la categoría observada."}
 # Imitamos la función caret::plotClassProbs()
 library(lattice) 
-histogram(~ p.est | obs, xlab = "Probabilidad estimada de 'Alto'")
+histogram(~ p.est | obs, xlab = "Probabilidad estimada")
 ```
 
 
 Para evaluar las estimaciones de las probabilidades se suele emplear la curva ROC (*receiver operating characteristics*, característica operativa del receptor; diseñada inicialmente en el campo de la detección de señales).
-Como ya se comentó, normalmente se emplea $c = 0.5$ como punto de corte para clasificar en la categoría de interés (es lo que se conoce como *regla de Bayes*), aunque se podrían considerar otros valores (por ejemplo para mejorar la clasificación en una de las categorías, a costa de empeorar la precisión global).
+Como ya se comentó, normalmente se emplea $c = 0.5$ como punto de corte para clasificar en la categoría de interés (*regla de Bayes*), aunque se podrían considerar otros valores (por ejemplo para mejorar la clasificación en una de las categorías, a costa de empeorar la precisión global).
 En la curva ROC se representa la sensibilidad (TPR) frente a la tasa de falsos negativos (FNR = 1 - TNR = 1 - especificidad) para distintos valores de corte.
 Para ello se puede emplear el paquete `pROC`:
 
@@ -849,8 +849,8 @@ En este caso, para $k=5$, podríamos pensar que el efecto frontera aparece en el
 Al aumentar el número de variables explicativas, considerando que el 10\% más externo del rango de cada una de ellas constituye la "frontera" de los datos, tendríamos que la proporción de frontera sería $1-0.9^d$, siendo $d$ el número de dimensiones.
 Lo que se traduce que con $d = 10$ el 65\% del espacio predictivo sería frontera y en torno al 88\% para $d=20$, es decir, al aumentar el número de dimensiones el problema del efecto frontera será generalizado.  
 
-```{r }
-curve(1 - 0.9^x, 0, 200, ylab = 'Proporción de "frontera"', xlab = 'Número de dimensiones')
+```{r pfrontera, fig.cap='Proporción de "frontera" dependiendo del número de dimensiones y del porcentaje de valores considerados extremos en cada dimensión.'}
+curve(1 - 0.9^x, 0, 200, ylab = 'Proporción de frontera', xlab = 'Número de dimensiones')
 curve(1 - 0.95^x, lty = 2, add = TRUE)
 curve(1 - 0.99^x, lty = 3, add = TRUE)
 abline(h = 0.5, col = "lightgray")
@@ -907,6 +907,8 @@ Paquetes y funciones de R:
 
 * [`vip`](https://koalaverse.github.io/vip/index.html): Variable Importance Plots
 
+* [`vivid`](https://github.com/AlanInglis/vivid): Variable Importance and Variable Interaction Displays
+
 *  `caret::varImp()`, `h2o::h2o.partialPplot()`...
 
 En los siguientes capítulos se mostrarán ejemplos empleando algunas de estas herramientas.
@@ -915,13 +917,16 @@ En los siguientes capítulos se mostrarán ejemplos empleando algunas de estas h
 
 ## Introducción al paquete `caret` {#caret}    
 
-Como ya se comentó en la Sección \@ref(metodos-pkgs), el paquete `caret` (abreviatura de *Classification And REgression Training*) proporciona una interfaz unificada que simplifica el proceso de modelado empleando la mayoría de los métodos de AE implementados en R (actualmente admite 238 métodos; ver el [Capítulo 6](https://topepo.github.io/caret/available-models.html) del [manual](https://topepo.github.io/caret) de este paquete). 
+Como ya se comentó en la Sección \@ref(metodos-pkgs), el paquete `caret` (abreviatura de *Classification And REgression Training*) proporciona una interfaz unificada que simplifica el proceso de modelado empleando la mayoría de los métodos de AE implementados en R (actualmente admite 239 métodos; ver el [Capítulo 6](https://topepo.github.io/caret/available-models.html) del [manual](https://topepo.github.io/caret) de este paquete). 
 Además de proporcionar rutinas para los principales pasos del proceso, incluye también numerosas funciones auxiliares que permitirían implementar nuevos procedimientos.
 
 En esta sección se describirán de forma esquemática las principales herramientas disponibles en este paquete, para más detalles se recomendaría consultar el [manual del paquete caret](https://topepo.github.io/caret).
 También está disponible una pequeña introducción en la vignette del paquete: [A Short Introduction to the caret Package](https://cran.r-project.org/web/packages/caret/vignettes/caret.html) y una "chuleta": [Caret Cheat Sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/caret.pdf).
 
-La función principal es `train()` (descrita más adelante), que incluye un parámetro `method` que permite establecer el modelo mediante una cadena de texto.
+
+### Métodos implementados
+
+La función principal es `train()` (descrita en la siguiente subsección), que incluye un parámetro `method` que permite establecer el modelo mediante una cadena de texto.
 Podemos obtener información sobre los modelos disponibles con las funciones `getModelInfo()` y `modelLookup()` (puede haber varias implementaciones del mismo método con distintas configuraciones de hiperparámetros; también se pueden definir nuevos modelos, ver el [Capítulo 13](https://topepo.github.io/caret/using-your-own-model-in-train.html) del [manual](https://topepo.github.io/caret)).
 
 ```{r}
@@ -931,7 +936,16 @@ str(names(getModelInfo())) # Listado de todos los métodos disponibles
 modelLookup("knn")  # Información sobre hiperparámetros
 ```
 
-En la siguiente tabla se muestran los métodos actualmente disponibles:
+```{r echo=FALSE, results="asis"}
+
+if(is_html()) {
+    cat("\n\nEn la siguiente tabla se muestran los métodos actualmente disponibles:\n\n")
+} else {
+    cat("\n\nEn la versión online del libro se incluye una [tabla dinámica](https://rubenfcasal.github.io/aprendizaje_estadistico/caret.html) con los métodos actualmente disponibles.\n\n")  
+}
+
+```
+
 
 ```{r methods-caret, echo=FALSE, eval=is_html(), fig.cap="Listado de los métodos disponiles en `caret::train()`."}
 
@@ -950,6 +964,7 @@ DT::datatable(model_info, rownames = FALSE,
           options = list(scrollX = TRUE))
 ```
 
+### Herramientas
 
 Este paquete permite, entre otras cosas:
 
@@ -1015,47 +1030,69 @@ Este paquete permite, entre otras cosas:
 
 * Analisis de la importancia de los predictores: 
 
-    - `varImp()`: interfaz a las medidas específicas de los métodos de aprendizaje supervisado ([Sección 15.1](https://topepo.github.io/caret/variable-importance.html#model-specific-metrics)) o medidas genéricas ([Sección 15.2](https://topepo.github.io/caret/variable-importance.html#model-independent-metrics)).
+    - `varImp()`: interfaz a las medidas específicas de los métodos de aprendizaje supervisado ([Sección 15.1](https://topepo.github.io/caret/variable-importance.html#model-specific-metrics) del manual) o medidas genéricas ([Sección 15.2](https://topepo.github.io/caret/variable-importance.html#model-independent-metrics)).
 
 
+### Ejemplo
 
-
-Ejemplo regresión con KNN:
+Como ejemplo consideraremos el problema de regresión anterior empleando KNN en caret:
 
 ```{r}
-# caret
 data(Boston, package = "MASS")
-
 library(caret)
-# Partición
+```
+
+Particionamos los datos:
+
+```{r}
 set.seed(1)
 itrain <- createDataPartition(Boston$medv, p = 0.8, list = FALSE)
 train <- Boston[itrain, ]
 test <- Boston[-itrain, ]
-# Entrenamiento y selección de hiperparámetros
+```
+
+Entrenamiento, con preprocesado de los datos (se almacenan las transformaciones para volver a aplicarlas en la predicción con nuevos datos) y empleando validación cruzada con 10 grupos para la selección de hiperparámetros:
+
+```{r fig.cap="Raíz del error cuadrático medio de validación cruzada dependiendo del valor del hiperparámetro."}
 set.seed(1)
 knn <- train(medv ~ ., data = train,
              method = "knn",
              preProc = c("center", "scale"),
              tuneGrid = data.frame(k = 1:10),
              trControl = trainControl(method = "cv", number = 10))
-plot(knn)
-ggplot(knn, highlight = TRUE)
+plot(knn) # Alternativamente: ggplot(knn, highlight = TRUE)
 knn$bestTune
 knn$finalModel
-# Interpretación
+```
+
+Importancia de las variables (interpretación del modelo final)
+
+```{r}
 varImp(knn)
-# Evaluación
+```
+
+Evaluación del modelo final en la muestra de test:
+
+```{r}
 postResample(predict(knn, newdata = test), test$medv)
 ```
 
 
-Un comentario final:
+### Desarrollo futuro
+
+Como comenta el autor del paquete `caret`: 
 
 > "While I'm still supporting caret, the majority of my development effort has gone into the tidyverse modeling packages (called tidymodels)". 
 >
-> --- Max Kuhn, autor del paquete `caret` (actualmente ingeniero de software en RStudio).
+> --- Max Kuhn (actualmente ingeniero de software en RStudio).
 
-Kuhn, M. y Wickham, H. (2020). *Tidymodels: a collection of packages for modeling and machine learning using tidyverse principles*. Version 0.1.1 (2020-07-14). <https://www.tidymodels.org>. 
+este paquete ha dejado de desarrollarse de forma activa, aunque podemos considerar que la alternativa `r citepkg("tidymodels", "https://www.tidymodels.org")` todavía está en una fase inicial de desarrollo.
+Este es uno de los motivos por los que se ha optado por mantener el uso de `caret` en este libro, aunque la intención es incluir apéndices adicionales en próximas versiones ilustrando el uso de otras herramientas (como `tidymodels` o incluso `mlr3`).
+
+Kuhn, M. y Wickham, H. (2020). *Tidymodels: a collection of packages for modeling and machine learning using tidyverse principles*. Version 0.1.3 (2021-04-19). <https://www.tidymodels.org>. 
+
+
+
+
 
 

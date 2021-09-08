@@ -13,7 +13,8 @@ En los métodos de aprendizaje supervisado se realizan una o varias transformaci
 
 Una red neuronal básica va a realizar dos transformaciones de los datos, y por tanto es un modelo con tres capas: una capa de entrada (*input layer*) consistente en las variables originales $\mathbf{X} = (X_1,X_2,\ldots, X_p)$, otra capa oculta (*hidden layer*) con $M$ nodos, y la capa de salida (*output layer*) con la predicción (o predicciones) final $m(\mathbf{X})$. 
 
-<img src="08-redes_neuronales_files/figure-html/unnamed-chunk-2-1.png" width="80%" style="display: block; margin: auto;" />
+
+\begin{center}\includegraphics[width=0.8\linewidth]{08-redes_neuronales_files/figure-latex/unnamed-chunk-2-1} \end{center}
 
 Para que las redes neuronales tengan un rendimiento aceptable se requiere disponer de tamaños muestrales grandes, debido a que son modelos hiperparametrizados (y por tanto de difícil interpretación). Son modelos muy demandantes computacionalmente y solo desde fechas recientes es viable utilizarlos con un número elevado de capas (*deep neural networks*).
 
@@ -61,7 +62,7 @@ En esta modelización del problema, hay dos hiperparámetros cuyos valores deben
 
 La extensión natural de este modelo es utilizar más de una capa de nodos (variables ocultas). En cada capa, los nodos están *conectados* con los nodos de la capa precedente.
 
-Observemos que el modelo *single-hidden-layer feedforward network* tiene la misma forma que el de la *projection pursuit regression* (Sección \ref(ppr)), sin más que considerar $\alpha_m = \omega_m/\| \omega_m \|$, con $\omega_m = (\omega_{1m}, \omega_{2m}, \ldots, \omega_{pm})$, y
+Observemos que el modelo *single-hidden-layer feedforward network* tiene la misma forma que el de la *projection pursuit regression* (Sección \@ref(ppr)), sin más que considerar $\alpha_m = \omega_m/\| \omega_m \|$, con $\omega_m = (\omega_{1m}, \omega_{2m}, \ldots, \omega_{pm})$, y
 $$g_m (\alpha_{1m}x_1 + \alpha_{2m}x_2 + \ldots + \alpha_{pm}x_p) = 
 \gamma_m \phi(\omega_{0m} + \omega_{1m} x_1 + \omega_{2m} x_2 + \ldots + \omega_{pm} x_p)$$
 Sin embargo, hay que destacar una diferencia muy importante: en una red neuronal, el analista fija la función $\phi$ (lo más habitual es utilizar la función logística), mientras que las funciones *ridge* $g_m$ se consideran como funciones no paramétricas desconocidas que hay que estimar.
@@ -153,7 +154,9 @@ caret.nnet <- train(O3 ~ ., data = train, method = "nnet",
 ggplot(caret.nnet, highlight = TRUE)
 ```
 
-<img src="08-redes_neuronales_files/figure-html/unnamed-chunk-5-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{08-redes_neuronales_files/figure-latex/unnamed-chunk-5-1} \end{center}
 
 Analizamos el modelo resultante:
 
@@ -185,7 +188,9 @@ library(NeuralNetTools)
 plotnet(caret.nnet$finalModel)
 ```
 
-<img src="08-redes_neuronales_files/figure-html/unnamed-chunk-7-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{08-redes_neuronales_files/figure-latex/unnamed-chunk-7-1} \end{center}
 
 Por último evaluamos las predicciones en la muestra de test:
 
@@ -200,7 +205,9 @@ abline(a = 0, b = 1)
 abline(lm(obs ~ pred), lty = 2)
 ```
 
-<img src="08-redes_neuronales_files/figure-html/unnamed-chunk-8-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{08-redes_neuronales_files/figure-latex/unnamed-chunk-8-1} \end{center}
 
 ```r
 accuracy <- function(pred, obs, na.rm = FALSE,

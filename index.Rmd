@@ -1,6 +1,9 @@
 --- 
 title: "Aprendizaje Estadístico"
-author: "Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)"
+author: 
+  - "Rubén Fernández Casal (ruben.fcasal@udc.es)"
+  - "Julián Costa Bouzas (julian.costa@udc.es)"
+  - "Manuel Oviedo de la Fuente (manuel.oviedo@udc.es)"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
@@ -30,12 +33,12 @@ Se puede acceder a la versión en línea a través del siguiente enlace:
 donde puede descargarse en formato [pdf](https://rubenfcasal.github.io/aprendizaje_estadistico/aprendizaje_estadistico.pdf).
 
 Para ejecutar los ejemplos mostrados en el libro sería necesario tener instalados los siguientes paquetes:
-`r citepkgs(c("caret", "rattle", "car", "leaps", "MASS", "RcmdrMisc", "lmtest", "glmnet", "mgcv", "np", "NeuralNetTools", "AppliedPredictiveModeling", "ISLR"))`.
+`r citepkgs(c("caret", "rattle", "car", "leaps", "MASS", "RcmdrMisc", "lmtest", "glmnet", "mgcv", "np", "NeuralNetTools", "pdp", "gbm", "plot3D", "AppliedPredictiveModeling", "ISLR"))`.
 Por ejemplo mediante los siguientes comandos:
 ```{r eval=FALSE}
 pkgs <- c("caret", "rattle", "car", "leaps", "MASS", "RcmdrMisc", 
-          "lmtest", "glmnet", "mgcv", "np", "NeuralNetTools",
-          "AppliedPredictiveModeling", "ISLR")
+          "lmtest", "glmnet", "mgcv", "np", "NeuralNetTools", "pdp", "gbm",
+          "plot3D", "AppliedPredictiveModeling", "ISLR")
 
 install.packages(setdiff(pkgs, installed.packages()[,"Package"]), dependencies = TRUE)
 # Si aparecen errores (normalmente debidos a incompatibilidades con versiones ya instaladas), 

@@ -521,7 +521,7 @@ Lo ideal sería observar normalidad en los dos gráficos de la izquierda, falta 
 Como se deduce del resultado anterior, podría ser recomendable modificar la dimensión `k` de la base utilizada construir la componente no paramétrica, este valor se puede interpretar como el grado máximo de libertad permitido en ese componente, aunque normalmente no influye demasiado en el resultado (puede influir en el tiempo de computación).
 
 
-También se podría chequear concurvidad (*concurvity*; generalización de la multicolinealidad) entre las componentes del modelo:
+También se podría chequear concurvidad (*concurvity*; generalización de la colinealidad) entre las componentes del modelo:
 
 ```{r}
 concurvity(modelo)
@@ -841,7 +841,7 @@ accuracy(pred, obs)
 
 Para ajustar un modelo *single index* también se podría emplear la función `npindex()` del paquete  `r citepkg("np","https://github.com/JeffreyRacine/R-Package-np")` (que implementa el método de Ichimura, 1993, considerando un estimador local constante), aunque en este caso ni el tiempo de computación ni el resultado es satisfactorio:
 
-```{r }
+```{r results=FALSE}
 library(np)
 # bw <- npindexbw(O3 ~ ., data = train)
 # Error in terms.formula(formula): '.' in formula and no 'data' argument
@@ -849,6 +849,11 @@ library(np)
 
 bw <- npindexbw(O3 ~ vh + wind + humidity + temp + ibh + dpg + ibt + vis + doy,
                 data = train, optim.method = "BFGS", nmulti = 1) # Por defecto nmulti = 5
+# Nota: por defecto imprime caracteres inválidos para compilar en LaTeX
+```
+
+
+```{r }
 summary(bw)
 sindex <- npindex(bws = bw, gradients = TRUE)
 summary(sindex)

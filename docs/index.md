@@ -1,7 +1,10 @@
 --- 
 title: "Aprendizaje Estadístico"
-author: "Rubén Fernández Casal (ruben.fcasal@udc.es), Julián Costa (julian.costa@udc.es)"
-date: "2020-12-01"
+author: 
+  - "Rubén Fernández Casal (ruben.fcasal@udc.es)"
+  - "Julián Costa Bouzas (julian.costa@udc.es)"
+  - "Manuel Oviedo de la Fuente (manuel.oviedo@udc.es)"
+date: "2021-09-08"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
@@ -26,13 +29,13 @@ Se puede acceder a la versión en línea a través del siguiente enlace:
 donde puede descargarse en formato [pdf](https://rubenfcasal.github.io/aprendizaje_estadistico/aprendizaje_estadistico.pdf).
 
 Para ejecutar los ejemplos mostrados en el libro sería necesario tener instalados los siguientes paquetes:
-[`caret`](https://CRAN.R-project.org/package=caret), [`rattle`](https://CRAN.R-project.org/package=rattle), [`car`](https://CRAN.R-project.org/package=car), [`leaps`](https://CRAN.R-project.org/package=leaps), [`MASS`](https://CRAN.R-project.org/package=MASS), [`RcmdrMisc`](https://CRAN.R-project.org/package=RcmdrMisc), [`lmtest`](https://CRAN.R-project.org/package=lmtest), [`glmnet`](https://CRAN.R-project.org/package=glmnet), [`mgcv`](https://CRAN.R-project.org/package=mgcv), [`np`](https://CRAN.R-project.org/package=np), [`NeuralNetTools`](https://CRAN.R-project.org/package=NeuralNetTools), [`AppliedPredictiveModeling`](https://CRAN.R-project.org/package=AppliedPredictiveModeling), [`ISLR`](https://CRAN.R-project.org/package=ISLR).
+[`caret`](https://CRAN.R-project.org/package=caret), [`rattle`](https://CRAN.R-project.org/package=rattle), [`car`](https://CRAN.R-project.org/package=car), [`leaps`](https://CRAN.R-project.org/package=leaps), [`MASS`](https://CRAN.R-project.org/package=MASS), [`RcmdrMisc`](https://CRAN.R-project.org/package=RcmdrMisc), [`lmtest`](https://CRAN.R-project.org/package=lmtest), [`glmnet`](https://CRAN.R-project.org/package=glmnet), [`mgcv`](https://CRAN.R-project.org/package=mgcv), [`np`](https://CRAN.R-project.org/package=np), [`NeuralNetTools`](https://CRAN.R-project.org/package=NeuralNetTools), [`pdp`](https://CRAN.R-project.org/package=pdp), [`gbm`](https://CRAN.R-project.org/package=gbm), [`plot3D`](https://CRAN.R-project.org/package=plot3D), [`AppliedPredictiveModeling`](https://CRAN.R-project.org/package=AppliedPredictiveModeling), [`ISLR`](https://CRAN.R-project.org/package=ISLR).
 Por ejemplo mediante los siguientes comandos:
 
 ```r
 pkgs <- c("caret", "rattle", "car", "leaps", "MASS", "RcmdrMisc", 
-          "lmtest", "glmnet", "mgcv", "np", "NeuralNetTools",
-          "AppliedPredictiveModeling", "ISLR")
+          "lmtest", "glmnet", "mgcv", "np", "NeuralNetTools", "pdp", "gbm",
+          "plot3D", "AppliedPredictiveModeling", "ISLR")
 
 install.packages(setdiff(pkgs, installed.packages()[,"Package"]), dependencies = TRUE)
 # Si aparecen errores (normalmente debidos a incompatibilidades con versiones ya instaladas), 
@@ -42,7 +45,8 @@ install.packages(setdiff(pkgs, installed.packages()[,"Package"]), dependencies =
 Para generar el libro (compilar) serán necesarios paquetes adicionales, 
 para lo que se recomendaría consultar el libro de ["Escritura de libros con bookdown" ](https://rubenfcasal.github.io/bookdown_intro) en castellano.
 
-<img src="images/by-nc-nd-88x31.png" width="44" />
+
+\includegraphics[width=1.22in]{images/by-nc-nd-88x31} 
 
 Este obra está bajo una licencia de [Creative Commons Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.es_ES) 
 (esperamos poder liberarlo bajo una licencia menos restrictiva más adelante...).
