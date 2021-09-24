@@ -13,8 +13,7 @@ En los métodos de aprendizaje supervisado se realizan una o varias transformaci
 
 Una red neuronal básica va a realizar dos transformaciones de los datos, y por tanto es un modelo con tres capas: una capa de entrada (*input layer*) consistente en las variables originales $\mathbf{X} = (X_1,X_2,\ldots, X_p)$, otra capa oculta (*hidden layer*) con $M$ nodos, y la capa de salida (*output layer*) con la predicción (o predicciones) final $m(\mathbf{X})$. 
 
-
-\begin{center}\includegraphics[width=0.8\linewidth]{08-redes_neuronales_files/figure-latex/unnamed-chunk-2-1} \end{center}
+<img src="08-redes_neuronales_files/figure-html/unnamed-chunk-2-1.png" width="80%" style="display: block; margin: auto;" />
 
 Para que las redes neuronales tengan un rendimiento aceptable se requiere disponer de tamaños muestrales grandes, debido a que son modelos hiperparametrizados (y por tanto de difícil interpretación). Son modelos muy demandantes computacionalmente y solo desde fechas recientes es viable utilizarlos con un número elevado de capas (*deep neural networks*).
 
@@ -154,9 +153,7 @@ caret.nnet <- train(O3 ~ ., data = train, method = "nnet",
 ggplot(caret.nnet, highlight = TRUE)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{08-redes_neuronales_files/figure-latex/unnamed-chunk-5-1} \end{center}
+<img src="08-redes_neuronales_files/figure-html/unnamed-chunk-5-1.png" width="80%" style="display: block; margin: auto;" />
 
 Analizamos el modelo resultante:
 
@@ -188,9 +185,7 @@ library(NeuralNetTools)
 plotnet(caret.nnet$finalModel)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{08-redes_neuronales_files/figure-latex/unnamed-chunk-7-1} \end{center}
+<img src="08-redes_neuronales_files/figure-html/unnamed-chunk-7-1.png" width="80%" style="display: block; margin: auto;" />
 
 Por último evaluamos las predicciones en la muestra de test:
 
@@ -205,9 +200,7 @@ abline(a = 0, b = 1)
 abline(lm(obs ~ pred), lty = 2)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{08-redes_neuronales_files/figure-latex/unnamed-chunk-8-1} \end{center}
+<img src="08-redes_neuronales_files/figure-html/unnamed-chunk-8-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 accuracy <- function(pred, obs, na.rm = FALSE,

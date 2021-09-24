@@ -225,7 +225,7 @@ pred <- predict(bagtrees, newdata = test)
 caret::confusionMatrix(pred, test$taste)
 ```
 
-### Ejemplo: Clasificación con bosques aleatorios
+### Ejemplo: Clasificación con bosques aleatorios {#ejemplo-clasif-rf}
 
 Continuando con el ejemplo anterior, empleamos la función `randomForest()` con las opciones por defecto para ajustar un bosque aleatorio:
 

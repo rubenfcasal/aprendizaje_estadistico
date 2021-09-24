@@ -1,6 +1,7 @@
 # Introducción al Aprendizaje Estadístico {#intro-AE}
 
 <!-- 
+# Introducción al Aprendizaje Estadístico {#intro-AE}
 knitr::purl("01-introduccion.Rmd", documentation = 2)
 knitr::spin("01-introduccion.R",knit = FALSE)
 -->
@@ -191,14 +192,16 @@ Normalmente se predice la clase más probable, lo que se conoce como la *regla d
 
 Resulta claro que el modelo base general \@ref(eq:modelogeneral) puede no ser adecuado para modelar variables indicadoras (o probabilidades).
 Muchos de los métodos de AE emplean \@ref(eq:modelogeneral) para una variable auxiliar numérica (denominada puntuación o *score*) que se transforma a escala de probabilidades mediante la función logística (denominada función sigmoidal, *sigmoid function*, en ML)^[De especial interés en regresión logística y en redes neuronales artificiales.]:
-$$p(s) = \frac{1}{1 + e^{-s}},$$
-cuya inversa es la *función logit*:
-$$\operatorname{logit}(p)=\log\left( \frac{p}{1-p} \right).$$
+$$\operatorname{sigmoid}(s) = \frac{e^s}{1 + e^s}= \frac{1}{1 + e^{-s}},$$
+de forma que $\hat p(\mathbf{x}) = \operatorname{sigmoid}(\hat Y(\mathbf{x}))$.
+Reciprocamente, empleando su inversa, la *función logit*:
+$$\operatorname{logit}(p)=\log\left( \frac{p}{1-p} \right),$$
+se pueden transformar las probabilidades a la escala de puntuaciones.
 
 Lo anterior se puede generalizar para el caso de múltiples categorías, considerando variables indicadoras de cada categoría $Y_1, \ldots, Y_K$, lo que se conoce como la estrategia de "uno contra todos" (*One-vs-Rest*, OVR). En este caso típicamente:
 $$\hat G \left(\mathbf{x} \right) = \underset{k}{\operatorname{argmax}} \left\{ \hat p_k(\mathbf{x}) : k = 1, 2, \ldots, K \right\}.$$
 
-Otra posible estrategia es la denominada "uno contra uno" (*One-vs-One*, OVO), que requiere entrenar un clasificador para cada par de categorías (se consideran $K(K-1)/2$ subproblemas de clasificación binaria).
+Otra posible estrategia es la denominada "uno contra uno" (*One-vs-One*, OVO) o también conocido por "votación mayoritaria" (*majority voting*), que requiere entrenar un clasificador para cada par de categorías (se consideran $K(K-1)/2$ subproblemas de clasificación binaria).
 En este caso se suele seleccionar como predicción la categoría que recibe más votos (la que resultó seleccionada por el mayor número de los clasificadores binarios).
 
 Otros métodos (como por ejemplo los árboles de decisión, que se tratarán en el Tema \@ref(trees)) permiten la estimación directa de las probabilidades de cada clase.
@@ -251,7 +254,11 @@ Métodos de regresión:
 
 -   Modelos aditivos generalizados (GAM): `mgcv`, `gam`...
 
--   Redes neuronales: `nnet`... 
+-   Regresión spline adaptativa multivariante (MARS): `earth`
+
+-   Regresión por *projection pursuit* (incluyendo *single index model*): `caret::ppr()`, `np::npindex()`...
+
+-   Redes neuronales: `nnet`, `neuralnet`... 
 
 También existen paquetes de `R` que permiten utilizar plataformas de ML externas, como por ejemplo `r citepkg("h2o", "https://github.com/h2oai/h2o-3/tree/master/h2o-r ")` o `r citepkg("RWeka")`.
 
@@ -260,7 +267,7 @@ Entre ellos podríamos citar `r citepkg("caret", "https://topepo.github.io/caret
 En la Sección \@ref(caret) se incluye una breve introducción al paquete `r citepkg("caret", "https://topepo.github.io/caret")` que será empleado en diversas ocasiones a lo largo del presente libro.
 
 Adicionalmente hay paquetes de R que disponen de entornos gráficos que permiten emplear estos métodos evitando el uso de comandos. 
-Entre ellos estarían R-Commander con el plugin FactoMineR (`Rcmdr`, `RcmdrPlugin.FactoMineR`) y `r citepkg("rattle", "https://rattle.togaware.com")`.
+Entre ellos estarían R-Commander con el plugin FactoMineR (`Rcmdr`, `RcmdrPlugin.FactoMineR`), `r citepkg("rattle", "https://rattle.togaware.com")` y `r citepkg("radiant", "https://github.com/radiant-rstats/radiant")`.
 
 
 ## Construcción y evaluación de los modelos {#const-eval}
@@ -814,7 +821,7 @@ plot(x, y)
 lines(x, mu, lwd = 2, col = "lightgray")
 ```
 
-Cuando el número de datos es más o menos grande podríamos pensar en predecir la respuesta a partir de lo que ocurre en las observaciones cercanas a la posición de predicción, esta es la idea de los métodos locales (Capítulo 6).
+Cuando el número de datos es más o menos grande podríamos pensar en predecir la respuesta a partir de lo que ocurre en las observaciones cercanas a la posición de predicción, esta es la idea de los métodos locales (Capítulo \@ref(modelos-lineales)).
 Uno de los métodos de este tipo más conocidos es el de los *k-vecinos más cercanos* (*k-nearest neighbors*; KNN). 
 Se trata de un método muy simple, pero que puede ser muy efectivo, que se basa en la idea de que localmente la media condicional (la predicción óptima) es constante.
 Concretamente, dados un entero $k$ (hiperparámetro) y un conjunto de entrenamiento $\mathcal{T}$, para obtener la predicción correspondiente a un vector de valores de las variables explicativas $\mathbf{x}$, el método de regresión^[En el caso de clasificación se considerarían las variables indicadoras de las categorías y se obtendrían las frecuencias relativas en el vecindario como estimaciones de las probabilidades de las clases.] KNN promedia las observaciones en un vecindario $\mathcal{N}_k(\mathbf{x}, \mathcal{T})$ formado por las $k$ observaciones más cercanas a $\mathbf{x}$: 
@@ -887,8 +894,18 @@ Alternativamente también se pueden obtener medidas de la importancia de las var
 En algunos de los métodos se modela explícitamente los efectos de los distintos predictores y estos se pueden analizar con (mas o menos) facilidad. 
 Hay que tener en cuenta que, al margen de las interacciones, la colinealidad/concurvidad dificulta notablemente el estudio de los efectos de las variables explicativas.
 Otros métodos son más del tipo "caja negra" (*black box*) y precisan de aproximaciones más generales, como los gráficos PDP (*Partial Dependence Plots*; Friedman y Popescu, 2008; ver también [Greenwell, 2017](https://journal.r-project.org/archive/2017/RJ-2017-016/index.html)) o las curvas ICE (*Individual Conditional Expectation*; [Goldstein *et al.* , 2015](https://doi.org/10.1080/10618600.2014.907095)). 
-Estos métodos^[Similares a los gráficos parciales de residuos de los modelos lineales o aditivos (ver p.e. las funciones `termplot()`, `car::crPlots()` o `car::avPlots()`).] tratan de estimar el efecto marginal de las variables explicativas, es decir, la variación en la predicción a medida que varía una variable explicativa manteniendo constantes el resto.
-La principal diferencia entre ambas aproximaciones es que los gráficos PDP muestran una única curva con el promedio de la respuesta mientras que las curvas ICE muestran una curva para cada observación (para más detalles ver las referencias anteriores).
+Estos métodos tratan de estimar el efecto marginal de las variables explicativas. 
+En ese sentido son similares a los gráficos parciales de residuos (habitualmente empleados en los modelos lineales o aditivos; ver p.e. las funciones `termplot()`, `car::crPlots()` o `car::avPlots()`, Sección 6.4, y `mgcv::plot.gam()`, Sección 7.3), que muestran la variación en la predicción a medida que varía una variable explicativa manteniendo constantes el resto (algo que tiene sentido si asumimos que los predictores son independientes), pero en este caso se admite que el resto de predictores también pueden variar.
+
+En el caso de los gráficos PDP se tiene en cuenta el efecto marginal de los demás predictores del modelo.
+Suponiendo que estamos interesados en un conjunto $\mathbf X^S$ de predictores, de forma que $\mathbf X = [\mathbf X^S, \mathbf X^C]$ y $f_{\mathbf X^C}(\mathbf x^C) = \int f(\mathbf x) d\mathbf x^S$ es la densidad marginal de $\mathbf X^C = \mathbf X \setminus \mathbf X^S$, se trata de aproximar:
+$$\hat Y_S(\mathbf x^S) = E_{\mathbf X^C}\left[\hat{Y}(\mathbf x^S,\mathbf X^C)\right]=\int\hat{Y}(\mathbf x^S,\mathbf x^C)f_{\mathbf X^C}(\mathbf x^C)d\mathbf x^C$$
+mediante:
+$$\hat{y}_{\mathbf x^S}(\mathbf x^S)=\frac{1}{n}\sum_{i=1}^n\hat{y}(\mathbf x^S, \mathbf x^C_i)$$
+donde $n$ en el tamaño de la muestra de entrenamiento y $\mathbf x^C_i$ son los valores observados de las variables explicativas en las que no estamos interesados.
+La principal diferencia con los gráficos ICE es que, en lugar de mostrar una única curva promedio de la respuesta, estos muestran una curva para cada observación (para más detalles ver las referencias anteriores).
+En la Sección \@ref(ejemplo-clasif-rf) se incluyen algunos ejemplos...
+<!-- también Hastie *et al.*, 2009, Sección ? -->
 
 En problemas de clasificación también se están empleando la teoría de juegos cooperativos y las técnicas de optimización de Investigación Operativa para evaluar la importancia de las variables predictoras y determinar las más influyentes. 
 Por citar algunos, Strumbelj y Kononenko (2010) propusieron un procedimiento general basado en el valor de Shapley de juegos cooperativos, y en Agor y Özaltın (2019) se propone el uso de algoritmos genéticos para determinar los predictores más influyentes.
@@ -909,7 +926,11 @@ Paquetes y funciones de R:
 
 * [`vivid`](https://github.com/AlanInglis/vivid): Variable Importance and Variable Interaction Displays
 
-*  `caret::varImp()`, `h2o::h2o.partialPplot()`...
+* [`plotmo`](http://www.milbo.users.sonic.net/): Plot a Model's Residuals, Response, and Partial Dependence Plots.<!-- Dibuja las superficies del modelo estimado utilizando gráficos de dependencia parcial y otras técnicas -->
+
+* [`randomForestExplainer`](https://modeloriented.github.io/randomForestExplainer): Explaining and Visualizing Random Forests in Terms of Variable Importance. <!--conjunto de herramientas para explicar y visualizar los modelos de bosque aleatorio  -->
+
+En este caso también puede ser de utilidad `caret::varImp()`, `h2o::h2o.partialPplot()`...
 
 En los siguientes capítulos se mostrarán ejemplos empleando algunas de estas herramientas.
 

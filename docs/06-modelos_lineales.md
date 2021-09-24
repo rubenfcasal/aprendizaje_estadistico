@@ -140,9 +140,7 @@ mcor <- cor(train)
 corrplot::corrplot(mcor, method = "ellipse")
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-4-1} \end{center}
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-4-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 print(mcor, digits = 1)
@@ -218,9 +216,7 @@ plot(fidelida ~ velocida, train)
 abline(modelo)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-5-1} \end{center}
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-5-1.png" width="80%" style="display: block; margin: auto;" />
 
 Para calcular predicciones (estimaciones de la media condicionada), también intervalos de confianza o de predicción, se puede emplear la función `predict()` (consultar la ayuda `help(predict.lm)` para ver todas las opciones disponibles).
 
@@ -237,9 +233,7 @@ matlines(valores, pred2[, -1], lty = 3, col = 1)
 legend("topleft", c("Ajuste", "Int. confianza", "Int. predicción"), lty = c(1, 2, 3))
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-6-1} \end{center}
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-6-1.png" width="80%" style="display: block; margin: auto;" />
 
 Para la extracción de información se pueden acceder a los componentes del modelo ajustado o emplear funciones  (genéricas; muchas de ellas válidas para otro tipo de modelos: rlm, glm...). 
 Algunas de las más utilizadas son las siguientes:
@@ -331,9 +325,7 @@ x2.pred <- predict(fit.x2, newdata = data.frame(x1 = x1.range))
 lines3D(z = rep(ylim[1], 2), x = x1.range, y = x2.pred, add = TRUE, colkey = FALSE, col = "black") 
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-9-1} \end{center}
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-9-1.png" width="80%" style="display: block; margin: auto;" />
 
 
 Simulación de la respuesta:
@@ -361,42 +353,10 @@ for (isim in 1:nsim) {
 }
 ```
 
+<img src="06-modelos_lineales_files/figure-html/multicol-movie.gif" width="80%" style="display: block; margin: auto;" />
 
 
-```r
-sd.err <- 0.25
-oldpar <- par(mfrow = c(2,2))
 
-for (isim in 7:10) {
-  set.seed(isim)
-  y <- y.mean + rnorm(n, 0, sd.err)
-  
-  # Ajuste lineal y superficie de predicción
-  fit <- lm(y ~ x1 + x2)
-  y.pred <- matrix(predict(fit, newdata = xy), nrow = length(x1.grid)) 
-  
-  # Representar
-  fitpoints <- predict(fit) 
-  scatter3D(z = y, x = x1, y = x2, pch = 16, cex = 1.5, clim = ylim, zlim = ylim,
-            theta = -40, phi = 20, ticktype = "detailed", 
-            main = "Modelo ajustado", xlab = "x1", ylab = "x2", zlab = "y", 
-            surf = list(x = x1.grid, y = x2.grid, z = y.pred, 
-                        facets = NA, fit = fitpoints))
-}
-```
-
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/multicol-movie-latex-1} 
-
-}
-
-\caption{Ejemplo de simulaciones bajo colinelidad.}(\#fig:multicol-movie-latex)
-\end{figure}
-
-```r
-par(oldpar)
-```
 
 Incluso puede ocurrir que el contraste de regresión sea significativo (alto coeficiente de determinación), pero los contrastes individuales sean no significativos. 
 
@@ -453,44 +413,10 @@ for (isim in 1:nsim) {
 }
 ```
 
+<img src="06-modelos_lineales_files/figure-html/indep-movie.gif" width="80%" style="display: block; margin: auto;" />
 
 
-```r
-x2 <- rand.gen(n)
-y.mean <- mapply(model.teor, x1, x2)
-oldpar <- par(mfrow = c(2,2))
 
-for (isim in 7:10) {
-  # Simular respuesta
-  set.seed(isim)
-  y <- y.mean + rnorm(n, 0, sd.err)
-  
-  # Ajuste lineal y superficie de predicción
-  fit2 <- lm(y ~ x1 + x2)
-  y.pred <- matrix(predict(fit2, newdata = xy), nrow = length(x1.grid)) 
-  
-  # Representar
-  fitpoints <- predict(fit2) 
-  scatter3D(z = y, x = x1, y = x2, pch = 16, cex = 1.5, clim = ylim, zlim = ylim,
-            theta = -40, phi = 20, ticktype = "detailed", 
-            main = "Modelo ajustado", xlab = "x1", ylab = "x2", zlab = "y", 
-            surf = list(x = x1.grid, y = x2.grid, z = y.pred, 
-                        facets = NA, fit = fitpoints))
-}
-```
-
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/indep-movie-latex-1} 
-
-}
-
-\caption{Ejemplo de simulaciones bajo independencia.}(\#fig:indep-movie-latex)
-\end{figure}
-
-```r
-par(oldpar)
-```
 
 
 
@@ -611,9 +537,7 @@ Por ejemplo, en este caso, empleando el coeficiente de determinación ajustado, 
 plot(regsel, scale = "adjr2")
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-15-1} \end{center}
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-15-1.png" width="80%" style="display: block; margin: auto;" />
 
 En este caso, considerando que es preferible un modelo más simple que una mejora del 2%, podríamos seleccionar como modelo final el modelo con dos predictores.
 Podríamos obtener los coeficientes:
@@ -833,9 +757,7 @@ oldpar <- par(mfrow = c(2,2))
 plot(modelo)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-19-1} \end{center}
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-19-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 par(oldpar)
@@ -877,9 +799,7 @@ library(car)
 crPlots(modelo)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-21-1} \end{center}
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-21-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 # avPlots(modelo)
@@ -960,9 +880,7 @@ res <- lm(obs ~ pred)
 abline(res, lty = 2)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-23-1} \end{center}
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-23-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 accuracy <- function(pred, obs, na.rm = FALSE, 
@@ -1238,9 +1156,7 @@ fit.ridge <- glmnet(x, y, alpha = 0)
 plot(fit.ridge, xvar = "lambda", label = TRUE)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-30-1} \end{center}
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-30-1.png" width="80%" style="display: block; margin: auto;" />
 
 Podemos obtener el modelo o predicciones para un valor concreto de $\lambda$:
 
@@ -1250,7 +1166,7 @@ coef(fit.ridge, s = 2) # lambda = 2
 
 ```
 ## 14 x 1 sparse Matrix of class "dgCMatrix"
-##                      s1
+##                       1
 ## (Intercept)  3.56806743
 ## calidadp     2.41027431
 ## web          0.94414628
@@ -1277,9 +1193,7 @@ cv.ridge <- cv.glmnet(x, y, alpha = 0)
 plot(cv.ridge)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-32-1} \end{center}
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-32-1.png" width="80%" style="display: block; margin: auto;" />
 
 En este caso el parámetro óptimo (según la regla de un error estándar) sería:
 
@@ -1305,7 +1219,7 @@ coef(cv.ridge) # s = "lambda.1se"
 
 ```
 ## 14 x 1 sparse Matrix of class "dgCMatrix"
-##                      s1
+##                       1
 ## (Intercept)  8.38314273
 ## calidadp     2.06713538
 ## web          0.84771656
@@ -1352,9 +1266,7 @@ cv.lasso <- cv.glmnet(x,y)
 plot(cv.lasso)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-36-1} \end{center}
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-36-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 plot(cv.lasso$glmnet.fit, xvar = "lambda", label = TRUE) 	
@@ -1362,9 +1274,7 @@ abline(v = log(cv.lasso$lambda.1se), lty = 2)
 abline(v = log(cv.lasso$lambda.min), lty = 3)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-36-2} \end{center}
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-36-2.png" width="80%" style="display: block; margin: auto;" />
 
 El modelo resultante (oneSE rule) solo contiene 4 variables explicativas:
 
@@ -1375,7 +1285,7 @@ coef(cv.lasso) # s = "lambda.1se"
 
 ```
 ## 14 x 1 sparse Matrix of class "dgCMatrix"
-##                     s1
+##                      1
 ## (Intercept) 12.0485398
 ## calidadp     2.4673862
 ## web          0.3498592
@@ -1482,9 +1392,7 @@ caret.glmnet
 ggplot(caret.glmnet, highlight = TRUE)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-39-1} \end{center}
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-39-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 pred <- predict(caret.glmnet, newdata = test)
@@ -1581,9 +1489,7 @@ rmsep.cv <- RMSEP(pcreg)
 plot(rmsep.cv, legend = "topright")
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-40-1} \end{center}
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-40-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 ncomp.op <- with(rmsep.cv, comps[which.min(val[2, 1, ])]) # mínimo adjCV RMSEP
@@ -1685,9 +1591,7 @@ caret.pcr
 ggplot(caret.pcr, highlight = TRUE)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-43-1} \end{center}
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-43-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 pred <- predict(caret.pcr, newdata = test)
@@ -1747,9 +1651,7 @@ caret.pcrsel
 ggplot(caret.pcrsel, highlight = TRUE)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-44-1} \end{center}
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-44-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 with(caret.pcrsel, coef(finalModel, bestTune$nvmax))
@@ -1821,9 +1723,7 @@ rmsep.cv <- RMSEP(plsreg)
 plot(rmsep.cv, legend = "topright")
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-45-1} \end{center}
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-45-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 ncomp.op <- with(rmsep.cv, comps[which.min(val[2, 1, ])]) # mínimo adjCV RMSEP
@@ -1922,9 +1822,7 @@ caret.pls
 ggplot(caret.pls, highlight = TRUE)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-48-1} \end{center}
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-48-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 # Podía ser preferible incluir `trControl(selectionFunction = "oneSE")`
@@ -2003,9 +1901,7 @@ test <- df[-itrain, ]
 plot(train, pch = as.numeric(train$alianza), col = as.numeric(train$alianza))
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-50-1} \end{center}
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-50-1.png" width="80%" style="display: block; margin: auto;" />
 
 Como ya se comentó, estableciendo `family = binomial` en la llamada a `glm()` se ajusta un modelo de regresión logística  (por defecto `link = "logit"`):
 
@@ -2259,9 +2155,7 @@ oldpar <- par( mfrow=c(2,2))
 plot(modelo)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-56-1} \end{center}
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-56-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 par(oldpar)
@@ -2277,9 +2171,7 @@ Se pueden generar gráficos parciales de residuos (p.e. `crPlots()` del paquete 
 crPlots(modelo)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-57-1} \end{center}
+<img src="06-modelos_lineales_files/figure-html/unnamed-chunk-57-1.png" width="80%" style="display: block; margin: auto;" />
 
 Se pueden emplear las mismas funciones vistas en los modelos lineales para obtener medidas de diagnosis de interés (Sección \@ref(analisis-reg-multiple)). Por ejemplo:
 
@@ -2377,21 +2269,17 @@ names(getModelInfo("glm")) # 11 métodos
 Se pueden imponer restricciones a las estimaciones de los parámetros de modo análogo al caso de modelos lineales ( y \@ref(pca-pls)).
 Por ejemplo, en los métodos de regularización (*ridge*, *lasso* o *elastic net*; Sección \@ref(shrinkage)) bastaría con cambiar en la función de pérdidas la suma residual de cuadrados por el logaritmo negativo de la función de verosimilitud.
 
-\BeginKnitrBlock{exercise}
-<span class="exercise" id="exr:glmnet"><strong>(\#exr:glmnet) </strong></span>
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:glmnet"><strong>(\#exr:glmnet) </strong></span>
 Emplear el paquete `glmnet` para ajustar modelos logísticos con penalización *ridge* y *lasso* a la muestra de entrenamiento de los datos de clientes de la compañía de distribución industrial HBAT, considerando como respuesta la variable *alianza* y seleccionando un valor "óptimo" del hiperparámetro $\lambda$.
 Ajustar también un modelo con penalización *elastic net* empleando `caret` (seleccionando los valores óptimos de los hiperparámetros).
-
-\EndKnitrBlock{exercise}
+</div>\EndKnitrBlock{exercise}
 
  
 El método PCR (Sección \@ref(pca-pls)) se extendería de forma inmediata al caso de modelos generalizados, simplemente cambiando el modelo ajustado.
 También están disponibles métodos PLSR para modelos generalizados.
 
 
-\BeginKnitrBlock{exercise}
-<span class="exercise" id="exr:glm-reduccion"><strong>(\#exr:glm-reduccion) </strong></span>
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:glm-reduccion"><strong>(\#exr:glm-reduccion) </strong></span>
 Emplear el paquete `caret` para ajustar modelos logísticos con reducción de la dimensión a los datos de clientes de la compañía de distribución industrial HBAT. Comparar el modelo obtenido con preprocesado `"pca"` y el método `"glmStepAIC"`, con el obtenido empleando el método `"plsRglm"`.
-
-\EndKnitrBlock{exercise}
+</div>\EndKnitrBlock{exercise}
 

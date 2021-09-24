@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>3.3 Bagging y bosques aleatorios en R | Aprendizaje Estadístico</title>
   <meta name="description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="3.3 Bagging y bosques aleatorios en R | Aprendizaje Estadístico" />
   <meta property="og:type" content="book" />
@@ -26,7 +26,7 @@
 <meta name="author" content="Manuel Oviedo de la Fuente (manuel.oviedo@udc.es)" />
 
 
-<meta name="date" content="2021-09-08" />
+<meta name="date" content="2021-09-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -35,9 +35,7 @@
   
 <link rel="prev" href="bosques-aleatorios.html"/>
 <link rel="next" href="boosting.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -53,31 +51,31 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<script src="libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.19/datatables.js"></script>
+<script src="libs/datatables-binding-0.16/datatables.js"></script>
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
-<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
 
 
 <style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -97,7 +95,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -130,7 +128,6 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
@@ -148,21 +145,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prólogo</a></li>
-<li class="chapter" data-level="1" data-path="intro-AE.html"><a href="intro-AE.html"><i class="fa fa-check"></i><b>1</b> Introducción al Aprendizaje Estadístico</a>
-<ul>
-<li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje Estadístico vs. Aprendizaje Automático</a>
-<ul>
-<li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#machine-learning-vs.-data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
-<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#las-dos-culturas-breiman-2001"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas (Breiman, 2001)</a></li>
-<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#machine-learning-vs.-estadística-dunson-2018"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística (Dunson, 2018)</a></li>
+<li class="chapter" data-level="1" data-path="intro-AE.html"><a href="intro-AE.html"><i class="fa fa-check"></i><b>1</b> Introducción al Aprendizaje Estadístico</a><ul>
+<li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje Estadístico vs. Aprendizaje Automático</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
+<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#las-dos-culturas-breiman-2001"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas (Breiman, 2001)</a></li>
+<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-estadística-dunson-2018"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística (Dunson, 2018)</a></li>
 </ul></li>
-<li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de Aprendizaje Estadístico</a>
-<ul>
+<li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de Aprendizaje Estadístico</a><ul>
 <li class="chapter" data-level="1.2.1" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#notacion"><i class="fa fa-check"></i><b>1.2.1</b> Notación y terminología</a></li>
 <li class="chapter" data-level="1.2.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#metodos-pkgs"><i class="fa fa-check"></i><b>1.2.2</b> Métodos (de aprendizaje supervisado) y paquetes de R</a></li>
 </ul></li>
-<li class="chapter" data-level="1.3" data-path="const-eval.html"><a href="const-eval.html"><i class="fa fa-check"></i><b>1.3</b> Construcción y evaluación de los modelos</a>
-<ul>
+<li class="chapter" data-level="1.3" data-path="const-eval.html"><a href="const-eval.html"><i class="fa fa-check"></i><b>1.3</b> Construcción y evaluación de los modelos</a><ul>
 <li class="chapter" data-level="1.3.1" data-path="const-eval.html"><a href="const-eval.html#bias-variance"><i class="fa fa-check"></i><b>1.3.1</b> Equilibrio entre sesgo y varianza: infraajuste y sobreajuste</a></li>
 <li class="chapter" data-level="1.3.2" data-path="const-eval.html"><a href="const-eval.html#entrenamiento-test"><i class="fa fa-check"></i><b>1.3.2</b> Datos de entrenamiento y datos de test</a></li>
 <li class="chapter" data-level="1.3.3" data-path="const-eval.html"><a href="const-eval.html#cv"><i class="fa fa-check"></i><b>1.3.3</b> Validación cruzada</a></li>
@@ -171,103 +164,84 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="dimen-curse.html"><a href="dimen-curse.html"><i class="fa fa-check"></i><b>1.4</b> La maldición de la dimensionalidad</a></li>
 <li class="chapter" data-level="1.5" data-path="analisis-modelos.html"><a href="analisis-modelos.html"><i class="fa fa-check"></i><b>1.5</b> Análisis e interpretación de los modelos</a></li>
-<li class="chapter" data-level="1.6" data-path="caret.html"><a href="caret.html"><i class="fa fa-check"></i><b>1.6</b> Introducción al paquete <code>caret</code></a>
-<ul>
+<li class="chapter" data-level="1.6" data-path="caret.html"><a href="caret.html"><i class="fa fa-check"></i><b>1.6</b> Introducción al paquete <code>caret</code></a><ul>
 <li class="chapter" data-level="1.6.1" data-path="caret.html"><a href="caret.html#métodos-implementados"><i class="fa fa-check"></i><b>1.6.1</b> Métodos implementados</a></li>
 <li class="chapter" data-level="1.6.2" data-path="caret.html"><a href="caret.html#herramientas"><i class="fa fa-check"></i><b>1.6.2</b> Herramientas</a></li>
 <li class="chapter" data-level="1.6.3" data-path="caret.html"><a href="caret.html#ejemplo"><i class="fa fa-check"></i><b>1.6.3</b> Ejemplo</a></li>
 <li class="chapter" data-level="1.6.4" data-path="caret.html"><a href="caret.html#desarrollo-futuro"><i class="fa fa-check"></i><b>1.6.4</b> Desarrollo futuro</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="trees.html"><a href="trees.html"><i class="fa fa-check"></i><b>2</b> Árboles de decisión</a>
-<ul>
+<li class="chapter" data-level="2" data-path="trees.html"><a href="trees.html"><i class="fa fa-check"></i><b>2</b> Árboles de decisión</a><ul>
 <li class="chapter" data-level="2.1" data-path="árboles-de-regresión-cart.html"><a href="árboles-de-regresión-cart.html"><i class="fa fa-check"></i><b>2.1</b> Árboles de regresión CART</a></li>
 <li class="chapter" data-level="2.2" data-path="árboles-de-clasificación-cart.html"><a href="árboles-de-clasificación-cart.html"><i class="fa fa-check"></i><b>2.2</b> Árboles de clasificación CART</a></li>
-<li class="chapter" data-level="2.3" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html"><i class="fa fa-check"></i><b>2.3</b> CART con el paquete <code>rpart</code></a>
-<ul>
+<li class="chapter" data-level="2.3" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html"><i class="fa fa-check"></i><b>2.3</b> CART con el paquete <code>rpart</code></a><ul>
 <li class="chapter" data-level="2.3.1" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#ejemplo-regresión"><i class="fa fa-check"></i><b>2.3.1</b> Ejemplo: regresión</a></li>
 <li class="chapter" data-level="2.3.2" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#class-rpart"><i class="fa fa-check"></i><b>2.3.2</b> Ejemplo: modelo de clasificación</a></li>
 <li class="chapter" data-level="2.3.3" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#interfaz-de-caret"><i class="fa fa-check"></i><b>2.3.3</b> Interfaz de <code>caret</code></a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html"><i class="fa fa-check"></i><b>2.4</b> Alternativas a los árboles CART</a>
-<ul>
+<li class="chapter" data-level="2.4" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html"><i class="fa fa-check"></i><b>2.4</b> Alternativas a los árboles CART</a><ul>
 <li class="chapter" data-level="2.4.1" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html#ejemplo-1"><i class="fa fa-check"></i><b>2.4.1</b> Ejemplo</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="bagging-boosting.html"><a href="bagging-boosting.html"><i class="fa fa-check"></i><b>3</b> Bagging y Boosting</a>
-<ul>
+<li class="chapter" data-level="3" data-path="bagging-boosting.html"><a href="bagging-boosting.html"><i class="fa fa-check"></i><b>3</b> Bagging y Boosting</a><ul>
 <li class="chapter" data-level="3.1" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>3.1</b> Bagging</a></li>
 <li class="chapter" data-level="3.2" data-path="bosques-aleatorios.html"><a href="bosques-aleatorios.html"><i class="fa fa-check"></i><b>3.2</b> Bosques aleatorios</a></li>
-<li class="chapter" data-level="3.3" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html"><i class="fa fa-check"></i><b>3.3</b> Bagging y bosques aleatorios en R</a>
-<ul>
+<li class="chapter" data-level="3.3" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html"><i class="fa fa-check"></i><b>3.3</b> Bagging y bosques aleatorios en R</a><ul>
 <li class="chapter" data-level="3.3.1" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-clasificación-con-bagging"><i class="fa fa-check"></i><b>3.3.1</b> Ejemplo: Clasificación con bagging</a></li>
-<li class="chapter" data-level="3.3.2" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-clasificación-con-bosques-aleatorios"><i class="fa fa-check"></i><b>3.3.2</b> Ejemplo: Clasificación con bosques aleatorios</a></li>
+<li class="chapter" data-level="3.3.2" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-clasif-rf"><i class="fa fa-check"></i><b>3.3.2</b> Ejemplo: Clasificación con bosques aleatorios</a></li>
 <li class="chapter" data-level="3.3.3" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-bosques-aleatorios-con-caret"><i class="fa fa-check"></i><b>3.3.3</b> Ejemplo: bosques aleatorios con <code>caret</code></a></li>
 </ul></li>
 <li class="chapter" data-level="3.4" data-path="boosting.html"><a href="boosting.html"><i class="fa fa-check"></i><b>3.4</b> Boosting</a></li>
-<li class="chapter" data-level="3.5" data-path="boosting-en-r.html"><a href="boosting-en-r.html"><i class="fa fa-check"></i><b>3.5</b> Boosting en R</a>
-<ul>
+<li class="chapter" data-level="3.5" data-path="boosting-en-r.html"><a href="boosting-en-r.html"><i class="fa fa-check"></i><b>3.5</b> Boosting en R</a><ul>
 <li class="chapter" data-level="3.5.1" data-path="boosting-en-r.html"><a href="boosting-en-r.html#ejemplo-clasificación-con-el-paquete-ada"><i class="fa fa-check"></i><b>3.5.1</b> Ejemplo: clasificación con el paquete <code>ada</code></a></li>
 <li class="chapter" data-level="3.5.2" data-path="boosting-en-r.html"><a href="boosting-en-r.html#ejemplo-regresión-con-el-paquete-gbm"><i class="fa fa-check"></i><b>3.5.2</b> Ejemplo: regresión con el paquete <code>gbm</code></a></li>
 <li class="chapter" data-level="3.5.3" data-path="boosting-en-r.html"><a href="boosting-en-r.html#ejemplo-xgboost-con-el-paquete-caret"><i class="fa fa-check"></i><b>3.5.3</b> Ejemplo: XGBoost con el paquete <code>caret</code></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>4</b> Máquinas de soporte vectorial</a>
-<ul>
+<li class="chapter" data-level="4" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>4</b> Máquinas de soporte vectorial</a><ul>
 <li class="chapter" data-level="4.1" data-path="clasificadores-de-máximo-margen.html"><a href="clasificadores-de-máximo-margen.html"><i class="fa fa-check"></i><b>4.1</b> Clasificadores de máximo margen</a></li>
 <li class="chapter" data-level="4.2" data-path="clasificadores-de-soporte-vectorial.html"><a href="clasificadores-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>4.2</b> Clasificadores de soporte vectorial</a></li>
-<li class="chapter" data-level="4.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>4.3</b> Máquinas de soporte vectorial</a>
-<ul>
+<li class="chapter" data-level="4.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>4.3</b> Máquinas de soporte vectorial</a><ul>
 <li class="chapter" data-level="4.3.1" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#clasificación-con-más-de-dos-categorías"><i class="fa fa-check"></i><b>4.3.1</b> Clasificación con más de dos categorías</a></li>
 <li class="chapter" data-level="4.3.2" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#regresión"><i class="fa fa-check"></i><b>4.3.2</b> Regresión</a></li>
 <li class="chapter" data-level="4.3.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#ventajas-e-incovenientes"><i class="fa fa-check"></i><b>4.3.3</b> Ventajas e incovenientes</a></li>
 </ul></li>
 <li class="chapter" data-level="4.4" data-path="svm-con-el-paquete-kernlab.html"><a href="svm-con-el-paquete-kernlab.html"><i class="fa fa-check"></i><b>4.4</b> SVM con el paquete <code>kernlab</code></a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="class-otros.html"><a href="class-otros.html"><i class="fa fa-check"></i><b>5</b> Otros métodos de clasificación</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="análisis-discriminate-lineal.html"><a href="análisis-discriminate-lineal.html"><i class="fa fa-check"></i><b>5.1</b> Análisis discriminate lineal</a>
-<ul>
+<li class="chapter" data-level="5" data-path="class-otros.html"><a href="class-otros.html"><i class="fa fa-check"></i><b>5</b> Otros métodos de clasificación</a><ul>
+<li class="chapter" data-level="5.1" data-path="análisis-discriminate-lineal.html"><a href="análisis-discriminate-lineal.html"><i class="fa fa-check"></i><b>5.1</b> Análisis discriminate lineal</a><ul>
 <li class="chapter" data-level="5.1.1" data-path="análisis-discriminate-lineal.html"><a href="análisis-discriminate-lineal.html#ejemplo-masslda"><i class="fa fa-check"></i><b>5.1.1</b> Ejemplo <code>MASS::lda</code></a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="análisis-discriminante-cuadrático.html"><a href="análisis-discriminante-cuadrático.html"><i class="fa fa-check"></i><b>5.2</b> Análisis discriminante cuadrático</a>
-<ul>
+<li class="chapter" data-level="5.2" data-path="análisis-discriminante-cuadrático.html"><a href="análisis-discriminante-cuadrático.html"><i class="fa fa-check"></i><b>5.2</b> Análisis discriminante cuadrático</a><ul>
 <li class="chapter" data-level="5.2.1" data-path="análisis-discriminante-cuadrático.html"><a href="análisis-discriminante-cuadrático.html#ejemplo-massqda"><i class="fa fa-check"></i><b>5.2.1</b> Ejemplo <code>MASS::qda</code></a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="naive-bayes.html"><a href="naive-bayes.html"><i class="fa fa-check"></i><b>5.3</b> Naive Bayes</a>
-<ul>
+<li class="chapter" data-level="5.3" data-path="naive-bayes.html"><a href="naive-bayes.html"><i class="fa fa-check"></i><b>5.3</b> Naive Bayes</a><ul>
 <li class="chapter" data-level="5.3.1" data-path="naive-bayes.html"><a href="naive-bayes.html#ejemplo-e1071naivebayes"><i class="fa fa-check"></i><b>5.3.1</b> Ejemplo <code>e1071::naiveBayes</code></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="modelos-lineales.html"><a href="modelos-lineales.html"><i class="fa fa-check"></i><b>6</b> Modelos lineales y extensiones</a>
-<ul>
-<li class="chapter" data-level="6.1" data-path="reg-multiple.html"><a href="reg-multiple.html"><i class="fa fa-check"></i><b>6.1</b> Regresión lineal múltiple</a>
-<ul>
+<li class="chapter" data-level="6" data-path="modelos-lineales.html"><a href="modelos-lineales.html"><i class="fa fa-check"></i><b>6</b> Modelos lineales y extensiones</a><ul>
+<li class="chapter" data-level="6.1" data-path="reg-multiple.html"><a href="reg-multiple.html"><i class="fa fa-check"></i><b>6.1</b> Regresión lineal múltiple</a><ul>
 <li class="chapter" data-level="6.1.1" data-path="reg-multiple.html"><a href="reg-multiple.html#ajuste-función-lm"><i class="fa fa-check"></i><b>6.1.1</b> Ajuste: función <code>lm</code></a></li>
 <li class="chapter" data-level="6.1.2" data-path="reg-multiple.html"><a href="reg-multiple.html#ejemplo-2"><i class="fa fa-check"></i><b>6.1.2</b> Ejemplo</a></li>
 </ul></li>
 <li class="chapter" data-level="6.2" data-path="colinealidad.html"><a href="colinealidad.html"><i class="fa fa-check"></i><b>6.2</b> El problema de la colinealidad</a></li>
-<li class="chapter" data-level="6.3" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html"><i class="fa fa-check"></i><b>6.3</b> Selección de variables explicativas</a>
-<ul>
+<li class="chapter" data-level="6.3" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html"><i class="fa fa-check"></i><b>6.3</b> Selección de variables explicativas</a><ul>
 <li class="chapter" data-level="6.3.1" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html#búsqueda-exhaustiva"><i class="fa fa-check"></i><b>6.3.1</b> Búsqueda exhaustiva</a></li>
 <li class="chapter" data-level="6.3.2" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html#selección-por-pasos"><i class="fa fa-check"></i><b>6.3.2</b> Selección por pasos</a></li>
 </ul></li>
 <li class="chapter" data-level="6.4" data-path="analisis-reg-multiple.html"><a href="analisis-reg-multiple.html"><i class="fa fa-check"></i><b>6.4</b> Análisis e interpretación del modelo</a></li>
 <li class="chapter" data-level="6.5" data-path="evaluación-de-la-precisión.html"><a href="evaluación-de-la-precisión.html"><i class="fa fa-check"></i><b>6.5</b> Evaluación de la precisión</a></li>
-<li class="chapter" data-level="6.6" data-path="shrinkage.html"><a href="shrinkage.html"><i class="fa fa-check"></i><b>6.6</b> Métodos de regularización</a>
-<ul>
+<li class="chapter" data-level="6.6" data-path="shrinkage.html"><a href="shrinkage.html"><i class="fa fa-check"></i><b>6.6</b> Métodos de regularización</a><ul>
 <li class="chapter" data-level="6.6.1" data-path="shrinkage.html"><a href="shrinkage.html#implementación-en-r"><i class="fa fa-check"></i><b>6.6.1</b> Implementación en R</a></li>
 <li class="chapter" data-level="6.6.2" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-ridge-regression"><i class="fa fa-check"></i><b>6.6.2</b> Ejemplo: Ridge Regression</a></li>
 <li class="chapter" data-level="6.6.3" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-lasso"><i class="fa fa-check"></i><b>6.6.3</b> Ejemplo: Lasso</a></li>
 <li class="chapter" data-level="6.6.4" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-elastic-net"><i class="fa fa-check"></i><b>6.6.4</b> Ejemplo: Elastic Net</a></li>
 </ul></li>
-<li class="chapter" data-level="6.7" data-path="pca-pls.html"><a href="pca-pls.html"><i class="fa fa-check"></i><b>6.7</b> Métodos de reducción de la dimensión</a>
-<ul>
+<li class="chapter" data-level="6.7" data-path="pca-pls.html"><a href="pca-pls.html"><i class="fa fa-check"></i><b>6.7</b> Métodos de reducción de la dimensión</a><ul>
 <li class="chapter" data-level="6.7.1" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-componentes-principales-pcr"><i class="fa fa-check"></i><b>6.7.1</b> Regresión por componentes principales (PCR)</a></li>
 <li class="chapter" data-level="6.7.2" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-mínimos-cuadrados-parciales-plsr"><i class="fa fa-check"></i><b>6.7.2</b> Regresión por mínimos cuadrados parciales (PLSR)</a></li>
 </ul></li>
-<li class="chapter" data-level="6.8" data-path="reg-glm.html"><a href="reg-glm.html"><i class="fa fa-check"></i><b>6.8</b> Modelos lineales generalizados</a>
-<ul>
+<li class="chapter" data-level="6.8" data-path="reg-glm.html"><a href="reg-glm.html"><i class="fa fa-check"></i><b>6.8</b> Modelos lineales generalizados</a><ul>
 <li class="chapter" data-level="6.8.1" data-path="reg-glm.html"><a href="reg-glm.html#ajuste-función-glm"><i class="fa fa-check"></i><b>6.8.1</b> Ajuste: función <code>glm</code></a></li>
 <li class="chapter" data-level="6.8.2" data-path="reg-glm.html"><a href="reg-glm.html#ejemplo-regresión-logística"><i class="fa fa-check"></i><b>6.8.2</b> Ejemplo: Regresión logística</a></li>
 <li class="chapter" data-level="6.8.3" data-path="reg-glm.html"><a href="reg-glm.html#selección-de-variables-explicativas"><i class="fa fa-check"></i><b>6.8.3</b> Selección de variables explicativas</a></li>
@@ -276,22 +250,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.8.6" data-path="reg-glm.html"><a href="reg-glm.html#extensiones"><i class="fa fa-check"></i><b>6.8.6</b> Extensiones</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="reg-np.html"><a href="reg-np.html"><i class="fa fa-check"></i><b>7</b> Regresión no paramétrica</a>
-<ul>
-<li class="chapter" data-level="7.1" data-path="reg-local.html"><a href="reg-local.html"><i class="fa fa-check"></i><b>7.1</b> Regresión local</a>
-<ul>
+<li class="chapter" data-level="7" data-path="reg-np.html"><a href="reg-np.html"><i class="fa fa-check"></i><b>7</b> Regresión no paramétrica</a><ul>
+<li class="chapter" data-level="7.1" data-path="reg-local.html"><a href="reg-local.html"><i class="fa fa-check"></i><b>7.1</b> Regresión local</a><ul>
 <li class="chapter" data-level="7.1.1" data-path="reg-local.html"><a href="reg-local.html#reg-knn"><i class="fa fa-check"></i><b>7.1.1</b> Vecinos más próximos</a></li>
 <li class="chapter" data-level="7.1.2" data-path="reg-local.html"><a href="reg-local.html#reg-locpol"><i class="fa fa-check"></i><b>7.1.2</b> Regresión polinómica local</a></li>
 <li class="chapter" data-level="7.1.3" data-path="reg-local.html"><a href="reg-local.html#regresión-polinómica-local-robusta"><i class="fa fa-check"></i><b>7.1.3</b> Regresión polinómica local robusta</a></li>
 </ul></li>
-<li class="chapter" data-level="7.2" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>7.2</b> Splines</a>
-<ul>
+<li class="chapter" data-level="7.2" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>7.2</b> Splines</a><ul>
 <li class="chapter" data-level="7.2.1" data-path="splines.html"><a href="splines.html#reg-splines"><i class="fa fa-check"></i><b>7.2.1</b> Regression splines</a></li>
 <li class="chapter" data-level="7.2.2" data-path="splines.html"><a href="splines.html#smoothing-splines"><i class="fa fa-check"></i><b>7.2.2</b> Smoothing splines</a></li>
 <li class="chapter" data-level="7.2.3" data-path="splines.html"><a href="splines.html#splines-penalizados"><i class="fa fa-check"></i><b>7.2.3</b> Splines penalizados</a></li>
 </ul></li>
-<li class="chapter" data-level="7.3" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html"><i class="fa fa-check"></i><b>7.3</b> Modelos aditivos</a>
-<ul>
+<li class="chapter" data-level="7.3" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html"><i class="fa fa-check"></i><b>7.3</b> Modelos aditivos</a><ul>
 <li class="chapter" data-level="7.3.1" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#ajuste-función-gam"><i class="fa fa-check"></i><b>7.3.1</b> Ajuste: función <code>gam</code></a></li>
 <li class="chapter" data-level="7.3.2" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#ejemplo-3"><i class="fa fa-check"></i><b>7.3.2</b> Ejemplo</a></li>
 <li class="chapter" data-level="7.3.3" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#superficies-de-predicción"><i class="fa fa-check"></i><b>7.3.3</b> Superficies de predicción</a></li>
@@ -300,28 +270,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.3.6" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#gam-en-caret"><i class="fa fa-check"></i><b>7.3.6</b> GAM en <code>caret</code></a></li>
 <li class="chapter" data-level="7.3.7" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#ejercicios"><i class="fa fa-check"></i><b>7.3.7</b> Ejercicios</a></li>
 </ul></li>
-<li class="chapter" data-level="7.4" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>7.4</b> Regresión spline adaptativa multivariante</a>
-<ul>
+<li class="chapter" data-level="7.4" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>7.4</b> Regresión spline adaptativa multivariante</a><ul>
 <li class="chapter" data-level="7.4.1" data-path="mars.html"><a href="mars.html#mars-con-el-paquete-earth"><i class="fa fa-check"></i><b>7.4.1</b> MARS con el paquete <code>earth</code></a></li>
 <li class="chapter" data-level="7.4.2" data-path="mars.html"><a href="mars.html#mars-con-el-paquete-caret"><i class="fa fa-check"></i><b>7.4.2</b> MARS con el paquete <code>caret</code></a></li>
 </ul></li>
-<li class="chapter" data-level="7.5" data-path="projection-pursuit.html"><a href="projection-pursuit.html"><i class="fa fa-check"></i><b>7.5</b> Projection pursuit</a>
-<ul>
+<li class="chapter" data-level="7.5" data-path="projection-pursuit.html"><a href="projection-pursuit.html"><i class="fa fa-check"></i><b>7.5</b> Projection pursuit</a><ul>
 <li class="chapter" data-level="7.5.1" data-path="projection-pursuit.html"><a href="projection-pursuit.html#ppr"><i class="fa fa-check"></i><b>7.5.1</b> Regresión por <em>projection pursuit</em></a></li>
 <li class="chapter" data-level="7.5.2" data-path="projection-pursuit.html"><a href="projection-pursuit.html#implementación-en-r-1"><i class="fa fa-check"></i><b>7.5.2</b> Implementación en R</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="neural-nets.html"><a href="neural-nets.html"><i class="fa fa-check"></i><b>8</b> Redes neuronales</a>
-<ul>
+<li class="chapter" data-level="8" data-path="neural-nets.html"><a href="neural-nets.html"><i class="fa fa-check"></i><b>8</b> Redes neuronales</a><ul>
 <li class="chapter" data-level="8.1" data-path="single-hidden-layer-feedforward-network.html"><a href="single-hidden-layer-feedforward-network.html"><i class="fa fa-check"></i><b>8.1</b> Single-hidden-layer feedforward network</a></li>
 <li class="chapter" data-level="8.2" data-path="clasificación-con-ann.html"><a href="clasificación-con-ann.html"><i class="fa fa-check"></i><b>8.2</b> Clasificación con ANN</a></li>
 <li class="chapter" data-level="8.3" data-path="implementación-en-r-2.html"><a href="implementación-en-r-2.html"><i class="fa fa-check"></i><b>8.3</b> Implementación en R</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a>
-<ul>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
 <li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a>
-<ul>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a><ul>
 <li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html#libros"><i class="fa fa-check"></i>Libros</a></li>
 <li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html#artículos"><i class="fa fa-check"></i>Artículos</a></li>
 </ul></li>
@@ -346,7 +311,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="bagging-rf-r" class="section level2" number="3.3">
+<div id="bagging-rf-r" class="section level2">
 <h2><span class="header-section-number">3.3</span> Bagging y bosques aleatorios en R</h2>
 <!-- 
 Búsquedas en caret: bag, forest 
@@ -362,7 +327,7 @@ Si la respuesta es un factor asumirá que se trata de un problema de clasificaci
 <li><p><code>mtry</code>: número de predictores seleccionados al azar en cada división; por defecto <code>max(floor(p/3), 1)</code> en el caso de regresión y <code>floor(sqrt(p))</code> en clasificación, siendo <code>p = ncol(x) = ncol(data) - 1</code> el número de predictores.</p></li>
 <li><p><code>nodesize</code>: número mínimo de observaciones en un nodo terminal; por defecto 1 en clasificación y 5 en regresión (puede ser recomendable incrementarlo si el conjunto de datos es muy grande, para evitar posibles problemas de sobreajuste, disminuir el tiempo de computación y los requerimientos de memoria; también podría ser considerado como un hiperparámetro).</p></li>
 </ul>
-<p>Otros argumentos que pueden ser de interés<a href="#fn20" class="footnote-ref" id="fnref20"><sup>20</sup></a> son:</p>
+<p>Otros argumentos que pueden ser de interés<a href="#fn19" class="footnote-ref" id="fnref19"><sup>19</sup></a> son:</p>
 <ul>
 <li><p><code>maxnodes</code>: número máximo de nodos terminales (como alternativa para la establecer la complejidad).</p></li>
 <li><p><code>importance = TRUE</code>: permite obtener medidas adicionales de importancia.</p></li>
@@ -371,24 +336,24 @@ Si la respuesta es un factor asumirá que se trata de un problema de clasificaci
 </ul>
 <p>Más detalles en la ayuda de esta función o en <a href="https://www.r-project.org/doc/Rnews/Rnews_2002-3.pdf">Liaw y Wiener (2002)</a>.</p>
 <p>Entre las numerosas alternativas, además de las implementadas en paquetes que integran colecciones de métodos como <code>h2o</code> o <code>RWeka</code>, una de las más utilizadas son los bosques aleatorios con <em>conditional inference trees</em>, implementada en la función <code>cforest()</code> del paquete <a href="https://CRAN.R-project.org/package=party"><code>party</code></a>.</p>
-<div id="ejemplo-clasificación-con-bagging" class="section level3" number="3.3.1">
+<div id="ejemplo-clasificación-con-bagging" class="section level3">
 <h3><span class="header-section-number">3.3.1</span> Ejemplo: Clasificación con bagging</h3>
 <p>Como ejemplo consideraremos el conjunto de datos de calidad de vino empleado en la Sección <a href="cart-con-el-paquete-rpart.html#class-rpart">2.3.2</a> (para hacer comparaciones con el ajuste de un único árbol).</p>
-<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="bagging-rf-r.html#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/winetaste.RData&quot;</span>)</span>
-<span id="cb140-2"><a href="bagging-rf-r.html#cb140-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb140-3"><a href="bagging-rf-r.html#cb140-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> winetaste</span>
-<span id="cb140-4"><a href="bagging-rf-r.html#cb140-4" aria-hidden="true" tabindex="-1"></a>nobs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
-<span id="cb140-5"><a href="bagging-rf-r.html#cb140-5" aria-hidden="true" tabindex="-1"></a>itrain <span class="ot">&lt;-</span> <span class="fu">sample</span>(nobs, <span class="fl">0.8</span> <span class="sc">*</span> nobs)</span>
-<span id="cb140-6"><a href="bagging-rf-r.html#cb140-6" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> df[itrain, ]</span>
-<span id="cb140-7"><a href="bagging-rf-r.html#cb140-7" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> df[<span class="sc">-</span>itrain, ]</span></code></pre></div>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="bagging-rf-r.html#cb140-1"></a><span class="kw">load</span>(<span class="st">&quot;data/winetaste.RData&quot;</span>)</span>
+<span id="cb140-2"><a href="bagging-rf-r.html#cb140-2"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb140-3"><a href="bagging-rf-r.html#cb140-3"></a>df &lt;-<span class="st"> </span>winetaste</span>
+<span id="cb140-4"><a href="bagging-rf-r.html#cb140-4"></a>nobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(df)</span>
+<span id="cb140-5"><a href="bagging-rf-r.html#cb140-5"></a>itrain &lt;-<span class="st"> </span><span class="kw">sample</span>(nobs, <span class="fl">0.8</span> <span class="op">*</span><span class="st"> </span>nobs)</span>
+<span id="cb140-6"><a href="bagging-rf-r.html#cb140-6"></a>train &lt;-<span class="st"> </span>df[itrain, ]</span>
+<span id="cb140-7"><a href="bagging-rf-r.html#cb140-7"></a>test &lt;-<span class="st"> </span>df[<span class="op">-</span>itrain, ]</span></code></pre></div>
 <p>Al ser bagging con árboles un caso particular de bosques aleatorios, cuando <span class="math inline">\(m = p\)</span>, también podemos emplear <code>randomForest</code>:</p>
 <!-- 
 Pendiente: establecer nodesize=5 para reducir tiempos de computación? 
 -->
-<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="bagging-rf-r.html#cb141-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span>
-<span id="cb141-2"><a href="bagging-rf-r.html#cb141-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">4</span>) <span class="co"># NOTA: Fijamos esta semilla para ilustrar dependencia</span></span>
-<span id="cb141-3"><a href="bagging-rf-r.html#cb141-3" aria-hidden="true" tabindex="-1"></a>bagtrees <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(taste <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">mtry =</span> <span class="fu">ncol</span>(train) <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb141-4"><a href="bagging-rf-r.html#cb141-4" aria-hidden="true" tabindex="-1"></a>bagtrees</span></code></pre></div>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="bagging-rf-r.html#cb141-1"></a><span class="kw">library</span>(randomForest)</span>
+<span id="cb141-2"><a href="bagging-rf-r.html#cb141-2"></a><span class="kw">set.seed</span>(<span class="dv">4</span>) <span class="co"># NOTA: Fijamos esta semilla para ilustrar dependencia</span></span>
+<span id="cb141-3"><a href="bagging-rf-r.html#cb141-3"></a>bagtrees &lt;-<span class="st"> </span><span class="kw">randomForest</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train, <span class="dt">mtry =</span> <span class="kw">ncol</span>(train) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</span>
+<span id="cb141-4"><a href="bagging-rf-r.html#cb141-4"></a>bagtrees</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ##  randomForest(formula = taste ~ ., data = train, mtry = ncol(train) -      1) 
@@ -402,17 +367,17 @@ Pendiente: establecer nodesize=5 para reducir tiempos de computación?
 ## good  565  97   0.1465257
 ## bad   138 200   0.4082840</code></pre>
 <p>Con el método <code>plot()</code> podemos examinar la convergencia del error en las muestras OOB (simplemente emplea <code>matplot()</code> para representar la componente <code>$err.rate</code>):</p>
-<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="bagging-rf-r.html#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(bagtrees, <span class="at">main =</span> <span class="st">&quot;Tasas de error&quot;</span>)</span>
-<span id="cb143-2"><a href="bagging-rf-r.html#cb143-2" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="fu">colnames</span>(bagtrees<span class="sc">$</span>err.rate), <span class="at">lty =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">col =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="bagging-rf-r.html#cb143-1"></a><span class="kw">plot</span>(bagtrees, <span class="dt">main =</span> <span class="st">&quot;Tasas de error&quot;</span>)</span>
+<span id="cb143-2"><a href="bagging-rf-r.html#cb143-2"></a><span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="kw">colnames</span>(bagtrees<span class="op">$</span>err.rate), <span class="dt">lty =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">col =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">6</span>)</span></code></pre></div>
 <p><img src="03-bagging_boosting_files/figure-html/unnamed-chunk-3-1.png" width="80%" style="display: block; margin: auto;" />
 Como vemos que los errores se estabilizan podríamos pensar que aparentemente hay convergencia (aunque situaciones de alta dependencia entre los árboles dificultarían su interpretación).</p>
 <p>Con la función <code>getTree()</code> podemos extraer los árboles individuales.
 Por ejemplo el siguiente código permite extraer la variable seleccionada para la primera división:</p>
-<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="bagging-rf-r.html#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View(getTree(bagtrees, 1, labelVar=TRUE))</span></span>
-<span id="cb144-2"><a href="bagging-rf-r.html#cb144-2" aria-hidden="true" tabindex="-1"></a>split_var_1 <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">seq_len</span>(bagtrees<span class="sc">$</span>ntree),</span>
-<span id="cb144-3"><a href="bagging-rf-r.html#cb144-3" aria-hidden="true" tabindex="-1"></a>                      <span class="cf">function</span>(i) <span class="fu">getTree</span>(bagtrees, i, <span class="at">labelVar=</span><span class="cn">TRUE</span>)[<span class="dv">1</span>, <span class="st">&quot;split var&quot;</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="bagging-rf-r.html#cb144-1"></a><span class="co"># View(getTree(bagtrees, 1, labelVar=TRUE))</span></span>
+<span id="cb144-2"><a href="bagging-rf-r.html#cb144-2"></a>split_var_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span class="kw">seq_len</span>(bagtrees<span class="op">$</span>ntree),</span>
+<span id="cb144-3"><a href="bagging-rf-r.html#cb144-3"></a>                      <span class="cf">function</span>(i) <span class="kw">getTree</span>(bagtrees, i, <span class="dt">labelVar=</span><span class="ot">TRUE</span>)[<span class="dv">1</span>, <span class="st">&quot;split var&quot;</span>])</span></code></pre></div>
 <p>En este caso concreto podemos observar que siempre es la misma, lo que indicaría una alta dependencia entre los distintos árboles:</p>
-<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="bagging-rf-r.html#cb145-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(split_var_1)</span></code></pre></div>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="bagging-rf-r.html#cb145-1"></a><span class="kw">table</span>(split_var_<span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## split_var_1
 ##              alcohol            chlorides          citric.acid 
 ##                  500                    0                    0 
@@ -423,8 +388,8 @@ Por ejemplo el siguiente código permite extraer la variable seleccionada para l
 ## total.sulfur.dioxide     volatile.acidity 
 ##                    0                    0</code></pre>
 <p>Por último evaluamos la precisión en la muestra de test:</p>
-<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="bagging-rf-r.html#cb147-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(bagtrees, <span class="at">newdata =</span> test)</span>
-<span id="cb147-2"><a href="bagging-rf-r.html#cb147-2" aria-hidden="true" tabindex="-1"></a>caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(pred, test<span class="sc">$</span>taste)</span></code></pre></div>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="bagging-rf-r.html#cb147-1"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(bagtrees, <span class="dt">newdata =</span> test)</span>
+<span id="cb147-2"><a href="bagging-rf-r.html#cb147-2"></a>caret<span class="op">::</span><span class="kw">confusionMatrix</span>(pred, test<span class="op">$</span>taste)</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -453,20 +418,20 @@ Por ejemplo el siguiente código permite extraer la variable seleccionada para l
 ##        &#39;Positive&#39; Class : good            
 ## </code></pre>
 </div>
-<div id="ejemplo-clasificación-con-bosques-aleatorios" class="section level3" number="3.3.2">
+<div id="ejemplo-clasif-rf" class="section level3">
 <h3><span class="header-section-number">3.3.2</span> Ejemplo: Clasificación con bosques aleatorios</h3>
 <p>Continuando con el ejemplo anterior, empleamos la función <code>randomForest()</code> con las opciones por defecto para ajustar un bosque aleatorio:</p>
-<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="bagging-rf-r.html#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load(&quot;data/winetaste.RData&quot;)</span></span>
-<span id="cb149-2"><a href="bagging-rf-r.html#cb149-2" aria-hidden="true" tabindex="-1"></a><span class="co"># set.seed(1)</span></span>
-<span id="cb149-3"><a href="bagging-rf-r.html#cb149-3" aria-hidden="true" tabindex="-1"></a><span class="co"># df &lt;- winetaste</span></span>
-<span id="cb149-4"><a href="bagging-rf-r.html#cb149-4" aria-hidden="true" tabindex="-1"></a><span class="co"># nobs &lt;- nrow(df)</span></span>
-<span id="cb149-5"><a href="bagging-rf-r.html#cb149-5" aria-hidden="true" tabindex="-1"></a><span class="co"># itrain &lt;- sample(nobs, 0.8 * nobs)</span></span>
-<span id="cb149-6"><a href="bagging-rf-r.html#cb149-6" aria-hidden="true" tabindex="-1"></a><span class="co"># train &lt;- df[itrain, ]</span></span>
-<span id="cb149-7"><a href="bagging-rf-r.html#cb149-7" aria-hidden="true" tabindex="-1"></a><span class="co"># test &lt;- df[-itrain, ]</span></span>
-<span id="cb149-8"><a href="bagging-rf-r.html#cb149-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb149-9"><a href="bagging-rf-r.html#cb149-9" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb149-10"><a href="bagging-rf-r.html#cb149-10" aria-hidden="true" tabindex="-1"></a>rf <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(taste <span class="sc">~</span> ., <span class="at">data =</span> train)</span>
-<span id="cb149-11"><a href="bagging-rf-r.html#cb149-11" aria-hidden="true" tabindex="-1"></a>rf</span></code></pre></div>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="bagging-rf-r.html#cb149-1"></a><span class="co"># load(&quot;data/winetaste.RData&quot;)</span></span>
+<span id="cb149-2"><a href="bagging-rf-r.html#cb149-2"></a><span class="co"># set.seed(1)</span></span>
+<span id="cb149-3"><a href="bagging-rf-r.html#cb149-3"></a><span class="co"># df &lt;- winetaste</span></span>
+<span id="cb149-4"><a href="bagging-rf-r.html#cb149-4"></a><span class="co"># nobs &lt;- nrow(df)</span></span>
+<span id="cb149-5"><a href="bagging-rf-r.html#cb149-5"></a><span class="co"># itrain &lt;- sample(nobs, 0.8 * nobs)</span></span>
+<span id="cb149-6"><a href="bagging-rf-r.html#cb149-6"></a><span class="co"># train &lt;- df[itrain, ]</span></span>
+<span id="cb149-7"><a href="bagging-rf-r.html#cb149-7"></a><span class="co"># test &lt;- df[-itrain, ]</span></span>
+<span id="cb149-8"><a href="bagging-rf-r.html#cb149-8"></a></span>
+<span id="cb149-9"><a href="bagging-rf-r.html#cb149-9"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb149-10"><a href="bagging-rf-r.html#cb149-10"></a>rf &lt;-<span class="st"> </span><span class="kw">randomForest</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train)</span>
+<span id="cb149-11"><a href="bagging-rf-r.html#cb149-11"></a>rf</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ##  randomForest(formula = taste ~ ., data = train) 
@@ -480,11 +445,11 @@ Por ejemplo el siguiente código permite extraer la variable seleccionada para l
 ## good  578  84   0.1268882
 ## bad   136 202   0.4023669</code></pre>
 <p>En este caso también observamos que aparentemente hay convergencia y tampoco sería necesario incrementar el número de árboles:</p>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="bagging-rf-r.html#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rf, <span class="at">main =</span> <span class="st">&quot;Tasas de error&quot;</span>)</span>
-<span id="cb151-2"><a href="bagging-rf-r.html#cb151-2" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="fu">colnames</span>(rf<span class="sc">$</span>err.rate), <span class="at">lty =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">col =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="bagging-rf-r.html#cb151-1"></a><span class="kw">plot</span>(rf, <span class="dt">main =</span> <span class="st">&quot;Tasas de error&quot;</span>)</span>
+<span id="cb151-2"><a href="bagging-rf-r.html#cb151-2"></a><span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="kw">colnames</span>(rf<span class="op">$</span>err.rate), <span class="dt">lty =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">col =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">6</span>)</span></code></pre></div>
 <p><img src="03-bagging_boosting_files/figure-html/unnamed-chunk-7-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>Podemos mostrar la importancia de las variables predictoras con la función <code>importance()</code> o representarlas con <code>varImpPlot()</code>:</p>
-<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="bagging-rf-r.html#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="fu">importance</span>(rf)</span></code></pre></div>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="bagging-rf-r.html#cb152-1"></a><span class="kw">importance</span>(rf)</span></code></pre></div>
 <pre><code>##                      MeanDecreaseGini
 ## fixed.acidity                37.77155
 ## volatile.acidity             43.99769
@@ -497,11 +462,11 @@ Por ejemplo el siguiente código permite extraer la variable seleccionada para l
 ## pH                           32.31442
 ## sulphates                    30.32322
 ## alcohol                      63.89185</code></pre>
-<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="bagging-rf-r.html#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="fu">varImpPlot</span>(rf)</span></code></pre></div>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="bagging-rf-r.html#cb154-1"></a><span class="kw">varImpPlot</span>(rf)</span></code></pre></div>
 <p><img src="03-bagging_boosting_files/figure-html/unnamed-chunk-8-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>Si evaluamos la precisión en la muestra de test podemos observar un ligero incremento en la precisión en comparación con el método anterior:</p>
-<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="bagging-rf-r.html#cb155-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(rf, <span class="at">newdata =</span> test)</span>
-<span id="cb155-2"><a href="bagging-rf-r.html#cb155-2" aria-hidden="true" tabindex="-1"></a>caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(pred, test<span class="sc">$</span>taste)</span></code></pre></div>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="bagging-rf-r.html#cb155-1"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(rf, <span class="dt">newdata =</span> test)</span>
+<span id="cb155-2"><a href="bagging-rf-r.html#cb155-2"></a>caret<span class="op">::</span><span class="kw">confusionMatrix</span>(pred, test<span class="op">$</span>taste)</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -530,9 +495,9 @@ Por ejemplo el siguiente código permite extraer la variable seleccionada para l
 ##        &#39;Positive&#39; Class : good            
 ## </code></pre>
 <p>Esta mejora sería debida a que en este caso la dependencia entre los árboles es menor:</p>
-<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="bagging-rf-r.html#cb157-1" aria-hidden="true" tabindex="-1"></a>split_var_1 <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">seq_len</span>(rf<span class="sc">$</span>ntree),</span>
-<span id="cb157-2"><a href="bagging-rf-r.html#cb157-2" aria-hidden="true" tabindex="-1"></a>                      <span class="cf">function</span>(i) <span class="fu">getTree</span>(rf, i, <span class="at">labelVar=</span><span class="cn">TRUE</span>)[<span class="dv">1</span>, <span class="st">&quot;split var&quot;</span>])</span>
-<span id="cb157-3"><a href="bagging-rf-r.html#cb157-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(split_var_1)</span></code></pre></div>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="bagging-rf-r.html#cb157-1"></a>split_var_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span class="kw">seq_len</span>(rf<span class="op">$</span>ntree),</span>
+<span id="cb157-2"><a href="bagging-rf-r.html#cb157-2"></a>                      <span class="cf">function</span>(i) <span class="kw">getTree</span>(rf, i, <span class="dt">labelVar=</span><span class="ot">TRUE</span>)[<span class="dv">1</span>, <span class="st">&quot;split var&quot;</span>])</span>
+<span id="cb157-3"><a href="bagging-rf-r.html#cb157-3"></a><span class="kw">table</span>(split_var_<span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## split_var_1
 ##              alcohol            chlorides          citric.acid 
 ##                  150                   49                   38 
@@ -544,13 +509,13 @@ Por ejemplo el siguiente código permite extraer la variable seleccionada para l
 ##                   49                   41</code></pre>
 <p>El análisis e interpretación del modelo puede resultar más complicado en este tipo de métodos.
 Por ejemplo, podemos emplear alguna de las herramientas mostradas en la Sección <a href="analisis-modelos.html#analisis-modelos">1.5</a>:</p>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="bagging-rf-r.html#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;pdp&quot;)</span></span>
-<span id="cb159-2"><a href="bagging-rf-r.html#cb159-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pdp)</span>
-<span id="cb159-3"><a href="bagging-rf-r.html#cb159-3" aria-hidden="true" tabindex="-1"></a>pdp1 <span class="ot">&lt;-</span> <span class="fu">partial</span>(rf, <span class="st">&quot;alcohol&quot;</span>)</span>
-<span id="cb159-4"><a href="bagging-rf-r.html#cb159-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPartial</span>(pdp1)</span></code></pre></div>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="bagging-rf-r.html#cb159-1"></a><span class="co"># install.packages(&quot;pdp&quot;)</span></span>
+<span id="cb159-2"><a href="bagging-rf-r.html#cb159-2"></a><span class="kw">library</span>(pdp)</span>
+<span id="cb159-3"><a href="bagging-rf-r.html#cb159-3"></a>pdp1 &lt;-<span class="st"> </span><span class="kw">partial</span>(rf, <span class="st">&quot;alcohol&quot;</span>)</span>
+<span id="cb159-4"><a href="bagging-rf-r.html#cb159-4"></a><span class="kw">plotPartial</span>(pdp1)</span></code></pre></div>
 <p><img src="03-bagging_boosting_files/figure-html/unnamed-chunk-11-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="bagging-rf-r.html#cb160-1" aria-hidden="true" tabindex="-1"></a>pdp2 <span class="ot">&lt;-</span> <span class="fu">partial</span>(rf, <span class="fu">c</span>(<span class="st">&quot;alcohol&quot;</span>, <span class="st">&quot;density&quot;</span>))</span>
-<span id="cb160-2"><a href="bagging-rf-r.html#cb160-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPartial</span>(pdp2)</span></code></pre></div>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="bagging-rf-r.html#cb160-1"></a>pdp2 &lt;-<span class="st"> </span><span class="kw">partial</span>(rf, <span class="kw">c</span>(<span class="st">&quot;alcohol&quot;</span>, <span class="st">&quot;density&quot;</span>))</span>
+<span id="cb160-2"><a href="bagging-rf-r.html#cb160-2"></a><span class="kw">plotPartial</span>(pdp2)</span></code></pre></div>
 <p><img src="03-bagging_boosting_files/figure-html/unnamed-chunk-11-2.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>En este caso también puede ser de utilidad el paquete <a href="https://modeloriented.github.io/randomForestExplainer"><code>randomForestExplainer</code></a>.</p>
 <!-- 
@@ -560,34 +525,34 @@ library(randomForestExplainer)
 plot_min_depth_distribution(rf)
 plot_min_depth_interactions(rf, k = 5) # solo 5 mejores iteracione-->
 </div>
-<div id="ejemplo-bosques-aleatorios-con-caret" class="section level3" number="3.3.3">
+<div id="ejemplo-bosques-aleatorios-con-caret" class="section level3">
 <h3><span class="header-section-number">3.3.3</span> Ejemplo: bosques aleatorios con <code>caret</code></h3>
-<p>En paquete <code>caret</code> hay varias implementaciones de bagging y bosques aleatorios<a href="#fn21" class="footnote-ref" id="fnref21"><sup>21</sup></a>, incluyendo el algoritmo del paquete <code>randomForest</code> considerando como hiperparámetro el número de predictores seleccionados al azar en cada división <code>mtry</code>.
+<p>En paquete <code>caret</code> hay varias implementaciones de bagging y bosques aleatorios<a href="#fn20" class="footnote-ref" id="fnref20"><sup>20</sup></a>, incluyendo el algoritmo del paquete <code>randomForest</code> considerando como hiperparámetro el número de predictores seleccionados al azar en cada división <code>mtry</code>.
 Para ajustar este modelo a una muestra de entrenamiento hay que establecer <code>method = "rf"</code> en la llamada a <code>train()</code>.</p>
-<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="bagging-rf-r.html#cb161-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
-<span id="cb161-2"><a href="bagging-rf-r.html#cb161-2" aria-hidden="true" tabindex="-1"></a><span class="co"># str(getModelInfo(&quot;rf&quot;, regex = FALSE))</span></span>
-<span id="cb161-3"><a href="bagging-rf-r.html#cb161-3" aria-hidden="true" tabindex="-1"></a><span class="fu">modelLookup</span>(<span class="st">&quot;rf&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="bagging-rf-r.html#cb161-1"></a><span class="kw">library</span>(caret)</span>
+<span id="cb161-2"><a href="bagging-rf-r.html#cb161-2"></a><span class="co"># str(getModelInfo(&quot;rf&quot;, regex = FALSE))</span></span>
+<span id="cb161-3"><a href="bagging-rf-r.html#cb161-3"></a><span class="kw">modelLookup</span>(<span class="st">&quot;rf&quot;</span>)</span></code></pre></div>
 <pre><code>##   model parameter                         label forReg forClass probModel
 ## 1    rf      mtry #Randomly Selected Predictors   TRUE     TRUE      TRUE</code></pre>
-<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="bagging-rf-r.html#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load(&quot;data/winetaste.RData&quot;)</span></span>
-<span id="cb163-2"><a href="bagging-rf-r.html#cb163-2" aria-hidden="true" tabindex="-1"></a><span class="co"># set.seed(1)</span></span>
-<span id="cb163-3"><a href="bagging-rf-r.html#cb163-3" aria-hidden="true" tabindex="-1"></a><span class="co"># df &lt;- winetaste</span></span>
-<span id="cb163-4"><a href="bagging-rf-r.html#cb163-4" aria-hidden="true" tabindex="-1"></a><span class="co"># nobs &lt;- nrow(df)</span></span>
-<span id="cb163-5"><a href="bagging-rf-r.html#cb163-5" aria-hidden="true" tabindex="-1"></a><span class="co"># itrain &lt;- sample(nobs, 0.8 * nobs)</span></span>
-<span id="cb163-6"><a href="bagging-rf-r.html#cb163-6" aria-hidden="true" tabindex="-1"></a><span class="co"># train &lt;- df[itrain, ]</span></span>
-<span id="cb163-7"><a href="bagging-rf-r.html#cb163-7" aria-hidden="true" tabindex="-1"></a><span class="co"># test &lt;- df[-itrain, ]</span></span></code></pre></div>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="bagging-rf-r.html#cb163-1"></a><span class="co"># load(&quot;data/winetaste.RData&quot;)</span></span>
+<span id="cb163-2"><a href="bagging-rf-r.html#cb163-2"></a><span class="co"># set.seed(1)</span></span>
+<span id="cb163-3"><a href="bagging-rf-r.html#cb163-3"></a><span class="co"># df &lt;- winetaste</span></span>
+<span id="cb163-4"><a href="bagging-rf-r.html#cb163-4"></a><span class="co"># nobs &lt;- nrow(df)</span></span>
+<span id="cb163-5"><a href="bagging-rf-r.html#cb163-5"></a><span class="co"># itrain &lt;- sample(nobs, 0.8 * nobs)</span></span>
+<span id="cb163-6"><a href="bagging-rf-r.html#cb163-6"></a><span class="co"># train &lt;- df[itrain, ]</span></span>
+<span id="cb163-7"><a href="bagging-rf-r.html#cb163-7"></a><span class="co"># test &lt;- df[-itrain, ]</span></span></code></pre></div>
 <p>Con las opciones por defecto únicamente evalúa tres valores posibles del hiperparámetro (se podría aumentar el número con <code>tuneLength</code> o especificarlos con <code>tuneGrid</code>), pero aún así el tiempo de computación puede ser alto (puede ser recomendable reducir el valor de <code>nodesize</code> o paralelizar los cálculos; otras implementaciones pueden ser más eficientes).</p>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="bagging-rf-r.html#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb164-2"><a href="bagging-rf-r.html#cb164-2" aria-hidden="true" tabindex="-1"></a>rf.caret <span class="ot">&lt;-</span> <span class="fu">train</span>(taste <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">method =</span> <span class="st">&quot;rf&quot;</span>)</span>
-<span id="cb164-3"><a href="bagging-rf-r.html#cb164-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rf.caret)</span></code></pre></div>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="bagging-rf-r.html#cb164-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb164-2"><a href="bagging-rf-r.html#cb164-2"></a>rf.caret &lt;-<span class="st"> </span><span class="kw">train</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train, <span class="dt">method =</span> <span class="st">&quot;rf&quot;</span>)</span>
+<span id="cb164-3"><a href="bagging-rf-r.html#cb164-3"></a><span class="kw">plot</span>(rf.caret)</span></code></pre></div>
 <p><img src="03-bagging_boosting_files/figure-html/caret-rf-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>Breiman (2001) sugiere emplear el valor por defecto, la mitad y el doble:</p>
-<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="bagging-rf-r.html#cb165-1" aria-hidden="true" tabindex="-1"></a>mtry.class <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">ncol</span>(train) <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb165-2"><a href="bagging-rf-r.html#cb165-2" aria-hidden="true" tabindex="-1"></a>tuneGrid <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">mtry =</span> <span class="fu">floor</span>(<span class="fu">c</span>(mtry.class<span class="sc">/</span><span class="dv">2</span>, mtry.class, <span class="dv">2</span><span class="sc">*</span>mtry.class)))</span>
-<span id="cb165-3"><a href="bagging-rf-r.html#cb165-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb165-4"><a href="bagging-rf-r.html#cb165-4" aria-hidden="true" tabindex="-1"></a>rf.caret <span class="ot">&lt;-</span> <span class="fu">train</span>(taste <span class="sc">~</span> ., <span class="at">data =</span> train,</span>
-<span id="cb165-5"><a href="bagging-rf-r.html#cb165-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">method =</span> <span class="st">&quot;rf&quot;</span>, <span class="at">tuneGrid =</span> tuneGrid)</span>
-<span id="cb165-6"><a href="bagging-rf-r.html#cb165-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rf.caret)</span></code></pre></div>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="bagging-rf-r.html#cb165-1"></a>mtry.class &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">ncol</span>(train) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</span>
+<span id="cb165-2"><a href="bagging-rf-r.html#cb165-2"></a>tuneGrid &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">mtry =</span> <span class="kw">floor</span>(<span class="kw">c</span>(mtry.class<span class="op">/</span><span class="dv">2</span>, mtry.class, <span class="dv">2</span><span class="op">*</span>mtry.class)))</span>
+<span id="cb165-3"><a href="bagging-rf-r.html#cb165-3"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb165-4"><a href="bagging-rf-r.html#cb165-4"></a>rf.caret &lt;-<span class="st"> </span><span class="kw">train</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train,</span>
+<span id="cb165-5"><a href="bagging-rf-r.html#cb165-5"></a>                  <span class="dt">method =</span> <span class="st">&quot;rf&quot;</span>, <span class="dt">tuneGrid =</span> tuneGrid)</span>
+<span id="cb165-6"><a href="bagging-rf-r.html#cb165-6"></a><span class="kw">plot</span>(rf.caret)</span></code></pre></div>
 <p><img src="03-bagging_boosting_files/figure-html/unnamed-chunk-13-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <!-- 
 Pendiente: 
@@ -597,9 +562,9 @@ crear un método "rf2" en `caret` que incluya `nodesize` como hiperparámetro (p
 </div>
 <div class="footnotes">
 <hr />
-<ol start="20">
-<li id="fn20"><p>Si se quiere minimizar el uso de memoria, por ejemplo mientras se seleccionan hiperparámetros, se puede establecer <code>keep.forest=FALSE</code>.<a href="bagging-rf-r.html#fnref20" class="footnote-back">↩︎</a></p></li>
-<li id="fn21"><p>Se puede hacer una búsqueda en la tabla del <a href="https://topepo.github.io/caret/available-models.html">Capítulo 6: Available Models</a> del manual.<a href="bagging-rf-r.html#fnref21" class="footnote-back">↩︎</a></p></li>
+<ol start="19">
+<li id="fn19"><p>Si se quiere minimizar el uso de memoria, por ejemplo mientras se seleccionan hiperparámetros, se puede establecer <code>keep.forest=FALSE</code>.<a href="bagging-rf-r.html#fnref19" class="footnote-back">↩︎</a></p></li>
+<li id="fn20"><p>Se puede hacer una búsqueda en la tabla del <a href="https://topepo.github.io/caret/available-models.html">Capítulo 6: Available Models</a> del manual.<a href="bagging-rf-r.html#fnref20" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -612,6 +577,7 @@ crear un método "rf2" en `caret` que incluya `nodesize` como hiperparámetro (p
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -630,7 +596,6 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -651,10 +616,6 @@ gitbook.start({
 "text": null
 },
 "download": ["aprendizaje_estadistico.pdf"],
-"search": {
-"engine": "fuse",
-"options": null
-},
 "toc": {
 "collapse": "subsection"
 }

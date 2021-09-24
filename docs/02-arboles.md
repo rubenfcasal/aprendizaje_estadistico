@@ -12,8 +12,7 @@ Se parte de un nodo inicial que representa a toda la muestra (se utiliza la mues
 Este proceso se repite un número finito de veces hasta obtener las hojas del árbol, es decir, los nodos terminales, que son los que se utilizan para realizar la predicción.
 Una vez construido el árbol, la predicción se realizará en cada nodo terminal utilizando, típicamente, la media en un problema de regresión y la moda en un problema de clasificación. 
 
-
-\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-2-1} \end{center}
+<img src="02-arboles_files/figure-html/unnamed-chunk-2-1.png" width="80%" style="display: block; margin: auto;" />
 
 <!-- 
 Pendiente:
@@ -26,8 +25,7 @@ Al final de este proceso iterativo el espacio predictor se ha particionado en re
 Si la relación entre las variables predictoras y la variable respuesta no se puede describir adecuadamente mediante rectángulos, la calidad predictiva del árbol será limitada. 
 Como vemos, la simplicidad del modelo es su principal argumento, pero también su talón de Aquiles.
 
-
-\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-3-1} \end{center}
+<img src="02-arboles_files/figure-html/unnamed-chunk-3-1.png" width="80%" style="display: block; margin: auto;" />
 
 Como se ha dicho antes, cada nodo padre se divide, a través de dos ramas, en dos nodos hijos. 
 Esto se hace seleccionando una variable predictora y dando respuesta a una pregunta dicotómica sobre ella.
@@ -292,9 +290,7 @@ str(winequality)
 barplot(table(winequality$quality))
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-4-1} \end{center}
+<img src="02-arboles_files/figure-html/unnamed-chunk-4-1.png" width="80%" style="display: block; margin: auto;" />
 
 En primer lugar se selecciona el 80\% de los datos como muestra de entrenamiento y el 20\% restante como muestra de test:
 
@@ -358,9 +354,7 @@ plot(tree)
 text(tree)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-8-1} \end{center}
+<img src="02-arboles_files/figure-html/unnamed-chunk-8-1.png" width="80%" style="display: block; margin: auto;" />
 
 Pero puede ser preferible emplear el paquete [`rpart.plot`](https://CRAN.R-project.org/package=rpart.plot)
 
@@ -370,9 +364,7 @@ library(rpart.plot)
 rpart.plot(tree, main="Regresion tree winequality")  
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-9-1} \end{center}
+<img src="02-arboles_files/figure-html/unnamed-chunk-9-1.png" width="80%" style="display: block; margin: auto;" />
 
 Nos interesa como se clasificaría a una nueva observación en los nodos terminales (en los nodos intermedios solo nos interesarían las condiciones, y el orden de las variables consideradas, hasta llegar a las hojas) y las correspondientes predicciones (la media de la respuesta en el correspondiente nodo terminal).
 Para ello, puede ser de utilidad imprimir las reglas:
@@ -537,9 +529,7 @@ printcp(tree)
 plotcp(tree)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-12-1} \end{center}
+<img src="02-arboles_files/figure-html/unnamed-chunk-12-1.png" width="80%" style="display: block; margin: auto;" />
 
 La tabla con los valores de las podas (óptimas, dependiendo del parámetro de complejidad) 
 está almacenada en la componente `$cptable`:
@@ -594,9 +584,7 @@ tree <- prune(tree, cp = cp)
 rpart.plot(tree, main="Regresion tree winequality") 
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-15-1} \end{center}
+<img src="02-arboles_files/figure-html/unnamed-chunk-15-1.png" width="80%" style="display: block; margin: auto;" />
 
 Podríamos estudiar el modelo final, por ejemplo mediante el método `summary()`, que entre otras cosas muestra una medida (en porcentaje) de la importancia de las variables explicativas para la predicción de la respuesta (teniendo en cuenta todas las particiones, principales y secundarias, en las que se emplea cada variable explicativa). 
 Alternativamente podríamos emplear el siguiente código:
@@ -634,9 +622,7 @@ plot(jitter(pred), jitter(obs), main = "Observado frente a predicciones (quality
 abline(a = 0, b = 1)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-17-1} \end{center}
+<img src="02-arboles_files/figure-html/unnamed-chunk-17-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 # Empleando el paquete caret 
@@ -777,9 +763,7 @@ library(rpart.plot)
 rpart.plot(tree, main="Classification tree winetaste") # Alternativa: rattle::fancyRpartPlot
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-22-1} \end{center}
+<img src="02-arboles_files/figure-html/unnamed-chunk-22-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 rpart.plot(tree, main="Classification tree winetaste",
@@ -790,9 +774,7 @@ rpart.plot(tree, main="Classification tree winetaste",
            nn = TRUE)            # display the node numbers 
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-22-2} \end{center}
+<img src="02-arboles_files/figure-html/unnamed-chunk-22-2.png" width="80%" style="display: block; margin: auto;" />
 
 Nos interesa como se clasificaría a una nueva observación (como se llega a los nodos terminales) y su probabilidad estimada (la frecuencia relativa de la clase más frecuente en el correspondiente nodo terminal).
 Al igual que en el caso de regresión, puede ser de utilidad imprimir las reglas:
@@ -890,9 +872,7 @@ Representamos los errores (reescalados) de validación cruzada:
 plotcp(tree)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-26-1} \end{center}
+<img src="02-arboles_files/figure-html/unnamed-chunk-26-1.png" width="80%" style="display: block; margin: auto;" />
 
 Para obtener el modelo final, seleccionamos el valor óptimo de complejidad siguiendo el criterio de un error estándar de Breiman et al. (1984) y podamos el arbol:
 
@@ -913,9 +893,7 @@ tree <- prune(tree, cp = cp)
 rpart.plot(tree, main="Classification tree winetaste")
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-27-1} \end{center}
+<img src="02-arboles_files/figure-html/unnamed-chunk-27-1.png" width="80%" style="display: block; margin: auto;" />
 
 El último paso sería evaluarlo en la muestra de test siguiendo los pasos descritos en la Sección \@ref(eval-class).
 El método `predict()` por defecto (`type = "prob"`) devuelve una matriz con las probabilidades de cada clase, habrá que establecer `type = "class"` (para más detalles consultar la ayuda de `predic.rpart()`).
@@ -1046,9 +1024,7 @@ caret.rpart
 ggplot(caret.rpart)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-29-1} \end{center}
+<img src="02-arboles_files/figure-html/unnamed-chunk-29-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 caret.rpart$finalModel
@@ -1087,9 +1063,7 @@ caret.rpart$finalModel
 rpart.plot(caret.rpart$finalModel, main="Classification tree winetaste")
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-29-2} \end{center}
+<img src="02-arboles_files/figure-html/unnamed-chunk-29-2.png" width="80%" style="display: block; margin: auto;" />
 
 Para utilizar la regla de "un error estándar" se puede añadir `selectionFunction = "oneSE"`
 
@@ -1163,18 +1137,14 @@ caret.rpart$finalModel
 rpart.plot(caret.rpart$finalModel, main = "Classification tree winetaste")
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-30-1} \end{center}
+<img src="02-arboles_files/figure-html/unnamed-chunk-30-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 var.imp <- varImp(caret.rpart)
 plot(var.imp)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-30-2} \end{center}
+<img src="02-arboles_files/figure-html/unnamed-chunk-30-2.png" width="80%" style="display: block; margin: auto;" />
 
 Para calcular las predicciones (o las estimaciones de las probabilidades) podemos emplear el método `predict.train()` y posteriormente `confusionMatrix()` para evaluar su precisión:
 
@@ -1290,7 +1260,5 @@ tree2 <- ctree(taste ~ ., data = train)
 plot(tree2)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-33-1} \end{center}
+<img src="02-arboles_files/figure-html/unnamed-chunk-33-1.png" width="80%" style="display: block; margin: auto;" />
 

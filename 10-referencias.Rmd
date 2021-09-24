@@ -82,6 +82,8 @@ Breiman, L. (2001). Random Forests. *Machine Learning*, 45(1), 5–32.
 
 Breiman, L. (2001). Statistical Modeling: The Two Cultures (with comments and a rejoinder by the author). *Statistical Science*, 16, 199-231.
 
+Chen, T. y Guestrin, C. (2016). Xgboost: A scalable tree boosting system. In *Proceedings of the 22nd acm sigkdd international conference on knowledge discovery and data mining*, pp. 785-794.
+
 Comon, P. (1994). Independent component analysis, a new concept?. *Signal processing*, 36(3), 287-314.
 
 Cortes, C. y Vapnik, V. (1995). Support–Vector Networks. *Machine Learning*, 20(3), 273–297.
@@ -138,6 +140,8 @@ Kearns, M. y Valiant, L. (1989). Cryptographic Limitations on Learning Boolean F
 Kruskal, J.B. (1969). Toward a practical method which helps uncover the structure of a set of observations by finding the line transformation which optimizes a new “index of condensation”. En Milton, R.C. y Nelder, J.A. (eds.), *Statistical Computation*, Academic Press, 427–440.
 
 Kuhn, M. (2008). Building predictive models in R using the caret package. *Journal of Statistical Software*, 28(5), 1-26.
+
+Kvålseth, T. O. (1985). Cautionary note about R2. *The American Statistician*, 39(4), 279-285.
 
 Lauro, C. (1996). Computational statistics or statistical computing, is that the question?, *Computational Statistics & Data Analysis*, 23 (1), 191-193.
 
