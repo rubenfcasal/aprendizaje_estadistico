@@ -1,5 +1,28 @@
 # Regresión no paramétrica {#reg-np}
 
+<!-- 
+---
+title: "Regresión no paramétrica"
+author: "Aprendizaje Estadístico (MTE, USC)"
+date: "Curso 2021/2022"
+bibliography: ["packages.bib", "aprendizaje_estadistico.bib"]
+link-citations: yes
+output: 
+  bookdown::html_document2:
+    pandoc_args: ["--number-offset", "6,0"]
+    toc: yes 
+    # mathjax: local            # copia local de MathJax, hay que establecer:
+    # self_contained: false     # las dependencias se guardan en ficheros externos 
+  bookdown::pdf_document2:
+    keep_tex: yes
+    toc: yes 
+---
+
+bookdown::preview_chapter("07-regresion_np.Rmd")
+knitr::purl("07-regresion_np.Rmd", documentation = 2)
+knitr::spin("07-regresion_np.R",knit = FALSE)
+-->
+
 ```{r , child = '_global_options.Rmd'}
 ```
 
@@ -106,9 +129,9 @@ Habitualmente se considera:
 
 -   $d=1$: Estimador lineal local.
 
-Desde el punto de vista asintótico ambos estimadores tienen un comportamiento similar^[Asintóticamente el estimador lineal local tiene un sesgo menor que el de Nadaraya-Watson (pero del mismo orden) y la misma varianza (e.g. Fan and Gijbels, 1996).], pero en la práctica suele ser preferible el estimador lineal local, sobre todo porque se ve menos afectado por el denominado efecto frontera (Sección \@ref(dimen-curse)).
+Desde el punto de vista asintótico ambos estimadores tienen un comportamiento similar^[Asintóticamente el estimador lineal local tiene un sesgo menor que el de Nadaraya-Watson (pero del mismo orden) y la misma varianza (e.g. @fan1996).], pero en la práctica suele ser preferible el estimador lineal local, sobre todo porque se ve menos afectado por el denominado efecto frontera (Sección \@ref(dimen-curse)).
 
-Aunque el paquete base de `R` incluye herramientas para la estimación tipo núcleo de la regresión (`ksmooth()`, `loess()`), recomiendan el uso del paquete `KernSmooth` (Wand y Ripley, 2020). 
+Aunque el paquete base de `R` incluye herramientas para la estimación tipo núcleo de la regresión (`ksmooth()`, `loess()`), recomiendan el uso del paquete `KernSmooth` [@R-KernSmooth]. 
 
 La ventana $h$ es el (hiper)parámetro de mayor importancia en la predicción y para seleccionarlo se suelen emplear métodos de validación cruzada (Sección \@ref(cv)) o tipo plug-in (reemplazando las funciones desconocidas que aparecen en la expresión de la ventana asintóticamente óptima por estimaciones; e.g. función `dpill()` del paquete `KernSmooth`).
 Por ejemplo, usando el criterio de validación cruzada dejando uno fuera (LOOCV) se trataría de minimizar:
@@ -118,7 +141,7 @@ Al igual que en el caso de regresión lineal, este error también se puede obten
 $$CV(h)=\frac{1}{n}\sum_{i=1}^n\left(\frac{y_i-\hat{m}(x_i)}{1 - S_{ii}}\right)^2$$
 siendo $S_{ii}$ el elemento $i$-ésimo de la diagonal de la matriz de suavizado (esto en general es cierto para cualquier suavizador lineal).
 
-Alternativamente se podría emplear *validación cruzada generalizada* (Craven y Wahba, 1979):
+Alternativamente se podría emplear *validación cruzada generalizada* [@craven1978smoothing]:
 $$GCV(h)=\frac{1}{n}\sum_{i=1}^n\left(\frac{y_i-\hat{m}(x_i)}{1 - \frac{1}{n}tr(S)}\right)^2$$
 (sustituyendo $S_{ii}$ por su promedio). 
 Además, la traza de la matriz de suavizado $tr(S)$ es lo que se conoce como el *número efectivo de parámetros* ($n - tr(S)$ sería una aproximación de los grados de libertad del error).
@@ -249,7 +272,7 @@ siendo $(x - z)_+ = \max(0, x - z)$, y posteriormente realizar un ajuste lineal:
 $$m(x) = \beta_0 + \beta_1 b_1(x) +  \beta_2 b_2(x) + \ldots  + \beta_{k+d} b_{k+d}(x)$$
 
 Típicamente se seleccionan polinomios de grado $d=3$, lo que se conoce como splines cúbicos, y nodos equiespaciados.
-Además, se podrían emplear otras bases equivalentes. Por ejemplo, para evitar posibles problemas computacionales con la base anterior, se suele emplear la denominada base $B$-spline (de Boor, 1978; implementada en la función `bs()` del paquete `splines`).
+Además, se podrían emplear otras bases equivalentes. Por ejemplo, para evitar posibles problemas computacionales con la base anterior, se suele emplear la denominada base $B$-spline [@de1978practical], implementada en la función `bs()` del paquete `splines`.
 
 ```{r}
 nknots <- 9 # nodos internos; 10 intervalos
@@ -332,10 +355,10 @@ Cuando el número de observaciones es muy grande, y por tanto el número de nodo
 
 Los splines penalizados (*penalized splines*) combinan las dos aproximaciones anteriores.
 Incluyen una penalización (que depende de la base considerada) y el número de nodos puede ser mucho menor que el número de observaciones (son un tipo de *low-rank smoothers*). De esta forma se obtienen modelos spline con mejores propiedades, con un menor efecto frontera y en los que se evitan problemas en la selección de los nodos.
-Unos de los más empleados son los $P$-splines (Eilers and Marx, 1996) que emplean una base $B$-spline con una penalización simple (basada en los cuadrados de diferencias de coeficientes consecutivos $(\beta_{i+1} - \beta_i)^2$).
+Unos de los más empleados son los $P$-splines [@eilers1996flexible] que emplean una base $B$-spline con una penalización simple (basada en los cuadrados de diferencias de coeficientes consecutivos $(\beta_{i+1} - \beta_i)^2$).
 
 Además, un modelo spline penalizado se puede representar como un modelo lineal mixto, lo que permite emplear herramientas desarrolladas para este tipo de modelos (por ejemplo la implementadas en el paquete `nlme`, del que depende `mgcv`, que por defecto emplea splines penalizados).
-Para más detalles ver por ejemplo las secciones 5.2 y 5.3 de Wood (2017).
+Para más detalles ver por ejemplo las secciones 5.2 y 5.3 de @wood2017generalized.
 
 <!-- 
 ?mgcv::adaptive.smooth 
@@ -348,7 +371,7 @@ Se supone que:
 $$Y= \beta_{0} + f_1(X_1) + f_2(X_2) + \ldots + f_p(X_p)  + \varepsilon$$
 con $f_{i},$ $i=1,...,p,$ funciones cualesquiera.
 De esta forma se consigue mucha mayor flexibilidad que con los modelos lineales pero manteniendo la interpretabilidad de los efectos de los predictores. 
-Adicionalmente se puede considerar una función de enlace, obteniéndose los denominados *modelos aditivos generalizados* (GAM). Para más detalles sobre este tipo modelos ver por ejemplo Hastie y Tibshirani (1990) o Wood (2017).
+Adicionalmente se puede considerar una función de enlace, obteniéndose los denominados *modelos aditivos generalizados* (GAM). Para más detalles sobre este tipo modelos ver por ejemplo @hastie1990generalized o @wood2017generalized.
 
 Los modelos lineales (generalizados) serían un caso particular considerando $f_{i}(x) = \beta_{i}x$.
 Además, se podrían considerar cualquiera de los métodos de suavizado descritos anteriormente para construir las componentes no paramétricas (por ejemplo si se emplean splines naturales de regresión el ajuste se reduciría al de un modelo lineal).
@@ -359,20 +382,12 @@ Si en las componentes no paramétricas se emplea únicamente splines de regresi�
 De entre todos los paquetes de R que implementan estos modelos destacan: 
 
 - `gam`: Admite splines de suavizado (univariantes, `s()`) y regresión polinómica local (multivariante, `lo()`), pero no dispone de un método para la selección automática de los parámetros de suavizado (se podría emplear un criterio por pasos para la selección de componentes).
-Sigue la referencia:
-
-    * Hastie, T.J. y Tibshirani, R.J. (1990). *Generalized Additive Models*. Chapman & Hall.
-
-<br> \vspace{0.5cm}
+Sigue la referencia @hastie1990generalized.
 
 - `mgcv`: Admite una gran variedad de splines de regresión y splines penalizados (`s()`; por defecto emplea thin plate regression splines penalizados multivariantes), con la opción de selección automática de los parámetros de suavizado mediante distintos criterios.
 Además de que se podría emplear un método por pasos, permite la selección de componentes mediante regularización.
 Al ser más completo que el anterior sería el recomendado en la mayoría de los casos (ver `?mgcv::mgcv.package` para una introducción al paquete).
-Sigue la referencia:
-
-    * Wood, S.N. (2017). *Generalized Additive Models: An Introduction with R*. Chapman & Hall/CRC
-
-<br> \vspace{0.5cm}
+Sigue la referencia @wood2017generalized.
 
 
 ### Ajuste: función `gam` 
@@ -551,7 +566,7 @@ Es preferible suponer que hay una interacción entre `Temp` y `Wind`?
 
 ## Regresión spline adaptativa multivariante {#mars}
 
-La regresión spline adaptativa multivariante, en inglés *multivariate adaptive regression splines* (MARS; Friedman, 1991), es un procedimiento adaptativo para problemas de regresión que puede verse como una generalización tanto de la regresión lineal por pasos (*stepwise linear regression*) como de los árboles de decisión CART. 
+La regresión spline adaptativa multivariante, en inglés *multivariate adaptive regression splines* [MARS; @friedman1991multivariate], es un procedimiento adaptativo para problemas de regresión que puede verse como una generalización tanto de la regresión lineal por pasos (*stepwise linear regression*) como de los árboles de decisión CART. 
 
 El modelo MARS es un spline multivariante lineal:  
 $$m(\mathbf{x}) = \beta_0 + \sum_{m=1}^M \beta_m h_m(\mathbf{x})$$
@@ -755,7 +770,7 @@ accuracy(pred, test$O3)
 
 ## Projection pursuit
 
-*Projection pursuit* (Friedman y Tukey, 1974) es una técnica de análisis exploratorio de datos multivariantes que busca proyecciones lineales de los datos en espacios de dimensión baja, siguiendo una idea originalmente propuesta en Kruskal (1969).
+*Projection pursuit* [@friedman1974projection] es una técnica de análisis exploratorio de datos multivariantes que busca proyecciones lineales de los datos en espacios de dimensión baja, siguiendo una idea originalmente propuesta en [@kruskal1969toward].
 Inicialmente se presentó como una técnica gráfica y por ese motivo buscaba proyecciones de dimensión 1 o 2 (proyecciones en rectas o planos), resultando que las direcciones interesantes son aquellas con distribución no normal. 
 La motivación es que cuando se realizan transformaciones lineales lo habitual es que el resultado tenga la apariencia de una distribución normal (por el teorema central del límite), lo cual oculta las singularidades de los datos originales. 
 Se supone que los datos son una trasformación lineal de componentes no gaussianas (variables latentes) y la idea es deshacer esta transformación mediante la optimización de una función objetivo, que en este contexto recibe el nombre de *projection index*.
@@ -766,7 +781,7 @@ Hay extensiones de *projection pursuit* para regresión, clasificación, estimac
 
 ### Regresión por *projection pursuit* {#ppr}
 
-En el método original de *projection pursuit regression* (PPR; Friedman y Stuetzle, 1981) se considera el siguiente modelo semiparamétrico
+En el método original de *projection pursuit regression* [PPR; @friedman1981projection] se considera el siguiente modelo semiparamétrico
 $$m(\mathbf{x}) = \sum_{m=1}^M g_m (\alpha_{1m}x_1 + \alpha_{2m}x_2 + \ldots + \alpha_{pm}x_p)$$
 siendo $\boldsymbol{\alpha}_m = (\alpha_{1m}, \alpha_{2m}, \ldots, \alpha_{pm})$ vectores de parámetros (desconocidos) de módulo unitario y $g_m$ funciones suaves (desconocidas), denominadas funciones *ridge*.
 
@@ -800,7 +815,7 @@ va añadiendo términos *ridge* hasta un máximo de `max.terms` y posteriormente
 Por defecto emplea el *super suavizador* de Friedman (función `supsmu()`, con parámetros `bass` y `spam`), aunque también admite splines (función `smooth.spline()`, fijando los grados de libertad con `df` o seleccionándolos mediante GCV).
 Para más detalles ver `help(ppr)`.
 
-Continuaremos con el ejemplo del conjunto de datos `earth::Ozone1`. En primer lugar ajustamos un modelo PPR con dos términos (incrementando el suavizado por defecto de `supsmu()` siguiendo la recomendación de Venables y Ripley, 2002):
+Continuaremos con el ejemplo del conjunto de datos `earth::Ozone1`. En primer lugar ajustamos un modelo PPR con dos términos [incrementando el suavizado por defecto de `supsmu()` siguiendo la recomendación de @Venables2002Modern]:
 
 ```{r fig.height=6, fig.width=12, out.width = "90%"}
 ppreg <- ppr(O3 ~ ., nterms = 2, data = train, bass = 2)
@@ -839,7 +854,7 @@ pred <- predict(caret.ppr, newdata = test)
 accuracy(pred, obs)
 ```
 
-Para ajustar un modelo *single index* también se podría emplear la función `npindex()` del paquete  `r citepkg("np","https://github.com/JeffreyRacine/R-Package-np")` (que implementa el método de Ichimura, 1993, considerando un estimador local constante), aunque en este caso ni el tiempo de computación ni el resultado es satisfactorio:
+Para ajustar un modelo *single index* también se podría emplear la función `npindex()` del paquete  `r citepkg("np","https://github.com/JeffreyRacine/R-Package-np")` [que implementa el método de @ichimura1993, considerando un estimador local constante], aunque en este caso ni el tiempo de computación ni el resultado es satisfactorio:
 
 ```{r results=FALSE}
 library(np)

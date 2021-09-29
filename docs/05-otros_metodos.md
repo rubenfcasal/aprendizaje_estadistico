@@ -1,5 +1,28 @@
 # Otros métodos de clasificación {#class-otros}
 
+<!-- 
+---
+title: "Otros métodos de clasificación"
+author: "Aprendizaje Estadístico (MTE, USC)"
+date: "Curso 2021/2022"
+bibliography: ["packages.bib", "aprendizaje_estadistico.bib"]
+link-citations: yes
+output: 
+  bookdown::html_document2:
+    pandoc_args: ["--number-offset", "4,0"]
+    toc: yes 
+    # mathjax: local            # copia local de MathJax, hay que establecer:
+    # self_contained: false     # las dependencias se guardan en ficheros externos 
+  bookdown::pdf_document2:
+    keep_tex: yes
+    toc: yes 
+---
+
+bookdown::preview_chapter("05-otros_metodos.Rmd")
+knitr::purl("05-otros_metodos.Rmd", documentation = 2)
+knitr::spin("05-otros_metodos.R",knit = FALSE)
+-->
+
 
 
 
@@ -16,12 +39,12 @@ A continuación vamos a ver tres casos particulares de este enfoque, siempre sup
 
 ## Análisis discriminate lineal 
 
-El análisis lineal discrimintante (LDA) se inicia en Fisher (1936) pero es Welch (1939) quien lo enfoca utilizando el teorema de Bayes. Asumiendo que $X | Y = k \sim N(\mu_k, \Sigma)$, es decir, que todas las categorías comparten la misma matriz $\Sigma$, se obtienen las funciones discriminantes, lineales en $\mathbf{x}$,
+El análisis lineal discrimintante (LDA) se inicia en @fisher1936use pero es @welch1939note quien lo enfoca utilizando el teorema de Bayes. Asumiendo que $X | Y = k \sim N(\mu_k, \Sigma)$, es decir, que todas las categorías comparten la misma matriz $\Sigma$, se obtienen las funciones discriminantes, lineales en $\mathbf{x}$,
 $$\mathbf{x}^t \Sigma^{-1} \mu_k - \frac{1}{2} \mu_k^t \Sigma^{-1} \mu_k + \mbox{log}(P(Y = k))$$
 
 La dificultad técnica del método LDA reside en el cálculo de $\Sigma^{-1}$. Cuando hay más variables predictoras que datos, o cuando las variables predictoras están fuertemente correlacionadas, hay un problema. Una solución pasa por aplicar análisis de componentes principales (PCA) para reducir la dimensión y tener predictores incorrelados antes de utilizar LDA. Aunque la solución anterior se utiliza mucho, hay que tener en cuenta que la reducción de la dimensión se lleva a cabo sin tener en cuenta la información de las categorías, es decir, la estructura de los datos en categorías. Una alternativa consiste en utilizar *partial least squares discriminant analysis* (PLSDA, Berntsson y Wold, 1986). La idea consiste en realizar una regresión PLS siendo las categorías la respuesta, con el objetivo de reducir la dimensión a la vez que se maximiza la correlación con las respuestas.
 
-Una generalización de LDA es el *mixture discriminant analysis* (Hastie y Tibshirani, 1996) en el que, siempre con la misma matriz $\Sigma$, se contempla la posibilidad de que dentro de cada categoría haya múltiples subcategorías que únicamente difieren en la media. Las distribuciones dentro de cada clase se agregan mediante una mixtura de las distribuciones multivariantes.
+Una generalización de LDA es el *mixture discriminant analysis* [@hastie1996fisher] en el que, siempre con la misma matriz $\Sigma$, se contempla la posibilidad de que dentro de cada categoría haya múltiples subcategorías que únicamente difieren en la media. Las distribuciones dentro de cada clase se agregan mediante una mixtura de las distribuciones multivariantes.
 
 ### Ejemplo `MASS::lda`
 
@@ -79,7 +102,9 @@ ld
 plot(ld)
 ```
 
-<img src="05-otros_metodos_files/figure-html/unnamed-chunk-2-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{05-otros_metodos_files/figure-latex/unnamed-chunk-2-1} \end{center}
 
 ```r
 ld.pred <- predict(ld, newdata = test)
@@ -133,7 +158,7 @@ Si el número de variables predictoras es próximo al tamaño muestral, en la pr
 
 Al ser QDA una generalización de LDA podemos pensar que siempre va a ser preferible, pero eso no es cierto, ya que QDA requiere estimar muchos más parámetros que LDA y por tanto tiene más riesgo de sobreajustar. Al ser menos flexible, LDA da lugar a modelos más simples: menos varianza pero más sesgo. LDA suele funcionar mejor que QDA cuando hay pocos datos y es por tanto muy importante reducir la varianza. Por el contrario, QDA es recomendable cuando hay muchos datos. 
 
-Una solución intermedia entre LDA y QDA es el análisis discriminante regularizado (RDA, Friedman, 1989), que utiliza el hiperparámetro $\lambda$ para definir la matriz
+Una solución intermedia entre LDA y QDA es el análisis discriminante regularizado [RDA, @friedman1989regularized], que utiliza el hiperparámetro $\lambda$ para definir la matriz
 $$\Sigma_{k,\lambda}' = \lambda\Sigma_k + (1 - \lambda) \Sigma
 $$
 

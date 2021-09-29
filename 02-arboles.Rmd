@@ -1,5 +1,28 @@
 # Árboles de decisión {#trees}
 
+<!-- 
+---
+title: "Árboles de decisión"
+author: "Aprendizaje Estadístico (MTE, USC)"
+date: "Curso 2021/2022"
+bibliography: ["packages.bib", "aprendizaje_estadistico.bib"]
+link-citations: yes
+output: 
+  bookdown::html_document2:
+    pandoc_args: ["--number-offset", "1,0"]
+    toc: yes 
+    # mathjax: local            # copia local de MathJax, hay que establecer:
+    # self_contained: false     # las dependencias se guardan en ficheros externos 
+  bookdown::pdf_document2:
+    keep_tex: yes
+    toc: yes 
+---
+
+bookdown::preview_chapter("02-arboles.Rmd")
+knitr::purl("02-arboles.Rmd", documentation = 2)
+knitr::spin("02-arboles.R",knit = FALSE)
+-->
+
 ```{r , child = '_global_options.Rmd'}
 ```
 
@@ -76,7 +99,7 @@ En resumen:
 
 - Válidos para predictores numéricos y categóricos.
 
-La metodología CART (Classification and Regresion Trees, Breiman *et al.*, 1984) es la más popular para la construcción de árboles de decisión y es la que se va a explicar con algo de detalle en las siguientes secciones. 
+La metodología CART [Classification and Regresion Trees, @breiman1984classification] es la más popular para la construcción de árboles de decisión y es la que se va a explicar con algo de detalle en las siguientes secciones. 
 
 En primer lugar se tratarán los *árboles de regresión* (árboles de decisión en un problema de regresión, en el que la variable respuesta $Y$ es numérica) y después veremos los *arboles de clasificación* (respuesta categórica) que son los más utilizados en la práctica (los primeros se suelen emplear únicamente como métodos descriptivos o como base de métodos más complejos).
 Las variables predictoras $\mathbf{X}=(X_1, X_2, \ldots, X_p)$ pueden ser tanto numéricas como categóricas.
@@ -160,7 +183,7 @@ realmente nos interesa es encontrar el subárbol con un menor error al utilizar 
 de validación. Lamentablemente, no es una buena estrategia el evaluar todos los subárboles: 
 simplemente, hay demasiados. Lo que se hace es, mediante un 
 hiperparámetro (*tuning parameter* o parámetro de ajuste) controlar el tamaño del árbol, 
-es decir, la complejidad del modelo, seleccionando el subárbol *optimo* (para los datos 
+es decir, la complejidad del modelo, seleccionando el subárbol *óptimo* (para los datos 
 de los que disponemos, claro). Veamos la idea.
 
 Dado un subárbol $T$ con $R_1, R_2, \ldots, R_t$ nodos terminales, consideramos como 
@@ -230,7 +253,7 @@ Se utilizan tres medidas distintas del error en la región:
 - Índice de Gini:
     $$\sum_{k=1}^K \widehat p_{k} (1 - \widehat p_{k})$$
 
-- Entropía^[La entropía es un concepto básico de la teoría de la información (Shannon, 1948) y se mide en *bits* (cuando en la definición se utilizan $log_2$).] (*cross-entropy*):
+- Entropía^[La entropía es un concepto básico de la teoría de la información [@shannon1948mathematical] y se mide en *bits* (cuando en la definición se utilizan $log_2$).] (*cross-entropy*):
     $$- \sum_{k=1}^K \widehat p_{k} \text{log}(\widehat p_{k})$$
 
 Aunque la proporción de errores de clasificación es la medida del error más intuitiva, en la práctica sólo se utiliza para la fase de poda. Fijémonos que en el cálculo de esta medida sólo interviene $max_{k} (\widehat p_{k})$, mientras que en las medidas alternativas intervienen las proporciones $\widehat p_{k}$ de todas las categorías. Para la fase de crecimiento se utilizan indistintamente el índice de Gini o la entropía. Cuando nos interesa el error no en una única región sino en varias (al romper un nodo en dos, o al considerar todos los nodos terminales), se suman los errores de cada región previa ponderación por el número de observaciones que hay en cada una de ellas.
@@ -284,7 +307,7 @@ Para más detalles consultar la documentación de esta función o la vignette [*
 
 ### Ejemplo: regresión
 
-Emplearemos el conjunto de datos *winequality.RData* (ver Cortez et al., 2009), que contiene información fisico-química 
+Emplearemos el conjunto de datos *winequality.RData* [ver @cortez2009modeling], que contiene información fisico-química 
 (`fixed.acidity`, `volatile.acidity`, `citric.acid`, `residual.sugar`, `chlorides`, `free.sulfur.dioxide`, 
 `total.sulfur.dioxide`, `density`, `pH`, `sulphates` y `alcohol`) y sensorial (`quality`) 
 de una muestra de 1250 vinos portugueses de la variedad *Vinho Verde*.
@@ -368,7 +391,7 @@ head(tree$cptable, 10)
 ```
 
 A partir de la que podríamos seleccionar el valor óptimo de forma automática, 
-siguiendo el criterio de un error estándar de Breiman et al. (1984): 
+siguiendo el criterio de un error estándar de @breiman1984classification: 
 
 ```{r }
 xerror <- tree$cptable[,"xerror"]
@@ -510,7 +533,7 @@ Representamos los errores (reescalados) de validación cruzada:
 plotcp(tree)
 ```
 
-Para obtener el modelo final, seleccionamos el valor óptimo de complejidad siguiendo el criterio de un error estándar de Breiman et al. (1984) y podamos el arbol:
+Para obtener el modelo final, seleccionamos el valor óptimo de complejidad siguiendo el criterio de un error estándar de @breiman1984classification y podamos el arbol:
 
 ```{r }
 xerror <- tree$cptable[,"xerror"]
@@ -604,50 +627,33 @@ varImp(caret.rpart)
 
 ## Alternativas a los árboles CART
 
-Una de las alternativas más populares es la metodología C4.5 (Quinlan, 1993), evolución de ID3 (1986), que en estos momentos se encuentra en la versión C5.0 (y es ya muy similar a CART). 
+Una de las alternativas más populares es la metodología C4.5 [@quinlan1993c4], evolución de ID3 (1986), que en estos momentos se encuentra en la versión C5.0 (y es ya muy similar a CART). 
 C5.0 se utiliza sólo para clasificación e incorpora *boosting* (que veremos en el tema siguiente).
 Esta metodología está implementada en el paquete `r citepkg("C50", "https://topepo.github.io/C5.0/index.html")`. 
 
-Ross Quinlan desarrolló también la metodologia M5 (Quinlan, 1992) para regresión. 
-Su principal característica es que los nodos terminales, en lugar de contener un número, 
-contienen un modelo (de regresión) lineal. El paquete `r citepkg("Cubist", "https://topepo.github.io/Cubist")` es una evolución de M5 que incorpora un método *ensemble* similar a *boosting*.
+Ross Quinlan desarrolló también la metodologia M5 [@quinlan1992learning] para regresión. 
+Su principal característica es que los nodos terminales, en lugar de contener un número, contienen un modelo (de regresión) lineal. 
+El paquete `r citepkg("Cubist", "https://topepo.github.io/Cubist")` es una evolución de M5 que incorpora un método *ensemble* similar a *boosting*.
 
-La motivación detrás de M5 es que, si la predicción que aporta un nodo terminal se limita 
-a un único número (como hace la metodología CART), entonces el modelo va a predecir muy 
-mal los valores que *realmente* son muy extremos, ya que el número de posibles valores 
-predichos está limitado por el número de nodos terminales, y en cada uno de ellos se utiliza 
-una media. Por ello M5 le asocia a cada nodo un modelo de regresión lineal, para cuyo 
-ajuste se utilizan los datos del nodo y todas las variables que están en la ruta del nodo. 
-Para evaluar los posibles cortes que conducen al siguiente nodo, se utilizan los propios 
-modelos lineales para calcular la medida del error.
+La motivación detrás de M5 es que, si la predicción que aporta un nodo terminal se limita a un único número (como hace la metodología CART), entonces el modelo va a predecir muy mal los valores que *realmente* son muy extremos, ya que el número de posibles valores predichos está limitado por el número de nodos terminales, y en cada uno de ellos se utiliza una media. 
+Por ello M5 le asocia a cada nodo un modelo de regresión lineal, para cuyo ajuste se utilizan los datos del nodo y todas las variables que están en la ruta del nodo. 
+Para evaluar los posibles cortes que conducen al siguiente nodo, se utilizan los propios modelos lineales para calcular la medida del error.
 
-Una vez se ha construido todo el árbol, para realizar la predicción se puede utilizar 
-el modelo lineal que está en el nodo terminal correspondiente, pero funciona mejor 
-si se utiliza una combinación lineal del modelo del nodo terminal y de todos sus 
-nodos ascendientes (es decir, los que están en su camino).
+Una vez se ha construido todo el árbol, para realizar la predicción se puede utilizar el modelo lineal que está en el nodo terminal correspondiente, pero funciona mejor si se utiliza una combinación lineal del modelo del nodo terminal y de todos sus nodos ascendientes (es decir, los que están en su camino).
 
-Otra opción es CHAID (CHi-squared Automated Interaction Detection, Kass, 1980), que 
-se basa en una idea diferente. Es un método de construcción de árboles de clasificación 
-que se utiliza cuando las variables predictoras son cualitativas o discretas; 
-en caso contrario deben ser categorizadas previamente. Y se basa en el contraste chi-cuadrado 
-de independencia para tablas de contingencia.
+Otra opción es CHAID [CHi-squared Automated Interaction Detection, @kass1980exploratory], que se basa en una idea diferente. Es un método de construcción de árboles de clasificación que se utiliza cuando las variables predictoras son cualitativas o discretas; en caso contrario deben ser categorizadas previamente. 
+Y se basa en el contraste chi-cuadrado de independencia para tablas de contingencia.
 
-Para cada par $(X_i, Y)$, se considera su tabla de contingencia y se calcula el p-valor 
-del contraste chi-cuadrado, seleccionándose la variable predictora que tenga un p-valor 
-más pequeño, ya que se asume que las variables predictoras más relacionadas con la 
-respuesta $Y$ son las que van a tener p-valores más pequeños y darán lugar a mejores 
-predicciones. Se divide el nodo de acuerdo con los distintos valores de la variable 
-predictora seleccionada, y se repite el proceso mientras haya variables *significativas*. 
-Como el método exige que el p-valor sea menor que 0.05 (o el nivel de significación que 
-se elija), y hay que hacer muchas comparaciones es necesario aplicar una corrección para 
-comparaciones múltiples, por ejemplo la de Bonferroni.
+Para cada par $(X_i, Y)$, se considera su tabla de contingencia y se calcula el *p*-valor del contraste chi-cuadrado, seleccionándose la variable predictora que tenga un *p*-valor más pequeño, ya que se asume que las variables predictoras más relacionadas con la respuesta $Y$ son las que van a tener *p*-valores más pequeños y darán lugar a mejores predicciones. 
+Se divide el nodo de acuerdo con los distintos valores de la variable predictora seleccionada, y se repite el proceso mientras haya variables *significativas*.
+Como el método exige que el *p*-valor sea menor que 0.05 (o el nivel de significación que se elija), y hay que hacer muchas comparaciones es necesario aplicar una corrección para comparaciones múltiples, por ejemplo la de Bonferroni.
 
 Lo que acabamos de explicar daría lugar a árboles no necesariamente binarios. 
 Como se desea trabajar con árboles binarios (si se admite que de un nodo salga cualquier número de ramas, con muy pocos niveles de profundidad del árbol ya nos quedaríamos sin datos), es necesario hacer algo más: forzar a que las variables predictoras tengan sólo dos categorías mediante un proceso de fusión. 
-Se van haciendo pruebas chi-cuadrado entre pares de categorías y la variable respuesta, y se fusiona el par con el p-valor más alto, ya que se trata de fusionar las categorías que sean más similares.
+Se van haciendo pruebas chi-cuadrado entre pares de categorías y la variable respuesta, y se fusiona el par con el *p*-valor más alto, ya que se trata de fusionar las categorías que sean más similares.
 
-Para árboles de regresión hay metodologías que, al igual que CHAID, se basan en el cálculo de p-valores, en este caso de contrastes de igualdes de medias.
-Una de las más utilizadas son los *conditional inference trees* (Hothorn *et al.*, 2006)^[Otra alternativa es GUIDE (Generalized, Unbiased, Interaction Detection and Estimation; Loh, 2002).], implementada en la función `ctree()` del paquete `r citepkg("party")`.  
+Para árboles de regresión hay metodologías que, al igual que CHAID, se basan en el cálculo de *p*-valores, en este caso de contrastes de igualdes de medias.
+Una de las más utilizadas son los *conditional inference trees* [@hothorn2006unbiased]^[Otra alternativa es GUIDE (Generalized, Unbiased, Interaction Detection and Estimation; @loh2002regression).], implementada en la función `ctree()` del paquete `r citepkg("party")`.
 
 Un problema conocido de los árboles CART es que sufren un sesgo de selección de variables: los predictores con más valores distintos son favorecidos. 
 Esta es una de las motivaciones de utilizar estos métodos basados en contrastes de hipótesis. 
@@ -656,9 +662,13 @@ Por otra parte hay que ser conscientes de que los contrastes de hipótesis y la 
 
 ### Ejemplo
 
-```{r}
+Siguiendo con el problema de clasificación anterior, podríamos ajustar un arbol de decisión empleando la metodología de *inferencia condicional* mediante el siguiente código:
+
+```{r ctree-plot, fig.cap="Arbol de decisión para clasificar la calidad del vino obtenido con el método condicional.", fig.height=8, fig.width=10}
 library(party)
 tree2 <- ctree(taste ~ ., data = train) 
 plot(tree2)
 ```
+
+Para más detalles ver la vignette del paquete [*party: A Laboratory for Recursive Partytioning*](https://cran.r-project.org/web/packages/party/vignettes/party.pdf).
 

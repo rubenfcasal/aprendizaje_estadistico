@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html lang="es" xml:lang="es">
 <head>
 
   <meta charset="utf-8" />
@@ -26,7 +26,7 @@
 <meta name="author" content="Manuel Oviedo de la Fuente (manuel.oviedo@udc.es)" />
 
 
-<meta name="date" content="2021-09-24" />
+<meta name="date" content="2021-09-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -148,8 +148,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1" data-path="intro-AE.html"><a href="intro-AE.html"><i class="fa fa-check"></i><b>1</b> Introducción al Aprendizaje Estadístico</a><ul>
 <li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje Estadístico vs. Aprendizaje Automático</a><ul>
 <li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
-<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#las-dos-culturas-breiman-2001"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas (Breiman, 2001)</a></li>
-<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-estadística-dunson-2018"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística (Dunson, 2018)</a></li>
+<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#las-dos-culturas-breiman2001statistical"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas <span class="citation">(Breiman, <span>2001</span><span>b</span>)</span></a></li>
+<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-estadística-dunson2018statistics"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística <span class="citation">(Dunson, <span>2018</span>)</span></a></li>
 </ul></li>
 <li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de Aprendizaje Estadístico</a><ul>
 <li class="chapter" data-level="1.2.1" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#notacion"><i class="fa fa-check"></i><b>1.2.1</b> Notación y terminología</a></li>
@@ -285,11 +285,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.3" data-path="implementación-en-r-2.html"><a href="implementación-en-r-2.html"><i class="fa fa-check"></i><b>8.3</b> Implementación en R</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
-<li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a><ul>
-<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html#libros"><i class="fa fa-check"></i>Libros</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html#artículos"><i class="fa fa-check"></i>Artículos</a></li>
-</ul></li>
+<li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -313,11 +309,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="neural-nets" class="section level1">
 <h1><span class="header-section-number">Capítulo 8</span> Redes neuronales</h1>
-<p>Las redes neuronales (McCulloch y Pitts, 1943), también conocidas como redes de neuronas artificiales (<em>artificial neural network</em>; ANN), son una metodología de aprendizaje supervisado que destaca porque da lugar a modelos con un número muy elevado de parámetros, adecuada para abordar problemas con estructuras subyacentes muy complejas, pero de muy difícil interpretación.
+<!-- 
+---
+title: "Redes neuronales"
+author: "Aprendizaje Estadístico (MTE, USC)"
+date: "Curso 2021/2022"
+bibliography: ["packages.bib", "aprendizaje_estadistico.bib"]
+link-citations: yes
+output: 
+  bookdown::html_document2:
+    pandoc_args: ["--number-offset", "7,0"]
+    toc: yes 
+    # mathjax: local            # copia local de MathJax, hay que establecer:
+    # self_contained: false     # las dependencias se guardan en ficheros externos 
+  bookdown::pdf_document2:
+    keep_tex: yes
+    toc: yes 
+---
+
+bookdown::preview_chapter("08-redes_neuronales.Rmd")
+knitr::purl("08-redes_neuronales.Rmd", documentation = 2)
+knitr::spin("08-redes_neuronales.R",knit = FALSE)
+-->
+<p>Las redes neuronales <span class="citation">(McCulloch y Pitts, <a href="#ref-mcculloch1943logical" role="doc-biblioref">1943</a>)</span>, también conocidas como redes de neuronas artificiales (<em>artificial neural network</em>; ANN), son una metodología de aprendizaje supervisado que destaca porque da lugar a modelos con un número muy elevado de parámetros, adecuada para abordar problemas con estructuras subyacentes muy complejas, pero de muy difícil interpretación.
 Con la aparición de los métodos SVM y boosting, ANN perdió popularidad, pero en los últimos años ha vuelto a ganarla, también gracias al aumento de las capacidades de computación.
 El diseño y el entrenamiento de una ANN suele requerir de más tiempo y experimentación que otros algoritmos de AE/ML. Además el gran número de hiperparámetros lo convierte en un problema de optimización complicado.
-En este capítulo se va a hacer una breve introducción a estos métodos, para poder emplearlos con solvencia en la práctica sería muy recomendable profundizar más en esta metodología (por ejemplo se podría consultar Chollet y Allaire, 2018, para un tratamiento más detallado).</p>
-<p>En los métodos de aprendizaje supervisado se realizan una o varias transformaciones del espacio de las variables predictoras buscando una representación <em>óptima</em> de los datos, para así poder conseguir una buena predicción. Los modelos que realizan una o dos transformaciones reciben el nombre de modelos superficiales (<em>shallow models</em>). Por el contrario, cuando se realizan muchas transformaciones se habla de aprendizaje profundo (<em>deep learning</em>). No nos debemos dejar engañar por la publicidad: que un aprendizaje sea profundo no significa que sea mejor que el superficial. Aunque es verdad que ahora mismo la metodología que está de moda son las redes neuronales profundas (<em>deep neural networks</em>), hay que ser muy consciente de que dependiendo del contexto será más conveniente un tipo de modelos u otro. Se trata de una metodología adecuada para problemas muy complejos y no tanto para problemas con pocas observaciones o pocos predictores. Hay que tener en cuenta que no existe ninguna metodología que sea <em>transversalmente</em> la mejor (lo que se conoce como el teorema <em>no free lunch</em>; Wolpert y Macready, 1997).</p>
+En este capítulo se va a hacer una breve introducción a estos métodos, para poder emplearlos con solvencia en la práctica sería muy recomendable profundizar más en esta metodología <span class="citation">(por ejemplo se podría consultar Chollet y Allaire, <a href="#ref-chollet2018deep" role="doc-biblioref">2018</a>, para un tratamiento más detallado)</span>.</p>
+<p>En los métodos de aprendizaje supervisado se realizan una o varias transformaciones del espacio de las variables predictoras buscando una representación <em>óptima</em> de los datos, para así poder conseguir una buena predicción. Los modelos que realizan una o dos transformaciones reciben el nombre de modelos superficiales (<em>shallow models</em>). Por el contrario, cuando se realizan muchas transformaciones se habla de aprendizaje profundo (<em>deep learning</em>). No nos debemos dejar engañar por la publicidad: que un aprendizaje sea profundo no significa que sea mejor que el superficial. Aunque es verdad que ahora mismo la metodología que está de moda son las redes neuronales profundas (<em>deep neural networks</em>), hay que ser muy consciente de que dependiendo del contexto será más conveniente un tipo de modelos u otro. Se trata de una metodología adecuada para problemas muy complejos y no tanto para problemas con pocas observaciones o pocos predictores. Hay que tener en cuenta que no existe ninguna metodología que sea <em>transversalmente</em> la mejor <span class="citation">(lo que se conoce como el teorema <em>no free lunch</em>; Wolpert y Macready, <a href="#ref-wolpert1997no" role="doc-biblioref">1997</a>)</span>.</p>
 <p>Una red neuronal básica va a realizar dos transformaciones de los datos, y por tanto es un modelo con tres capas: una capa de entrada (<em>input layer</em>) consistente en las variables originales <span class="math inline">\(\mathbf{X} = (X_1,X_2,\ldots, X_p)\)</span>, otra capa oculta (<em>hidden layer</em>) con <span class="math inline">\(M\)</span> nodos, y la capa de salida (<em>output layer</em>) con la predicción (o predicciones) final <span class="math inline">\(m(\mathbf{X})\)</span>.</p>
 <p><img src="08-redes_neuronales_files/figure-html/unnamed-chunk-2-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>Para que las redes neuronales tengan un rendimiento aceptable se requiere disponer de tamaños muestrales grandes, debido a que son modelos hiperparametrizados (y por tanto de difícil interpretación). Son modelos muy demandantes computacionalmente y solo desde fechas recientes es viable utilizarlos con un número elevado de capas (<em>deep neural networks</em>).</p>
@@ -329,6 +347,18 @@ En este capítulo se va a hacer una breve introducción a estos métodos, para p
 <li><p><em>Recurrent neural networks</em> para reconocimiento de voz.</p></li>
 <li><p><em>Long short-term memory neural networks</em> para traducción automática.</p></li>
 </ul>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-chollet2018deep">
+<p>Chollet, F., y Allaire, J. J. (2018). <em>Deep Learning with R, Ch. 5.4</em>. Shelter Island: Manning Publications Company.</p>
+</div>
+<div id="ref-mcculloch1943logical">
+<p>McCulloch, W. S., y Pitts, W. (1943). A logical calculus of the ideas immanent in nervous activity. <em>The bulletin of mathematical biophysics</em>, <em>5</em>(4), 115-133. <a href="https://doi.org/10.1007/bf02459570">https://doi.org/10.1007/bf02459570</a></p>
+</div>
+<div id="ref-wolpert1997no">
+<p>Wolpert, D. H., y Macready, W. G. (1997). No free lunch theorems for optimization. <em>IEEE Transactions on Evolutionary Computation</em>, <em>1</em>(1), 67-82. <a href="https://doi.org/10.1109/4235.585893">https://doi.org/10.1109/4235.585893</a></p>
+</div>
 </div>
             </section>
 

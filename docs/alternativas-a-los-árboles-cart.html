@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html lang="es" xml:lang="es">
 <head>
 
   <meta charset="utf-8" />
@@ -26,7 +26,7 @@
 <meta name="author" content="Manuel Oviedo de la Fuente (manuel.oviedo@udc.es)" />
 
 
-<meta name="date" content="2021-09-24" />
+<meta name="date" content="2021-09-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -148,8 +148,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1" data-path="intro-AE.html"><a href="intro-AE.html"><i class="fa fa-check"></i><b>1</b> Introducción al Aprendizaje Estadístico</a><ul>
 <li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje Estadístico vs. Aprendizaje Automático</a><ul>
 <li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
-<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#las-dos-culturas-breiman-2001"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas (Breiman, 2001)</a></li>
-<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-estadística-dunson-2018"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística (Dunson, 2018)</a></li>
+<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#las-dos-culturas-breiman2001statistical"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas <span class="citation">(Breiman, <span>2001</span><span>b</span>)</span></a></li>
+<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-estadística-dunson2018statistics"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística <span class="citation">(Dunson, <span>2018</span>)</span></a></li>
 </ul></li>
 <li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de Aprendizaje Estadístico</a><ul>
 <li class="chapter" data-level="1.2.1" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#notacion"><i class="fa fa-check"></i><b>1.2.1</b> Notación y terminología</a></li>
@@ -285,11 +285,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.3" data-path="implementación-en-r-2.html"><a href="implementación-en-r-2.html"><i class="fa fa-check"></i><b>8.3</b> Implementación en R</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
-<li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a><ul>
-<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html#libros"><i class="fa fa-check"></i>Libros</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html#artículos"><i class="fa fa-check"></i>Artículos</a></li>
-</ul></li>
+<li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -313,60 +309,65 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="alternativas-a-los-árboles-cart" class="section level2">
 <h2><span class="header-section-number">2.4</span> Alternativas a los árboles CART</h2>
-<p>Una de las alternativas más populares es la metodología C4.5 (Quinlan, 1993), evolución de ID3 (1986), que en estos momentos se encuentra en la versión C5.0 (y es ya muy similar a CART).
+<p>Una de las alternativas más populares es la metodología C4.5 <span class="citation">(Quinlan, <a href="#ref-quinlan1993c4" role="doc-biblioref">1993</a>)</span>, evolución de ID3 (1986), que en estos momentos se encuentra en la versión C5.0 (y es ya muy similar a CART).
 C5.0 se utiliza sólo para clasificación e incorpora <em>boosting</em> (que veremos en el tema siguiente).
 Esta metodología está implementada en el paquete <a href="https://topepo.github.io/C5.0/index.html"><code>C50</code></a>.</p>
-<p>Ross Quinlan desarrolló también la metodologia M5 (Quinlan, 1992) para regresión.
-Su principal característica es que los nodos terminales, en lugar de contener un número,
-contienen un modelo (de regresión) lineal. El paquete <a href="https://topepo.github.io/Cubist"><code>Cubist</code></a> es una evolución de M5 que incorpora un método <em>ensemble</em> similar a <em>boosting</em>.</p>
-<p>La motivación detrás de M5 es que, si la predicción que aporta un nodo terminal se limita
-a un único número (como hace la metodología CART), entonces el modelo va a predecir muy
-mal los valores que <em>realmente</em> son muy extremos, ya que el número de posibles valores
-predichos está limitado por el número de nodos terminales, y en cada uno de ellos se utiliza
-una media. Por ello M5 le asocia a cada nodo un modelo de regresión lineal, para cuyo
-ajuste se utilizan los datos del nodo y todas las variables que están en la ruta del nodo.
-Para evaluar los posibles cortes que conducen al siguiente nodo, se utilizan los propios
-modelos lineales para calcular la medida del error.</p>
-<p>Una vez se ha construido todo el árbol, para realizar la predicción se puede utilizar
-el modelo lineal que está en el nodo terminal correspondiente, pero funciona mejor
-si se utiliza una combinación lineal del modelo del nodo terminal y de todos sus
-nodos ascendientes (es decir, los que están en su camino).</p>
-<p>Otra opción es CHAID (CHi-squared Automated Interaction Detection, Kass, 1980), que
-se basa en una idea diferente. Es un método de construcción de árboles de clasificación
-que se utiliza cuando las variables predictoras son cualitativas o discretas;
-en caso contrario deben ser categorizadas previamente. Y se basa en el contraste chi-cuadrado
-de independencia para tablas de contingencia.</p>
-<p>Para cada par <span class="math inline">\((X_i, Y)\)</span>, se considera su tabla de contingencia y se calcula el p-valor
-del contraste chi-cuadrado, seleccionándose la variable predictora que tenga un p-valor
-más pequeño, ya que se asume que las variables predictoras más relacionadas con la
-respuesta <span class="math inline">\(Y\)</span> son las que van a tener p-valores más pequeños y darán lugar a mejores
-predicciones. Se divide el nodo de acuerdo con los distintos valores de la variable
-predictora seleccionada, y se repite el proceso mientras haya variables <em>significativas</em>.
-Como el método exige que el p-valor sea menor que 0.05 (o el nivel de significación que
-se elija), y hay que hacer muchas comparaciones es necesario aplicar una corrección para
-comparaciones múltiples, por ejemplo la de Bonferroni.</p>
+<p>Ross Quinlan desarrolló también la metodologia M5 <span class="citation">(Quinlan y others, <a href="#ref-quinlan1992learning" role="doc-biblioref">1992</a>)</span> para regresión.
+Su principal característica es que los nodos terminales, en lugar de contener un número, contienen un modelo (de regresión) lineal.
+El paquete <a href="https://topepo.github.io/Cubist"><code>Cubist</code></a> es una evolución de M5 que incorpora un método <em>ensemble</em> similar a <em>boosting</em>.</p>
+<p>La motivación detrás de M5 es que, si la predicción que aporta un nodo terminal se limita a un único número (como hace la metodología CART), entonces el modelo va a predecir muy mal los valores que <em>realmente</em> son muy extremos, ya que el número de posibles valores predichos está limitado por el número de nodos terminales, y en cada uno de ellos se utiliza una media.
+Por ello M5 le asocia a cada nodo un modelo de regresión lineal, para cuyo ajuste se utilizan los datos del nodo y todas las variables que están en la ruta del nodo.
+Para evaluar los posibles cortes que conducen al siguiente nodo, se utilizan los propios modelos lineales para calcular la medida del error.</p>
+<p>Una vez se ha construido todo el árbol, para realizar la predicción se puede utilizar el modelo lineal que está en el nodo terminal correspondiente, pero funciona mejor si se utiliza una combinación lineal del modelo del nodo terminal y de todos sus nodos ascendientes (es decir, los que están en su camino).</p>
+<p>Otra opción es CHAID <span class="citation">(CHi-squared Automated Interaction Detection, Kass, <a href="#ref-kass1980exploratory" role="doc-biblioref">1980</a>)</span>, que se basa en una idea diferente. Es un método de construcción de árboles de clasificación que se utiliza cuando las variables predictoras son cualitativas o discretas; en caso contrario deben ser categorizadas previamente.
+Y se basa en el contraste chi-cuadrado de independencia para tablas de contingencia.</p>
+<p>Para cada par <span class="math inline">\((X_i, Y)\)</span>, se considera su tabla de contingencia y se calcula el <em>p</em>-valor del contraste chi-cuadrado, seleccionándose la variable predictora que tenga un <em>p</em>-valor más pequeño, ya que se asume que las variables predictoras más relacionadas con la respuesta <span class="math inline">\(Y\)</span> son las que van a tener <em>p</em>-valores más pequeños y darán lugar a mejores predicciones.
+Se divide el nodo de acuerdo con los distintos valores de la variable predictora seleccionada, y se repite el proceso mientras haya variables <em>significativas</em>.
+Como el método exige que el <em>p</em>-valor sea menor que 0.05 (o el nivel de significación que se elija), y hay que hacer muchas comparaciones es necesario aplicar una corrección para comparaciones múltiples, por ejemplo la de Bonferroni.</p>
 <p>Lo que acabamos de explicar daría lugar a árboles no necesariamente binarios.
 Como se desea trabajar con árboles binarios (si se admite que de un nodo salga cualquier número de ramas, con muy pocos niveles de profundidad del árbol ya nos quedaríamos sin datos), es necesario hacer algo más: forzar a que las variables predictoras tengan sólo dos categorías mediante un proceso de fusión.
-Se van haciendo pruebas chi-cuadrado entre pares de categorías y la variable respuesta, y se fusiona el par con el p-valor más alto, ya que se trata de fusionar las categorías que sean más similares.</p>
-<p>Para árboles de regresión hay metodologías que, al igual que CHAID, se basan en el cálculo de p-valores, en este caso de contrastes de igualdes de medias.
-Una de las más utilizadas son los <em>conditional inference trees</em> (Hothorn <em>et al.</em>, 2006)<a href="#fn18" class="footnote-ref" id="fnref18"><sup>18</sup></a>, implementada en la función <code>ctree()</code> del paquete <a href="https://CRAN.R-project.org/package=party"><code>party</code></a>.</p>
+Se van haciendo pruebas chi-cuadrado entre pares de categorías y la variable respuesta, y se fusiona el par con el <em>p</em>-valor más alto, ya que se trata de fusionar las categorías que sean más similares.</p>
+<p>Para árboles de regresión hay metodologías que, al igual que CHAID, se basan en el cálculo de <em>p</em>-valores, en este caso de contrastes de igualdes de medias.
+Una de las más utilizadas son los <em>conditional inference trees</em> <span class="citation">(Hothorn et al., <a href="#ref-hothorn2006unbiased" role="doc-biblioref">2006</a>)</span><a href="#fn18" class="footnote-ref" id="fnref18"><sup>18</sup></a>, implementada en la función <code>ctree()</code> del paquete <a href="https://CRAN.R-project.org/package=party"><code>party</code></a>.</p>
 <p>Un problema conocido de los árboles CART es que sufren un sesgo de selección de variables: los predictores con más valores distintos son favorecidos.
 Esta es una de las motivaciones de utilizar estos métodos basados en contrastes de hipótesis.
 Por otra parte hay que ser conscientes de que los contrastes de hipótesis y la calidad predictiva son cosas distintas.</p>
 <div id="ejemplo-1" class="section level3">
 <h3><span class="header-section-number">2.4.1</span> Ejemplo</h3>
+<p>Siguiendo con el problema de clasificación anterior, podríamos ajustar un arbol de decisión empleando la metodología de <em>inferencia condicional</em> mediante el siguiente código:</p>
 <div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="alternativas-a-los-árboles-cart.html#cb139-1"></a><span class="kw">library</span>(party)</span>
 <span id="cb139-2"><a href="alternativas-a-los-árboles-cart.html#cb139-2"></a>tree2 &lt;-<span class="st"> </span><span class="kw">ctree</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train) </span>
 <span id="cb139-3"><a href="alternativas-a-los-árboles-cart.html#cb139-3"></a><span class="kw">plot</span>(tree2)</span></code></pre></div>
-<p><img src="02-arboles_files/figure-html/unnamed-chunk-33-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center"><span id="fig:ctree-plot"></span>
+<img src="02-arboles_files/figure-html/ctree-plot-1.png" alt="Arbol de decisión para clasificar la calidad del vino obtenido con el método condicional." width="80%" />
+<p class="caption">
+Figura 2.1: Arbol de decisión para clasificar la calidad del vino obtenido con el método condicional.
+</p>
+</div>
+<p>Para más detalles ver la vignette del paquete <a href="https://cran.r-project.org/web/packages/party/vignettes/party.pdf"><em>party: A Laboratory for Recursive Partytioning</em></a>.</p>
 
 </div>
 </div>
 <!-- </div> -->
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-hothorn2006unbiased">
+<p>Hothorn, T., Hornik, K., y Zeileis, A. (2006). Unbiased recursive partitioning: A conditional inference framework. <em>Journal of Computational and Graphical Statistics</em>, <em>15</em>(3), 651-674. <a href="https://doi.org/10.1198/106186006x133933">https://doi.org/10.1198/106186006x133933</a></p>
+</div>
+<div id="ref-kass1980exploratory">
+<p>Kass, G. V. (1980). An exploratory technique for investigating large quantities of categorical data. <em>Journal of the Royal Statistical Society: Series C (Applied Statistics)</em>, <em>29</em>(2), 119-127. <a href="https://doi.org/10.2307/2986296">https://doi.org/10.2307/2986296</a></p>
+</div>
+<div id="ref-quinlan1993c4">
+<p>Quinlan, J. R. (1993). <em>C4.5: Programs for Machine Learning</em>. Elsevier Science.</p>
+</div>
+<div id="ref-quinlan1992learning">
+<p>Quinlan, J. R., y others. (1992). Learning with continuous classes. <em>5th Australian joint conference on artificial intelligence</em>, <em>92</em>, 343-348.</p>
+</div>
+</div>
 <div class="footnotes">
 <hr />
 <ol start="18">
-<li id="fn18"><p>Otra alternativa es GUIDE (Generalized, Unbiased, Interaction Detection and Estimation; Loh, 2002).<a href="alternativas-a-los-árboles-cart.html#fnref18" class="footnote-back">↩︎</a></p></li>
+<li id="fn18"><p>Otra alternativa es GUIDE (Generalized, Unbiased, Interaction Detection and Estimation; <span class="citation">Loh (<a href="#ref-loh2002regression" role="doc-biblioref">2002</a>)</span>).<a href="alternativas-a-los-árboles-cart.html#fnref18" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

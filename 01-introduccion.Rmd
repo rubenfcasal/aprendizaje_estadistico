@@ -1,7 +1,24 @@
 # Introducción al Aprendizaje Estadístico {#intro-AE}
 
 <!-- 
-# Introducción al Aprendizaje Estadístico {#intro-AE}
+---
+title: "Introducción al Aprendizaje Estadístico"
+author: "Aprendizaje Estadístico (MTE, USC)"
+date: "Curso 2021/2022"
+bibliography: ["packages.bib", "aprendizaje_estadistico.bib"]
+link-citations: yes
+output: 
+  bookdown::html_document2:
+    pandoc_args: ["--number-offset", "0,0"]
+    toc: yes 
+    # mathjax: local            # copia local de MathJax, hay que establecer:
+    # self_contained: false     # las dependencias se guardan en ficheros externos 
+  bookdown::pdf_document2:
+    keep_tex: yes
+    toc: yes 
+---
+
+bookdown::preview_chapter("01-introduccion.Rmd")
 knitr::purl("01-introduccion.Rmd", documentation = 2)
 knitr::spin("01-introduccion.R",knit = FALSE)
 -->
@@ -9,15 +26,10 @@ knitr::spin("01-introduccion.R",knit = FALSE)
 ```{r , child = '_global_options.Rmd'}
 ```
 
-
-<!-- 
-## Introducción {#intro} 
--->
-
 La denominada *Ciencia de Datos* (Data Science; también denominada *Science of Learning*) se ha vuelto muy popular hoy en día. 
 Se trata de un campo multidisciplicar, con importantes aportaciones estadísticas e informáticas, dentro del que se incluirían disciplinas como *Minería de Datos* (Data Mining), *Aprendizaje Automático* (Machine Learning), *Aprendizaje Profundo* (Deep Learning), *Modelado Predictivo* (Predictive Modeling), *Extracción de Conocimiento* (Knowlegde Discovery) y también el *Aprendizaje Estadístico* (Statistical Learning).
 
-Podríamos definir la Ciencia de Datos como el conjunto de conocimientos y herramientas utilizados en las distintas etapas del análisis de datos (ver Figura \@ref(fig:esquema)). Otras definiciones podrían ser:
+Podríamos definir la Ciencia de Datos como el conjunto de conocimientos y herramientas utilizados en las distintas etapas del análisis de datos `r citefig("esquema")`. Otras definiciones podrían ser:
 
 -   El arte y la ciencia del análisis inteligente de los datos.
 
@@ -37,7 +49,7 @@ Una de estas etapas (que están interrelacionadas) es la construcción de modelo
 
 En Estadística se consideran modelos estocásticos (con componente aleatoria), para tratar de tener en cuenta la incertidumbre debida a que no se disponga de toda la información (sobre las variables que influyen en el fenómeno de interés).
 
-> "Nothing in Nature is random... a thing appears random only through the incompleteness of our knowledge."
+> "Nothing in Nature is random... a thing appears random only through the incompleteness of our knowledge." 
 >
 > --- Spinoza, Baruch (Ethics, 1677)
 
@@ -47,7 +59,7 @@ En Estadística se consideran modelos estocásticos (con componente aleatoria), 
 
 La Inferencia Estadística proporciona herramientas para ajustar este tipo de modelos a los datos observados (seleccionar un modelo adecuado, estimar sus parámetros y contrastar su validez). 
 Sin embargo, en la aproximación estadística clásica como primer objetivo se trata de explicar por completo lo que ocurre en la población y suponiendo que esto se puede hacer con modelos tratables analíticamente, emplear resultados teóricos (típicamente resultados asintóticos) para realizar inferencias (entre ellas la predicción). 
-Los avances en computación han permitido el uso de modelos estadísticos más avanzados, principalmente métodos no paramétricos, muchos de los cuales no pueden ser tratados analíticamente (por lo menos no por completo o no inicialmente), este es el campo de la Estadística Computacional^[Lauro (1996) definió la Estadística Computacional como la disciplina que tiene como objetivo "diseñar algoritmos para implementar métodos estadísticos en computadoras, incluidos los impensables antes de la era de las computadoras (por ejemplo, bootstrap, simulación), así como hacer frente a problemas analíticamente intratables".]. Desde este punto de vista, el AE se enmarcaría dentro del campo de la Estadística Computacional.
+Los avances en computación han permitido el uso de modelos estadísticos más avanzados, principalmente métodos no paramétricos, muchos de los cuales no pueden ser tratados analíticamente (por lo menos no por completo o no inicialmente), este es el campo de la Estadística Computacional^[@lauro1996computational definió la Estadística Computacional como la disciplina que tiene como objetivo "diseñar algoritmos para implementar métodos estadísticos en computadoras, incluidos los impensables antes de la era de las computadoras (por ejemplo, bootstrap, simulación), así como hacer frente a problemas analíticamente intratables".]. Desde este punto de vista, el AE se enmarcaría dentro del campo de la Estadística Computacional.
 
 Cuando pensamos en AE pensamos en:
 
@@ -107,7 +119,7 @@ ML es un conjunto de algoritmos principalmente dedicados a hacer predicciones y 
 DM intenta *entender* conjuntos de datos (en el sentido de encontrar sus patrones), requiere de una intervención humana activa (al igual que la Inferencia Estadística tradicional), pero utiliza entre otras las técnicas automáticas de ML. Por tanto podríamos pensar que es más parecido al AE.
 
 
-### Las dos culturas (Breiman, 2001)
+### Las dos culturas [@breiman2001statistical]
 
 Breiman diferencia dos objetivos en el análisis de datos, que él llama *información* (en el sentido de *inferencia*) y *predicción*. 
 Cada uno de estos objetivos da lugar a una cultura:
@@ -118,7 +130,7 @@ Cada uno de estos objetivos da lugar a una cultura:
 son las competiciones entre algoritmos predictivos, al estilo del [Netflix Challenge](https://en.wikipedia.org/wiki/Netflix_Prize)).
 
 
-### Machine Learning vs. Estadística (Dunson, 2018)
+### Machine Learning vs. Estadística [@dunson2018statistics]
 
 - "Machine learning: The main publication outlets tend to be peer-reviewed conference proceedings and the style of research is very fast paced, trendy, and driven by performance metrics in prediction and related tasks".
 
@@ -268,6 +280,7 @@ En la Sección \@ref(caret) se incluye una breve introducción al paquete `r cit
 
 Adicionalmente hay paquetes de R que disponen de entornos gráficos que permiten emplear estos métodos evitando el uso de comandos. 
 Entre ellos estarían R-Commander con el plugin FactoMineR (`Rcmdr`, `RcmdrPlugin.FactoMineR`), `r citepkg("rattle", "https://rattle.togaware.com")` y `r citepkg("radiant", "https://github.com/radiant-rstats/radiant")`.
+
 
 
 ## Construcción y evaluación de los modelos {#const-eval}
@@ -475,12 +488,13 @@ Podríamos emplear la siguiente función que devuelve para cada observación (fi
 
 ```{r}
 cv.lm0 <- function(formula, datos) {
+    respuesta <- as.character(formula)[2] # extraer nombre variable respuesta
     n <- nrow(datos)
     cv.res <- numeric(n)
     for (i in 1:n) {
         modelo <- lm(formula, datos[-i, ])
         cv.pred <- predict(modelo, newdata = datos[i, ])
-        cv.res[i] <- cv.pred - datos[i, ]
+        cv.res[i] <- cv.pred - datos[i, respuesta]
     }
     return(cv.res)
 }
@@ -504,6 +518,7 @@ grado.max <- 10
 grados <- seq_len(grado.max) 
 cv.mse <- cv.mse.sd <- numeric(grado.max)
 for(grado in grados){
+  # cv.res <- cv.lm0(medv ~ poly(lstat, grado), train) # Tiempo de computación elevado!
   cv.res <- cv.lm(medv ~ poly(lstat, grado), train)
   se <- cv.res^2
   cv.mse[grado] <- mean(se)
@@ -517,7 +532,7 @@ grado.op <- grados[imin.mse]
 points(grado.op, cv.mse[imin.mse], pch = 16)
 grado.op
 ```
-En lugar de emplear los valores óptimos de los hiperparámetros, Breiman *et al.* (1984) propusieron la regla de "un error estándar" para seleccionar la complejidad del modelo.
+En lugar de emplear los valores óptimos de los hiperparámetros, @breiman1984classification propusieron la regla de "un error estándar" para seleccionar la complejidad del modelo.
 La idea es que estamos trabajando con estimaciones de la precisión y pueden presentar variabilidad, 
 por lo que la sugerencia es seleccionar el modelo más simple^[Suponiendo que los modelos se pueden ordenar del más simple al más complejo.] dentro de un error estándar de la precisión del modelo correspondiente al valor óptimo 
 (se consideraría que no hay diferencias significativas en la precisión; 
@@ -557,6 +572,7 @@ modelo en el conjunto de datos de test y se comparan las predicciones frente a l
 Si generamos un gráfico de dispersión de observaciones frente a predicciones, los puntos deberían estar en torno a la recta $y=x$ `r citefig("obs-pred-plot")`.
 
 <!-- 
+Volver a intentar incluir latex en leyenda con referencia externa:
 (ref:obs-pred-caption) Gráfico de dispersión de observaciones frente a predicciones, incluyendo la recta $x=y$ (línea continua) y el ajuste lineal (línea discontinua). 
 -->
 
@@ -580,7 +596,7 @@ caret::postResample(pred, obs)
 La función anterior, además de las medidas de error habituales (que dependen en su mayoría de la escala de la variable respuesta) calcula un *pseudo R-cuadrado*. 
 En este paquete (también en `rattle`) se emplea uno de los más utilizados, el cuadrado del coeficiente de correlación entre las predicciones y los valores observados (que se corresponde con la línea discontinua en la figura anterior). 
 Estos valores se interpretarían como el coeficiente de determinación en regresión lineal, debería ser próximo a 1. 
-Hay otras alternativas (ver Kvålseth, 1985), pero la idea es que deberían medir la proporción de variabilidad de la respuesta explicada por el modelo, algo que en general no es cierto con el anterior^[Por ejemplo obtendríamos el mismo valor si desplazamos las predicciones sumando una constante (i.e. no tiene en cuenta el sesgo). Lo que interesaría sería medir la proximidad de los puntos a la recta $y=x$.].
+Hay otras alternativas [ver @kvaalseth1985cautionary], pero la idea es que deberían medir la proporción de variabilidad de la respuesta explicada por el modelo, algo que en general no es cierto con el anterior^[Por ejemplo obtendríamos el mismo valor si desplazamos las predicciones sumando una constante (i.e. no tiene en cuenta el sesgo). Lo que interesaría sería medir la proximidad de los puntos a la recta $y=x$.].
 La recomendación sería emplear:
 $$\tilde R^2 = 1 - \frac{\sum_{i=1}^n(y_i - \hat y_i)^2}{\sum_{i=1}^n(y_i - \bar y_i)^2}$$
 implementado junto con otras medidas en la siguiente función:
@@ -650,8 +666,8 @@ La matriz de confusión será de la forma:
 
   Observado\\Predicción             Positivo                       Negativo
  ----------------------- ------------------------------ ------------------------------
-        Verdadero           Verdaderos positivos (TP)         Falsos negativos (FN)
-          Falso               Falsos positivos (FP)        Verdaderos negativos (TN)
+        Positivo           Verdaderos positivos (TP)         Falsos negativos (FN)
+        Negativo              Falsos positivos (FP)        Verdaderos negativos (TN)
  ----------------------- ------------------------------ ------------------------------
 
 A partir de esta tabla se pueden obtener distintas medidas de la precisión de las predicciones. 
@@ -772,7 +788,7 @@ aunque en este caso en principio solo podríamos calcular medidas globales de la
 Podríamos obtener también medidas por clase, como la sensibilidad y la especificidad, siguiendo la estrategia “uno contra todos” descrita en la Sección \@ref(notacion).
 Esta aproximación es la que sigue la función `confusionMatrix()` del paquete `caret` (devuelve las medidas comparando cada categoría con las restantes en el componente `$byClass`).
 
-Como ejemplo ilustrativo consideraremos el conocido conjunto de datos `iris` (Fisher, 1936) en el que el objetivo es clasificar flores de lirio en tres especies (`Species`) a partir del largo y ancho de sépalos y pétalos, aunque en este caso emplearemos un clasificador aleatorio.
+Como ejemplo ilustrativo consideraremos el conocido conjunto de datos `iris` [@fisher1936use] en el que el objetivo es clasificar flores de lirio en tres especies (`Species`) a partir del largo y ancho de sépalos y pétalos, aunque en este caso emplearemos un clasificador aleatorio.
 
 ```{r}
 data(iris)
@@ -799,7 +815,7 @@ caret::confusionMatrix(pred.rand, test$Species)
 ## La maldición de la dimensionalidad {#dimen-curse}
 
 Podríamos pensar que al aumentar el número de variables explicativas se mejora la capacidad predictiva de los modelos. Lo cual, en general, sería cierto si realmente los predictores fuesen de utilidad para explicar la respuesta.
-Sin embargo, al aumentar el número de dimensiones se pueden agravar notablemente muchos de los problemas que ya pueden aparecer en dimensiones menores, esto es lo que se conoce como la *maldición de la dimensionalidad* (*curse of dimensionality*, Bellman, 1961).
+Sin embargo, al aumentar el número de dimensiones se pueden agravar notablemente muchos de los problemas que ya pueden aparecer en dimensiones menores, esto es lo que se conoce como la *maldición de la dimensionalidad* [*curse of dimensionality*, @bellman1961adaptive].
 
 Uno de estos problemas es el denominado *efecto frontera* que ya puede aparecer en una dimensión, especialmente al trabajar con modelos flexibles (como ajustes polinómicos con grados altos o los métodos locales que trataremos en el Capítulo 6).
 La idea es que en la "frontera" del rango de valores de una variable explicativa vamos a disponer de pocos datos y los errores de predicción van a tener gran variabilidad (se están haciendo extrapolaciones de los datos, más que interpolaciones, y van a ser menos fiables).
@@ -881,7 +897,7 @@ Como conclusión, en el caso multidimensional habrá que tratar de emplear méto
 ## Análisis e interpretación de los modelos {#analisis-modelos}
 
 El análisis e interpretación de modelos es un campo muy activo en AE/ML, para el que recientemente se ha acuñado el término de *interpretable machine learning* (IML). 
-A continuación se resumen brevemente algunas de las principales ideas, para más detalles ver por ejemplo [Molnar (2020)](https://christophm.github.io/interpretable-ml-book).
+A continuación se resumen brevemente algunas de las principales ideas, para más detalles ver por ejemplo [@molnar2020interpretable].
 
 Como ya se comentó, a medida que aumenta la complejidad de los modelos generalmente disminuye su interpretabilidad, por lo que normalmente interesa encontrar el modelo más simple posible que resulte de utilidad para los objetivos propuestos.
 Aunque el principal objetivo sea la predicción, una vez obtenido el modelo final suele interesar medir la importancia de cada predictor en el modelo y si es posible como influyen en la predicción de la respuesta, es decir, estudiar el efecto de las variables explicativas.
@@ -893,7 +909,7 @@ Alternativamente también se pueden obtener medidas de la importancia de las var
 
 En algunos de los métodos se modela explícitamente los efectos de los distintos predictores y estos se pueden analizar con (mas o menos) facilidad. 
 Hay que tener en cuenta que, al margen de las interacciones, la colinealidad/concurvidad dificulta notablemente el estudio de los efectos de las variables explicativas.
-Otros métodos son más del tipo "caja negra" (*black box*) y precisan de aproximaciones más generales, como los gráficos PDP (*Partial Dependence Plots*; Friedman y Popescu, 2008; ver también [Greenwell, 2017](https://journal.r-project.org/archive/2017/RJ-2017-016/index.html)) o las curvas ICE (*Individual Conditional Expectation*; [Goldstein *et al.* , 2015](https://doi.org/10.1080/10618600.2014.907095)). 
+Otros métodos son más del tipo "caja negra" (*black box*) y precisan de aproximaciones más generales, como los gráficos PDP (*Partial Dependence Plots*; @friedman2008predictive; ver también @greenwell2020dblp) o las curvas ICE *Individual Conditional Expectation*, ver @goldstein2015peeking. 
 Estos métodos tratan de estimar el efecto marginal de las variables explicativas. 
 En ese sentido son similares a los gráficos parciales de residuos (habitualmente empleados en los modelos lineales o aditivos; ver p.e. las funciones `termplot()`, `car::crPlots()` o `car::avPlots()`, Sección 6.4, y `mgcv::plot.gam()`, Sección 7.3), que muestran la variación en la predicción a medida que varía una variable explicativa manteniendo constantes el resto (algo que tiene sentido si asumimos que los predictores son independientes), pero en este caso se admite que el resto de predictores también pueden variar.
 
@@ -904,12 +920,16 @@ mediante:
 $$\hat{y}_{\mathbf x^S}(\mathbf x^S)=\frac{1}{n}\sum_{i=1}^n\hat{y}(\mathbf x^S, \mathbf x^C_i)$$
 donde $n$ en el tamaño de la muestra de entrenamiento y $\mathbf x^C_i$ son los valores observados de las variables explicativas en las que no estamos interesados.
 La principal diferencia con los gráficos ICE es que, en lugar de mostrar una única curva promedio de la respuesta, estos muestran una curva para cada observación (para más detalles ver las referencias anteriores).
-En la Sección \@ref(ejemplo-clasif-rf) se incluyen algunos ejemplos...
+En la Sección \@ref(ejemplo-clasif-rf) se incluyen algunos ejemplos.
 <!-- también Hastie *et al.*, 2009, Sección ? -->
 
 En problemas de clasificación también se están empleando la teoría de juegos cooperativos y las técnicas de optimización de Investigación Operativa para evaluar la importancia de las variables predictoras y determinar las más influyentes. 
-Por citar algunos, Strumbelj y Kononenko (2010) propusieron un procedimiento general basado en el valor de Shapley de juegos cooperativos, y en Agor y Özaltın (2019) se propone el uso de algoritmos genéticos para determinar los predictores más influyentes.
+Por citar algunos, @strumbelj2010efficient propusieron un procedimiento general basado en el valor de Shapley de juegos cooperativos (ver p.e. `iml::Shapley()`), y en @agor2019feature se propone el uso de algoritmos genéticos para determinar los predictores más influyentes.
 
+<!-- 
+Incluir meta-paquetes compatibles
+iml: caret, mlr3...
+-->
 Paquetes y funciones de R:
 
 * [`pdp`](https://bgreenwell.github.io/pdp/index.html): Partial Dependence Plots 
@@ -926,6 +946,8 @@ Paquetes y funciones de R:
 
 * [`vivid`](https://github.com/AlanInglis/vivid): Variable Importance and Variable Interaction Displays
 
+* [`ICEbox`](https://CRAN.R-project.org/package=ICEbox) ICEbox: Individual Conditional Expectation Plot Toolbox. <!-- Herramientas para visualizar el gráfico ICE y el modelo estimado por cualquier algoritmo de aprendizaje supervisado -->
+
 * [`plotmo`](http://www.milbo.users.sonic.net/): Plot a Model's Residuals, Response, and Partial Dependence Plots.<!-- Dibuja las superficies del modelo estimado utilizando gráficos de dependencia parcial y otras técnicas -->
 
 * [`randomForestExplainer`](https://modeloriented.github.io/randomForestExplainer): Explaining and Visualizing Random Forests in Terms of Variable Importance. <!--conjunto de herramientas para explicar y visualizar los modelos de bosque aleatorio  -->
@@ -938,7 +960,7 @@ En los siguientes capítulos se mostrarán ejemplos empleando algunas de estas h
 
 ## Introducción al paquete `caret` {#caret}    
 
-Como ya se comentó en la Sección \@ref(metodos-pkgs), el paquete `caret` (abreviatura de *Classification And REgression Training*) proporciona una interfaz unificada que simplifica el proceso de modelado empleando la mayoría de los métodos de AE implementados en R (actualmente admite 239 métodos; ver el [Capítulo 6](https://topepo.github.io/caret/available-models.html) del [manual](https://topepo.github.io/caret) de este paquete). 
+Como ya se comentó en la Sección \@ref(metodos-pkgs), el paquete `caret` [*Classification And REgression Training*; @kuhn2008building] proporciona una interfaz unificada que simplifica el proceso de modelado empleando la mayoría de los métodos de AE implementados en R (actualmente admite 239 métodos; ver el [Capítulo 6](https://topepo.github.io/caret/available-models.html) del [manual](https://topepo.github.io/caret) de este paquete). 
 Además de proporcionar rutinas para los principales pasos del proceso, incluye también numerosas funciones auxiliares que permitirían implementar nuevos procedimientos.
 
 En esta sección se describirán de forma esquemática las principales herramientas disponibles en este paquete, para más detalles se recomendaría consultar el [manual del paquete caret](https://topepo.github.io/caret).
@@ -1108,10 +1130,11 @@ Como comenta el autor del paquete `caret`:
 > --- Max Kuhn (actualmente ingeniero de software en RStudio).
 
 este paquete ha dejado de desarrollarse de forma activa, aunque podemos considerar que la alternativa `r citepkg("tidymodels", "https://www.tidymodels.org")` todavía está en una fase inicial de desarrollo.
-Este es uno de los motivos por los que se ha optado por mantener el uso de `caret` en este libro, aunque la intención es incluir apéndices adicionales en próximas versiones ilustrando el uso de otras herramientas (como `tidymodels` o incluso `mlr3`).
+Este es uno de los motivos por los que se ha optado por mantener el uso de `caret` en este libro, aunque la intención es incluir apéndices adicionales en próximas versiones ilustrando el uso de otras herramientas [como `tidymodels`, @kuhn2020tidymodels; o incluso `mlr3`, @becker2021mlr3].
 
+<!--
 Kuhn, M. y Wickham, H. (2020). *Tidymodels: a collection of packages for modeling and machine learning using tidyverse principles*. Version 0.1.3 (2021-04-19). <https://www.tidymodels.org>. 
-
+-->
 
 
 

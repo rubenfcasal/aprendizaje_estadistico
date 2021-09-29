@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html lang="es" xml:lang="es">
 <head>
 
   <meta charset="utf-8" />
@@ -26,7 +26,7 @@
 <meta name="author" content="Manuel Oviedo de la Fuente (manuel.oviedo@udc.es)" />
 
 
-<meta name="date" content="2021-09-24" />
+<meta name="date" content="2021-09-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -148,8 +148,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1" data-path="intro-AE.html"><a href="intro-AE.html"><i class="fa fa-check"></i><b>1</b> Introducción al Aprendizaje Estadístico</a><ul>
 <li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje Estadístico vs. Aprendizaje Automático</a><ul>
 <li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
-<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#las-dos-culturas-breiman-2001"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas (Breiman, 2001)</a></li>
-<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-estadística-dunson-2018"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística (Dunson, 2018)</a></li>
+<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#las-dos-culturas-breiman2001statistical"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas <span class="citation">(Breiman, <span>2001</span><span>b</span>)</span></a></li>
+<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-estadística-dunson2018statistics"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística <span class="citation">(Dunson, <span>2018</span>)</span></a></li>
 </ul></li>
 <li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de Aprendizaje Estadístico</a><ul>
 <li class="chapter" data-level="1.2.1" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#notacion"><i class="fa fa-check"></i><b>1.2.1</b> Notación y terminología</a></li>
@@ -285,11 +285,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.3" data-path="implementación-en-r-2.html"><a href="implementación-en-r-2.html"><i class="fa fa-check"></i><b>8.3</b> Implementación en R</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
-<li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a><ul>
-<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html#libros"><i class="fa fa-check"></i>Libros</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html#artículos"><i class="fa fa-check"></i>Artículos</a></li>
-</ul></li>
+<li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -345,7 +341,7 @@ y en un nodo terminal.</p></li>
 <p>Para más detalles consultar la documentación de esta función o la vignette <a href="https://cran.r-project.org/web/packages/rpart/vignettes/longintro.pdf"><em>Introduction to Rpart</em></a>.</p>
 <div id="ejemplo-regresión" class="section level3">
 <h3><span class="header-section-number">2.3.1</span> Ejemplo: regresión</h3>
-<p>Emplearemos el conjunto de datos <em>winequality.RData</em> (ver Cortez et al., 2009), que contiene información fisico-química
+<p>Emplearemos el conjunto de datos <em>winequality.RData</em> <span class="citation">(ver Cortez et al., <a href="#ref-cortez2009modeling" role="doc-biblioref">2009</a>)</span>, que contiene información fisico-química
 (<code>fixed.acidity</code>, <code>volatile.acidity</code>, <code>citric.acid</code>, <code>residual.sugar</code>, <code>chlorides</code>, <code>free.sulfur.dioxide</code>,
 <code>total.sulfur.dioxide</code>, <code>density</code>, <code>pH</code>, <code>sulphates</code> y <code>alcohol</code>) y sensorial (<code>quality</code>)
 de una muestra de 1250 vinos portugueses de la variedad <em>Vinho Verde</em>.
@@ -568,7 +564,7 @@ está almacenada en la componente <code>$cptable</code>:</p>
 ## 9  0.008139238     10 0.6707022 0.8011719 0.03991498
 ## 10 0.007805674     11 0.6625630 0.8001996 0.04048088</code></pre>
 <p>A partir de la que podríamos seleccionar el valor óptimo de forma automática,
-siguiendo el criterio de un error estándar de Breiman et al. (1984):</p>
+siguiendo el criterio de un error estándar de <span class="citation">Breiman et al. (<a href="#ref-breiman1984classification" role="doc-biblioref">1984</a>)</span>:</p>
 <div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="cart-con-el-paquete-rpart.html#cb91-1"></a>xerror &lt;-<span class="st"> </span>tree<span class="op">$</span>cptable[,<span class="st">&quot;xerror&quot;</span>]</span>
 <span id="cb91-2"><a href="cart-con-el-paquete-rpart.html#cb91-2"></a>imin.xerror &lt;-<span class="st"> </span><span class="kw">which.min</span>(xerror)</span>
 <span id="cb91-3"><a href="cart-con-el-paquete-rpart.html#cb91-3"></a><span class="co"># Valor óptimo</span></span>
@@ -780,7 +776,7 @@ se podría aumentar los valores mínimos de observaciones en los nodos intermedi
 <div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="cart-con-el-paquete-rpart.html#cb116-1"></a><span class="co"># printcp(tree)</span></span>
 <span id="cb116-2"><a href="cart-con-el-paquete-rpart.html#cb116-2"></a><span class="kw">plotcp</span>(tree)</span></code></pre></div>
 <p><img src="02-arboles_files/figure-html/unnamed-chunk-26-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<p>Para obtener el modelo final, seleccionamos el valor óptimo de complejidad siguiendo el criterio de un error estándar de Breiman et al. (1984) y podamos el arbol:</p>
+<p>Para obtener el modelo final, seleccionamos el valor óptimo de complejidad siguiendo el criterio de un error estándar de <span class="citation">Breiman et al. (<a href="#ref-breiman1984classification" role="doc-biblioref">1984</a>)</span> y podamos el arbol:</p>
 <div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="cart-con-el-paquete-rpart.html#cb117-1"></a>xerror &lt;-<span class="st"> </span>tree<span class="op">$</span>cptable[,<span class="st">&quot;xerror&quot;</span>]</span>
 <span id="cb117-2"><a href="cart-con-el-paquete-rpart.html#cb117-2"></a>imin.xerror &lt;-<span class="st"> </span><span class="kw">which.min</span>(xerror)</span>
 <span id="cb117-3"><a href="cart-con-el-paquete-rpart.html#cb117-3"></a>upper.xerror &lt;-<span class="st"> </span>xerror[imin.xerror] <span class="op">+</span><span class="st"> </span>tree<span class="op">$</span>cptable[imin.xerror, <span class="st">&quot;xstd&quot;</span>]</span>
@@ -1021,6 +1017,15 @@ Si queremos emplear validación cruzada como en el caso anterior podemos emplear
 <span id="cb138-5"><a href="cart-con-el-paquete-rpart.html#cb138-5"></a>caret.rpart<span class="op">$</span>finalModel</span>
 <span id="cb138-6"><a href="cart-con-el-paquete-rpart.html#cb138-6"></a><span class="kw">rpart.plot</span>(caret.rpart<span class="op">$</span>finalModel, <span class="dt">main =</span> <span class="st">&quot;Classification tree winetaste&quot;</span>)</span>
 <span id="cb138-7"><a href="cart-con-el-paquete-rpart.html#cb138-7"></a><span class="kw">varImp</span>(caret.rpart)</span></code></pre></div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-breiman1984classification">
+<p>Breiman, L., Friedman, J. H., Olshen, R. A., y Stone, C. J. (1984). Classification and regression trees. Belmont, CA: Wadsworth. <em>International Group</em>, <em>432</em>, 151-166.</p>
+</div>
+<div id="ref-cortez2009modeling">
+<p>Cortez, P., Cerdeira, A., Almeida, F., Matos, T., y Reis, J. (2009). Modeling wine preferences by data mining from physicochemical properties. <em>Decision support systems</em>, <em>47</em>(4), 547-553. <a href="https://doi.org/10.1016/j.dss.2009.05.016">https://doi.org/10.1016/j.dss.2009.05.016</a></p>
 </div>
 </div>
 <div class="footnotes">

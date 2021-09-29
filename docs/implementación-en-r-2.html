@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html lang="es" xml:lang="es">
 <head>
 
   <meta charset="utf-8" />
@@ -26,7 +26,7 @@
 <meta name="author" content="Manuel Oviedo de la Fuente (manuel.oviedo@udc.es)" />
 
 
-<meta name="date" content="2021-09-24" />
+<meta name="date" content="2021-09-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -148,8 +148,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1" data-path="intro-AE.html"><a href="intro-AE.html"><i class="fa fa-check"></i><b>1</b> Introducción al Aprendizaje Estadístico</a><ul>
 <li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje Estadístico vs. Aprendizaje Automático</a><ul>
 <li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
-<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#las-dos-culturas-breiman-2001"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas (Breiman, 2001)</a></li>
-<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-estadística-dunson-2018"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística (Dunson, 2018)</a></li>
+<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#las-dos-culturas-breiman2001statistical"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas <span class="citation">(Breiman, <span>2001</span><span>b</span>)</span></a></li>
+<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-estadística-dunson2018statistics"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística <span class="citation">(Dunson, <span>2018</span>)</span></a></li>
 </ul></li>
 <li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de Aprendizaje Estadístico</a><ul>
 <li class="chapter" data-level="1.2.1" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#notacion"><i class="fa fa-check"></i><b>1.2.1</b> Notación y terminología</a></li>
@@ -285,11 +285,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.3" data-path="implementación-en-r-2.html"><a href="implementación-en-r-2.html"><i class="fa fa-check"></i><b>8.3</b> Implementación en R</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
-<li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a><ul>
-<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html#libros"><i class="fa fa-check"></i>Libros</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html#artículos"><i class="fa fa-check"></i>Artículos</a></li>
-</ul></li>
+<li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -316,8 +312,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Hay numerosos paquetes que implementan métodos de este tipo, aunque por simplicidad consideraremos el paquete <code>nnet</code> que implementa redes neuronales <em>feed fordward</em> con una única capa oculta y está incluido en el paquete base de R.
 Para el caso de redes más complejas se puede utilizar por ejemplo el paquete <a href="https://CRAN.R-project.org/package=neuralnet"><code>neuralnet</code></a>, pero en el caso de grandes volúmenes de datos o aprendizaje profundo la recomendación sería emplear paquetes computacionalmente más eficientes (con computación en paralelo empleando CPUs o GPUs) como <a href="https://keras.rstudio.com"><code>keras</code></a>, <a href="https://github.com/h2oai/h2o-3"><code>h2o</code></a> o <a href="https://spark.rstudio.com/"><code>sparlyr</code></a>, entre otros.</p>
 <p>La función principal <code>nnet()</code> se suele emplear con los siguientes argumentos:</p>
-<div class="sourceCode" id="cb514"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb514-1"><a href="implementación-en-r-2.html#cb514-1"></a><span class="kw">nnet</span>(formula, data, size, Wts, <span class="dt">linout =</span> <span class="ot">FALSE</span>, <span class="dt">skip =</span> <span class="ot">FALSE</span>, </span>
-<span id="cb514-2"><a href="implementación-en-r-2.html#cb514-2"></a>     <span class="dt">rang =</span> <span class="fl">0.7</span>, <span class="dt">decay =</span> <span class="dv">0</span>, <span class="dt">maxit =</span> <span class="dv">100</span>, ...)</span></code></pre></div>
+<div class="sourceCode" id="cb516"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb516-1"><a href="implementación-en-r-2.html#cb516-1"></a><span class="kw">nnet</span>(formula, data, size, Wts, <span class="dt">linout =</span> <span class="ot">FALSE</span>, <span class="dt">skip =</span> <span class="ot">FALSE</span>, </span>
+<span id="cb516-2"><a href="implementación-en-r-2.html#cb516-2"></a>     <span class="dt">rang =</span> <span class="fl">0.7</span>, <span class="dt">decay =</span> <span class="dv">0</span>, <span class="dt">maxit =</span> <span class="dv">100</span>, ...)</span></code></pre></div>
 <ul>
 <li><p><code>formula</code> y <code>data</code> (opcional): permiten especificar la respuesta y las variables predictoras de la forma habitual (e.g. <code>respuesta ~ .</code>; también implementa una interfaz con matrices <code>x</code> e <code>y</code>). Admite respuestas multidimensionales (ajustará un modelo para cada componente) y categóricas (las convierte en multivariantes si tienen más de dos categorías y emplea <em>softmax</em> en los nodos finales).
 Teniendo en cuenta que por defecto los pesos iniciales se asignan al azar (<code>Wts &lt;- runif(nwts, -rang, rang)</code>) la recomendación sería reescalar los predictores en el intervalo <span class="math inline">\([0, 1]\)</span>, sobre todo si se emplea regularización (<code>decay &gt; 0</code>).</p></li>
@@ -328,36 +324,36 @@ Teniendo en cuenta que por defecto los pesos iniciales se asignan al azar (<code
 <li><p><code>maxit</code>: número máximo de iteraciones; por defecto 100.</p></li>
 </ul>
 <p>Como ejemplo consideraremos el conjunto de datos <code>earth::Ozone1</code> empleado en el capítulo anterior:</p>
-<div class="sourceCode" id="cb515"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb515-1"><a href="implementación-en-r-2.html#cb515-1"></a><span class="kw">data</span>(ozone1, <span class="dt">package =</span> <span class="st">&quot;earth&quot;</span>)</span>
-<span id="cb515-2"><a href="implementación-en-r-2.html#cb515-2"></a>df &lt;-<span class="st"> </span>ozone1</span>
-<span id="cb515-3"><a href="implementación-en-r-2.html#cb515-3"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb515-4"><a href="implementación-en-r-2.html#cb515-4"></a>nobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(df)</span>
-<span id="cb515-5"><a href="implementación-en-r-2.html#cb515-5"></a>itrain &lt;-<span class="st"> </span><span class="kw">sample</span>(nobs, <span class="fl">0.8</span> <span class="op">*</span><span class="st"> </span>nobs)</span>
-<span id="cb515-6"><a href="implementación-en-r-2.html#cb515-6"></a>train &lt;-<span class="st"> </span>df[itrain, ]</span>
-<span id="cb515-7"><a href="implementación-en-r-2.html#cb515-7"></a>test &lt;-<span class="st"> </span>df[<span class="op">-</span>itrain, ]</span></code></pre></div>
+<div class="sourceCode" id="cb517"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb517-1"><a href="implementación-en-r-2.html#cb517-1"></a><span class="kw">data</span>(ozone1, <span class="dt">package =</span> <span class="st">&quot;earth&quot;</span>)</span>
+<span id="cb517-2"><a href="implementación-en-r-2.html#cb517-2"></a>df &lt;-<span class="st"> </span>ozone1</span>
+<span id="cb517-3"><a href="implementación-en-r-2.html#cb517-3"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb517-4"><a href="implementación-en-r-2.html#cb517-4"></a>nobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(df)</span>
+<span id="cb517-5"><a href="implementación-en-r-2.html#cb517-5"></a>itrain &lt;-<span class="st"> </span><span class="kw">sample</span>(nobs, <span class="fl">0.8</span> <span class="op">*</span><span class="st"> </span>nobs)</span>
+<span id="cb517-6"><a href="implementación-en-r-2.html#cb517-6"></a>train &lt;-<span class="st"> </span>df[itrain, ]</span>
+<span id="cb517-7"><a href="implementación-en-r-2.html#cb517-7"></a>test &lt;-<span class="st"> </span>df[<span class="op">-</span>itrain, ]</span></code></pre></div>
 <p>En este caso emplearemos el método <code>"nnet"</code> de <code>caret</code> para preprocesar los datos y seleccionar el número de nodos en la capa oculta y el parámetro de regularización.
 Como emplea las opciones por defecto de <code>nnet()</code> (diseñadas para clasificación),
 estableceremos <code>linout = TRUE</code> (la alternativa sería transformar la respuesta a rango 1) y aumentaremos el número de iteraciones (aunque seguramente sigue siendo demasiado pequeño).</p>
-<div class="sourceCode" id="cb516"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb516-1"><a href="implementación-en-r-2.html#cb516-1"></a><span class="kw">library</span>(caret)</span>
-<span id="cb516-2"><a href="implementación-en-r-2.html#cb516-2"></a><span class="co"># Buscar &quot;Neural Network&quot;: 10 métodos</span></span>
-<span id="cb516-3"><a href="implementación-en-r-2.html#cb516-3"></a><span class="co"># getModelInfo(&quot;nnet&quot;)</span></span>
-<span id="cb516-4"><a href="implementación-en-r-2.html#cb516-4"></a><span class="kw">modelLookup</span>(<span class="st">&quot;nnet&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb518"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb518-1"><a href="implementación-en-r-2.html#cb518-1"></a><span class="kw">library</span>(caret)</span>
+<span id="cb518-2"><a href="implementación-en-r-2.html#cb518-2"></a><span class="co"># Buscar &quot;Neural Network&quot;: 10 métodos</span></span>
+<span id="cb518-3"><a href="implementación-en-r-2.html#cb518-3"></a><span class="co"># getModelInfo(&quot;nnet&quot;)</span></span>
+<span id="cb518-4"><a href="implementación-en-r-2.html#cb518-4"></a><span class="kw">modelLookup</span>(<span class="st">&quot;nnet&quot;</span>)</span></code></pre></div>
 <pre><code>##   model parameter         label forReg forClass probModel
 ## 1  nnet      size #Hidden Units   TRUE     TRUE      TRUE
 ## 2  nnet     decay  Weight Decay   TRUE     TRUE      TRUE</code></pre>
-<div class="sourceCode" id="cb518"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb518-1"><a href="implementación-en-r-2.html#cb518-1"></a>tuneGrid &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">size =</span> <span class="dv">2</span><span class="op">*</span><span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">decay =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.001</span>, <span class="fl">0.01</span>))</span>
-<span id="cb518-2"><a href="implementación-en-r-2.html#cb518-2"></a></span>
-<span id="cb518-3"><a href="implementación-en-r-2.html#cb518-3"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb518-4"><a href="implementación-en-r-2.html#cb518-4"></a>caret.nnet &lt;-<span class="st"> </span><span class="kw">train</span>(O3 <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train, <span class="dt">method =</span> <span class="st">&quot;nnet&quot;</span>,</span>
-<span id="cb518-5"><a href="implementación-en-r-2.html#cb518-5"></a>             <span class="dt">preProc =</span> <span class="kw">c</span>(<span class="st">&quot;range&quot;</span>), <span class="co"># Reescalado en [0,1]</span></span>
-<span id="cb518-6"><a href="implementación-en-r-2.html#cb518-6"></a>             <span class="dt">tuneGrid =</span> tuneGrid,</span>
-<span id="cb518-7"><a href="implementación-en-r-2.html#cb518-7"></a>             <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="dt">number =</span> <span class="dv">10</span>), </span>
-<span id="cb518-8"><a href="implementación-en-r-2.html#cb518-8"></a>             <span class="dt">linout =</span> <span class="ot">TRUE</span>, <span class="dt">maxit =</span> <span class="dv">200</span>, <span class="dt">trace =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb518-9"><a href="implementación-en-r-2.html#cb518-9"></a></span>
-<span id="cb518-10"><a href="implementación-en-r-2.html#cb518-10"></a><span class="kw">ggplot</span>(caret.nnet, <span class="dt">highlight =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb520"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb520-1"><a href="implementación-en-r-2.html#cb520-1"></a>tuneGrid &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">size =</span> <span class="dv">2</span><span class="op">*</span><span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">decay =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.001</span>, <span class="fl">0.01</span>))</span>
+<span id="cb520-2"><a href="implementación-en-r-2.html#cb520-2"></a></span>
+<span id="cb520-3"><a href="implementación-en-r-2.html#cb520-3"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb520-4"><a href="implementación-en-r-2.html#cb520-4"></a>caret.nnet &lt;-<span class="st"> </span><span class="kw">train</span>(O3 <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train, <span class="dt">method =</span> <span class="st">&quot;nnet&quot;</span>,</span>
+<span id="cb520-5"><a href="implementación-en-r-2.html#cb520-5"></a>             <span class="dt">preProc =</span> <span class="kw">c</span>(<span class="st">&quot;range&quot;</span>), <span class="co"># Reescalado en [0,1]</span></span>
+<span id="cb520-6"><a href="implementación-en-r-2.html#cb520-6"></a>             <span class="dt">tuneGrid =</span> tuneGrid,</span>
+<span id="cb520-7"><a href="implementación-en-r-2.html#cb520-7"></a>             <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="dt">number =</span> <span class="dv">10</span>), </span>
+<span id="cb520-8"><a href="implementación-en-r-2.html#cb520-8"></a>             <span class="dt">linout =</span> <span class="ot">TRUE</span>, <span class="dt">maxit =</span> <span class="dv">200</span>, <span class="dt">trace =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb520-9"><a href="implementación-en-r-2.html#cb520-9"></a></span>
+<span id="cb520-10"><a href="implementación-en-r-2.html#cb520-10"></a><span class="kw">ggplot</span>(caret.nnet, <span class="dt">highlight =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <p><img src="08-redes_neuronales_files/figure-html/unnamed-chunk-5-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>Analizamos el modelo resultante:</p>
-<div class="sourceCode" id="cb519"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb519-1"><a href="implementación-en-r-2.html#cb519-1"></a><span class="kw">summary</span>(caret.nnet<span class="op">$</span>finalModel)</span></code></pre></div>
+<div class="sourceCode" id="cb521"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb521-1"><a href="implementación-en-r-2.html#cb521-1"></a><span class="kw">summary</span>(caret.nnet<span class="op">$</span>finalModel)</span></code></pre></div>
 <pre><code>## a 9-4-1 network with 45 weights
 ## options were - linear output units  decay=0.01
 ##  b-&gt;h1 i1-&gt;h1 i2-&gt;h1 i3-&gt;h1 i4-&gt;h1 i5-&gt;h1 i6-&gt;h1 i7-&gt;h1 i8-&gt;h1 i9-&gt;h1 
@@ -371,38 +367,38 @@ estableceremos <code>linout = TRUE</code> (la alternativa sería transformar la 
 ##   b-&gt;o  h1-&gt;o  h2-&gt;o  h3-&gt;o  h4-&gt;o 
 ##  -5.32   4.19 -14.03   7.50  38.75</code></pre>
 <p>Podemos representarlo gráficamente empleando el paquete <code>NeuralNetTools</code>:</p>
-<div class="sourceCode" id="cb521"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb521-1"><a href="implementación-en-r-2.html#cb521-1"></a><span class="kw">library</span>(NeuralNetTools)</span>
-<span id="cb521-2"><a href="implementación-en-r-2.html#cb521-2"></a><span class="kw">plotnet</span>(caret.nnet<span class="op">$</span>finalModel)</span></code></pre></div>
+<div class="sourceCode" id="cb523"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb523-1"><a href="implementación-en-r-2.html#cb523-1"></a><span class="kw">library</span>(NeuralNetTools)</span>
+<span id="cb523-2"><a href="implementación-en-r-2.html#cb523-2"></a><span class="kw">plotnet</span>(caret.nnet<span class="op">$</span>finalModel)</span></code></pre></div>
 <p><img src="08-redes_neuronales_files/figure-html/unnamed-chunk-7-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>Por último evaluamos las predicciones en la muestra de test:</p>
-<div class="sourceCode" id="cb522"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb522-1"><a href="implementación-en-r-2.html#cb522-1"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(caret.nnet, <span class="dt">newdata =</span> test)</span>
-<span id="cb522-2"><a href="implementación-en-r-2.html#cb522-2"></a>obs &lt;-<span class="st"> </span>test<span class="op">$</span>O3</span>
-<span id="cb522-3"><a href="implementación-en-r-2.html#cb522-3"></a></span>
-<span id="cb522-4"><a href="implementación-en-r-2.html#cb522-4"></a><span class="kw">plot</span>(pred, obs, <span class="dt">main =</span> <span class="st">&quot;Observado frente a predicciones&quot;</span>,</span>
-<span id="cb522-5"><a href="implementación-en-r-2.html#cb522-5"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Predicción&quot;, ylab = &quot;</span>Observado<span class="st">&quot;)</span></span>
-<span id="cb522-6"><a href="implementación-en-r-2.html#cb522-6"></a><span class="st">abline(a = 0, b = 1)</span></span>
-<span id="cb522-7"><a href="implementación-en-r-2.html#cb522-7"></a><span class="st">abline(lm(obs ~ pred), lty = 2)</span></span></code></pre></div>
+<div class="sourceCode" id="cb524"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb524-1"><a href="implementación-en-r-2.html#cb524-1"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(caret.nnet, <span class="dt">newdata =</span> test)</span>
+<span id="cb524-2"><a href="implementación-en-r-2.html#cb524-2"></a>obs &lt;-<span class="st"> </span>test<span class="op">$</span>O3</span>
+<span id="cb524-3"><a href="implementación-en-r-2.html#cb524-3"></a></span>
+<span id="cb524-4"><a href="implementación-en-r-2.html#cb524-4"></a><span class="kw">plot</span>(pred, obs, <span class="dt">main =</span> <span class="st">&quot;Observado frente a predicciones&quot;</span>,</span>
+<span id="cb524-5"><a href="implementación-en-r-2.html#cb524-5"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Predicción&quot;, ylab = &quot;</span>Observado<span class="st">&quot;)</span></span>
+<span id="cb524-6"><a href="implementación-en-r-2.html#cb524-6"></a><span class="st">abline(a = 0, b = 1)</span></span>
+<span id="cb524-7"><a href="implementación-en-r-2.html#cb524-7"></a><span class="st">abline(lm(obs ~ pred), lty = 2)</span></span></code></pre></div>
 <p><img src="08-redes_neuronales_files/figure-html/unnamed-chunk-8-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb523"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb523-1"><a href="implementación-en-r-2.html#cb523-1"></a>accuracy &lt;-<span class="st"> </span><span class="cf">function</span>(pred, obs, <span class="dt">na.rm =</span> <span class="ot">FALSE</span>,</span>
-<span id="cb523-2"><a href="implementación-en-r-2.html#cb523-2"></a>                     <span class="dt">tol =</span> <span class="kw">sqrt</span>(.Machine<span class="op">$</span>double.eps)) {</span>
-<span id="cb523-3"><a href="implementación-en-r-2.html#cb523-3"></a>  err &lt;-<span class="st"> </span>obs <span class="op">-</span><span class="st"> </span>pred     <span class="co"># Errores</span></span>
-<span id="cb523-4"><a href="implementación-en-r-2.html#cb523-4"></a>  <span class="cf">if</span>(na.rm) {</span>
-<span id="cb523-5"><a href="implementación-en-r-2.html#cb523-5"></a>    is.a &lt;-<span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(err)</span>
-<span id="cb523-6"><a href="implementación-en-r-2.html#cb523-6"></a>    err &lt;-<span class="st"> </span>err[is.a]</span>
-<span id="cb523-7"><a href="implementación-en-r-2.html#cb523-7"></a>    obs &lt;-<span class="st"> </span>obs[is.a]</span>
-<span id="cb523-8"><a href="implementación-en-r-2.html#cb523-8"></a>  }</span>
-<span id="cb523-9"><a href="implementación-en-r-2.html#cb523-9"></a>  perr &lt;-<span class="st"> </span><span class="dv">100</span><span class="op">*</span>err<span class="op">/</span><span class="kw">pmax</span>(obs, tol)  <span class="co"># Errores porcentuales</span></span>
-<span id="cb523-10"><a href="implementación-en-r-2.html#cb523-10"></a>  <span class="kw">return</span>(<span class="kw">c</span>(</span>
-<span id="cb523-11"><a href="implementación-en-r-2.html#cb523-11"></a>    <span class="dt">me =</span> <span class="kw">mean</span>(err),           <span class="co"># Error medio</span></span>
-<span id="cb523-12"><a href="implementación-en-r-2.html#cb523-12"></a>    <span class="dt">rmse =</span> <span class="kw">sqrt</span>(<span class="kw">mean</span>(err<span class="op">^</span><span class="dv">2</span>)), <span class="co"># Raíz del error cuadrático medio</span></span>
-<span id="cb523-13"><a href="implementación-en-r-2.html#cb523-13"></a>    <span class="dt">mae =</span> <span class="kw">mean</span>(<span class="kw">abs</span>(err)),     <span class="co"># Error absoluto medio</span></span>
-<span id="cb523-14"><a href="implementación-en-r-2.html#cb523-14"></a>    <span class="dt">mpe =</span> <span class="kw">mean</span>(perr),         <span class="co"># Error porcentual medio</span></span>
-<span id="cb523-15"><a href="implementación-en-r-2.html#cb523-15"></a>    <span class="dt">mape =</span> <span class="kw">mean</span>(<span class="kw">abs</span>(perr)),   <span class="co"># Error porcentual absoluto medio</span></span>
-<span id="cb523-16"><a href="implementación-en-r-2.html#cb523-16"></a>    <span class="dt">r.squared =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">sum</span>(err<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span><span class="kw">sum</span>((obs <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(obs))<span class="op">^</span><span class="dv">2</span>) <span class="co"># Pseudo R-cuadrado</span></span>
-<span id="cb523-17"><a href="implementación-en-r-2.html#cb523-17"></a>  ))</span>
-<span id="cb523-18"><a href="implementación-en-r-2.html#cb523-18"></a>}</span>
-<span id="cb523-19"><a href="implementación-en-r-2.html#cb523-19"></a></span>
-<span id="cb523-20"><a href="implementación-en-r-2.html#cb523-20"></a><span class="kw">accuracy</span>(pred, obs)</span></code></pre></div>
+<div class="sourceCode" id="cb525"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb525-1"><a href="implementación-en-r-2.html#cb525-1"></a>accuracy &lt;-<span class="st"> </span><span class="cf">function</span>(pred, obs, <span class="dt">na.rm =</span> <span class="ot">FALSE</span>,</span>
+<span id="cb525-2"><a href="implementación-en-r-2.html#cb525-2"></a>                     <span class="dt">tol =</span> <span class="kw">sqrt</span>(.Machine<span class="op">$</span>double.eps)) {</span>
+<span id="cb525-3"><a href="implementación-en-r-2.html#cb525-3"></a>  err &lt;-<span class="st"> </span>obs <span class="op">-</span><span class="st"> </span>pred     <span class="co"># Errores</span></span>
+<span id="cb525-4"><a href="implementación-en-r-2.html#cb525-4"></a>  <span class="cf">if</span>(na.rm) {</span>
+<span id="cb525-5"><a href="implementación-en-r-2.html#cb525-5"></a>    is.a &lt;-<span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(err)</span>
+<span id="cb525-6"><a href="implementación-en-r-2.html#cb525-6"></a>    err &lt;-<span class="st"> </span>err[is.a]</span>
+<span id="cb525-7"><a href="implementación-en-r-2.html#cb525-7"></a>    obs &lt;-<span class="st"> </span>obs[is.a]</span>
+<span id="cb525-8"><a href="implementación-en-r-2.html#cb525-8"></a>  }</span>
+<span id="cb525-9"><a href="implementación-en-r-2.html#cb525-9"></a>  perr &lt;-<span class="st"> </span><span class="dv">100</span><span class="op">*</span>err<span class="op">/</span><span class="kw">pmax</span>(obs, tol)  <span class="co"># Errores porcentuales</span></span>
+<span id="cb525-10"><a href="implementación-en-r-2.html#cb525-10"></a>  <span class="kw">return</span>(<span class="kw">c</span>(</span>
+<span id="cb525-11"><a href="implementación-en-r-2.html#cb525-11"></a>    <span class="dt">me =</span> <span class="kw">mean</span>(err),           <span class="co"># Error medio</span></span>
+<span id="cb525-12"><a href="implementación-en-r-2.html#cb525-12"></a>    <span class="dt">rmse =</span> <span class="kw">sqrt</span>(<span class="kw">mean</span>(err<span class="op">^</span><span class="dv">2</span>)), <span class="co"># Raíz del error cuadrático medio</span></span>
+<span id="cb525-13"><a href="implementación-en-r-2.html#cb525-13"></a>    <span class="dt">mae =</span> <span class="kw">mean</span>(<span class="kw">abs</span>(err)),     <span class="co"># Error absoluto medio</span></span>
+<span id="cb525-14"><a href="implementación-en-r-2.html#cb525-14"></a>    <span class="dt">mpe =</span> <span class="kw">mean</span>(perr),         <span class="co"># Error porcentual medio</span></span>
+<span id="cb525-15"><a href="implementación-en-r-2.html#cb525-15"></a>    <span class="dt">mape =</span> <span class="kw">mean</span>(<span class="kw">abs</span>(perr)),   <span class="co"># Error porcentual absoluto medio</span></span>
+<span id="cb525-16"><a href="implementación-en-r-2.html#cb525-16"></a>    <span class="dt">r.squared =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">sum</span>(err<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span><span class="kw">sum</span>((obs <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(obs))<span class="op">^</span><span class="dv">2</span>) <span class="co"># Pseudo R-cuadrado</span></span>
+<span id="cb525-17"><a href="implementación-en-r-2.html#cb525-17"></a>  ))</span>
+<span id="cb525-18"><a href="implementación-en-r-2.html#cb525-18"></a>}</span>
+<span id="cb525-19"><a href="implementación-en-r-2.html#cb525-19"></a></span>
+<span id="cb525-20"><a href="implementación-en-r-2.html#cb525-20"></a><span class="kw">accuracy</span>(pred, obs)</span></code></pre></div>
 <pre><code>##         me       rmse        mae        mpe       mape  r.squared 
 ##  0.3321276  3.0242169  2.4466958 -7.4095987 32.8000107  0.8586515</code></pre>
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html lang="es" xml:lang="es">
 <head>
 
   <meta charset="utf-8" />
@@ -26,7 +26,7 @@
 <meta name="author" content="Manuel Oviedo de la Fuente (manuel.oviedo@udc.es)" />
 
 
-<meta name="date" content="2021-09-24" />
+<meta name="date" content="2021-09-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -148,8 +148,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1" data-path="intro-AE.html"><a href="intro-AE.html"><i class="fa fa-check"></i><b>1</b> Introducción al Aprendizaje Estadístico</a><ul>
 <li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje Estadístico vs. Aprendizaje Automático</a><ul>
 <li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
-<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#las-dos-culturas-breiman-2001"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas (Breiman, 2001)</a></li>
-<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-estadística-dunson-2018"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística (Dunson, 2018)</a></li>
+<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#las-dos-culturas-breiman2001statistical"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas <span class="citation">(Breiman, <span>2001</span><span>b</span>)</span></a></li>
+<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-estadística-dunson2018statistics"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística <span class="citation">(Dunson, <span>2018</span>)</span></a></li>
 </ul></li>
 <li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de Aprendizaje Estadístico</a><ul>
 <li class="chapter" data-level="1.2.1" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#notacion"><i class="fa fa-check"></i><b>1.2.1</b> Notación y terminología</a></li>
@@ -285,11 +285,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.3" data-path="implementación-en-r-2.html"><a href="implementación-en-r-2.html"><i class="fa fa-check"></i><b>8.3</b> Implementación en R</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
-<li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a><ul>
-<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html#libros"><i class="fa fa-check"></i>Libros</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html#artículos"><i class="fa fa-check"></i>Artículos</a></li>
-</ul></li>
+<li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -324,25 +320,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 siendo <span class="math inline">\((x - z)_+ = \max(0, x - z)\)</span>, y posteriormente realizar un ajuste lineal:
 <span class="math display">\[m(x) = \beta_0 + \beta_1 b_1(x) +  \beta_2 b_2(x) + \ldots  + \beta_{k+d} b_{k+d}(x)\]</span></p>
 <p>Típicamente se seleccionan polinomios de grado <span class="math inline">\(d=3\)</span>, lo que se conoce como splines cúbicos, y nodos equiespaciados.
-Además, se podrían emplear otras bases equivalentes. Por ejemplo, para evitar posibles problemas computacionales con la base anterior, se suele emplear la denominada base <span class="math inline">\(B\)</span>-spline (de Boor, 1978; implementada en la función <code>bs()</code> del paquete <code>splines</code>).</p>
-<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb415-1"><a href="splines.html#cb415-1"></a>nknots &lt;-<span class="st"> </span><span class="dv">9</span> <span class="co"># nodos internos; 10 intervalos</span></span>
-<span id="cb415-2"><a href="splines.html#cb415-2"></a>knots &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(x), <span class="kw">max</span>(x), <span class="dt">len =</span> nknots <span class="op">+</span><span class="st"> </span><span class="dv">2</span>)[<span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span>, nknots <span class="op">+</span><span class="st"> </span><span class="dv">2</span>)]</span>
-<span id="cb415-3"><a href="splines.html#cb415-3"></a><span class="co"># knots &lt;- quantile(x, 1:nknots/(nknots + 1)) # bs(x, df = nknots + degree + intercept)</span></span>
-<span id="cb415-4"><a href="splines.html#cb415-4"></a></span>
-<span id="cb415-5"><a href="splines.html#cb415-5"></a><span class="kw">library</span>(splines)</span>
-<span id="cb415-6"><a href="splines.html#cb415-6"></a>fit1 &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span><span class="kw">bs</span>(x, <span class="dt">knots =</span> knots, <span class="dt">degree =</span> <span class="dv">1</span>))</span>
-<span id="cb415-7"><a href="splines.html#cb415-7"></a>fit2 &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span><span class="kw">bs</span>(x, <span class="dt">knots =</span> knots, <span class="dt">degree =</span> <span class="dv">2</span>))</span>
-<span id="cb415-8"><a href="splines.html#cb415-8"></a>fit3 &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span><span class="kw">bs</span>(x, <span class="dt">knots =</span> knots)) <span class="co"># degree = 3</span></span>
-<span id="cb415-9"><a href="splines.html#cb415-9"></a></span>
-<span id="cb415-10"><a href="splines.html#cb415-10"></a><span class="kw">plot</span>(x, y, <span class="dt">col =</span> <span class="st">&#39;darkgray&#39;</span>)</span>
-<span id="cb415-11"><a href="splines.html#cb415-11"></a>newx &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(x), <span class="kw">max</span>(x), <span class="dt">len =</span> <span class="dv">200</span>)</span>
-<span id="cb415-12"><a href="splines.html#cb415-12"></a>newdata &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> newx)</span>
-<span id="cb415-13"><a href="splines.html#cb415-13"></a><span class="kw">lines</span>(newx, <span class="kw">predict</span>(fit1, newdata), <span class="dt">lty =</span> <span class="dv">3</span>)</span>
-<span id="cb415-14"><a href="splines.html#cb415-14"></a><span class="kw">lines</span>(newx, <span class="kw">predict</span>(fit2, newdata), <span class="dt">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb415-15"><a href="splines.html#cb415-15"></a><span class="kw">lines</span>(newx, <span class="kw">predict</span>(fit3, newdata))</span>
-<span id="cb415-16"><a href="splines.html#cb415-16"></a><span class="kw">abline</span>(<span class="dt">v =</span> knots, <span class="dt">lty =</span> <span class="dv">3</span>, <span class="dt">col =</span> <span class="st">&#39;darkgray&#39;</span>)</span>
-<span id="cb415-17"><a href="splines.html#cb415-17"></a><span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;d=1 (df=11)&quot;</span>, <span class="st">&quot;d=2 (df=12)&quot;</span>, <span class="st">&quot;d=3 (df=13)&quot;</span>), </span>
-<span id="cb415-18"><a href="splines.html#cb415-18"></a>       <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>))</span></code></pre></div>
+Además, se podrían emplear otras bases equivalentes. Por ejemplo, para evitar posibles problemas computacionales con la base anterior, se suele emplear la denominada base <span class="math inline">\(B\)</span>-spline <span class="citation">(De Boor y De Boor, <a href="#ref-de1978practical" role="doc-biblioref">1978</a>)</span>, implementada en la función <code>bs()</code> del paquete <code>splines</code>.</p>
+<div class="sourceCode" id="cb417"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb417-1"><a href="splines.html#cb417-1"></a>nknots &lt;-<span class="st"> </span><span class="dv">9</span> <span class="co"># nodos internos; 10 intervalos</span></span>
+<span id="cb417-2"><a href="splines.html#cb417-2"></a>knots &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(x), <span class="kw">max</span>(x), <span class="dt">len =</span> nknots <span class="op">+</span><span class="st"> </span><span class="dv">2</span>)[<span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span>, nknots <span class="op">+</span><span class="st"> </span><span class="dv">2</span>)]</span>
+<span id="cb417-3"><a href="splines.html#cb417-3"></a><span class="co"># knots &lt;- quantile(x, 1:nknots/(nknots + 1)) # bs(x, df = nknots + degree + intercept)</span></span>
+<span id="cb417-4"><a href="splines.html#cb417-4"></a></span>
+<span id="cb417-5"><a href="splines.html#cb417-5"></a><span class="kw">library</span>(splines)</span>
+<span id="cb417-6"><a href="splines.html#cb417-6"></a>fit1 &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span><span class="kw">bs</span>(x, <span class="dt">knots =</span> knots, <span class="dt">degree =</span> <span class="dv">1</span>))</span>
+<span id="cb417-7"><a href="splines.html#cb417-7"></a>fit2 &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span><span class="kw">bs</span>(x, <span class="dt">knots =</span> knots, <span class="dt">degree =</span> <span class="dv">2</span>))</span>
+<span id="cb417-8"><a href="splines.html#cb417-8"></a>fit3 &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span><span class="kw">bs</span>(x, <span class="dt">knots =</span> knots)) <span class="co"># degree = 3</span></span>
+<span id="cb417-9"><a href="splines.html#cb417-9"></a></span>
+<span id="cb417-10"><a href="splines.html#cb417-10"></a><span class="kw">plot</span>(x, y, <span class="dt">col =</span> <span class="st">&#39;darkgray&#39;</span>)</span>
+<span id="cb417-11"><a href="splines.html#cb417-11"></a>newx &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(x), <span class="kw">max</span>(x), <span class="dt">len =</span> <span class="dv">200</span>)</span>
+<span id="cb417-12"><a href="splines.html#cb417-12"></a>newdata &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> newx)</span>
+<span id="cb417-13"><a href="splines.html#cb417-13"></a><span class="kw">lines</span>(newx, <span class="kw">predict</span>(fit1, newdata), <span class="dt">lty =</span> <span class="dv">3</span>)</span>
+<span id="cb417-14"><a href="splines.html#cb417-14"></a><span class="kw">lines</span>(newx, <span class="kw">predict</span>(fit2, newdata), <span class="dt">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb417-15"><a href="splines.html#cb417-15"></a><span class="kw">lines</span>(newx, <span class="kw">predict</span>(fit3, newdata))</span>
+<span id="cb417-16"><a href="splines.html#cb417-16"></a><span class="kw">abline</span>(<span class="dt">v =</span> knots, <span class="dt">lty =</span> <span class="dv">3</span>, <span class="dt">col =</span> <span class="st">&#39;darkgray&#39;</span>)</span>
+<span id="cb417-17"><a href="splines.html#cb417-17"></a><span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;d=1 (df=11)&quot;</span>, <span class="st">&quot;d=2 (df=12)&quot;</span>, <span class="st">&quot;d=3 (df=13)&quot;</span>), </span>
+<span id="cb417-18"><a href="splines.html#cb417-18"></a>       <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>))</span></code></pre></div>
 <p><img src="07-regresion_np_files/figure-html/unnamed-chunk-7-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>El grado del polinomio, pero sobre todo el número de nodos, determinarán la flexibilidad del modelo.
 Se podrían considerar el número de parámetros en el ajuste lineal, los grados de libertad, como medida de la complejidad (en la función <code>bs()</code> se puede especificar <code>df</code> en lugar de <code>knots</code>, y estos se generarán a partir de los cuantiles de <code>x</code>).</p>
@@ -350,12 +346,12 @@ Se podrían considerar el número de parámetros en el ajuste lineal, los grados
 Para tratar de evitar este problema se suelen emplear los <em>splines naturales</em>, que son splines de regresión con restricciones adicionales de forma que el ajuste sea lineal en los intervalos extremos (lo que en general produce estimaciones más estables en la frontera y mejores extrapolaciones).
 Estas restricciones reducen la complejidad (los grados de libertad del modelo), y al igual que en el caso de considerar únicamente las restricciones de continuidad y diferenciabilidad, resultan equivalentes a considerar una nueva base en un ajuste sin restricciones.
 Por ejemplo, se puede emplear la función <code>splines::ns()</code> para ajustar un spline natural (cúbico por defecto):</p>
-<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb416-1"><a href="splines.html#cb416-1"></a><span class="kw">plot</span>(x, y, <span class="dt">col =</span> <span class="st">&#39;darkgray&#39;</span>)</span>
-<span id="cb416-2"><a href="splines.html#cb416-2"></a>fit4 &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span><span class="kw">ns</span>(x, <span class="dt">knots =</span> knots))</span>
-<span id="cb416-3"><a href="splines.html#cb416-3"></a><span class="kw">lines</span>(newx, <span class="kw">predict</span>(fit4, newdata))</span>
-<span id="cb416-4"><a href="splines.html#cb416-4"></a><span class="kw">lines</span>(newx, <span class="kw">predict</span>(fit3, newdata), <span class="dt">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb416-5"><a href="splines.html#cb416-5"></a><span class="kw">abline</span>(<span class="dt">v =</span> knots, <span class="dt">lty =</span> <span class="dv">3</span>, <span class="dt">col =</span> <span class="st">&#39;darkgray&#39;</span>)</span>
-<span id="cb416-6"><a href="splines.html#cb416-6"></a><span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;ns (d=3, df=11)&quot;</span>, <span class="st">&quot;bs (d=3, df=13)&quot;</span>), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="splines.html#cb418-1"></a><span class="kw">plot</span>(x, y, <span class="dt">col =</span> <span class="st">&#39;darkgray&#39;</span>)</span>
+<span id="cb418-2"><a href="splines.html#cb418-2"></a>fit4 &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span><span class="kw">ns</span>(x, <span class="dt">knots =</span> knots))</span>
+<span id="cb418-3"><a href="splines.html#cb418-3"></a><span class="kw">lines</span>(newx, <span class="kw">predict</span>(fit4, newdata))</span>
+<span id="cb418-4"><a href="splines.html#cb418-4"></a><span class="kw">lines</span>(newx, <span class="kw">predict</span>(fit3, newdata), <span class="dt">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb418-5"><a href="splines.html#cb418-5"></a><span class="kw">abline</span>(<span class="dt">v =</span> knots, <span class="dt">lty =</span> <span class="dv">3</span>, <span class="dt">col =</span> <span class="st">&#39;darkgray&#39;</span>)</span>
+<span id="cb418-6"><a href="splines.html#cb418-6"></a><span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;ns (d=3, df=11)&quot;</span>, <span class="st">&quot;bs (d=3, df=13)&quot;</span>), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span></code></pre></div>
 <p><img src="07-regresion_np_files/figure-html/unnamed-chunk-8-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>La dificultad está en la selección de los nodos <span class="math inline">\(z_i\)</span>. Si se consideran equiespaciados (o se emplea otro criterio como los cuantiles), se podría seleccionar su número (equivalentemente los grados de libertad) empleando algún método de validación cruzada.
 Sin embargo, sería preferible considerar más nodos donde aparentemente hay más variaciones en la función de regresión y menos donde es más estable, esta es la idea de la regresión spline adaptativa descrita en la Sección <a href="mars.html#mars">7.4</a>.
@@ -378,11 +374,11 @@ o validación cruzada generalizada (GCV), minimizando:
 <span class="math display">\[GCV(\lambda)=\frac{1}{n}\sum_{i=1}^n\left(\frac{y_i-\hat{s}_{\lambda}(x_i)}{1 - \frac{1}{n}tr(S_{\lambda})}\right)^2\]</span></p>
 <p>Análogamente, el número efectivo de parámetros o grados de libertad<a href="#fn32" class="footnote-ref" id="fnref32"><sup>32</sup></a> <span class="math inline">\(df_{\lambda}=tr(S_{\lambda})\)</span> sería una medida de la complejidad del modelo equivalente a <span class="math inline">\(\lambda\)</span> (muchas implementaciones permiten seleccionar la complejidad empleando <span class="math inline">\(df\)</span>).</p>
 <p>Este método de suavizado está implementado en la función <code>smooth.spline()</code> del paquete base y por defecto emplea GCV para seleccionar el parámetro de suavizado (aunque también admite CV y se puede especificar <code>lambda</code> o <code>df</code>)<a href="#fn33" class="footnote-ref" id="fnref33"><sup>33</sup></a>.</p>
-<div class="sourceCode" id="cb417"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb417-1"><a href="splines.html#cb417-1"></a>sspline.gcv &lt;-<span class="st"> </span><span class="kw">smooth.spline</span>(x, y)</span>
-<span id="cb417-2"><a href="splines.html#cb417-2"></a>sspline.cv &lt;-<span class="st"> </span><span class="kw">smooth.spline</span>(x, y, <span class="dt">cv =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb417-3"><a href="splines.html#cb417-3"></a><span class="kw">plot</span>(x, y, <span class="dt">col =</span> <span class="st">&#39;darkgray&#39;</span>)</span>
-<span id="cb417-4"><a href="splines.html#cb417-4"></a><span class="kw">lines</span>(sspline.gcv)</span>
-<span id="cb417-5"><a href="splines.html#cb417-5"></a><span class="kw">lines</span>(sspline.cv, <span class="dt">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb419"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb419-1"><a href="splines.html#cb419-1"></a>sspline.gcv &lt;-<span class="st"> </span><span class="kw">smooth.spline</span>(x, y)</span>
+<span id="cb419-2"><a href="splines.html#cb419-2"></a>sspline.cv &lt;-<span class="st"> </span><span class="kw">smooth.spline</span>(x, y, <span class="dt">cv =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb419-3"><a href="splines.html#cb419-3"></a><span class="kw">plot</span>(x, y, <span class="dt">col =</span> <span class="st">&#39;darkgray&#39;</span>)</span>
+<span id="cb419-4"><a href="splines.html#cb419-4"></a><span class="kw">lines</span>(sspline.gcv)</span>
+<span id="cb419-5"><a href="splines.html#cb419-5"></a><span class="kw">lines</span>(sspline.cv, <span class="dt">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="07-regresion_np_files/figure-html/unnamed-chunk-9-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>Cuando el número de observaciones es muy grande, y por tanto el número de nodos, pueden aparecer problemas computacionales al emplear estos métodos.</p>
 </div>
@@ -390,13 +386,25 @@ o validación cruzada generalizada (GCV), minimizando:
 <h3><span class="header-section-number">7.2.3</span> Splines penalizados</h3>
 <p>Los splines penalizados (<em>penalized splines</em>) combinan las dos aproximaciones anteriores.
 Incluyen una penalización (que depende de la base considerada) y el número de nodos puede ser mucho menor que el número de observaciones (son un tipo de <em>low-rank smoothers</em>). De esta forma se obtienen modelos spline con mejores propiedades, con un menor efecto frontera y en los que se evitan problemas en la selección de los nodos.
-Unos de los más empleados son los <span class="math inline">\(P\)</span>-splines (Eilers and Marx, 1996) que emplean una base <span class="math inline">\(B\)</span>-spline con una penalización simple (basada en los cuadrados de diferencias de coeficientes consecutivos <span class="math inline">\((\beta_{i+1} - \beta_i)^2\)</span>).</p>
+Unos de los más empleados son los <span class="math inline">\(P\)</span>-splines <span class="citation">(Eilers y Marx, <a href="#ref-eilers1996flexible" role="doc-biblioref">1996</a>)</span> que emplean una base <span class="math inline">\(B\)</span>-spline con una penalización simple (basada en los cuadrados de diferencias de coeficientes consecutivos <span class="math inline">\((\beta_{i+1} - \beta_i)^2\)</span>).</p>
 <p>Además, un modelo spline penalizado se puede representar como un modelo lineal mixto, lo que permite emplear herramientas desarrolladas para este tipo de modelos (por ejemplo la implementadas en el paquete <code>nlme</code>, del que depende <code>mgcv</code>, que por defecto emplea splines penalizados).
-Para más detalles ver por ejemplo las secciones 5.2 y 5.3 de Wood (2017).</p>
+Para más detalles ver por ejemplo las secciones 5.2 y 5.3 de <span class="citation">Wood (<a href="#ref-wood2017generalized" role="doc-biblioref">2017</a>)</span>.</p>
 <!-- 
 ?mgcv::adaptive.smooth 
 Wand, M.P. (2003). Smoothing and Mixed Models. *Computational Statistics*, 18(2), 223–249
 -->
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-de1978practical">
+<p>De Boor, C., y De Boor, C. (1978). <em>A practical guide to splines</em> (Vol. 27). springer-verlag New York. <a href="https://doi.org/10.1007/978-1-4612-6333-3">https://doi.org/10.1007/978-1-4612-6333-3</a></p>
+</div>
+<div id="ref-eilers1996flexible">
+<p>Eilers, P. H., y Marx, B. D. (1996). Flexible smoothing with B-splines and penalties. <em>Statistical science</em>, <em>11</em>(2), 89-121. <a href="https://doi.org/10.1214/ss/1038425655">https://doi.org/10.1214/ss/1038425655</a></p>
+</div>
+<div id="ref-wood2017generalized">
+<p>Wood, S. N. (2017). <em>Generalized Additive Models: An Introduction with R, Second Edition</em>. CRC Press.</p>
 </div>
 </div>
 <div class="footnotes">

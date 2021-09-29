@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html lang="es" xml:lang="es">
 <head>
 
   <meta charset="utf-8" />
@@ -26,7 +26,7 @@
 <meta name="author" content="Manuel Oviedo de la Fuente (manuel.oviedo@udc.es)" />
 
 
-<meta name="date" content="2021-09-24" />
+<meta name="date" content="2021-09-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -148,8 +148,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1" data-path="intro-AE.html"><a href="intro-AE.html"><i class="fa fa-check"></i><b>1</b> Introducción al Aprendizaje Estadístico</a><ul>
 <li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje Estadístico vs. Aprendizaje Automático</a><ul>
 <li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
-<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#las-dos-culturas-breiman-2001"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas (Breiman, 2001)</a></li>
-<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-estadística-dunson-2018"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística (Dunson, 2018)</a></li>
+<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#las-dos-culturas-breiman2001statistical"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas <span class="citation">(Breiman, <span>2001</span><span>b</span>)</span></a></li>
+<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-estadística-dunson2018statistics"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística <span class="citation">(Dunson, <span>2018</span>)</span></a></li>
 </ul></li>
 <li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de Aprendizaje Estadístico</a><ul>
 <li class="chapter" data-level="1.2.1" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#notacion"><i class="fa fa-check"></i><b>1.2.1</b> Notación y terminología</a></li>
@@ -285,11 +285,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.3" data-path="implementación-en-r-2.html"><a href="implementación-en-r-2.html"><i class="fa fa-check"></i><b>8.3</b> Implementación en R</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
-<li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a><ul>
-<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html#libros"><i class="fa fa-check"></i>Libros</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html#artículos"><i class="fa fa-check"></i>Artículos</a></li>
-</ul></li>
+<li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -325,65 +321,65 @@ modelo, añadiendo o eliminando una variable o una observación,
 se producirán grandes cambios en las estimaciones de los efectos).</p></li>
 </ul>
 <p>Consideraremos un ejemplo de regresión lineal bidimensional con datos simulados en el que las dos variables explicativas están altamente correlacionadas:</p>
-<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="colinealidad.html#cb263-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb263-2"><a href="colinealidad.html#cb263-2"></a>n &lt;-<span class="st"> </span><span class="dv">50</span></span>
-<span id="cb263-3"><a href="colinealidad.html#cb263-3"></a>rand.gen &lt;-<span class="st"> </span>runif <span class="co"># rnorm</span></span>
-<span id="cb263-4"><a href="colinealidad.html#cb263-4"></a>x1 &lt;-<span class="st"> </span><span class="kw">rand.gen</span>(n)</span>
-<span id="cb263-5"><a href="colinealidad.html#cb263-5"></a>rho &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="fl">0.99</span>) <span class="co"># coeficiente de correlación</span></span>
-<span id="cb263-6"><a href="colinealidad.html#cb263-6"></a>x2 &lt;-<span class="st"> </span>rho<span class="op">*</span>x1 <span class="op">+</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>rho<span class="op">^</span><span class="dv">2</span>)<span class="op">*</span><span class="kw">rand.gen</span>(n)</span>
-<span id="cb263-7"><a href="colinealidad.html#cb263-7"></a>fit.x2 &lt;-<span class="st"> </span><span class="kw">lm</span>(x2 <span class="op">~</span><span class="st"> </span>x1)</span>
-<span id="cb263-8"><a href="colinealidad.html#cb263-8"></a><span class="co"># plot(x1, x2)</span></span>
-<span id="cb263-9"><a href="colinealidad.html#cb263-9"></a><span class="co"># summary(fit.x2)</span></span>
-<span id="cb263-10"><a href="colinealidad.html#cb263-10"></a></span>
-<span id="cb263-11"><a href="colinealidad.html#cb263-11"></a><span class="co"># Rejilla x-y para predicciones:</span></span>
-<span id="cb263-12"><a href="colinealidad.html#cb263-12"></a>x1.range &lt;-<span class="st"> </span><span class="kw">range</span>(x1)</span>
-<span id="cb263-13"><a href="colinealidad.html#cb263-13"></a>x1.grid &lt;-<span class="st"> </span><span class="kw">seq</span>(x1.range[<span class="dv">1</span>], x1.range[<span class="dv">2</span>], <span class="dt">length.out =</span> <span class="dv">30</span>)</span>
-<span id="cb263-14"><a href="colinealidad.html#cb263-14"></a>x2.range &lt;-<span class="st"> </span><span class="kw">range</span>(x2)</span>
-<span id="cb263-15"><a href="colinealidad.html#cb263-15"></a>x2.grid &lt;-<span class="st"> </span><span class="kw">seq</span>(x2.range[<span class="dv">1</span>], x2.range[<span class="dv">2</span>], <span class="dt">length.out =</span> <span class="dv">30</span>)</span>
-<span id="cb263-16"><a href="colinealidad.html#cb263-16"></a>xy &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">x1 =</span> x1.grid, <span class="dt">x2 =</span> x2.grid)</span>
-<span id="cb263-17"><a href="colinealidad.html#cb263-17"></a></span>
-<span id="cb263-18"><a href="colinealidad.html#cb263-18"></a><span class="co"># Modelo teórico:</span></span>
-<span id="cb263-19"><a href="colinealidad.html#cb263-19"></a>model.teor &lt;-<span class="st"> </span><span class="cf">function</span>(x1, x2) x1</span>
-<span id="cb263-20"><a href="colinealidad.html#cb263-20"></a><span class="co"># model.teor &lt;- function(x1, x2) x1 - 0.5*x2</span></span>
-<span id="cb263-21"><a href="colinealidad.html#cb263-21"></a>y.grid &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">mapply</span>(model.teor, xy<span class="op">$</span>x1, xy<span class="op">$</span>x2), <span class="dt">nrow =</span> <span class="kw">length</span>(x1.grid))</span>
-<span id="cb263-22"><a href="colinealidad.html#cb263-22"></a>y.mean &lt;-<span class="st"> </span><span class="kw">mapply</span>(model.teor, x1, x2)</span></code></pre></div>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="colinealidad.html#cb265-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb265-2"><a href="colinealidad.html#cb265-2"></a>n &lt;-<span class="st"> </span><span class="dv">50</span></span>
+<span id="cb265-3"><a href="colinealidad.html#cb265-3"></a>rand.gen &lt;-<span class="st"> </span>runif <span class="co"># rnorm</span></span>
+<span id="cb265-4"><a href="colinealidad.html#cb265-4"></a>x1 &lt;-<span class="st"> </span><span class="kw">rand.gen</span>(n)</span>
+<span id="cb265-5"><a href="colinealidad.html#cb265-5"></a>rho &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="fl">0.99</span>) <span class="co"># coeficiente de correlación</span></span>
+<span id="cb265-6"><a href="colinealidad.html#cb265-6"></a>x2 &lt;-<span class="st"> </span>rho<span class="op">*</span>x1 <span class="op">+</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>rho<span class="op">^</span><span class="dv">2</span>)<span class="op">*</span><span class="kw">rand.gen</span>(n)</span>
+<span id="cb265-7"><a href="colinealidad.html#cb265-7"></a>fit.x2 &lt;-<span class="st"> </span><span class="kw">lm</span>(x2 <span class="op">~</span><span class="st"> </span>x1)</span>
+<span id="cb265-8"><a href="colinealidad.html#cb265-8"></a><span class="co"># plot(x1, x2)</span></span>
+<span id="cb265-9"><a href="colinealidad.html#cb265-9"></a><span class="co"># summary(fit.x2)</span></span>
+<span id="cb265-10"><a href="colinealidad.html#cb265-10"></a></span>
+<span id="cb265-11"><a href="colinealidad.html#cb265-11"></a><span class="co"># Rejilla x-y para predicciones:</span></span>
+<span id="cb265-12"><a href="colinealidad.html#cb265-12"></a>x1.range &lt;-<span class="st"> </span><span class="kw">range</span>(x1)</span>
+<span id="cb265-13"><a href="colinealidad.html#cb265-13"></a>x1.grid &lt;-<span class="st"> </span><span class="kw">seq</span>(x1.range[<span class="dv">1</span>], x1.range[<span class="dv">2</span>], <span class="dt">length.out =</span> <span class="dv">30</span>)</span>
+<span id="cb265-14"><a href="colinealidad.html#cb265-14"></a>x2.range &lt;-<span class="st"> </span><span class="kw">range</span>(x2)</span>
+<span id="cb265-15"><a href="colinealidad.html#cb265-15"></a>x2.grid &lt;-<span class="st"> </span><span class="kw">seq</span>(x2.range[<span class="dv">1</span>], x2.range[<span class="dv">2</span>], <span class="dt">length.out =</span> <span class="dv">30</span>)</span>
+<span id="cb265-16"><a href="colinealidad.html#cb265-16"></a>xy &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">x1 =</span> x1.grid, <span class="dt">x2 =</span> x2.grid)</span>
+<span id="cb265-17"><a href="colinealidad.html#cb265-17"></a></span>
+<span id="cb265-18"><a href="colinealidad.html#cb265-18"></a><span class="co"># Modelo teórico:</span></span>
+<span id="cb265-19"><a href="colinealidad.html#cb265-19"></a>model.teor &lt;-<span class="st"> </span><span class="cf">function</span>(x1, x2) x1</span>
+<span id="cb265-20"><a href="colinealidad.html#cb265-20"></a><span class="co"># model.teor &lt;- function(x1, x2) x1 - 0.5*x2</span></span>
+<span id="cb265-21"><a href="colinealidad.html#cb265-21"></a>y.grid &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">mapply</span>(model.teor, xy<span class="op">$</span>x1, xy<span class="op">$</span>x2), <span class="dt">nrow =</span> <span class="kw">length</span>(x1.grid))</span>
+<span id="cb265-22"><a href="colinealidad.html#cb265-22"></a>y.mean &lt;-<span class="st"> </span><span class="kw">mapply</span>(model.teor, x1, x2)</span></code></pre></div>
 <p>Tendencia teórica y valores de las variables explicativas:</p>
-<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="colinealidad.html#cb264-1"></a><span class="kw">library</span>(plot3D)</span>
-<span id="cb264-2"><a href="colinealidad.html#cb264-2"></a>ylim &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>) <span class="co"># range(y, y.pred)</span></span>
-<span id="cb264-3"><a href="colinealidad.html#cb264-3"></a><span class="kw">scatter3D</span>(<span class="dt">z =</span> y.mean, <span class="dt">x =</span> x1, <span class="dt">y =</span> x2, <span class="dt">pch =</span> <span class="dv">16</span>, <span class="dt">cex =</span> <span class="dv">1</span>, <span class="dt">clim =</span> ylim, <span class="dt">zlim =</span> ylim,</span>
-<span id="cb264-4"><a href="colinealidad.html#cb264-4"></a>          <span class="dt">theta =</span> <span class="dv">-40</span>, <span class="dt">phi =</span> <span class="dv">20</span>, <span class="dt">ticktype =</span> <span class="st">&quot;detailed&quot;</span>, </span>
-<span id="cb264-5"><a href="colinealidad.html#cb264-5"></a>          <span class="dt">main =</span> <span class="st">&quot;Modelo teórico y valores de las variables explicativas&quot;</span>,</span>
-<span id="cb264-6"><a href="colinealidad.html#cb264-6"></a>          <span class="dt">xlab =</span> <span class="st">&quot;x1&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;x2&quot;</span>, <span class="dt">zlab =</span> <span class="st">&quot;y&quot;</span>, <span class="dt">sub =</span> <span class="kw">sprintf</span>(<span class="st">&quot;R2(x1,x2) = %.2f&quot;</span>, <span class="kw">summary</span>(fit.x2)<span class="op">$</span>r.squared),</span>
-<span id="cb264-7"><a href="colinealidad.html#cb264-7"></a>          <span class="dt">surf =</span> <span class="kw">list</span>(<span class="dt">x =</span> x1.grid, <span class="dt">y =</span> x2.grid, <span class="dt">z =</span> y.grid, <span class="dt">facets =</span> <span class="ot">NA</span>))</span>
-<span id="cb264-8"><a href="colinealidad.html#cb264-8"></a><span class="kw">scatter3D</span>(<span class="dt">z =</span> <span class="kw">rep</span>(ylim[<span class="dv">1</span>], n), <span class="dt">x =</span> x1, <span class="dt">y =</span> x2, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">colkey =</span> <span class="ot">FALSE</span>, </span>
-<span id="cb264-9"><a href="colinealidad.html#cb264-9"></a>           <span class="dt">pch =</span> <span class="dv">16</span>, <span class="dt">cex =</span> <span class="dv">1</span>, <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>)</span>
-<span id="cb264-10"><a href="colinealidad.html#cb264-10"></a>x2.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(fit.x2, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">x1 =</span> x1.range))</span>
-<span id="cb264-11"><a href="colinealidad.html#cb264-11"></a><span class="kw">lines3D</span>(<span class="dt">z =</span> <span class="kw">rep</span>(ylim[<span class="dv">1</span>], <span class="dv">2</span>), <span class="dt">x =</span> x1.range, <span class="dt">y =</span> x2.pred, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">colkey =</span> <span class="ot">FALSE</span>, <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="colinealidad.html#cb266-1"></a><span class="kw">library</span>(plot3D)</span>
+<span id="cb266-2"><a href="colinealidad.html#cb266-2"></a>ylim &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>) <span class="co"># range(y, y.pred)</span></span>
+<span id="cb266-3"><a href="colinealidad.html#cb266-3"></a><span class="kw">scatter3D</span>(<span class="dt">z =</span> y.mean, <span class="dt">x =</span> x1, <span class="dt">y =</span> x2, <span class="dt">pch =</span> <span class="dv">16</span>, <span class="dt">cex =</span> <span class="dv">1</span>, <span class="dt">clim =</span> ylim, <span class="dt">zlim =</span> ylim,</span>
+<span id="cb266-4"><a href="colinealidad.html#cb266-4"></a>          <span class="dt">theta =</span> <span class="dv">-40</span>, <span class="dt">phi =</span> <span class="dv">20</span>, <span class="dt">ticktype =</span> <span class="st">&quot;detailed&quot;</span>, </span>
+<span id="cb266-5"><a href="colinealidad.html#cb266-5"></a>          <span class="dt">main =</span> <span class="st">&quot;Modelo teórico y valores de las variables explicativas&quot;</span>,</span>
+<span id="cb266-6"><a href="colinealidad.html#cb266-6"></a>          <span class="dt">xlab =</span> <span class="st">&quot;x1&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;x2&quot;</span>, <span class="dt">zlab =</span> <span class="st">&quot;y&quot;</span>, <span class="dt">sub =</span> <span class="kw">sprintf</span>(<span class="st">&quot;R2(x1,x2) = %.2f&quot;</span>, <span class="kw">summary</span>(fit.x2)<span class="op">$</span>r.squared),</span>
+<span id="cb266-7"><a href="colinealidad.html#cb266-7"></a>          <span class="dt">surf =</span> <span class="kw">list</span>(<span class="dt">x =</span> x1.grid, <span class="dt">y =</span> x2.grid, <span class="dt">z =</span> y.grid, <span class="dt">facets =</span> <span class="ot">NA</span>))</span>
+<span id="cb266-8"><a href="colinealidad.html#cb266-8"></a><span class="kw">scatter3D</span>(<span class="dt">z =</span> <span class="kw">rep</span>(ylim[<span class="dv">1</span>], n), <span class="dt">x =</span> x1, <span class="dt">y =</span> x2, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">colkey =</span> <span class="ot">FALSE</span>, </span>
+<span id="cb266-9"><a href="colinealidad.html#cb266-9"></a>           <span class="dt">pch =</span> <span class="dv">16</span>, <span class="dt">cex =</span> <span class="dv">1</span>, <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>)</span>
+<span id="cb266-10"><a href="colinealidad.html#cb266-10"></a>x2.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(fit.x2, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">x1 =</span> x1.range))</span>
+<span id="cb266-11"><a href="colinealidad.html#cb266-11"></a><span class="kw">lines3D</span>(<span class="dt">z =</span> <span class="kw">rep</span>(ylim[<span class="dv">1</span>], <span class="dv">2</span>), <span class="dt">x =</span> x1.range, <span class="dt">y =</span> x2.pred, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">colkey =</span> <span class="ot">FALSE</span>, <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>) </span></code></pre></div>
 <p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-9-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>Simulación de la respuesta:</p>
-<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="colinealidad.html#cb265-1"></a>sd.err &lt;-<span class="st"> </span><span class="fl">0.25</span></span>
-<span id="cb265-2"><a href="colinealidad.html#cb265-2"></a>nsim &lt;-<span class="st"> </span><span class="dv">10</span></span>
-<span id="cb265-3"><a href="colinealidad.html#cb265-3"></a></span>
-<span id="cb265-4"><a href="colinealidad.html#cb265-4"></a><span class="cf">for</span> (isim <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nsim) {</span>
-<span id="cb265-5"><a href="colinealidad.html#cb265-5"></a>  <span class="kw">set.seed</span>(isim)</span>
-<span id="cb265-6"><a href="colinealidad.html#cb265-6"></a>  y &lt;-<span class="st"> </span>y.mean <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dv">0</span>, sd.err)</span>
-<span id="cb265-7"><a href="colinealidad.html#cb265-7"></a>  </span>
-<span id="cb265-8"><a href="colinealidad.html#cb265-8"></a>  <span class="co"># Ajuste lineal y superficie de predicción</span></span>
-<span id="cb265-9"><a href="colinealidad.html#cb265-9"></a>  fit &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2)</span>
-<span id="cb265-10"><a href="colinealidad.html#cb265-10"></a>  y.pred &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">predict</span>(fit, <span class="dt">newdata =</span> xy), <span class="dt">nrow =</span> <span class="kw">length</span>(x1.grid)) </span>
-<span id="cb265-11"><a href="colinealidad.html#cb265-11"></a>  </span>
-<span id="cb265-12"><a href="colinealidad.html#cb265-12"></a>  <span class="co"># Representar</span></span>
-<span id="cb265-13"><a href="colinealidad.html#cb265-13"></a>  fitpoints &lt;-<span class="st"> </span><span class="kw">predict</span>(fit) </span>
-<span id="cb265-14"><a href="colinealidad.html#cb265-14"></a>  <span class="kw">scatter3D</span>(<span class="dt">z =</span> y, <span class="dt">x =</span> x1, <span class="dt">y =</span> x2, <span class="dt">pch =</span> <span class="dv">16</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>, <span class="dt">clim =</span> ylim, <span class="dt">zlim =</span> ylim,</span>
-<span id="cb265-15"><a href="colinealidad.html#cb265-15"></a>            <span class="dt">theta =</span> <span class="dv">-40</span>, <span class="dt">phi =</span> <span class="dv">20</span>, <span class="dt">ticktype =</span> <span class="st">&quot;detailed&quot;</span>, </span>
-<span id="cb265-16"><a href="colinealidad.html#cb265-16"></a>            <span class="dt">main =</span> <span class="st">&quot;Modelo ajustado&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;x1&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;x2&quot;</span>, <span class="dt">zlab =</span> <span class="st">&quot;y&quot;</span>, </span>
-<span id="cb265-17"><a href="colinealidad.html#cb265-17"></a>            <span class="dt">surf =</span> <span class="kw">list</span>(<span class="dt">x =</span> x1.grid, <span class="dt">y =</span> x2.grid, <span class="dt">z =</span> y.pred, </span>
-<span id="cb265-18"><a href="colinealidad.html#cb265-18"></a>                        <span class="dt">facets =</span> <span class="ot">NA</span>, <span class="dt">fit =</span> fitpoints))</span>
-<span id="cb265-19"><a href="colinealidad.html#cb265-19"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="colinealidad.html#cb267-1"></a>sd.err &lt;-<span class="st"> </span><span class="fl">0.25</span></span>
+<span id="cb267-2"><a href="colinealidad.html#cb267-2"></a>nsim &lt;-<span class="st"> </span><span class="dv">10</span></span>
+<span id="cb267-3"><a href="colinealidad.html#cb267-3"></a></span>
+<span id="cb267-4"><a href="colinealidad.html#cb267-4"></a><span class="cf">for</span> (isim <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nsim) {</span>
+<span id="cb267-5"><a href="colinealidad.html#cb267-5"></a>  <span class="kw">set.seed</span>(isim)</span>
+<span id="cb267-6"><a href="colinealidad.html#cb267-6"></a>  y &lt;-<span class="st"> </span>y.mean <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dv">0</span>, sd.err)</span>
+<span id="cb267-7"><a href="colinealidad.html#cb267-7"></a>  </span>
+<span id="cb267-8"><a href="colinealidad.html#cb267-8"></a>  <span class="co"># Ajuste lineal y superficie de predicción</span></span>
+<span id="cb267-9"><a href="colinealidad.html#cb267-9"></a>  fit &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2)</span>
+<span id="cb267-10"><a href="colinealidad.html#cb267-10"></a>  y.pred &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">predict</span>(fit, <span class="dt">newdata =</span> xy), <span class="dt">nrow =</span> <span class="kw">length</span>(x1.grid)) </span>
+<span id="cb267-11"><a href="colinealidad.html#cb267-11"></a>  </span>
+<span id="cb267-12"><a href="colinealidad.html#cb267-12"></a>  <span class="co"># Representar</span></span>
+<span id="cb267-13"><a href="colinealidad.html#cb267-13"></a>  fitpoints &lt;-<span class="st"> </span><span class="kw">predict</span>(fit) </span>
+<span id="cb267-14"><a href="colinealidad.html#cb267-14"></a>  <span class="kw">scatter3D</span>(<span class="dt">z =</span> y, <span class="dt">x =</span> x1, <span class="dt">y =</span> x2, <span class="dt">pch =</span> <span class="dv">16</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>, <span class="dt">clim =</span> ylim, <span class="dt">zlim =</span> ylim,</span>
+<span id="cb267-15"><a href="colinealidad.html#cb267-15"></a>            <span class="dt">theta =</span> <span class="dv">-40</span>, <span class="dt">phi =</span> <span class="dv">20</span>, <span class="dt">ticktype =</span> <span class="st">&quot;detailed&quot;</span>, </span>
+<span id="cb267-16"><a href="colinealidad.html#cb267-16"></a>            <span class="dt">main =</span> <span class="st">&quot;Modelo ajustado&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;x1&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;x2&quot;</span>, <span class="dt">zlab =</span> <span class="st">&quot;y&quot;</span>, </span>
+<span id="cb267-17"><a href="colinealidad.html#cb267-17"></a>            <span class="dt">surf =</span> <span class="kw">list</span>(<span class="dt">x =</span> x1.grid, <span class="dt">y =</span> x2.grid, <span class="dt">z =</span> y.pred, </span>
+<span id="cb267-18"><a href="colinealidad.html#cb267-18"></a>                        <span class="dt">facets =</span> <span class="ot">NA</span>, <span class="dt">fit =</span> fitpoints))</span>
+<span id="cb267-19"><a href="colinealidad.html#cb267-19"></a>}</span></code></pre></div>
 <p><img src="06-modelos_lineales_files/figure-html/multicol-movie.gif" width="80%" style="display: block; margin: auto;" /></p>
 <p>Incluso puede ocurrir que el contraste de regresión sea significativo (alto coeficiente de determinación), pero los contrastes individuales sean no significativos.</p>
 <p>Por ejemplo, en el último ajuste obtendríamos:</p>
-<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="colinealidad.html#cb266-1"></a><span class="kw">summary</span>(fit)</span></code></pre></div>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="colinealidad.html#cb268-1"></a><span class="kw">summary</span>(fit)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = y ~ x1 + x2)
@@ -402,29 +398,29 @@ se producirán grandes cambios en las estimaciones de los efectos).</p></li>
 ## Multiple R-squared:  0.6308, Adjusted R-squared:  0.6151 
 ## F-statistic: 40.15 on 2 and 47 DF,  p-value: 6.776e-11</code></pre>
 <p>Si las variables explicativas no estuviesen correlacionadas:</p>
-<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="colinealidad.html#cb268-1"></a>x2 &lt;-<span class="st"> </span><span class="kw">rand.gen</span>(n)</span>
-<span id="cb268-2"><a href="colinealidad.html#cb268-2"></a>y.mean &lt;-<span class="st"> </span><span class="kw">mapply</span>(model.teor, x1, x2)</span>
-<span id="cb268-3"><a href="colinealidad.html#cb268-3"></a></span>
-<span id="cb268-4"><a href="colinealidad.html#cb268-4"></a><span class="cf">for</span> (isim <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nsim) {</span>
-<span id="cb268-5"><a href="colinealidad.html#cb268-5"></a>  <span class="co"># Simular respuesta</span></span>
-<span id="cb268-6"><a href="colinealidad.html#cb268-6"></a>  <span class="kw">set.seed</span>(isim)</span>
-<span id="cb268-7"><a href="colinealidad.html#cb268-7"></a>  y &lt;-<span class="st"> </span>y.mean <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dv">0</span>, sd.err)</span>
-<span id="cb268-8"><a href="colinealidad.html#cb268-8"></a>  </span>
-<span id="cb268-9"><a href="colinealidad.html#cb268-9"></a>  <span class="co"># Ajuste lineal y superficie de predicción</span></span>
-<span id="cb268-10"><a href="colinealidad.html#cb268-10"></a>  fit2 &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2)</span>
-<span id="cb268-11"><a href="colinealidad.html#cb268-11"></a>  y.pred &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">predict</span>(fit2, <span class="dt">newdata =</span> xy), <span class="dt">nrow =</span> <span class="kw">length</span>(x1.grid)) </span>
-<span id="cb268-12"><a href="colinealidad.html#cb268-12"></a>  </span>
-<span id="cb268-13"><a href="colinealidad.html#cb268-13"></a>  <span class="co"># Representar</span></span>
-<span id="cb268-14"><a href="colinealidad.html#cb268-14"></a>  fitpoints &lt;-<span class="st"> </span><span class="kw">predict</span>(fit2) </span>
-<span id="cb268-15"><a href="colinealidad.html#cb268-15"></a>  <span class="kw">scatter3D</span>(<span class="dt">z =</span> y, <span class="dt">x =</span> x1, <span class="dt">y =</span> x2, <span class="dt">pch =</span> <span class="dv">16</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>, <span class="dt">clim =</span> ylim, <span class="dt">zlim =</span> ylim,</span>
-<span id="cb268-16"><a href="colinealidad.html#cb268-16"></a>            <span class="dt">theta =</span> <span class="dv">-40</span>, <span class="dt">phi =</span> <span class="dv">20</span>, <span class="dt">ticktype =</span> <span class="st">&quot;detailed&quot;</span>, </span>
-<span id="cb268-17"><a href="colinealidad.html#cb268-17"></a>            <span class="dt">main =</span> <span class="st">&quot;Modelo ajustado&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;x1&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;x2&quot;</span>, <span class="dt">zlab =</span> <span class="st">&quot;y&quot;</span>, </span>
-<span id="cb268-18"><a href="colinealidad.html#cb268-18"></a>            <span class="dt">surf =</span> <span class="kw">list</span>(<span class="dt">x =</span> x1.grid, <span class="dt">y =</span> x2.grid, <span class="dt">z =</span> y.pred, </span>
-<span id="cb268-19"><a href="colinealidad.html#cb268-19"></a>                        <span class="dt">facets =</span> <span class="ot">NA</span>, <span class="dt">fit =</span> fitpoints))</span>
-<span id="cb268-20"><a href="colinealidad.html#cb268-20"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="colinealidad.html#cb270-1"></a>x2 &lt;-<span class="st"> </span><span class="kw">rand.gen</span>(n)</span>
+<span id="cb270-2"><a href="colinealidad.html#cb270-2"></a>y.mean &lt;-<span class="st"> </span><span class="kw">mapply</span>(model.teor, x1, x2)</span>
+<span id="cb270-3"><a href="colinealidad.html#cb270-3"></a></span>
+<span id="cb270-4"><a href="colinealidad.html#cb270-4"></a><span class="cf">for</span> (isim <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nsim) {</span>
+<span id="cb270-5"><a href="colinealidad.html#cb270-5"></a>  <span class="co"># Simular respuesta</span></span>
+<span id="cb270-6"><a href="colinealidad.html#cb270-6"></a>  <span class="kw">set.seed</span>(isim)</span>
+<span id="cb270-7"><a href="colinealidad.html#cb270-7"></a>  y &lt;-<span class="st"> </span>y.mean <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dv">0</span>, sd.err)</span>
+<span id="cb270-8"><a href="colinealidad.html#cb270-8"></a>  </span>
+<span id="cb270-9"><a href="colinealidad.html#cb270-9"></a>  <span class="co"># Ajuste lineal y superficie de predicción</span></span>
+<span id="cb270-10"><a href="colinealidad.html#cb270-10"></a>  fit2 &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2)</span>
+<span id="cb270-11"><a href="colinealidad.html#cb270-11"></a>  y.pred &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">predict</span>(fit2, <span class="dt">newdata =</span> xy), <span class="dt">nrow =</span> <span class="kw">length</span>(x1.grid)) </span>
+<span id="cb270-12"><a href="colinealidad.html#cb270-12"></a>  </span>
+<span id="cb270-13"><a href="colinealidad.html#cb270-13"></a>  <span class="co"># Representar</span></span>
+<span id="cb270-14"><a href="colinealidad.html#cb270-14"></a>  fitpoints &lt;-<span class="st"> </span><span class="kw">predict</span>(fit2) </span>
+<span id="cb270-15"><a href="colinealidad.html#cb270-15"></a>  <span class="kw">scatter3D</span>(<span class="dt">z =</span> y, <span class="dt">x =</span> x1, <span class="dt">y =</span> x2, <span class="dt">pch =</span> <span class="dv">16</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>, <span class="dt">clim =</span> ylim, <span class="dt">zlim =</span> ylim,</span>
+<span id="cb270-16"><a href="colinealidad.html#cb270-16"></a>            <span class="dt">theta =</span> <span class="dv">-40</span>, <span class="dt">phi =</span> <span class="dv">20</span>, <span class="dt">ticktype =</span> <span class="st">&quot;detailed&quot;</span>, </span>
+<span id="cb270-17"><a href="colinealidad.html#cb270-17"></a>            <span class="dt">main =</span> <span class="st">&quot;Modelo ajustado&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;x1&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;x2&quot;</span>, <span class="dt">zlab =</span> <span class="st">&quot;y&quot;</span>, </span>
+<span id="cb270-18"><a href="colinealidad.html#cb270-18"></a>            <span class="dt">surf =</span> <span class="kw">list</span>(<span class="dt">x =</span> x1.grid, <span class="dt">y =</span> x2.grid, <span class="dt">z =</span> y.pred, </span>
+<span id="cb270-19"><a href="colinealidad.html#cb270-19"></a>                        <span class="dt">facets =</span> <span class="ot">NA</span>, <span class="dt">fit =</span> fitpoints))</span>
+<span id="cb270-20"><a href="colinealidad.html#cb270-20"></a>}</span></code></pre></div>
 <p><img src="06-modelos_lineales_files/figure-html/indep-movie.gif" width="80%" style="display: block; margin: auto;" /></p>
 <p>Por ejemplo, en el último ajuste obtendríamos:</p>
-<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="colinealidad.html#cb269-1"></a><span class="kw">summary</span>(fit2)</span></code></pre></div>
+<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="colinealidad.html#cb271-1"></a><span class="kw">summary</span>(fit2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = y ~ x1 + x2)
@@ -447,11 +443,11 @@ se producirán grandes cambios en las estimaciones de los efectos).</p></li>
 <p>En la práctica, para la detección de colinealidad, se puede emplear la función
 <code>vif()</code> del paquete <a href="https://CRAN.R-project.org/package=car"><code>car</code></a> para calcular los factores de inflación de varianza para las variables del modelo.
 Por ejemplo, en los últimos ajustes obtendríamos:</p>
-<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="colinealidad.html#cb271-1"></a><span class="kw">library</span>(car)</span>
-<span id="cb271-2"><a href="colinealidad.html#cb271-2"></a><span class="kw">vif</span>(fit)</span></code></pre></div>
+<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="colinealidad.html#cb273-1"></a><span class="kw">library</span>(car)</span>
+<span id="cb273-2"><a href="colinealidad.html#cb273-2"></a><span class="kw">vif</span>(fit)</span></code></pre></div>
 <pre><code>##       x1       x2 
 ## 107.0814 107.0814</code></pre>
-<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="colinealidad.html#cb273-1"></a><span class="kw">vif</span>(fit2) </span></code></pre></div>
+<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="colinealidad.html#cb275-1"></a><span class="kw">vif</span>(fit2) </span></code></pre></div>
 <pre><code>##       x1       x2 
 ## 1.000139 1.000139</code></pre>
 <p>La idea de este estadístico es que la varianza de la estimación del efecto en
@@ -460,10 +456,10 @@ El factor de inflación de la varianza mide el incremento debido a la colinealid
 Valores grandes, por ejemplo &gt; 10, indican la posible presencia de colinealidad.</p>
 <p>Las tolerancias, proporciones de variabilidad no explicada por las demás covariables, se pueden calcular con <code>1/vif(modelo)</code>.
 Por ejemplo, los coeficientes de tolerancia de los últimos ajustes serían:</p>
-<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="colinealidad.html#cb275-1"></a><span class="dv">1</span><span class="op">/</span><span class="kw">vif</span>(fit)</span></code></pre></div>
+<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="colinealidad.html#cb277-1"></a><span class="dv">1</span><span class="op">/</span><span class="kw">vif</span>(fit)</span></code></pre></div>
 <pre><code>##          x1          x2 
 ## 0.009338689 0.009338689</code></pre>
-<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="colinealidad.html#cb277-1"></a><span class="dv">1</span><span class="op">/</span><span class="kw">vif</span>(fit2) </span></code></pre></div>
+<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="colinealidad.html#cb279-1"></a><span class="dv">1</span><span class="op">/</span><span class="kw">vif</span>(fit2) </span></code></pre></div>
 <pre><code>##        x1        x2 
 ## 0.9998606 0.9998606</code></pre>
 <p>Como ya se comentó en la Sección 1.4, el problema de la colinealidad se agrava al aumentar el número de dimensiones (la maldición de la dimensionalidad).

@@ -1,5 +1,28 @@
 # Bagging y Boosting {#bagging-boosting}
 
+<!-- 
+---
+title: "Bagging y Boosting"
+author: "Aprendizaje Estadístico (MTE, USC)"
+date: "Curso 2021/2022"
+bibliography: ["packages.bib", "aprendizaje_estadistico.bib"]
+link-citations: yes
+output: 
+  bookdown::html_document2:
+    pandoc_args: ["--number-offset", "2,0"]
+    toc: yes 
+    # mathjax: local            # copia local de MathJax, hay que establecer:
+    # self_contained: false     # las dependencias se guardan en ficheros externos 
+  bookdown::pdf_document2:
+    keep_tex: yes
+    toc: yes 
+---
+
+bookdown::preview_chapter("03-bagging_boosting.Rmd")
+knitr::purl("03-bagging_boosting.Rmd", documentation = 2)
+knitr::spin("03-bagging_boosting.R",knit = FALSE)
+-->
+
 
 
 
@@ -16,7 +39,7 @@ Lo que se hace es construir muchos modelos (crecer muchos árboles) que luego se
 ## Bagging
 
 En la década de 1990 empiezan a utilizarse los métodos *ensemble* (métodos combinados), esto es, métodos predictivos que se basan en combinar las predicciones de cientos de modelos. 
-Uno de los primeros métodos combinados que se utilizó fue el  *bagging* (nombre que viene de *bootstrap aggregation*), propuesto en Breiman (1996). 
+Uno de los primeros métodos combinados que se utilizó fue el  *bagging* (nombre que viene de *bootstrap aggregation*), propuesto en @breiman1996bagging. 
 Es un método general de reducción de la varianza que se basa en la utilización del bootstrap junto con un modelo de regresión o de clasificación, como puede ser un árbol de decisión.
 
 La idea es muy sencilla. 
@@ -49,7 +72,7 @@ De este modo, para cada observación se pueden utilizar los árboles para los qu
 Repitiendo el proceso para todas las observaciones se obtiene una medida del error.
 
 Una decisión que hay que tomar es cuántas muestras bootstrap se toman (o lo que es lo mismo, cuántos árboles se construyen). 
-Realmente se trata de una aproximación Monte Carlo, por lo que típicamente se estudia gráficamente la convergencia del error OOB al aumentar el número de árboles (para más detalles ver p.e. Fernández-Casal y Cao, 2020, [Sección 4.1](https://rubenfcasal.github.io/simbook/convergencia.html)).
+Realmente se trata de una aproximación Monte Carlo, por lo que típicamente se estudia gráficamente la convergencia del error OOB al aumentar el número de árboles [para más detalles ver p.e. @fernandez2020simbook, [Sección 4.1](https://rubenfcasal.github.io/simbook/convergencia.html)].
 Si aparentemente hay convergencia con unos pocos cientos de árboles, no va a variar mucho el nivel de error al aumentar el número. 
 Por tanto aumentar mucho el número de árboles no mejora las predicciones, aunque tampoco aumenta el riesgo de sobreajuste.
 Los costes computacionales aumentan con el número de árboles, pero la construcción y evaluación del modelo son fácilmente paralelizables (aunque pueden llegar a requerir mucha memoria si el conjunto de datos es muy grande).
@@ -84,8 +107,8 @@ Esta correlación entre árboles se va a traducir en una correlación entre sus 
 
 Promediar variables altamente correladas produce una reducción de la varianza mucho menor que si promediamos variables incorreladas. 
 La solución pasa por añadir aleatoriedad al proceso de construcción de los árboles, para que estos dejen de estar correlados. 
-Hubo varios intentos, entre los que destaca Dietterich (2000) al proponer la idea de introducir aleatorieadad en la selección de las variables de cada corte. 
-Breiman (2001) propuso un algoritmo unificado al que llamó bosques aleatorios. 
+Hubo varios intentos, entre los que destaca @dietterich2000experimental al proponer la idea de introducir aleatorieadad en la selección de las variables de cada corte. 
+@breiman2001statistical propuso un algoritmo unificado al que llamó bosques aleatorios. 
 En la construcción de cada uno de los árboles que finalmente constituirán el bosque, se van haciendo cortes binarios, y para cada corte hay que seleccionar una variable predictora.
 La modificación introducida fue que antes de hacer cada uno de los cortes, de todas las $p$ variables predictoras, se seleccionan al azar $m < p$ predictores que van a ser los candidatos para el corte.
 
@@ -99,7 +122,7 @@ En general, van a hacer falta más árboles que en bagging.
 Los bosques aleatorios son computacionalmente más eficientes que bagging porque, aunque como acabamos de decir requieren más árboles, la construcción de cada árbol es mucho más rápida al evaluarse sólo unos pocos predictores en cada corte.
 
 Este método también puede ser empleado para aprendizaje no supervisado, 
-por ejemplo se puede construir una matriz de proximidad entre observaciones a partir de la proporción de veces que están en un mismo nodo terminal (para más detalles ver [Liaw y Wiener, 2002](https://www.r-project.org/doc/Rnews/Rnews_2002-3.pdf)).  
+por ejemplo se puede construir una matriz de proximidad entre observaciones a partir de la proporción de veces que están en un mismo nodo terminal [para más detalles ver @liaw2002classification].  
 
 
 
@@ -122,7 +145,7 @@ En resumen:
         predictor y posteriormente se promedian los valores de todos
         los árboles.
         
-    -   Alternativamente (Breiman, 2001) se puede medir el incremento en el error de 
+    -   Alternativamente [@breiman2001statistical] se puede medir el incremento en el error de 
         predicción OOB al permutar aleatoriamente los valores de la
         variable explicativa en las muestras OOB (manteniendo el resto
         sin cambios).
@@ -220,7 +243,9 @@ plot(bagtrees, main = "Tasas de error")
 legend("topright", colnames(bagtrees$err.rate), lty = 1:5, col = 1:6)
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-3-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/bagging-conv-1} \end{center}
 Como vemos que los errores se estabilizan podríamos pensar que aparentemente hay convergencia (aunque situaciones de alta dependencia entre los árboles dificultarían su interpretación).
 
 Con la función `getTree()` podemos extraer los árboles individuales.
@@ -331,7 +356,9 @@ plot(rf, main = "Tasas de error")
 legend("topright", colnames(rf$err.rate), lty = 1:5, col = 1:6)
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-7-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/rf-plot-1} \end{center}
 
 Podemos mostrar la importancia de las variables predictoras con la función `importance()` o representarlas con `varImpPlot()`:
 
@@ -359,7 +386,9 @@ importance(rf)
 varImpPlot(rf)
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-8-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/rf-importance-1} \end{center}
 
 Si evaluamos la precisión en la muestra de test podemos observar un ligero incremento en la precisión en comparación con el método anterior:
 
@@ -428,26 +457,71 @@ Por ejemplo, podemos emplear alguna de las herramientas mostradas en la Sección
 # install.packages("pdp")
 library(pdp)
 pdp1 <- partial(rf, "alcohol")
-plotPartial(pdp1)
+p1 <- plotPartial(pdp1)
+pdp2 <- partial(rf, c("density"))
+p2 <-plotPartial(pdp2)
+grid.arrange(p1, p2, ncol = 2)
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-11-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/rf-pdp-1} \end{center}
 
 ```r
-pdp2 <- partial(rf, c("alcohol", "density"))
-plotPartial(pdp2)
+pdp12 <- partial(rf, c("alcohol", "density"))
+plotPartial(pdp12)
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-11-2.png" width="80%" style="display: block; margin: auto;" />
 
-En este caso también puede ser de utilidad el paquete [`randomForestExplainer`](https://modeloriented.github.io/randomForestExplainer).
+
+\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/rf-pdp-2} \end{center}
+La función `partial()` ofrece un abaníco amplio de argumentos. Por ejemplo, con `ice = TRUE` se calculan as curvas de expectativa condicional individual (ICE). Estos gráficos ICE extienden los PDP, ya que además de mostrar la variación del promedio (en rojo), también muestra la variación de los valores predichos para cada observación (curvas en negro).
+
+
+```r
+ice1 <- partial(rf, pred.var = "alcohol", ice = TRUE)
+ice2 <- partial(rf, pred.var = "density", ice = TRUE)
+p1 <- plotPartial(ice1, alpha = 0.5)
+p2 <- plotPartial(ice2, alpha = 0.5)
+grid.arrange(p1, p2, ncol = 2)
+```
+
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/rf-ice-1} \end{center}
+
+Gráficos similares pueden crearse utilizando otros paquetes indicados en la Sección \@ref(analisis-modelos).  En particular, el paquete `vivid` muestra  en la la diagonal del Figura \@ref(fig:vivid1) la importancia de los predictores (*Vimp*) y fuera de la diagonal las interacciones 2 a 2 (*Vint*). 
+
+
+```r
+library(vivid)
+fit_rf  <- vivi(data = train, fit = rf, response = "taste", importanceType = "%IncMSE")
+viviHeatmap(mat = fit_rf[1:5,1:5])
+```
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/vivid1-1} 
+
+}
+
+\caption{Mapa de calor para la importancia e interaciones del ajuste de un bosque aleatorio usando vivid}(\#fig:vivid1)
+\end{figure}
 
 <!-- 
+
+Alternativamente, también se pueden visualizar las relaciones mediante un gráfico de red (ver Figura \@ref(fig:vivid2).
+{r vivid2, eval=FALSE, fig.cap="Gráfico, include=FALSE}
+# require(igraph)
+viviNetwork(mat = fit_rf)
+
+En este caso también puede ser de utilidad el paquete [`randomForestExplainer`](https://modeloriented.github.io/randomForestExplainer), 
 Pendiente: Análisis e interpretación del modelo
 # install.packages("randomForestExplainer")
 library(randomForestExplainer)
 plot_min_depth_distribution(rf)
-plot_min_depth_interactions(rf, k = 5) # solo 5 mejores iteracione-->
+plot_min_depth_interactions(rf, k = 5) # solo 5 mejores iteraciones
+-->
 
 
 ### Ejemplo: bosques aleatorios con `caret`
@@ -487,9 +561,11 @@ rf.caret <- train(taste ~ ., data = train, method = "rf")
 plot(rf.caret)
 ```
 
-<img src="03-bagging_boosting_files/figure-html/caret-rf-1.png" width="80%" style="display: block; margin: auto;" />
 
-Breiman (2001) sugiere emplear el valor por defecto, la mitad y el doble:
+
+\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/rf-caret-train-1} \end{center}
+
+@breiman2001random sugiere emplear el valor por defecto, la mitad y el doble:
 
 
 ```r
@@ -501,7 +577,9 @@ rf.caret <- train(taste ~ ., data = train,
 plot(rf.caret)
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-13-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/rf-caret-grid-1} \end{center}
 
 <!-- 
 Pendiente: 
@@ -515,7 +593,7 @@ La metodología *boosting* es una metodología general de aprendizaje lento en l
 
 El boosting nació en el contexto de los problemas de clasificación y tardó varios años en poderse extender a los problemas de regresión. Por ese motivo vamos a empezar viendo el boosting en clasificación.
 
-La idea del boosting la desarrollaron Valiant (1984) y Kearns y Valiant (1989), pero encontrar una implementación efectiva fue una tarea difícil que no se resolvió satisfactoriamente hasta que Freund y Schapire (1996) presentaron el algoritmo *AdaBoost*, que rápidamente se convirtió en un éxito. 
+La idea del boosting la desarrollaron @valiant1984theory y @kearns_cryptographic_1994, pero encontrar una implementación efectiva fue una tarea difícil que no se resolvió satisfactoriamente hasta que @freund1996schapire presentaron el algoritmo *AdaBoost*, que rápidamente se convirtió en un éxito. 
 
 Veamos, de forma muy esquemática, en que consiste el algoritmo AdaBoost para un problema de clasificación en el que sólo hay dos categorías y en el que se utiliza como clasificador débil un árbol de decisión con pocos nodos terminales, sólo marginalmente superior a un clasificador aleatorio.
 En este caso resulta más cómodo recodificar la variable indicadora $Y$ como 1 si éxito y -1 si fracaso.
@@ -545,7 +623,7 @@ Aproximación de las probabilidades: Real AdaBoost -->
 
 Vemos que el algoritmo AdaBoost no combina árboles independientes (como sería el caso de los bosques aleatorios, por ejemplo), sino que estos se van generando en una secuencia en la que cada árbol depende del anterior. Se utiliza siempre el mismo conjunto de datos (de entrenamiento), pero a estos datos se les van poniendo unos pesos en cada iteración que dependen de lo que ha ocurrido en la iteración anterior: se les da más peso a las observaciones mal clasificadas para que en sucesivas iteraciones se clasifiquen bien. Finalmente, la combinación de los árboles se hace mediante una suma ponderada de las $B$ clasificaciones realizadas. Los pesos de esta suma son los valores $s_b$. Un árbol que clasifique de forma aleatoria $e_b = 0.5$ va a tener un peso $s_b = 0$ y cuando mejor clasifique el árbol mayor será su peso. Al estar utilizando clasificadores débiles (árboles pequeños) es de esperar que los pesos sean en general próximos a cero.
 
-El siguiente hito fue la aparición del método *gradient boosting machine* ([Friedman, 2001](https://projecteuclid.org/euclid.aos/1013203451)), perteneciente a la familia de los métodos iterativos de descenso de gradientes. 
+El siguiente hito fue la aparición del método *gradient boosting machine* [@friedman2001greedy], perteneciente a la familia de los métodos iterativos de descenso de gradientes. 
 Entre otras muchas ventajas, este método permitió resolver no sólo problemas de clasificación sino también de regresión; y permitió la conexión con lo que se estaba haciendo en otros campos próximos como pueden ser los modelos aditivos o la regresión logística. 
 La idea es encontrar un modelo aditivo que minimice una función de perdida utilizando predictores débiles (por ejemplo árboles). 
 
@@ -586,7 +664,7 @@ Comprobamos que este método depende de 3 hiperparámetros, $B$, $d$ y $\lambda$
 
 - $0 < \lambda < 1$, parámetro de regularización. Las primeras versiones del algorimo utilizaban un $\lambda = 1$, pero no funcionaba bien del todo. Se mejoró mucho el rendimiento *ralentizando* aún más el aprendizaje al incorporar al modelo el parámetro $\lambda$, que se puede interpretar como una proporción de aprendizaje (la velocidad a la que aprende, *learning rate*). Valores pequeños de $\lambda$ evitan el problema del sobreajuste, siendo habitual utilizar $\lambda = 0.01$ o $\lambda = 0.001$. Como ya se ha dicho, lo ideal es seleccionar su valor utilizando, por ejemplo, validación cruzada. Por supuesto, cuanto más pequeño sea el valor de $\lambda$, más lento va a ser el proceso de aprendizaje y serán necesarias más iteraciones, lo cual incrementa los tiempos de cómputo.
 
-El propio Friedman propuso una mejora de su algoritmo ([Friedman, 2002](https://www.sciencedirect.com/science/article/pii/S0167947301000652)), inspirado por la técnica bagging de Breiman. Esta variante, conocida como *stochastic gradient boosting* (SGB), es a día de hoy una de las más utilizadas. 
+El propio Friedman propuso una mejora de su algoritmo [@friedman2002stochastic], inspirado por la técnica bagging de Breiman. Esta variante, conocida como *stochastic gradient boosting* (SGB), es a día de hoy una de las más utilizadas. 
 La única diferencia respecto al algoritmo anterior es en la primera línea dentro del bucle: al hacer el ajuste de $(X, r)$, no se considera toda la muestra de entrenamiento, sino que se selecciona al azar un subconjunto. 
 Esto incorpora un nuevo hiperparámetro a la metodología, la fracción que se utiliza de los datos. 
 Lo ideal es seleccionar un valor por algún método automático (*tunearlo*) tipo validación cruzada; una selección manual típica es 0.5.
@@ -598,7 +676,7 @@ SGB incorpora dos ventajas importantes: reduce la varianza y reduce los tiempos 
 En terminos de rendimiento tanto el método SGB como *random forest* son muy competitivos, y por tanto son muy utilizando en la práctica. 
 Los bosques aleatorios tienen la ventaja de que, al construir árboles de forma independiente, es paralelizable y eso puede reducir los tiempos de cómputo.
 
-Otro método reciente que está ganando popularidad es *extreme gradient boosting*, también conocido como *XGBoost* (Chen y Guestrin, 2016). 
+Otro método reciente que está ganando popularidad es *extreme gradient boosting*, también conocido como *XGBoost* [@chen2016xgboost]. 
 Es un metodo más complejo que el anterior que, entre otras modificaciones, utiliza una función de pérdida con una penalización por complejidad y, para evitar el sobreajuste, regulariza utilizando la hessiana de la función de pérdida (necesita calcular las derivadas parciales de primer y de segundo orden), e incorpora parámetros de regularización adicionales para evitar el sobreajuste.
 
 Por último, la importancia de las variables se puede medir de forma similar a lo que ya hemos visto en otros métodos: dentro de cada árbol se sumas las reducciones del error que consigue cada predictor, y se promedia entre todos los árboles utilizados.
@@ -633,7 +711,7 @@ Estos métodos son también de los más populares en AE y están implementados e
 
 ### Ejemplo: clasificación con el paquete `ada`
 
-La función `ada()` del paquete [`ada`](https://CRAN.R-project.org/package=ada) ([Culp *et al*., 2006](https://www.jstatsoft.org/article/view/v017i02)) implementa diversos métodos boosting (incluyendo el algoritmo original AdaBoost). 
+La función `ada()` del paquete [`ada`](https://CRAN.R-project.org/package=ada) [@culp2006ada] implementa diversos métodos boosting (incluyendo el algoritmo original AdaBoost). 
 Emplea `rpart` para la construcción de los árboles, aunque solo admite respuestas dicotómicas y dos funciones de pérdida (exponencial y logística).
 Además, un posible problema al emplear esta función es que ordena alfabéticamente los niveles del factor, lo que puede llevar a una mala interpretación de los resultados.
 
@@ -649,7 +727,7 @@ ada(formula, data, loss = c("exponential", "logistic"),
 
 * `loss`: función de pérdida; por defecto `"exponential"` (algoritmo AdaBoost).
 
-* `type`: algoritmo boosting; por defecto `"discrete"` que implementa el algoritmo AdaBoost original que predice la variable respuesta. Otras alternativas son `"real"`, que implementa el algoritmo *Real AdaBoost* ([Friedman *et al*., 2000](https://projecteuclid.org/euclid.aos/1016218223)) que permite estimar las probabilidades, y `"gentle"` , versión modificada del anterior que emplea un método Newton de optimización por pasos (en lugar de optimización exacta).
+* `type`: algoritmo boosting; por defecto `"discrete"` que implementa el algoritmo AdaBoost original que predice la variable respuesta. Otras alternativas son `"real"`, que implementa el algoritmo *Real AdaBoost* [@friedman2000additive] que permite estimar las probabilidades, y `"gentle"` , versión modificada del anterior que emplea un método Newton de optimización por pasos (en lugar de optimización exacta).
 
 * `iter`: número de iteraciones boosting; por defecto 50.
 
@@ -717,7 +795,9 @@ Con el método `plot()` podemos representar la evolución del error de clasifica
 plot(ada.boost)
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-16-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/ada-plot-1} \end{center}
 
 <!-- 
 Con la función `varplot()` podemos representar la importancia de las variables (y almacenarla empleando `type = "scores"`): 
@@ -727,7 +807,9 @@ Con la función `varplot()` podemos representar la importancia de las variables 
 res <- varplot(ada.boost, type = "scores")
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-17-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/unnamed-chunk-3-1} \end{center}
 
 ```r
 res
@@ -963,7 +1045,7 @@ confusionMatrix(predict(caret.ada1, newdata = test), test$taste, positive = "goo
 
 ### Ejemplo: regresión con el paquete `gbm`
 
-El paquete [`gbm`](https://CRAN.R-project.org/package=gbm) implementa el algoritmo SGB de Friedman (2002) y admite varios tipos de respuesta considerando distintas funciones de pérdida (aunque en el caso de variables dicotómicas éstas deben tomar valores en $\{0, 1\}$^[Se puede evitar este inconveniente empleando la interfaz de `caret`.]).
+El paquete [`gbm`](https://CRAN.R-project.org/package=gbm) implementa el algoritmo SGB de @friedman2002stochastic y admite varios tipos de respuesta considerando distintas funciones de pérdida (aunque en el caso de variables dicotómicas éstas deben tomar valores en $\{0, 1\}$^[Se puede evitar este inconveniente empleando la interfaz de `caret`.]).
 La función principal es `gbm()` y se suelen considerar los siguientes argumentos:
 
 ```r
@@ -1032,7 +1114,9 @@ El método `summary()` calcula las medidas de influencia de los predictores y la
 summary(gbm.fit)
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-22-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/gbm-summary-1} \end{center}
 
 ```
 ##                                       var   rel.inf
@@ -1056,7 +1140,9 @@ Para estudiar el efecto de un predictor se pueden generar gráficos de los efect
 plot(gbm.fit, i = "alcohol")
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-23-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/gbm-plot-1} \end{center}
 
 Finalmente podemos evaluar la precisión en la muestra de test empleando el código habitual:
 
@@ -1249,7 +1335,7 @@ Dispone de una interfaz simple `xgboost()` y otra más avanzada `xgb.train()`, q
 Normalmente es necesario un preprocesado de los datos antes de llamar a estas funciones, ya que requieren de una matriz para los predictores y de un vector para la respuesta (además en el caso de que sea dicotómica debe tomar valores en $\{0, 1\}$). Por tanto es necesario recodificar las variables categóricas como numéricas. 
 Por este motivo puede ser preferible emplear la interfaz de `caret`.
 
-El algoritmo estándar *XGBoost*, que emplea árboles como modelo base, está implementado en el método `"xgbTree"` de `caret`^[Otras alternativas son: `"xgbDART"` que también emplean árboles como modelo base, pero incluye el método DART (Vinayak y Gilad-Bachrach, 2015) para evitar sobreajuste (básicamente descarta árboles al azar en la secuencia), y`"xgbLinear"` que emplea modelos lineales.].
+El algoritmo estándar *XGBoost*, que emplea árboles como modelo base, está implementado en el método `"xgbTree"` de `caret`^[Otras alternativas son: `"xgbDART"` que también emplean árboles como modelo base, pero incluye el método DART [@vinayak2015dart] para evitar sobreajuste (básicamente descarta árboles al azar en la secuencia), y`"xgbLinear"` que emplea modelos lineales.].
 
 
 ```r

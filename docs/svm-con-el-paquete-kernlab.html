@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html lang="es" xml:lang="es">
 <head>
 
   <meta charset="utf-8" />
@@ -26,7 +26,7 @@
 <meta name="author" content="Manuel Oviedo de la Fuente (manuel.oviedo@udc.es)" />
 
 
-<meta name="date" content="2021-09-24" />
+<meta name="date" content="2021-09-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -148,8 +148,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1" data-path="intro-AE.html"><a href="intro-AE.html"><i class="fa fa-check"></i><b>1</b> Introducción al Aprendizaje Estadístico</a><ul>
 <li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje Estadístico vs. Aprendizaje Automático</a><ul>
 <li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
-<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#las-dos-culturas-breiman-2001"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas (Breiman, 2001)</a></li>
-<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-estadística-dunson-2018"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística (Dunson, 2018)</a></li>
+<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#las-dos-culturas-breiman2001statistical"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas <span class="citation">(Breiman, <span>2001</span><span>b</span>)</span></a></li>
+<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-estadística-dunson2018statistics"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística <span class="citation">(Dunson, <span>2018</span>)</span></a></li>
 </ul></li>
 <li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de Aprendizaje Estadístico</a><ul>
 <li class="chapter" data-level="1.2.1" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#notacion"><i class="fa fa-check"></i><b>1.2.1</b> Notación y terminología</a></li>
@@ -285,11 +285,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.3" data-path="implementación-en-r-2.html"><a href="implementación-en-r-2.html"><i class="fa fa-check"></i><b>8.3</b> Implementación en R</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
-<li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a><ul>
-<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html#libros"><i class="fa fa-check"></i>Libros</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html#artículos"><i class="fa fa-check"></i>Artículos</a></li>
-</ul></li>
+<li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -313,12 +309,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="svm-con-el-paquete-kernlab" class="section level2">
 <h2><span class="header-section-number">4.4</span> SVM con el paquete <code>kernlab</code></h2>
-<p>Hay varios paquetes que implementan este procedimiento (e.g. <a href="https://CRAN.R-project.org/package=e1071"><code>e1071</code></a>, <a href="https://CRAN.R-project.org/package=svmpath"><code>svmpath</code></a>, Hastie <em>et al.</em>, 2004), aunque se considera que el más completo es <a href="https://CRAN.R-project.org/package=kernlab"><code>kernlab</code></a> (Karatzoglou <em>et al.</em>, 2004).</p>
+<p>Hay varios paquetes que implementan este procedimiento <span class="citation">(e.g. <a href="https://CRAN.R-project.org/package=e1071" role="doc-biblioref"><code>e1071</code></a>, Meyer et al., <a href="#ref-R-e1071" role="doc-biblioref">2020</a>; <a href="https://CRAN.R-project.org/package=svmpath" role="doc-biblioref"><code>svmpath</code></a>, ver Hastie et al., <a href="#ref-hastie2004entire" role="doc-biblioref">2004</a>)</span>, aunque se considera que el más completo es <a href="https://CRAN.R-project.org/package=kernlab"><code>kernlab</code></a> <span class="citation">(Karatzoglou et al., <a href="#ref-kernlab2004" role="doc-biblioref">2004</a>)</span>.</p>
 <p>La función principal es <code>ksvm()</code> y se suelen considerar los siguientes argumentos:</p>
-<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="svm-con-el-paquete-kernlab.html#cb220-1"></a><span class="kw">ksvm</span>(formula, data, <span class="dt">scaled =</span> <span class="ot">TRUE</span>, type,</span>
-<span id="cb220-2"><a href="svm-con-el-paquete-kernlab.html#cb220-2"></a>  <span class="dt">kernel =</span><span class="st">&quot;rbfdot&quot;</span>, <span class="dt">kpar =</span> <span class="st">&quot;automatic&quot;</span>,</span>
-<span id="cb220-3"><a href="svm-con-el-paquete-kernlab.html#cb220-3"></a>  <span class="dt">C =</span> <span class="dv">1</span>, <span class="dt">epsilon =</span> <span class="fl">0.1</span>, <span class="dt">prob.model =</span> <span class="ot">FALSE</span>, </span>
-<span id="cb220-4"><a href="svm-con-el-paquete-kernlab.html#cb220-4"></a>  class.weights, <span class="dt">cross =</span> <span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="svm-con-el-paquete-kernlab.html#cb222-1"></a><span class="kw">ksvm</span>(formula, data, <span class="dt">scaled =</span> <span class="ot">TRUE</span>, type,</span>
+<span id="cb222-2"><a href="svm-con-el-paquete-kernlab.html#cb222-2"></a>  <span class="dt">kernel =</span><span class="st">&quot;rbfdot&quot;</span>, <span class="dt">kpar =</span> <span class="st">&quot;automatic&quot;</span>,</span>
+<span id="cb222-3"><a href="svm-con-el-paquete-kernlab.html#cb222-3"></a>  <span class="dt">C =</span> <span class="dv">1</span>, <span class="dt">epsilon =</span> <span class="fl">0.1</span>, <span class="dt">prob.model =</span> <span class="ot">FALSE</span>, </span>
+<span id="cb222-4"><a href="svm-con-el-paquete-kernlab.html#cb222-4"></a>  class.weights, <span class="dt">cross =</span> <span class="dv">0</span>)</span></code></pre></div>
 <ul>
 <li><p><code>formula</code> y <code>data</code> (opcional): permiten especificar la respuesta y las variables predictoras de la forma habitual (e.g. <code>respuesta ~ .</code>; también admite matrices).</p></li>
 <li><p><code>scaled</code>: vector lógico indicando que predictores serán reescalados; por defecto se reescalan todas las variables no binarias (y se almacenan los valores empleados para ser usados en posteriores predicciones).</p></li>
@@ -332,21 +328,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p><code>cross</code>: número grupos para validación cruzada; por defecto 0 (no se hace validación cruzada). Si se asigna un valor mayor que 1 se realizará validación cruzada y se devolverá el error en la componente <code>@cross</code> (se puede acceder con la función <code>cross()</code>; y se puede emplear para seleccionar hiperparámetros).</p></li>
 </ul>
 <p>Como ejemplo consideraremos el problema de clasificación con los datos de calidad de vino:</p>
-<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="svm-con-el-paquete-kernlab.html#cb221-1"></a><span class="kw">load</span>(<span class="st">&quot;data/winetaste.RData&quot;</span>)</span>
-<span id="cb221-2"><a href="svm-con-el-paquete-kernlab.html#cb221-2"></a><span class="co"># Partición de los datos</span></span>
-<span id="cb221-3"><a href="svm-con-el-paquete-kernlab.html#cb221-3"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb221-4"><a href="svm-con-el-paquete-kernlab.html#cb221-4"></a>df &lt;-<span class="st"> </span>winetaste</span>
-<span id="cb221-5"><a href="svm-con-el-paquete-kernlab.html#cb221-5"></a>nobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(df)</span>
-<span id="cb221-6"><a href="svm-con-el-paquete-kernlab.html#cb221-6"></a>itrain &lt;-<span class="st"> </span><span class="kw">sample</span>(nobs, <span class="fl">0.8</span> <span class="op">*</span><span class="st"> </span>nobs)</span>
-<span id="cb221-7"><a href="svm-con-el-paquete-kernlab.html#cb221-7"></a>train &lt;-<span class="st"> </span>df[itrain, ]</span>
-<span id="cb221-8"><a href="svm-con-el-paquete-kernlab.html#cb221-8"></a>test &lt;-<span class="st"> </span>df[<span class="op">-</span>itrain, ]</span>
-<span id="cb221-9"><a href="svm-con-el-paquete-kernlab.html#cb221-9"></a></span>
-<span id="cb221-10"><a href="svm-con-el-paquete-kernlab.html#cb221-10"></a></span>
-<span id="cb221-11"><a href="svm-con-el-paquete-kernlab.html#cb221-11"></a><span class="kw">library</span>(kernlab)</span>
-<span id="cb221-12"><a href="svm-con-el-paquete-kernlab.html#cb221-12"></a><span class="kw">set.seed</span>(<span class="dv">1</span>) <span class="co"># Para la selección de sigma = mean(sigest(fmedv ~ ., data = train)[-2])</span></span>
-<span id="cb221-13"><a href="svm-con-el-paquete-kernlab.html#cb221-13"></a>svm &lt;-<span class="st"> </span><span class="kw">ksvm</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train,</span>
-<span id="cb221-14"><a href="svm-con-el-paquete-kernlab.html#cb221-14"></a>            <span class="dt">kernel =</span> <span class="st">&quot;rbfdot&quot;</span>, <span class="dt">prob.model =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb221-15"><a href="svm-con-el-paquete-kernlab.html#cb221-15"></a>svm</span></code></pre></div>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="svm-con-el-paquete-kernlab.html#cb223-1"></a><span class="kw">load</span>(<span class="st">&quot;data/winetaste.RData&quot;</span>)</span>
+<span id="cb223-2"><a href="svm-con-el-paquete-kernlab.html#cb223-2"></a><span class="co"># Partición de los datos</span></span>
+<span id="cb223-3"><a href="svm-con-el-paquete-kernlab.html#cb223-3"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb223-4"><a href="svm-con-el-paquete-kernlab.html#cb223-4"></a>df &lt;-<span class="st"> </span>winetaste</span>
+<span id="cb223-5"><a href="svm-con-el-paquete-kernlab.html#cb223-5"></a>nobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(df)</span>
+<span id="cb223-6"><a href="svm-con-el-paquete-kernlab.html#cb223-6"></a>itrain &lt;-<span class="st"> </span><span class="kw">sample</span>(nobs, <span class="fl">0.8</span> <span class="op">*</span><span class="st"> </span>nobs)</span>
+<span id="cb223-7"><a href="svm-con-el-paquete-kernlab.html#cb223-7"></a>train &lt;-<span class="st"> </span>df[itrain, ]</span>
+<span id="cb223-8"><a href="svm-con-el-paquete-kernlab.html#cb223-8"></a>test &lt;-<span class="st"> </span>df[<span class="op">-</span>itrain, ]</span>
+<span id="cb223-9"><a href="svm-con-el-paquete-kernlab.html#cb223-9"></a></span>
+<span id="cb223-10"><a href="svm-con-el-paquete-kernlab.html#cb223-10"></a></span>
+<span id="cb223-11"><a href="svm-con-el-paquete-kernlab.html#cb223-11"></a><span class="kw">library</span>(kernlab)</span>
+<span id="cb223-12"><a href="svm-con-el-paquete-kernlab.html#cb223-12"></a><span class="kw">set.seed</span>(<span class="dv">1</span>) </span>
+<span id="cb223-13"><a href="svm-con-el-paquete-kernlab.html#cb223-13"></a><span class="co"># Selección de sigma = mean(sigest(taste ~ ., data = train)[-2]) # depende de la semilla</span></span>
+<span id="cb223-14"><a href="svm-con-el-paquete-kernlab.html#cb223-14"></a>svm &lt;-<span class="st"> </span><span class="kw">ksvm</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train,</span>
+<span id="cb223-15"><a href="svm-con-el-paquete-kernlab.html#cb223-15"></a>            <span class="dt">kernel =</span> <span class="st">&quot;rbfdot&quot;</span>, <span class="dt">prob.model =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb223-16"><a href="svm-con-el-paquete-kernlab.html#cb223-16"></a>svm</span></code></pre></div>
 <pre><code>## Support Vector Machine object of class &quot;ksvm&quot; 
 ## 
 ## SV type: C-svc  (classification) 
@@ -360,10 +357,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Objective Function Value : -494.1409 
 ## Training error : 0.198 
 ## Probability model included.</code></pre>
-<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="svm-con-el-paquete-kernlab.html#cb223-1"></a><span class="co"># plot(svm, data = train) produce un error # packageVersion(&quot;kernlab&quot;) ‘0.9.29’</span></span></code></pre></div>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="svm-con-el-paquete-kernlab.html#cb225-1"></a><span class="co"># plot(svm, data = train) produce un error # packageVersion(&quot;kernlab&quot;) ‘0.9.29’</span></span></code></pre></div>
 <p>Podemos evaluar la precisión en la muestra de test empleando el procedimiento habitual:</p>
-<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="svm-con-el-paquete-kernlab.html#cb224-1"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(svm, <span class="dt">newdata =</span> test)</span>
-<span id="cb224-2"><a href="svm-con-el-paquete-kernlab.html#cb224-2"></a>caret<span class="op">::</span><span class="kw">confusionMatrix</span>(pred, test<span class="op">$</span>taste)</span></code></pre></div>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="svm-con-el-paquete-kernlab.html#cb226-1"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(svm, <span class="dt">newdata =</span> test)</span>
+<span id="cb226-2"><a href="svm-con-el-paquete-kernlab.html#cb226-2"></a>caret<span class="op">::</span><span class="kw">confusionMatrix</span>(pred, test<span class="op">$</span>taste)</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -394,8 +391,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Para obtener las estimaciones de las probabilidades, habría que establecer
 <code>type = "probabilities"</code> al predecir (devolverá una matriz con columnas
 correspondientes a los niveles)<a href="#fn23" class="footnote-ref" id="fnref23"><sup>23</sup></a>:</p>
-<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="svm-con-el-paquete-kernlab.html#cb226-1"></a>p.est &lt;-<span class="st"> </span><span class="kw">predict</span>(svm, <span class="dt">newdata =</span> test, <span class="dt">type =</span> <span class="st">&quot;probabilities&quot;</span>)</span>
-<span id="cb226-2"><a href="svm-con-el-paquete-kernlab.html#cb226-2"></a><span class="kw">head</span>(p.est)</span></code></pre></div>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="svm-con-el-paquete-kernlab.html#cb228-1"></a>p.est &lt;-<span class="st"> </span><span class="kw">predict</span>(svm, <span class="dt">newdata =</span> test, <span class="dt">type =</span> <span class="st">&quot;probabilities&quot;</span>)</span>
+<span id="cb228-2"><a href="svm-con-el-paquete-kernlab.html#cb228-2"></a><span class="kw">head</span>(p.est)</span></code></pre></div>
 <pre><code>##           good       bad
 ## [1,] 0.4761934 0.5238066
 ## [2,] 0.7089338 0.2910662
@@ -409,22 +406,22 @@ Emplear `class.weights` para tratar de mejorar el ajuste en "bad"
 Tratar de realizar lo mismo empleando `p.est`
 -->
 <p>Este procedimiento está implementado en el método <code>"svmRadial"</code> de <code>caret</code> y considera como hiperparámetros:</p>
-<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="svm-con-el-paquete-kernlab.html#cb228-1"></a><span class="kw">library</span>(caret)</span>
-<span id="cb228-2"><a href="svm-con-el-paquete-kernlab.html#cb228-2"></a><span class="co"># names(getModelInfo(&quot;svm&quot;)) # 17 métodos</span></span>
-<span id="cb228-3"><a href="svm-con-el-paquete-kernlab.html#cb228-3"></a><span class="kw">modelLookup</span>(<span class="st">&quot;svmRadial&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="svm-con-el-paquete-kernlab.html#cb230-1"></a><span class="kw">library</span>(caret)</span>
+<span id="cb230-2"><a href="svm-con-el-paquete-kernlab.html#cb230-2"></a><span class="co"># names(getModelInfo(&quot;svm&quot;)) # 17 métodos</span></span>
+<span id="cb230-3"><a href="svm-con-el-paquete-kernlab.html#cb230-3"></a><span class="kw">modelLookup</span>(<span class="st">&quot;svmRadial&quot;</span>)</span></code></pre></div>
 <pre><code>##       model parameter label forReg forClass probModel
 ## 1 svmRadial     sigma Sigma   TRUE     TRUE      TRUE
 ## 2 svmRadial         C  Cost   TRUE     TRUE      TRUE</code></pre>
 <p>En este caso la función <code>train()</code> por defecto evaluará únicamente tres valores del hiperparámetro <code>C = c(0.25, 0.5, 1)</code> y fijará el valor de <code>sigma</code>.
 Alternativamente podríamos establecer la rejilla de búsqueda, por ejemplo:</p>
-<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="svm-con-el-paquete-kernlab.html#cb230-1"></a>tuneGrid &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">sigma =</span> <span class="kw">kernelf</span>(svm)<span class="op">@</span>kpar<span class="op">$</span>sigma, <span class="co"># Emplea clases S4</span></span>
-<span id="cb230-2"><a href="svm-con-el-paquete-kernlab.html#cb230-2"></a>                       <span class="dt">C =</span> <span class="kw">c</span>(<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">5</span>))</span>
-<span id="cb230-3"><a href="svm-con-el-paquete-kernlab.html#cb230-3"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb230-4"><a href="svm-con-el-paquete-kernlab.html#cb230-4"></a>caret.svm &lt;-<span class="st"> </span><span class="kw">train</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train,</span>
-<span id="cb230-5"><a href="svm-con-el-paquete-kernlab.html#cb230-5"></a>    <span class="dt">method =</span> <span class="st">&quot;svmRadial&quot;</span>, <span class="dt">preProcess =</span> <span class="kw">c</span>(<span class="st">&quot;center&quot;</span>, <span class="st">&quot;scale&quot;</span>),</span>
-<span id="cb230-6"><a href="svm-con-el-paquete-kernlab.html#cb230-6"></a>    <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="dt">number =</span> <span class="dv">5</span>),</span>
-<span id="cb230-7"><a href="svm-con-el-paquete-kernlab.html#cb230-7"></a>    <span class="dt">tuneGrid =</span> tuneGrid, <span class="dt">prob.model =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb230-8"><a href="svm-con-el-paquete-kernlab.html#cb230-8"></a>caret.svm</span></code></pre></div>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="svm-con-el-paquete-kernlab.html#cb232-1"></a>tuneGrid &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">sigma =</span> <span class="kw">kernelf</span>(svm)<span class="op">@</span>kpar<span class="op">$</span>sigma, <span class="co"># Emplea clases S4</span></span>
+<span id="cb232-2"><a href="svm-con-el-paquete-kernlab.html#cb232-2"></a>                       <span class="dt">C =</span> <span class="kw">c</span>(<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">5</span>))</span>
+<span id="cb232-3"><a href="svm-con-el-paquete-kernlab.html#cb232-3"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb232-4"><a href="svm-con-el-paquete-kernlab.html#cb232-4"></a>caret.svm &lt;-<span class="st"> </span><span class="kw">train</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train,</span>
+<span id="cb232-5"><a href="svm-con-el-paquete-kernlab.html#cb232-5"></a>    <span class="dt">method =</span> <span class="st">&quot;svmRadial&quot;</span>, <span class="dt">preProcess =</span> <span class="kw">c</span>(<span class="st">&quot;center&quot;</span>, <span class="st">&quot;scale&quot;</span>),</span>
+<span id="cb232-6"><a href="svm-con-el-paquete-kernlab.html#cb232-6"></a>    <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="dt">number =</span> <span class="dv">5</span>),</span>
+<span id="cb232-7"><a href="svm-con-el-paquete-kernlab.html#cb232-7"></a>    <span class="dt">tuneGrid =</span> tuneGrid, <span class="dt">prob.model =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb232-8"><a href="svm-con-el-paquete-kernlab.html#cb232-8"></a>caret.svm</span></code></pre></div>
 <pre><code>## Support Vector Machines with Radial Basis Function Kernel 
 ## 
 ## 1000 samples
@@ -444,7 +441,7 @@ Alternativamente podríamos establecer la rejilla de búsqueda, por ejemplo:</p>
 ## Tuning parameter &#39;sigma&#39; was held constant at a value of 0.07511338
 ## Accuracy was used to select the optimal model using the largest value.
 ## The final values used for the model were sigma = 0.07511338 and C = 1.</code></pre>
-<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="svm-con-el-paquete-kernlab.html#cb232-1"></a><span class="kw">varImp</span>(caret.svm)</span></code></pre></div>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="svm-con-el-paquete-kernlab.html#cb234-1"></a><span class="kw">varImp</span>(caret.svm)</span></code></pre></div>
 <pre><code>## ROC curve variable importance
 ## 
 ##                      Importance
@@ -459,7 +456,7 @@ Alternativamente podríamos establecer la rejilla de búsqueda, por ejemplo:</p>
 ## citric.acid               6.777
 ## residual.sugar            6.317
 ## free.sulfur.dioxide       0.000</code></pre>
-<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="svm-con-el-paquete-kernlab.html#cb234-1"></a><span class="kw">confusionMatrix</span>(<span class="kw">predict</span>(caret.svm, <span class="dt">newdata =</span> test), test<span class="op">$</span>taste)</span></code></pre></div>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="svm-con-el-paquete-kernlab.html#cb236-1"></a><span class="kw">confusionMatrix</span>(<span class="kw">predict</span>(caret.svm, <span class="dt">newdata =</span> test), test<span class="op">$</span>taste)</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -497,6 +494,18 @@ Cambiar el criterio de error en train() a AUC en lugar de precisión:
 
 </div>
 <!-- </div> -->
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-hastie2004entire">
+<p>Hastie, T., Rosset, S., Tibshirani, R., y Zhu, J. (2004). The entire regularization path for the support vector machine. <em>Journal of Machine Learning Research</em>, <em>5</em>(Oct), 1391-1415.</p>
+</div>
+<div id="ref-kernlab2004">
+<p>Karatzoglou, A., Smola, A., Hornik, K., y Zeileis, A. (2004). kernlab - An S4 Package for Kernel Methods in R. <em>Journal of Statistical Software, Articles</em>, <em>11</em>(9), 1-20. <a href="https://doi.org/10.18637/jss.v011.i09">https://doi.org/10.18637/jss.v011.i09</a></p>
+</div>
+<div id="ref-R-e1071">
+<p>Meyer, D., Dimitriadou, E., Hornik, K., Weingessel, A., y Leisch, F. (2020). <em>e1071: Misc Functions of the Department of Statistics, Probability Theory Group (Formerly: E1071), TU Wien</em>. <a href="https://CRAN.R-project.org/package=e1071">https://CRAN.R-project.org/package=e1071</a></p>
+</div>
+</div>
 <div class="footnotes">
 <hr />
 <ol start="23">

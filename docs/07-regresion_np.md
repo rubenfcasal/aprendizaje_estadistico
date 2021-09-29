@@ -1,5 +1,28 @@
 # Regresión no paramétrica {#reg-np}
 
+<!-- 
+---
+title: "Regresión no paramétrica"
+author: "Aprendizaje Estadístico (MTE, USC)"
+date: "Curso 2021/2022"
+bibliography: ["packages.bib", "aprendizaje_estadistico.bib"]
+link-citations: yes
+output: 
+  bookdown::html_document2:
+    pandoc_args: ["--number-offset", "6,0"]
+    toc: yes 
+    # mathjax: local            # copia local de MathJax, hay que establecer:
+    # self_contained: false     # las dependencias se guardan en ficheros externos 
+  bookdown::pdf_document2:
+    keep_tex: yes
+    toc: yes 
+---
+
+bookdown::preview_chapter("07-regresion_np.Rmd")
+knitr::purl("07-regresion_np.Rmd", documentation = 2)
+knitr::spin("07-regresion_np.R",knit = FALSE)
+-->
+
 
 
 
@@ -62,10 +85,14 @@ legend("topright", legend = c("5-NN", "10-NN", "20-NN"),
        lty = c(3, 2, 1), lwd = 1)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="07-regresion_np_files/figure-html/np-knnfit-1.png" alt="Predicciones con el método KNN y distintos vecindarios" width="80%" />
-<p class="caption">(\#fig:np-knnfit)Predicciones con el método KNN y distintos vecindarios</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/np-knnfit-1} 
+
+}
+
+\caption{Predicciones con el método KNN y distintos vecindarios}(\#fig:np-knnfit)
+\end{figure}
 
 El hiperparámetro $k$ (número de vecinos más cercanos) determina la complejidad del modelo, de forma que valores más pequeños de $k$ se corresponden con modelos más complejos (en el caso extremo $k = 1$ se interpolarían las observaciones).
 Este parámetro se puede seleccionar empleando alguno de los métodos descritos en la Sección \@ref(cv) (por ejemplo mediante validación con *k* grupos como se mostró en la Sección \@ref(caret)).  
@@ -112,9 +139,9 @@ Habitualmente se considera:
 
 -   $d=1$: Estimador lineal local.
 
-Desde el punto de vista asintótico ambos estimadores tienen un comportamiento similar^[Asintóticamente el estimador lineal local tiene un sesgo menor que el de Nadaraya-Watson (pero del mismo orden) y la misma varianza (e.g. Fan and Gijbels, 1996).], pero en la práctica suele ser preferible el estimador lineal local, sobre todo porque se ve menos afectado por el denominado efecto frontera (Sección \@ref(dimen-curse)).
+Desde el punto de vista asintótico ambos estimadores tienen un comportamiento similar^[Asintóticamente el estimador lineal local tiene un sesgo menor que el de Nadaraya-Watson (pero del mismo orden) y la misma varianza (e.g. @fan1996).], pero en la práctica suele ser preferible el estimador lineal local, sobre todo porque se ve menos afectado por el denominado efecto frontera (Sección \@ref(dimen-curse)).
 
-Aunque el paquete base de `R` incluye herramientas para la estimación tipo núcleo de la regresión (`ksmooth()`, `loess()`), recomiendan el uso del paquete `KernSmooth` (Wand y Ripley, 2020). 
+Aunque el paquete base de `R` incluye herramientas para la estimación tipo núcleo de la regresión (`ksmooth()`, `loess()`), recomiendan el uso del paquete `KernSmooth` [@R-KernSmooth]. 
 
 La ventana $h$ es el (hiper)parámetro de mayor importancia en la predicción y para seleccionarlo se suelen emplear métodos de validación cruzada (Sección \@ref(cv)) o tipo plug-in (reemplazando las funciones desconocidas que aparecen en la expresión de la ventana asintóticamente óptima por estimaciones; e.g. función `dpill()` del paquete `KernSmooth`).
 Por ejemplo, usando el criterio de validación cruzada dejando uno fuera (LOOCV) se trataría de minimizar:
@@ -124,7 +151,7 @@ Al igual que en el caso de regresión lineal, este error también se puede obten
 $$CV(h)=\frac{1}{n}\sum_{i=1}^n\left(\frac{y_i-\hat{m}(x_i)}{1 - S_{ii}}\right)^2$$
 siendo $S_{ii}$ el elemento $i$-ésimo de la diagonal de la matriz de suavizado (esto en general es cierto para cualquier suavizador lineal).
 
-Alternativamente se podría emplear *validación cruzada generalizada* (Craven y Wahba, 1979):
+Alternativamente se podría emplear *validación cruzada generalizada* [@craven1978smoothing]:
 $$GCV(h)=\frac{1}{n}\sum_{i=1}^n\left(\frac{y_i-\hat{m}(x_i)}{1 - \frac{1}{n}tr(S)}\right)^2$$
 (sustituyendo $S_{ii}$ por su promedio). 
 Además, la traza de la matriz de suavizado $tr(S)$ es lo que se conoce como el *número efectivo de parámetros* ($n - tr(S)$ sería una aproximación de los grados de libertad del error).
@@ -144,7 +171,9 @@ plot(x, y, col = 'darkgray')
 lines(fit)
 ```
 
-<img src="07-regresion_np_files/figure-html/unnamed-chunk-2-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-2-1} \end{center}
 
 Hay que tener en cuenta que el paquete `KernSmooth` no implementa los métodos
 `predict()` y `residuals()`:
@@ -232,7 +261,9 @@ span.cv <- ventanas[imin]
 points(span.cv, cv.error[imin], pch = 16)
 ```
 
-<img src="07-regresion_np_files/figure-html/unnamed-chunk-5-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-5-1} \end{center}
 
 ```r
 # Ajuste con todos los datos
@@ -241,14 +272,17 @@ fit <- loess(accel ~ times, mcycle, span = span.cv, family = "symmetric")
 lines(mcycle$times, predict(fit))
 ```
 
-<img src="07-regresion_np_files/figure-html/unnamed-chunk-5-2.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-5-2} \end{center}
 
 
 ## Splines
 
 Otra alternativa consiste en trocear los datos en intervalos, fijando unos puntos de corte $z_i$ (denominados nudos; *knots*), con $i = 1, \ldots, k$, y ajustar un polinomio en cada segmento (lo que se conoce como regresión segmentada, *piecewise regression*).
 
-<img src="07-regresion_np_files/figure-html/unnamed-chunk-6-1.png" width="80%" style="display: block; margin: auto;" />
+
+\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-6-1} \end{center}
 
 De esta forma sin embargo habrá discontinuidades en los puntos de corte, pero podrían añadirse restricciones adicionales de continuidad (o incluso de diferenciabilidad) para evitarlo (e.g. paquete [`segmented`](https://CRAN.R-project.org/package=segmented)).
 
@@ -263,7 +297,7 @@ siendo $(x - z)_+ = \max(0, x - z)$, y posteriormente realizar un ajuste lineal:
 $$m(x) = \beta_0 + \beta_1 b_1(x) +  \beta_2 b_2(x) + \ldots  + \beta_{k+d} b_{k+d}(x)$$
 
 Típicamente se seleccionan polinomios de grado $d=3$, lo que se conoce como splines cúbicos, y nodos equiespaciados.
-Además, se podrían emplear otras bases equivalentes. Por ejemplo, para evitar posibles problemas computacionales con la base anterior, se suele emplear la denominada base $B$-spline (de Boor, 1978; implementada en la función `bs()` del paquete `splines`).
+Además, se podrían emplear otras bases equivalentes. Por ejemplo, para evitar posibles problemas computacionales con la base anterior, se suele emplear la denominada base $B$-spline [@de1978practical], implementada en la función `bs()` del paquete `splines`.
 
 
 ```r
@@ -287,7 +321,9 @@ legend("topright", legend = c("d=1 (df=11)", "d=2 (df=12)", "d=3 (df=13)"),
        lty = c(3, 2, 1))
 ```
 
-<img src="07-regresion_np_files/figure-html/unnamed-chunk-7-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-7-1} \end{center}
 
 El grado del polinomio, pero sobre todo el número de nodos, determinarán la flexibilidad del modelo. 
 Se podrían considerar el número de parámetros en el ajuste lineal, los grados de libertad, como medida de la complejidad (en la función `bs()` se puede especificar `df` en lugar de `knots`, y estos se generarán a partir de los cuantiles de `x`). 
@@ -307,7 +343,9 @@ abline(v = knots, lty = 3, col = 'darkgray')
 legend("topright", legend = c("ns (d=3, df=11)", "bs (d=3, df=13)"), lty = c(1, 2))
 ```
 
-<img src="07-regresion_np_files/figure-html/unnamed-chunk-8-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-8-1} \end{center}
 
 La dificultad está en la selección de los nodos $z_i$. Si se consideran equiespaciados (o se emplea otro criterio como los cuantiles), se podría seleccionar su número (equivalentemente los grados de libertad) empleando algún método de validación cruzada.
 Sin embargo, sería preferible considerar más nodos donde aparentemente hay más variaciones en la función de regresión y menos donde es más estable, esta es la idea de la regresión spline adaptativa descrita en la Sección \@ref(mars).
@@ -346,7 +384,9 @@ lines(sspline.gcv)
 lines(sspline.cv, lty = 2)
 ```
 
-<img src="07-regresion_np_files/figure-html/unnamed-chunk-9-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-9-1} \end{center}
 
 Cuando el número de observaciones es muy grande, y por tanto el número de nodos, pueden aparecer problemas computacionales al emplear estos métodos.
 
@@ -355,10 +395,10 @@ Cuando el número de observaciones es muy grande, y por tanto el número de nodo
 
 Los splines penalizados (*penalized splines*) combinan las dos aproximaciones anteriores.
 Incluyen una penalización (que depende de la base considerada) y el número de nodos puede ser mucho menor que el número de observaciones (son un tipo de *low-rank smoothers*). De esta forma se obtienen modelos spline con mejores propiedades, con un menor efecto frontera y en los que se evitan problemas en la selección de los nodos.
-Unos de los más empleados son los $P$-splines (Eilers and Marx, 1996) que emplean una base $B$-spline con una penalización simple (basada en los cuadrados de diferencias de coeficientes consecutivos $(\beta_{i+1} - \beta_i)^2$).
+Unos de los más empleados son los $P$-splines [@eilers1996flexible] que emplean una base $B$-spline con una penalización simple (basada en los cuadrados de diferencias de coeficientes consecutivos $(\beta_{i+1} - \beta_i)^2$).
 
 Además, un modelo spline penalizado se puede representar como un modelo lineal mixto, lo que permite emplear herramientas desarrolladas para este tipo de modelos (por ejemplo la implementadas en el paquete `nlme`, del que depende `mgcv`, que por defecto emplea splines penalizados).
-Para más detalles ver por ejemplo las secciones 5.2 y 5.3 de Wood (2017).
+Para más detalles ver por ejemplo las secciones 5.2 y 5.3 de @wood2017generalized.
 
 <!-- 
 ?mgcv::adaptive.smooth 
@@ -371,7 +411,7 @@ Se supone que:
 $$Y= \beta_{0} + f_1(X_1) + f_2(X_2) + \ldots + f_p(X_p)  + \varepsilon$$
 con $f_{i},$ $i=1,...,p,$ funciones cualesquiera.
 De esta forma se consigue mucha mayor flexibilidad que con los modelos lineales pero manteniendo la interpretabilidad de los efectos de los predictores. 
-Adicionalmente se puede considerar una función de enlace, obteniéndose los denominados *modelos aditivos generalizados* (GAM). Para más detalles sobre este tipo modelos ver por ejemplo Hastie y Tibshirani (1990) o Wood (2017).
+Adicionalmente se puede considerar una función de enlace, obteniéndose los denominados *modelos aditivos generalizados* (GAM). Para más detalles sobre este tipo modelos ver por ejemplo @hastie1990generalized o @wood2017generalized.
 
 Los modelos lineales (generalizados) serían un caso particular considerando $f_{i}(x) = \beta_{i}x$.
 Además, se podrían considerar cualquiera de los métodos de suavizado descritos anteriormente para construir las componentes no paramétricas (por ejemplo si se emplean splines naturales de regresión el ajuste se reduciría al de un modelo lineal).
@@ -382,20 +422,12 @@ Si en las componentes no paramétricas se emplea únicamente splines de regresi�
 De entre todos los paquetes de R que implementan estos modelos destacan: 
 
 - `gam`: Admite splines de suavizado (univariantes, `s()`) y regresión polinómica local (multivariante, `lo()`), pero no dispone de un método para la selección automática de los parámetros de suavizado (se podría emplear un criterio por pasos para la selección de componentes).
-Sigue la referencia:
-
-    * Hastie, T.J. y Tibshirani, R.J. (1990). *Generalized Additive Models*. Chapman & Hall.
-
-<br> \vspace{0.5cm}
+Sigue la referencia @hastie1990generalized.
 
 - `mgcv`: Admite una gran variedad de splines de regresión y splines penalizados (`s()`; por defecto emplea thin plate regression splines penalizados multivariantes), con la opción de selección automática de los parámetros de suavizado mediante distintos criterios.
 Además de que se podría emplear un método por pasos, permite la selección de componentes mediante regularización.
 Al ser más completo que el anterior sería el recomendado en la mayoría de los casos (ver `?mgcv::mgcv.package` para una introducción al paquete).
-Sigue la referencia:
-
-    * Wood, S.N. (2017). *Generalized Additive Models: An Introduction with R*. Chapman & Hall/CRC
-
-<br> \vspace{0.5cm}
+Sigue la referencia @wood2017generalized.
 
 
 ### Ajuste: función `gam` 
@@ -486,7 +518,9 @@ par.old <- par(mfrow = c(1, 2))
 plot(modelo, shade = TRUE) # 
 ```
 
-<img src="07-regresion_np_files/figure-html/unnamed-chunk-16-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-16-1} \end{center}
 
 ```r
 par(par.old)
@@ -513,7 +547,9 @@ plot(income ~ education, Prestige, pch = 16)
 abline(h = inc, v = ed, col = "grey")
 ```
 
-<img src="07-regresion_np_files/figure-html/unnamed-chunk-17-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-17-1} \end{center}
 
 ```r
 # Se calculan las predicciones
@@ -525,7 +561,9 @@ plot3D::persp3D(inc, ed, pred, theta = -40, phi = 30, ticktype = "detailed",
                 xlab = "Income", ylab = "Education", zlab = "Prestige")
 ```
 
-<img src="07-regresion_np_files/figure-html/unnamed-chunk-17-2.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-17-2} \end{center}
 
 Alternativamente se podrían emplear las funciones `contour()`, `filled.contour()`, `plot3D::image2D` o similares:
 
@@ -535,7 +573,9 @@ Alternativamente se podrían emplear las funciones `contour()`, `filled.contour(
 filled.contour(inc, ed, pred, xlab = "Income", ylab = "Education", key.title = title("Prestige"))
 ```
 
-<img src="07-regresion_np_files/figure-html/unnamed-chunk-18-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-18-1} \end{center}
 
 Puede ser más cómodo emplear el paquete [`modelr`](https://modelr.tidyverse.org) (emplea gráficos `ggplot2`) para trabajar con modelos y predicciones.
 
@@ -708,7 +748,9 @@ example(gam.selection)
 ## gm.slc> plot(b,pages=1)
 ```
 
-<img src="07-regresion_np_files/figure-html/unnamed-chunk-22-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-22-1} \end{center}
 
 
 
@@ -721,7 +763,9 @@ La función `gam.check()` realiza una diagnosis del modelo:
 gam.check(modelo)
 ```
 
-<img src="07-regresion_np_files/figure-html/unnamed-chunk-23-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-23-1} \end{center}
 
 ```
 ## 
@@ -804,7 +848,7 @@ Es preferible suponer que hay una interacción entre `Temp` y `Wind`?
 
 ## Regresión spline adaptativa multivariante {#mars}
 
-La regresión spline adaptativa multivariante, en inglés *multivariate adaptive regression splines* (MARS; Friedman, 1991), es un procedimiento adaptativo para problemas de regresión que puede verse como una generalización tanto de la regresión lineal por pasos (*stepwise linear regression*) como de los árboles de decisión CART. 
+La regresión spline adaptativa multivariante, en inglés *multivariate adaptive regression splines* [MARS; @friedman1991multivariate], es un procedimiento adaptativo para problemas de regresión que puede verse como una generalización tanto de la regresión lineal por pasos (*stepwise linear regression*) como de los árboles de decisión CART. 
 
 El modelo MARS es un spline multivariante lineal:  
 $$m(\mathbf{x}) = \beta_0 + \sum_{m=1}^M \beta_m h_m(\mathbf{x})$$
@@ -921,14 +965,18 @@ summary(mars)
 plot(mars)
 ```
 
-<img src="07-regresion_np_files/figure-html/unnamed-chunk-27-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-27-1} \end{center}
 
 ```r
 plot(accel ~ times, data = mcycle, col = 'darkgray')
 lines(mcycle$times, predict(mars))
 ```
 
-<img src="07-regresion_np_files/figure-html/unnamed-chunk-27-2.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-27-2} \end{center}
 
 Como con las opciones por defecto el ajuste no es muy bueno (aunque podría ser suficiente), podríamos forzar la complejidad del modelo en el crecimiento  (`minspan = 1` permite que todas las observaciones sean potenciales nodos): 
 
@@ -962,7 +1010,9 @@ plot(accel ~ times, data = mcycle, col = 'darkgray')
 lines(mcycle$times, predict(mars2))
 ```
 
-<img src="07-regresion_np_files/figure-html/unnamed-chunk-28-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-28-1} \end{center}
 
 Como siguiente ejemplo consideramos los datos de `carData::Prestige`:
 
@@ -998,7 +1048,9 @@ summary(mars)
 plot(mars)
 ```
 
-<img src="07-regresion_np_files/figure-html/unnamed-chunk-29-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-29-1} \end{center}
 
 Para representar los efectos de las variables importa las herramientas del paquete `plotmo` (del mismo autor; válido también para la mayoría de los modelos tratados en este libro, incluyendo `mgcv::gam()`).
 
@@ -1012,7 +1064,9 @@ plotmo(mars)
 ##                      10.54   5930  13.6
 ```
 
-<img src="07-regresion_np_files/figure-html/unnamed-chunk-30-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-30-1} \end{center}
 
 Podríamos obtener la importancia de las variables:
 
@@ -1033,7 +1087,9 @@ varimp
 plot(varimp)
 ```
 
-<img src="07-regresion_np_files/figure-html/unnamed-chunk-31-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-31-1} \end{center}
 
 Siempre podríamos considerar este modelo de partida para seleccionar componentes de un modelo GAM más flexible:
 
@@ -1125,13 +1181,17 @@ plotmo(gam2)
 ##                      10.54   5930  13.6
 ```
 
-<img src="07-regresion_np_files/figure-html/unnamed-chunk-32-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-32-1} \end{center}
 
 ```r
 plot(gam2, scheme = 2, select = 2)
 ```
 
-<img src="07-regresion_np_files/figure-html/unnamed-chunk-32-2.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-32-2} \end{center}
 
 Pregunta: ¿Observas algo extraño en el contraste ANOVA anterior? 
 <!-- 
@@ -1223,7 +1283,9 @@ caret.mars
 ggplot(caret.mars, highlight = TRUE)
 ```
 
-<img src="07-regresion_np_files/figure-html/unnamed-chunk-35-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-35-1} \end{center}
 
 Podemos analizar el modelo final con las herramientas de `earth`:
 
@@ -1265,13 +1327,17 @@ plotmo(caret.mars$finalModel, degree2 = 0, caption = 'ozone$O3 (efectos principa
 ##                5770    5     64.5   62 2046.5  24 169.5 100 213.5
 ```
 
-<img src="07-regresion_np_files/figure-html/unnamed-chunk-36-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-36-1} \end{center}
 
 ```r
 plotmo(caret.mars$finalModel, degree1 = 0, caption = 'ozone$O3 (interacciones)')
 ```
 
-<img src="07-regresion_np_files/figure-html/unnamed-chunk-36-2.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-36-2} \end{center}
 
 Finalmente medimos la precisión con el procedimiento habitual:
 
@@ -1289,7 +1355,7 @@ accuracy(pred, test$O3)
 
 ## Projection pursuit
 
-*Projection pursuit* (Friedman y Tukey, 1974) es una técnica de análisis exploratorio de datos multivariantes que busca proyecciones lineales de los datos en espacios de dimensión baja, siguiendo una idea originalmente propuesta en Kruskal (1969).
+*Projection pursuit* [@friedman1974projection] es una técnica de análisis exploratorio de datos multivariantes que busca proyecciones lineales de los datos en espacios de dimensión baja, siguiendo una idea originalmente propuesta en [@kruskal1969toward].
 Inicialmente se presentó como una técnica gráfica y por ese motivo buscaba proyecciones de dimensión 1 o 2 (proyecciones en rectas o planos), resultando que las direcciones interesantes son aquellas con distribución no normal. 
 La motivación es que cuando se realizan transformaciones lineales lo habitual es que el resultado tenga la apariencia de una distribución normal (por el teorema central del límite), lo cual oculta las singularidades de los datos originales. 
 Se supone que los datos son una trasformación lineal de componentes no gaussianas (variables latentes) y la idea es deshacer esta transformación mediante la optimización de una función objetivo, que en este contexto recibe el nombre de *projection index*.
@@ -1300,7 +1366,7 @@ Hay extensiones de *projection pursuit* para regresión, clasificación, estimac
 
 ### Regresión por *projection pursuit* {#ppr}
 
-En el método original de *projection pursuit regression* (PPR; Friedman y Stuetzle, 1981) se considera el siguiente modelo semiparamétrico
+En el método original de *projection pursuit regression* [PPR; @friedman1981projection] se considera el siguiente modelo semiparamétrico
 $$m(\mathbf{x}) = \sum_{m=1}^M g_m (\alpha_{1m}x_1 + \alpha_{2m}x_2 + \ldots + \alpha_{pm}x_p)$$
 siendo $\boldsymbol{\alpha}_m = (\alpha_{1m}, \alpha_{2m}, \ldots, \alpha_{pm})$ vectores de parámetros (desconocidos) de módulo unitario y $g_m$ funciones suaves (desconocidas), denominadas funciones *ridge*.
 
@@ -1335,7 +1401,7 @@ va añadiendo términos *ridge* hasta un máximo de `max.terms` y posteriormente
 Por defecto emplea el *super suavizador* de Friedman (función `supsmu()`, con parámetros `bass` y `spam`), aunque también admite splines (función `smooth.spline()`, fijando los grados de libertad con `df` o seleccionándolos mediante GCV).
 Para más detalles ver `help(ppr)`.
 
-Continuaremos con el ejemplo del conjunto de datos `earth::Ozone1`. En primer lugar ajustamos un modelo PPR con dos términos (incrementando el suavizado por defecto de `supsmu()` siguiendo la recomendación de Venables y Ripley, 2002):
+Continuaremos con el ejemplo del conjunto de datos `earth::Ozone1`. En primer lugar ajustamos un modelo PPR con dos términos [incrementando el suavizado por defecto de `supsmu()` siguiendo la recomendación de @Venables2002Modern]:
 
 
 ```r
@@ -1373,7 +1439,9 @@ oldpar <- par(mfrow = c(1, 2))
 plot(ppreg)
 ```
 
-<img src="07-regresion_np_files/figure-html/unnamed-chunk-39-1.png" width="90%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.9\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-39-1} \end{center}
 
 ```r
 par(oldpar)
@@ -1391,7 +1459,9 @@ abline(a = 0, b = 1)
 abline(lm(obs ~ pred), lty = 2)
 ```
 
-<img src="07-regresion_np_files/figure-html/unnamed-chunk-40-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-40-1} \end{center}
 
 ```r
 accuracy(pred, obs)
@@ -1446,7 +1516,9 @@ caret.ppr
 ggplot(caret.ppr, highlight = TRUE)
 ```
 
-<img src="07-regresion_np_files/figure-html/unnamed-chunk-41-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-41-1} \end{center}
 
 ```r
 summary(caret.ppr$finalModel)
@@ -1475,7 +1547,9 @@ summary(caret.ppr$finalModel)
 plot(caret.ppr$finalModel)
 ```
 
-<img src="07-regresion_np_files/figure-html/unnamed-chunk-41-2.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-41-2} \end{center}
 
 ```r
 # varImp(caret.ppr) # emplea una medida genérica de importancia
@@ -1488,7 +1562,7 @@ accuracy(pred, obs)
 ##   0.3135877   3.3652891   2.7061615 -10.7532705  33.8333646   0.8249710
 ```
 
-Para ajustar un modelo *single index* también se podría emplear la función `npindex()` del paquete  [`np`](https://github.com/JeffreyRacine/R-Package-np) (que implementa el método de Ichimura, 1993, considerando un estimador local constante), aunque en este caso ni el tiempo de computación ni el resultado es satisfactorio:
+Para ajustar un modelo *single index* también se podría emplear la función `npindex()` del paquete  [`np`](https://github.com/JeffreyRacine/R-Package-np) [que implementa el método de @ichimura1993, considerando un estimador local constante], aunque en este caso ni el tiempo de computación ni el resultado es satisfactorio:
 
 
 ```r
@@ -1527,7 +1601,7 @@ summary(bw)
 ## 
 ## Continuous Kernel Type: Second-Order Gaussian
 ## No. Continuous Explanatory Vars.: 1
-## Estimation Time: 8.33 seconds
+## Estimation Time: 9.48 seconds
 ```
 
 ```r
@@ -1558,7 +1632,9 @@ summary(sindex)
 plot(bw)
 ```
 
-<img src="07-regresion_np_files/figure-html/unnamed-chunk-43-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-43-1} \end{center}
 
 ```r
 pred <- predict(sindex, newdata = test)

@@ -1,15 +1,38 @@
 # Redes neuronales {#neural-nets}
 
+<!-- 
+---
+title: "Redes neuronales"
+author: "Aprendizaje Estadístico (MTE, USC)"
+date: "Curso 2021/2022"
+bibliography: ["packages.bib", "aprendizaje_estadistico.bib"]
+link-citations: yes
+output: 
+  bookdown::html_document2:
+    pandoc_args: ["--number-offset", "7,0"]
+    toc: yes 
+    # mathjax: local            # copia local de MathJax, hay que establecer:
+    # self_contained: false     # las dependencias se guardan en ficheros externos 
+  bookdown::pdf_document2:
+    keep_tex: yes
+    toc: yes 
+---
+
+bookdown::preview_chapter("08-redes_neuronales.Rmd")
+knitr::purl("08-redes_neuronales.Rmd", documentation = 2)
+knitr::spin("08-redes_neuronales.R",knit = FALSE)
+-->
+
 ```{r , child = '_global_options.Rmd'}
 ```
 
 
-Las redes neuronales (McCulloch y Pitts, 1943), también conocidas como redes de neuronas artificiales (*artificial neural network*; ANN), son una metodología de aprendizaje supervisado que destaca porque da lugar a modelos con un número muy elevado de parámetros, adecuada para abordar problemas con estructuras subyacentes muy complejas, pero de muy difícil interpretación. 
+Las redes neuronales [@mcculloch1943logical], también conocidas como redes de neuronas artificiales (*artificial neural network*; ANN), son una metodología de aprendizaje supervisado que destaca porque da lugar a modelos con un número muy elevado de parámetros, adecuada para abordar problemas con estructuras subyacentes muy complejas, pero de muy difícil interpretación. 
 Con la aparición de los métodos SVM y boosting, ANN perdió popularidad, pero en los últimos años ha vuelto a ganarla, también gracias al aumento de las capacidades de computación.
 El diseño y el entrenamiento de una ANN suele requerir de más tiempo y experimentación que otros algoritmos de AE/ML. Además el gran número de hiperparámetros lo convierte en un problema de optimización complicado.
-En este capítulo se va a hacer una breve introducción a estos métodos, para poder emplearlos con solvencia en la práctica sería muy recomendable profundizar más en esta metodología (por ejemplo se podría consultar Chollet y Allaire, 2018, para un tratamiento más detallado).
+En este capítulo se va a hacer una breve introducción a estos métodos, para poder emplearlos con solvencia en la práctica sería muy recomendable profundizar más en esta metodología [por ejemplo se podría consultar @chollet2018deep, para un tratamiento más detallado].
 
-En los métodos de aprendizaje supervisado se realizan una o varias transformaciones del espacio de las variables predictoras buscando una representación *óptima* de los datos, para así poder conseguir una buena predicción. Los modelos que realizan una o dos transformaciones reciben el nombre de modelos superficiales (*shallow models*). Por el contrario, cuando se realizan muchas transformaciones se habla de aprendizaje profundo (*deep learning*). No nos debemos dejar engañar por la publicidad: que un aprendizaje sea profundo no significa que sea mejor que el superficial. Aunque es verdad que ahora mismo la metodología que está de moda son las redes neuronales profundas (*deep neural networks*), hay que ser muy consciente de que dependiendo del contexto será más conveniente un tipo de modelos u otro. Se trata de una metodología adecuada para problemas muy complejos y no tanto para problemas con pocas observaciones o pocos predictores. Hay que tener en cuenta que no existe ninguna metodología que sea *transversalmente* la mejor (lo que se conoce como el teorema *no free lunch*; Wolpert y Macready, 1997). 
+En los métodos de aprendizaje supervisado se realizan una o varias transformaciones del espacio de las variables predictoras buscando una representación *óptima* de los datos, para así poder conseguir una buena predicción. Los modelos que realizan una o dos transformaciones reciben el nombre de modelos superficiales (*shallow models*). Por el contrario, cuando se realizan muchas transformaciones se habla de aprendizaje profundo (*deep learning*). No nos debemos dejar engañar por la publicidad: que un aprendizaje sea profundo no significa que sea mejor que el superficial. Aunque es verdad que ahora mismo la metodología que está de moda son las redes neuronales profundas (*deep neural networks*), hay que ser muy consciente de que dependiendo del contexto será más conveniente un tipo de modelos u otro. Se trata de una metodología adecuada para problemas muy complejos y no tanto para problemas con pocas observaciones o pocos predictores. Hay que tener en cuenta que no existe ninguna metodología que sea *transversalmente* la mejor [lo que se conoce como el teorema *no free lunch*; @wolpert1997no]. 
 
 Una red neuronal básica va a realizar dos transformaciones de los datos, y por tanto es un modelo con tres capas: una capa de entrada (*input layer*) consistente en las variables originales $\mathbf{X} = (X_1,X_2,\ldots, X_p)$, otra capa oculta (*hidden layer*) con $M$ nodos, y la capa de salida (*output layer*) con la predicción (o predicciones) final $m(\mathbf{X})$. 
 
@@ -56,7 +79,7 @@ aunque también se puede considerar una función de activación en el nodo final
 
 Por tanto, el modelo $m$ es un modelo de regresión no lineal en dos etapas con $M(p + 1) + M + 1$ parámetros (también llamados *pesos*). Por ejemplo, con 200 variables predictoras y 10 variables ocultas, hay nada menos que 2021 parámetros. Como podemos comprobar, incluso con el modelo más sencillo y una cantidad moderada de variables predictoras y ocultas, el número de parámetros a estimar es muy grande. Por eso decimos que estos modelos están hiperparametrizados. 
 
-La estimación de los parámetros (el aprendizaje) se realiza minimizando una función de pérdidas, típicamente $\mbox{RSS}$. La solución exacta de este problema de optimización suele ser imposible en la práctica (es un problema no convexo), por lo que se resuelve mediante un algoritmo heurístico de descenso de gradientes (que utiliza las derivadas de las funciones de activación), llamado en este contexto *backpropagation*  (Werbos, 1975), que va a converger a un óptimo local, pero difícilmente al óptimo global. Por este motivo, el modelo resultante va a ser muy sensible a la solución inicial, que generalmente se selecciona de forma aleatoria con valores próximos a cero (si se empezase dando a los parámetros valores nulos, el algoritmo no se movería). El algoritmo va cogiendo los datos de entrenamiento por lotes (de 32, 64...) llamados *batch*, y recibe el nombre de *epoch* cada vez que el algoritmo completa el procesado de todos los datos; por tanto, el número de *epochs* es el número de veces que el algoritmo procesa la totalidad de los datos.
+La estimación de los parámetros (el aprendizaje) se realiza minimizando una función de pérdidas, típicamente $\mbox{RSS}$. La solución exacta de este problema de optimización suele ser imposible en la práctica (es un problema no convexo), por lo que se resuelve mediante un algoritmo heurístico de descenso de gradientes (que utiliza las derivadas de las funciones de activación), llamado en este contexto *backpropagation* [@werbos1974new], que va a converger a un óptimo local, pero difícilmente al óptimo global. Por este motivo, el modelo resultante va a ser muy sensible a la solución inicial, que generalmente se selecciona de forma aleatoria con valores próximos a cero (si se empezase dando a los parámetros valores nulos, el algoritmo no se movería). El algoritmo va cogiendo los datos de entrenamiento por lotes (de 32, 64...) llamados *batch*, y recibe el nombre de *epoch* cada vez que el algoritmo completa el procesado de todos los datos; por tanto, el número de *epochs* es el número de veces que el algoritmo procesa la totalidad de los datos.
 
 Una forma de mitigar la inestabilidad de la estimación del modelo es generando muchos modelos (que se consiguen con soluciones iniciales diferentes) y promediando las predicciones; una alternativa es utilizar *bagging*. El algoritmo depende de un parámetro en cada iteración, que representa el ratio de aprendizaje (*learning rate*). Por razones matemáticas, se selecciona una sucesión que converja a cero. 
 

@@ -1,13 +1,36 @@
 # Máquinas de soporte vectorial {#svm}
 
+<!-- 
+---
+title: "Máquinas de soporte vectorial"
+author: "Aprendizaje Estadístico (MTE, USC)"
+date: "Curso 2021/2022"
+bibliography: ["packages.bib", "aprendizaje_estadistico.bib"]
+link-citations: yes
+output: 
+  bookdown::html_document2:
+    pandoc_args: ["--number-offset", "3,0"]
+    toc: yes 
+    # mathjax: local            # copia local de MathJax, hay que establecer:
+    # self_contained: false     # las dependencias se guardan en ficheros externos 
+  bookdown::pdf_document2:
+    keep_tex: yes
+    toc: yes 
+---
+
+bookdown::preview_chapter("04-svm.Rmd")
+knitr::purl("04-svm.Rmd", documentation = 2)
+knitr::spin("04-svm.R",knit = FALSE)
+-->
+
 
 
 
 Las máquinas de soporte vectorial (*support vector machines*, SVM) son métodos estadísticos que Vladimir Vapnik empezó a desarrollar a mediados de 1960, inicialmente para problemas de clasificación binaria (problemas de clasificación con dos categorias), basados en la idea de separar los datos mediante hiperplanos. Actualmente existen extensiones dentro de esta metodología para clasificación con más de dos categorías, para regresión y para detección de datos atípicos. El nombre proviene de la utilización de vectores que hacen de soporte para maximizar la separación entre los datos y el hiperplano.
 
-La popularidad de las máquinas de soporte vectorial creció a partir de los años 90 cuando los incorpora la comunidad informática. Se considera una metodología muy flexible y con buen rendimiento en un amplio abanico de situaciones, aunque por lo general no es la que consigue los mejores rendimientos. Dos referencias ya clásicas son Vapnik (1998) y Vapnik (2010).
+La popularidad de las máquinas de soporte vectorial creció a partir de los años 90 cuando los incorpora la comunidad informática. Se considera una metodología muy flexible y con buen rendimiento en un amplio abanico de situaciones, aunque por lo general no es la que consigue los mejores rendimientos. Dos referencias ya clásicas son @vapnik1998 y @vapnik2013nature.
 
-Siguiendo a James *et al.* (2013) distinguiremos en nuestra exposición entre clasificadores de máximo margen (*maximal margin classifiers*), clasificadores de soporte vectorial (*support vector classifiers*) y máquinas de soporte vectorial (*support vector machines*).
+Siguiendo a @james2021introduction distinguiremos en nuestra exposición entre clasificadores de máximo margen (*maximal margin classifiers*), clasificadores de soporte vectorial (*support vector classifiers*) y máquinas de soporte vectorial (*support vector machines*).
 
 
 ## Clasificadores de máximo margen 
@@ -27,7 +50,8 @@ Por supuesto, aunque clasifique los datos de entrenamiento sin error, no hay nin
 
 Realmente, si existe al menos un hiperplano que separa perfectamente los datos de entrenamiento de las dos categorías, entonces va a haber infinitos. El objetivo es seleccionar un hiperplano. Para ello, dado un hiperplano, se calculan sus distancias a todos los datos de entrenamiento y se define el *margen* como la menor de esas distancias. El método *maximal margin classifier* lo que hace es seleccionar, de los infinitos hiperplanos, aquel que tiene el mayor margen. Fijémonos en que siempre va a haber varias observaciones que equidistan del hiperplano de máximo margen, y cuya distancia es precisamente el margen. Esas observaciones reciben el nombre de *vectores soporte* y son las que dan nombre a esta metodología.
 
-<img src="04-svm_files/figure-html/unnamed-chunk-2-1.png" width="80%" style="display: block; margin: auto;" />
+
+\begin{center}\includegraphics[width=0.8\linewidth]{04-svm_files/figure-latex/unnamed-chunk-2-1} \end{center}
 
 Matemáticamente, dadas las $n$ observaciones de entrenamiento $\mathbf{x_1}, \mathbf{x_2}, \ldots, \mathbf{x_n}$, el clasificador de máximo margen es la solución del problema de optimización
 \[max_{\beta_0, \beta_1,\ldots, \beta_p} M\]
@@ -48,7 +72,7 @@ Hay una característica de este método que es de destacar: así como en otros m
 
 ## Clasificadores de soporte vectorial 
 
-Los clasificadores de soporte vectorial (*support vector classifiers*; también denominados *soft margin classifiers*) fueron introducidos en Cortes y Vapnik (1995). Son una extensión del problema anterior que se utiliza cuando se desea clasificar mediante un hiperplano pero no existe ninguno que separe perfectamente los datos de entrenamiento según su categoría. En este caso no queda más remedio que admitir errores en la clasificación de algunos datos de entrenamiento (como hemos visto que pasa con todas las metodologías), que van a estar en el lado equivocado del hiperplano. Y en lugar de hablar de un margen se habla de un margen débil (*soft margin*).
+Los clasificadores de soporte vectorial (*support vector classifiers*; también denominados *soft margin classifiers*) fueron introducidos en @cortes1995support. Son una extensión del problema anterior que se utiliza cuando se desea clasificar mediante un hiperplano pero no existe ninguno que separe perfectamente los datos de entrenamiento según su categoría. En este caso no queda más remedio que admitir errores en la clasificación de algunos datos de entrenamiento (como hemos visto que pasa con todas las metodologías), que van a estar en el lado equivocado del hiperplano. Y en lugar de hablar de un margen se habla de un margen débil (*soft margin*).
 
 Este enfoque, consistente en aceptar que algunos datos de entrenamiento van a estar mal clasificados, puede ser preferible aunque exista un hiperplano que resuelva el problema de la sección anterior, ya que los clasificadores de soporte vectorial son más robustos que los clasificadores de máximo margen.
 
@@ -77,7 +101,8 @@ sujeto a
 
 Aunque el problema a resolver es el mismo, y por tanto también la solución, hay que tener cuidado con la interpretación, pues el hiperparámetro $K$ se ha sustituido por $C$. Este nuevo parámetro es el que nos vamos a encontrar en los ejercicios prácticos y tiene una interpretación inversa a $K$. El parámetro $C$ es la penalización por mala clasificación (coste que supone que un dato de entrenamiento esté mal clasificado), y por tanto el *hard margin classifier* se obtiene para valores muy grandes ($C = \infty$ se corresponde con $K = 0$). Esto es algo confuso, ya que no se corresponde con la interpretación habitual de *penalización por complejidad*.
 
-<img src="04-svm_files/figure-html/unnamed-chunk-3-1.png" width="90%" style="display: block; margin: auto;" />
+
+\begin{center}\includegraphics[width=0.9\linewidth]{04-svm_files/figure-latex/unnamed-chunk-3-1} \end{center}
 
 En este contexto, los vectores soporte van a ser no solo los datos de entrenamiento que están (correctamente clasificados) a una distancia $M$ del hiperplano, sino también aquellos que están incorrectamente clasificados e incluso los que están a una distancia inferior a $M$. Como se comentó en la sección anterior, estos son los datos que definen el modelo, que es por tanto robusto a las observaciones que están lejos del hiperplano.
 
@@ -113,7 +138,8 @@ Algunas de las funciones kernel más utilizadas son:
 
 Antes de construir el modelo, es recomendable centrar y reescalar los datos para evitar que los valores grandes *ahoguen* al resto de los datos. Por supuesto, tiene que hacerse la misma transformación a todos los datos, incluidos los datos de test. La posibilidad de utilizar distintos kernels da mucha flexibilidad a esta metodología, pero es muy importante seleccionar adecuadamente los parámetros de la función kernel ($\gamma,d$) y el parámetro $C$ para evitar sobreajustes.
 
-<img src="04-svm_files/figure-html/unnamed-chunk-4-1.png" width="90%" style="display: block; margin: auto;" />
+
+\begin{center}\includegraphics[width=0.9\linewidth]{04-svm_files/figure-latex/unnamed-chunk-4-1} \end{center}
 
 ### Clasificación con más de dos categorías
 
@@ -126,7 +152,7 @@ La alternativa es llevar a cabo un enfoque de *uno contra todos*. Para cada cate
 
 ### Regresión
 
-Aunque la metodología SVM está concebida para problemas de clasificación, ha habido varios intentos de adaptar su filosofía a problemas de regresión. En esta sección vamos a comentar muy por encima el enfoque seguido en Drucker *et al.* (1997), con un fuerte enfoque en la robustez. Recordemos que, en el contexto de la clasificación, el modelo SVM va a depender de unos pocos datos: los vectores soporte. En regresión, si se utiliza RSS como criterio de error, todos los datos van a influir en el modelo y además, al estar los errores al cuadrado, los valores atípicos van a tener mucha influencia, muy superior a la que se tendría si se utilizase, por ejemplo, el valor absoluto. Una alternativa, poco intuitiva pero efectiva, es fijar los hiperparámetros $\epsilon,c > 0$ como umbral y coste, respectivamente, y definir la función de pérdidas 
+Aunque la metodología SVM está concebida para problemas de clasificación, ha habido varios intentos de adaptar su filosofía a problemas de regresión. En esta sección vamos a comentar muy por encima el enfoque seguido en @drucker1997support, con un fuerte enfoque en la robustez. Recordemos que, en el contexto de la clasificación, el modelo SVM va a depender de unos pocos datos: los vectores soporte. En regresión, si se utiliza RSS como criterio de error, todos los datos van a influir en el modelo y además, al estar los errores al cuadrado, los valores atípicos van a tener mucha influencia, muy superior a la que se tendría si se utilizase, por ejemplo, el valor absoluto. Una alternativa, poco intuitiva pero efectiva, es fijar los hiperparámetros $\epsilon,c > 0$ como umbral y coste, respectivamente, y definir la función de pérdidas 
 \[
 L_{\epsilon,c} (x) = \left\{ \begin{array}{ll}
   0 & \mbox{si } |x|< \epsilon \\
@@ -171,7 +197,7 @@ Inconvenientes:
 
 ## SVM con el paquete `kernlab`
 
-Hay varios paquetes que implementan este procedimiento (e.g. [`e1071`](https://CRAN.R-project.org/package=e1071), [`svmpath`](https://CRAN.R-project.org/package=svmpath), Hastie *et al.*, 2004), aunque se considera que el más completo es [`kernlab`](https://CRAN.R-project.org/package=kernlab) (Karatzoglou *et al.*, 2004).
+Hay varios paquetes que implementan este procedimiento [e.g. [`e1071`](https://CRAN.R-project.org/package=e1071), @R-e1071; [`svmpath`](https://CRAN.R-project.org/package=svmpath), ver @hastie2004entire], aunque se considera que el más completo es [`kernlab`](https://CRAN.R-project.org/package=kernlab) [@kernlab2004].
 
 La función principal es `ksvm()` y se suelen considerar los siguientes argumentos:
 
@@ -218,7 +244,8 @@ test <- df[-itrain, ]
 
 
 library(kernlab)
-set.seed(1) # Para la selección de sigma = mean(sigest(fmedv ~ ., data = train)[-2])
+set.seed(1) 
+# Selección de sigma = mean(sigest(taste ~ ., data = train)[-2]) # depende de la semilla
 svm <- ksvm(taste ~ ., data = train,
             kernel = "rbfdot", prob.model = TRUE)
 svm

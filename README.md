@@ -14,8 +14,8 @@ donde puede descargarse en formato [pdf](https://rubenfcasal.github.io/aprendiza
 
 Para instalar los paquetes necesarios para poder ejecutar los ejemplos mostrados en el libro se puede emplear el siguiente comando:
 ```{r eval=FALSE}
-pkgs <- c("caret", "rattle", "car", "leaps", "MASS", "RcmdrMisc", 
-          "lmtest", "glmnet", "mgcv", "np", "NeuralNetTools", "pdp", "gbm",
+pkgs <- c("caret", "rattle", "gbm", "car", "leaps", "MASS", "RcmdrMisc", 
+          "lmtest", "glmnet", "mgcv", "np", "NeuralNetTools", "pdp", "vivid",
           "plot3D", "AppliedPredictiveModeling", "ISLR")
 # install.packages(pkgs, dependencies=TRUE)
 install.packages(setdiff(pkgs, installed.packages()[,"Package"]), 

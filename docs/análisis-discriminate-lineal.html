@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html lang="es" xml:lang="es">
 <head>
 
   <meta charset="utf-8" />
@@ -26,7 +26,7 @@
 <meta name="author" content="Manuel Oviedo de la Fuente (manuel.oviedo@udc.es)" />
 
 
-<meta name="date" content="2021-09-24" />
+<meta name="date" content="2021-09-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -148,8 +148,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1" data-path="intro-AE.html"><a href="intro-AE.html"><i class="fa fa-check"></i><b>1</b> Introducción al Aprendizaje Estadístico</a><ul>
 <li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje Estadístico vs. Aprendizaje Automático</a><ul>
 <li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
-<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#las-dos-culturas-breiman-2001"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas (Breiman, 2001)</a></li>
-<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-estadística-dunson-2018"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística (Dunson, 2018)</a></li>
+<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#las-dos-culturas-breiman2001statistical"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas <span class="citation">(Breiman, <span>2001</span><span>b</span>)</span></a></li>
+<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-estadística-dunson2018statistics"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística <span class="citation">(Dunson, <span>2018</span>)</span></a></li>
 </ul></li>
 <li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de Aprendizaje Estadístico</a><ul>
 <li class="chapter" data-level="1.2.1" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#notacion"><i class="fa fa-check"></i><b>1.2.1</b> Notación y terminología</a></li>
@@ -285,11 +285,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.3" data-path="implementación-en-r-2.html"><a href="implementación-en-r-2.html"><i class="fa fa-check"></i><b>8.3</b> Implementación en R</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
-<li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a><ul>
-<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html#libros"><i class="fa fa-check"></i>Libros</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html#artículos"><i class="fa fa-check"></i>Artículos</a></li>
-</ul></li>
+<li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -313,24 +309,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="análisis-discriminate-lineal" class="section level2">
 <h2><span class="header-section-number">5.1</span> Análisis discriminate lineal</h2>
-<p>El análisis lineal discrimintante (LDA) se inicia en Fisher (1936) pero es Welch (1939) quien lo enfoca utilizando el teorema de Bayes. Asumiendo que <span class="math inline">\(X | Y = k \sim N(\mu_k, \Sigma)\)</span>, es decir, que todas las categorías comparten la misma matriz <span class="math inline">\(\Sigma\)</span>, se obtienen las funciones discriminantes, lineales en <span class="math inline">\(\mathbf{x}\)</span>,
+<p>El análisis lineal discrimintante (LDA) se inicia en <span class="citation">Fisher (<a href="#ref-fisher1936use" role="doc-biblioref">1936</a>)</span> pero es <span class="citation">Welch (<a href="#ref-welch1939note" role="doc-biblioref">1939</a>)</span> quien lo enfoca utilizando el teorema de Bayes. Asumiendo que <span class="math inline">\(X | Y = k \sim N(\mu_k, \Sigma)\)</span>, es decir, que todas las categorías comparten la misma matriz <span class="math inline">\(\Sigma\)</span>, se obtienen las funciones discriminantes, lineales en <span class="math inline">\(\mathbf{x}\)</span>,
 <span class="math display">\[\mathbf{x}^t \Sigma^{-1} \mu_k - \frac{1}{2} \mu_k^t \Sigma^{-1} \mu_k + \mbox{log}(P(Y = k))\]</span></p>
 <p>La dificultad técnica del método LDA reside en el cálculo de <span class="math inline">\(\Sigma^{-1}\)</span>. Cuando hay más variables predictoras que datos, o cuando las variables predictoras están fuertemente correlacionadas, hay un problema. Una solución pasa por aplicar análisis de componentes principales (PCA) para reducir la dimensión y tener predictores incorrelados antes de utilizar LDA. Aunque la solución anterior se utiliza mucho, hay que tener en cuenta que la reducción de la dimensión se lleva a cabo sin tener en cuenta la información de las categorías, es decir, la estructura de los datos en categorías. Una alternativa consiste en utilizar <em>partial least squares discriminant analysis</em> (PLSDA, Berntsson y Wold, 1986). La idea consiste en realizar una regresión PLS siendo las categorías la respuesta, con el objetivo de reducir la dimensión a la vez que se maximiza la correlación con las respuestas.</p>
-<p>Una generalización de LDA es el <em>mixture discriminant analysis</em> (Hastie y Tibshirani, 1996) en el que, siempre con la misma matriz <span class="math inline">\(\Sigma\)</span>, se contempla la posibilidad de que dentro de cada categoría haya múltiples subcategorías que únicamente difieren en la media. Las distribuciones dentro de cada clase se agregan mediante una mixtura de las distribuciones multivariantes.</p>
+<p>Una generalización de LDA es el <em>mixture discriminant analysis</em> <span class="citation">(Hastie y Tibshirani, <a href="#ref-hastie1996fisher" role="doc-biblioref">1996</a>)</span> en el que, siempre con la misma matriz <span class="math inline">\(\Sigma\)</span>, se contempla la posibilidad de que dentro de cada categoría haya múltiples subcategorías que únicamente difieren en la media. Las distribuciones dentro de cada clase se agregan mediante una mixtura de las distribuciones multivariantes.</p>
 <div id="ejemplo-masslda" class="section level3">
 <h3><span class="header-section-number">5.1.1</span> Ejemplo <code>MASS::lda</code></h3>
-<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="análisis-discriminate-lineal.html#cb236-1"></a><span class="kw">load</span>(<span class="st">&quot;data/winetaste.RData&quot;</span>)</span>
-<span id="cb236-2"><a href="análisis-discriminate-lineal.html#cb236-2"></a><span class="co"># Partición de los datos</span></span>
-<span id="cb236-3"><a href="análisis-discriminate-lineal.html#cb236-3"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb236-4"><a href="análisis-discriminate-lineal.html#cb236-4"></a>df &lt;-<span class="st"> </span>winetaste</span>
-<span id="cb236-5"><a href="análisis-discriminate-lineal.html#cb236-5"></a>nobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(df)</span>
-<span id="cb236-6"><a href="análisis-discriminate-lineal.html#cb236-6"></a>itrain &lt;-<span class="st"> </span><span class="kw">sample</span>(nobs, <span class="fl">0.8</span> <span class="op">*</span><span class="st"> </span>nobs)</span>
-<span id="cb236-7"><a href="análisis-discriminate-lineal.html#cb236-7"></a>train &lt;-<span class="st"> </span>df[itrain, ]</span>
-<span id="cb236-8"><a href="análisis-discriminate-lineal.html#cb236-8"></a>test &lt;-<span class="st"> </span>df[<span class="op">-</span>itrain, ]</span>
-<span id="cb236-9"><a href="análisis-discriminate-lineal.html#cb236-9"></a></span>
-<span id="cb236-10"><a href="análisis-discriminate-lineal.html#cb236-10"></a><span class="kw">library</span>(MASS)</span>
-<span id="cb236-11"><a href="análisis-discriminate-lineal.html#cb236-11"></a>ld &lt;-<span class="st"> </span><span class="kw">lda</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train)</span>
-<span id="cb236-12"><a href="análisis-discriminate-lineal.html#cb236-12"></a>ld</span></code></pre></div>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="análisis-discriminate-lineal.html#cb238-1"></a><span class="kw">load</span>(<span class="st">&quot;data/winetaste.RData&quot;</span>)</span>
+<span id="cb238-2"><a href="análisis-discriminate-lineal.html#cb238-2"></a><span class="co"># Partición de los datos</span></span>
+<span id="cb238-3"><a href="análisis-discriminate-lineal.html#cb238-3"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb238-4"><a href="análisis-discriminate-lineal.html#cb238-4"></a>df &lt;-<span class="st"> </span>winetaste</span>
+<span id="cb238-5"><a href="análisis-discriminate-lineal.html#cb238-5"></a>nobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(df)</span>
+<span id="cb238-6"><a href="análisis-discriminate-lineal.html#cb238-6"></a>itrain &lt;-<span class="st"> </span><span class="kw">sample</span>(nobs, <span class="fl">0.8</span> <span class="op">*</span><span class="st"> </span>nobs)</span>
+<span id="cb238-7"><a href="análisis-discriminate-lineal.html#cb238-7"></a>train &lt;-<span class="st"> </span>df[itrain, ]</span>
+<span id="cb238-8"><a href="análisis-discriminate-lineal.html#cb238-8"></a>test &lt;-<span class="st"> </span>df[<span class="op">-</span>itrain, ]</span>
+<span id="cb238-9"><a href="análisis-discriminate-lineal.html#cb238-9"></a></span>
+<span id="cb238-10"><a href="análisis-discriminate-lineal.html#cb238-10"></a><span class="kw">library</span>(MASS)</span>
+<span id="cb238-11"><a href="análisis-discriminate-lineal.html#cb238-11"></a>ld &lt;-<span class="st"> </span><span class="kw">lda</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train)</span>
+<span id="cb238-12"><a href="análisis-discriminate-lineal.html#cb238-12"></a>ld</span></code></pre></div>
 <pre><code>## Call:
 ## lda(taste ~ ., data = train)
 ## 
@@ -362,11 +358,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## pH                   -2.103922e+00
 ## sulphates            -2.400004e+00
 ## alcohol              -1.996112e-01</code></pre>
-<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="análisis-discriminate-lineal.html#cb238-1"></a><span class="kw">plot</span>(ld)</span></code></pre></div>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="análisis-discriminate-lineal.html#cb240-1"></a><span class="kw">plot</span>(ld)</span></code></pre></div>
 <p><img src="05-otros_metodos_files/figure-html/unnamed-chunk-2-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="análisis-discriminate-lineal.html#cb239-1"></a>ld.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(ld, <span class="dt">newdata =</span> test)</span>
-<span id="cb239-2"><a href="análisis-discriminate-lineal.html#cb239-2"></a>pred &lt;-<span class="st"> </span>ld.pred<span class="op">$</span>class</span>
-<span id="cb239-3"><a href="análisis-discriminate-lineal.html#cb239-3"></a>caret<span class="op">::</span><span class="kw">confusionMatrix</span>(pred, test<span class="op">$</span>taste)</span></code></pre></div>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="análisis-discriminate-lineal.html#cb241-1"></a>ld.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(ld, <span class="dt">newdata =</span> test)</span>
+<span id="cb241-2"><a href="análisis-discriminate-lineal.html#cb241-2"></a>pred &lt;-<span class="st"> </span>ld.pred<span class="op">$</span>class</span>
+<span id="cb241-3"><a href="análisis-discriminate-lineal.html#cb241-3"></a>caret<span class="op">::</span><span class="kw">confusionMatrix</span>(pred, test<span class="op">$</span>taste)</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -394,7 +390,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##                                           
 ##        &#39;Positive&#39; Class : good            
 ## </code></pre>
-<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="análisis-discriminate-lineal.html#cb241-1"></a>p.est &lt;-ld.pred<span class="op">$</span>posterior</span></code></pre></div>
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="análisis-discriminate-lineal.html#cb243-1"></a>p.est &lt;-ld.pred<span class="op">$</span>posterior</span></code></pre></div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-fisher1936use">
+<p>Fisher, R. A. (1936). The use of multiple measurements in taxonomic problems. <em>Annals of eugenics</em>, <em>7</em>(2), 179-188. <a href="https://doi.org/10.1111/j.1469-1809.1936.tb02137.x">https://doi.org/10.1111/j.1469-1809.1936.tb02137.x</a></p>
+</div>
+<div id="ref-hastie1996fisher">
+<p>Hastie, T., y Tibshirani, R. (1996). Discriminant Analysis by Gaussian Mixtures. <em>Journal of the Royal Statistical Society. Series B (Methodological)</em>, <em>58</em>(1), 155-176. <a href="https://doi.org/10.1111/j.2517-6161.1996.tb02073.x">https://doi.org/10.1111/j.2517-6161.1996.tb02073.x</a></p>
+</div>
+<div id="ref-welch1939note">
+<p>Welch, B. L. (1939). Note on Discriminant Functions. <em>Biometrika</em>, <em>31</em>(1/2), 218-220. <a href="https://doi.org/10.2307/2334985">https://doi.org/10.2307/2334985</a></p>
 </div>
 </div>
             </section>

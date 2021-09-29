@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html lang="es" xml:lang="es">
 <head>
 
   <meta charset="utf-8" />
@@ -26,7 +26,7 @@
 <meta name="author" content="Manuel Oviedo de la Fuente (manuel.oviedo@udc.es)" />
 
 
-<meta name="date" content="2021-09-24" />
+<meta name="date" content="2021-09-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -148,8 +148,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1" data-path="intro-AE.html"><a href="intro-AE.html"><i class="fa fa-check"></i><b>1</b> Introducción al Aprendizaje Estadístico</a><ul>
 <li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje Estadístico vs. Aprendizaje Automático</a><ul>
 <li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
-<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#las-dos-culturas-breiman-2001"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas (Breiman, 2001)</a></li>
-<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-estadística-dunson-2018"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística (Dunson, 2018)</a></li>
+<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#las-dos-culturas-breiman2001statistical"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas <span class="citation">(Breiman, <span>2001</span><span>b</span>)</span></a></li>
+<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-estadística-dunson2018statistics"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística <span class="citation">(Dunson, <span>2018</span>)</span></a></li>
 </ul></li>
 <li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de Aprendizaje Estadístico</a><ul>
 <li class="chapter" data-level="1.2.1" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#notacion"><i class="fa fa-check"></i><b>1.2.1</b> Notación y terminología</a></li>
@@ -285,11 +285,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.3" data-path="implementación-en-r-2.html"><a href="implementación-en-r-2.html"><i class="fa fa-check"></i><b>8.3</b> Implementación en R</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
-<li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a><ul>
-<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html#libros"><i class="fa fa-check"></i>Libros</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html#artículos"><i class="fa fa-check"></i>Artículos</a></li>
-</ul></li>
+<li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -328,22 +324,22 @@ fijando el número de variables explicativas.
 Por defecto, evalúa todos los modelos posibles con un determinado número de
 parámetros (variando desde 1 hasta por defecto un máximo de <code>nvmax = 8</code>)
 y selecciona el mejor (<code>nbest = 1</code>).</p>
-<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="seleccion-reg-lineal.html#cb279-1"></a><span class="kw">library</span>(leaps)</span>
-<span id="cb279-2"><a href="seleccion-reg-lineal.html#cb279-2"></a>regsel &lt;-<span class="st"> </span><span class="kw">regsubsets</span>(fidelida <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> train)</span>
-<span id="cb279-3"><a href="seleccion-reg-lineal.html#cb279-3"></a><span class="co"># summary(regsel)</span></span>
-<span id="cb279-4"><a href="seleccion-reg-lineal.html#cb279-4"></a><span class="co"># names(summary(regsel))</span></span></code></pre></div>
+<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="seleccion-reg-lineal.html#cb281-1"></a><span class="kw">library</span>(leaps)</span>
+<span id="cb281-2"><a href="seleccion-reg-lineal.html#cb281-2"></a>regsel &lt;-<span class="st"> </span><span class="kw">regsubsets</span>(fidelida <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> train)</span>
+<span id="cb281-3"><a href="seleccion-reg-lineal.html#cb281-3"></a><span class="co"># summary(regsel)</span></span>
+<span id="cb281-4"><a href="seleccion-reg-lineal.html#cb281-4"></a><span class="co"># names(summary(regsel))</span></span></code></pre></div>
 <p>Al representar el resultado se obtiene un gráfico con los mejores modelos ordenados
 según el criterio determinado por el argumento <code>scale = c("bic", "Cp", "adjr2", "r2")</code>.
 Por ejemplo, en este caso, empleando el coeficiente de determinación ajustado, obtendríamos:</p>
-<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="seleccion-reg-lineal.html#cb280-1"></a><span class="kw">plot</span>(regsel, <span class="dt">scale =</span> <span class="st">&quot;adjr2&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="seleccion-reg-lineal.html#cb282-1"></a><span class="kw">plot</span>(regsel, <span class="dt">scale =</span> <span class="st">&quot;adjr2&quot;</span>)</span></code></pre></div>
 <p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-15-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>En este caso, considerando que es preferible un modelo más simple que una mejora del 2%, podríamos seleccionar como modelo final el modelo con dos predictores.
 Podríamos obtener los coeficientes:</p>
-<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="seleccion-reg-lineal.html#cb281-1"></a><span class="kw">coef</span>(regsel, <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="seleccion-reg-lineal.html#cb283-1"></a><span class="kw">coef</span>(regsel, <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## (Intercept)    calidadp    velocida 
 ##    3.332511    3.204201    7.700260</code></pre>
 <p>pero normalmente nos interesará ajustarlo de nuevo:</p>
-<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="seleccion-reg-lineal.html#cb283-1"></a><span class="kw">lm</span>(fidelida <span class="op">~</span><span class="st"> </span>velocida <span class="op">+</span><span class="st"> </span>calidadp, <span class="dt">data =</span> train)</span></code></pre></div>
+<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="seleccion-reg-lineal.html#cb285-1"></a><span class="kw">lm</span>(fidelida <span class="op">~</span><span class="st"> </span>velocida <span class="op">+</span><span class="st"> </span>calidadp, <span class="dt">data =</span> train)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = fidelida ~ velocida + calidadp, data = train)
@@ -382,10 +378,10 @@ exclusión (forward/backward).</p></li>
 </ul>
 <p>La función <code>stepAIC</code> del paquete <code>MASS</code> permite seleccionar el modelo por pasos, hacia delante o hacia atrás según criterio AIC o BIC (también esta disponible una función <code>step</code> del paquete base <code>stats</code> con menos opciones).
 La función <code>stepwise</code> del paquete <code>RcmdrMisc</code> es una interfaz de <code>stepAIC</code> que facilita su uso:</p>
-<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="seleccion-reg-lineal.html#cb285-1"></a><span class="kw">library</span>(MASS)</span>
-<span id="cb285-2"><a href="seleccion-reg-lineal.html#cb285-2"></a><span class="kw">library</span>(RcmdrMisc)</span>
-<span id="cb285-3"><a href="seleccion-reg-lineal.html#cb285-3"></a>modelo.completo &lt;-<span class="st"> </span><span class="kw">lm</span>(fidelida <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> train)</span>
-<span id="cb285-4"><a href="seleccion-reg-lineal.html#cb285-4"></a>modelo &lt;-<span class="st"> </span><span class="kw">stepwise</span>(modelo.completo, <span class="dt">direction =</span> <span class="st">&quot;forward/backward&quot;</span>, <span class="dt">criterion =</span> <span class="st">&quot;BIC&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="seleccion-reg-lineal.html#cb287-1"></a><span class="kw">library</span>(MASS)</span>
+<span id="cb287-2"><a href="seleccion-reg-lineal.html#cb287-2"></a><span class="kw">library</span>(RcmdrMisc)</span>
+<span id="cb287-3"><a href="seleccion-reg-lineal.html#cb287-3"></a>modelo.completo &lt;-<span class="st"> </span><span class="kw">lm</span>(fidelida <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> train)</span>
+<span id="cb287-4"><a href="seleccion-reg-lineal.html#cb287-4"></a>modelo &lt;-<span class="st"> </span><span class="kw">stepwise</span>(modelo.completo, <span class="dt">direction =</span> <span class="st">&quot;forward/backward&quot;</span>, <span class="dt">criterion =</span> <span class="st">&quot;BIC&quot;</span>)</span></code></pre></div>
 <pre><code>## 
 ## Direction:  forward/backward
 ## Criterion:  BIC 
@@ -465,7 +461,7 @@ La función <code>stepwise</code> del paquete <code>RcmdrMisc</code> es una inte
 ## + publi     1       0.2 3014.3 495.13
 ## - calidadp  1    3409.7 6424.2 606.05
 ## - velocida  1    4370.9 7385.4 628.36</code></pre>
-<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="seleccion-reg-lineal.html#cb287-1"></a><span class="kw">summary</span>(modelo)</span></code></pre></div>
+<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="seleccion-reg-lineal.html#cb289-1"></a><span class="kw">summary</span>(modelo)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = fidelida ~ velocida + calidadp + web, data = train)
@@ -489,10 +485,16 @@ La función <code>stepwise</code> del paquete <code>RcmdrMisc</code> es una inte
 <p>Los métodos disponibles son <code>"backward/forward"</code>, <code>"forward/backward"</code>, <code>"backward"</code> y <code>"forward"</code>.</p>
 <p>Cuando el número de variables explicativas es muy grande (o si el tamaño de la muestra es pequeño en comparación) pueden aparecer problemas al emplear los métodos anteriores (incluso pueden no ser aplicables).
 Una alternativa son los métodos de regularización (ridge regression, lasso; Sección <a href="shrinkage.html#shrinkage">6.6</a>) o los de reducción de la dimensión (regresión con componentes principales o mínimos cuadrados parciales; Sección <a href="pca-pls.html#pca-pls">6.7</a>).</p>
-<p>Por otra parte en los modelos anteriores no se consideraron interacciones entre predictores (para detalles sobre como incluir interacciones en modelos lineales ver por ejemplo la <a href="https://rubenfcasal.github.io/intror/modelos-lineales.html#interacciones">Sección 8.6</a> de Fernández-Casal <em>et al</em>., 2019).
+<p>Por otra parte en los modelos anteriores no se consideraron interacciones entre predictores <span class="citation">(para detalles sobre como incluir interacciones en modelos lineales ver por ejemplo la <a href="https://rubenfcasal.github.io/intror/modelos-lineales.html#interacciones" role="doc-biblioref">Sección 8.6</a> de Fernández-Casal et al., <a href="#ref-fernandez2019intror" role="doc-biblioref">2019</a>)</span>.
 Por ejemplo podríamos considerar como modelo completo <code>respuesta ~ .*.</code>, que incluiría los efectos principales y las interacciones de orden 2 de todos los predictores.</p>
 <p>En la práctica se suele comenzar con modelos aditivos y posteriormente se estudian posibles interacciones siguiendo un proceso interactivo (aunque también, por ejemplo, se podría considerar un nuevo modelo completo a partir de las variables seleccionadas en el modelo aditivo, incluyendo todas las posibles interacciones de orden 2, y posteriormente aplicar alguno de los métodos de selección anteriores).
 Como ya vimos en capítulos anteriores, en AE interesan algoritmos que puedan detectar e incorporar automáticamente efectos de interacción (en el siguiente capítulo veremos extensiones en este sentido).</p>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-fernandez2019intror">
+<p>Fernández-Casal, R., Roca-Pardiñas, J., y Costa, J. (2019). <em>Introducción al Análisis de Datos con R</em>. <a href="https://rubenfcasal.github.io/intror">https://rubenfcasal.github.io/intror</a></p>
 </div>
 </div>
             </section>
