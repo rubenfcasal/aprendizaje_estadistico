@@ -243,9 +243,7 @@ plot(bagtrees, main = "Tasas de error")
 legend("topright", colnames(bagtrees$err.rate), lty = 1:5, col = 1:6)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/bagging-conv-1} \end{center}
+<img src="03-bagging_boosting_files/figure-html/bagging-conv-1.png" width="80%" style="display: block; margin: auto;" />
 Como vemos que los errores se estabilizan podríamos pensar que aparentemente hay convergencia (aunque situaciones de alta dependencia entre los árboles dificultarían su interpretación).
 
 Con la función `getTree()` podemos extraer los árboles individuales.
@@ -356,9 +354,7 @@ plot(rf, main = "Tasas de error")
 legend("topright", colnames(rf$err.rate), lty = 1:5, col = 1:6)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/rf-plot-1} \end{center}
+<img src="03-bagging_boosting_files/figure-html/rf-plot-1.png" width="80%" style="display: block; margin: auto;" />
 
 Podemos mostrar la importancia de las variables predictoras con la función `importance()` o representarlas con `varImpPlot()`:
 
@@ -386,9 +382,7 @@ importance(rf)
 varImpPlot(rf)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/rf-importance-1} \end{center}
+<img src="03-bagging_boosting_files/figure-html/rf-importance-1.png" width="80%" style="display: block; margin: auto;" />
 
 Si evaluamos la precisión en la muestra de test podemos observar un ligero incremento en la precisión en comparación con el método anterior:
 
@@ -463,18 +457,14 @@ p2 <-plotPartial(pdp2)
 grid.arrange(p1, p2, ncol = 2)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/rf-pdp-1} \end{center}
+<img src="03-bagging_boosting_files/figure-html/rf-pdp-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 pdp12 <- partial(rf, c("alcohol", "density"))
 plotPartial(pdp12)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/rf-pdp-2} \end{center}
+<img src="03-bagging_boosting_files/figure-html/rf-pdp-2.png" width="80%" style="display: block; margin: auto;" />
 La función `partial()` ofrece un abaníco amplio de argumentos. Por ejemplo, con `ice = TRUE` se calculan as curvas de expectativa condicional individual (ICE). Estos gráficos ICE extienden los PDP, ya que además de mostrar la variación del promedio (en rojo), también muestra la variación de los valores predichos para cada observación (curvas en negro).
 
 
@@ -486,9 +476,7 @@ p2 <- plotPartial(ice2, alpha = 0.5)
 grid.arrange(p1, p2, ncol = 2)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/rf-ice-1} \end{center}
+<img src="03-bagging_boosting_files/figure-html/rf-ice-1.png" width="80%" style="display: block; margin: auto;" />
 
 Gráficos similares pueden crearse utilizando otros paquetes indicados en la Sección \@ref(analisis-modelos).  En particular, el paquete `vivid` muestra  en la la diagonal del Figura \@ref(fig:vivid1) la importancia de los predictores (*Vimp*) y fuera de la diagonal las interacciones 2 a 2 (*Vint*). 
 
@@ -499,18 +487,14 @@ fit_rf  <- vivi(data = train, fit = rf, response = "taste", importanceType = "%I
 viviHeatmap(mat = fit_rf[1:5,1:5])
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/vivid1-1} 
-
-}
-
-\caption{Mapa de calor para la importancia e interaciones del ajuste de un bosque aleatorio usando vivid}(\#fig:vivid1)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="03-bagging_boosting_files/figure-html/vivid1-1.png" alt="Mapa de calor para la importancia e interaciones del ajuste de un bosque aleatorio usando vivid." width="80%" />
+<p class="caption">(\#fig:vivid1)Mapa de calor para la importancia e interaciones del ajuste de un bosque aleatorio usando vivid.</p>
+</div>
 
 <!-- 
 
-Alternativamente, también se pueden visualizar las relaciones mediante un gráfico de red (ver Figura \@ref(fig:vivid2).
+Alternativamente, también se pueden visualizar las relaciones mediante un gráfico de red (ver Figura \@ref(fig:vivid2)).
 {r vivid2, eval=FALSE, fig.cap="Gráfico, include=FALSE}
 # require(igraph)
 viviNetwork(mat = fit_rf)
@@ -561,9 +545,7 @@ rf.caret <- train(taste ~ ., data = train, method = "rf")
 plot(rf.caret)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/rf-caret-train-1} \end{center}
+<img src="03-bagging_boosting_files/figure-html/rf-caret-train-1.png" width="80%" style="display: block; margin: auto;" />
 
 @breiman2001random sugiere emplear el valor por defecto, la mitad y el doble:
 
@@ -577,9 +559,7 @@ rf.caret <- train(taste ~ ., data = train,
 plot(rf.caret)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/rf-caret-grid-1} \end{center}
+<img src="03-bagging_boosting_files/figure-html/rf-caret-grid-1.png" width="80%" style="display: block; margin: auto;" />
 
 <!-- 
 Pendiente: 
@@ -795,9 +775,7 @@ Con el método `plot()` podemos representar la evolución del error de clasifica
 plot(ada.boost)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/ada-plot-1} \end{center}
+<img src="03-bagging_boosting_files/figure-html/ada-plot-1.png" width="80%" style="display: block; margin: auto;" />
 
 <!-- 
 Con la función `varplot()` podemos representar la importancia de las variables (y almacenarla empleando `type = "scores"`): 
@@ -807,9 +785,7 @@ Con la función `varplot()` podemos representar la importancia de las variables 
 res <- varplot(ada.boost, type = "scores")
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/unnamed-chunk-3-1} \end{center}
+<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-3-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 res
@@ -1114,9 +1090,7 @@ El método `summary()` calcula las medidas de influencia de los predictores y la
 summary(gbm.fit)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/gbm-summary-1} \end{center}
+<img src="03-bagging_boosting_files/figure-html/gbm-summary-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```
 ##                                       var   rel.inf
@@ -1140,9 +1114,7 @@ Para estudiar el efecto de un predictor se pueden generar gráficos de los efect
 plot(gbm.fit, i = "alcohol")
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/gbm-plot-1} \end{center}
+<img src="03-bagging_boosting_files/figure-html/gbm-plot-1.png" width="80%" style="display: block; margin: auto;" />
 
 Finalmente podemos evaluar la precisión en la muestra de test empleando el código habitual:
 

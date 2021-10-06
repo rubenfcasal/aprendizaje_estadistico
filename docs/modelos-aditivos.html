@@ -26,7 +26,7 @@
 <meta name="author" content="Manuel Oviedo de la Fuente (manuel.oviedo@udc.es)" />
 
 
-<meta name="date" content="2021-09-28" />
+<meta name="date" content="2021-10-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -330,29 +330,29 @@ Sigue la referencia <span class="citation">Wood (<a href="#ref-wood2017generaliz
 <div id="ajuste-función-gam" class="section level3">
 <h3><span class="header-section-number">7.3.1</span> Ajuste: función <code>gam</code></h3>
 <p>La función <code>gam()</code> del paquete <code>mgcv</code> permite ajustar modelos aditivos generalizados empleando suavizado mediante splines:</p>
-<div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb420-1"><a href="modelos-aditivos.html#cb420-1"></a><span class="kw">library</span>(mgcv)</span>
-<span id="cb420-2"><a href="modelos-aditivos.html#cb420-2"></a>ajuste &lt;-<span class="st"> </span><span class="kw">gam</span>(formula, <span class="dt">family =</span> gaussian, data, <span class="dt">method =</span> <span class="st">&quot;GCV.Cp&quot;</span>, <span class="dt">select =</span> <span class="ot">FALSE</span>, ...)</span></code></pre></div>
+<div class="sourceCode" id="cb424"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb424-1"><a href="modelos-aditivos.html#cb424-1"></a><span class="kw">library</span>(mgcv)</span>
+<span id="cb424-2"><a href="modelos-aditivos.html#cb424-2"></a>ajuste &lt;-<span class="st"> </span><span class="kw">gam</span>(formula, <span class="dt">family =</span> gaussian, data, <span class="dt">method =</span> <span class="st">&quot;GCV.Cp&quot;</span>, <span class="dt">select =</span> <span class="ot">FALSE</span>, ...)</span></code></pre></div>
 <p>(también dispone de la función <code>bam()</code> para el ajuste de estos modelos a grandes conjuntos de datos y de la función <code>gamm()</code> para el ajuste de modelos aditivos generalizados mixtos). El modelo se establece a partir de la <code>formula</code> empleando <code>s()</code> para especificar las componentes “suaves” (ver <code>help(s)</code> y Sección <a href="modelos-aditivos.html#mgcv-diagnosis">7.3.5</a>).</p>
 <p>Algunas posibilidades de uso son las que siguen:</p>
 <ul>
 <li><p>Modelo lineal:</p>
-<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb421-1"><a href="modelos-aditivos.html#cb421-1"></a>ajuste &lt;-<span class="st"> </span><span class="kw">gam</span>(y <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2 <span class="op">+</span><span class="st"> </span>x3)</span></code></pre></div></li>
+<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="modelos-aditivos.html#cb425-1"></a>ajuste &lt;-<span class="st"> </span><span class="kw">gam</span>(y <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2 <span class="op">+</span><span class="st"> </span>x3)</span></code></pre></div></li>
 <li><p>Modelo (semiparamétrico) aditivo con efectos no paramétricos para <code>x1</code> y <code>x2</code>, y un efecto lineal para <code>x3</code>:</p>
-<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="modelos-aditivos.html#cb422-1"></a>ajuste &lt;-<span class="st"> </span><span class="kw">gam</span>(y <span class="op">~</span><span class="st"> </span><span class="kw">s</span>(x1) <span class="op">+</span><span class="st"> </span><span class="kw">s</span>(x2) <span class="op">+</span><span class="st"> </span>x3)</span></code></pre></div></li>
+<div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb426-1"><a href="modelos-aditivos.html#cb426-1"></a>ajuste &lt;-<span class="st"> </span><span class="kw">gam</span>(y <span class="op">~</span><span class="st"> </span><span class="kw">s</span>(x1) <span class="op">+</span><span class="st"> </span><span class="kw">s</span>(x2) <span class="op">+</span><span class="st"> </span>x3)</span></code></pre></div></li>
 <li><p>Modelo no aditivo (con interacción):</p>
-<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb423-1"><a href="modelos-aditivos.html#cb423-1"></a>ajuste &lt;-<span class="st"> </span><span class="kw">gam</span>(y <span class="op">~</span><span class="st"> </span><span class="kw">s</span>(x1, x2))</span></code></pre></div></li>
+<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="modelos-aditivos.html#cb427-1"></a>ajuste &lt;-<span class="st"> </span><span class="kw">gam</span>(y <span class="op">~</span><span class="st"> </span><span class="kw">s</span>(x1, x2))</span></code></pre></div></li>
 <li><p>Modelo (semiparamétrico) con distintas combinaciones :</p>
-<div class="sourceCode" id="cb424"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb424-1"><a href="modelos-aditivos.html#cb424-1"></a>ajuste &lt;-<span class="st"> </span><span class="kw">gam</span>(y <span class="op">~</span><span class="st"> </span><span class="kw">s</span>(x1, x2) <span class="op">+</span><span class="st"> </span><span class="kw">s</span>(x3) <span class="op">+</span><span class="st"> </span>x4)</span></code></pre></div></li>
+<div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb428-1"><a href="modelos-aditivos.html#cb428-1"></a>ajuste &lt;-<span class="st"> </span><span class="kw">gam</span>(y <span class="op">~</span><span class="st"> </span><span class="kw">s</span>(x1, x2) <span class="op">+</span><span class="st"> </span><span class="kw">s</span>(x3) <span class="op">+</span><span class="st"> </span>x4)</span></code></pre></div></li>
 </ul>
 </div>
 <div id="ejemplo-3" class="section level3">
 <h3><span class="header-section-number">7.3.2</span> Ejemplo</h3>
 <p>En esta sección utilizaremos como ejemplo el conjunto de datos <code>Prestige</code> de la librería <code>carData</code>.
 Se tratará de explicar <code>prestige</code> (puntuación de ocupaciones obtenidas a partir de una encuesta) a partir de <code>income</code> (media de ingresos en la ocupación) y <code>education</code> (media de los años de educación).</p>
-<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="modelos-aditivos.html#cb425-1"></a><span class="kw">data</span>(Prestige, <span class="dt">package =</span> <span class="st">&quot;carData&quot;</span>)</span>
-<span id="cb425-2"><a href="modelos-aditivos.html#cb425-2"></a><span class="kw">library</span>(mgcv)</span>
-<span id="cb425-3"><a href="modelos-aditivos.html#cb425-3"></a>modelo &lt;-<span class="st"> </span><span class="kw">gam</span>(prestige <span class="op">~</span><span class="st"> </span><span class="kw">s</span>(income) <span class="op">+</span><span class="st"> </span><span class="kw">s</span>(education), <span class="dt">data =</span> Prestige)</span>
-<span id="cb425-4"><a href="modelos-aditivos.html#cb425-4"></a><span class="kw">summary</span>(modelo)</span></code></pre></div>
+<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="modelos-aditivos.html#cb429-1"></a><span class="kw">data</span>(Prestige, <span class="dt">package =</span> <span class="st">&quot;carData&quot;</span>)</span>
+<span id="cb429-2"><a href="modelos-aditivos.html#cb429-2"></a><span class="kw">library</span>(mgcv)</span>
+<span id="cb429-3"><a href="modelos-aditivos.html#cb429-3"></a>modelo &lt;-<span class="st"> </span><span class="kw">gam</span>(prestige <span class="op">~</span><span class="st"> </span><span class="kw">s</span>(income) <span class="op">+</span><span class="st"> </span><span class="kw">s</span>(education), <span class="dt">data =</span> Prestige)</span>
+<span id="cb429-4"><a href="modelos-aditivos.html#cb429-4"></a><span class="kw">summary</span>(modelo)</span></code></pre></div>
 <pre><code>## 
 ## Family: gaussian 
 ## Link function: identity 
@@ -375,12 +375,12 @@ Se tratará de explicar <code>prestige</code> (puntuación de ocupaciones obteni
 ## 
 ## R-sq.(adj) =  0.836   Deviance explained = 84.7%
 ## GCV = 52.143  Scale est. = 48.414    n = 102</code></pre>
-<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="modelos-aditivos.html#cb427-1"></a><span class="co"># coef(modelo) # El resultado es un modelo lineal en transformaciones de los predictores</span></span></code></pre></div>
+<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="modelos-aditivos.html#cb431-1"></a><span class="co"># coef(modelo) # El resultado es un modelo lineal en transformaciones de los predictores</span></span></code></pre></div>
 <p>En este caso el método <code>plot()</code> representa los efectos (parciales) estimados de cada predictor:</p>
-<div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb428-1"><a href="modelos-aditivos.html#cb428-1"></a>par.old &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb428-2"><a href="modelos-aditivos.html#cb428-2"></a><span class="kw">plot</span>(modelo, <span class="dt">shade =</span> <span class="ot">TRUE</span>) <span class="co"># </span></span></code></pre></div>
+<div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb432-1"><a href="modelos-aditivos.html#cb432-1"></a>par.old &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb432-2"><a href="modelos-aditivos.html#cb432-2"></a><span class="kw">plot</span>(modelo, <span class="dt">shade =</span> <span class="ot">TRUE</span>) <span class="co"># </span></span></code></pre></div>
 <p><img src="07-regresion_np_files/figure-html/unnamed-chunk-16-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="modelos-aditivos.html#cb429-1"></a><span class="kw">par</span>(par.old)</span></code></pre></div>
+<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="modelos-aditivos.html#cb433-1"></a><span class="kw">par</span>(par.old)</span></code></pre></div>
 <p>En general se representa cada componente no paramétrica (salvo que se especifique <code>all.terms = TRUE</code>), incluyendo gráficos de contorno para el caso de componentes bivariantes (correspondientes a interacciones entre predictores).</p>
 <p>Se dispone también de un método <code>predict()</code> para calcular las predicciones de la forma habitual (por defecto devuelve las correspondientes a las observaciones <code>modelo$fitted.values</code> y para nuevos datos hay que emplear el argumento <code>newdata</code>).</p>
 </div>
@@ -389,24 +389,24 @@ Se tratará de explicar <code>prestige</code> (puntuación de ocupaciones obteni
 <p>En el caso bivariante, para representar las estimaciones (la superficie de predicción) obtenidas con el modelo se pueden utilizar las funciones <code>persp()</code> o versiones mejoradas como <code>plot3D::persp3D</code>.
 Estas funciones requieren que los valores de entrada estén dispuestos en una rejilla bidimensional.
 Para generar esta rejilla se puede emplear la función <code>expand.grid(x,y)</code> que crea todas las combinaciones de los puntos dados en <code>x</code> e <code>y</code>.</p>
-<div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb430-1"><a href="modelos-aditivos.html#cb430-1"></a>inc &lt;-<span class="st"> </span><span class="kw">with</span>(Prestige, <span class="kw">seq</span>(<span class="kw">min</span>(income), <span class="kw">max</span>(income), <span class="dt">len =</span> <span class="dv">25</span>))</span>
-<span id="cb430-2"><a href="modelos-aditivos.html#cb430-2"></a>ed &lt;-<span class="st"> </span><span class="kw">with</span>(Prestige, <span class="kw">seq</span>(<span class="kw">min</span>(education), <span class="kw">max</span>(education), <span class="dt">len =</span> <span class="dv">25</span>))</span>
-<span id="cb430-3"><a href="modelos-aditivos.html#cb430-3"></a>newdata &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">income =</span> inc, <span class="dt">education =</span> ed)</span>
-<span id="cb430-4"><a href="modelos-aditivos.html#cb430-4"></a><span class="co"># Representamos la rejilla</span></span>
-<span id="cb430-5"><a href="modelos-aditivos.html#cb430-5"></a><span class="kw">plot</span>(income <span class="op">~</span><span class="st"> </span>education, Prestige, <span class="dt">pch =</span> <span class="dv">16</span>)</span>
-<span id="cb430-6"><a href="modelos-aditivos.html#cb430-6"></a><span class="kw">abline</span>(<span class="dt">h =</span> inc, <span class="dt">v =</span> ed, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="modelos-aditivos.html#cb434-1"></a>inc &lt;-<span class="st"> </span><span class="kw">with</span>(Prestige, <span class="kw">seq</span>(<span class="kw">min</span>(income), <span class="kw">max</span>(income), <span class="dt">len =</span> <span class="dv">25</span>))</span>
+<span id="cb434-2"><a href="modelos-aditivos.html#cb434-2"></a>ed &lt;-<span class="st"> </span><span class="kw">with</span>(Prestige, <span class="kw">seq</span>(<span class="kw">min</span>(education), <span class="kw">max</span>(education), <span class="dt">len =</span> <span class="dv">25</span>))</span>
+<span id="cb434-3"><a href="modelos-aditivos.html#cb434-3"></a>newdata &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">income =</span> inc, <span class="dt">education =</span> ed)</span>
+<span id="cb434-4"><a href="modelos-aditivos.html#cb434-4"></a><span class="co"># Representamos la rejilla</span></span>
+<span id="cb434-5"><a href="modelos-aditivos.html#cb434-5"></a><span class="kw">plot</span>(income <span class="op">~</span><span class="st"> </span>education, Prestige, <span class="dt">pch =</span> <span class="dv">16</span>)</span>
+<span id="cb434-6"><a href="modelos-aditivos.html#cb434-6"></a><span class="kw">abline</span>(<span class="dt">h =</span> inc, <span class="dt">v =</span> ed, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>)</span></code></pre></div>
 <p><img src="07-regresion_np_files/figure-html/unnamed-chunk-17-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="modelos-aditivos.html#cb431-1"></a><span class="co"># Se calculan las predicciones</span></span>
-<span id="cb431-2"><a href="modelos-aditivos.html#cb431-2"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(modelo, newdata)</span>
-<span id="cb431-3"><a href="modelos-aditivos.html#cb431-3"></a><span class="co"># Se representan</span></span>
-<span id="cb431-4"><a href="modelos-aditivos.html#cb431-4"></a>pred &lt;-<span class="st"> </span><span class="kw">matrix</span>(pred, <span class="dt">nrow =</span> <span class="dv">25</span>)</span>
-<span id="cb431-5"><a href="modelos-aditivos.html#cb431-5"></a><span class="co"># persp(inc, ed, pred, theta = -40, phi = 30)</span></span>
-<span id="cb431-6"><a href="modelos-aditivos.html#cb431-6"></a>plot3D<span class="op">::</span><span class="kw">persp3D</span>(inc, ed, pred, <span class="dt">theta =</span> <span class="dv">-40</span>, <span class="dt">phi =</span> <span class="dv">30</span>, <span class="dt">ticktype =</span> <span class="st">&quot;detailed&quot;</span>,</span>
-<span id="cb431-7"><a href="modelos-aditivos.html#cb431-7"></a>                <span class="dt">xlab =</span> <span class="st">&quot;Income&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Education&quot;</span>, <span class="dt">zlab =</span> <span class="st">&quot;Prestige&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="modelos-aditivos.html#cb435-1"></a><span class="co"># Se calculan las predicciones</span></span>
+<span id="cb435-2"><a href="modelos-aditivos.html#cb435-2"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(modelo, newdata)</span>
+<span id="cb435-3"><a href="modelos-aditivos.html#cb435-3"></a><span class="co"># Se representan</span></span>
+<span id="cb435-4"><a href="modelos-aditivos.html#cb435-4"></a>pred &lt;-<span class="st"> </span><span class="kw">matrix</span>(pred, <span class="dt">nrow =</span> <span class="dv">25</span>)</span>
+<span id="cb435-5"><a href="modelos-aditivos.html#cb435-5"></a><span class="co"># persp(inc, ed, pred, theta = -40, phi = 30)</span></span>
+<span id="cb435-6"><a href="modelos-aditivos.html#cb435-6"></a>plot3D<span class="op">::</span><span class="kw">persp3D</span>(inc, ed, pred, <span class="dt">theta =</span> <span class="dv">-40</span>, <span class="dt">phi =</span> <span class="dv">30</span>, <span class="dt">ticktype =</span> <span class="st">&quot;detailed&quot;</span>,</span>
+<span id="cb435-7"><a href="modelos-aditivos.html#cb435-7"></a>                <span class="dt">xlab =</span> <span class="st">&quot;Income&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Education&quot;</span>, <span class="dt">zlab =</span> <span class="st">&quot;Prestige&quot;</span>)</span></code></pre></div>
 <p><img src="07-regresion_np_files/figure-html/unnamed-chunk-17-2.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>Alternativamente se podrían emplear las funciones <code>contour()</code>, <code>filled.contour()</code>, <code>plot3D::image2D</code> o similares:</p>
-<div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb432-1"><a href="modelos-aditivos.html#cb432-1"></a><span class="co"># contour(inc, ed, pred, xlab = &quot;Income&quot;, ylab = &quot;Education&quot;)</span></span>
-<span id="cb432-2"><a href="modelos-aditivos.html#cb432-2"></a><span class="kw">filled.contour</span>(inc, ed, pred, <span class="dt">xlab =</span> <span class="st">&quot;Income&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Education&quot;</span>, <span class="dt">key.title =</span> <span class="kw">title</span>(<span class="st">&quot;Prestige&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb436"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb436-1"><a href="modelos-aditivos.html#cb436-1"></a><span class="co"># contour(inc, ed, pred, xlab = &quot;Income&quot;, ylab = &quot;Education&quot;)</span></span>
+<span id="cb436-2"><a href="modelos-aditivos.html#cb436-2"></a><span class="kw">filled.contour</span>(inc, ed, pred, <span class="dt">xlab =</span> <span class="st">&quot;Income&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Education&quot;</span>, <span class="dt">key.title =</span> <span class="kw">title</span>(<span class="st">&quot;Prestige&quot;</span>))</span></code></pre></div>
 <p><img src="07-regresion_np_files/figure-html/unnamed-chunk-18-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>Puede ser más cómodo emplear el paquete <a href="https://modelr.tidyverse.org"><code>modelr</code></a> (emplea gráficos <code>ggplot2</code>) para trabajar con modelos y predicciones.</p>
 </div>
@@ -414,9 +414,9 @@ Para generar esta rejilla se puede emplear la función <code>expand.grid(x,y)</c
 <h3><span class="header-section-number">7.3.4</span> Comparación y selección de modelos</h3>
 <p>Además de las medidas de bondad de ajuste como el coeficiente de determinación ajustado, también se puede emplear la función <code>anova</code> para la comparación de modelos (y seleccionar las componentes por pasos de forma interactiva).
 Por ejemplo, viendo el gráfico de los efectos se podría pensar que el efecto de <code>education</code> podría ser lineal:</p>
-<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="modelos-aditivos.html#cb433-1"></a><span class="co"># plot(modelo)</span></span>
-<span id="cb433-2"><a href="modelos-aditivos.html#cb433-2"></a>modelo0 &lt;-<span class="st"> </span><span class="kw">gam</span>(prestige <span class="op">~</span><span class="st"> </span><span class="kw">s</span>(income) <span class="op">+</span><span class="st"> </span>education, <span class="dt">data =</span> Prestige)</span>
-<span id="cb433-3"><a href="modelos-aditivos.html#cb433-3"></a><span class="kw">summary</span>(modelo0)</span></code></pre></div>
+<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="modelos-aditivos.html#cb437-1"></a><span class="co"># plot(modelo)</span></span>
+<span id="cb437-2"><a href="modelos-aditivos.html#cb437-2"></a>modelo0 &lt;-<span class="st"> </span><span class="kw">gam</span>(prestige <span class="op">~</span><span class="st"> </span><span class="kw">s</span>(income) <span class="op">+</span><span class="st"> </span>education, <span class="dt">data =</span> Prestige)</span>
+<span id="cb437-3"><a href="modelos-aditivos.html#cb437-3"></a><span class="kw">summary</span>(modelo0)</span></code></pre></div>
 <pre><code>## 
 ## Family: gaussian 
 ## Link function: identity 
@@ -439,7 +439,7 @@ Por ejemplo, viendo el gráfico de los efectos se podría pensar que el efecto d
 ## 
 ## R-sq.(adj) =  0.825   Deviance explained = 83.3%
 ## GCV = 54.798  Scale est. = 51.8      n = 102</code></pre>
-<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="modelos-aditivos.html#cb435-1"></a><span class="kw">anova</span>(modelo0, modelo, <span class="dt">test=</span><span class="st">&quot;F&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="modelos-aditivos.html#cb439-1"></a><span class="kw">anova</span>(modelo0, modelo, <span class="dt">test=</span><span class="st">&quot;F&quot;</span>)</span></code></pre></div>
 <pre><code>## Analysis of Deviance Table
 ## 
 ## Model 1: prestige ~ s(income) + education
@@ -451,8 +451,8 @@ Por ejemplo, viendo el gráfico de los efectos se podría pensar que el efecto d
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>En este caso aceptaríamos que el modelo original es significativamente mejor.</p>
 <p>Alternativamente, podríamos pensar que hay interacción:</p>
-<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="modelos-aditivos.html#cb437-1"></a>modelo2 &lt;-<span class="st"> </span><span class="kw">gam</span>(prestige <span class="op">~</span><span class="st"> </span><span class="kw">s</span>(income, education), <span class="dt">data =</span> Prestige)</span>
-<span id="cb437-2"><a href="modelos-aditivos.html#cb437-2"></a><span class="kw">summary</span>(modelo2)</span></code></pre></div>
+<div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb441-1"><a href="modelos-aditivos.html#cb441-1"></a>modelo2 &lt;-<span class="st"> </span><span class="kw">gam</span>(prestige <span class="op">~</span><span class="st"> </span><span class="kw">s</span>(income, education), <span class="dt">data =</span> Prestige)</span>
+<span id="cb441-2"><a href="modelos-aditivos.html#cb441-2"></a><span class="kw">summary</span>(modelo2)</span></code></pre></div>
 <pre><code>## 
 ## Family: gaussian 
 ## Link function: identity 
@@ -474,8 +474,8 @@ Por ejemplo, viendo el gráfico de los efectos se podría pensar que el efecto d
 ## 
 ## R-sq.(adj) =  0.824   Deviance explained = 83.3%
 ## GCV = 55.188  Scale est. = 51.974    n = 102</code></pre>
-<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="modelos-aditivos.html#cb439-1"></a><span class="co"># plot(modelo2, se = FALSE)</span></span>
-<span id="cb439-2"><a href="modelos-aditivos.html#cb439-2"></a><span class="co"># plot(modelo2, scheme = 2)</span></span></code></pre></div>
+<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="modelos-aditivos.html#cb443-1"></a><span class="co"># plot(modelo2, se = FALSE)</span></span>
+<span id="cb443-2"><a href="modelos-aditivos.html#cb443-2"></a><span class="co"># plot(modelo2, scheme = 2)</span></span></code></pre></div>
 <p>En este caso el coeficiente de determinación ajustado es menor y ya no tendría sentido realizar el contraste.</p>
 <!-- 
 También podríamos emplear el criterio `AIC()` (o `BIC()`): 
@@ -498,7 +498,7 @@ AIC(modelo2)
 ```
 -->
 <p>Ademas se pueden seleccionar componentes del modelo (mediante regularización) empleando el parámetro <code>select = TRUE</code>.</p>
-<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="modelos-aditivos.html#cb440-1"></a><span class="kw">example</span>(gam.selection)</span></code></pre></div>
+<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="modelos-aditivos.html#cb444-1"></a><span class="kw">example</span>(gam.selection)</span></code></pre></div>
 <pre><code>## 
 ## gm.slc&gt; ## an example of automatic model selection via null space penalization
 ## gm.slc&gt; library(mgcv)
@@ -547,7 +547,7 @@ AIC(modelo2)
 <div id="mgcv-diagnosis" class="section level3">
 <h3><span class="header-section-number">7.3.5</span> Diagnosis del modelo</h3>
 <p>La función <code>gam.check()</code> realiza una diagnosis del modelo:</p>
-<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="modelos-aditivos.html#cb442-1"></a><span class="kw">gam.check</span>(modelo)</span></code></pre></div>
+<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="modelos-aditivos.html#cb446-1"></a><span class="kw">gam.check</span>(modelo)</span></code></pre></div>
 <p><img src="07-regresion_np_files/figure-html/unnamed-chunk-23-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <pre><code>## 
 ## Method: GCV   Optimizer: magic
@@ -565,7 +565,7 @@ AIC(modelo2)
 <p>Lo ideal sería observar normalidad en los dos gráficos de la izquierda, falta de patrón en el superior derecho, y ajuste a una recta en el inferior derecho. En este caso parece que el modelo se comporta adecuadamente.
 Como se deduce del resultado anterior, podría ser recomendable modificar la dimensión <code>k</code> de la base utilizada construir la componente no paramétrica, este valor se puede interpretar como el grado máximo de libertad permitido en ese componente, aunque normalmente no influye demasiado en el resultado (puede influir en el tiempo de computación).</p>
 <p>También se podría chequear concurvidad (<em>concurvity</em>; generalización de la colinealidad) entre las componentes del modelo:</p>
-<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="modelos-aditivos.html#cb444-1"></a><span class="kw">concurvity</span>(modelo)</span></code></pre></div>
+<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="modelos-aditivos.html#cb448-1"></a><span class="kw">concurvity</span>(modelo)</span></code></pre></div>
 <pre><code>##                  para s(income) s(education)
 ## worst    3.107241e-23 0.5931528    0.5931528
 ## observed 3.107241e-23 0.4065402    0.4398639
@@ -575,14 +575,14 @@ Como se deduce del resultado anterior, podría ser recomendable modificar la dim
 <div id="gam-en-caret" class="section level3">
 <h3><span class="header-section-number">7.3.6</span> GAM en <code>caret</code></h3>
 <p>El soporte de GAM en <code>caret</code> es como poco deficiente…</p>
-<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="modelos-aditivos.html#cb446-1"></a><span class="kw">library</span>(caret)</span>
-<span id="cb446-2"><a href="modelos-aditivos.html#cb446-2"></a><span class="kw">names</span>(<span class="kw">getModelInfo</span>(<span class="st">&quot;gam&quot;</span>)) <span class="co"># 4 métodos</span></span></code></pre></div>
+<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="modelos-aditivos.html#cb450-1"></a><span class="kw">library</span>(caret)</span>
+<span id="cb450-2"><a href="modelos-aditivos.html#cb450-2"></a><span class="kw">names</span>(<span class="kw">getModelInfo</span>(<span class="st">&quot;gam&quot;</span>)) <span class="co"># 4 métodos</span></span></code></pre></div>
 <pre><code>## [1] &quot;gam&quot;       &quot;gamboost&quot;  &quot;gamLoess&quot;  &quot;gamSpline&quot;</code></pre>
-<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="modelos-aditivos.html#cb448-1"></a><span class="kw">modelLookup</span>(<span class="st">&quot;gam&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="modelos-aditivos.html#cb452-1"></a><span class="kw">modelLookup</span>(<span class="st">&quot;gam&quot;</span>)</span></code></pre></div>
 <pre><code>##   model parameter             label forReg forClass probModel
 ## 1   gam    select Feature Selection   TRUE     TRUE      TRUE
 ## 2   gam    method            Method   TRUE     TRUE      TRUE</code></pre>
-<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="modelos-aditivos.html#cb450-1"></a><span class="kw">modelLookup</span>(<span class="st">&quot;gamLoess&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="modelos-aditivos.html#cb454-1"></a><span class="kw">modelLookup</span>(<span class="st">&quot;gamLoess&quot;</span>)</span></code></pre></div>
 <pre><code>##      model parameter  label forReg forClass probModel
 ## 1 gamLoess      span   Span   TRUE     TRUE      TRUE
 ## 2 gamLoess    degree Degree   TRUE     TRUE      TRUE</code></pre>

@@ -26,7 +26,7 @@
 <meta name="author" content="Manuel Oviedo de la Fuente (manuel.oviedo@udc.es)" />
 
 
-<meta name="date" content="2021-09-28" />
+<meta name="date" content="2021-10-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -352,12 +352,12 @@ Hay algoritmos muy eficientes que permiten el ajuste, tanto de <em>ridge regress
 <div id="implementación-en-r" class="section level3">
 <h3><span class="header-section-number">6.6.1</span> Implementación en R</h3>
 <p>Hay varios paquetes que implementan estos métodos: <code>h2o</code>, <code>elasticnet</code>, <code>penalized</code>, <code>lasso2</code>, <code>biglasso</code>, etc., pero el paquete <a href="https://glmnet.stanford.edu"><code>glmnet</code></a> utiliza una de las más eficientes.</p>
-<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="shrinkage.html#cb317-1"></a><span class="kw">library</span>(glmnet)</span></code></pre></div>
+<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="shrinkage.html#cb321-1"></a><span class="kw">library</span>(glmnet)</span></code></pre></div>
 <p>El paquete <code>glmnet</code> no emplea formulación de modelos, hay que establecer la respuesta
 <code>y</code> y una matriz o data.frame con las variables explicativas <code>x</code>.
 Además, no admite predictores categóricos ni datos faltantes, por lo que puede ser recomendable emplear la función <code>model.matrix()</code> para construir la matriz de diseño <code>x</code> (o <code>Matrix::sparse.model.matrix()</code> si el conjunto de datos es muy grande) a partir de una fórmula (alternativamente se pueden emplear la herramientas implementadas en el paquete <code>caret</code>).</p>
 <p>La función principal es:</p>
-<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="shrinkage.html#cb318-1"></a><span class="kw">glmnet</span>(x, y, family, <span class="dt">alpha =</span> <span class="dv">1</span>, <span class="dt">lambda =</span> <span class="ot">NULL</span>, ...)</span></code></pre></div>
+<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="shrinkage.html#cb322-1"></a><span class="kw">glmnet</span>(x, y, family, <span class="dt">alpha =</span> <span class="dv">1</span>, <span class="dt">lambda =</span> <span class="ot">NULL</span>, ...)</span></code></pre></div>
 <ul>
 <li><p><code>family</code>: familia del modelo lineal generalizado (ver Sección <a href="reg-glm.html#reg-glm">6.8</a>); por defecto <code>"gaussian"</code> (modelo lineal con ajuste cuadrático), también admite <code>"binomial"</code>, <code>"poisson"</code>, <code>"multinomial"</code>, <code>"cox"</code> o <code>"mgaussian"</code> (modelo lineal con respuesta multivariante).</p></li>
 <li><p><code>alpha</code>: parámetro <span class="math inline">\(\alpha\)</span> de elasticnet <span class="math inline">\(0 \leq \alpha \leq 1\)</span>. Por defecto <code>alpha = 1</code> penalización <em>lasso</em> (<code>alpha = 0</code> para <em>ridge regression</em>).</p></li>
@@ -365,22 +365,22 @@ Además, no admite predictores categóricos ni datos faltantes, por lo que puede
 </ul>
 <p>Entre los métodos genéricos disponibles del objeto resultante, <code>coef()</code> y <code>predict()</code> permiten obtener los coeficientes y las predicciones para un valor concreto de <span class="math inline">\(\lambda\)</span>, que se debe especificar mediante el argumento <code>s = valor</code> (“For historical reasons we use the symbol ‘s’ rather than ‘lambda’”).</p>
 <p>Aunque para seleccionar el un valor “óptimo” del hiperparámetro <span class="math inline">\(\lambda\)</span> (mediante validación cruzada) se puede emplear:</p>
-<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="shrinkage.html#cb319-1"></a><span class="kw">cv.glmnet</span>(x, y, family, alpha, lambda, <span class="dt">type.measure =</span> <span class="st">&quot;default&quot;</span>, <span class="dt">nfolds =</span> <span class="dv">10</span>, ...)</span></code></pre></div>
+<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="shrinkage.html#cb323-1"></a><span class="kw">cv.glmnet</span>(x, y, family, alpha, lambda, <span class="dt">type.measure =</span> <span class="st">&quot;default&quot;</span>, <span class="dt">nfolds =</span> <span class="dv">10</span>, ...)</span></code></pre></div>
 <p>Esta función también devuelve los ajustes con toda la muestra de entrenamiento (en la componente <code>$glmnet.fit</code>) y se puede emplear el resultado directamente para predecir o obtener los coeficientes del modelo.
 Por defecto seleccionando <span class="math inline">\(\lambda\)</span> mediante la regla de “un error estándar” de <span class="citation">Breiman et al. (<a href="#ref-breiman1984classification" role="doc-biblioref">1984</a>)</span> (componente <code>$lambda.1se</code>), aunque también calcula el valor óptimo (componente <code>$lambda.min</code>; que se puede seleccionar con estableciendo <code>s = "lambda.min"</code>).</p>
 <p>Para más detalles consultar la vignette del paquete <a href="https://glmnet.stanford.edu/articles/glmnet.html">An Introduction to glmnet</a>.</p>
 <p>Continuaremos con el ejemplo de los datos de clientes de la compañía de distribución industrial HBAT (en este caso todos los predictores son numéricos y no hay datos faltantes):</p>
-<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="shrinkage.html#cb320-1"></a>x &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(train[, <span class="dv">-14</span>])</span>
-<span id="cb320-2"><a href="shrinkage.html#cb320-2"></a>y &lt;-<span class="st"> </span>train<span class="op">$</span>fidelida</span></code></pre></div>
+<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="shrinkage.html#cb324-1"></a>x &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(train[, <span class="dv">-14</span>])</span>
+<span id="cb324-2"><a href="shrinkage.html#cb324-2"></a>y &lt;-<span class="st"> </span>train<span class="op">$</span>fidelida</span></code></pre></div>
 </div>
 <div id="ejemplo-ridge-regression" class="section level3">
 <h3><span class="header-section-number">6.6.2</span> Ejemplo: Ridge Regression</h3>
 <p>Ajustamos los modelos de regresión ridge (con la secuencia de valores de <span class="math inline">\(\lambda\)</span> por defecto) con la función <code>glmnet()</code> con <code>alpha=0</code> (ridge penalty):</p>
-<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="shrinkage.html#cb321-1"></a>fit.ridge &lt;-<span class="st"> </span><span class="kw">glmnet</span>(x, y, <span class="dt">alpha =</span> <span class="dv">0</span>)</span>
-<span id="cb321-2"><a href="shrinkage.html#cb321-2"></a><span class="kw">plot</span>(fit.ridge, <span class="dt">xvar =</span> <span class="st">&quot;lambda&quot;</span>, <span class="dt">label =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="shrinkage.html#cb325-1"></a>fit.ridge &lt;-<span class="st"> </span><span class="kw">glmnet</span>(x, y, <span class="dt">alpha =</span> <span class="dv">0</span>)</span>
+<span id="cb325-2"><a href="shrinkage.html#cb325-2"></a><span class="kw">plot</span>(fit.ridge, <span class="dt">xvar =</span> <span class="st">&quot;lambda&quot;</span>, <span class="dt">label =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-30-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>Podemos obtener el modelo o predicciones para un valor concreto de <span class="math inline">\(\lambda\)</span>:</p>
-<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="shrinkage.html#cb322-1"></a><span class="kw">coef</span>(fit.ridge, <span class="dt">s =</span> <span class="dv">2</span>) <span class="co"># lambda = 2</span></span></code></pre></div>
+<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="shrinkage.html#cb326-1"></a><span class="kw">coef</span>(fit.ridge, <span class="dt">s =</span> <span class="dv">2</span>) <span class="co"># lambda = 2</span></span></code></pre></div>
 <pre><code>## 14 x 1 sparse Matrix of class &quot;dgCMatrix&quot;
 ##                       1
 ## (Intercept)  3.56806743
@@ -398,16 +398,16 @@ Por defecto seleccionando <span class="math inline">\(\lambda\)</span> mediante 
 ## flexprec     0.37732748
 ## velocida     3.11101217</code></pre>
 <p>Para seleccionar el parámetro de penalización por validación cruzada empleamos <code>cv.glmnet()</code>:</p>
-<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="shrinkage.html#cb324-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb324-2"><a href="shrinkage.html#cb324-2"></a>cv.ridge &lt;-<span class="st"> </span><span class="kw">cv.glmnet</span>(x, y, <span class="dt">alpha =</span> <span class="dv">0</span>)</span>
-<span id="cb324-3"><a href="shrinkage.html#cb324-3"></a><span class="kw">plot</span>(cv.ridge)</span></code></pre></div>
+<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="shrinkage.html#cb328-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb328-2"><a href="shrinkage.html#cb328-2"></a>cv.ridge &lt;-<span class="st"> </span><span class="kw">cv.glmnet</span>(x, y, <span class="dt">alpha =</span> <span class="dv">0</span>)</span>
+<span id="cb328-3"><a href="shrinkage.html#cb328-3"></a><span class="kw">plot</span>(cv.ridge)</span></code></pre></div>
 <p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-32-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>En este caso el parámetro óptimo (según la regla de un error estándar) sería:</p>
-<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="shrinkage.html#cb325-1"></a>cv.ridge<span class="op">$</span>lambda<span class="fl">.1</span>se</span></code></pre></div>
+<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="shrinkage.html#cb329-1"></a>cv.ridge<span class="op">$</span>lambda<span class="fl">.1</span>se</span></code></pre></div>
 <pre><code>## [1] 3.413705</code></pre>
-<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="shrinkage.html#cb327-1"></a><span class="co"># cv.ridge$lambda.min</span></span></code></pre></div>
+<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="shrinkage.html#cb331-1"></a><span class="co"># cv.ridge$lambda.min</span></span></code></pre></div>
 <p>y el correspondiente modelo contiene todas las variables explicativas:</p>
-<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="shrinkage.html#cb328-1"></a><span class="kw">coef</span>(cv.ridge) <span class="co"># s = &quot;lambda.1se&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="shrinkage.html#cb332-1"></a><span class="kw">coef</span>(cv.ridge) <span class="co"># s = &quot;lambda.1se&quot;</span></span></code></pre></div>
 <pre><code>## 14 x 1 sparse Matrix of class &quot;dgCMatrix&quot;
 ##                       1
 ## (Intercept)  8.38314273
@@ -424,11 +424,11 @@ Por defecto seleccionando <span class="math inline">\(\lambda\)</span> mediante 
 ## facturac     0.45964418
 ## flexprec     0.24646749
 ## velocida     2.70697234</code></pre>
-<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="shrinkage.html#cb330-1"></a><span class="co"># coef(cv.ridge, s = &quot;lambda.min&quot;)</span></span></code></pre></div>
+<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="shrinkage.html#cb334-1"></a><span class="co"># coef(cv.ridge, s = &quot;lambda.min&quot;)</span></span></code></pre></div>
 <p>Finalmente evaluamos la precisión en la muestra de test:</p>
-<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="shrinkage.html#cb331-1"></a>newx &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(test[, <span class="dv">-14</span>])</span>
-<span id="cb331-2"><a href="shrinkage.html#cb331-2"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(cv.ridge, <span class="dt">newx =</span> newx) <span class="co"># s = &quot;lambda.1se&quot;</span></span>
-<span id="cb331-3"><a href="shrinkage.html#cb331-3"></a><span class="kw">accuracy</span>(pred, obs)</span></code></pre></div>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="shrinkage.html#cb335-1"></a>newx &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(test[, <span class="dv">-14</span>])</span>
+<span id="cb335-2"><a href="shrinkage.html#cb335-2"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(cv.ridge, <span class="dt">newx =</span> newx) <span class="co"># s = &quot;lambda.1se&quot;</span></span>
+<span id="cb335-3"><a href="shrinkage.html#cb335-3"></a><span class="kw">accuracy</span>(pred, obs)</span></code></pre></div>
 <pre><code>##         me       rmse        mae        mpe       mape  r.squared 
 ## 0.74752331 5.04159165 4.08299692 0.03577857 7.26473444 0.75087456</code></pre>
 </div>
@@ -436,16 +436,16 @@ Por defecto seleccionando <span class="math inline">\(\lambda\)</span> mediante 
 <h3><span class="header-section-number">6.6.3</span> Ejemplo: Lasso</h3>
 <p>También podríamos ajustar modelos lasso con la opción por defecto de <code>glmnet()</code> (<code>alpha = 1</code>, lasso penalty).
 Pero en este caso lo haremos al mismo tiempo que seleccionamos el parámetro de penalización por validación cruzada:</p>
-<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="shrinkage.html#cb333-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb333-2"><a href="shrinkage.html#cb333-2"></a>cv.lasso &lt;-<span class="st"> </span><span class="kw">cv.glmnet</span>(x,y)</span>
-<span id="cb333-3"><a href="shrinkage.html#cb333-3"></a><span class="kw">plot</span>(cv.lasso)</span></code></pre></div>
+<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="shrinkage.html#cb337-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb337-2"><a href="shrinkage.html#cb337-2"></a>cv.lasso &lt;-<span class="st"> </span><span class="kw">cv.glmnet</span>(x,y)</span>
+<span id="cb337-3"><a href="shrinkage.html#cb337-3"></a><span class="kw">plot</span>(cv.lasso)</span></code></pre></div>
 <p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-36-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="shrinkage.html#cb334-1"></a><span class="kw">plot</span>(cv.lasso<span class="op">$</span>glmnet.fit, <span class="dt">xvar =</span> <span class="st">&quot;lambda&quot;</span>, <span class="dt">label =</span> <span class="ot">TRUE</span>)    </span>
-<span id="cb334-2"><a href="shrinkage.html#cb334-2"></a><span class="kw">abline</span>(<span class="dt">v =</span> <span class="kw">log</span>(cv.lasso<span class="op">$</span>lambda<span class="fl">.1</span>se), <span class="dt">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb334-3"><a href="shrinkage.html#cb334-3"></a><span class="kw">abline</span>(<span class="dt">v =</span> <span class="kw">log</span>(cv.lasso<span class="op">$</span>lambda.min), <span class="dt">lty =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="shrinkage.html#cb338-1"></a><span class="kw">plot</span>(cv.lasso<span class="op">$</span>glmnet.fit, <span class="dt">xvar =</span> <span class="st">&quot;lambda&quot;</span>, <span class="dt">label =</span> <span class="ot">TRUE</span>)    </span>
+<span id="cb338-2"><a href="shrinkage.html#cb338-2"></a><span class="kw">abline</span>(<span class="dt">v =</span> <span class="kw">log</span>(cv.lasso<span class="op">$</span>lambda<span class="fl">.1</span>se), <span class="dt">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb338-3"><a href="shrinkage.html#cb338-3"></a><span class="kw">abline</span>(<span class="dt">v =</span> <span class="kw">log</span>(cv.lasso<span class="op">$</span>lambda.min), <span class="dt">lty =</span> <span class="dv">3</span>)</span></code></pre></div>
 <p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-36-2.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>El modelo resultante (oneSE rule) solo contiene 4 variables explicativas:</p>
-<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="shrinkage.html#cb335-1"></a><span class="kw">coef</span>(cv.lasso) <span class="co"># s = &quot;lambda.1se&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="shrinkage.html#cb339-1"></a><span class="kw">coef</span>(cv.lasso) <span class="co"># s = &quot;lambda.1se&quot;</span></span></code></pre></div>
 <pre><code>## 14 x 1 sparse Matrix of class &quot;dgCMatrix&quot;
 ##                      1
 ## (Intercept) 12.0485398
@@ -464,8 +464,8 @@ Pero en este caso lo haremos al mismo tiempo que seleccionamos el parámetro de 
 ## velocida     6.1011015</code></pre>
 <p>Por tanto este método también podría ser empleando para la selección de variables (puede hacerse automáticamente estableciendo <code>relax = TRUE</code>, ajustará los modelos sin regularización).</p>
 <p>Finalmente evaluamos también la precisión en la muestra de test:</p>
-<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="shrinkage.html#cb337-1"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(cv.lasso, <span class="dt">newx =</span> newx)</span>
-<span id="cb337-2"><a href="shrinkage.html#cb337-2"></a><span class="kw">accuracy</span>(pred, obs)</span></code></pre></div>
+<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="shrinkage.html#cb341-1"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(cv.lasso, <span class="dt">newx =</span> newx)</span>
+<span id="cb341-2"><a href="shrinkage.html#cb341-2"></a><span class="kw">accuracy</span>(pred, obs)</span></code></pre></div>
 <pre><code>##         me       rmse        mae        mpe       mape  r.squared 
 ##  0.4895391  4.8572144  3.8870383 -0.4192005  6.9713208  0.7687630</code></pre>
 </div>
@@ -473,20 +473,20 @@ Pero en este caso lo haremos al mismo tiempo que seleccionamos el parámetro de 
 <h3><span class="header-section-number">6.6.4</span> Ejemplo: Elastic Net</h3>
 <p>Podemos ajustar modelos elastic net para un valor concreto de <code>alpha</code> empleando la función <code>glmnet()</code>, pero las opciones del paquete no incluyen la selección de este hiperparámetro.
 Aunque se podría implementar fácilmente (como se muestra en <code>help(cv.glmnet)</code>), resulta mucho más cómodo emplear el método <code>"glmnet"</code> de <code>caret</code>:</p>
-<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="shrinkage.html#cb339-1"></a><span class="kw">library</span>(caret)</span>
-<span id="cb339-2"><a href="shrinkage.html#cb339-2"></a><span class="kw">modelLookup</span>(<span class="st">&quot;glmnet&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="shrinkage.html#cb343-1"></a><span class="kw">library</span>(caret)</span>
+<span id="cb343-2"><a href="shrinkage.html#cb343-2"></a><span class="kw">modelLookup</span>(<span class="st">&quot;glmnet&quot;</span>) </span></code></pre></div>
 <pre><code>##    model parameter                    label forReg forClass probModel
 ## 1 glmnet     alpha        Mixing Percentage   TRUE     TRUE      TRUE
 ## 2 glmnet    lambda Regularization Parameter   TRUE     TRUE      TRUE</code></pre>
-<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="shrinkage.html#cb341-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb341-2"><a href="shrinkage.html#cb341-2"></a><span class="co"># Se podría emplear train(fidelida ~ ., data = train, ...)</span></span>
-<span id="cb341-3"><a href="shrinkage.html#cb341-3"></a>caret.glmnet &lt;-<span class="st"> </span><span class="kw">train</span>(x, y, <span class="dt">method =</span> <span class="st">&quot;glmnet&quot;</span>,</span>
-<span id="cb341-4"><a href="shrinkage.html#cb341-4"></a>    <span class="dt">preProc =</span> <span class="kw">c</span>(<span class="st">&quot;zv&quot;</span>, <span class="st">&quot;center&quot;</span>, <span class="st">&quot;scale&quot;</span>),</span>
-<span id="cb341-5"><a href="shrinkage.html#cb341-5"></a>    <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="dt">number =</span> <span class="dv">5</span>),</span>
-<span id="cb341-6"><a href="shrinkage.html#cb341-6"></a>    <span class="dt">tuneLength =</span> <span class="dv">5</span>)</span>
-<span id="cb341-7"><a href="shrinkage.html#cb341-7"></a></span>
-<span id="cb341-8"><a href="shrinkage.html#cb341-8"></a></span>
-<span id="cb341-9"><a href="shrinkage.html#cb341-9"></a>caret.glmnet</span></code></pre></div>
+<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="shrinkage.html#cb345-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb345-2"><a href="shrinkage.html#cb345-2"></a><span class="co"># Se podría emplear train(fidelida ~ ., data = train, ...)</span></span>
+<span id="cb345-3"><a href="shrinkage.html#cb345-3"></a>caret.glmnet &lt;-<span class="st"> </span><span class="kw">train</span>(x, y, <span class="dt">method =</span> <span class="st">&quot;glmnet&quot;</span>,</span>
+<span id="cb345-4"><a href="shrinkage.html#cb345-4"></a>    <span class="dt">preProc =</span> <span class="kw">c</span>(<span class="st">&quot;zv&quot;</span>, <span class="st">&quot;center&quot;</span>, <span class="st">&quot;scale&quot;</span>),</span>
+<span id="cb345-5"><a href="shrinkage.html#cb345-5"></a>    <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="dt">number =</span> <span class="dv">5</span>),</span>
+<span id="cb345-6"><a href="shrinkage.html#cb345-6"></a>    <span class="dt">tuneLength =</span> <span class="dv">5</span>)</span>
+<span id="cb345-7"><a href="shrinkage.html#cb345-7"></a></span>
+<span id="cb345-8"><a href="shrinkage.html#cb345-8"></a></span>
+<span id="cb345-9"><a href="shrinkage.html#cb345-9"></a>caret.glmnet</span></code></pre></div>
 <pre><code>## glmnet 
 ## 
 ## 160 samples
@@ -526,10 +526,10 @@ Aunque se podría implementar fácilmente (como se muestra en <code>help(cv.glmn
 ## 
 ## RMSE was used to select the optimal model using the smallest value.
 ## The final values used for the model were alpha = 1 and lambda = 0.1165679.</code></pre>
-<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="shrinkage.html#cb343-1"></a><span class="kw">ggplot</span>(caret.glmnet, <span class="dt">highlight =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="shrinkage.html#cb347-1"></a><span class="kw">ggplot</span>(caret.glmnet, <span class="dt">highlight =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-39-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="shrinkage.html#cb344-1"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(caret.glmnet, <span class="dt">newdata =</span> test)</span>
-<span id="cb344-2"><a href="shrinkage.html#cb344-2"></a><span class="kw">accuracy</span>(pred, obs)</span></code></pre></div>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="shrinkage.html#cb348-1"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(caret.glmnet, <span class="dt">newdata =</span> test)</span>
+<span id="cb348-2"><a href="shrinkage.html#cb348-2"></a><span class="kw">accuracy</span>(pred, obs)</span></code></pre></div>
 <pre><code>##          me        rmse         mae         mpe        mape   r.squared 
 ##  0.49843131  4.28230542  3.43805154 -0.02851825  6.15711129  0.82026278</code></pre>
 </div>
@@ -537,10 +537,10 @@ Aunque se podría implementar fácilmente (como se muestra en <code>help(cv.glmn
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-breiman1984classification">
-<p>Breiman, L., Friedman, J. H., Olshen, R. A., y Stone, C. J. (1984). Classification and regression trees. Belmont, CA: Wadsworth. <em>International Group</em>, <em>432</em>, 151-166.</p>
+<p>Breiman, L., Friedman, J. H., Stone, C. J., y Olshen, R. A. (1984). <em>Classification and Regression Trees</em>. Taylor; Francis.</p>
 </div>
 <div id="ref-efron2004least">
-<p>Efron, B., Hastie, T., Johnstone, I., y Tibshirani, R. (2004). Least angle regression. <em>The Annals of statistics</em>, <em>32</em>(2), 407-499. <a href="https://doi.org/10.1214/009053604000000067">https://doi.org/10.1214/009053604000000067</a></p>
+<p>Efron, B., Hastie, T., Johnstone, I., y Tibshirani, R. (2004). Least angle regression. <em>The Annals of Statistics</em>, <em>32</em>(2), 407-499. <a href="https://doi.org/10.1214/009053604000000067">https://doi.org/10.1214/009053604000000067</a></p>
 </div>
 <div id="ref-hothorn2006unbiased">
 <p>Hothorn, T., Hornik, K., y Zeileis, A. (2006). Unbiased recursive partitioning: A conditional inference framework. <em>Journal of Computational and Graphical Statistics</em>, <em>15</em>(3), 651-674. <a href="https://doi.org/10.1198/106186006x133933">https://doi.org/10.1198/106186006x133933</a></p>

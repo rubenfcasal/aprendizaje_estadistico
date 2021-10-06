@@ -26,7 +26,7 @@
 <meta name="author" content="Manuel Oviedo de la Fuente (manuel.oviedo@udc.es)" />
 
 
-<meta name="date" content="2021-09-28" />
+<meta name="date" content="2021-10-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -324,10 +324,10 @@ intervalos de confianza y contrastes podrían verse afectados.</p></li>
 más grave.</p></li>
 </ul>
 <p>Con la función <code>plot</code> se pueden generar gráficos de interés para la diagnosis del modelo:</p>
-<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="analisis-reg-multiple.html#cb291-1"></a>oldpar &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb291-2"><a href="analisis-reg-multiple.html#cb291-2"></a><span class="kw">plot</span>(modelo)</span></code></pre></div>
+<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="analisis-reg-multiple.html#cb295-1"></a>oldpar &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb295-2"><a href="analisis-reg-multiple.html#cb295-2"></a><span class="kw">plot</span>(modelo)</span></code></pre></div>
 <p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-19-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="analisis-reg-multiple.html#cb292-1"></a><span class="kw">par</span>(oldpar)</span></code></pre></div>
+<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="analisis-reg-multiple.html#cb296-1"></a><span class="kw">par</span>(oldpar)</span></code></pre></div>
 <p>Por defecto se muestran cuatro gráficos (ver <code>help(plot.lm)</code> para más detalles).
 El primero (residuos frente a predicciones) permite detectar falta de
 linealidad o heterocedasticidad (o el efecto de un factor omitido: mala
@@ -346,12 +346,12 @@ por ejemplo mediante la función <code>rlm()</code> del paquete <code>MASS</code
 (p.e. gráficos de dispersión matriciales) para analizar los efectos de las variables explicativas y
 detectar posibles problemas (falta de linealidad…),
 se pueden generar gráficos parciales de residuos, por ejemplo con el comando:</p>
-<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="analisis-reg-multiple.html#cb293-1"></a><span class="kw">termplot</span>(modelo, <span class="dt">partial.resid =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="analisis-reg-multiple.html#cb297-1"></a><span class="kw">termplot</span>(modelo, <span class="dt">partial.resid =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <p>Aunque puede ser preferible emplear las funciones <code>crPlots</code> ó <code>avPlots</code> del paquete <code>car</code>:</p>
-<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="analisis-reg-multiple.html#cb294-1"></a><span class="kw">library</span>(car)</span>
-<span id="cb294-2"><a href="analisis-reg-multiple.html#cb294-2"></a><span class="kw">crPlots</span>(modelo)</span></code></pre></div>
+<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="analisis-reg-multiple.html#cb298-1"></a><span class="kw">library</span>(car)</span>
+<span id="cb298-2"><a href="analisis-reg-multiple.html#cb298-2"></a><span class="kw">crPlots</span>(modelo)</span></code></pre></div>
 <p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-21-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="analisis-reg-multiple.html#cb295-1"></a><span class="co"># avPlots(modelo)</span></span></code></pre></div>
+<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="analisis-reg-multiple.html#cb299-1"></a><span class="co"># avPlots(modelo)</span></span></code></pre></div>
 <p>Estas funciones permitirían además detectar puntos atípicos o influyentes
 (mediante los argumentos <code>id.method</code> e <code>id.n</code>).</p>
 <p>Para obtener medidas de diagnosis o resúmenes numéricos de interés se pueden emplear

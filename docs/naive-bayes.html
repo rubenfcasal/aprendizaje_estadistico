@@ -26,7 +26,7 @@
 <meta name="author" content="Manuel Oviedo de la Fuente (manuel.oviedo@udc.es)" />
 
 
-<meta name="date" content="2021-09-28" />
+<meta name="date" content="2021-10-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -313,9 +313,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Asumiendo normalidad, este modelo no es más que un caso particular de QDA con matrices <span class="math inline">\(\Sigma_k\)</span> diagonales. Cuando las variables predictoras son categóricas, lo más habitual es modelizar naive Bayes utilizando distribuciones multinomiales.</p>
 <div id="ejemplo-e1071naivebayes" class="section level3">
 <h3><span class="header-section-number">5.3.1</span> Ejemplo <code>e1071::naiveBayes</code></h3>
-<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="naive-bayes.html#cb249-1"></a><span class="kw">library</span>(e1071)</span>
-<span id="cb249-2"><a href="naive-bayes.html#cb249-2"></a>nb &lt;-<span class="st"> </span><span class="kw">naiveBayes</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train)</span>
-<span id="cb249-3"><a href="naive-bayes.html#cb249-3"></a>nb</span></code></pre></div>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="naive-bayes.html#cb253-1"></a><span class="kw">library</span>(e1071)</span>
+<span id="cb253-2"><a href="naive-bayes.html#cb253-2"></a>nb &lt;-<span class="st"> </span><span class="kw">naiveBayes</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train)</span>
+<span id="cb253-3"><a href="naive-bayes.html#cb253-3"></a>nb</span></code></pre></div>
 <pre><code>## 
 ## Naive Bayes Classifier for Discrete Predictors
 ## 
@@ -382,8 +382,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Y           [,1]      [,2]
 ##   good 10.786959 1.2298425
 ##   bad   9.845611 0.8710844</code></pre>
-<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="naive-bayes.html#cb251-1"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(nb, <span class="dt">newdata =</span> test)</span>
-<span id="cb251-2"><a href="naive-bayes.html#cb251-2"></a>caret<span class="op">::</span><span class="kw">confusionMatrix</span>(pred, test<span class="op">$</span>taste)</span></code></pre></div>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="naive-bayes.html#cb255-1"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(nb, <span class="dt">newdata =</span> test)</span>
+<span id="cb255-2"><a href="naive-bayes.html#cb255-2"></a>caret<span class="op">::</span><span class="kw">confusionMatrix</span>(pred, test<span class="op">$</span>taste)</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -411,7 +411,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##                                           
 ##        &#39;Positive&#39; Class : good            
 ## </code></pre>
-<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="naive-bayes.html#cb253-1"></a>p.est &lt;-<span class="st"> </span><span class="kw">predict</span>(nb, <span class="dt">newdata =</span> test, <span class="dt">type =</span> <span class="st">&quot;raw&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="naive-bayes.html#cb257-1"></a>p.est &lt;-<span class="st"> </span><span class="kw">predict</span>(nb, <span class="dt">newdata =</span> test, <span class="dt">type =</span> <span class="st">&quot;raw&quot;</span>)</span></code></pre></div>
 
 </div>
 </div>

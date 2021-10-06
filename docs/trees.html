@@ -26,7 +26,7 @@
 <meta name="author" content="Manuel Oviedo de la Fuente (manuel.oviedo@udc.es)" />
 
 
-<meta name="date" content="2021-09-28" />
+<meta name="date" content="2021-10-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -336,18 +336,28 @@ Se desarrollan a partir de los años 70 del siglo pasado como una alternativa ve
 Aunque su calidad predictiva es mediocre (especialmente en el caso de regresión), constituyen la base de otros métodos altamente competitivos (bagging, bosques aleatorios, boosting) en los que se combinan múltiples árboles para mejorar la predicción, pagando el precio, eso sí, de hacer más difícil la interpretación del modelo resultante.</p>
 <p>La idea de este método consiste en la segmentación (partición) del <em>espacio predictor</em> (es decir, del conjunto de posibles valores de las variables predictoras) en regiones tan simples que el proceso se pueda representar mediante un árbol binario.
 Se parte de un nodo inicial que representa a toda la muestra (se utiliza la muestra de entrenamiento), del que salen dos ramas que dividen la muestra en dos subconjuntos, cada uno representado por un nuevo nodo.
-Este proceso se repite un número finito de veces hasta obtener las hojas del árbol, es decir, los nodos terminales, que son los que se utilizan para realizar la predicción.
+Como se muestra en la Figura <a href="trees.html#fig:arbol">2.1</a> este proceso se repite un número finito de veces hasta obtener las hojas del árbol, es decir, los nodos terminales, que son los que se utilizan para realizar la predicción.
 Una vez construido el árbol, la predicción se realizará en cada nodo terminal utilizando, típicamente, la media en un problema de regresión y la moda en un problema de clasificación.</p>
-<p><img src="02-arboles_files/figure-html/unnamed-chunk-2-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center"><span id="fig:arbol"></span>
+<img src="02-arboles_files/figure-html/arbol-1.png" alt="Ejemplo de un árbol de decisión obtenido al realizar una partición binaria recursiva de un espacio bidimensional." width="80%" />
+<p class="caption">
+Figura 2.1: Ejemplo de un árbol de decisión obtenido al realizar una partición binaria recursiva de un espacio bidimensional.
+</p>
+</div>
 <!-- 
 Pendiente:
 Incluir figuras en dos columnas? 
 fig.cap="Izquierda: ejemplo de un árbol obtenido al realizar una partición binaria recursiva de un espacio bidimensional. Derecha: superficie de predicción correspondiente."
 -->
-<p>Al final de este proceso iterativo el espacio predictor se ha particionado en regiones de forma rectangular en la que la predicción de la respuesta es constante.
+<p>Al final de este proceso iterativo el espacio predictor se ha particionado en regiones de forma rectangular en la que la predicción de la respuesta es constante (ver Figura <a href="trees.html#fig:predictor">2.2</a>).
 Si la relación entre las variables predictoras y la variable respuesta no se puede describir adecuadamente mediante rectángulos, la calidad predictiva del árbol será limitada.
 Como vemos, la simplicidad del modelo es su principal argumento, pero también su talón de Aquiles.</p>
-<p><img src="02-arboles_files/figure-html/unnamed-chunk-3-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center"><span id="fig:predictor"></span>
+<img src="02-arboles_files/figure-html/predictor-1.png" alt="Ejemplo de la superficie de predicción correspondiente a un árbol de decisión." width="80%" />
+<p class="caption">
+Figura 2.2: Ejemplo de la superficie de predicción correspondiente a un árbol de decisión.
+</p>
+</div>
 <p>Como se ha dicho antes, cada nodo padre se divide, a través de dos ramas, en dos nodos hijos.
 Esto se hace seleccionando una variable predictora y dando respuesta a una pregunta dicotómica sobre ella.
 Por ejemplo, ¿es el sueldo anual menor que 30000 euros?, o ¿es el género igual a <em>mujer</em>?
@@ -365,7 +375,7 @@ Será necesario encontrar un equilibrio entre la complejidad del árbol y la pur
 <li><p>Válidos para predictores numéricos y categóricos.</p></li>
 </ul>
 <p>La metodología CART <span class="citation">(Classification and Regresion Trees, Breiman et al., <a href="#ref-breiman1984classification" role="doc-biblioref">1984</a>)</span> es la más popular para la construcción de árboles de decisión y es la que se va a explicar con algo de detalle en las siguientes secciones.</p>
-<p>En primer lugar se tratarán los <em>árboles de regresión</em> (árboles de decisión en un problema de regresión, en el que la variable respuesta <span class="math inline">\(Y\)</span> es numérica) y después veremos los <em>arboles de clasificación</em> (respuesta categórica) que son los más utilizados en la práctica (los primeros se suelen emplear únicamente como métodos descriptivos o como base de métodos más complejos).
+<p>En primer lugar se tratarán los <em>árboles de regresión</em> (árboles de decisión en un problema de regresión, en el que la variable respuesta <span class="math inline">\(Y\)</span> es numérica) y después veremos los <em>árboles de clasificación</em> (respuesta categórica) que son los más utilizados en la práctica (los primeros se suelen emplear únicamente como métodos descriptivos o como base de métodos más complejos).
 Las variables predictoras <span class="math inline">\(\mathbf{X}=(X_1, X_2, \ldots, X_p)\)</span> pueden ser tanto numéricas como categóricas.
 Además, con la metodología CART, las variables explicativas podrían contener datos faltantes.
 Se pueden establecer “particiones sustitutas” (<em>surrogate splits</em>), de forma que cuando falta un valor en una variable que determina una división, se usa una variable alternativa que produce una partición similar.</p>
@@ -373,7 +383,7 @@ Se pueden establecer “particiones sustitutas” (<em>surrogate splits</em>), d
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-breiman1984classification">
-<p>Breiman, L., Friedman, J. H., Olshen, R. A., y Stone, C. J. (1984). Classification and regression trees. Belmont, CA: Wadsworth. <em>International Group</em>, <em>432</em>, 151-166.</p>
+<p>Breiman, L., Friedman, J. H., Stone, C. J., y Olshen, R. A. (1984). <em>Classification and Regression Trees</em>. Taylor; Francis.</p>
 </div>
 </div>
             </section>

@@ -26,7 +26,7 @@
 <meta name="author" content="Manuel Oviedo de la Fuente (manuel.oviedo@udc.es)" />
 
 
-<meta name="date" content="2021-09-28" />
+<meta name="date" content="2021-10-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -324,22 +324,22 @@ fijando el número de variables explicativas.
 Por defecto, evalúa todos los modelos posibles con un determinado número de
 parámetros (variando desde 1 hasta por defecto un máximo de <code>nvmax = 8</code>)
 y selecciona el mejor (<code>nbest = 1</code>).</p>
-<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="seleccion-reg-lineal.html#cb281-1"></a><span class="kw">library</span>(leaps)</span>
-<span id="cb281-2"><a href="seleccion-reg-lineal.html#cb281-2"></a>regsel &lt;-<span class="st"> </span><span class="kw">regsubsets</span>(fidelida <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> train)</span>
-<span id="cb281-3"><a href="seleccion-reg-lineal.html#cb281-3"></a><span class="co"># summary(regsel)</span></span>
-<span id="cb281-4"><a href="seleccion-reg-lineal.html#cb281-4"></a><span class="co"># names(summary(regsel))</span></span></code></pre></div>
+<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="seleccion-reg-lineal.html#cb285-1"></a><span class="kw">library</span>(leaps)</span>
+<span id="cb285-2"><a href="seleccion-reg-lineal.html#cb285-2"></a>regsel &lt;-<span class="st"> </span><span class="kw">regsubsets</span>(fidelida <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> train)</span>
+<span id="cb285-3"><a href="seleccion-reg-lineal.html#cb285-3"></a><span class="co"># summary(regsel)</span></span>
+<span id="cb285-4"><a href="seleccion-reg-lineal.html#cb285-4"></a><span class="co"># names(summary(regsel))</span></span></code></pre></div>
 <p>Al representar el resultado se obtiene un gráfico con los mejores modelos ordenados
 según el criterio determinado por el argumento <code>scale = c("bic", "Cp", "adjr2", "r2")</code>.
 Por ejemplo, en este caso, empleando el coeficiente de determinación ajustado, obtendríamos:</p>
-<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="seleccion-reg-lineal.html#cb282-1"></a><span class="kw">plot</span>(regsel, <span class="dt">scale =</span> <span class="st">&quot;adjr2&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="seleccion-reg-lineal.html#cb286-1"></a><span class="kw">plot</span>(regsel, <span class="dt">scale =</span> <span class="st">&quot;adjr2&quot;</span>)</span></code></pre></div>
 <p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-15-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>En este caso, considerando que es preferible un modelo más simple que una mejora del 2%, podríamos seleccionar como modelo final el modelo con dos predictores.
 Podríamos obtener los coeficientes:</p>
-<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="seleccion-reg-lineal.html#cb283-1"></a><span class="kw">coef</span>(regsel, <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="seleccion-reg-lineal.html#cb287-1"></a><span class="kw">coef</span>(regsel, <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## (Intercept)    calidadp    velocida 
 ##    3.332511    3.204201    7.700260</code></pre>
 <p>pero normalmente nos interesará ajustarlo de nuevo:</p>
-<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="seleccion-reg-lineal.html#cb285-1"></a><span class="kw">lm</span>(fidelida <span class="op">~</span><span class="st"> </span>velocida <span class="op">+</span><span class="st"> </span>calidadp, <span class="dt">data =</span> train)</span></code></pre></div>
+<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="seleccion-reg-lineal.html#cb289-1"></a><span class="kw">lm</span>(fidelida <span class="op">~</span><span class="st"> </span>velocida <span class="op">+</span><span class="st"> </span>calidadp, <span class="dt">data =</span> train)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = fidelida ~ velocida + calidadp, data = train)
@@ -378,10 +378,10 @@ exclusión (forward/backward).</p></li>
 </ul>
 <p>La función <code>stepAIC</code> del paquete <code>MASS</code> permite seleccionar el modelo por pasos, hacia delante o hacia atrás según criterio AIC o BIC (también esta disponible una función <code>step</code> del paquete base <code>stats</code> con menos opciones).
 La función <code>stepwise</code> del paquete <code>RcmdrMisc</code> es una interfaz de <code>stepAIC</code> que facilita su uso:</p>
-<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="seleccion-reg-lineal.html#cb287-1"></a><span class="kw">library</span>(MASS)</span>
-<span id="cb287-2"><a href="seleccion-reg-lineal.html#cb287-2"></a><span class="kw">library</span>(RcmdrMisc)</span>
-<span id="cb287-3"><a href="seleccion-reg-lineal.html#cb287-3"></a>modelo.completo &lt;-<span class="st"> </span><span class="kw">lm</span>(fidelida <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> train)</span>
-<span id="cb287-4"><a href="seleccion-reg-lineal.html#cb287-4"></a>modelo &lt;-<span class="st"> </span><span class="kw">stepwise</span>(modelo.completo, <span class="dt">direction =</span> <span class="st">&quot;forward/backward&quot;</span>, <span class="dt">criterion =</span> <span class="st">&quot;BIC&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="seleccion-reg-lineal.html#cb291-1"></a><span class="kw">library</span>(MASS)</span>
+<span id="cb291-2"><a href="seleccion-reg-lineal.html#cb291-2"></a><span class="kw">library</span>(RcmdrMisc)</span>
+<span id="cb291-3"><a href="seleccion-reg-lineal.html#cb291-3"></a>modelo.completo &lt;-<span class="st"> </span><span class="kw">lm</span>(fidelida <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> train)</span>
+<span id="cb291-4"><a href="seleccion-reg-lineal.html#cb291-4"></a>modelo &lt;-<span class="st"> </span><span class="kw">stepwise</span>(modelo.completo, <span class="dt">direction =</span> <span class="st">&quot;forward/backward&quot;</span>, <span class="dt">criterion =</span> <span class="st">&quot;BIC&quot;</span>)</span></code></pre></div>
 <pre><code>## 
 ## Direction:  forward/backward
 ## Criterion:  BIC 
@@ -461,7 +461,7 @@ La función <code>stepwise</code> del paquete <code>RcmdrMisc</code> es una inte
 ## + publi     1       0.2 3014.3 495.13
 ## - calidadp  1    3409.7 6424.2 606.05
 ## - velocida  1    4370.9 7385.4 628.36</code></pre>
-<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="seleccion-reg-lineal.html#cb289-1"></a><span class="kw">summary</span>(modelo)</span></code></pre></div>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="seleccion-reg-lineal.html#cb293-1"></a><span class="kw">summary</span>(modelo)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = fidelida ~ velocida + calidadp + web, data = train)

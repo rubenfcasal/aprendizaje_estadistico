@@ -85,14 +85,10 @@ legend("topright", legend = c("5-NN", "10-NN", "20-NN"),
        lty = c(3, 2, 1), lwd = 1)
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/np-knnfit-1} 
-
-}
-
-\caption{Predicciones con el método KNN y distintos vecindarios}(\#fig:np-knnfit)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-regresion_np_files/figure-html/np-knnfit-1.png" alt="Predicciones con el método KNN y distintos vecindarios" width="80%" />
+<p class="caption">(\#fig:np-knnfit)Predicciones con el método KNN y distintos vecindarios</p>
+</div>
 
 El hiperparámetro $k$ (número de vecinos más cercanos) determina la complejidad del modelo, de forma que valores más pequeños de $k$ se corresponden con modelos más complejos (en el caso extremo $k = 1$ se interpolarían las observaciones).
 Este parámetro se puede seleccionar empleando alguno de los métodos descritos en la Sección \@ref(cv) (por ejemplo mediante validación con *k* grupos como se mostró en la Sección \@ref(caret)).  
@@ -171,9 +167,7 @@ plot(x, y, col = 'darkgray')
 lines(fit)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-2-1} \end{center}
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-2-1.png" width="80%" style="display: block; margin: auto;" />
 
 Hay que tener en cuenta que el paquete `KernSmooth` no implementa los métodos
 `predict()` y `residuals()`:
@@ -261,9 +255,7 @@ span.cv <- ventanas[imin]
 points(span.cv, cv.error[imin], pch = 16)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-5-1} \end{center}
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-5-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 # Ajuste con todos los datos
@@ -272,17 +264,14 @@ fit <- loess(accel ~ times, mcycle, span = span.cv, family = "symmetric")
 lines(mcycle$times, predict(fit))
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-5-2} \end{center}
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-5-2.png" width="80%" style="display: block; margin: auto;" />
 
 
 ## Splines
 
 Otra alternativa consiste en trocear los datos en intervalos, fijando unos puntos de corte $z_i$ (denominados nudos; *knots*), con $i = 1, \ldots, k$, y ajustar un polinomio en cada segmento (lo que se conoce como regresión segmentada, *piecewise regression*).
 
-
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-6-1} \end{center}
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-6-1.png" width="80%" style="display: block; margin: auto;" />
 
 De esta forma sin embargo habrá discontinuidades en los puntos de corte, pero podrían añadirse restricciones adicionales de continuidad (o incluso de diferenciabilidad) para evitarlo (e.g. paquete [`segmented`](https://CRAN.R-project.org/package=segmented)).
 
@@ -321,9 +310,7 @@ legend("topright", legend = c("d=1 (df=11)", "d=2 (df=12)", "d=3 (df=13)"),
        lty = c(3, 2, 1))
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-7-1} \end{center}
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-7-1.png" width="80%" style="display: block; margin: auto;" />
 
 El grado del polinomio, pero sobre todo el número de nodos, determinarán la flexibilidad del modelo. 
 Se podrían considerar el número de parámetros en el ajuste lineal, los grados de libertad, como medida de la complejidad (en la función `bs()` se puede especificar `df` en lugar de `knots`, y estos se generarán a partir de los cuantiles de `x`). 
@@ -343,9 +330,7 @@ abline(v = knots, lty = 3, col = 'darkgray')
 legend("topright", legend = c("ns (d=3, df=11)", "bs (d=3, df=13)"), lty = c(1, 2))
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-8-1} \end{center}
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-8-1.png" width="80%" style="display: block; margin: auto;" />
 
 La dificultad está en la selección de los nodos $z_i$. Si se consideran equiespaciados (o se emplea otro criterio como los cuantiles), se podría seleccionar su número (equivalentemente los grados de libertad) empleando algún método de validación cruzada.
 Sin embargo, sería preferible considerar más nodos donde aparentemente hay más variaciones en la función de regresión y menos donde es más estable, esta es la idea de la regresión spline adaptativa descrita en la Sección \@ref(mars).
@@ -384,9 +369,7 @@ lines(sspline.gcv)
 lines(sspline.cv, lty = 2)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-9-1} \end{center}
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-9-1.png" width="80%" style="display: block; margin: auto;" />
 
 Cuando el número de observaciones es muy grande, y por tanto el número de nodos, pueden aparecer problemas computacionales al emplear estos métodos.
 
@@ -518,9 +501,7 @@ par.old <- par(mfrow = c(1, 2))
 plot(modelo, shade = TRUE) # 
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-16-1} \end{center}
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-16-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 par(par.old)
@@ -547,9 +528,7 @@ plot(income ~ education, Prestige, pch = 16)
 abline(h = inc, v = ed, col = "grey")
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-17-1} \end{center}
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-17-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 # Se calculan las predicciones
@@ -561,9 +540,7 @@ plot3D::persp3D(inc, ed, pred, theta = -40, phi = 30, ticktype = "detailed",
                 xlab = "Income", ylab = "Education", zlab = "Prestige")
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-17-2} \end{center}
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-17-2.png" width="80%" style="display: block; margin: auto;" />
 
 Alternativamente se podrían emplear las funciones `contour()`, `filled.contour()`, `plot3D::image2D` o similares:
 
@@ -573,9 +550,7 @@ Alternativamente se podrían emplear las funciones `contour()`, `filled.contour(
 filled.contour(inc, ed, pred, xlab = "Income", ylab = "Education", key.title = title("Prestige"))
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-18-1} \end{center}
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-18-1.png" width="80%" style="display: block; margin: auto;" />
 
 Puede ser más cómodo emplear el paquete [`modelr`](https://modelr.tidyverse.org) (emplea gráficos `ggplot2`) para trabajar con modelos y predicciones.
 
@@ -748,9 +723,7 @@ example(gam.selection)
 ## gm.slc> plot(b,pages=1)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-22-1} \end{center}
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-22-1.png" width="80%" style="display: block; margin: auto;" />
 
 
 
@@ -763,9 +736,7 @@ La función `gam.check()` realiza una diagnosis del modelo:
 gam.check(modelo)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-23-1} \end{center}
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-23-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```
 ## 
@@ -965,18 +936,14 @@ summary(mars)
 plot(mars)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-27-1} \end{center}
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-27-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 plot(accel ~ times, data = mcycle, col = 'darkgray')
 lines(mcycle$times, predict(mars))
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-27-2} \end{center}
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-27-2.png" width="80%" style="display: block; margin: auto;" />
 
 Como con las opciones por defecto el ajuste no es muy bueno (aunque podría ser suficiente), podríamos forzar la complejidad del modelo en el crecimiento  (`minspan = 1` permite que todas las observaciones sean potenciales nodos): 
 
@@ -1010,9 +977,7 @@ plot(accel ~ times, data = mcycle, col = 'darkgray')
 lines(mcycle$times, predict(mars2))
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-28-1} \end{center}
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-28-1.png" width="80%" style="display: block; margin: auto;" />
 
 Como siguiente ejemplo consideramos los datos de `carData::Prestige`:
 
@@ -1048,9 +1013,7 @@ summary(mars)
 plot(mars)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-29-1} \end{center}
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-29-1.png" width="80%" style="display: block; margin: auto;" />
 
 Para representar los efectos de las variables importa las herramientas del paquete `plotmo` (del mismo autor; válido también para la mayoría de los modelos tratados en este libro, incluyendo `mgcv::gam()`).
 
@@ -1064,9 +1027,7 @@ plotmo(mars)
 ##                      10.54   5930  13.6
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-30-1} \end{center}
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-30-1.png" width="80%" style="display: block; margin: auto;" />
 
 Podríamos obtener la importancia de las variables:
 
@@ -1087,9 +1048,7 @@ varimp
 plot(varimp)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-31-1} \end{center}
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-31-1.png" width="80%" style="display: block; margin: auto;" />
 
 Siempre podríamos considerar este modelo de partida para seleccionar componentes de un modelo GAM más flexible:
 
@@ -1181,17 +1140,13 @@ plotmo(gam2)
 ##                      10.54   5930  13.6
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-32-1} \end{center}
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-32-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 plot(gam2, scheme = 2, select = 2)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-32-2} \end{center}
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-32-2.png" width="80%" style="display: block; margin: auto;" />
 
 Pregunta: ¿Observas algo extraño en el contraste ANOVA anterior? 
 <!-- 
@@ -1283,9 +1238,7 @@ caret.mars
 ggplot(caret.mars, highlight = TRUE)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-35-1} \end{center}
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-35-1.png" width="80%" style="display: block; margin: auto;" />
 
 Podemos analizar el modelo final con las herramientas de `earth`:
 
@@ -1327,17 +1280,13 @@ plotmo(caret.mars$finalModel, degree2 = 0, caption = 'ozone$O3 (efectos principa
 ##                5770    5     64.5   62 2046.5  24 169.5 100 213.5
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-36-1} \end{center}
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-36-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 plotmo(caret.mars$finalModel, degree1 = 0, caption = 'ozone$O3 (interacciones)')
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-36-2} \end{center}
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-36-2.png" width="80%" style="display: block; margin: auto;" />
 
 Finalmente medimos la precisión con el procedimiento habitual:
 
@@ -1439,9 +1388,7 @@ oldpar <- par(mfrow = c(1, 2))
 plot(ppreg)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.9\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-39-1} \end{center}
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-39-1.png" width="90%" style="display: block; margin: auto;" />
 
 ```r
 par(oldpar)
@@ -1459,9 +1406,7 @@ abline(a = 0, b = 1)
 abline(lm(obs ~ pred), lty = 2)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-40-1} \end{center}
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-40-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 accuracy(pred, obs)
@@ -1516,9 +1461,7 @@ caret.ppr
 ggplot(caret.ppr, highlight = TRUE)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-41-1} \end{center}
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-41-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 summary(caret.ppr$finalModel)
@@ -1547,9 +1490,7 @@ summary(caret.ppr$finalModel)
 plot(caret.ppr$finalModel)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-41-2} \end{center}
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-41-2.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 # varImp(caret.ppr) # emplea una medida genérica de importancia
@@ -1601,7 +1542,7 @@ summary(bw)
 ## 
 ## Continuous Kernel Type: Second-Order Gaussian
 ## No. Continuous Explanatory Vars.: 1
-## Estimation Time: 9.48 seconds
+## Estimation Time: 11.38 seconds
 ```
 
 ```r
@@ -1632,9 +1573,7 @@ summary(sindex)
 plot(bw)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-43-1} \end{center}
+<img src="07-regresion_np_files/figure-html/unnamed-chunk-43-1.png" width="80%" style="display: block; margin: auto;" />
 
 ```r
 pred <- predict(sindex, newdata = test)

@@ -26,7 +26,7 @@
 <meta name="author" content="Manuel Oviedo de la Fuente (manuel.oviedo@udc.es)" />
 
 
-<meta name="date" content="2021-09-28" />
+<meta name="date" content="2021-10-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -334,14 +334,14 @@ Esta es una de las motivaciones de utilizar estos métodos basados en contrastes
 Por otra parte hay que ser conscientes de que los contrastes de hipótesis y la calidad predictiva son cosas distintas.</p>
 <div id="ejemplo-1" class="section level3">
 <h3><span class="header-section-number">2.4.1</span> Ejemplo</h3>
-<p>Siguiendo con el problema de clasificación anterior, podríamos ajustar un arbol de decisión empleando la metodología de <em>inferencia condicional</em> mediante el siguiente código:</p>
-<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="alternativas-a-los-árboles-cart.html#cb139-1"></a><span class="kw">library</span>(party)</span>
-<span id="cb139-2"><a href="alternativas-a-los-árboles-cart.html#cb139-2"></a>tree2 &lt;-<span class="st"> </span><span class="kw">ctree</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train) </span>
-<span id="cb139-3"><a href="alternativas-a-los-árboles-cart.html#cb139-3"></a><span class="kw">plot</span>(tree2)</span></code></pre></div>
+<p>Siguiendo con el problema de clasificación anterior, podríamos ajustar un árbol de decisión empleando la metodología de <em>inferencia condicional</em> mediante el siguiente código:</p>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="alternativas-a-los-árboles-cart.html#cb143-1"></a><span class="kw">library</span>(party)</span>
+<span id="cb143-2"><a href="alternativas-a-los-árboles-cart.html#cb143-2"></a>tree2 &lt;-<span class="st"> </span><span class="kw">ctree</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train) </span>
+<span id="cb143-3"><a href="alternativas-a-los-árboles-cart.html#cb143-3"></a><span class="kw">plot</span>(tree2)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:ctree-plot"></span>
-<img src="02-arboles_files/figure-html/ctree-plot-1.png" alt="Arbol de decisión para clasificar la calidad del vino obtenido con el método condicional." width="80%" />
+<img src="02-arboles_files/figure-html/ctree-plot-1.png" alt="Árbol de decisión para clasificar la calidad del vino (`winetaste$taste`) obtenido con el método condicional." width="80%" />
 <p class="caption">
-Figura 2.1: Arbol de decisión para clasificar la calidad del vino obtenido con el método condicional.
+Figura 2.17: Árbol de decisión para clasificar la calidad del vino (<code>winetaste$taste</code>) obtenido con el método condicional.
 </p>
 </div>
 <p>Para más detalles ver la vignette del paquete <a href="https://cran.r-project.org/web/packages/party/vignettes/party.pdf"><em>party: A Laboratory for Recursive Partytioning</em></a>.</p>

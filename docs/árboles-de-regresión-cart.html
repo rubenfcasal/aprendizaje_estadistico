@@ -26,7 +26,7 @@
 <meta name="author" content="Manuel Oviedo de la Fuente (manuel.oviedo@udc.es)" />
 
 
-<meta name="date" content="2021-09-28" />
+<meta name="date" content="2021-10-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -410,8 +410,8 @@ el árbol más pequeño que esté a una distancia de un error estándar del árb
 mediante la opción anterior.</p>
 <p>También es habitual escribir la Ecuación <a href="árboles-de-regresión-cart.html#eq:rss-alpha">(2.1)</a> reescalando el parámetro de complejidad como <span class="math inline">\(\tilde \alpha = \alpha / RSS_0\)</span>, siendo <span class="math inline">\(RSS_0 = \sum_{i=1}^{n} (y_i - \bar y)^2\)</span> la variabilidad total (la suma de cuadrados residual del árbol sin divisiones):
 <span class="math display">\[RSS_{\tilde \alpha}=RSS + \tilde \alpha RSS_0 t\]</span></p>
-<p>De esta forma se podría interpretar el hiperparámetro <span class="math inline">\(\tilde \alpha\)</span> como una penalización en la proporción de variabilidad explicada, ya que dividiendo la expresión anterior por <span class="math inline">\(RSS_0\)</span> obtendríamos:
-<span class="math display">\[R^2_{\tilde \alpha}=R^2+ \tilde \alpha  t\]</span></p>
+<p>De esta forma se podría interpretar el hiperparámetro <span class="math inline">\(\tilde \alpha\)</span> como una penalización en la proporción de variabilidad explicada, ya que dividiendo la expresión anterior por <span class="math inline">\(RSS_0\)</span> obtendríamos la proporción de variabilidad residual y a partir de ella podríamos definir:
+<span class="math display">\[R^2_{\tilde \alpha}=R^2 - \tilde \alpha  t\]</span></p>
 </div>
             </section>
 

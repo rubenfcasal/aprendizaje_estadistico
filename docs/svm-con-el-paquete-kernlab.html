@@ -26,7 +26,7 @@
 <meta name="author" content="Manuel Oviedo de la Fuente (manuel.oviedo@udc.es)" />
 
 
-<meta name="date" content="2021-09-28" />
+<meta name="date" content="2021-10-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -311,10 +311,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">4.4</span> SVM con el paquete <code>kernlab</code></h2>
 <p>Hay varios paquetes que implementan este procedimiento <span class="citation">(e.g. <a href="https://CRAN.R-project.org/package=e1071" role="doc-biblioref"><code>e1071</code></a>, Meyer et al., <a href="#ref-R-e1071" role="doc-biblioref">2020</a>; <a href="https://CRAN.R-project.org/package=svmpath" role="doc-biblioref"><code>svmpath</code></a>, ver Hastie et al., <a href="#ref-hastie2004entire" role="doc-biblioref">2004</a>)</span>, aunque se considera que el más completo es <a href="https://CRAN.R-project.org/package=kernlab"><code>kernlab</code></a> <span class="citation">(Karatzoglou et al., <a href="#ref-kernlab2004" role="doc-biblioref">2004</a>)</span>.</p>
 <p>La función principal es <code>ksvm()</code> y se suelen considerar los siguientes argumentos:</p>
-<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="svm-con-el-paquete-kernlab.html#cb222-1"></a><span class="kw">ksvm</span>(formula, data, <span class="dt">scaled =</span> <span class="ot">TRUE</span>, type,</span>
-<span id="cb222-2"><a href="svm-con-el-paquete-kernlab.html#cb222-2"></a>  <span class="dt">kernel =</span><span class="st">&quot;rbfdot&quot;</span>, <span class="dt">kpar =</span> <span class="st">&quot;automatic&quot;</span>,</span>
-<span id="cb222-3"><a href="svm-con-el-paquete-kernlab.html#cb222-3"></a>  <span class="dt">C =</span> <span class="dv">1</span>, <span class="dt">epsilon =</span> <span class="fl">0.1</span>, <span class="dt">prob.model =</span> <span class="ot">FALSE</span>, </span>
-<span id="cb222-4"><a href="svm-con-el-paquete-kernlab.html#cb222-4"></a>  class.weights, <span class="dt">cross =</span> <span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="svm-con-el-paquete-kernlab.html#cb226-1"></a><span class="kw">ksvm</span>(formula, data, <span class="dt">scaled =</span> <span class="ot">TRUE</span>, type,</span>
+<span id="cb226-2"><a href="svm-con-el-paquete-kernlab.html#cb226-2"></a>  <span class="dt">kernel =</span><span class="st">&quot;rbfdot&quot;</span>, <span class="dt">kpar =</span> <span class="st">&quot;automatic&quot;</span>,</span>
+<span id="cb226-3"><a href="svm-con-el-paquete-kernlab.html#cb226-3"></a>  <span class="dt">C =</span> <span class="dv">1</span>, <span class="dt">epsilon =</span> <span class="fl">0.1</span>, <span class="dt">prob.model =</span> <span class="ot">FALSE</span>, </span>
+<span id="cb226-4"><a href="svm-con-el-paquete-kernlab.html#cb226-4"></a>  class.weights, <span class="dt">cross =</span> <span class="dv">0</span>)</span></code></pre></div>
 <ul>
 <li><p><code>formula</code> y <code>data</code> (opcional): permiten especificar la respuesta y las variables predictoras de la forma habitual (e.g. <code>respuesta ~ .</code>; también admite matrices).</p></li>
 <li><p><code>scaled</code>: vector lógico indicando que predictores serán reescalados; por defecto se reescalan todas las variables no binarias (y se almacenan los valores empleados para ser usados en posteriores predicciones).</p></li>
@@ -328,22 +328,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p><code>cross</code>: número grupos para validación cruzada; por defecto 0 (no se hace validación cruzada). Si se asigna un valor mayor que 1 se realizará validación cruzada y se devolverá el error en la componente <code>@cross</code> (se puede acceder con la función <code>cross()</code>; y se puede emplear para seleccionar hiperparámetros).</p></li>
 </ul>
 <p>Como ejemplo consideraremos el problema de clasificación con los datos de calidad de vino:</p>
-<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="svm-con-el-paquete-kernlab.html#cb223-1"></a><span class="kw">load</span>(<span class="st">&quot;data/winetaste.RData&quot;</span>)</span>
-<span id="cb223-2"><a href="svm-con-el-paquete-kernlab.html#cb223-2"></a><span class="co"># Partición de los datos</span></span>
-<span id="cb223-3"><a href="svm-con-el-paquete-kernlab.html#cb223-3"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb223-4"><a href="svm-con-el-paquete-kernlab.html#cb223-4"></a>df &lt;-<span class="st"> </span>winetaste</span>
-<span id="cb223-5"><a href="svm-con-el-paquete-kernlab.html#cb223-5"></a>nobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(df)</span>
-<span id="cb223-6"><a href="svm-con-el-paquete-kernlab.html#cb223-6"></a>itrain &lt;-<span class="st"> </span><span class="kw">sample</span>(nobs, <span class="fl">0.8</span> <span class="op">*</span><span class="st"> </span>nobs)</span>
-<span id="cb223-7"><a href="svm-con-el-paquete-kernlab.html#cb223-7"></a>train &lt;-<span class="st"> </span>df[itrain, ]</span>
-<span id="cb223-8"><a href="svm-con-el-paquete-kernlab.html#cb223-8"></a>test &lt;-<span class="st"> </span>df[<span class="op">-</span>itrain, ]</span>
-<span id="cb223-9"><a href="svm-con-el-paquete-kernlab.html#cb223-9"></a></span>
-<span id="cb223-10"><a href="svm-con-el-paquete-kernlab.html#cb223-10"></a></span>
-<span id="cb223-11"><a href="svm-con-el-paquete-kernlab.html#cb223-11"></a><span class="kw">library</span>(kernlab)</span>
-<span id="cb223-12"><a href="svm-con-el-paquete-kernlab.html#cb223-12"></a><span class="kw">set.seed</span>(<span class="dv">1</span>) </span>
-<span id="cb223-13"><a href="svm-con-el-paquete-kernlab.html#cb223-13"></a><span class="co"># Selección de sigma = mean(sigest(taste ~ ., data = train)[-2]) # depende de la semilla</span></span>
-<span id="cb223-14"><a href="svm-con-el-paquete-kernlab.html#cb223-14"></a>svm &lt;-<span class="st"> </span><span class="kw">ksvm</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train,</span>
-<span id="cb223-15"><a href="svm-con-el-paquete-kernlab.html#cb223-15"></a>            <span class="dt">kernel =</span> <span class="st">&quot;rbfdot&quot;</span>, <span class="dt">prob.model =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb223-16"><a href="svm-con-el-paquete-kernlab.html#cb223-16"></a>svm</span></code></pre></div>
+<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="svm-con-el-paquete-kernlab.html#cb227-1"></a><span class="kw">load</span>(<span class="st">&quot;data/winetaste.RData&quot;</span>)</span>
+<span id="cb227-2"><a href="svm-con-el-paquete-kernlab.html#cb227-2"></a><span class="co"># Partición de los datos</span></span>
+<span id="cb227-3"><a href="svm-con-el-paquete-kernlab.html#cb227-3"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb227-4"><a href="svm-con-el-paquete-kernlab.html#cb227-4"></a>df &lt;-<span class="st"> </span>winetaste</span>
+<span id="cb227-5"><a href="svm-con-el-paquete-kernlab.html#cb227-5"></a>nobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(df)</span>
+<span id="cb227-6"><a href="svm-con-el-paquete-kernlab.html#cb227-6"></a>itrain &lt;-<span class="st"> </span><span class="kw">sample</span>(nobs, <span class="fl">0.8</span> <span class="op">*</span><span class="st"> </span>nobs)</span>
+<span id="cb227-7"><a href="svm-con-el-paquete-kernlab.html#cb227-7"></a>train &lt;-<span class="st"> </span>df[itrain, ]</span>
+<span id="cb227-8"><a href="svm-con-el-paquete-kernlab.html#cb227-8"></a>test &lt;-<span class="st"> </span>df[<span class="op">-</span>itrain, ]</span>
+<span id="cb227-9"><a href="svm-con-el-paquete-kernlab.html#cb227-9"></a></span>
+<span id="cb227-10"><a href="svm-con-el-paquete-kernlab.html#cb227-10"></a></span>
+<span id="cb227-11"><a href="svm-con-el-paquete-kernlab.html#cb227-11"></a><span class="kw">library</span>(kernlab)</span>
+<span id="cb227-12"><a href="svm-con-el-paquete-kernlab.html#cb227-12"></a><span class="kw">set.seed</span>(<span class="dv">1</span>) </span>
+<span id="cb227-13"><a href="svm-con-el-paquete-kernlab.html#cb227-13"></a><span class="co"># Selección de sigma = mean(sigest(taste ~ ., data = train)[-2]) # depende de la semilla</span></span>
+<span id="cb227-14"><a href="svm-con-el-paquete-kernlab.html#cb227-14"></a>svm &lt;-<span class="st"> </span><span class="kw">ksvm</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train,</span>
+<span id="cb227-15"><a href="svm-con-el-paquete-kernlab.html#cb227-15"></a>            <span class="dt">kernel =</span> <span class="st">&quot;rbfdot&quot;</span>, <span class="dt">prob.model =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb227-16"><a href="svm-con-el-paquete-kernlab.html#cb227-16"></a>svm</span></code></pre></div>
 <pre><code>## Support Vector Machine object of class &quot;ksvm&quot; 
 ## 
 ## SV type: C-svc  (classification) 
@@ -357,10 +357,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Objective Function Value : -494.1409 
 ## Training error : 0.198 
 ## Probability model included.</code></pre>
-<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="svm-con-el-paquete-kernlab.html#cb225-1"></a><span class="co"># plot(svm, data = train) produce un error # packageVersion(&quot;kernlab&quot;) ‘0.9.29’</span></span></code></pre></div>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="svm-con-el-paquete-kernlab.html#cb229-1"></a><span class="co"># plot(svm, data = train) produce un error # packageVersion(&quot;kernlab&quot;) ‘0.9.29’</span></span></code></pre></div>
 <p>Podemos evaluar la precisión en la muestra de test empleando el procedimiento habitual:</p>
-<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="svm-con-el-paquete-kernlab.html#cb226-1"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(svm, <span class="dt">newdata =</span> test)</span>
-<span id="cb226-2"><a href="svm-con-el-paquete-kernlab.html#cb226-2"></a>caret<span class="op">::</span><span class="kw">confusionMatrix</span>(pred, test<span class="op">$</span>taste)</span></code></pre></div>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="svm-con-el-paquete-kernlab.html#cb230-1"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(svm, <span class="dt">newdata =</span> test)</span>
+<span id="cb230-2"><a href="svm-con-el-paquete-kernlab.html#cb230-2"></a>caret<span class="op">::</span><span class="kw">confusionMatrix</span>(pred, test<span class="op">$</span>taste)</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -391,8 +391,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Para obtener las estimaciones de las probabilidades, habría que establecer
 <code>type = "probabilities"</code> al predecir (devolverá una matriz con columnas
 correspondientes a los niveles)<a href="#fn23" class="footnote-ref" id="fnref23"><sup>23</sup></a>:</p>
-<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="svm-con-el-paquete-kernlab.html#cb228-1"></a>p.est &lt;-<span class="st"> </span><span class="kw">predict</span>(svm, <span class="dt">newdata =</span> test, <span class="dt">type =</span> <span class="st">&quot;probabilities&quot;</span>)</span>
-<span id="cb228-2"><a href="svm-con-el-paquete-kernlab.html#cb228-2"></a><span class="kw">head</span>(p.est)</span></code></pre></div>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="svm-con-el-paquete-kernlab.html#cb232-1"></a>p.est &lt;-<span class="st"> </span><span class="kw">predict</span>(svm, <span class="dt">newdata =</span> test, <span class="dt">type =</span> <span class="st">&quot;probabilities&quot;</span>)</span>
+<span id="cb232-2"><a href="svm-con-el-paquete-kernlab.html#cb232-2"></a><span class="kw">head</span>(p.est)</span></code></pre></div>
 <pre><code>##           good       bad
 ## [1,] 0.4761934 0.5238066
 ## [2,] 0.7089338 0.2910662
@@ -406,22 +406,22 @@ Emplear `class.weights` para tratar de mejorar el ajuste en "bad"
 Tratar de realizar lo mismo empleando `p.est`
 -->
 <p>Este procedimiento está implementado en el método <code>"svmRadial"</code> de <code>caret</code> y considera como hiperparámetros:</p>
-<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="svm-con-el-paquete-kernlab.html#cb230-1"></a><span class="kw">library</span>(caret)</span>
-<span id="cb230-2"><a href="svm-con-el-paquete-kernlab.html#cb230-2"></a><span class="co"># names(getModelInfo(&quot;svm&quot;)) # 17 métodos</span></span>
-<span id="cb230-3"><a href="svm-con-el-paquete-kernlab.html#cb230-3"></a><span class="kw">modelLookup</span>(<span class="st">&quot;svmRadial&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="svm-con-el-paquete-kernlab.html#cb234-1"></a><span class="kw">library</span>(caret)</span>
+<span id="cb234-2"><a href="svm-con-el-paquete-kernlab.html#cb234-2"></a><span class="co"># names(getModelInfo(&quot;svm&quot;)) # 17 métodos</span></span>
+<span id="cb234-3"><a href="svm-con-el-paquete-kernlab.html#cb234-3"></a><span class="kw">modelLookup</span>(<span class="st">&quot;svmRadial&quot;</span>)</span></code></pre></div>
 <pre><code>##       model parameter label forReg forClass probModel
 ## 1 svmRadial     sigma Sigma   TRUE     TRUE      TRUE
 ## 2 svmRadial         C  Cost   TRUE     TRUE      TRUE</code></pre>
 <p>En este caso la función <code>train()</code> por defecto evaluará únicamente tres valores del hiperparámetro <code>C = c(0.25, 0.5, 1)</code> y fijará el valor de <code>sigma</code>.
 Alternativamente podríamos establecer la rejilla de búsqueda, por ejemplo:</p>
-<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="svm-con-el-paquete-kernlab.html#cb232-1"></a>tuneGrid &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">sigma =</span> <span class="kw">kernelf</span>(svm)<span class="op">@</span>kpar<span class="op">$</span>sigma, <span class="co"># Emplea clases S4</span></span>
-<span id="cb232-2"><a href="svm-con-el-paquete-kernlab.html#cb232-2"></a>                       <span class="dt">C =</span> <span class="kw">c</span>(<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">5</span>))</span>
-<span id="cb232-3"><a href="svm-con-el-paquete-kernlab.html#cb232-3"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb232-4"><a href="svm-con-el-paquete-kernlab.html#cb232-4"></a>caret.svm &lt;-<span class="st"> </span><span class="kw">train</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train,</span>
-<span id="cb232-5"><a href="svm-con-el-paquete-kernlab.html#cb232-5"></a>    <span class="dt">method =</span> <span class="st">&quot;svmRadial&quot;</span>, <span class="dt">preProcess =</span> <span class="kw">c</span>(<span class="st">&quot;center&quot;</span>, <span class="st">&quot;scale&quot;</span>),</span>
-<span id="cb232-6"><a href="svm-con-el-paquete-kernlab.html#cb232-6"></a>    <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="dt">number =</span> <span class="dv">5</span>),</span>
-<span id="cb232-7"><a href="svm-con-el-paquete-kernlab.html#cb232-7"></a>    <span class="dt">tuneGrid =</span> tuneGrid, <span class="dt">prob.model =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb232-8"><a href="svm-con-el-paquete-kernlab.html#cb232-8"></a>caret.svm</span></code></pre></div>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="svm-con-el-paquete-kernlab.html#cb236-1"></a>tuneGrid &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">sigma =</span> <span class="kw">kernelf</span>(svm)<span class="op">@</span>kpar<span class="op">$</span>sigma, <span class="co"># Emplea clases S4</span></span>
+<span id="cb236-2"><a href="svm-con-el-paquete-kernlab.html#cb236-2"></a>                       <span class="dt">C =</span> <span class="kw">c</span>(<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">5</span>))</span>
+<span id="cb236-3"><a href="svm-con-el-paquete-kernlab.html#cb236-3"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb236-4"><a href="svm-con-el-paquete-kernlab.html#cb236-4"></a>caret.svm &lt;-<span class="st"> </span><span class="kw">train</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train,</span>
+<span id="cb236-5"><a href="svm-con-el-paquete-kernlab.html#cb236-5"></a>    <span class="dt">method =</span> <span class="st">&quot;svmRadial&quot;</span>, <span class="dt">preProcess =</span> <span class="kw">c</span>(<span class="st">&quot;center&quot;</span>, <span class="st">&quot;scale&quot;</span>),</span>
+<span id="cb236-6"><a href="svm-con-el-paquete-kernlab.html#cb236-6"></a>    <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="dt">number =</span> <span class="dv">5</span>),</span>
+<span id="cb236-7"><a href="svm-con-el-paquete-kernlab.html#cb236-7"></a>    <span class="dt">tuneGrid =</span> tuneGrid, <span class="dt">prob.model =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb236-8"><a href="svm-con-el-paquete-kernlab.html#cb236-8"></a>caret.svm</span></code></pre></div>
 <pre><code>## Support Vector Machines with Radial Basis Function Kernel 
 ## 
 ## 1000 samples
@@ -441,7 +441,7 @@ Alternativamente podríamos establecer la rejilla de búsqueda, por ejemplo:</p>
 ## Tuning parameter &#39;sigma&#39; was held constant at a value of 0.07511338
 ## Accuracy was used to select the optimal model using the largest value.
 ## The final values used for the model were sigma = 0.07511338 and C = 1.</code></pre>
-<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="svm-con-el-paquete-kernlab.html#cb234-1"></a><span class="kw">varImp</span>(caret.svm)</span></code></pre></div>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="svm-con-el-paquete-kernlab.html#cb238-1"></a><span class="kw">varImp</span>(caret.svm)</span></code></pre></div>
 <pre><code>## ROC curve variable importance
 ## 
 ##                      Importance
@@ -456,7 +456,7 @@ Alternativamente podríamos establecer la rejilla de búsqueda, por ejemplo:</p>
 ## citric.acid               6.777
 ## residual.sugar            6.317
 ## free.sulfur.dioxide       0.000</code></pre>
-<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="svm-con-el-paquete-kernlab.html#cb236-1"></a><span class="kw">confusionMatrix</span>(<span class="kw">predict</span>(caret.svm, <span class="dt">newdata =</span> test), test<span class="op">$</span>taste)</span></code></pre></div>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="svm-con-el-paquete-kernlab.html#cb240-1"></a><span class="kw">confusionMatrix</span>(<span class="kw">predict</span>(caret.svm, <span class="dt">newdata =</span> test), test<span class="op">$</span>taste)</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference

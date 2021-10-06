@@ -26,7 +26,7 @@
 <meta name="author" content="Manuel Oviedo de la Fuente (manuel.oviedo@udc.es)" />
 
 
-<meta name="date" content="2021-09-28" />
+<meta name="date" content="2021-10-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -315,18 +315,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Una generalización de LDA es el <em>mixture discriminant analysis</em> <span class="citation">(Hastie y Tibshirani, <a href="#ref-hastie1996fisher" role="doc-biblioref">1996</a>)</span> en el que, siempre con la misma matriz <span class="math inline">\(\Sigma\)</span>, se contempla la posibilidad de que dentro de cada categoría haya múltiples subcategorías que únicamente difieren en la media. Las distribuciones dentro de cada clase se agregan mediante una mixtura de las distribuciones multivariantes.</p>
 <div id="ejemplo-masslda" class="section level3">
 <h3><span class="header-section-number">5.1.1</span> Ejemplo <code>MASS::lda</code></h3>
-<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="análisis-discriminate-lineal.html#cb238-1"></a><span class="kw">load</span>(<span class="st">&quot;data/winetaste.RData&quot;</span>)</span>
-<span id="cb238-2"><a href="análisis-discriminate-lineal.html#cb238-2"></a><span class="co"># Partición de los datos</span></span>
-<span id="cb238-3"><a href="análisis-discriminate-lineal.html#cb238-3"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb238-4"><a href="análisis-discriminate-lineal.html#cb238-4"></a>df &lt;-<span class="st"> </span>winetaste</span>
-<span id="cb238-5"><a href="análisis-discriminate-lineal.html#cb238-5"></a>nobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(df)</span>
-<span id="cb238-6"><a href="análisis-discriminate-lineal.html#cb238-6"></a>itrain &lt;-<span class="st"> </span><span class="kw">sample</span>(nobs, <span class="fl">0.8</span> <span class="op">*</span><span class="st"> </span>nobs)</span>
-<span id="cb238-7"><a href="análisis-discriminate-lineal.html#cb238-7"></a>train &lt;-<span class="st"> </span>df[itrain, ]</span>
-<span id="cb238-8"><a href="análisis-discriminate-lineal.html#cb238-8"></a>test &lt;-<span class="st"> </span>df[<span class="op">-</span>itrain, ]</span>
-<span id="cb238-9"><a href="análisis-discriminate-lineal.html#cb238-9"></a></span>
-<span id="cb238-10"><a href="análisis-discriminate-lineal.html#cb238-10"></a><span class="kw">library</span>(MASS)</span>
-<span id="cb238-11"><a href="análisis-discriminate-lineal.html#cb238-11"></a>ld &lt;-<span class="st"> </span><span class="kw">lda</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train)</span>
-<span id="cb238-12"><a href="análisis-discriminate-lineal.html#cb238-12"></a>ld</span></code></pre></div>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="análisis-discriminate-lineal.html#cb242-1"></a><span class="kw">load</span>(<span class="st">&quot;data/winetaste.RData&quot;</span>)</span>
+<span id="cb242-2"><a href="análisis-discriminate-lineal.html#cb242-2"></a><span class="co"># Partición de los datos</span></span>
+<span id="cb242-3"><a href="análisis-discriminate-lineal.html#cb242-3"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb242-4"><a href="análisis-discriminate-lineal.html#cb242-4"></a>df &lt;-<span class="st"> </span>winetaste</span>
+<span id="cb242-5"><a href="análisis-discriminate-lineal.html#cb242-5"></a>nobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(df)</span>
+<span id="cb242-6"><a href="análisis-discriminate-lineal.html#cb242-6"></a>itrain &lt;-<span class="st"> </span><span class="kw">sample</span>(nobs, <span class="fl">0.8</span> <span class="op">*</span><span class="st"> </span>nobs)</span>
+<span id="cb242-7"><a href="análisis-discriminate-lineal.html#cb242-7"></a>train &lt;-<span class="st"> </span>df[itrain, ]</span>
+<span id="cb242-8"><a href="análisis-discriminate-lineal.html#cb242-8"></a>test &lt;-<span class="st"> </span>df[<span class="op">-</span>itrain, ]</span>
+<span id="cb242-9"><a href="análisis-discriminate-lineal.html#cb242-9"></a></span>
+<span id="cb242-10"><a href="análisis-discriminate-lineal.html#cb242-10"></a><span class="kw">library</span>(MASS)</span>
+<span id="cb242-11"><a href="análisis-discriminate-lineal.html#cb242-11"></a>ld &lt;-<span class="st"> </span><span class="kw">lda</span>(taste <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train)</span>
+<span id="cb242-12"><a href="análisis-discriminate-lineal.html#cb242-12"></a>ld</span></code></pre></div>
 <pre><code>## Call:
 ## lda(taste ~ ., data = train)
 ## 
@@ -358,11 +358,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## pH                   -2.103922e+00
 ## sulphates            -2.400004e+00
 ## alcohol              -1.996112e-01</code></pre>
-<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="análisis-discriminate-lineal.html#cb240-1"></a><span class="kw">plot</span>(ld)</span></code></pre></div>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="análisis-discriminate-lineal.html#cb244-1"></a><span class="kw">plot</span>(ld)</span></code></pre></div>
 <p><img src="05-otros_metodos_files/figure-html/unnamed-chunk-2-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="análisis-discriminate-lineal.html#cb241-1"></a>ld.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(ld, <span class="dt">newdata =</span> test)</span>
-<span id="cb241-2"><a href="análisis-discriminate-lineal.html#cb241-2"></a>pred &lt;-<span class="st"> </span>ld.pred<span class="op">$</span>class</span>
-<span id="cb241-3"><a href="análisis-discriminate-lineal.html#cb241-3"></a>caret<span class="op">::</span><span class="kw">confusionMatrix</span>(pred, test<span class="op">$</span>taste)</span></code></pre></div>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="análisis-discriminate-lineal.html#cb245-1"></a>ld.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(ld, <span class="dt">newdata =</span> test)</span>
+<span id="cb245-2"><a href="análisis-discriminate-lineal.html#cb245-2"></a>pred &lt;-<span class="st"> </span>ld.pred<span class="op">$</span>class</span>
+<span id="cb245-3"><a href="análisis-discriminate-lineal.html#cb245-3"></a>caret<span class="op">::</span><span class="kw">confusionMatrix</span>(pred, test<span class="op">$</span>taste)</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -390,7 +390,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##                                           
 ##        &#39;Positive&#39; Class : good            
 ## </code></pre>
-<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="análisis-discriminate-lineal.html#cb243-1"></a>p.est &lt;-ld.pred<span class="op">$</span>posterior</span></code></pre></div>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="análisis-discriminate-lineal.html#cb247-1"></a>p.est &lt;-ld.pred<span class="op">$</span>posterior</span></code></pre></div>
 </div>
 </div>
 <h3>References</h3>
