@@ -773,7 +773,13 @@ set.seed(1)
 ntrain <- nrow(train)
 itrain.boot <- sample(ntrain, replace = TRUE)
 train.boot <- train[itrain.boot, ]
+```
 
+La muestra bootstrap va a contener muchas observaciones repetidas y habrá observaciones no seleccionadas.
+La probabilidad de que una observación no sea seleccionada es $(1 - 1/n)^n \approx e^{-1} \approx 0.37$.
+
+
+```r
 # Número de casos "out of bag"
 ntrain - length(unique(itrain.boot))
 ```
@@ -783,17 +789,15 @@ ntrain - length(unique(itrain.boot))
 ```
 
 ```r
-# $(1 - 1/n)^n \approx e^{-1}$
-
 # Muestra "out of bag"
 # oob <- train[-unique(itrain.boot), ]
 oob <- train[-itrain.boot, ]
 ```
 
+
 El resto sería igual que el caso anterior cambiando `train` por `train.boot` y `validate` por `oob`.
 
-Como comentario final, lo recomendable sería repetir el proceso un número grande de veces y promediar los errores, especialmente cuando el tamaño muestral es pequeño.
-Esto está relacionado con el método de *bagging* descrito en el siguiente capítulo.
+Como comentario final, lo recomendable sería repetir el proceso un número grande de veces y promediar los errores (esto está relacionado con el método de *bagging* descrito en el siguiente capítulo), especialmente cuando el tamaño muestral es pequeño, pero por simplicidad consideraremos únicamente una muestra boostrap.
 
 
 ### Ejemplo: modelo de clasificación {#class-rpart}
@@ -1119,7 +1123,7 @@ library(caret)
 # names(getModelInfo()) # Listado de todos los métodos disponibles
 # modelLookup("rpart")  # Información sobre hiperparámetros
 set.seed(1)
-# itrain <- <- createDataPartition(winetaste$taste, p = 0.8, list = FALSE)
+# itrain <- createDataPartition(winetaste$taste, p = 0.8, list = FALSE)
 # train <- winetaste[itrain, ]
 # test <- winetaste[-itrain, ]
 caret.rpart <- train(taste ~ ., method = "rpart", data = train, 

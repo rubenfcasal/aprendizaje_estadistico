@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>3.4 Boosting | Aprendizaje Estadístico</title>
   <meta name="description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="3.4 Boosting | Aprendizaje Estadístico" />
   <meta property="og:type" content="book" />
@@ -26,7 +26,7 @@
 <meta name="author" content="Manuel Oviedo de la Fuente (manuel.oviedo@udc.es)" />
 
 
-<meta name="date" content="2021-10-06" />
+<meta name="date" content="2021-10-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -35,7 +35,9 @@
   
 <link rel="prev" href="bagging-rf-r.html"/>
 <link rel="next" href="boosting-en-r.html"/>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -51,31 +53,31 @@
 
 
 
-
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<script src="libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.16/datatables.js"></script>
+<script src="libs/datatables-binding-0.19/datatables.js"></script>
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
-<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -95,7 +97,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -128,6 +130,29 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
@@ -145,17 +170,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prólogo</a></li>
-<li class="chapter" data-level="1" data-path="intro-AE.html"><a href="intro-AE.html"><i class="fa fa-check"></i><b>1</b> Introducción al Aprendizaje Estadístico</a><ul>
-<li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje Estadístico vs. Aprendizaje Automático</a><ul>
-<li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
-<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#las-dos-culturas-breiman2001statistical"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas <span class="citation">(Breiman, <span>2001</span><span>b</span>)</span></a></li>
-<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs-aprendizaje-automático.html#machine-learning-vs.-estadística-dunson2018statistics"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística <span class="citation">(Dunson, <span>2018</span>)</span></a></li>
+<li class="chapter" data-level="1" data-path="intro-AE.html"><a href="intro-AE.html"><i class="fa fa-check"></i><b>1</b> Introducción al Aprendizaje Estadístico</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje Estadístico vs. Aprendizaje Automático</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#machine-learning-vs.-data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
+<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#las-dos-culturas-breiman2001statistical"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas <span class="citation">(<span>Breiman, 2001b</span>)</span></a></li>
+<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#machine-learning-vs.-estadística-dunson2018statistics"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística <span class="citation">(<span>Dunson, 2018</span>)</span></a></li>
 </ul></li>
-<li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de Aprendizaje Estadístico</a><ul>
+<li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de Aprendizaje Estadístico</a>
+<ul>
 <li class="chapter" data-level="1.2.1" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#notacion"><i class="fa fa-check"></i><b>1.2.1</b> Notación y terminología</a></li>
 <li class="chapter" data-level="1.2.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#metodos-pkgs"><i class="fa fa-check"></i><b>1.2.2</b> Métodos (de aprendizaje supervisado) y paquetes de R</a></li>
 </ul></li>
-<li class="chapter" data-level="1.3" data-path="const-eval.html"><a href="const-eval.html"><i class="fa fa-check"></i><b>1.3</b> Construcción y evaluación de los modelos</a><ul>
+<li class="chapter" data-level="1.3" data-path="const-eval.html"><a href="const-eval.html"><i class="fa fa-check"></i><b>1.3</b> Construcción y evaluación de los modelos</a>
+<ul>
 <li class="chapter" data-level="1.3.1" data-path="const-eval.html"><a href="const-eval.html#bias-variance"><i class="fa fa-check"></i><b>1.3.1</b> Equilibrio entre sesgo y varianza: infraajuste y sobreajuste</a></li>
 <li class="chapter" data-level="1.3.2" data-path="const-eval.html"><a href="const-eval.html#entrenamiento-test"><i class="fa fa-check"></i><b>1.3.2</b> Datos de entrenamiento y datos de test</a></li>
 <li class="chapter" data-level="1.3.3" data-path="const-eval.html"><a href="const-eval.html#cv"><i class="fa fa-check"></i><b>1.3.3</b> Validación cruzada</a></li>
@@ -164,84 +193,103 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="dimen-curse.html"><a href="dimen-curse.html"><i class="fa fa-check"></i><b>1.4</b> La maldición de la dimensionalidad</a></li>
 <li class="chapter" data-level="1.5" data-path="analisis-modelos.html"><a href="analisis-modelos.html"><i class="fa fa-check"></i><b>1.5</b> Análisis e interpretación de los modelos</a></li>
-<li class="chapter" data-level="1.6" data-path="caret.html"><a href="caret.html"><i class="fa fa-check"></i><b>1.6</b> Introducción al paquete <code>caret</code></a><ul>
+<li class="chapter" data-level="1.6" data-path="caret.html"><a href="caret.html"><i class="fa fa-check"></i><b>1.6</b> Introducción al paquete <code>caret</code></a>
+<ul>
 <li class="chapter" data-level="1.6.1" data-path="caret.html"><a href="caret.html#métodos-implementados"><i class="fa fa-check"></i><b>1.6.1</b> Métodos implementados</a></li>
 <li class="chapter" data-level="1.6.2" data-path="caret.html"><a href="caret.html#herramientas"><i class="fa fa-check"></i><b>1.6.2</b> Herramientas</a></li>
 <li class="chapter" data-level="1.6.3" data-path="caret.html"><a href="caret.html#ejemplo"><i class="fa fa-check"></i><b>1.6.3</b> Ejemplo</a></li>
 <li class="chapter" data-level="1.6.4" data-path="caret.html"><a href="caret.html#desarrollo-futuro"><i class="fa fa-check"></i><b>1.6.4</b> Desarrollo futuro</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="trees.html"><a href="trees.html"><i class="fa fa-check"></i><b>2</b> Árboles de decisión</a><ul>
+<li class="chapter" data-level="2" data-path="trees.html"><a href="trees.html"><i class="fa fa-check"></i><b>2</b> Árboles de decisión</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="árboles-de-regresión-cart.html"><a href="árboles-de-regresión-cart.html"><i class="fa fa-check"></i><b>2.1</b> Árboles de regresión CART</a></li>
 <li class="chapter" data-level="2.2" data-path="árboles-de-clasificación-cart.html"><a href="árboles-de-clasificación-cart.html"><i class="fa fa-check"></i><b>2.2</b> Árboles de clasificación CART</a></li>
-<li class="chapter" data-level="2.3" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html"><i class="fa fa-check"></i><b>2.3</b> CART con el paquete <code>rpart</code></a><ul>
+<li class="chapter" data-level="2.3" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html"><i class="fa fa-check"></i><b>2.3</b> CART con el paquete <code>rpart</code></a>
+<ul>
 <li class="chapter" data-level="2.3.1" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#ejemplo-regresión"><i class="fa fa-check"></i><b>2.3.1</b> Ejemplo: regresión</a></li>
 <li class="chapter" data-level="2.3.2" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#class-rpart"><i class="fa fa-check"></i><b>2.3.2</b> Ejemplo: modelo de clasificación</a></li>
 <li class="chapter" data-level="2.3.3" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#interfaz-de-caret"><i class="fa fa-check"></i><b>2.3.3</b> Interfaz de <code>caret</code></a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html"><i class="fa fa-check"></i><b>2.4</b> Alternativas a los árboles CART</a><ul>
+<li class="chapter" data-level="2.4" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html"><i class="fa fa-check"></i><b>2.4</b> Alternativas a los árboles CART</a>
+<ul>
 <li class="chapter" data-level="2.4.1" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html#ejemplo-1"><i class="fa fa-check"></i><b>2.4.1</b> Ejemplo</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="bagging-boosting.html"><a href="bagging-boosting.html"><i class="fa fa-check"></i><b>3</b> Bagging y Boosting</a><ul>
+<li class="chapter" data-level="3" data-path="bagging-boosting.html"><a href="bagging-boosting.html"><i class="fa fa-check"></i><b>3</b> Bagging y Boosting</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>3.1</b> Bagging</a></li>
 <li class="chapter" data-level="3.2" data-path="bosques-aleatorios.html"><a href="bosques-aleatorios.html"><i class="fa fa-check"></i><b>3.2</b> Bosques aleatorios</a></li>
-<li class="chapter" data-level="3.3" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html"><i class="fa fa-check"></i><b>3.3</b> Bagging y bosques aleatorios en R</a><ul>
+<li class="chapter" data-level="3.3" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html"><i class="fa fa-check"></i><b>3.3</b> Bagging y bosques aleatorios en R</a>
+<ul>
 <li class="chapter" data-level="3.3.1" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-clasificación-con-bagging"><i class="fa fa-check"></i><b>3.3.1</b> Ejemplo: Clasificación con bagging</a></li>
 <li class="chapter" data-level="3.3.2" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-clasif-rf"><i class="fa fa-check"></i><b>3.3.2</b> Ejemplo: Clasificación con bosques aleatorios</a></li>
 <li class="chapter" data-level="3.3.3" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-bosques-aleatorios-con-caret"><i class="fa fa-check"></i><b>3.3.3</b> Ejemplo: bosques aleatorios con <code>caret</code></a></li>
 </ul></li>
 <li class="chapter" data-level="3.4" data-path="boosting.html"><a href="boosting.html"><i class="fa fa-check"></i><b>3.4</b> Boosting</a></li>
-<li class="chapter" data-level="3.5" data-path="boosting-en-r.html"><a href="boosting-en-r.html"><i class="fa fa-check"></i><b>3.5</b> Boosting en R</a><ul>
+<li class="chapter" data-level="3.5" data-path="boosting-en-r.html"><a href="boosting-en-r.html"><i class="fa fa-check"></i><b>3.5</b> Boosting en R</a>
+<ul>
 <li class="chapter" data-level="3.5.1" data-path="boosting-en-r.html"><a href="boosting-en-r.html#ejemplo-clasificación-con-el-paquete-ada"><i class="fa fa-check"></i><b>3.5.1</b> Ejemplo: clasificación con el paquete <code>ada</code></a></li>
 <li class="chapter" data-level="3.5.2" data-path="boosting-en-r.html"><a href="boosting-en-r.html#ejemplo-regresión-con-el-paquete-gbm"><i class="fa fa-check"></i><b>3.5.2</b> Ejemplo: regresión con el paquete <code>gbm</code></a></li>
 <li class="chapter" data-level="3.5.3" data-path="boosting-en-r.html"><a href="boosting-en-r.html#ejemplo-xgboost-con-el-paquete-caret"><i class="fa fa-check"></i><b>3.5.3</b> Ejemplo: XGBoost con el paquete <code>caret</code></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>4</b> Máquinas de soporte vectorial</a><ul>
+<li class="chapter" data-level="4" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>4</b> Máquinas de soporte vectorial</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="clasificadores-de-máximo-margen.html"><a href="clasificadores-de-máximo-margen.html"><i class="fa fa-check"></i><b>4.1</b> Clasificadores de máximo margen</a></li>
 <li class="chapter" data-level="4.2" data-path="clasificadores-de-soporte-vectorial.html"><a href="clasificadores-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>4.2</b> Clasificadores de soporte vectorial</a></li>
-<li class="chapter" data-level="4.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>4.3</b> Máquinas de soporte vectorial</a><ul>
+<li class="chapter" data-level="4.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>4.3</b> Máquinas de soporte vectorial</a>
+<ul>
 <li class="chapter" data-level="4.3.1" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#clasificación-con-más-de-dos-categorías"><i class="fa fa-check"></i><b>4.3.1</b> Clasificación con más de dos categorías</a></li>
 <li class="chapter" data-level="4.3.2" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#regresión"><i class="fa fa-check"></i><b>4.3.2</b> Regresión</a></li>
 <li class="chapter" data-level="4.3.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#ventajas-e-incovenientes"><i class="fa fa-check"></i><b>4.3.3</b> Ventajas e incovenientes</a></li>
 </ul></li>
 <li class="chapter" data-level="4.4" data-path="svm-con-el-paquete-kernlab.html"><a href="svm-con-el-paquete-kernlab.html"><i class="fa fa-check"></i><b>4.4</b> SVM con el paquete <code>kernlab</code></a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="class-otros.html"><a href="class-otros.html"><i class="fa fa-check"></i><b>5</b> Otros métodos de clasificación</a><ul>
-<li class="chapter" data-level="5.1" data-path="análisis-discriminate-lineal.html"><a href="análisis-discriminate-lineal.html"><i class="fa fa-check"></i><b>5.1</b> Análisis discriminate lineal</a><ul>
+<li class="chapter" data-level="5" data-path="class-otros.html"><a href="class-otros.html"><i class="fa fa-check"></i><b>5</b> Otros métodos de clasificación</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="análisis-discriminate-lineal.html"><a href="análisis-discriminate-lineal.html"><i class="fa fa-check"></i><b>5.1</b> Análisis discriminate lineal</a>
+<ul>
 <li class="chapter" data-level="5.1.1" data-path="análisis-discriminate-lineal.html"><a href="análisis-discriminate-lineal.html#ejemplo-masslda"><i class="fa fa-check"></i><b>5.1.1</b> Ejemplo <code>MASS::lda</code></a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="análisis-discriminante-cuadrático.html"><a href="análisis-discriminante-cuadrático.html"><i class="fa fa-check"></i><b>5.2</b> Análisis discriminante cuadrático</a><ul>
+<li class="chapter" data-level="5.2" data-path="análisis-discriminante-cuadrático.html"><a href="análisis-discriminante-cuadrático.html"><i class="fa fa-check"></i><b>5.2</b> Análisis discriminante cuadrático</a>
+<ul>
 <li class="chapter" data-level="5.2.1" data-path="análisis-discriminante-cuadrático.html"><a href="análisis-discriminante-cuadrático.html#ejemplo-massqda"><i class="fa fa-check"></i><b>5.2.1</b> Ejemplo <code>MASS::qda</code></a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="naive-bayes.html"><a href="naive-bayes.html"><i class="fa fa-check"></i><b>5.3</b> Naive Bayes</a><ul>
+<li class="chapter" data-level="5.3" data-path="naive-bayes.html"><a href="naive-bayes.html"><i class="fa fa-check"></i><b>5.3</b> Naive Bayes</a>
+<ul>
 <li class="chapter" data-level="5.3.1" data-path="naive-bayes.html"><a href="naive-bayes.html#ejemplo-e1071naivebayes"><i class="fa fa-check"></i><b>5.3.1</b> Ejemplo <code>e1071::naiveBayes</code></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="modelos-lineales.html"><a href="modelos-lineales.html"><i class="fa fa-check"></i><b>6</b> Modelos lineales y extensiones</a><ul>
-<li class="chapter" data-level="6.1" data-path="reg-multiple.html"><a href="reg-multiple.html"><i class="fa fa-check"></i><b>6.1</b> Regresión lineal múltiple</a><ul>
+<li class="chapter" data-level="6" data-path="modelos-lineales.html"><a href="modelos-lineales.html"><i class="fa fa-check"></i><b>6</b> Modelos lineales y extensiones</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="reg-multiple.html"><a href="reg-multiple.html"><i class="fa fa-check"></i><b>6.1</b> Regresión lineal múltiple</a>
+<ul>
 <li class="chapter" data-level="6.1.1" data-path="reg-multiple.html"><a href="reg-multiple.html#ajuste-función-lm"><i class="fa fa-check"></i><b>6.1.1</b> Ajuste: función <code>lm</code></a></li>
 <li class="chapter" data-level="6.1.2" data-path="reg-multiple.html"><a href="reg-multiple.html#ejemplo-2"><i class="fa fa-check"></i><b>6.1.2</b> Ejemplo</a></li>
 </ul></li>
 <li class="chapter" data-level="6.2" data-path="colinealidad.html"><a href="colinealidad.html"><i class="fa fa-check"></i><b>6.2</b> El problema de la colinealidad</a></li>
-<li class="chapter" data-level="6.3" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html"><i class="fa fa-check"></i><b>6.3</b> Selección de variables explicativas</a><ul>
+<li class="chapter" data-level="6.3" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html"><i class="fa fa-check"></i><b>6.3</b> Selección de variables explicativas</a>
+<ul>
 <li class="chapter" data-level="6.3.1" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html#búsqueda-exhaustiva"><i class="fa fa-check"></i><b>6.3.1</b> Búsqueda exhaustiva</a></li>
 <li class="chapter" data-level="6.3.2" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html#selección-por-pasos"><i class="fa fa-check"></i><b>6.3.2</b> Selección por pasos</a></li>
 </ul></li>
 <li class="chapter" data-level="6.4" data-path="analisis-reg-multiple.html"><a href="analisis-reg-multiple.html"><i class="fa fa-check"></i><b>6.4</b> Análisis e interpretación del modelo</a></li>
 <li class="chapter" data-level="6.5" data-path="evaluación-de-la-precisión.html"><a href="evaluación-de-la-precisión.html"><i class="fa fa-check"></i><b>6.5</b> Evaluación de la precisión</a></li>
-<li class="chapter" data-level="6.6" data-path="shrinkage.html"><a href="shrinkage.html"><i class="fa fa-check"></i><b>6.6</b> Métodos de regularización</a><ul>
+<li class="chapter" data-level="6.6" data-path="shrinkage.html"><a href="shrinkage.html"><i class="fa fa-check"></i><b>6.6</b> Métodos de regularización</a>
+<ul>
 <li class="chapter" data-level="6.6.1" data-path="shrinkage.html"><a href="shrinkage.html#implementación-en-r"><i class="fa fa-check"></i><b>6.6.1</b> Implementación en R</a></li>
 <li class="chapter" data-level="6.6.2" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-ridge-regression"><i class="fa fa-check"></i><b>6.6.2</b> Ejemplo: Ridge Regression</a></li>
 <li class="chapter" data-level="6.6.3" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-lasso"><i class="fa fa-check"></i><b>6.6.3</b> Ejemplo: Lasso</a></li>
 <li class="chapter" data-level="6.6.4" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-elastic-net"><i class="fa fa-check"></i><b>6.6.4</b> Ejemplo: Elastic Net</a></li>
 </ul></li>
-<li class="chapter" data-level="6.7" data-path="pca-pls.html"><a href="pca-pls.html"><i class="fa fa-check"></i><b>6.7</b> Métodos de reducción de la dimensión</a><ul>
+<li class="chapter" data-level="6.7" data-path="pca-pls.html"><a href="pca-pls.html"><i class="fa fa-check"></i><b>6.7</b> Métodos de reducción de la dimensión</a>
+<ul>
 <li class="chapter" data-level="6.7.1" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-componentes-principales-pcr"><i class="fa fa-check"></i><b>6.7.1</b> Regresión por componentes principales (PCR)</a></li>
 <li class="chapter" data-level="6.7.2" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-mínimos-cuadrados-parciales-plsr"><i class="fa fa-check"></i><b>6.7.2</b> Regresión por mínimos cuadrados parciales (PLSR)</a></li>
 </ul></li>
-<li class="chapter" data-level="6.8" data-path="reg-glm.html"><a href="reg-glm.html"><i class="fa fa-check"></i><b>6.8</b> Modelos lineales generalizados</a><ul>
+<li class="chapter" data-level="6.8" data-path="reg-glm.html"><a href="reg-glm.html"><i class="fa fa-check"></i><b>6.8</b> Modelos lineales generalizados</a>
+<ul>
 <li class="chapter" data-level="6.8.1" data-path="reg-glm.html"><a href="reg-glm.html#ajuste-función-glm"><i class="fa fa-check"></i><b>6.8.1</b> Ajuste: función <code>glm</code></a></li>
 <li class="chapter" data-level="6.8.2" data-path="reg-glm.html"><a href="reg-glm.html#ejemplo-regresión-logística"><i class="fa fa-check"></i><b>6.8.2</b> Ejemplo: Regresión logística</a></li>
 <li class="chapter" data-level="6.8.3" data-path="reg-glm.html"><a href="reg-glm.html#selección-de-variables-explicativas"><i class="fa fa-check"></i><b>6.8.3</b> Selección de variables explicativas</a></li>
@@ -250,18 +298,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.8.6" data-path="reg-glm.html"><a href="reg-glm.html#extensiones"><i class="fa fa-check"></i><b>6.8.6</b> Extensiones</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="reg-np.html"><a href="reg-np.html"><i class="fa fa-check"></i><b>7</b> Regresión no paramétrica</a><ul>
-<li class="chapter" data-level="7.1" data-path="reg-local.html"><a href="reg-local.html"><i class="fa fa-check"></i><b>7.1</b> Regresión local</a><ul>
+<li class="chapter" data-level="7" data-path="reg-np.html"><a href="reg-np.html"><i class="fa fa-check"></i><b>7</b> Regresión no paramétrica</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="reg-local.html"><a href="reg-local.html"><i class="fa fa-check"></i><b>7.1</b> Regresión local</a>
+<ul>
 <li class="chapter" data-level="7.1.1" data-path="reg-local.html"><a href="reg-local.html#reg-knn"><i class="fa fa-check"></i><b>7.1.1</b> Vecinos más próximos</a></li>
 <li class="chapter" data-level="7.1.2" data-path="reg-local.html"><a href="reg-local.html#reg-locpol"><i class="fa fa-check"></i><b>7.1.2</b> Regresión polinómica local</a></li>
 <li class="chapter" data-level="7.1.3" data-path="reg-local.html"><a href="reg-local.html#regresión-polinómica-local-robusta"><i class="fa fa-check"></i><b>7.1.3</b> Regresión polinómica local robusta</a></li>
 </ul></li>
-<li class="chapter" data-level="7.2" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>7.2</b> Splines</a><ul>
+<li class="chapter" data-level="7.2" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>7.2</b> Splines</a>
+<ul>
 <li class="chapter" data-level="7.2.1" data-path="splines.html"><a href="splines.html#reg-splines"><i class="fa fa-check"></i><b>7.2.1</b> Regression splines</a></li>
 <li class="chapter" data-level="7.2.2" data-path="splines.html"><a href="splines.html#smoothing-splines"><i class="fa fa-check"></i><b>7.2.2</b> Smoothing splines</a></li>
 <li class="chapter" data-level="7.2.3" data-path="splines.html"><a href="splines.html#splines-penalizados"><i class="fa fa-check"></i><b>7.2.3</b> Splines penalizados</a></li>
 </ul></li>
-<li class="chapter" data-level="7.3" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html"><i class="fa fa-check"></i><b>7.3</b> Modelos aditivos</a><ul>
+<li class="chapter" data-level="7.3" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html"><i class="fa fa-check"></i><b>7.3</b> Modelos aditivos</a>
+<ul>
 <li class="chapter" data-level="7.3.1" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#ajuste-función-gam"><i class="fa fa-check"></i><b>7.3.1</b> Ajuste: función <code>gam</code></a></li>
 <li class="chapter" data-level="7.3.2" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#ejemplo-3"><i class="fa fa-check"></i><b>7.3.2</b> Ejemplo</a></li>
 <li class="chapter" data-level="7.3.3" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#superficies-de-predicción"><i class="fa fa-check"></i><b>7.3.3</b> Superficies de predicción</a></li>
@@ -270,21 +322,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.3.6" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#gam-en-caret"><i class="fa fa-check"></i><b>7.3.6</b> GAM en <code>caret</code></a></li>
 <li class="chapter" data-level="7.3.7" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#ejercicios"><i class="fa fa-check"></i><b>7.3.7</b> Ejercicios</a></li>
 </ul></li>
-<li class="chapter" data-level="7.4" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>7.4</b> Regresión spline adaptativa multivariante</a><ul>
+<li class="chapter" data-level="7.4" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>7.4</b> Regresión spline adaptativa multivariante</a>
+<ul>
 <li class="chapter" data-level="7.4.1" data-path="mars.html"><a href="mars.html#mars-con-el-paquete-earth"><i class="fa fa-check"></i><b>7.4.1</b> MARS con el paquete <code>earth</code></a></li>
 <li class="chapter" data-level="7.4.2" data-path="mars.html"><a href="mars.html#mars-con-el-paquete-caret"><i class="fa fa-check"></i><b>7.4.2</b> MARS con el paquete <code>caret</code></a></li>
 </ul></li>
-<li class="chapter" data-level="7.5" data-path="projection-pursuit.html"><a href="projection-pursuit.html"><i class="fa fa-check"></i><b>7.5</b> Projection pursuit</a><ul>
+<li class="chapter" data-level="7.5" data-path="projection-pursuit.html"><a href="projection-pursuit.html"><i class="fa fa-check"></i><b>7.5</b> Projection pursuit</a>
+<ul>
 <li class="chapter" data-level="7.5.1" data-path="projection-pursuit.html"><a href="projection-pursuit.html#ppr"><i class="fa fa-check"></i><b>7.5.1</b> Regresión por <em>projection pursuit</em></a></li>
 <li class="chapter" data-level="7.5.2" data-path="projection-pursuit.html"><a href="projection-pursuit.html#implementación-en-r-1"><i class="fa fa-check"></i><b>7.5.2</b> Implementación en R</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="neural-nets.html"><a href="neural-nets.html"><i class="fa fa-check"></i><b>8</b> Redes neuronales</a><ul>
+<li class="chapter" data-level="8" data-path="neural-nets.html"><a href="neural-nets.html"><i class="fa fa-check"></i><b>8</b> Redes neuronales</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="single-hidden-layer-feedforward-network.html"><a href="single-hidden-layer-feedforward-network.html"><i class="fa fa-check"></i><b>8.1</b> Single-hidden-layer feedforward network</a></li>
 <li class="chapter" data-level="8.2" data-path="clasificación-con-ann.html"><a href="clasificación-con-ann.html"><i class="fa fa-check"></i><b>8.2</b> Clasificación con ANN</a></li>
 <li class="chapter" data-level="8.3" data-path="implementación-en-r-2.html"><a href="implementación-en-r-2.html"><i class="fa fa-check"></i><b>8.3</b> Implementación en R</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a>
+<ul>
 <li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
 </ul></li>
 <li class="divider"></li>
@@ -307,11 +363,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="boosting" class="section level2">
+<div id="boosting" class="section level2" number="3.4">
 <h2><span class="header-section-number">3.4</span> Boosting</h2>
 <p>La metodología <em>boosting</em> es una metodología general de aprendizaje lento en la que se combinan muchos modelos obtenidos mediante un método con poca capacidad predictiva para, <em>impulsados</em>, dar lugar a un mejor predictor. Los árboles de decisión pequeños (construidos con poca profundidad) resultan perfectos para esta tarea, al ser realmente malos predictores (<em>weak learners</em>), fáciles de combinar y generarse de forma muy rápida.</p>
 <p>El boosting nació en el contexto de los problemas de clasificación y tardó varios años en poderse extender a los problemas de regresión. Por ese motivo vamos a empezar viendo el boosting en clasificación.</p>
-<p>La idea del boosting la desarrollaron <span class="citation">Valiant (<a href="#ref-valiant1984theory" role="doc-biblioref">1984</a>)</span> y <span class="citation">Kearns y Valiant (<a href="#ref-kearns_cryptographic_1994" role="doc-biblioref">1994</a>)</span>, pero encontrar una implementación efectiva fue una tarea difícil que no se resolvió satisfactoriamente hasta que <span class="citation">Freund y Schapire (<a href="#ref-freund1996schapire" role="doc-biblioref">1996</a>)</span> presentaron el algoritmo <em>AdaBoost</em>, que rápidamente se convirtió en un éxito.</p>
+<p>La idea del boosting la desarrollaron <span class="citation"><a href="#ref-valiant1984theory" role="doc-biblioref">Valiant</a> (<a href="#ref-valiant1984theory" role="doc-biblioref">1984</a>)</span> y <span class="citation"><a href="#ref-kearns_cryptographic_1994" role="doc-biblioref">Kearns y Valiant</a> (<a href="#ref-kearns_cryptographic_1994" role="doc-biblioref">1994</a>)</span>, pero encontrar una implementación efectiva fue una tarea difícil que no se resolvió satisfactoriamente hasta que <span class="citation"><a href="#ref-freund1996schapire" role="doc-biblioref">Freund y Schapire</a> (<a href="#ref-freund1996schapire" role="doc-biblioref">1996</a>)</span> presentaron el algoritmo <em>AdaBoost</em>, que rápidamente se convirtió en un éxito.</p>
 <p>Veamos, de forma muy esquemática, en que consiste el algoritmo AdaBoost para un problema de clasificación en el que sólo hay dos categorías y en el que se utiliza como clasificador débil un árbol de decisión con pocos nodos terminales, sólo marginalmente superior a un clasificador aleatorio.
 En este caso resulta más cómodo recodificar la variable indicadora <span class="math inline">\(Y\)</span> como 1 si éxito y -1 si fracaso.</p>
 <!-- OJO: Estamos empleando \hat Y_b = +1/-1 como si fuese \hat G en Sección 1.2.1 -->
@@ -332,7 +388,7 @@ Pendiente:
 Añadir referencia: https://projecteuclid.org/euclid.aos/1016218223
 Aproximación de las probabilidades: Real AdaBoost -->
 <p>Vemos que el algoritmo AdaBoost no combina árboles independientes (como sería el caso de los bosques aleatorios, por ejemplo), sino que estos se van generando en una secuencia en la que cada árbol depende del anterior. Se utiliza siempre el mismo conjunto de datos (de entrenamiento), pero a estos datos se les van poniendo unos pesos en cada iteración que dependen de lo que ha ocurrido en la iteración anterior: se les da más peso a las observaciones mal clasificadas para que en sucesivas iteraciones se clasifiquen bien. Finalmente, la combinación de los árboles se hace mediante una suma ponderada de las <span class="math inline">\(B\)</span> clasificaciones realizadas. Los pesos de esta suma son los valores <span class="math inline">\(s_b\)</span>. Un árbol que clasifique de forma aleatoria <span class="math inline">\(e_b = 0.5\)</span> va a tener un peso <span class="math inline">\(s_b = 0\)</span> y cuando mejor clasifique el árbol mayor será su peso. Al estar utilizando clasificadores débiles (árboles pequeños) es de esperar que los pesos sean en general próximos a cero.</p>
-<p>El siguiente hito fue la aparición del método <em>gradient boosting machine</em> <span class="citation">(Friedman, <a href="#ref-friedman2001greedy" role="doc-biblioref">2001</a>)</span>, perteneciente a la familia de los métodos iterativos de descenso de gradientes.
+<p>El siguiente hito fue la aparición del método <em>gradient boosting machine</em> <span class="citation">(<a href="#ref-friedman2001greedy" role="doc-biblioref">Friedman, 2001</a>)</span>, perteneciente a la familia de los métodos iterativos de descenso de gradientes.
 Entre otras muchas ventajas, este método permitió resolver no sólo problemas de clasificación sino también de regresión; y permitió la conexión con lo que se estaba haciendo en otros campos próximos como pueden ser los modelos aditivos o la regresión logística.
 La idea es encontrar un modelo aditivo que minimice una función de perdida utilizando predictores débiles (por ejemplo árboles).</p>
 <p>Si como función de pérdida se utiliza RSS, entonces la pérdida de utilizar <span class="math inline">\(m(x)\)</span> para predecir <span class="math inline">\(y\)</span> en los datos de entrenamiento es <span class="math display">\[L(m) = \sum_{i=1}^n L(y_i, m(x_i)) = \sum_{i=1}^n (y_i - m(x_i))^2\]</span></p>
@@ -364,7 +420,7 @@ Una ventaja de esta aproximación es que puede extenderse a otras funciones de p
 <li><p>Al ser necesario que el aprendizaje sea lento se utilizan árboles muy pequeños. Esto consigue que poco a poco se vayan cubriendo las zonas en las que es más difícil predecir bien. En muchas situaciones funciona bien utilizar <span class="math inline">\(d = 1\)</span>, es decir, con un único corte. En este caso en cada <span class="math inline">\(\hat m^b\)</span> interviene una única variable, y por tanto <span class="math inline">\(\hat m\)</span> es un ajuste de un modelo aditivo. Si <span class="math inline">\(d&gt;1\)</span> se puede interpretar como un parámetro que mide el órden de interacción entre las variables.</p></li>
 <li><p><span class="math inline">\(0 &lt; \lambda &lt; 1\)</span>, parámetro de regularización. Las primeras versiones del algorimo utilizaban un <span class="math inline">\(\lambda = 1\)</span>, pero no funcionaba bien del todo. Se mejoró mucho el rendimiento <em>ralentizando</em> aún más el aprendizaje al incorporar al modelo el parámetro <span class="math inline">\(\lambda\)</span>, que se puede interpretar como una proporción de aprendizaje (la velocidad a la que aprende, <em>learning rate</em>). Valores pequeños de <span class="math inline">\(\lambda\)</span> evitan el problema del sobreajuste, siendo habitual utilizar <span class="math inline">\(\lambda = 0.01\)</span> o <span class="math inline">\(\lambda = 0.001\)</span>. Como ya se ha dicho, lo ideal es seleccionar su valor utilizando, por ejemplo, validación cruzada. Por supuesto, cuanto más pequeño sea el valor de <span class="math inline">\(\lambda\)</span>, más lento va a ser el proceso de aprendizaje y serán necesarias más iteraciones, lo cual incrementa los tiempos de cómputo.</p></li>
 </ul>
-<p>El propio Friedman propuso una mejora de su algoritmo <span class="citation">(Friedman, <a href="#ref-friedman2002stochastic" role="doc-biblioref">2002</a>)</span>, inspirado por la técnica bagging de Breiman. Esta variante, conocida como <em>stochastic gradient boosting</em> (SGB), es a día de hoy una de las más utilizadas.
+<p>El propio Friedman propuso una mejora de su algoritmo <span class="citation">(<a href="#ref-friedman2002stochastic" role="doc-biblioref">Friedman, 2002</a>)</span>, inspirado por la técnica bagging de Breiman. Esta variante, conocida como <em>stochastic gradient boosting</em> (SGB), es a día de hoy una de las más utilizadas.
 La única diferencia respecto al algoritmo anterior es en la primera línea dentro del bucle: al hacer el ajuste de <span class="math inline">\((X, r)\)</span>, no se considera toda la muestra de entrenamiento, sino que se selecciona al azar un subconjunto.
 Esto incorpora un nuevo hiperparámetro a la metodología, la fracción que se utiliza de los datos.
 Lo ideal es seleccionar un valor por algún método automático (<em>tunearlo</em>) tipo validación cruzada; una selección manual típica es 0.5.
@@ -373,7 +429,7 @@ Hay otras variantes, como por ejemplo la selección aleatoria de predictores ant
 <p>SGB incorpora dos ventajas importantes: reduce la varianza y reduce los tiempos de cómputo.
 En terminos de rendimiento tanto el método SGB como <em>random forest</em> son muy competitivos, y por tanto son muy utilizando en la práctica.
 Los bosques aleatorios tienen la ventaja de que, al construir árboles de forma independiente, es paralelizable y eso puede reducir los tiempos de cómputo.</p>
-<p>Otro método reciente que está ganando popularidad es <em>extreme gradient boosting</em>, también conocido como <em>XGBoost</em> <span class="citation">(Chen y Guestrin, <a href="#ref-chen2016xgboost" role="doc-biblioref">2016</a>)</span>.
+<p>Otro método reciente que está ganando popularidad es <em>extreme gradient boosting</em>, también conocido como <em>XGBoost</em> <span class="citation">(<a href="#ref-chen2016xgboost" role="doc-biblioref">Chen y Guestrin, 2016</a>)</span>.
 Es un metodo más complejo que el anterior que, entre otras modificaciones, utiliza una función de pérdida con una penalización por complejidad y, para evitar el sobreajuste, regulariza utilizando la hessiana de la función de pérdida (necesita calcular las derivadas parciales de primer y de segundo orden), e incorpora parámetros de regularización adicionales para evitar el sobreajuste.</p>
 <p>Por último, la importancia de las variables se puede medir de forma similar a lo que ya hemos visto en otros métodos: dentro de cada árbol se sumas las reducciones del error que consigue cada predictor, y se promedia entre todos los árboles utilizados.</p>
 <p>En resumen:</p>
@@ -390,24 +446,24 @@ asigna más peso a las que resultaron más difíciles de clasificar.</p></li>
 </ul>
 </div>
 <h3>References</h3>
-<div id="refs" class="references">
-<div id="ref-chen2016xgboost">
-<p>Chen, T., y Guestrin, C. (2016). Xgboost: A scalable tree boosting system. <em>Proceedings of the 22nd acm sigkdd international conference on knowledge discovery and data mining</em>, 785-794. <a href="https://doi.org/10.1145/2939672.2939785">https://doi.org/10.1145/2939672.2939785</a></p>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-chen2016xgboost" class="csl-entry">
+Chen, T., y Guestrin, C. (2016). Xgboost: A scalable tree boosting system. <em>Proceedings of the 22nd acm sigkdd international conference on knowledge discovery and data mining</em>, 785-794. <a href="https://doi.org/10.1145/2939672.2939785">https://doi.org/10.1145/2939672.2939785</a>
 </div>
-<div id="ref-freund1996schapire">
-<p>Freund, Y., y Schapire, R. E. (1996). Schapire R: Experiments with a new boosting algorithm. <em>in: Thirteenth International Conference on ML</em>.</p>
+<div id="ref-freund1996schapire" class="csl-entry">
+Freund, Y., y Schapire, R. E. (1996). Schapire R: Experiments with a new boosting algorithm. <em>in: Thirteenth International Conference on ML</em>.
 </div>
-<div id="ref-friedman2001greedy">
-<p>Friedman, J. H. (2001). Greedy function approximation: a gradient boosting machine. <em>The Annals of Statistics</em>, 1189-1232. <a href="https://doi.org/10.1214/aos/1013203451">https://doi.org/10.1214/aos/1013203451</a></p>
+<div id="ref-friedman2001greedy" class="csl-entry">
+Friedman, J. H. (2001). Greedy function approximation: a gradient boosting machine. <em>The Annals of Statistics</em>, 1189-1232. <a href="https://doi.org/10.1214/aos/1013203451">https://doi.org/10.1214/aos/1013203451</a>
 </div>
-<div id="ref-friedman2002stochastic">
-<p>Friedman, J. H. (2002). Stochastic gradient boosting. <em>Computational Statistics &amp; data analysis</em>, <em>38</em>(4), 367-378. <a href="https://doi.org/10.1016/S0167-9473(01)00065-2">https://doi.org/10.1016/S0167-9473(01)00065-2</a></p>
+<div id="ref-friedman2002stochastic" class="csl-entry">
+Friedman, J. H. (2002). Stochastic gradient boosting. <em>Computational Statistics &amp; data analysis</em>, <em>38</em>(4), 367-378. <a href="https://doi.org/10.1016/S0167-9473(01)00065-2">https://doi.org/10.1016/S0167-9473(01)00065-2</a>
 </div>
-<div id="ref-kearns_cryptographic_1994">
-<p>Kearns, M., y Valiant, L. (1994). Cryptographic limitations on learning Boolean formulae and finite automata. <em>Journal of the ACM</em>, <em>41</em>(1), 67-95. <a href="https://doi.org/10.1145/174644.174647">https://doi.org/10.1145/174644.174647</a></p>
+<div id="ref-kearns_cryptographic_1994" class="csl-entry">
+Kearns, M., y Valiant, L. (1994). Cryptographic limitations on learning <span>Boolean</span> formulae and finite automata. <em>Journal of the ACM</em>, <em>41</em>(1), 67-95. <a href="https://doi.org/10.1145/174644.174647">https://doi.org/10.1145/174644.174647</a>
 </div>
-<div id="ref-valiant1984theory">
-<p>Valiant, L. G. (1984). A Theory of the Learnable. <em>Communications of the ACM</em>, <em>27</em>(11), 1134-1142. <a href="https://doi.org/10.1145/800057.808710">https://doi.org/10.1145/800057.808710</a></p>
+<div id="ref-valiant1984theory" class="csl-entry">
+Valiant, L. G. (1984). A Theory of the Learnable. <em>Communications of the ACM</em>, <em>27</em>(11), 1134-1142. <a href="https://doi.org/10.1145/800057.808710">https://doi.org/10.1145/800057.808710</a>
 </div>
 </div>
             </section>
@@ -420,7 +476,6 @@ asigna más peso a las que resultaron más difíciles de clasificar.</p></li>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -439,6 +494,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -459,6 +515,10 @@ gitbook.start({
 "text": null
 },
 "download": ["aprendizaje_estadistico.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

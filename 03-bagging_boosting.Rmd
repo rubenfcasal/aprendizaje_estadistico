@@ -218,12 +218,13 @@ bagtrees <- randomForest(taste ~ ., data = train, mtry = ncol(train) - 1)
 bagtrees
 ```
 
-Con el método `plot()` podemos examinar la convergencia del error en las muestras OOB (simplemente emplea `matplot()` para representar la componente `$err.rate`):
+Con el método `plot()` podemos examinar la convergencia del error en las muestras OOB (simplemente emplea `matplot()` para representar la componente `$err.rate` como se muestra en la Figura \@ref(fig:bagging-conv)):
 
-```{r bagging-conv}
-plot(bagtrees, main = "Tasas de error")
-legend("topright", colnames(bagtrees$err.rate), lty = 1:5, col = 1:6)
+```{r bagging-conv,fig.cap="Tasas de error OOB al usar bagging para la predicción de `winetaste$taste` (realizado empleando `randomForest()` con `mtry` igual al número de predictores)."}
+plot(bagtrees, main = "")
+legend("right", colnames(bagtrees$err.rate), lty = 1:5, col = 1:6)
 ```
+
 Como vemos que los errores se estabilizan podríamos pensar que aparentemente hay convergencia (aunque situaciones de alta dependencia entre los árboles dificultarían su interpretación).
 
 Con la función `getTree()` podemos extraer los árboles individuales.
@@ -266,15 +267,15 @@ rf <- randomForest(taste ~ ., data = train)
 rf
 ```
 
-En este caso también observamos que aparentemente hay convergencia y tampoco sería necesario incrementar el número de árboles:
-```{r rf-plot}
-plot(rf, main = "Tasas de error")
-legend("topright", colnames(rf$err.rate), lty = 1:5, col = 1:6)
+En este caso también observamos en la Figura \@ref(fig:rf-plot) que aparentemente hay convergencia y tampoco sería necesario incrementar el número de árboles:
+```{r rf-plot,fig.cap="Tasas de error OOB al usar bosques aleatorios para la predicción de `winetaste$taste` (empleando `randomForest()` con las opciones por defecto)."}
+plot(rf,main="")
+legend("right", colnames(rf$err.rate), lty = 1:5, col = 1:6)
 ```
 
-Podemos mostrar la importancia de las variables predictoras con la función `importance()` o representarlas con `varImpPlot()`:
+Podemos mostrar la importancia de las variables predictoras (utilizadas en el bosque aleatorio y sus sustituas) con la función `importance()` o representarlas con `varImpPlot()` `r citefig("rf-importance")`:
 
-```{r rf-importance}
+```{r rf-importance,fig.cap="Importancia de las variables predictoras al emplear bosques aleatorios para la predicción de `winetaste$taste`."}
 importance(rf)
 varImpPlot(rf)
 ```
@@ -295,23 +296,41 @@ table(split_var_1)
 ```
 
 El análisis e interpretación del modelo puede resultar más complicado en este tipo de métodos.
-Por ejemplo, podemos emplear alguna de las herramientas mostradas en la Sección \@ref(analisis-modelos):
+Para estudiar el efecto de los predictores en la respuesta se suelen emplear alguna de las herramientas descritas en la Sección \@ref(analisis-modelos).
+Por ejemplo, empleando la función `pdp::partial()`, podemos generar gráficos PDP estimando los efectos individuales de los predictores `r citefig("rf-pdp-uni-plot")`:
 
-```{r rf-pdp}
+
+```{r rf-pdp-uni, eval=.regerar, fig.dim = c(12, 6), fig.path="images/", dev="png"}
 # install.packages("pdp")
 library(pdp)
 pdp1 <- partial(rf, "alcohol")
 p1 <- plotPartial(pdp1)
 pdp2 <- partial(rf, c("density"))
-p2 <-plotPartial(pdp2)
+p2 <- plotPartial(pdp2)
 grid.arrange(p1, p2, ncol = 2)
+```
+
+
+```{r rf-pdp-uni-plot, echo=FALSE, out.width="90%", fig.path="images/", dev="png", fig.cap="Efecto parcial del alcochol (panel izquierdo) y la densidad (panel derecho) sobre la respuesta."}
+library(pdp) # por si no se ejecuta el código anterior
+knitr::include_graphics("images/rf-pdp-uni-1.png")
+```
+
+O gráficos PDP considerando la interacción entre dos predictores `r citefig("rf-pdp-plot")` (cuidado, puede requerir de mucho tiempo de computación):
+
+```{r rf-pdp, eval=.regerar}
 pdp12 <- partial(rf, c("alcohol", "density"))
 plotPartial(pdp12)
-
 ```
-La función `partial()` ofrece un abaníco amplio de argumentos. Por ejemplo, con `ice = TRUE` se calculan as curvas de expectativa condicional individual (ICE). Estos gráficos ICE extienden los PDP, ya que además de mostrar la variación del promedio (en rojo), también muestra la variación de los valores predichos para cada observación (curvas en negro).
 
-```{r rf-ice}
+```{r rf-pdp-plot, echo=FALSE, out.width="80%", fig.path="images/", dev="png", fig.cap="Efecto parcial de la interacción del alcochol y la densidad sobre la respuesta."}
+knitr::include_graphics("images/rf-pdp-1.png")
+```
+
+
+Adicionalmente, estableciendo `ice = TRUE` se calculan las curvas de expectativa condicional individual (ICE). Estos gráficos ICE extienden los PDP, ya que además de mostrar la variación del promedio (ver línea roja en la Figura \@ref(fig:rf-ice-plot)), también muestra la variación de los valores predichos para cada observación  (ver líneas en negro en la Figura \@ref(fig:rf-ice-plot)).
+
+```{r rf-ice, eval=.regerar, fig.dim = c(12, 6), fig.path="images/", dev="png"}
 ice1 <- partial(rf, pred.var = "alcohol", ice = TRUE)
 ice2 <- partial(rf, pred.var = "density", ice = TRUE)
 p1 <- plotPartial(ice1, alpha = 0.5)
@@ -319,21 +338,37 @@ p2 <- plotPartial(ice2, alpha = 0.5)
 grid.arrange(p1, p2, ncol = 2)
 ```
 
-Gráficos similares pueden crearse utilizando otros paquetes indicados en la Sección \@ref(analisis-modelos).  En particular, el paquete `vivid` muestra  en la la diagonal del Figura \@ref(fig:vivid1) la importancia de los predictores (*Vimp*) y fuera de la diagonal las interacciones 2 a 2 (*Vint*). 
+```{r rf-ice-plot, echo=FALSE, out.width="80%", fig.cap="Efecto individual de cada observación de alcochol (panel izquierdo) y densidad (panel derecho) sobre la respuesta."}
+knitr::include_graphics("images/rf-ice-1.png")
+```
 
-```{r vivid1, fig.cap="Mapa de calor para la importancia e interaciones del ajuste de un bosque aleatorio usando vivid."}
+
+Gráficos similares pueden crearse utilizando otros paquetes indicados en la Sección \@ref(analisis-modelos).  En particular, el paquete `vivid` muestra  en la diagonal del Figura \@ref(fig:rf-vivid-plot) la importancia de los cinco primeros  predictores (*Vimp*) y fuera de la diagonal las interacciones 2 a 2 (*Vint*). 
+
+```{r rf-vivid, eval=.regerar, fig.path="images/", dev="png"}
 library(vivid)
 fit_rf  <- vivi(data = train, fit = rf, response = "taste", importanceType = "%IncMSE")
 viviHeatmap(mat = fit_rf[1:5,1:5])
 ```
 
-<!-- 
+```{r rf-vivid-plot, echo=FALSE, out.width="80%", fig.cap="Mapa de calor para la importancia e interaciones del ajuste de un bosque aleatorio usando vivid."}
+knitr::include_graphics("images/rf-vivid-1.png")
+```
 
-Alternativamente, también se pueden visualizar las relaciones mediante un gráfico de red (ver Figura \@ref(fig:vivid2)).
-{r vivid2, eval=FALSE, fig.cap="Gráfico, include=FALSE}
-# require(igraph)
+Alternativamente, también se pueden visualizar las relaciones mediante un gráfico de red (ver Figura \@ref(fig:rf-vivid-plot)).
+
+```{r rf-vivid2, eval=.regerar, fig.path="images/", dev="png"}
+require(igraph)
 viviNetwork(mat = fit_rf)
+```
 
+```{r rf-vivid2-plot, echo=FALSE, out.width="80%", fig.cap="Gráfico de red para la importancia e interaciones del ajuste de un bosque aleatorio usando vivid."}
+knitr::include_graphics("images/rf-vivid2-1.png")
+```
+
+
+<!-- 
+Pendiente: 
 En este caso también puede ser de utilidad el paquete `r citepkg("randomForestExplainer", "https://modeloriented.github.io/randomForestExplainer")`, 
 Pendiente: Análisis e interpretación del modelo
 # install.packages("randomForestExplainer")
@@ -341,7 +376,6 @@ library(randomForestExplainer)
 plot_min_depth_distribution(rf)
 plot_min_depth_interactions(rf, k = 5) # solo 5 mejores iteraciones
 -->
-
 
 ### Ejemplo: bosques aleatorios con `caret`
 
@@ -362,18 +396,19 @@ modelLookup("rf")
 # test <- df[-itrain, ]
 ```
 
-Con las opciones por defecto únicamente evalúa tres valores posibles del hiperparámetro (se podría aumentar el número con `tuneLength` o especificarlos con `tuneGrid`), pero aún así el tiempo de computación puede ser alto (puede ser recomendable reducir el valor de `nodesize` o paralelizar los cálculos; otras implementaciones pueden ser más eficientes).
+Con las opciones por defecto únicamente evalúa tres valores posibles del hiperparámetro `r citefig("rf-caret-train")`.
+Opcionalmente se podría aumentar el número valores a evaluar con `tuneLength` o directamente especificarlos con `tuneGrid`.
+En cualquier caso el tiempo de computación puede ser demasiado alto, por lo que puede ser recomendable reducir el valor de `nodesize`, paralelizar los cálculos o emplear otros paquetes con implementaciones más eficientes.
 
-
-```{r rf-caret-train}
+```{r rf-caret-train, fig.cap="Evolución de la precisión de un bosque aleatorio dependiendo del número de predictores seleccionados."}
 set.seed(1)
 rf.caret <- train(taste ~ ., data = train, method = "rf")
 plot(rf.caret)
 ```
 
-@breiman2001random sugiere emplear el valor por defecto, la mitad y el doble:
+@breiman2001random sugiere emplear el valor por defecto para `mtry`, la mitad y el doble `r citefig("rf-caret-grid")`:
 
-```{r rf-caret-grid}
+```{r rf-caret-grid, fig.cap="Evolución de la precisión de un bosque aleatorio con `caret` usando el argumento `tuneGrid`."}
 mtry.class <- sqrt(ncol(train) - 1)
 tuneGrid <- data.frame(mtry = floor(c(mtry.class/2, mtry.class, 2*mtry.class)))
 set.seed(1)
@@ -386,6 +421,16 @@ plot(rf.caret)
 Pendiente: 
 crear un método "rf2" en `caret` que incluya `nodesize` como hiperparámetro (para evitar posibles problemas de sobreajuste, disminuir el tiempo de computación en la evaluación y los requerimientos de memoria cuando el conjunto de datos es muy grande). Puede ser más cómodo hacerlo al margen de `caret`... 
 -->
+
+```{exercise, label="rf-tunegrid"}
+```
+
+Como acabamos de ver, `caret` permite ajustar un bosque aleatorio considerando `mtry` como único hiperparámetro, pero nos podría interesar buscar también valores adecuados para otros parámetros, como por ejemplo `nodesize`. 
+Esto se puede realizar fácilmente empleando directamente la función `randomForest()`. 
+En primer lugar habría que construir la rejilla de búsqueda, con las combinaciones de los valores de los hiperparámetros que se quieren evaluar (para ello se puede utilizar la función `expand.grid()`).
+Posteriormente se ajustaría un bosque aleatorio en la muestra de entrenamiento con cada una de las combinaciones (por ejemplo utilizando un bucle `for`) y se emplearía el error OOB para seleccionar la combinación óptima (al que podemos acceder empleando `with(fit, err.rate[ntree, "OOB"])` suponiendo que `fit` contiene el bosque aleatorio ajustado).
+
+Continuando con el mismo conjunto de datos de calidad de vino, emplear la función `randomForest()` para ajustar un bosque aleatorio con el fin de clasificar la calidad del vino `taste`, considerando 500 árboles  y empleando el error OOB para seleccionar los valores "óptimos" de los hiperparámetros considerando las posibles combinaciones de `mtry = floor(c(mtry.class/2, mtry.class, 2*mtry.class))` (siendo `mtry.class <- sqrt(ncol(train) - 1)`) y `nodesize = c(1, 3, 5, 10)`.
 
 
 ## Boosting
@@ -563,9 +608,9 @@ ada.boost <- ada(taste ~ ., data = train, type = "real",
 ada.boost
 ```
 
-Con el método `plot()` podemos representar la evolución del error de clasificación al aumentar el número de iteraciones:
+Con el método `plot()` podemos representar la evolución del error de clasificación al aumentar el número de iteraciones `r citefig("ada-plot")`:
 
-```{r ada-plot}
+```{r ada-plot, fig.cap="Evolución de la tasa de error utilizando `ada()`."}
 plot(ada.boost)
 ```
 
@@ -670,16 +715,19 @@ gbm.fit <- gbm(quality ~ ., data = train)
 gbm.fit
 ```
 
-El método `summary()` calcula las medidas de influencia de los predictores y las representa gráficamente:
+El método `summary()` calcula las medidas de influencia de los predictores y las representa gráficamente `r citefig("gbm-summary")`:
 
-```{r gbm-summary}
+```{r gbm-summary,fig.cap="Importancia de las variables predictoras (con los valores por defecto de `gbm()`)."}
 summary(gbm.fit)
 ```
 
-Para estudiar el efecto de un predictor se pueden generar gráficos de los efectos parciales mediante el método `plot()`:
+Para estudiar el efecto de un predictor se pueden generar gráficos de los efectos parciales mediante el método `plot()` `r citefig("gbm-plot")`:
 
-```{r gbm-plot}
-plot(gbm.fit, i = "alcohol")
+```{r gbm-plot, fig.dim = c(12, 6), out.width = "90%", fig.cap="Efecto parcíal del alcohol (panel izquierdo) y la densidad (panel derecho) sobre la respuesta (con `gbm()`)."}
+p1 <- plot(gbm.fit, i = c("alcohol"))
+p2 <- plot(gbm.fit, i = c("density"))
+grid.arrange(p1, p2, ncol = 2)
+# plot(gbm.fit, i = c("alcohol","density")) # interacción
 ```
 
 Finalmente podemos evaluar la precisión en la muestra de test empleando el código habitual:

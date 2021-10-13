@@ -1189,7 +1189,7 @@ coef(fit.ridge, s = 2) # lambda = 2
 
 ```
 ## 14 x 1 sparse Matrix of class "dgCMatrix"
-##                       1
+##                      s1
 ## (Intercept)  3.56806743
 ## calidadp     2.41027431
 ## web          0.94414628
@@ -1242,7 +1242,7 @@ coef(cv.ridge) # s = "lambda.1se"
 
 ```
 ## 14 x 1 sparse Matrix of class "dgCMatrix"
-##                       1
+##                      s1
 ## (Intercept)  8.38314273
 ## calidadp     2.06713538
 ## web          0.84771656
@@ -1308,7 +1308,7 @@ coef(cv.lasso) # s = "lambda.1se"
 
 ```
 ## 14 x 1 sparse Matrix of class "dgCMatrix"
-##                      1
+##                     s1
 ## (Intercept) 12.0485398
 ## calidadp     2.4673862
 ## web          0.3498592

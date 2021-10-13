@@ -205,9 +205,9 @@ accuracy(pred, y)
 
 ```
 ##            me          rmse           mae           mpe          mape 
-## -1.457414e-01  2.144568e+01  1.577670e+01 -2.458145e+10  7.556536e+10 
+## -2.712378e-01  2.140005e+01  1.565921e+01 -2.460832e+10  7.559223e+10 
 ##     r.squared 
-##  8.015429e-01
+##  8.023864e-01
 ```
 
 El caso multivariante es análogo, aunque habría que considerar una matriz de ventanas simétrica $H$. También hay extensiones para el caso de predictores categóricos (nominales o ordinales) y para el caso de distribuciones de la respuesta distintas de la normal (máxima verosimilitud local).
@@ -1542,7 +1542,7 @@ summary(bw)
 ## 
 ## Continuous Kernel Type: Second-Order Gaussian
 ## No. Continuous Explanatory Vars.: 1
-## Estimation Time: 11.38 seconds
+## Estimation Time: 7.47 seconds
 ```
 
 ```r

@@ -2,10 +2,14 @@
 knitr::opts_chunk$set(fig.width=7, fig.height=6, fig.align="center", fig.pos="!htb", out.width = "80%",
                cache=TRUE, cache.path='cache/',
                echo=TRUE, warning=FALSE, message=FALSE)
-fig.path <- "images/"
-# fig.path <- ""
 
-# funciones auxiliares
+# Variables globales
+.regerar <- FALSE
+.fig.path <- "images/"
+# .fig.path <- ""
+
+
+# Funciones auxiliares
   # Rmd, Bookdown
     # rmd.lines <- function(l = 1) paste0("<br> \vspace{0.5cm}") #cat(rep("<br>", l)) # 0.5*l
     is_latex <- function(...) knitr:::is_latex_output(...)
@@ -14,12 +18,6 @@ fig.path <- "images/"
     inline <- function(x = "") paste0("`` `r ", x, "` ``")
     inline2 <- function(x = "") paste0("`r ", x, "`")
   # Citas Figuras:
-    # paste0("\\@ref(fig:", "media-dt-conocida", ")")   
-    # labs <- c("fig1", "fig2")
-    # paste0("\\@ref(fig:", labs, ")")  
-    # list <- c("fig1", "fig2")
-    # paste0("\\@ref(fig:", list, ")")   
-    # paste0("\\@ref(fig:", list, ")", collapse = ", ")   
     # citefig("fig1", "fig2")
     citefig <- function(..., text = "(ver ") {
       x <- list(...)
