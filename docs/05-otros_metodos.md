@@ -102,7 +102,9 @@ ld
 plot(ld)
 ```
 
-<img src="05-otros_metodos_files/figure-html/unnamed-chunk-2-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{05-otros_metodos_files/figure-latex/unnamed-chunk-2-1} \end{center}
 
 ```r
 ld.pred <- predict(ld, newdata = test)

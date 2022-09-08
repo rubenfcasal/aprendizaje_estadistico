@@ -243,10 +243,14 @@ plot(bagtrees, main = "")
 legend("right", colnames(bagtrees$err.rate), lty = 1:5, col = 1:6)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="03-bagging_boosting_files/figure-html/bagging-conv-1.png" alt="Tasas de error OOB al usar bagging para la predicción de `winetaste$taste` (realizado empleando `randomForest()` con `mtry` igual al número de predictores)." width="80%" />
-<p class="caption">(\#fig:bagging-conv)Tasas de error OOB al usar bagging para la predicción de `winetaste$taste` (realizado empleando `randomForest()` con `mtry` igual al número de predictores).</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/bagging-conv-1} 
+
+}
+
+\caption{Tasas de error OOB al usar bagging para la predicción de `winetaste$taste` (realizado empleando `randomForest()` con `mtry` igual al número de predictores).}(\#fig:bagging-conv)
+\end{figure}
 
 Como vemos que los errores se estabilizan podríamos pensar que aparentemente hay convergencia (aunque situaciones de alta dependencia entre los árboles dificultarían su interpretación).
 
@@ -358,10 +362,14 @@ plot(rf,main="")
 legend("right", colnames(rf$err.rate), lty = 1:5, col = 1:6)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="03-bagging_boosting_files/figure-html/rf-plot-1.png" alt="Tasas de error OOB al usar bosques aleatorios para la predicción de `winetaste$taste` (empleando `randomForest()` con las opciones por defecto)." width="80%" />
-<p class="caption">(\#fig:rf-plot)Tasas de error OOB al usar bosques aleatorios para la predicción de `winetaste$taste` (empleando `randomForest()` con las opciones por defecto).</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/rf-plot-1} 
+
+}
+
+\caption{Tasas de error OOB al usar bosques aleatorios para la predicción de `winetaste$taste` (empleando `randomForest()` con las opciones por defecto).}(\#fig:rf-plot)
+\end{figure}
 
 Podemos mostrar la importancia de las variables predictoras (utilizadas en el bosque aleatorio y sus sustituas) con la función `importance()` o representarlas con `varImpPlot()` (ver Figura \@ref(fig:rf-importance)):
 
@@ -389,10 +397,14 @@ importance(rf)
 varImpPlot(rf)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="03-bagging_boosting_files/figure-html/rf-importance-1.png" alt="Importancia de las variables predictoras al emplear bosques aleatorios para la predicción de `winetaste$taste`." width="80%" />
-<p class="caption">(\#fig:rf-importance)Importancia de las variables predictoras al emplear bosques aleatorios para la predicción de `winetaste$taste`.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/rf-importance-1} 
+
+}
+
+\caption{Importancia de las variables predictoras al emplear bosques aleatorios para la predicción de `winetaste$taste`.}(\#fig:rf-importance)
+\end{figure}
 
 Si evaluamos la precisión en la muestra de test podemos observar un ligero incremento en la precisión en comparación con el método anterior:
 
@@ -470,10 +482,14 @@ grid.arrange(p1, p2, ncol = 2)
 ```
 
 
-<div class="figure" style="text-align: center">
-<img src="images/rf-pdp-uni-1.png" alt="Efecto parcial del alcochol (panel izquierdo) y la densidad (panel derecho) sobre la respuesta." width="90%" />
-<p class="caption">(\#fig:rf-pdp-uni-plot)Efecto parcial del alcochol (panel izquierdo) y la densidad (panel derecho) sobre la respuesta.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.9\linewidth]{images/rf-pdp-uni-1} 
+
+}
+
+\caption{Efecto parcial del alcochol (panel izquierdo) y la densidad (panel derecho) sobre la respuesta.}(\#fig:rf-pdp-uni-plot)
+\end{figure}
 
 O gráficos PDP considerando la interacción entre dos predictores (ver Figura \@ref(fig:rf-pdp-plot)) (cuidado, puede requerir de mucho tiempo de computación):
 
@@ -483,10 +499,14 @@ pdp12 <- partial(rf, c("alcohol", "density"))
 plotPartial(pdp12)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="images/rf-pdp-1.png" alt="Efecto parcial de la interacción del alcochol y la densidad sobre la respuesta." width="80%" />
-<p class="caption">(\#fig:rf-pdp-plot)Efecto parcial de la interacción del alcochol y la densidad sobre la respuesta.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{images/rf-pdp-1} 
+
+}
+
+\caption{Efecto parcial de la interacción del alcochol y la densidad sobre la respuesta.}(\#fig:rf-pdp-plot)
+\end{figure}
 
 
 Adicionalmente, estableciendo `ice = TRUE` se calculan las curvas de expectativa condicional individual (ICE). Estos gráficos ICE extienden los PDP, ya que además de mostrar la variación del promedio (ver línea roja en la Figura \@ref(fig:rf-ice-plot)), también muestra la variación de los valores predichos para cada observación  (ver líneas en negro en la Figura \@ref(fig:rf-ice-plot)).
@@ -500,10 +520,14 @@ p2 <- plotPartial(ice2, alpha = 0.5)
 grid.arrange(p1, p2, ncol = 2)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="images/rf-ice-1.png" alt="Efecto individual de cada observación de alcochol (panel izquierdo) y densidad (panel derecho) sobre la respuesta." width="80%" />
-<p class="caption">(\#fig:rf-ice-plot)Efecto individual de cada observación de alcochol (panel izquierdo) y densidad (panel derecho) sobre la respuesta.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{images/rf-ice-1} 
+
+}
+
+\caption{Efecto individual de cada observación de alcochol (panel izquierdo) y densidad (panel derecho) sobre la respuesta.}(\#fig:rf-ice-plot)
+\end{figure}
 
 
 Gráficos similares pueden crearse utilizando otros paquetes indicados en la Sección \@ref(analisis-modelos).  En particular, el paquete `vivid` muestra  en la diagonal del Figura \@ref(fig:rf-vivid-plot) la importancia de los cinco primeros  predictores (*Vimp*) y fuera de la diagonal las interacciones 2 a 2 (*Vint*). 
@@ -515,10 +539,14 @@ fit_rf  <- vivi(data = train, fit = rf, response = "taste", importanceType = "%I
 viviHeatmap(mat = fit_rf[1:5,1:5])
 ```
 
-<div class="figure" style="text-align: center">
-<img src="images/rf-vivid-1.png" alt="Mapa de calor para la importancia e interaciones del ajuste de un bosque aleatorio usando vivid." width="80%" />
-<p class="caption">(\#fig:rf-vivid-plot)Mapa de calor para la importancia e interaciones del ajuste de un bosque aleatorio usando vivid.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{images/rf-vivid-1} 
+
+}
+
+\caption{Mapa de calor para la importancia e interaciones del ajuste de un bosque aleatorio usando vivid.}(\#fig:rf-vivid-plot)
+\end{figure}
 
 Alternativamente, también se pueden visualizar las relaciones mediante un gráfico de red (ver Figura \@ref(fig:rf-vivid-plot)).
 
@@ -528,10 +556,14 @@ require(igraph)
 viviNetwork(mat = fit_rf)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="images/rf-vivid2-1.png" alt="Gráfico de red para la importancia e interaciones del ajuste de un bosque aleatorio usando vivid." width="80%" />
-<p class="caption">(\#fig:rf-vivid2-plot)Gráfico de red para la importancia e interaciones del ajuste de un bosque aleatorio usando vivid.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{images/rf-vivid2-1} 
+
+}
+
+\caption{Gráfico de red para la importancia e interaciones del ajuste de un bosque aleatorio usando vivid.}(\#fig:rf-vivid2-plot)
+\end{figure}
 
 
 <!-- 
@@ -582,10 +614,14 @@ rf.caret <- train(taste ~ ., data = train, method = "rf")
 plot(rf.caret)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="03-bagging_boosting_files/figure-html/rf-caret-train-1.png" alt="Evolución de la precisión de un bosque aleatorio dependiendo del número de predictores seleccionados." width="80%" />
-<p class="caption">(\#fig:rf-caret-train)Evolución de la precisión de un bosque aleatorio dependiendo del número de predictores seleccionados.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/rf-caret-train-1} 
+
+}
+
+\caption{Evolución de la precisión de un bosque aleatorio dependiendo del número de predictores seleccionados.}(\#fig:rf-caret-train)
+\end{figure}
 
 @breiman2001random sugiere emplear el valor por defecto para `mtry`, la mitad y el doble (ver Figura \@ref(fig:rf-caret-grid)):
 
@@ -599,17 +635,23 @@ rf.caret <- train(taste ~ ., data = train,
 plot(rf.caret)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="03-bagging_boosting_files/figure-html/rf-caret-grid-1.png" alt="Evolución de la precisión de un bosque aleatorio con `caret` usando el argumento `tuneGrid`." width="80%" />
-<p class="caption">(\#fig:rf-caret-grid)Evolución de la precisión de un bosque aleatorio con `caret` usando el argumento `tuneGrid`.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/rf-caret-grid-1} 
+
+}
+
+\caption{Evolución de la precisión de un bosque aleatorio con `caret` usando el argumento `tuneGrid`.}(\#fig:rf-caret-grid)
+\end{figure}
 
 <!-- 
 Pendiente: 
 crear un método "rf2" en `caret` que incluya `nodesize` como hiperparámetro (para evitar posibles problemas de sobreajuste, disminuir el tiempo de computación en la evaluación y los requerimientos de memoria cuando el conjunto de datos es muy grande). Puede ser más cómodo hacerlo al margen de `caret`... 
 -->
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:rf-tunegrid"><strong>(\#exr:rf-tunegrid) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}
+<span class="exercise" id="exr:rf-tunegrid"><strong>(\#exr:rf-tunegrid) </strong></span>
+\EndKnitrBlock{exercise}
 
 Como acabamos de ver, `caret` permite ajustar un bosque aleatorio considerando `mtry` como único hiperparámetro, pero nos podría interesar buscar también valores adecuados para otros parámetros, como por ejemplo `nodesize`. 
 Esto se puede realizar fácilmente empleando directamente la función `randomForest()`. 
@@ -827,10 +869,14 @@ Con el método `plot()` podemos representar la evolución del error de clasifica
 plot(ada.boost)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="03-bagging_boosting_files/figure-html/ada-plot-1.png" alt="Evolución de la tasa de error utilizando `ada()`." width="80%" />
-<p class="caption">(\#fig:ada-plot)Evolución de la tasa de error utilizando `ada()`.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/ada-plot-1} 
+
+}
+
+\caption{Evolución de la tasa de error utilizando `ada()`.}(\#fig:ada-plot)
+\end{figure}
 
 <!-- 
 Con la función `varplot()` podemos representar la importancia de las variables (y almacenarla empleando `type = "scores"`): 
@@ -840,7 +886,9 @@ Con la función `varplot()` podemos representar la importancia de las variables 
 res <- varplot(ada.boost, type = "scores")
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-3-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/unnamed-chunk-3-1} \end{center}
 
 ```r
 res
@@ -1145,10 +1193,14 @@ El método `summary()` calcula las medidas de influencia de los predictores y la
 summary(gbm.fit)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="03-bagging_boosting_files/figure-html/gbm-summary-1.png" alt="Importancia de las variables predictoras (con los valores por defecto de `gbm()`)." width="80%" />
-<p class="caption">(\#fig:gbm-summary)Importancia de las variables predictoras (con los valores por defecto de `gbm()`).</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/gbm-summary-1} 
+
+}
+
+\caption{Importancia de las variables predictoras (con los valores por defecto de `gbm()`).}(\#fig:gbm-summary)
+\end{figure}
 
 ```
 ##                                       var   rel.inf
@@ -1174,10 +1226,14 @@ p2 <- plot(gbm.fit, i = c("density"))
 grid.arrange(p1, p2, ncol = 2)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="03-bagging_boosting_files/figure-html/gbm-plot-1.png" alt="Efecto parcíal del alcohol (panel izquierdo) y la densidad (panel derecho) sobre la respuesta (con `gbm()`)." width="90%" />
-<p class="caption">(\#fig:gbm-plot)Efecto parcíal del alcohol (panel izquierdo) y la densidad (panel derecho) sobre la respuesta (con `gbm()`).</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.9\linewidth]{03-bagging_boosting_files/figure-latex/gbm-plot-1} 
+
+}
+
+\caption{Efecto parcíal del alcohol (panel izquierdo) y la densidad (panel derecho) sobre la respuesta (con `gbm()`).}(\#fig:gbm-plot)
+\end{figure}
 
 ```r
 # plot(gbm.fit, i = c("alcohol","density")) # interacción

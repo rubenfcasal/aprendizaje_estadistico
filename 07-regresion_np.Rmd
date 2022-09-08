@@ -8,14 +8,14 @@ date: "Curso 2021/2022"
 bibliography: ["packages.bib", "aprendizaje_estadistico.bib"]
 link-citations: yes
 output: 
+  bookdown::pdf_document2:
+    keep_tex: yes
+    toc: yes 
   bookdown::html_document2:
     pandoc_args: ["--number-offset", "6,0"]
     toc: yes 
     # mathjax: local            # copia local de MathJax, hay que establecer:
     # self_contained: false     # las dependencias se guardan en ficheros externos 
-  bookdown::pdf_document2:
-    keep_tex: yes
-    toc: yes 
 ---
 
 bookdown::preview_chapter("07-regresion_np.Rmd")
@@ -584,8 +584,10 @@ Asumimos que todas las variables predictoras son numéricas. El proceso de const
 $$\hat m(\mathbf{x}) = \hat \beta_0 $$
 donde $\hat \beta_0$ es la media de todas las respuestas, para a continuación considerar todos los puntos de corte (*knots*) posibles $x_{ji}$ con $i = 1, 2, \ldots, n$, $j = 1, 2, \ldots, p$, es decir, todas las observaciones de todas las variables predictoras de la muestra de entrenamiento. 
 Para cada punto de corte $x_{ji}$ (combinación de variable y observación) se consideran dos bases:
-$$h_1(\mathbf{x}) = h(x_j - x_{ji}) \\
-h_2(\mathbf{x}) = h(x_{ji} - x_j)$$
+$$ \begin{aligned}
+h_1(\mathbf{x}) = h(x_j - x_{ji}) \\
+h_2(\mathbf{x}) = h(x_{ji} - x_j)
+\end{aligned}$$
 y se construye el nuevo modelo 
 $$\hat m(\mathbf{x}) = \hat \beta_0 + \hat \beta_1 h_1(\mathbf{x}) + \hat \beta_2 h_2(\mathbf{x})$$
 La estimación de los parámetros $\beta_0, \beta_1, \beta_2$ se realiza de la forma estándar en regresión lineal, minimizando $\mbox{RSS}$. De este modo se construyen muchos modelos alternativos y entre ellos se selecciona aquel que tenga un menor error de entrenamiento. En la siguiente iteración se conservan $h_1(\mathbf{x})$ y $h_2(\mathbf{x})$ y se añade una pareja de términos nuevos siguiendo el mismo procedimiento. Y así sucesivamente, añadiendo de cada vez dos nuevos términos. Este procedimiento va creando un modelo lineal segmentado (piecewise) donde cada nuevo término modeliza una porción aislada de los datos originales.

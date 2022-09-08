@@ -179,7 +179,7 @@
 
 \title{Aprendizaje Estadístico}
 \author{Rubén Fernández Casal (\href{mailto:ruben.fcasal@udc.es}{\nolinkurl{ruben.fcasal@udc.es}}) \and Julián Costa Bouzas (\href{mailto:julian.costa@udc.es}{\nolinkurl{julian.costa@udc.es}}) \and Manuel Oviedo de la Fuente (\href{mailto:manuel.oviedo@udc.es}{\nolinkurl{manuel.oviedo@udc.es}})}
-\date{2021-09-29}
+\date{Edición: Septiembre de 2021. Impresión: 2022-09-08}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Teorema}[chapter]
@@ -275,13 +275,16 @@ Aunque esta ciencia incluiría también la gestión (sin olvidarnos del proceso 
 
 Una de estas etapas (que están interrelacionadas) es la construcción de modelos a partir de los datos para aprender y predecir. Podríamos decir que el Aprendizaje Estadístico (AE) se encarga de este problema desde el punto de vista estadístico.
 
-En Estadística se consideran modelos estocásticos (con componente aleatoria), para tratar de tener en cuenta la incertidumbre debida a que no se disponga de toda la información (sobre las variables que influyen en el fenómeno de interés).
+En Estadística se consideran modelos estocásticos (con componente aleatoria), para tratar de tener en cuenta la incertidumbre debida a que no se disponga de toda la información sobre las variables que influyen en el fenómeno de interés.
+Esto es lo que se conoce como \emph{aleatoriedad aparente}:
 
 \begin{quote}
 ``Nothing in Nature is random\ldots{} a thing appears random only through the incompleteness of our knowledge.''
 
 --- Spinoza, Baruch (Ethics, 1677)
 \end{quote}
+
+Aunque hoy en día gana peso la idea de la física cuántica de que en el fondo hay una \emph{aleatoriedad intrínseca}:
 
 \begin{quote}
 ``To my mind, although Spinoza lived and thought long before Darwin, Freud, Einstein, and the startling implications of quantum theory, he had a vision of truth beyond what is normally granted to human beings.''
@@ -515,7 +518,7 @@ Métodos de regresión:
 También existen paquetes de \texttt{R} que permiten utilizar plataformas de ML externas, como por ejemplo \href{https://github.com/h2oai/h2o-3/tree/master/h2o-r}{\texttt{h2o}} o \href{https://CRAN.R-project.org/package=RWeka}{\texttt{RWeka}}.
 
 Como todos estos paquetes emplean opciones, estructuras y convenciones sintácticas diferentes, se han desarrollado paquetes que proporcionan interfaces unificadas a muchas de estas implementaciones.
-Entre ellos podríamos citar \href{https://topepo.github.io/caret}{\texttt{caret}},\href{https://mlr3.mlr-org.com}{\texttt{mlr3}} y \href{https://www.tidymodels.org}{\texttt{tidymodels}}.
+Entre ellos podríamos citar \href{https://topepo.github.io/caret}{\texttt{caret}}, \href{https://mlr3.mlr-org.com}{\texttt{mlr3}} y \href{https://www.tidymodels.org}{\texttt{tidymodels}}.
 En la Sección \ref{caret} se incluye una breve introducción al paquete \href{https://topepo.github.io/caret}{\texttt{caret}} que será empleado en diversas ocasiones a lo largo del presente libro.
 
 Adicionalmente hay paquetes de R que disponen de entornos gráficos que permiten emplear estos métodos evitando el uso de comandos.
@@ -527,7 +530,7 @@ Entre ellos estarían R-Commander con el plugin FactoMineR (\texttt{Rcmdr}, \tex
 En Inferencia Estadística clásica el procedimiento habitual es emplear toda la información disponible para construir un modelo válido (que refleje de la forma más fiel posible lo que ocurre en la población) y asumiendo que el modelo es el verdadero (lo que en general sería falso) utilizar métodos de inferencia para evaluar su precisión.
 Por ejemplo, en el caso de regresión lineal múltiple, el coeficiente de determinación ajustado sería una medida del la precisión del modelo para predecir nuevas observaciones (no se debería emplear el coeficiente de determinación sin ajustar; aunque, en cualquier caso, su validez dependería de la de las suposiciones estructurales del modelo).
 
-Alternativamente, en Estadística Computacional es habitual emplear técnicas de remuestreo para evaluar la precisión (entrenando también el modelo con todos los datos disponibles), principalmente validación cruzada (leave-one-out, k-fold), jackniffe o bootstrap.
+Alternativamente, en Estadística Computacional es habitual emplear técnicas de remuestreo para evaluar la precisión (entrenando también el modelo con todos los datos disponibles), principalmente validación cruzada (leave-one-out, k-fold), jackknife o bootstrap.
 
 Por otra parte, como ya se comentó, algunos de los modelos empleados en AE son muy flexibles (están hiperparametrizados) y pueden aparecer problemas si se permite que se ajusten demasiado bien a las observaciones (podrían llegar a interpolar los datos).
 En estos casos habrá que controlar el procedimiento de aprendizaje, típicamente a traves de parámetros relacionados con la complejidad del modelo (ver sección siguiente).
@@ -935,6 +938,7 @@ además, se mitigaría el efecto de la variabilidad debida a aleatoriedad/semill
 
 Para estudiar la precisión de las predicciones de un método de regresión se evalúa el
 modelo en el conjunto de datos de test y se comparan las predicciones frente a los valores reales.
+Los resultados servirán como medidas globales de la calidad de las predicciones con nuevas observaciones.
 
 Si generamos un gráfico de dispersión de observaciones frente a predicciones, los puntos deberían estar en torno a la recta \(y=x\) (ver Figura \ref{fig:obs-pred-plot}).
 
@@ -1083,7 +1087,7 @@ Negativo & Falsos positivos (FP) & Verdaderos negativos (TN) \\
 \bottomrule
 \end{longtable}
 
-A partir de esta tabla se pueden obtener distintas medidas de la precisión de las predicciones.
+A partir de esta tabla se pueden obtener distintas medidas de la precisión de las predicciones (serían medidas globales de la calidad de la predicción de nuevas observaciones).
 Por ejemplo, dos de las más utilizadas son la tasa de verdaderos positivos y la de verdaderos negativos (tasas de acierto en positivos y negativos), también denominadas \emph{sensibilidad} y \emph{especificidad}:
 
 \begin{itemize}
@@ -1883,16 +1887,30 @@ Aunque su calidad predictiva es mediocre (especialmente en el caso de regresión
 
 La idea de este método consiste en la segmentación (partición) del \emph{espacio predictor} (es decir, del conjunto de posibles valores de las variables predictoras) en regiones tan simples que el proceso se pueda representar mediante un árbol binario.
 Se parte de un nodo inicial que representa a toda la muestra (se utiliza la muestra de entrenamiento), del que salen dos ramas que dividen la muestra en dos subconjuntos, cada uno representado por un nuevo nodo.
-Este proceso se repite un número finito de veces hasta obtener las hojas del árbol, es decir, los nodos terminales, que son los que se utilizan para realizar la predicción.
+Como se muestra en la Figura \ref{fig:arbol} este proceso se repite un número finito de veces hasta obtener las hojas del árbol, es decir, los nodos terminales, que son los que se utilizan para realizar la predicción.
 Una vez construido el árbol, la predicción se realizará en cada nodo terminal utilizando, típicamente, la media en un problema de regresión y la moda en un problema de clasificación.
 
-\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-2-1} \end{center}
+\begin{figure}[!htb]
 
-Al final de este proceso iterativo el espacio predictor se ha particionado en regiones de forma rectangular en la que la predicción de la respuesta es constante.
+{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/arbol-1} 
+
+}
+
+\caption{Ejemplo de un árbol de decisión obtenido al realizar una partición binaria recursiva de un espacio bidimensional.}\label{fig:arbol}
+\end{figure}
+
+Al final de este proceso iterativo el espacio predictor se ha particionado en regiones de forma rectangular en la que la predicción de la respuesta es constante (ver Figura \ref{fig:predictor}).
 Si la relación entre las variables predictoras y la variable respuesta no se puede describir adecuadamente mediante rectángulos, la calidad predictiva del árbol será limitada.
 Como vemos, la simplicidad del modelo es su principal argumento, pero también su talón de Aquiles.
 
-\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-3-1} \end{center}
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/predictor-1} 
+
+}
+
+\caption{Ejemplo de la superficie de predicción correspondiente a un árbol de decisión.}\label{fig:predictor}
+\end{figure}
 
 Como se ha dicho antes, cada nodo padre se divide, a través de dos ramas, en dos nodos hijos.
 Esto se hace seleccionando una variable predictora y dando respuesta a una pregunta dicotómica sobre ella.
@@ -1921,7 +1939,7 @@ En resumen:
 
 La metodología CART (Classification and Regresion Trees, \protect\hyperlink{ref-breiman1984classification}{Breiman et~al., 1984}) es la más popular para la construcción de árboles de decisión y es la que se va a explicar con algo de detalle en las siguientes secciones.
 
-En primer lugar se tratarán los \emph{árboles de regresión} (árboles de decisión en un problema de regresión, en el que la variable respuesta \(Y\) es numérica) y después veremos los \emph{arboles de clasificación} (respuesta categórica) que son los más utilizados en la práctica (los primeros se suelen emplear únicamente como métodos descriptivos o como base de métodos más complejos).
+En primer lugar se tratarán los \emph{árboles de regresión} (árboles de decisión en un problema de regresión, en el que la variable respuesta \(Y\) es numérica) y después veremos los \emph{árboles de clasificación} (respuesta categórica) que son los más utilizados en la práctica (los primeros se suelen emplear únicamente como métodos descriptivos o como base de métodos más complejos).
 Las variables predictoras \(\mathbf{X}=(X_1, X_2, \ldots, X_p)\) pueden ser tanto numéricas como categóricas.
 Además, con la metodología CART, las variables explicativas podrían contener datos faltantes.
 Se pueden establecer ``particiones sustitutas'' (\emph{surrogate splits}), de forma que cuando falta un valor en una variable que determina una división, se usa una variable alternativa que produce una partición similar.
@@ -2051,8 +2069,8 @@ mediante la opción anterior.
 También es habitual escribir la Ecuación \eqref{eq:rss-alpha} reescalando el parámetro de complejidad como \(\tilde \alpha = \alpha / RSS_0\), siendo \(RSS_0 = \sum_{i=1}^{n} (y_i - \bar y)^2\) la variabilidad total (la suma de cuadrados residual del árbol sin divisiones):
 \[RSS_{\tilde \alpha}=RSS + \tilde \alpha RSS_0 t\]
 
-De esta forma se podría interpretar el hiperparámetro \(\tilde \alpha\) como una penalización en la proporción de variabilidad explicada, ya que dividiendo la expresión anterior por \(RSS_0\) obtendríamos:
-\[R^2_{\tilde \alpha}=R^2+ \tilde \alpha  t\]
+De esta forma se podría interpretar el hiperparámetro \(\tilde \alpha\) como una penalización en la proporción de variabilidad explicada, ya que dividiendo la expresión anterior por \(RSS_0\) obtendríamos la proporción de variabilidad residual y a partir de ella podríamos definir:
+\[R^2_{\tilde \alpha}=R^2 - \tilde \alpha  t\]
 
 \hypertarget{uxe1rboles-de-clasificaciuxf3n-cart}{%
 \section{Árboles de clasificación CART}\label{uxe1rboles-de-clasificaciuxf3n-cart}}
@@ -2150,8 +2168,7 @@ Emplearemos el conjunto de datos \emph{winequality.RData} (ver \protect\hyperlin
 (\texttt{fixed.acidity}, \texttt{volatile.acidity}, \texttt{citric.acid}, \texttt{residual.sugar}, \texttt{chlorides}, \texttt{free.sulfur.dioxide},
 \texttt{total.sulfur.dioxide}, \texttt{density}, \texttt{pH}, \texttt{sulphates} y \texttt{alcohol}) y sensorial (\texttt{quality})
 de una muestra de 1250 vinos portugueses de la variedad \emph{Vinho Verde}.
-Como respuesta consideraremos la variable \texttt{quality}, mediana de al menos 3 evaluaciones de la calidad del vino
-realizadas por expertos, que los evaluaron entre 0 (muy malo) y 10 (muy excelente).
+Como respuesta consideraremos la variable \texttt{quality} , mediana de al menos 3 evaluaciones de la calidad del vino realizadas por expertos, que los evaluaron entre 0 (muy malo) y 10 (muy excelente) como puede observarse en el gráfico de barras de la Figura \ref{fig:barplot}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2182,7 +2199,14 @@ realizadas por expertos, que los evaluaron entre 0 (muy malo) y 10 (muy excelent
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-4-1} \end{center}
+\textbackslash begin\{figure\}{[}!htb{]}
+
+\{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/barplot-1}
+
+\}
+
+\textbackslash caption\{Distribución de frecuencias de la calidad del vino (\texttt{winequality\$quality}).\}\label{fig:barplot}
+\textbackslash end\{figure\}
 
 En primer lugar se selecciona el 80\% de los datos como muestra de entrenamiento y el 20\% restante como muestra de test:
 
@@ -2196,7 +2220,7 @@ En primer lugar se selecciona el 80\% de los datos como muestra de entrenamiento
 \end{Highlighting}
 \end{Shaded}
 
-Podemos obtener el arbol con las opciones por defecto con el comando:
+Podemos obtener el árbol de decisión con las opciones por defecto con el comando:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2242,7 +2266,7 @@ marcando con un \texttt{*} los nodos terminales.
 ##      7) alcohol>=11.775 178 105.23600 6.584270 *
 \end{verbatim}
 
-Para representarlo se puede emplear las herramientas del paquete \href{https://CRAN.R-project.org/package=rpart}{\texttt{rpart}}:
+Para representarlo se puede emplear las herramientas del paquete \href{https://CRAN.R-project.org/package=rpart}{\texttt{rpart}} (ver Figura \ref{fig:arbolrpart}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2251,18 +2275,32 @@ Para representarlo se puede emplear las herramientas del paquete \href{https://C
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-8-1} \end{center}
+\textbackslash begin\{figure\}{[}!htb{]}
 
-Pero puede ser preferible emplear el paquete \href{https://CRAN.R-project.org/package=rpart.plot}{\texttt{rpart.plot}}
+\{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/arbolrpart-1}
+
+\}
+
+\textbackslash caption\{Árbol de regresión para predecir \texttt{winequality\$quality} (obtenido con las opciones por defecto de \texttt{rpart()}).\}\label{fig:arbolrpart}
+\textbackslash end\{figure\}
+
+Pero puede ser preferible emplear el paquete \href{https://CRAN.R-project.org/package=rpart.plot}{\texttt{rpart.plot}} (ver Figura \ref{fig:arbolrpartplot}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(rpart.plot)}
-\FunctionTok{rpart.plot}\NormalTok{(tree, }\AttributeTok{main=}\StringTok{"Regresion tree winequality"}\NormalTok{)  }
+\FunctionTok{rpart.plot}\NormalTok{(tree)  }
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-9-1} \end{center}
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/arbolrpartplot-1} 
+
+}
+
+\caption{Representación del árbol de regresión obtenida con `rpart.plot()`.}\label{fig:arbolrpartplot}
+\end{figure}
 
 Nos interesa como se clasificaría a una nueva observación en los nodos terminales (en los nodos intermedios solo nos interesarían las condiciones, y el orden de las variables consideradas, hasta llegar a las hojas) y las correspondientes predicciones (la media de la respuesta en el correspondiente nodo terminal).
 Para ello, puede ser de utilidad imprimir las reglas:
@@ -2326,7 +2364,7 @@ Para ello, puede ser de utilidad imprimir las reglas:
 ##     alcohol >= 12
 \end{verbatim}
 
-Por defecto se poda el arbol considerando \texttt{cp\ =\ 0.01}, que puede ser adecuado en muchos casos.
+Por defecto se poda el árbol considerando \texttt{cp\ =\ 0.01}, que puede ser adecuado en muchos casos.
 Sin embargo, para seleccionar el valor óptimo de este (hiper)parámetro se puede emplear validación cruzada.
 En primer lugar habría que establecer \texttt{cp\ =\ 0} para construir el árbol completo, a la profundidad máxima
 (determinada por los valores de \texttt{minsplit} y \texttt{minbucket}, que se podrían seleccionar
@@ -2340,7 +2378,7 @@ En primer lugar habría que establecer \texttt{cp\ =\ 0} para construir el árbo
 
 Posteriormente podemos emplear las funciones \texttt{printcp()} (o \texttt{plotcp()}) para obtener (representar)
 los valores de CP para los árboles (óptimos) de menor tamaño junto con su error de validación cruzada
-\texttt{xerror} (reescalado de forma que el máximo de \texttt{rel\ error} es 1)\footnote{Realmente en la tabla de texto se muestra el valor mínimo de CP, ya que se obtendría la misma solución para un rango de valores de CP (desde ese valor hasta el anterior, sin incluirlo), mientras que en el gráfico generado por \texttt{plotcp()} se representa la media geométrica de los extremos de ese intervalo.}:
+\texttt{xerror} (reescalado de forma que el máximo de \texttt{rel\ error} es 1)\footnote{Realmente en la tabla de texto se muestra el valor mínimo de CP, ya que se obtendría la misma solución para un rango de valores de CP (desde ese valor hasta el anterior, sin incluirlo), mientras que en el gráfico generado por \texttt{plotcp()} se representa la media geométrica de los extremos de ese intervalo (ver Figura \ref{fig:cp}).}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2432,7 +2470,14 @@ los valores de CP para los árboles (óptimos) de menor tamaño junto con su err
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-12-1} \end{center}
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/cp-1} 
+
+}
+
+\caption{Error de validación cruzada (reescalado) dependiendo del parámetro de complejidad CP empleado en el ajuste del árbol de decisión.}\label{fig:cp}
+\end{figure}
 
 La tabla con los valores de las podas (óptimas, dependiendo del parámetro de complejidad)
 está almacenada en la componente \texttt{\$cptable}:
@@ -2483,16 +2528,23 @@ siguiendo el criterio de un error estándar de \protect\hyperlink{ref-breiman198
 \end{Highlighting}
 \end{Shaded}
 
-Para obtener el modelo final podamos el arbol con el valor de complejidad obtenido 0.0130437 (que en este caso coincide con el valor óptimo):
+Para obtener el modelo final (ver Figura \ref{fig:arbolpoda}) podamos el árbol con el valor de complejidad obtenido 0.0130437 que en este caso coincide con el valor óptimo).
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{tree }\OtherTok{\textless{}{-}} \FunctionTok{prune}\NormalTok{(tree, }\AttributeTok{cp =}\NormalTok{ cp)}
-\FunctionTok{rpart.plot}\NormalTok{(tree, }\AttributeTok{main=}\StringTok{"Regresion tree winequality"}\NormalTok{) }
+\FunctionTok{rpart.plot}\NormalTok{(tree) }
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-15-1} \end{center}
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/arbolpoda-1} 
+
+}
+
+\caption{Árbol de regresión resultante después de la poda (modelo final).}\label{fig:arbolpoda}
+\end{figure}
 
 Podríamos estudiar el modelo final, por ejemplo mediante el método \texttt{summary()}, que entre otras cosas muestra una medida (en porcentaje) de la importancia de las variables explicativas para la predicción de la respuesta (teniendo en cuenta todas las particiones, principales y secundarias, en las que se emplea cada variable explicativa).
 Alternativamente podríamos emplear el siguiente código:
@@ -2517,7 +2569,7 @@ Alternativamente podríamos emplear el siguiente código:
 ##                  1.1
 \end{verbatim}
 
-El último paso sería evaluarlo en la muestra de test siguiendo los pasos descritos en la Sección \ref{eval-reg}:
+El último paso sería evaluarlo en la muestra de test siguiendo los pasos descritos en la Sección \ref{eval-reg}. A continuación se muestra el código necesario (la Figura \ref{fig:obsXpred} muestra dicho rendimiento a través de remuestreo).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2526,13 +2578,19 @@ El último paso sería evaluarlo en la muestra de test siguiendo los pasos descr
 
 \CommentTok{\# plot(pred, obs, main = "Observado frente a predicciones (quality)",}
 \CommentTok{\#      xlab = "Predicción", ylab = "Observado")}
-\FunctionTok{plot}\NormalTok{(}\FunctionTok{jitter}\NormalTok{(pred), }\FunctionTok{jitter}\NormalTok{(obs), }\AttributeTok{main =} \StringTok{"Observado frente a predicciones (quality)"}\NormalTok{,}
-     \AttributeTok{xlab =} \StringTok{"Predicción"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Observado"}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(}\FunctionTok{jitter}\NormalTok{(pred), }\FunctionTok{jitter}\NormalTok{(obs), }\AttributeTok{xlab =} \StringTok{"Predicción"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Observado"}\NormalTok{)}
 \FunctionTok{abline}\NormalTok{(}\AttributeTok{a =} \DecValTok{0}\NormalTok{, }\AttributeTok{b =} \DecValTok{1}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-17-1} \end{center}
+\textbackslash begin\{figure\}{[}!htb{]}
+
+\{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/obsXpred-1}
+
+\}
+
+\textbackslash caption\{Gráfico de observaciones frente a predicciones (\texttt{test\$quality}; se añade una perturbación para mostrar la distribución de los valores).\}\label{fig:obsXpred}
+\textbackslash end\{figure\}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2575,6 +2633,100 @@ El último paso sería evaluarlo en la muestra de test siguiendo los pasos descr
 ##           me         rmse          mae          mpe         mape    r.squared 
 ## -0.001269398  0.814561435  0.657426365 -1.952342173 11.576716037  0.192007721
 \end{verbatim}
+
+Como se puede observar el ajuste del modelo es bastante malo, como ya se comentó esto es habitual en árboles de regresión (especialmente si son tan pequeños) y normalmente solo se utilizan en un análisis exploratorio inicial (o como base para modelos más avanzados como los mostrados en el siguiente capítulo).
+En problemas de clasificación es más habitual que se puedan llegar a obtener buenos ajustes con árboles de decisión.
+
+\begin{exercise}
+\protect\hypertarget{exr:efecto-semilla}{}{\label{exr:efecto-semilla} }
+\end{exercise}
+
+Como se comentó en la introducción del Capítulo \ref{intro-AE} al emplear el procedimiento habitual en AE de particionar los datos no se garantiza la reproducibilidad/repetibilidad de los resultados ya que dependen de la semilla.
+El modelo ajustado puede cambiar al variar la semilla (sobre todo si el conjunto de entrenamiento es pequeño; además, en algunos modelos el método de ajuste depende también de la semilla) pero normalmente no hay grandes cambios en las predicciones.
+
+Podemos ilustrar el efecto de la semilla en los resultados empleando el ejemplo anterior.
+Habría que repetir el ajuste de un árbol de regresión considerando distintas semillas y comparar los resultados obtenidos.
+
+La dificultad podría estar en como comparar los resultados.
+Una posible solución sería mantener fija la muestra de test (que forma que no dependa de las semillas).
+Por comodidad podríamos considerar las primeras \texttt{ntest} observaciones del conjunto de datos.
+Posteriormente, para cada semilla, seleccionaríamos la muestra de entrenamiento de la forma habitual y ajustaríamos un árbol. Finalmente evaluaríamos los resultados en la muestra de test.
+
+Como base se podría considerar el siguiente código:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ntest }\OtherTok{\textless{}{-}} \DecValTok{10}
+\NormalTok{test }\OtherTok{\textless{}{-}}\NormalTok{ winequality[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{ntest, ]}
+\NormalTok{df }\OtherTok{\textless{}{-}}\NormalTok{ winequality[}\SpecialCharTok{{-}}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{ntest), ]}
+\NormalTok{nobs }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(df)}
+
+\CommentTok{\# Para las distintas semillas}
+\FunctionTok{set.seed}\NormalTok{(semilla)}
+\NormalTok{itrain }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(nobs, }\FloatTok{0.8} \SpecialCharTok{*}\NormalTok{ nobs)}
+\NormalTok{train }\OtherTok{\textless{}{-}}\NormalTok{ df[itrain, ]}
+
+\CommentTok{\# tree \textless{}{-} ...}
+\end{Highlighting}
+\end{Shaded}
+
+Como comentario final, en este caso el conjunto de datos no es muy grande y tampoco se obtuvo un buen ajuste con un árbol de regresión, por lo que sería de esperar que se observaran más diferencias.
+
+\begin{exercise}
+\protect\hypertarget{exr:train-validate-test-tree}{}{\label{exr:train-validate-test-tree} }
+\end{exercise}
+
+Como ya se mostró, el paquete \texttt{rpart} implementa la selección del parámetro de complejidad mediante validación cruzada.
+Como alternativa, siguiendo la idea del Ejercicio \ref{exr:train-validate-test}, y considerando de nuevo el ejemplo anterior, particionar la muestra en datos de entrenamiento (70\%), de validación (15\%) y de test (15\%), para ajustar los árboles de decisión, seleccionar el parámetro de complejidad (el hiperparámetro) y evaluar las predicciones del modelo final, respectivamente.
+
+\begin{exercise}
+\protect\hypertarget{exr:train-boot-tree}{}{\label{exr:train-boot-tree} }
+\end{exercise}
+
+Una alternativa a particionar en entrenamiento y validación sería emplear bootstrap.
+La idea es emplear una remuestra bootstrap del conjunto de datos de entrenamiento para ajustar el modelo y utilizar las observaciones no seleccionadas (se suelen denominar datos \emph{out of bag}) como conjunto de validación.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{nobs }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(winequality)}
+\NormalTok{itrain }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(nobs, }\FloatTok{0.8} \SpecialCharTok{*}\NormalTok{ nobs)}
+\NormalTok{train }\OtherTok{\textless{}{-}}\NormalTok{ winequality[itrain, ]}
+\NormalTok{test }\OtherTok{\textless{}{-}}\NormalTok{ winequality[}\SpecialCharTok{{-}}\NormalTok{itrain, ]}
+
+\CommentTok{\# Indice muestra de entrenamiento bootstrap}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{ntrain }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(train)}
+\NormalTok{itrain.boot }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(ntrain, }\AttributeTok{replace =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{train.boot }\OtherTok{\textless{}{-}}\NormalTok{ train[itrain.boot, ]}
+\end{Highlighting}
+\end{Shaded}
+
+La muestra bootstrap va a contener muchas observaciones repetidas y habrá observaciones no seleccionadas.
+La probabilidad de que una observación no sea seleccionada es \((1 - 1/n)^n \approx e^{-1} \approx 0.37\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Número de casos "out of bag"}
+\NormalTok{ntrain }\SpecialCharTok{{-}} \FunctionTok{length}\NormalTok{(}\FunctionTok{unique}\NormalTok{(itrain.boot))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 370
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Muestra "out of bag"}
+\CommentTok{\# oob \textless{}{-} train[{-}unique(itrain.boot), ]}
+\NormalTok{oob }\OtherTok{\textless{}{-}}\NormalTok{ train[}\SpecialCharTok{{-}}\NormalTok{itrain.boot, ]}
+\end{Highlighting}
+\end{Shaded}
+
+El resto sería igual que el caso anterior cambiando \texttt{train} por \texttt{train.boot} y \texttt{validate} por \texttt{oob}.
+
+Como comentario final, lo recomendable sería repetir el proceso un número grande de veces y promediar los errores (esto está relacionado con el método de \emph{bagging} descrito en el siguiente capítulo), especialmente cuando el tamaño muestral es pequeño, pero por simplicidad consideraremos únicamente una muestra boostrap.
 
 \hypertarget{class-rpart}{%
 \subsection{Ejemplo: modelo de clasificación}\label{class-rpart}}
@@ -2675,20 +2827,29 @@ En este caso al imprimirlo como información de los nodos se muestra (además de
 ##       15) pH< 3.235 146  35 bad (0.2397260 0.7602740) *
 \end{verbatim}
 
-También puede ser preferible emplear el paquete \href{https://CRAN.R-project.org/package=rpart.plot}{\texttt{rpart.plot}} para representarlo:
+También puede ser preferible emplear el paquete \href{https://CRAN.R-project.org/package=rpart.plot}{\texttt{rpart.plot}} para representarlo (ver Figura \ref{fig:arbolclassif}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(rpart.plot)}
-\FunctionTok{rpart.plot}\NormalTok{(tree, }\AttributeTok{main=}\StringTok{"Classification tree winetaste"}\NormalTok{) }\CommentTok{\# Alternativa: rattle::fancyRpartPlot}
+\FunctionTok{rpart.plot}\NormalTok{(tree) }\CommentTok{\# Alternativa: rattle::fancyRpartPlot}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-22-1} \end{center}
+\textbackslash begin\{figure\}{[}!htb{]}
+
+\{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/arbolclassif-1}
+
+\}
+
+\textbackslash caption\{Árbol de clasificación de \texttt{winetaste\$taste} (obtenido con las opciones por defecto).\}\label{fig:arbolclassif}
+\textbackslash end\{figure\}
+
+Nos interesa como se clasificaría a una nueva observación (como se llega a los nodos terminales) y su probabilidad estimada (la frecuencia relativa de la clase más frecuente en el correspondiente nodo terminal). Para ello se puede modificar la información que se muestra en cada nodo (ver Figura \ref{fig:arbolextra}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{rpart.plot}\NormalTok{(tree, }\AttributeTok{main=}\StringTok{"Classification tree winetaste"}\NormalTok{,}
+\FunctionTok{rpart.plot}\NormalTok{(tree, }
            \AttributeTok{extra =} \DecValTok{104}\NormalTok{,          }\CommentTok{\# show fitted class, probs, percentages}
            \AttributeTok{box.palette =} \StringTok{"GnBu"}\NormalTok{, }\CommentTok{\# color scheme}
            \AttributeTok{branch.lty =} \DecValTok{3}\NormalTok{,       }\CommentTok{\# dotted branch lines}
@@ -2697,9 +2858,14 @@ También puede ser preferible emplear el paquete \href{https://CRAN.R-project.or
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-22-2} \end{center}
+\textbackslash begin\{figure\}{[}!htb{]}
 
-Nos interesa como se clasificaría a una nueva observación (como se llega a los nodos terminales) y su probabilidad estimada (la frecuencia relativa de la clase más frecuente en el correspondiente nodo terminal).
+\{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/arbolextra-1}
+
+\}
+
+\textbackslash caption\{Representación del árbol de clasificación de \texttt{winetaste\$taste} incluyendo información adicional en los nodos.\}\label{fig:arbolextra}
+\textbackslash end\{figure\}
 Al igual que en el caso de regresión, puede ser de utilidad imprimir las reglas:
 
 \begin{Shaded}
@@ -2773,7 +2939,7 @@ Al igual que en el caso de regresión, puede ser de utilidad imprimir las reglas
 ##     total.sulfur.dioxide < 150
 \end{verbatim}
 
-Al igual que en el caso anterior, para seleccionar un valor óptimo del (hiper)parámetro de complejidad, se puede construir un árbol de decisión completo y emplear validación cruzada para podarlo.
+También se suele emplear el mismo procedimiento para seleccionar un valor óptimo del (hiper)parámetro de complejidad, se construye un árbol de decisión completo y se emplea validación cruzada para podarlo.
 Además, si el número de observaciones es grande y las clases están más o menos balanceadas,
 se podría aumentar los valores mínimos de observaciones en los nodos intermedios y terminales\footnote{Otra opción, más interesante para regresión, sería considerar estos valores como hiperparámetros.}, por ejemplo:
 
@@ -2791,7 +2957,7 @@ En este caso mantenemos el resto de valores por defecto:
 \end{Highlighting}
 \end{Shaded}
 
-Representamos los errores (reescalados) de validación cruzada:
+Representamos los errores (reescalados) de validación cruzada (ver Figura \ref{fig:errorclassif})
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2800,9 +2966,16 @@ Representamos los errores (reescalados) de validación cruzada:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-26-1} \end{center}
+\begin{figure}[!htb]
 
-Para obtener el modelo final, seleccionamos el valor óptimo de complejidad siguiendo el criterio de un error estándar de \protect\hyperlink{ref-breiman1984classification}{Breiman et~al.} (\protect\hyperlink{ref-breiman1984classification}{1984}) y podamos el arbol:
+{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/errorclassif-1} 
+
+}
+
+\caption{Evolución del error (reescalado) de validación cruzada en función del parámetro de complejidad.}\label{fig:errorclassif}
+\end{figure}
+
+Para obtener el modelo final, seleccionamos el valor óptimo de complejidad siguiendo el criterio de un error estándar de \protect\hyperlink{ref-breiman1984classification}{Breiman et~al.} (\protect\hyperlink{ref-breiman1984classification}{1984}) y podamos el árbol (ver Figura \ref{fig:arbolclassifpoda}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2818,11 +2991,18 @@ Para obtener el modelo final, seleccionamos el valor óptimo de complejidad sigu
 \CommentTok{\# importance \textless{}{-} tree$variable.importance}
 \CommentTok{\# importance \textless{}{-} round(100*importance/sum(importance), 1)}
 \CommentTok{\# importance[importance \textgreater{}= 1]}
-\FunctionTok{rpart.plot}\NormalTok{(tree, }\AttributeTok{main=}\StringTok{"Classification tree winetaste"}\NormalTok{)}
+\FunctionTok{rpart.plot}\NormalTok{(tree) }\CommentTok{\#, main="Classification tree winetaste"}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-27-1} \end{center}
+\textbackslash begin\{figure\}{[}!htb{]}
+
+\{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/arbolclassifpoda-1}
+
+\}
+
+\textbackslash caption\{Árbol de clasificación de \texttt{winetaste\$taste} obtenido después de la poda (modelo final).\}\label{fig:arbolclassifpoda}
+\textbackslash end\{figure\}
 
 El último paso sería evaluarlo en la muestra de test siguiendo los pasos descritos en la Sección \ref{eval-class}.
 El método \texttt{predict()} por defecto (\texttt{type\ =\ "prob"}) devuelve una matriz con las probabilidades de cada clase, habrá que establecer \texttt{type\ =\ "class"} (para más detalles consultar la ayuda de \texttt{predic.rpart()}).
@@ -2899,7 +3079,7 @@ El método \texttt{predict()} por defecto (\texttt{type\ =\ "prob"}) devuelve un
 
 En \texttt{caret} podemos ajustar un árbol CART seleccionando \texttt{method\ =\ "rpart"}.
 Por defecto emplea bootstrap de las observaciones para seleccionar el valor óptimo del hiperparámetro \texttt{cp} (considerando únicamente tres posibles valores).
-Si queremos emplear validación cruzada como en el caso anterior podemos emplear la función auxiliar \texttt{trainControl()} y para considerar un mayor rango de posibles valores, el argumento \texttt{tuneLength}.
+Si queremos emplear validación cruzada como en el caso anterior podemos emplear la función auxiliar \texttt{trainControl()} y para considerar un mayor rango de posibles valores, el argumento \texttt{tuneLength} (ver Figura \ref{fig:arbolclassifggplot}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2907,7 +3087,7 @@ Si queremos emplear validación cruzada como en el caso anterior podemos emplear
 \CommentTok{\# names(getModelInfo()) \# Listado de todos los métodos disponibles}
 \CommentTok{\# modelLookup("rpart")  \# Información sobre hiperparámetros}
 \FunctionTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
-\CommentTok{\# itrain \textless{}{-} \textless{}{-} createDataPartition(winetaste$taste, p = 0.8, list = FALSE)}
+\CommentTok{\# itrain \textless{}{-} createDataPartition(winetaste$taste, p = 0.8, list = FALSE)}
 \CommentTok{\# train \textless{}{-} winetaste[itrain, ]}
 \CommentTok{\# test \textless{}{-} winetaste[{-}itrain, ]}
 \NormalTok{caret.rpart }\OtherTok{\textless{}{-}} \FunctionTok{train}\NormalTok{(taste }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{method =} \StringTok{"rpart"}\NormalTok{, }\AttributeTok{data =}\NormalTok{ train, }
@@ -2961,7 +3141,16 @@ Si queremos emplear validación cruzada como en el caso anterior podemos emplear
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-29-1} \end{center}
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/arbolclassifggplot-1} 
+
+}
+
+\caption{Evolución de la precisión (obtenida mediante validación cruzada) dependiendo del parámetro de complejidad.}\label{fig:arbolclassifggplot}
+\end{figure}
+
+El modelo final es el siguiente (ver Figura \ref{fig:arbolfinalcaret})
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3000,13 +3189,20 @@ Si queremos emplear validación cruzada como en el caso anterior podemos emplear
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{rpart.plot}\NormalTok{(caret.rpart}\SpecialCharTok{$}\NormalTok{finalModel, }\AttributeTok{main=}\StringTok{"Classification tree winetaste"}\NormalTok{)}
+\FunctionTok{rpart.plot}\NormalTok{(caret.rpart}\SpecialCharTok{$}\NormalTok{finalModel) }\CommentTok{\#, main="Classification tree winetaste"}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-29-2} \end{center}
+\textbackslash begin\{figure\}{[}!htb{]}
 
-Para utilizar la regla de ``un error estándar'' se puede añadir \texttt{selectionFunction\ =\ "oneSE"}
+\{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/arbolfinalcaret-1}
+
+\}
+
+\textbackslash caption\{Árbol de clasificación de \texttt{winetaste\$taste}, obtenido con la complejidad ``óptima'' (empleando \texttt{caret}).\}\label{fig:arbolfinalcaret}
+\textbackslash end\{figure\}
+
+Para utilizar la regla de ``un error estándar'' se puede añadir \texttt{selectionFunction\ =\ "oneSE"}. A continuacióno se muestra dicho código y en la Figura \ref{fig:arbolclassifoneSE} el árbol resultante.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3079,11 +3275,18 @@ Para utilizar la regla de ``un error estándar'' se puede añadir \texttt{select
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{rpart.plot}\NormalTok{(caret.rpart}\SpecialCharTok{$}\NormalTok{finalModel, }\AttributeTok{main =} \StringTok{"Classification tree winetaste"}\NormalTok{)}
+\FunctionTok{rpart.plot}\NormalTok{(caret.rpart}\SpecialCharTok{$}\NormalTok{finalModel)}\CommentTok{\#, main = "Classification tree winetaste"}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-30-1} \end{center}
+\textbackslash begin\{figure\}{[}!htb{]}
+
+\{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/arbolclassifoneSE-1}
+
+\}
+
+\textbackslash caption\{Árbol de clasificación de \texttt{winetaste\$taste}, obtenido con la regla de un error estándar para seleccionar la complejidad (empleando \texttt{caret}).\}\label{fig:arbolclassifoneSE}
+\textbackslash end\{figure\}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3092,7 +3295,14 @@ Para utilizar la regla de ``un error estándar'' se puede añadir \texttt{select
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/unnamed-chunk-30-2} \end{center}
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/arbolImpor-1} 
+
+}
+
+\caption{Importancia de los (posibles) predictores según el modelo obtenido con la regla de un error estándar.}\label{fig:arbolImpor}
+\end{figure}
 
 Para calcular las predicciones (o las estimaciones de las probabilidades) podemos emplear el método \texttt{predict.train()} y posteriormente \texttt{confusionMatrix()} para evaluar su precisión:
 
@@ -3143,10 +3353,20 @@ NOTA: En principio también se podría utilizar la regla de ``un error estándar
 \NormalTok{caret.rpart}
 \FunctionTok{printcp}\NormalTok{(caret.rpart}\SpecialCharTok{$}\NormalTok{finalModel)}
 \NormalTok{caret.rpart}\SpecialCharTok{$}\NormalTok{finalModel}
-\FunctionTok{rpart.plot}\NormalTok{(caret.rpart}\SpecialCharTok{$}\NormalTok{finalModel, }\AttributeTok{main =} \StringTok{"Classification tree winetaste"}\NormalTok{)}
+\FunctionTok{rpart.plot}\NormalTok{(caret.rpart}\SpecialCharTok{$}\NormalTok{finalModel) }\CommentTok{\#, main = "Classification tree winetaste"}
 \FunctionTok{varImp}\NormalTok{(caret.rpart)}
 \end{Highlighting}
 \end{Shaded}
+
+Como alternativas al uso de la metodología CART desde \texttt{cartet} se puede considerar las opciones de los metapaquetes:
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://mlr3book.mlr-org.com/mlr3book.pdf}{\texttt{mlr3}}, que incorpora una llamada a \texttt{rpart::rpart()} desde sus \textbf{learners} \texttt{lrn("regr.rpart")} y \texttt{lrn("classif.rpart")}.
+\item
+  \href{https://www.h2o.ai/blog/finally-you-can-plot-h2o-decision-trees-in-r/}{\texttt{h2o}}, que aunque no ofrece una implementación de los árboles CART, sí ofrece dos alternativas más sofisticadas usando bosques aleatorios \texttt{h2o.randomForest()} y los procedimientos basados en el aumento del gradiente \texttt{h2o.gbm()}.
+\end{itemize}
 
 \hypertarget{alternativas-a-los-uxe1rboles-cart}{%
 \section{Alternativas a los árboles CART}\label{alternativas-a-los-uxe1rboles-cart}}
@@ -3186,7 +3406,7 @@ Por otra parte hay que ser conscientes de que los contrastes de hipótesis y la 
 \hypertarget{ejemplo-1}{%
 \subsection{Ejemplo}\label{ejemplo-1}}
 
-Siguiendo con el problema de clasificación anterior, podríamos ajustar un arbol de decisión empleando la metodología de \emph{inferencia condicional} mediante el siguiente código:
+Siguiendo con el problema de clasificación anterior, podríamos ajustar un árbol de decisión empleando la metodología de \emph{inferencia condicional} mediante el siguiente código:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3196,14 +3416,14 @@ Siguiendo con el problema de clasificación anterior, podríamos ajustar un arbo
 \end{Highlighting}
 \end{Shaded}
 
-\begin{figure}[!htb]
+\textbackslash begin\{figure\}{[}!htb{]}
 
-{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/ctree-plot-1} 
+\{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/ctree-plot-1}
 
-}
+\}
 
-\caption{Arbol de decisión para clasificar la calidad del vino obtenido con el método condicional.}\label{fig:ctree-plot}
-\end{figure}
+\textbackslash caption\{Árbol de decisión para clasificar la calidad del vino (\texttt{winetaste\$taste}) obtenido con el método condicional.\}\label{fig:ctree-plot}
+\textbackslash end\{figure\}
 
 Para más detalles ver la vignette del paquete \href{https://cran.r-project.org/web/packages/party/vignettes/party.pdf}{\emph{party: A Laboratory for Recursive Partytioning}}.
 
@@ -3412,16 +3632,23 @@ Al ser bagging con árboles un caso particular de bosques aleatorios, cuando \(m
 ## bad   138 200   0.4082840
 \end{verbatim}
 
-Con el método \texttt{plot()} podemos examinar la convergencia del error en las muestras OOB (simplemente emplea \texttt{matplot()} para representar la componente \texttt{\$err.rate}):
+Con el método \texttt{plot()} podemos examinar la convergencia del error en las muestras OOB (simplemente emplea \texttt{matplot()} para representar la componente \texttt{\$err.rate} como se muestra en la Figura \ref{fig:bagging-conv}):
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{plot}\NormalTok{(bagtrees, }\AttributeTok{main =} \StringTok{"Tasas de error"}\NormalTok{)}
-\FunctionTok{legend}\NormalTok{(}\StringTok{"topright"}\NormalTok{, }\FunctionTok{colnames}\NormalTok{(bagtrees}\SpecialCharTok{$}\NormalTok{err.rate), }\AttributeTok{lty =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{, }\AttributeTok{col =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(bagtrees, }\AttributeTok{main =} \StringTok{""}\NormalTok{)}
+\FunctionTok{legend}\NormalTok{(}\StringTok{"right"}\NormalTok{, }\FunctionTok{colnames}\NormalTok{(bagtrees}\SpecialCharTok{$}\NormalTok{err.rate), }\AttributeTok{lty =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{, }\AttributeTok{col =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/bagging-conv-1} \end{center}
+\textbackslash begin\{figure\}{[}!htb{]}
+
+\{\centering \includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/bagging-conv-1}
+
+\}
+
+\textbackslash caption\{Tasas de error OOB al usar bagging para la predicción de \texttt{winetaste\$taste} (realizado empleando \texttt{randomForest()} con \texttt{mtry} igual al número de predictores).\}\label{fig:bagging-conv}
+\textbackslash end\{figure\}
 
 Como vemos que los errores se estabilizan podríamos pensar que aparentemente hay convergencia (aunque situaciones de alta dependencia entre los árboles dificultarían su interpretación).
 
@@ -3531,18 +3758,25 @@ Continuando con el ejemplo anterior, empleamos la función \texttt{randomForest(
 ## bad   136 202   0.4023669
 \end{verbatim}
 
-En este caso también observamos que aparentemente hay convergencia y tampoco sería necesario incrementar el número de árboles:
+En este caso también observamos en la Figura \ref{fig:rf-plot} que aparentemente hay convergencia y tampoco sería necesario incrementar el número de árboles:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{plot}\NormalTok{(rf, }\AttributeTok{main =} \StringTok{"Tasas de error"}\NormalTok{)}
-\FunctionTok{legend}\NormalTok{(}\StringTok{"topright"}\NormalTok{, }\FunctionTok{colnames}\NormalTok{(rf}\SpecialCharTok{$}\NormalTok{err.rate), }\AttributeTok{lty =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{, }\AttributeTok{col =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(rf,}\AttributeTok{main=}\StringTok{""}\NormalTok{)}
+\FunctionTok{legend}\NormalTok{(}\StringTok{"right"}\NormalTok{, }\FunctionTok{colnames}\NormalTok{(rf}\SpecialCharTok{$}\NormalTok{err.rate), }\AttributeTok{lty =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{, }\AttributeTok{col =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/rf-plot-1} \end{center}
+\textbackslash begin\{figure\}{[}!htb{]}
 
-Podemos mostrar la importancia de las variables predictoras con la función \texttt{importance()} o representarlas con \texttt{varImpPlot()}:
+\{\centering \includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/rf-plot-1}
+
+\}
+
+\textbackslash caption\{Tasas de error OOB al usar bosques aleatorios para la predicción de \texttt{winetaste\$taste} (empleando \texttt{randomForest()} con las opciones por defecto).\}\label{fig:rf-plot}
+\textbackslash end\{figure\}
+
+Podemos mostrar la importancia de las variables predictoras (utilizadas en el bosque aleatorio y sus sustituas) con la función \texttt{importance()} o representarlas con \texttt{varImpPlot()} (ver Figura \ref{fig:rf-importance}):
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3571,7 +3805,14 @@ Podemos mostrar la importancia de las variables predictoras con la función \tex
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/rf-importance-1} \end{center}
+\textbackslash begin\{figure\}{[}!htb{]}
+
+\{\centering \includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/rf-importance-1}
+
+\}
+
+\textbackslash caption\{Importancia de las variables predictoras al emplear bosques aleatorios para la predicción de \texttt{winetaste\$taste}.\}\label{fig:rf-importance}
+\textbackslash end\{figure\}
 
 Si evaluamos la precisión en la muestra de test podemos observar un ligero incremento en la precisión en comparación con el método anterior:
 
@@ -3635,7 +3876,8 @@ Esta mejora sería debida a que en este caso la dependencia entre los árboles e
 \end{verbatim}
 
 El análisis e interpretación del modelo puede resultar más complicado en este tipo de métodos.
-Por ejemplo, podemos emplear alguna de las herramientas mostradas en la Sección \ref{analisis-modelos}:
+Para estudiar el efecto de los predictores en la respuesta se suelen emplear alguna de las herramientas descritas en la Sección \ref{analisis-modelos}.
+Por ejemplo, empleando la función \texttt{pdp::partial()}, podemos generar gráficos PDP estimando los efectos individuales de los predictores (ver Figura \ref{fig:rf-pdp-uni-plot}):
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3644,12 +3886,21 @@ Por ejemplo, podemos emplear alguna de las herramientas mostradas en la Sección
 \NormalTok{pdp1 }\OtherTok{\textless{}{-}} \FunctionTok{partial}\NormalTok{(rf, }\StringTok{"alcohol"}\NormalTok{)}
 \NormalTok{p1 }\OtherTok{\textless{}{-}} \FunctionTok{plotPartial}\NormalTok{(pdp1)}
 \NormalTok{pdp2 }\OtherTok{\textless{}{-}} \FunctionTok{partial}\NormalTok{(rf, }\FunctionTok{c}\NormalTok{(}\StringTok{"density"}\NormalTok{))}
-\NormalTok{p2 }\OtherTok{\textless{}{-}}\FunctionTok{plotPartial}\NormalTok{(pdp2)}
+\NormalTok{p2 }\OtherTok{\textless{}{-}} \FunctionTok{plotPartial}\NormalTok{(pdp2)}
 \FunctionTok{grid.arrange}\NormalTok{(p1, p2, }\AttributeTok{ncol =} \DecValTok{2}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/rf-pdp-1} \end{center}
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.9\linewidth]{images/rf-pdp-uni-1} 
+
+}
+
+\caption{Efecto parcial del alcochol (panel izquierdo) y la densidad (panel derecho) sobre la respuesta.}\label{fig:rf-pdp-uni-plot}
+\end{figure}
+
+O gráficos PDP considerando la interacción entre dos predictores (ver Figura \ref{fig:rf-pdp-plot}) (cuidado, puede requerir de mucho tiempo de computación):
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3658,9 +3909,16 @@ Por ejemplo, podemos emplear alguna de las herramientas mostradas en la Sección
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/rf-pdp-2} \end{center}
+\begin{figure}[!htb]
 
-La función \texttt{partial()} ofrece un abaníco amplio de argumentos. Por ejemplo, con \texttt{ice\ =\ TRUE} se calculan as curvas de expectativa condicional individual (ICE). Estos gráficos ICE extienden los PDP, ya que además de mostrar la variación del promedio (en rojo), también muestra la variación de los valores predichos para cada observación (curvas en negro).
+{\centering \includegraphics[width=0.8\linewidth]{images/rf-pdp-1} 
+
+}
+
+\caption{Efecto parcial de la interacción del alcochol y la densidad sobre la respuesta.}\label{fig:rf-pdp-plot}
+\end{figure}
+
+Adicionalmente, estableciendo \texttt{ice\ =\ TRUE} se calculan las curvas de expectativa condicional individual (ICE). Estos gráficos ICE extienden los PDP, ya que además de mostrar la variación del promedio (ver línea roja en la Figura \ref{fig:rf-ice-plot}), también muestra la variación de los valores predichos para cada observación (ver líneas en negro en la Figura \ref{fig:rf-ice-plot}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3672,9 +3930,16 @@ La función \texttt{partial()} ofrece un abaníco amplio de argumentos. Por ejem
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/rf-ice-1} \end{center}
+\begin{figure}[!htb]
 
-Gráficos similares pueden crearse utilizando otros paquetes indicados en la Sección \ref{analisis-modelos}. En particular, el paquete \texttt{vivid} muestra en la la diagonal del Figura \ref{fig:vivid1} la importancia de los predictores (\emph{Vimp}) y fuera de la diagonal las interacciones 2 a 2 (\emph{Vint}).
+{\centering \includegraphics[width=0.8\linewidth]{images/rf-ice-1} 
+
+}
+
+\caption{Efecto individual de cada observación de alcochol (panel izquierdo) y densidad (panel derecho) sobre la respuesta.}\label{fig:rf-ice-plot}
+\end{figure}
+
+Gráficos similares pueden crearse utilizando otros paquetes indicados en la Sección \ref{analisis-modelos}. En particular, el paquete \texttt{vivid} muestra en la diagonal del Figura \ref{fig:rf-vivid-plot} la importancia de los cinco primeros predictores (\emph{Vimp}) y fuera de la diagonal las interacciones 2 a 2 (\emph{Vint}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3686,11 +3951,29 @@ Gráficos similares pueden crearse utilizando otros paquetes indicados en la Sec
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/vivid1-1} 
+{\centering \includegraphics[width=0.8\linewidth]{images/rf-vivid-1} 
 
 }
 
-\caption{Mapa de calor para la importancia e interaciones del ajuste de un bosque aleatorio usando vivid.}\label{fig:vivid1}
+\caption{Mapa de calor para la importancia e interaciones del ajuste de un bosque aleatorio usando vivid.}\label{fig:rf-vivid-plot}
+\end{figure}
+
+Alternativamente, también se pueden visualizar las relaciones mediante un gráfico de red (ver Figura \ref{fig:rf-vivid-plot}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{require}\NormalTok{(igraph)}
+\FunctionTok{viviNetwork}\NormalTok{(}\AttributeTok{mat =}\NormalTok{ fit\_rf)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{images/rf-vivid2-1} 
+
+}
+
+\caption{Gráfico de red para la importancia e interaciones del ajuste de un bosque aleatorio usando vivid.}\label{fig:rf-vivid2-plot}
 \end{figure}
 
 \hypertarget{ejemplo-bosques-aleatorios-con-caret}{%
@@ -3724,7 +4007,9 @@ Para ajustar este modelo a una muestra de entrenamiento hay que establecer \text
 \end{Highlighting}
 \end{Shaded}
 
-Con las opciones por defecto únicamente evalúa tres valores posibles del hiperparámetro (se podría aumentar el número con \texttt{tuneLength} o especificarlos con \texttt{tuneGrid}), pero aún así el tiempo de computación puede ser alto (puede ser recomendable reducir el valor de \texttt{nodesize} o paralelizar los cálculos; otras implementaciones pueden ser más eficientes).
+Con las opciones por defecto únicamente evalúa tres valores posibles del hiperparámetro (ver Figura \ref{fig:rf-caret-train}).
+Opcionalmente se podría aumentar el número valores a evaluar con \texttt{tuneLength} o directamente especificarlos con \texttt{tuneGrid}.
+En cualquier caso el tiempo de computación puede ser demasiado alto, por lo que puede ser recomendable reducir el valor de \texttt{nodesize}, paralelizar los cálculos o emplear otros paquetes con implementaciones más eficientes.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3734,9 +4019,16 @@ Con las opciones por defecto únicamente evalúa tres valores posibles del hiper
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/rf-caret-train-1} \end{center}
+\begin{figure}[!htb]
 
-\protect\hyperlink{ref-breiman2001random}{Breiman} (\protect\hyperlink{ref-breiman2001random}{2001a}) sugiere emplear el valor por defecto, la mitad y el doble:
+{\centering \includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/rf-caret-train-1} 
+
+}
+
+\caption{Evolución de la precisión de un bosque aleatorio dependiendo del número de predictores seleccionados.}\label{fig:rf-caret-train}
+\end{figure}
+
+\protect\hyperlink{ref-breiman2001random}{Breiman} (\protect\hyperlink{ref-breiman2001random}{2001a}) sugiere emplear el valor por defecto para \texttt{mtry}, la mitad y el doble (ver Figura \ref{fig:rf-caret-grid}):
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3749,7 +4041,25 @@ Con las opciones por defecto únicamente evalúa tres valores posibles del hiper
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/rf-caret-grid-1} \end{center}
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/rf-caret-grid-1} 
+
+}
+
+\caption{Evolución de la precisión de un bosque aleatorio con `caret` usando el argumento `tuneGrid`.}\label{fig:rf-caret-grid}
+\end{figure}
+
+\begin{exercise}
+\protect\hypertarget{exr:rf-tunegrid}{}{\label{exr:rf-tunegrid} }
+\end{exercise}
+
+Como acabamos de ver, \texttt{caret} permite ajustar un bosque aleatorio considerando \texttt{mtry} como único hiperparámetro, pero nos podría interesar buscar también valores adecuados para otros parámetros, como por ejemplo \texttt{nodesize}.
+Esto se puede realizar fácilmente empleando directamente la función \texttt{randomForest()}.
+En primer lugar habría que construir la rejilla de búsqueda, con las combinaciones de los valores de los hiperparámetros que se quieren evaluar (para ello se puede utilizar la función \texttt{expand.grid()}).
+Posteriormente se ajustaría un bosque aleatorio en la muestra de entrenamiento con cada una de las combinaciones (por ejemplo utilizando un bucle \texttt{for}) y se emplearía el error OOB para seleccionar la combinación óptima (al que podemos acceder empleando \texttt{with(fit,\ err.rate{[}ntree,\ "OOB"{]})} suponiendo que \texttt{fit} contiene el bosque aleatorio ajustado).
+
+Continuando con el mismo conjunto de datos de calidad de vino, emplear la función \texttt{randomForest()} para ajustar un bosque aleatorio con el fin de clasificar la calidad del vino \texttt{taste}, considerando 500 árboles y empleando el error OOB para seleccionar los valores ``óptimos'' de los hiperparámetros considerando las posibles combinaciones de \texttt{mtry\ =\ floor(c(mtry.class/2,\ mtry.class,\ 2*mtry.class))} (siendo \texttt{mtry.class\ \textless{}-\ sqrt(ncol(train)\ -\ 1)}) y \texttt{nodesize\ =\ c(1,\ 3,\ 5,\ 10)}.
 
 \hypertarget{boosting}{%
 \section{Boosting}\label{boosting}}
@@ -3970,7 +4280,7 @@ Por ejemplo, el siguiente código llama a la función \texttt{ada()} con la opci
 ##         93         93
 \end{verbatim}
 
-Con el método \texttt{plot()} podemos representar la evolución del error de clasificación al aumentar el número de iteraciones:
+Con el método \texttt{plot()} podemos representar la evolución del error de clasificación al aumentar el número de iteraciones (ver Figura \ref{fig:ada-plot}):
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3978,7 +4288,14 @@ Con el método \texttt{plot()} podemos representar la evolución del error de cl
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/ada-plot-1} \end{center}
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/ada-plot-1} 
+
+}
+
+\caption{Evolución de la tasa de error utilizando `ada()`.}\label{fig:ada-plot}
+\end{figure}
 
 Podemos evaluar la precisión en la muestra de test empleando el procedimiento habitual:
 
@@ -4277,7 +4594,7 @@ Como ejemplo consideraremos el conjunto de datos \emph{winequality.RData}:
 ## There were 11 predictors of which 11 had non-zero influence.
 \end{verbatim}
 
-El método \texttt{summary()} calcula las medidas de influencia de los predictores y las representa gráficamente:
+El método \texttt{summary()} calcula las medidas de influencia de los predictores y las representa gráficamente (ver Figura \ref{fig:gbm-summary}):
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4285,7 +4602,14 @@ El método \texttt{summary()} calcula las medidas de influencia de los predictor
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/gbm-summary-1} \end{center}
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/gbm-summary-1} 
+
+}
+
+\caption{Importancia de las variables predictoras (con los valores por defecto de `gbm()`).}\label{fig:gbm-summary}
+\end{figure}
 
 \begin{verbatim}
 ##                                       var   rel.inf
@@ -4302,15 +4626,30 @@ El método \texttt{summary()} calcula las medidas de influencia de los predictor
 ## pH                                     pH  1.088152
 \end{verbatim}
 
-Para estudiar el efecto de un predictor se pueden generar gráficos de los efectos parciales mediante el método \texttt{plot()}:
+Para estudiar el efecto de un predictor se pueden generar gráficos de los efectos parciales mediante el método \texttt{plot()} (ver Figura \ref{fig:gbm-plot}):
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{plot}\NormalTok{(gbm.fit, }\AttributeTok{i =} \StringTok{"alcohol"}\NormalTok{)}
+\NormalTok{p1 }\OtherTok{\textless{}{-}} \FunctionTok{plot}\NormalTok{(gbm.fit, }\AttributeTok{i =} \FunctionTok{c}\NormalTok{(}\StringTok{"alcohol"}\NormalTok{))}
+\NormalTok{p2 }\OtherTok{\textless{}{-}} \FunctionTok{plot}\NormalTok{(gbm.fit, }\AttributeTok{i =} \FunctionTok{c}\NormalTok{(}\StringTok{"density"}\NormalTok{))}
+\FunctionTok{grid.arrange}\NormalTok{(p1, p2, }\AttributeTok{ncol =} \DecValTok{2}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{03-bagging_boosting_files/figure-latex/gbm-plot-1} \end{center}
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.9\linewidth]{03-bagging_boosting_files/figure-latex/gbm-plot-1} 
+
+}
+
+\caption{Efecto parcíal del alcohol (panel izquierdo) y la densidad (panel derecho) sobre la respuesta (con `gbm()`).}\label{fig:gbm-plot}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# plot(gbm.fit, i = c("alcohol","density")) \# interacción}
+\end{Highlighting}
+\end{Shaded}
 
 Finalmente podemos evaluar la precisión en la muestra de test empleando el código habitual:
 
@@ -6848,9 +7187,9 @@ Hay varios paquetes que implementan estos métodos: \texttt{h2o}, \texttt{elasti
 \end{Highlighting}
 \end{Shaded}
 
-El paquete \texttt{glmnet} no emplea formulación de modelos, hay que establecer la respuesta
-\texttt{y} y una matriz o data.frame con las variables explicativas \texttt{x}.
-Además, no admite predictores categóricos ni datos faltantes, por lo que puede ser recomendable emplear la función \texttt{model.matrix()} para construir la matriz de diseño \texttt{x} (o \texttt{Matrix::sparse.model.matrix()} si el conjunto de datos es muy grande) a partir de una fórmula (alternativamente se pueden emplear la herramientas implementadas en el paquete \texttt{caret}).
+El paquete \texttt{glmnet} no emplea formulación de modelos, hay que establecer la respuesta \texttt{y} y la matriz numérica \texttt{x} correspondiente a las variables explicativas.
+Por tanto no se pueden incluir directamente predictores categóricos, habrá que codificarlos empleando variables auxiliares numéricas.
+Se puede emplear la función \texttt{model.matrix()}(o \texttt{Matrix::sparse.model.matrix()} si el conjunto de datos es muy grande) para construir la matriz de diseño \texttt{x} a partir de una fórmula (alternativamente se pueden emplear la herramientas implementadas en el paquete \texttt{caret}). Además, esta función tampoco admite datos faltantes.
 
 La función principal es:
 
@@ -8961,8 +9300,10 @@ Asumimos que todas las variables predictoras son numéricas. El proceso de const
 \[\hat m(\mathbf{x}) = \hat \beta_0 \]
 donde \(\hat \beta_0\) es la media de todas las respuestas, para a continuación considerar todos los puntos de corte (\emph{knots}) posibles \(x_{ji}\) con \(i = 1, 2, \ldots, n\), \(j = 1, 2, \ldots, p\), es decir, todas las observaciones de todas las variables predictoras de la muestra de entrenamiento.
 Para cada punto de corte \(x_{ji}\) (combinación de variable y observación) se consideran dos bases:
-\[h_1(\mathbf{x}) = h(x_j - x_{ji}) \\
-h_2(\mathbf{x}) = h(x_{ji} - x_j)\]
+\[ \begin{aligned}
+h_1(\mathbf{x}) = h(x_j - x_{ji}) \\
+h_2(\mathbf{x}) = h(x_{ji} - x_j)
+\end{aligned}\]
 y se construye el nuevo modelo
 \[\hat m(\mathbf{x}) = \hat \beta_0 + \hat \beta_1 h_1(\mathbf{x}) + \hat \beta_2 h_2(\mathbf{x})\]
 La estimación de los parámetros \(\beta_0, \beta_1, \beta_2\) se realiza de la forma estándar en regresión lineal, minimizando \(\mbox{RSS}\). De este modo se construyen muchos modelos alternativos y entre ellos se selecciona aquel que tenga un menor error de entrenamiento. En la siguiente iteración se conservan \(h_1(\mathbf{x})\) y \(h_2(\mathbf{x})\) y se añade una pareja de términos nuevos siguiendo el mismo procedimiento. Y así sucesivamente, añadiendo de cada vez dos nuevos términos. Este procedimiento va creando un modelo lineal segmentado (piecewise) donde cada nuevo término modeliza una porción aislada de los datos originales.
@@ -9725,7 +10066,7 @@ Para ajustar un modelo \emph{single index} también se podría emplear la funci�
 ## 
 ## Continuous Kernel Type: Second-Order Gaussian
 ## No. Continuous Explanatory Vars.: 1
-## Estimation Time: 6.68 seconds
+## Estimation Time: 6.66 seconds
 \end{verbatim}
 
 \begin{Shaded}

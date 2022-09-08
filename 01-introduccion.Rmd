@@ -47,11 +47,14 @@ knitr::include_graphics("images/esquema2.png")
 
 Una de estas etapas (que están interrelacionadas) es la construcción de modelos a partir de los datos para aprender y predecir. Podríamos decir que el Aprendizaje Estadístico (AE) se encarga de este problema desde el punto de vista estadístico.
 
-En Estadística se consideran modelos estocásticos (con componente aleatoria), para tratar de tener en cuenta la incertidumbre debida a que no se disponga de toda la información (sobre las variables que influyen en el fenómeno de interés).
+En Estadística se consideran modelos estocásticos (con componente aleatoria), para tratar de tener en cuenta la incertidumbre debida a que no se disponga de toda la información sobre las variables que influyen en el fenómeno de interés.
+Esto es lo que se conoce como *aleatoriedad aparente*:
 
 > "Nothing in Nature is random... a thing appears random only through the incompleteness of our knowledge." 
 >
 > --- Spinoza, Baruch (Ethics, 1677)
+
+Aunque hoy en día gana peso la idea de la física cuántica de que en el fondo hay una *aleatoriedad intrínseca*:
 
 > "To my mind, although Spinoza lived and thought long before Darwin, Freud, Einstein, and the startling implications of quantum theory, he had a vision of truth beyond what is normally granted to human beings."
 >
@@ -275,7 +278,7 @@ Métodos de regresión:
 También existen paquetes de `R` que permiten utilizar plataformas de ML externas, como por ejemplo `r citepkg("h2o", "https://github.com/h2oai/h2o-3/tree/master/h2o-r ")` o `r citepkg("RWeka")`.
 
 Como todos estos paquetes emplean opciones, estructuras y convenciones sintácticas diferentes, se han desarrollado paquetes que proporcionan interfaces unificadas a muchas de estas implementaciones. 
-Entre ellos podríamos citar `r citepkg("caret", "https://topepo.github.io/caret")`,`r citepkg("mlr3", "https://mlr3.mlr-org.com")` y `r citepkg("tidymodels", "https://www.tidymodels.org")`.
+Entre ellos podríamos citar `r citepkg("caret", "https://topepo.github.io/caret")`, `r citepkg("mlr3", "https://mlr3.mlr-org.com")` y `r citepkg("tidymodels", "https://www.tidymodels.org")`.
 En la Sección \@ref(caret) se incluye una breve introducción al paquete `r citepkg("caret", "https://topepo.github.io/caret")` que será empleado en diversas ocasiones a lo largo del presente libro.
 
 Adicionalmente hay paquetes de R que disponen de entornos gráficos que permiten emplear estos métodos evitando el uso de comandos. 
@@ -288,7 +291,7 @@ Entre ellos estarían R-Commander con el plugin FactoMineR (`Rcmdr`, `RcmdrPlugi
 En Inferencia Estadística clásica el procedimiento habitual es emplear toda la información disponible para construir un modelo válido (que refleje de la forma más fiel posible lo que ocurre en la población) y asumiendo que el modelo es el verdadero (lo que en general sería falso) utilizar métodos de inferencia para evaluar su precisión. 
 Por ejemplo, en el caso de regresión lineal múltiple, el coeficiente de determinación ajustado sería una medida del la precisión del modelo para predecir nuevas observaciones (no se debería emplear el coeficiente de determinación sin ajustar; aunque, en cualquier caso, su validez dependería de la de las suposiciones estructurales del modelo).
 
-Alternativamente, en Estadística Computacional es habitual emplear técnicas de remuestreo para evaluar la precisión (entrenando también el modelo con todos los datos disponibles), principalmente validación cruzada (leave-one-out, k-fold), jackniffe o bootstrap. 
+Alternativamente, en Estadística Computacional es habitual emplear técnicas de remuestreo para evaluar la precisión (entrenando también el modelo con todos los datos disponibles), principalmente validación cruzada (leave-one-out, k-fold), jackknife o bootstrap. 
 
 Por otra parte, como ya se comentó, algunos de los modelos empleados en AE son muy flexibles (están hiperparametrizados) y pueden aparecer problemas si se permite que se ajusten demasiado bien a las observaciones (podrían llegar a interpolar los datos). 
 En estos casos habrá que controlar el procedimiento de aprendizaje, típicamente a traves de  parámetros relacionados con la complejidad del modelo (ver sección siguiente).
@@ -568,6 +571,7 @@ legend("topright", legend = c(paste("Grado óptimo:", grado.op), paste("oneSE ru
 
 Para estudiar la precisión de las predicciones de un método de regresión se evalúa el
 modelo en el conjunto de datos de test y se comparan las predicciones frente a los valores reales.
+Los resultados servirán como medidas globales de la calidad de las predicciones con nuevas observaciones.
 
 Si generamos un gráfico de dispersión de observaciones frente a predicciones, los puntos deberían estar en torno a la recta $y=x$ `r citefig("obs-pred-plot")`.
 
@@ -670,7 +674,7 @@ La matriz de confusión será de la forma:
         Negativo              Falsos positivos (FP)        Verdaderos negativos (TN)
  ----------------------- ------------------------------ ------------------------------
 
-A partir de esta tabla se pueden obtener distintas medidas de la precisión de las predicciones. 
+A partir de esta tabla se pueden obtener distintas medidas de la precisión de las predicciones (serían medidas globales de la calidad de la predicción de nuevas observaciones). 
 Por ejemplo, dos de las más utilizadas son la tasa de verdaderos positivos y la de verdaderos negativos (tasas de acierto en positivos y negativos), también denominadas *sensibilidad* y *especificidad*:
 
 * Sensibilidad (*sensitivity*, *recall*, *hit rate*, *true positive rate*; TPR):

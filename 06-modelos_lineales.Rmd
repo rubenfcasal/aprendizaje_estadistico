@@ -739,9 +739,9 @@ Hay varios paquetes que implementan estos métodos: `h2o`, `elasticnet`, `penali
 library(glmnet)
 ```
 
-El paquete `glmnet` no emplea formulación de modelos, hay que establecer la respuesta
-`y` y una matriz o data.frame con las variables explicativas `x`.
-Además, no admite predictores categóricos ni datos faltantes, por lo que puede ser recomendable emplear la función `model.matrix()` para construir la matriz de diseño `x` (o `Matrix::sparse.model.matrix()` si el conjunto de datos es muy grande) a partir de una fórmula (alternativamente se pueden emplear la herramientas implementadas en el paquete `caret`). 
+El paquete `glmnet` no emplea formulación de modelos, hay que establecer la respuesta `y` y la matriz numérica `x` correspondiente a las variables explicativas.
+Por tanto no se pueden incluir directamente predictores categóricos, habrá que codificarlos empleando variables auxiliares numéricas. 
+Se puede emplear la función `model.matrix()`(o `Matrix::sparse.model.matrix()` si el conjunto de datos es muy grande) para construir la matriz de diseño `x` a partir de una fórmula (alternativamente se pueden emplear la herramientas implementadas en el paquete `caret`). Además, esta función tampoco admite datos faltantes.
 
 La función principal es:
 

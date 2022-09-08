@@ -35,10 +35,14 @@ Se parte de un nodo inicial que representa a toda la muestra (se utiliza la mues
 Como se muestra en la Figura \@ref(fig:arbol) este proceso se repite un número finito de veces hasta obtener las hojas del árbol, es decir, los nodos terminales, que son los que se utilizan para realizar la predicción.
 Una vez construido el árbol, la predicción se realizará en cada nodo terminal utilizando, típicamente, la media en un problema de regresión y la moda en un problema de clasificación. 
 
-<div class="figure" style="text-align: center">
-<img src="02-arboles_files/figure-html/arbol-1.png" alt="Ejemplo de un árbol de decisión obtenido al realizar una partición binaria recursiva de un espacio bidimensional." width="80%" />
-<p class="caption">(\#fig:arbol)Ejemplo de un árbol de decisión obtenido al realizar una partición binaria recursiva de un espacio bidimensional.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/arbol-1} 
+
+}
+
+\caption{Ejemplo de un árbol de decisión obtenido al realizar una partición binaria recursiva de un espacio bidimensional.}(\#fig:arbol)
+\end{figure}
 
 <!-- 
 Pendiente:
@@ -51,10 +55,14 @@ Al final de este proceso iterativo el espacio predictor se ha particionado en re
 Si la relación entre las variables predictoras y la variable respuesta no se puede describir adecuadamente mediante rectángulos, la calidad predictiva del árbol será limitada. 
 Como vemos, la simplicidad del modelo es su principal argumento, pero también su talón de Aquiles.
 
-<div class="figure" style="text-align: center">
-<img src="02-arboles_files/figure-html/predictor-1.png" alt="Ejemplo de la superficie de predicción correspondiente a un árbol de decisión." width="80%" />
-<p class="caption">(\#fig:predictor)Ejemplo de la superficie de predicción correspondiente a un árbol de decisión.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/predictor-1} 
+
+}
+
+\caption{Ejemplo de la superficie de predicción correspondiente a un árbol de decisión.}(\#fig:predictor)
+\end{figure}
 
 Como se ha dicho antes, cada nodo padre se divide, a través de dos ramas, en dos nodos hijos. 
 Esto se hace seleccionando una variable predictora y dando respuesta a una pregunta dicotómica sobre ella.
@@ -319,10 +327,14 @@ str(winequality)
 barplot(table(winequality$quality))
 ```
 
-<div class="figure" style="text-align: center">
-<img src="02-arboles_files/figure-html/barplot-1.png" alt="Distribución de frecuencias de la calidad del vino (`winequality$quality`)." width="80%" />
-<p class="caption">(\#fig:barplot)Distribución de frecuencias de la calidad del vino (`winequality$quality`).</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/barplot-1} 
+
+}
+
+\caption{Distribución de frecuencias de la calidad del vino (`winequality$quality`).}(\#fig:barplot)
+\end{figure}
 
 En primer lugar se selecciona el 80\% de los datos como muestra de entrenamiento y el 20\% restante como muestra de test:
 
@@ -386,10 +398,14 @@ plot(tree)
 text(tree)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="02-arboles_files/figure-html/arbolrpart-1.png" alt="Árbol de regresión para predecir `winequality$quality` (obtenido con las opciones por defecto de `rpart()`)." width="80%" />
-<p class="caption">(\#fig:arbolrpart)Árbol de regresión para predecir `winequality$quality` (obtenido con las opciones por defecto de `rpart()`).</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/arbolrpart-1} 
+
+}
+
+\caption{Árbol de regresión para predecir `winequality$quality` (obtenido con las opciones por defecto de `rpart()`).}(\#fig:arbolrpart)
+\end{figure}
 
 Pero puede ser preferible emplear el paquete [`rpart.plot`](https://CRAN.R-project.org/package=rpart.plot)  (ver Figura \@ref(fig:arbolrpartplot)).
 
@@ -399,10 +415,14 @@ library(rpart.plot)
 rpart.plot(tree)  
 ```
 
-<div class="figure" style="text-align: center">
-<img src="02-arboles_files/figure-html/arbolrpartplot-1.png" alt="Representación del árbol de regresión obtenida con `rpart.plot()`." width="80%" />
-<p class="caption">(\#fig:arbolrpartplot)Representación del árbol de regresión obtenida con `rpart.plot()`.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/arbolrpartplot-1} 
+
+}
+
+\caption{Representación del árbol de regresión obtenida con `rpart.plot()`.}(\#fig:arbolrpartplot)
+\end{figure}
 
 Nos interesa como se clasificaría a una nueva observación en los nodos terminales (en los nodos intermedios solo nos interesarían las condiciones, y el orden de las variables consideradas, hasta llegar a las hojas) y las correspondientes predicciones (la media de la respuesta en el correspondiente nodo terminal).
 Para ello, puede ser de utilidad imprimir las reglas:
@@ -567,10 +587,14 @@ printcp(tree)
 plotcp(tree)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="02-arboles_files/figure-html/cp-1.png" alt="Error de validación cruzada (reescalado) dependiendo del parámetro de complejidad CP empleado en el ajuste del árbol de decisión." width="80%" />
-<p class="caption">(\#fig:cp)Error de validación cruzada (reescalado) dependiendo del parámetro de complejidad CP empleado en el ajuste del árbol de decisión.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/cp-1} 
+
+}
+
+\caption{Error de validación cruzada (reescalado) dependiendo del parámetro de complejidad CP empleado en el ajuste del árbol de decisión.}(\#fig:cp)
+\end{figure}
 
 La tabla con los valores de las podas (óptimas, dependiendo del parámetro de complejidad) 
 está almacenada en la componente `$cptable`:
@@ -627,10 +651,14 @@ tree <- prune(tree, cp = cp)
 rpart.plot(tree) 
 ```
 
-<div class="figure" style="text-align: center">
-<img src="02-arboles_files/figure-html/arbolpoda-1.png" alt="Árbol de regresión resultante después de la poda (modelo final)." width="80%" />
-<p class="caption">(\#fig:arbolpoda)Árbol de regresión resultante después de la poda (modelo final).</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/arbolpoda-1} 
+
+}
+
+\caption{Árbol de regresión resultante después de la poda (modelo final).}(\#fig:arbolpoda)
+\end{figure}
 
 
 Podríamos estudiar el modelo final, por ejemplo mediante el método `summary()`, que entre otras cosas muestra una medida (en porcentaje) de la importancia de las variables explicativas para la predicción de la respuesta (teniendo en cuenta todas las particiones, principales y secundarias, en las que se emplea cada variable explicativa). 
@@ -668,10 +696,14 @@ plot(jitter(pred), jitter(obs), xlab = "Predicción", ylab = "Observado")
 abline(a = 0, b = 1)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="02-arboles_files/figure-html/obsXpred-1.png" alt="Gráfico de observaciones frente a predicciones (`test$quality`; se añade una perturbación para mostrar la distribución de los valores)." width="80%" />
-<p class="caption">(\#fig:obsXpred)Gráfico de observaciones frente a predicciones (`test$quality`; se añade una perturbación para mostrar la distribución de los valores).</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/obsXpred-1} 
+
+}
+
+\caption{Gráfico de observaciones frente a predicciones (`test$quality`; se añade una perturbación para mostrar la distribución de los valores).}(\#fig:obsXpred)
+\end{figure}
 
 ```r
 # Empleando el paquete caret 
@@ -715,7 +747,9 @@ Como se puede observar el ajuste del modelo es bastante malo, como ya se coment�
 En problemas de clasificación es más habitual que se puedan llegar a obtener buenos ajustes con árboles de decisión.
 
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:efecto-semilla"><strong>(\#exr:efecto-semilla) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}
+<span class="exercise" id="exr:efecto-semilla"><strong>(\#exr:efecto-semilla) </strong></span>
+\EndKnitrBlock{exercise}
 
 Como se comentó en la introducción del Capítulo \@ref(intro-AE) al emplear el procedimiento habitual en AE de particionar los datos no se garantiza la reproducibilidad/repetibilidad de los resultados ya que dependen de la semilla. 
 El modelo ajustado puede cambiar al variar la semilla (sobre todo si el conjunto de entrenamiento es pequeño; además, en algunos modelos el método de ajuste depende también de la semilla) pero normalmente no hay grandes cambios en las predicciones.
@@ -749,12 +783,16 @@ Como comentario final, en este caso el conjunto de datos no es muy grande y tamp
 
 
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:train-validate-test-tree"><strong>(\#exr:train-validate-test-tree) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}
+<span class="exercise" id="exr:train-validate-test-tree"><strong>(\#exr:train-validate-test-tree) </strong></span>
+\EndKnitrBlock{exercise}
 
 Como ya se mostró, el paquete `rpart` implementa la selección del parámetro de complejidad mediante validación cruzada. 
 Como alternativa, siguiendo la idea del Ejercicio \@ref(exr:train-validate-test), y considerando de nuevo el ejemplo anterior, particionar la muestra en datos de entrenamiento (70\%), de validación (15\%) y de test (15\%), para ajustar los árboles de decisión, seleccionar el parámetro de complejidad (el hiperparámetro) y evaluar las predicciones del modelo final, respectivamente.
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:train-boot-tree"><strong>(\#exr:train-boot-tree) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}
+<span class="exercise" id="exr:train-boot-tree"><strong>(\#exr:train-boot-tree) </strong></span>
+\EndKnitrBlock{exercise}
 
 Una alternativa a particionar en entrenamiento y validación sería emplear bootstrap.
 La idea es emplear una remuestra bootstrap del conjunto de datos de entrenamiento para ajustar el modelo y utilizar las observaciones no seleccionadas (se suelen denominar datos *out of bag*) como conjunto de validación.
@@ -900,10 +938,14 @@ library(rpart.plot)
 rpart.plot(tree) # Alternativa: rattle::fancyRpartPlot
 ```
 
-<div class="figure" style="text-align: center">
-<img src="02-arboles_files/figure-html/arbolclassif-1.png" alt="Árbol de clasificación de `winetaste$taste` (obtenido con las opciones por defecto)." width="80%" />
-<p class="caption">(\#fig:arbolclassif)Árbol de clasificación de `winetaste$taste` (obtenido con las opciones por defecto).</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/arbolclassif-1} 
+
+}
+
+\caption{Árbol de clasificación de `winetaste$taste` (obtenido con las opciones por defecto).}(\#fig:arbolclassif)
+\end{figure}
 
 
 Nos interesa como se clasificaría a una nueva observación (como se llega a los nodos terminales) y su probabilidad estimada (la frecuencia relativa de la clase más frecuente en el correspondiente nodo terminal). Para ello se puede modificar la información que se muestra en cada nodo (ver Figura \@ref(fig:arbolextra)).
@@ -917,10 +959,14 @@ rpart.plot(tree,
            nn = TRUE)            # display the node numbers 
 ```
 
-<div class="figure" style="text-align: center">
-<img src="02-arboles_files/figure-html/arbolextra-1.png" alt="Representación del árbol de clasificación de `winetaste$taste` incluyendo información adicional en los nodos." width="80%" />
-<p class="caption">(\#fig:arbolextra)Representación del árbol de clasificación de `winetaste$taste` incluyendo información adicional en los nodos.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/arbolextra-1} 
+
+}
+
+\caption{Representación del árbol de clasificación de `winetaste$taste` incluyendo información adicional en los nodos.}(\#fig:arbolextra)
+\end{figure}
 Al igual que en el caso de regresión, puede ser de utilidad imprimir las reglas:
 
 
@@ -1016,10 +1062,14 @@ Representamos los errores (reescalados) de validación cruzada (ver Figura \@ref
 plotcp(tree)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="02-arboles_files/figure-html/errorclassif-1.png" alt="Evolución del error (reescalado) de validación cruzada en función del parámetro de complejidad." width="80%" />
-<p class="caption">(\#fig:errorclassif)Evolución del error (reescalado) de validación cruzada en función del parámetro de complejidad.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/errorclassif-1} 
+
+}
+
+\caption{Evolución del error (reescalado) de validación cruzada en función del parámetro de complejidad.}(\#fig:errorclassif)
+\end{figure}
 
 Para obtener el modelo final, seleccionamos el valor óptimo de complejidad siguiendo el criterio de un error estándar de @breiman1984classification y podamos el árbol (ver Figura \@ref(fig:arbolclassifpoda)).
 
@@ -1040,10 +1090,14 @@ tree <- prune(tree, cp = cp)
 rpart.plot(tree) #, main="Classification tree winetaste"
 ```
 
-<div class="figure" style="text-align: center">
-<img src="02-arboles_files/figure-html/arbolclassifpoda-1.png" alt="Árbol de clasificación de `winetaste$taste` obtenido después de la poda (modelo final)." width="80%" />
-<p class="caption">(\#fig:arbolclassifpoda)Árbol de clasificación de `winetaste$taste` obtenido después de la poda (modelo final).</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/arbolclassifpoda-1} 
+
+}
+
+\caption{Árbol de clasificación de `winetaste$taste` obtenido después de la poda (modelo final).}(\#fig:arbolclassifpoda)
+\end{figure}
 
 El último paso sería evaluarlo en la muestra de test siguiendo los pasos descritos en la Sección \@ref(eval-class).
 El método `predict()` por defecto (`type = "prob"`) devuelve una matriz con las probabilidades de cada clase, habrá que establecer `type = "class"` (para más detalles consultar la ayuda de `predic.rpart()`).
@@ -1174,10 +1228,14 @@ caret.rpart
 ggplot(caret.rpart)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="02-arboles_files/figure-html/arbolclassifggplot-1.png" alt="Evolución de la precisión (obtenida mediante validación cruzada) dependiendo del parámetro de complejidad." width="80%" />
-<p class="caption">(\#fig:arbolclassifggplot)Evolución de la precisión (obtenida mediante validación cruzada) dependiendo del parámetro de complejidad.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/arbolclassifggplot-1} 
+
+}
+
+\caption{Evolución de la precisión (obtenida mediante validación cruzada) dependiendo del parámetro de complejidad.}(\#fig:arbolclassifggplot)
+\end{figure}
 El modelo final es el siguiente (ver Figura \@ref(fig:arbolfinalcaret))
 
 ```r
@@ -1217,10 +1275,14 @@ caret.rpart$finalModel
 rpart.plot(caret.rpart$finalModel) #, main="Classification tree winetaste"
 ```
 
-<div class="figure" style="text-align: center">
-<img src="02-arboles_files/figure-html/arbolfinalcaret-1.png" alt="Árbol de clasificación de `winetaste$taste`, obtenido con la complejidad &quot;óptima&quot; (empleando `caret`)." width="80%" />
-<p class="caption">(\#fig:arbolfinalcaret)Árbol de clasificación de `winetaste$taste`, obtenido con la complejidad "óptima" (empleando `caret`).</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/arbolfinalcaret-1} 
+
+}
+
+\caption{Árbol de clasificación de `winetaste$taste`, obtenido con la complejidad "óptima" (empleando `caret`).}(\#fig:arbolfinalcaret)
+\end{figure}
 
 Para utilizar la regla de "un error estándar" se puede añadir `selectionFunction = "oneSE"`. A continuacióno se muestra dicho código y en la Figura \@ref(fig:arbolclassifoneSE) el árbol resultante.
 
@@ -1294,10 +1356,14 @@ caret.rpart$finalModel
 rpart.plot(caret.rpart$finalModel)#, main = "Classification tree winetaste"
 ```
 
-<div class="figure" style="text-align: center">
-<img src="02-arboles_files/figure-html/arbolclassifoneSE-1.png" alt="Árbol de clasificación de `winetaste$taste`,  obtenido con la regla de un error estándar para seleccionar la complejidad (empleando `caret`)." width="80%" />
-<p class="caption">(\#fig:arbolclassifoneSE)Árbol de clasificación de `winetaste$taste`,  obtenido con la regla de un error estándar para seleccionar la complejidad (empleando `caret`).</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/arbolclassifoneSE-1} 
+
+}
+
+\caption{Árbol de clasificación de `winetaste$taste`,  obtenido con la regla de un error estándar para seleccionar la complejidad (empleando `caret`).}(\#fig:arbolclassifoneSE)
+\end{figure}
 
 
 ```r
@@ -1305,10 +1371,14 @@ var.imp <- varImp(caret.rpart)
 plot(var.imp)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="02-arboles_files/figure-html/arbolImpor-1.png" alt="Importancia de los (posibles) predictores según el modelo obtenido con la regla de un error estándar." width="80%" />
-<p class="caption">(\#fig:arbolImpor)Importancia de los (posibles) predictores según el modelo obtenido con la regla de un error estándar.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/arbolImpor-1} 
+
+}
+
+\caption{Importancia de los (posibles) predictores según el modelo obtenido con la regla de un error estándar.}(\#fig:arbolImpor)
+\end{figure}
 
 Para calcular las predicciones (o las estimaciones de las probabilidades) podemos emplear el método `predict.train()` y posteriormente `confusionMatrix()` para evaluar su precisión:
 
@@ -1415,10 +1485,14 @@ tree2 <- ctree(taste ~ ., data = train)
 plot(tree2)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="02-arboles_files/figure-html/ctree-plot-1.png" alt="Árbol de decisión para clasificar la calidad del vino (`winetaste$taste`) obtenido con el método condicional." width="80%" />
-<p class="caption">(\#fig:ctree-plot)Árbol de decisión para clasificar la calidad del vino (`winetaste$taste`) obtenido con el método condicional.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/ctree-plot-1} 
+
+}
+
+\caption{Árbol de decisión para clasificar la calidad del vino (`winetaste$taste`) obtenido con el método condicional.}(\#fig:ctree-plot)
+\end{figure}
 
 Para más detalles ver la vignette del paquete [*party: A Laboratory for Recursive Partytioning*](https://cran.r-project.org/web/packages/party/vignettes/party.pdf).
 
