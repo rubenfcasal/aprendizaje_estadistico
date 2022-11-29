@@ -1,5 +1,9 @@
 # Referencias {-}
 
+<!-- 
+Pendiente: añadir sección enlaces
+-->
+
 **Bibliografía básica**
 
 James, G., Witten, D., Hastie, T. y Tibshirani, R. (2021). *[An Introduction to Statistical Learning: with Aplications in R, Segunda Edición](https://www.statlearning.com)*. Springer.
