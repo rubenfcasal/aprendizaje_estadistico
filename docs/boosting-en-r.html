@@ -625,7 +625,7 @@ Por este motivo se suelen seguir distintos procedimientos de búsqueda. Por ejem
 </div>
 <div id="ejemplo-regresión-con-el-paquete-gbm" class="section level3" number="3.5.2">
 <h3><span class="header-section-number">3.5.2</span> Ejemplo: regresión con el paquete <code>gbm</code></h3>
-<p>El paquete <a href="https://CRAN.R-project.org/package=gbm"><code>gbm</code></a> implementa el algoritmo SGB de <span class="citation"><a href="#ref-friedman2002stochastic" role="doc-biblioref">Friedman</a> (<a href="#ref-friedman2002stochastic" role="doc-biblioref">2002</a>)</span> y admite varios tipos de respuesta considerando distintas funciones de pérdida (aunque en el caso de variables dicotómicas éstas deben tomar valores en <span class="math inline">\(\{0, 1\}\)</span><a href="#fn21" class="footnote-ref" id="fnref21"><sup>21</sup></a>).
+<p>El paquete <a href="https://CRAN.R-project.org/package=gbm"><code>gbm</code></a> implementa el algoritmo SGB de <span class="citation"><a href="#ref-friedman2002stochastic" role="doc-biblioref">Friedman</a> (<a href="#ref-friedman2002stochastic" role="doc-biblioref">2002</a>)</span> y admite varios tipos de respuesta considerando distintas funciones de pérdida (aunque en el caso de variables dicotómicas éstas deben tomar valores en <span class="math inline">\(\{0, 1\}\)</span><a href="#fn22" class="footnote-ref" id="fnref22"><sup>22</sup></a>).
 La función principal es <code>gbm()</code> y se suelen considerar los siguientes argumentos:</p>
 <div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="boosting-en-r.html#cb193-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gbm</span>( formula, <span class="at">distribution =</span> <span class="st">&quot;bernoulli&quot;</span>, data, <span class="at">n.trees =</span> <span class="dv">100</span>, </span>
 <span id="cb193-2"><a href="boosting-en-r.html#cb193-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">interaction.depth =</span> <span class="dv">1</span>, <span class="at">n.minobsinnode =</span> <span class="dv">10</span>,</span>
@@ -823,7 +823,7 @@ También incluye criterios de parada, para detener la evaluación del modelo cua
 Dispone de una interfaz simple <code>xgboost()</code> y otra más avanzada <code>xgb.train()</code>, que admite funciones de pérdida y evaluación personalizadas.
 Normalmente es necesario un preprocesado de los datos antes de llamar a estas funciones, ya que requieren de una matriz para los predictores y de un vector para la respuesta (además en el caso de que sea dicotómica debe tomar valores en <span class="math inline">\(\{0, 1\}\)</span>). Por tanto es necesario recodificar las variables categóricas como numéricas.
 Por este motivo puede ser preferible emplear la interfaz de <code>caret</code>.</p>
-<p>El algoritmo estándar <em>XGBoost</em>, que emplea árboles como modelo base, está implementado en el método <code>"xgbTree"</code> de <code>caret</code><a href="#fn22" class="footnote-ref" id="fnref22"><sup>22</sup></a>.</p>
+<p>El algoritmo estándar <em>XGBoost</em>, que emplea árboles como modelo base, está implementado en el método <code>"xgbTree"</code> de <code>caret</code><a href="#fn23" class="footnote-ref" id="fnref23"><sup>23</sup></a>.</p>
 <div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="boosting-en-r.html#cb218-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
 <span id="cb218-2"><a href="boosting-en-r.html#cb218-2" aria-hidden="true" tabindex="-1"></a><span class="co"># names(getModelInfo(&quot;xgb&quot;))</span></span>
 <span id="cb218-3"><a href="boosting-en-r.html#cb218-3" aria-hidden="true" tabindex="-1"></a><span class="fu">modelLookup</span>(<span class="st">&quot;xgbTree&quot;</span>)</span></code></pre></div>
@@ -1062,9 +1062,9 @@ Vinayak, R. K., y Gilad-Bachrach, R. (2015). Dart: Dropouts meet multiple additi
 </div>
 <div class="footnotes">
 <hr />
-<ol start="21">
-<li id="fn21"><p>Se puede evitar este inconveniente empleando la interfaz de <code>caret</code>.<a href="boosting-en-r.html#fnref21" class="footnote-back">↩︎</a></p></li>
-<li id="fn22"><p>Otras alternativas son: <code>"xgbDART"</code> que también emplean árboles como modelo base, pero incluye el método DART <span class="citation">(<a href="#ref-vinayak2015dart" role="doc-biblioref">Vinayak y Gilad-Bachrach, 2015</a>)</span> para evitar sobreajuste (básicamente descarta árboles al azar en la secuencia), y<code>"xgbLinear"</code> que emplea modelos lineales.<a href="boosting-en-r.html#fnref22" class="footnote-back">↩︎</a></p></li>
+<ol start="22">
+<li id="fn22"><p>Se puede evitar este inconveniente empleando la interfaz de <code>caret</code>.<a href="boosting-en-r.html#fnref22" class="footnote-back">↩︎</a></p></li>
+<li id="fn23"><p>Otras alternativas son: <code>"xgbDART"</code> que también emplean árboles como modelo base, pero incluye el método DART <span class="citation">(<a href="#ref-vinayak2015dart" role="doc-biblioref">Vinayak y Gilad-Bachrach, 2015</a>)</span> para evitar sobreajuste (básicamente descarta árboles al azar en la secuencia), y<code>"xgbLinear"</code> que emplea modelos lineales.<a href="boosting-en-r.html#fnref23" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

@@ -65,9 +65,11 @@ Este obra está bajo una licencia de [Creative Commons Reconocimiento-NoComercia
 (esperamos poder liberarlo bajo una licencia menos restrictiva más adelante...).
 
 ```{r include=FALSE}
-# automatically create a bib database for R packages
+# Automatically create a bib database for R packages
 pkgs <- c("caret", "rattle", "gbm", "car", "leaps", "MASS", "RcmdrMisc", 
           "lmtest", "glmnet", "mgcv", "np", "NeuralNetTools", "pdp", "vivid",
           "plot3D", "AppliedPredictiveModeling", "ISLR")
 knitr::write_bib(c(pkgs, "e1071", "KernSmooth"), 'packages.bib')
+# Create .nojekyll file in the /docs folder
+file.create('docs/.nojekyll')
 ```

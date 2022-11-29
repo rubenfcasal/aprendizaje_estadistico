@@ -367,8 +367,8 @@ div.csl-indent {
 <!-- 
 ---
 title: "Otros métodos de clasificación"
-author: "Aprendizaje Estadístico (MTE, USC)"
-date: "Curso 2021/2022"
+author: "Aprendizaje Estadístico (UDC)"
+date: "Máster en Técnicas Estadísticas"
 bibliography: ["packages.bib", "aprendizaje_estadistico.bib"]
 link-citations: yes
 output: 
@@ -385,6 +385,14 @@ output:
 bookdown::preview_chapter("05-otros_metodos.Rmd")
 knitr::purl("05-otros_metodos.Rmd", documentation = 2)
 knitr::spin("05-otros_metodos.R",knit = FALSE)
+
+Pendiente:
+https://topepo.github.io/caret/train-models-by-tag.html#discriminant-analysis
+- Selección de predictores
+  caret: method = "stepLDA", "stepQDA", 
+- Heteroscedastic Discriminant Analysis
+  caret: method = "hda"  
+- Paquetes Bayes Naive
 -->
 <p>En los métodos de clasificación que hemos visto en los capítulos anteriores, uno de los objetivos era estimar la probabilidad a posteriori <span class="math inline">\(P(Y = k | \mathbf{X}=\mathbf{x})\)</span> de que la observación <span class="math inline">\(\mathbf{x}\)</span> pertenezca a la categoría <span class="math inline">\(k\)</span>, pero en ningún caso nos preocupábamos por la distribución de las variables predictoras. En la terminología de ML estos métodos se conocen con el nombre de discriminadores (<em>discriminative methods</em>). Otro ejemplo de método discriminador es la regresión logística.</p>
 <p>En este capítulo vamos a ver métodos que reciben el nombre genérico de métodos generadores (<em>generative methods</em>). Se caracterizan porque calculan las probabilidades a posteriori utilizando la distribución conjunta de <span class="math inline">\((\mathbf{X}, Y)\)</span> y el teorema de Bayes:

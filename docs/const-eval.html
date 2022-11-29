@@ -506,7 +506,7 @@ Figura 1.4: Precisiones (errores cuadráticos medios) de ajustes polinómicos va
 Sin embargo los errores de predicción en nuevas observaciones primero disminuyen hasta alcanzar un mínimo, marcado por la línea de puntos vertical que se corresponde con el modelo de grado 4, y después aumentan (la línea de puntos horizontal es la varianza del proceso; el error cuadrático medio de predicción asintótico).
 La línea vertical representa el equilibrio entre el sesgo y la varianza.
 Considerando un valor de complejidad a la izquierda de esa línea tendríamos infraajuste (mayor sesgo y menor varianza) y a la derecha sobreajuste (menor sesgo y mayor varianza).</p>
-<p>Desde un punto de vista más formal, considerando el modelo <a href="métodos-de-aprendizaje-estadístico.html#eq:modelogeneral">(1.1)</a> y una función de pérdidas cuadrática, el predictor óptimo (desconocido) sería la media condicional <span class="math inline">\(m(\mathbf{x}) = E\left( \left. Y\right\vert_{\mathbf{X}=\mathbf{x}} \right)\)</span><a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>.
+<p>Desde un punto de vista más formal, considerando el modelo <a href="métodos-de-aprendizaje-estadístico.html#eq:modelogeneral">(1.1)</a> y una función de pérdidas cuadrática, el predictor óptimo (desconocido) sería la media condicional <span class="math inline">\(m(\mathbf{x}) = E\left( \left. Y\right\vert_{\mathbf{X}=\mathbf{x}} \right)\)</span><a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a>.
 Por tanto los predictores serían realmente estimaciones de la función de regresión, <span class="math inline">\(\hat Y(\mathbf{x}) = \hat m(\mathbf{x})\)</span> y podemos expresar la media del error cuadrático de predicción en términos del sesgo y la varianza:
 <span class="math display">\[
 \begin{aligned}
@@ -561,7 +561,7 @@ En la siguiente sección se describirá esta última aproximación.</p>
 Finalmente, combinando todos los errores individuales se puede obtener medidas globales del error de predicción (o aproximar características de su distribución).</p>
 <p>El método de LOOCV requeriría, en principio (ver comentarios más adelante), el ajuste de un modelo para cada observación por lo que pueden aparecer problemas computacionales si el conjunto de datos es grande.
 En este caso se suele emplear grupos de observaciones en lugar de observaciones individuales.
-Si se particiona el conjunto de datos en <em>k</em> grupos, típicamente 10 o 5 grupos, se denomina <em>k-fold cross-validation</em> (LOOCV sería un caso particular considerando un número de grupos igual al número de observaciones)<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a>.
+Si se particiona el conjunto de datos en <em>k</em> grupos, típicamente 10 o 5 grupos, se denomina <em>k-fold cross-validation</em> (LOOCV sería un caso particular considerando un número de grupos igual al número de observaciones)<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a>.
 Hay muchas variaciones de este método, entre ellas particionar repetidamente de forma aleatoria los datos en un conjunto de entrenamiento y otro de validación (de esta forma algunas observaciones podrían aparecer repetidas veces y otras ninguna en las muestras de validación).</p>
 <p>Continuando con el ejemplo anterior, supongamos que queremos emplear regresión polinómica para explicar la valoración de las viviendas a partir del “estatus” de los residentes (ver Figura <a href="const-eval.html#fig:boston-mass">1.6</a>).
 Al igual que se hizo en la Sección <a href="const-eval.html#bias-variance">1.3.1</a>, consideraremos el grado del polinomio como un hiperparámetro.</p>
@@ -584,8 +584,8 @@ Figura 1.6: Gráfico de dispersión de las valoraciones de las viviendas (<code>
 <span id="cb10-9"><a href="const-eval.html#cb10-9" aria-hidden="true" tabindex="-1"></a>    }</span>
 <span id="cb10-10"><a href="const-eval.html#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(cv.res)</span>
 <span id="cb10-11"><a href="const-eval.html#cb10-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>La función anterior no es muy eficiente, pero podría modificarse fácilmente para emplear otros métodos de regresión<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a>.
-En el caso de regresión lineal múltiple (y de otros modelos lineales), se pueden obtener fácilmente las predicciones eliminando una de las observaciones a partir del ajuste con todos los datos.
+<p>La función anterior no es muy eficiente, pero podría modificarse fácilmente para emplear otros métodos de regresión<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>.
+En el caso de regresión lineal múltiple (y de otros predictores lineales), se pueden obtener fácilmente las predicciones eliminando una de las observaciones a partir del ajuste con todos los datos.
 Por ejemplo, en lugar de la anterior sería preferible emplear la siguiente función (ver <code>?rstandard</code>):</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="const-eval.html#cb11-1" aria-hidden="true" tabindex="-1"></a>cv.lm <span class="ot">&lt;-</span> <span class="cf">function</span>(formula, datos) {</span>
 <span id="cb11-2"><a href="const-eval.html#cb11-2" aria-hidden="true" tabindex="-1"></a>    modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(formula, datos)</span>
@@ -617,8 +617,8 @@ Figura 1.7: Error cuadrático medio de validación cruzada dependiendo del grado
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="const-eval.html#cb13-1" aria-hidden="true" tabindex="-1"></a>grado.op</span></code></pre></div>
 <pre><code>## [1] 5</code></pre>
 <p>En lugar de emplear los valores óptimos de los hiperparámetros, <span class="citation"><a href="#ref-breiman1984classification" role="doc-biblioref">Breiman et al.</a> (<a href="#ref-breiman1984classification" role="doc-biblioref">1984</a>)</span> propusieron la regla de “un error estándar” para seleccionar la complejidad del modelo.
-La idea es que estamos trabajando con estimaciones de la precisión y pueden presentar variabilidad,
-por lo que la sugerencia es seleccionar el modelo más simple<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a> dentro de un error estándar de la precisión del modelo correspondiente al valor óptimo
+La idea es que estamos trabajando con estimaciones de la precisión y pueden presentar variabilidad (si cambiamos la muestra o cambiamos la partición los resultados seguramente cambiarán),
+por lo que la sugerencia es seleccionar el modelo más simple<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a> dentro de un error estándar de la precisión del modelo correspondiente al valor óptimo
 (se consideraría que no hay diferencias significativas en la precisión;
 además, se mitigaría el efecto de la variabilidad debida a aleatoriedad/semilla).</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="const-eval.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(grados, cv.mse, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">45</span>),</span>
@@ -685,9 +685,9 @@ Por ejemplo, podríamos emplear la función <code>postResample()</code> del paqu
 <p>La función anterior, además de las medidas de error habituales (que dependen en su mayoría de la escala de la variable respuesta) calcula un <em>pseudo R-cuadrado</em>.
 En este paquete (también en <code>rattle</code>) se emplea uno de los más utilizados, el cuadrado del coeficiente de correlación entre las predicciones y los valores observados (que se corresponde con la línea discontinua en la figura anterior).
 Estos valores se interpretarían como el coeficiente de determinación en regresión lineal, debería ser próximo a 1.
-Hay otras alternativas <span class="citation">(ver <a href="#ref-kvaalseth1985cautionary" role="doc-biblioref">Kvålseth, 1985</a>)</span>, pero la idea es que deberían medir la proporción de variabilidad de la respuesta explicada por el modelo, algo que en general no es cierto con el anterior<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a>.
+Hay otras alternativas <span class="citation">(ver <a href="#ref-kvaalseth1985cautionary" role="doc-biblioref">Kvålseth, 1985</a>)</span>, pero la idea es que deberían medir la proporción de variabilidad de la respuesta explicada por el modelo, algo que en general no es cierto con el anterior<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a>.
 La recomendación sería emplear:
-<span class="math display">\[\tilde R^2 = 1 - \frac{\sum_{i=1}^n(y_i - \hat y_i)^2}{\sum_{i=1}^n(y_i - \bar y_i)^2}\]</span>
+<span class="math display">\[\tilde R^2 = 1 - \frac{\sum_{i=1}^n(y_i - \hat y_i)^2}{\sum_{i=1}^n(y_i - \bar y)^2}\]</span>
 implementado junto con otras medidas en la siguiente función:</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="const-eval.html#cb22-1" aria-hidden="true" tabindex="-1"></a>accuracy <span class="ot">&lt;-</span> <span class="cf">function</span>(pred, obs, <span class="at">na.rm =</span> <span class="cn">FALSE</span>, </span>
 <span id="cb22-2"><a href="const-eval.html#cb22-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">tol =</span> <span class="fu">sqrt</span>(.Machine<span class="sc">$</span>double.eps)) {</span>
@@ -1008,12 +1008,12 @@ Kvålseth, T. O. (1985). Cautionary note about R 2. <em>The American Statisticia
 </div>
 <div class="footnotes">
 <hr />
-<ol start="6">
-<li id="fn6"><p>Se podrían considerar otras funciones de pérdida, por ejemplo con la distancia <span class="math inline">\(L_1\)</span> sería la mediana condicional, pero las consideraciones serían análogas.<a href="const-eval.html#fnref6" class="footnote-back">↩︎</a></p></li>
-<li id="fn7"><p>La partición en k-fold CV se suele realizar al azar. Hay que tener en cuenta la aleatoriedad al emplear k-fold CV, algo que no ocurre con LOOCV.<a href="const-eval.html#fnref7" class="footnote-back">↩︎</a></p></li>
-<li id="fn8"><p>También puede ser de interés la función <code>cv.glm()</code> del paquete <code>boot</code>.<a href="const-eval.html#fnref8" class="footnote-back">↩︎</a></p></li>
-<li id="fn9"><p>Suponiendo que los modelos se pueden ordenar del más simple al más complejo.<a href="const-eval.html#fnref9" class="footnote-back">↩︎</a></p></li>
-<li id="fn10"><p>Por ejemplo obtendríamos el mismo valor si desplazamos las predicciones sumando una constante (i.e. no tiene en cuenta el sesgo). Lo que interesaría sería medir la proximidad de los puntos a la recta <span class="math inline">\(y=x\)</span>.<a href="const-eval.html#fnref10" class="footnote-back">↩︎</a></p></li>
+<ol start="7">
+<li id="fn7"><p>Se podrían considerar otras funciones de pérdida, por ejemplo con la distancia <span class="math inline">\(L_1\)</span> sería la mediana condicional, pero las consideraciones serían análogas.<a href="const-eval.html#fnref7" class="footnote-back">↩︎</a></p></li>
+<li id="fn8"><p>La partición en k-fold CV se suele realizar al azar. Hay que tener en cuenta la aleatoriedad al emplear k-fold CV, algo que no ocurre con LOOCV.<a href="const-eval.html#fnref8" class="footnote-back">↩︎</a></p></li>
+<li id="fn9"><p>También puede ser de interés la función <code>cv.glm()</code> del paquete <code>boot</code>.<a href="const-eval.html#fnref9" class="footnote-back">↩︎</a></p></li>
+<li id="fn10"><p>Suponiendo que los modelos se pueden ordenar del más simple al más complejo.<a href="const-eval.html#fnref10" class="footnote-back">↩︎</a></p></li>
+<li id="fn11"><p>Por ejemplo obtendríamos el mismo valor si desplazamos las predicciones sumando una constante (i.e. no tiene en cuenta el sesgo). Lo que interesaría sería medir la proximidad de los puntos a la recta <span class="math inline">\(y=x\)</span>.<a href="const-eval.html#fnref11" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

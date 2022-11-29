@@ -367,8 +367,8 @@ div.csl-indent {
 <!-- 
 ---
 title: "Modelos lineales y extensiones"
-author: "Aprendizaje Estadístico (MTE, USC)"
-date: "Curso 2021/2022"
+author: "Aprendizaje Estadístico (UDC)"
+date: "Máster en Técnicas Estadísticas"
 bibliography: ["packages.bib", "aprendizaje_estadistico.bib"]
 link-citations: yes
 output: 
@@ -385,8 +385,11 @@ output:
 bookdown::preview_chapter("06-modelos_lineales.Rmd")
 knitr::purl("06-modelos_lineales.Rmd", documentation = 2)
 knitr::spin("06-modelos_lineales.R",knit = FALSE)
+
+Pendiente:
+- Añadir leyendas de figuras (eliminar títulos en gráficos)
 -->
-<p>En los modelo lineales se supone que la función de regresión es lineal<a href="#fn24" class="footnote-ref" id="fnref24"><sup>24</sup></a>:
+<p>En los modelo lineales se supone que la función de regresión es lineal<a href="#fn25" class="footnote-ref" id="fnref25"><sup>25</sup></a>:
 <span class="math display">\[E( Y | \mathbf{X} ) = \beta_{0}+\beta_{1}X_{1}+\beta_{2}X_{2}+\cdots+\beta_{p}X_{p}\]</span>
 Es decir, que el efecto de las variables explicativas sobre la respuesta es muy simple, proporcional a su valor, y por tanto la interpretación de este tipo de modelos es (en principio) muy fácil.
 El coeficiente <span class="math inline">\(\beta_j\)</span> representa el incremento medio de <span class="math inline">\(Y\)</span> al aumentar en una unidad el valor de <span class="math inline">\(X_j\)</span>, manteniendo fijos el resto de las covariables.
@@ -414,8 +417,8 @@ Fernández-Casal, R., Roca-Pardiñas, J., y Costa, J. (2019). <em>Introducción 
 </div>
 <div class="footnotes">
 <hr />
-<ol start="24">
-<li id="fn24"><p>Algunos predictores podrían corresponderse con interacciones, <span class="math inline">\(X_i = X_j X_k\)</span>, o transformaciones (e.g. <span class="math inline">\(X_i = X_j^2\)</span>) de las variables explicativas originales. También se podría haber transformado la respuesta.<a href="modelos-lineales.html#fnref24" class="footnote-back">↩︎</a></p></li>
+<ol start="25">
+<li id="fn25"><p>Algunos predictores podrían corresponderse con interacciones, <span class="math inline">\(X_i = X_j X_k\)</span>, o transformaciones (e.g. <span class="math inline">\(X_i = X_j^2\)</span>) de las variables explicativas originales. También se podría haber transformado la respuesta.<a href="modelos-lineales.html#fnref25" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

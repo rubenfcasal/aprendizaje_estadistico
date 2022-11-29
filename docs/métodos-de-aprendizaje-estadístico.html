@@ -381,7 +381,7 @@ div.csl-indent {
 <h3><span class="header-section-number">1.2.1</span> Notación y terminología</h3>
 <!-- Emplearemos principalmente la terminología estadística, pero trataremos de incluir también la de ML -->
 <p>Denotaremos por <span class="math inline">\(\mathbf{X}=(X_1, X_2, \ldots, X_p)\)</span> al vector formado por las variables predictoras
-(variables explicativas o variables independientes; también <em>inputs</em> o <em>features</em> en la terminología de ML), cada una de las cuales podría ser tanto numérica como categórica<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>.
+(variables explicativas o variables independientes; también <em>inputs</em> o <em>features</em> en la terminología de ML), cada una de las cuales podría ser tanto numérica como categórica<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.
 En general (ver comentarios más adelante), emplearemos <span class="math inline">\(Y\left(\mathbf{X} \right)\)</span> para referirnos a la variable objetivo (variable respuesta o variable dependiente; también <em>output</em> en la terminología de ML), que como ya se comentó puede ser una variable numérica (regresión) o categórica (clasificación).</p>
 <p>Supondremos que el objetivo principal es, a partir de una muestra:
 <span class="math display">\[\left\{ \left( x_{1i}, \ldots, x_{pi}, y_{i} \right)  : i = 1, \ldots, n \right\},\]</span>
@@ -403,15 +403,15 @@ vector de observaciones de la variable $Y$
 \end{equation}\]</span>
 donde <span class="math inline">\(m(\mathbf{x}) = E\left( \left. Y\right\vert_{\mathbf{X}=\mathbf{x}} \right)\)</span> es la media condicional, denominada función de regresión (o tendencia), y <span class="math inline">\(\varepsilon\)</span> es un error aleatorio de media cero y varianza <span class="math inline">\(\sigma^2\)</span>, independiente de <span class="math inline">\(\mathbf{X}\)</span>.
 Este modelo puede generalizarse de diversas formas, por ejemplo, asumiendo que la distribución del error depende de <span class="math inline">\(\mathbf{X}\)</span> (considerando <span class="math inline">\(\varepsilon(\mathbf{X})\)</span> en lugar de <span class="math inline">\(\varepsilon\)</span>) podríamos incluir dependencia y heterocedasticidad.
-En estos casos normalmente se supone que lo hace únicamente a través de la varianza (error heterocedástico independiente), denotando por <span class="math inline">\(\sigma^2(\mathbf{x}) = Var\left( \left. Y\right\vert_{\mathbf{X}=\mathbf{x}} \right)\)</span> la varianza condicional<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</p>
+En estos casos normalmente se supone que lo hace únicamente a través de la varianza (error heterocedástico independiente), denotando por <span class="math inline">\(\sigma^2(\mathbf{x}) = Var\left( \left. Y\right\vert_{\mathbf{X}=\mathbf{x}} \right)\)</span> la varianza condicional<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>.</p>
 <p>Como ya se comentó se podría considerar clasificación como un caso particular, por ejemplo definiendo <span class="math inline">\(Y\left(\mathbf{X} \right)\)</span> de forma que tome los valores <span class="math inline">\(1, 2, \ldots, K\)</span>, etiquetas que identifican las <span class="math inline">\(K\)</span> posibles categorías (también se habla de modalidades, niveles, clases o grupos).
 Sin embargo, muchos métodos de clasificación emplean variables auxiliares (variables <em>dummy</em>), indicadoras de las distintas categorías, y emplearemos la notación anterior para referirnos a estas variables (también denominadas variables <em>target</em>). En cuyo caso, denotaremos por <span class="math inline">\(G \left(\mathbf{X} \right)\)</span> la respuesta categórica (la clase verdadera; <span class="math inline">\(g_i\)</span>, <span class="math inline">\(i =1, \ldots, n\)</span>, serían los valores observados) y por <span class="math inline">\(\hat G \left(\mathbf{X} \right)\)</span> el predictor.</p>
-<p>Por ejemplo, en el caso de dos categorías, se suele definir <span class="math inline">\(Y\)</span> de forma que toma el valor 1 en la categoría de interés (también denominada <em>éxito</em> o <em>resultado positivo</em>) y 0 en caso contrario (<em>fracaso</em> o <em>resultado negativo</em>)<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>.
+<p>Por ejemplo, en el caso de dos categorías, se suele definir <span class="math inline">\(Y\)</span> de forma que toma el valor 1 en la categoría de interés (también denominada <em>éxito</em> o <em>resultado positivo</em>) y 0 en caso contrario (<em>fracaso</em> o <em>resultado negativo</em>)<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>.
 Además, en este caso, los modelos típicamente devuelven estimaciones de la probabilidad de la clase de interés en lugar de predecir directamente la clase, por lo que se empleará <span class="math inline">\(\hat p\)</span> en lugar de <span class="math inline">\(\hat Y\)</span>.
 A partir de esa estimación se obtiene una predicción de la categoría.
 Normalmente se predice la clase más probable, lo que se conoce como la <em>regla de Bayes</em>, i.e. “éxito” si <span class="math inline">\(\hat p(\mathbf{x}) &gt; c = 0.5\)</span> y “fracaso” en caso contrario (con probabilidad estimada <span class="math inline">\(1 - \hat p(\mathbf{x})\)</span>).</p>
 <p>Resulta claro que el modelo base general <a href="métodos-de-aprendizaje-estadístico.html#eq:modelogeneral">(1.1)</a> puede no ser adecuado para modelar variables indicadoras (o probabilidades).
-Muchos de los métodos de AE emplean <a href="métodos-de-aprendizaje-estadístico.html#eq:modelogeneral">(1.1)</a> para una variable auxiliar numérica (denominada puntuación o <em>score</em>) que se transforma a escala de probabilidades mediante la función logística (denominada función sigmoidal, <em>sigmoid function</em>, en ML)<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>:
+Muchos de los métodos de AE emplean <a href="métodos-de-aprendizaje-estadístico.html#eq:modelogeneral">(1.1)</a> para una variable auxiliar numérica (denominada puntuación o <em>score</em>) que se transforma a escala de probabilidades mediante la función logística (denominada función sigmoidal, <em>sigmoid function</em>, en ML)<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>:
 <span class="math display">\[\operatorname{sigmoid}(s) = \frac{e^s}{1 + e^s}= \frac{1}{1 + e^{-s}},\]</span>
 de forma que <span class="math inline">\(\hat p(\mathbf{x}) = \operatorname{sigmoid}(\hat Y(\mathbf{x}))\)</span>.
 Reciprocamente, empleando su inversa, la <em>función logit</em>:
@@ -474,11 +474,11 @@ Entre ellos estarían R-Commander con el plugin FactoMineR (<code>Rcmdr</code>, 
 </div>
 <div class="footnotes">
 <hr />
-<ol start="2">
-<li id="fn2"><p>Aunque hay que tener en cuenta que algunos métodos están diseñados para predictores numéricos, otros para categóricos y algunos para ambos tipos.<a href="métodos-de-aprendizaje-estadístico.html#fnref2" class="footnote-back">↩︎</a></p></li>
-<li id="fn3"><p>Por ejemplo considerando en el modelo base <span class="math inline">\(\sigma(\mathbf{X})\varepsilon\)</span> como termino de error y suponiendo adicionalmente que <span class="math inline">\(\varepsilon\)</span> tiene varianza uno.<a href="métodos-de-aprendizaje-estadístico.html#fnref3" class="footnote-back">↩︎</a></p></li>
-<li id="fn4"><p>Otra alternativa sería emplear 1 y -1, algo que simplifica las expresiones de algunos métodos.<a href="métodos-de-aprendizaje-estadístico.html#fnref4" class="footnote-back">↩︎</a></p></li>
-<li id="fn5"><p>De especial interés en regresión logística y en redes neuronales artificiales.<a href="métodos-de-aprendizaje-estadístico.html#fnref5" class="footnote-back">↩︎</a></p></li>
+<ol start="3">
+<li id="fn3"><p>Aunque hay que tener en cuenta que algunos métodos están diseñados para predictores numéricos, otros para categóricos y algunos para ambos tipos.<a href="métodos-de-aprendizaje-estadístico.html#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>Por ejemplo considerando en el modelo base <span class="math inline">\(\sigma(\mathbf{X})\varepsilon\)</span> como termino de error y suponiendo adicionalmente que <span class="math inline">\(\varepsilon\)</span> tiene varianza uno.<a href="métodos-de-aprendizaje-estadístico.html#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p>Otra alternativa sería emplear 1 y -1, algo que simplifica las expresiones de algunos métodos.<a href="métodos-de-aprendizaje-estadístico.html#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn6"><p>De especial interés en regresión logística y en redes neuronales artificiales.<a href="métodos-de-aprendizaje-estadístico.html#fnref6" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

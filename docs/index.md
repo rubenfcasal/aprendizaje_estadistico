@@ -4,7 +4,7 @@ author:
   - "Rubén Fernández Casal (ruben.fcasal@udc.es)"
   - "Julián Costa Bouzas (julian.costa@udc.es)"
   - "Manuel Oviedo de la Fuente (manuel.oviedo@udc.es)"
-date: "Edición: Septiembre de 2021. Impresión: 2022-09-08"
+date: "Edición: Septiembre de 2021. Impresión: 2022-11-29"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book

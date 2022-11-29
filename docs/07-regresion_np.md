@@ -3,8 +3,8 @@
 <!-- 
 ---
 title: "Regresión no paramétrica"
-author: "Aprendizaje Estadístico (MTE, USC)"
-date: "Curso 2021/2022"
+author: "Aprendizaje Estadístico (UDC)"
+date: "Máster en Técnicas Estadísticas"
 bibliography: ["packages.bib", "aprendizaje_estadistico.bib"]
 link-citations: yes
 output: 
@@ -1603,7 +1603,7 @@ summary(bw)
 ## 
 ## Continuous Kernel Type: Second-Order Gaussian
 ## No. Continuous Explanatory Vars.: 1
-## Estimation Time: 6.66 seconds
+## Estimation Time: 6.76 seconds
 ```
 
 ```r

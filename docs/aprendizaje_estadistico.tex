@@ -179,7 +179,7 @@
 
 \title{Aprendizaje Estadístico}
 \author{Rubén Fernández Casal (\href{mailto:ruben.fcasal@udc.es}{\nolinkurl{ruben.fcasal@udc.es}}) \and Julián Costa Bouzas (\href{mailto:julian.costa@udc.es}{\nolinkurl{julian.costa@udc.es}}) \and Manuel Oviedo de la Fuente (\href{mailto:manuel.oviedo@udc.es}{\nolinkurl{manuel.oviedo@udc.es}})}
-\date{Edición: Septiembre de 2021. Impresión: 2022-09-08}
+\date{Edición: Septiembre de 2021. Impresión: 2022-11-29}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Teorema}[chapter]
@@ -348,7 +348,7 @@ scientific method''
 --- Chris Anderson, físico y periodista, 2008
 \end{quote}
 
-Por el contrario en el caso del AE se trata de comprender, si es posible, el proceso subyacente del que provienen los datos y si estos son representativos de la población de interés (i.e.~si tienen algún tipo de sesgo).
+Por el contrario en el caso del AE se trata de comprender, si es posible, el proceso subyacente del que provienen los datos y si estos son representativos de la población de interés (i.e.~si tienen algún tipo de sesgo, especialmente de selección\footnote{También es importante detectar la presencia de algún tipo de error de medición, al menos como primer paso para tratar de predecir la respuesta libre de ruido.}).
 No obstante, en este libro se considerará en general ambos términos como sinónimos.
 
 ML/AE hacen un importante uso de la programación matemática, ya que muchos de sus problemas se plantean en términos de la optimización de funciones bajo restricciones.
@@ -381,16 +381,41 @@ Cada uno de estos objetivos da lugar a una cultura:
 \hypertarget{machine-learning-vs.-estaduxedstica-dunson2018statistics}{%
 \subsection{\texorpdfstring{Machine Learning vs.~Estadística (\protect\hyperlink{ref-dunson2018statistics}{Dunson, 2018})}{Machine Learning vs.~Estadística (Dunson, 2018)}}\label{machine-learning-vs.-estaduxedstica-dunson2018statistics}}
 
+Dunson también expone las diferencias entre ambas culturas, por ejemplo en investigación (la forma en que evolucionan):
+
 \begin{itemize}
 \item
   ``Machine learning: The main publication outlets tend to be peer-reviewed conference proceedings and the style of research is very fast paced, trendy, and driven by performance metrics in prediction and related tasks''.
 \item
   ``Statistical community: The main publication outlets are peer-reviewed journals, most of which have a long drawn out review process, and the style of research tends to be careful, slower paced, intellectual as opposed to primarily performance driven, emphasizing theoretical support (e.g., through asymptotic properties), under-stated, and conservative''.
+\end{itemize}
+
+también en los principales campos de aplicación y en el tipo de datos que manejan:
+
+\begin{itemize}
 \item
   ``\emph{Big data} in ML typically means that the number of examples (i.e.~sample size) is very large''.
 \item
   ``In statistics (\ldots) it has become common to collect high dimensional, complex and intricately structured data. Often the dimensionality of the data vastly exceeds the available sample size, and the fundamental challenge of the statistical analysis is obtaining new insights from these huge data, while maintaining reproducibility/replicability and reliability of the results''.
 \end{itemize}
+
+En las conclusiones, además de alertar de los peligros:
+
+\begin{itemize}
+\item
+  ``Big data that are subject to substantial selection bias and measurement errors, without information in the data about the magnitude,sources and types of errors, should not be used to inform important decisions without substantial care and skepticism''.
+\item
+  ``There is vast interest in automated methods for complex data analysis. However, there is a lack of consideration of (1) interpretability, (2) uncertainty quantification, (3) applications with limited training data, and (4) selection bias. Statistical methods can achieve (1)-(4) with a change in focus'' (Resumen del artículo).
+\end{itemize}
+
+destaca la importancia de tener en cuenta el punto de vista estadístico.
+
+\begin{quote}
+``Such developments will likely require a close collaboration between the Stats and ML-communities and mindsets.
+The emerging field of data science provides a key opportunity to forge a new approach for analyzing and interpreting large and complex data merging multiple fields.''
+
+--- Dunson, D.B. (2018).
+\end{quote}
 
 \hypertarget{muxe9todos-de-aprendizaje-estaduxedstico}{%
 \section{Métodos de Aprendizaje Estadístico}\label{muxe9todos-de-aprendizaje-estaduxedstico}}
@@ -818,7 +843,7 @@ Podríamos emplear la siguiente función que devuelve para cada observación (fi
 \end{Shaded}
 
 La función anterior no es muy eficiente, pero podría modificarse fácilmente para emplear otros métodos de regresión\footnote{También puede ser de interés la función \texttt{cv.glm()} del paquete \texttt{boot}.}.
-En el caso de regresión lineal múltiple (y de otros modelos lineales), se pueden obtener fácilmente las predicciones eliminando una de las observaciones a partir del ajuste con todos los datos.
+En el caso de regresión lineal múltiple (y de otros predictores lineales), se pueden obtener fácilmente las predicciones eliminando una de las observaciones a partir del ajuste con todos los datos.
 Por ejemplo, en lugar de la anterior sería preferible emplear la siguiente función (ver \texttt{?rstandard}):
 
 \begin{Shaded}
@@ -873,7 +898,7 @@ Empleando esta función, podemos calcular una medida del error de predicción de
 \end{verbatim}
 
 En lugar de emplear los valores óptimos de los hiperparámetros, \protect\hyperlink{ref-breiman1984classification}{Breiman et~al.} (\protect\hyperlink{ref-breiman1984classification}{1984}) propusieron la regla de ``un error estándar'' para seleccionar la complejidad del modelo.
-La idea es que estamos trabajando con estimaciones de la precisión y pueden presentar variabilidad,
+La idea es que estamos trabajando con estimaciones de la precisión y pueden presentar variabilidad (si cambiamos la muestra o cambiamos la partición los resultados seguramente cambiarán),
 por lo que la sugerencia es seleccionar el modelo más simple\footnote{Suponiendo que los modelos se pueden ordenar del más simple al más complejo.} dentro de un error estándar de la precisión del modelo correspondiente al valor óptimo
 (se consideraría que no hay diferencias significativas en la precisión;
 además, se mitigaría el efecto de la variabilidad debida a aleatoriedad/semilla).
@@ -983,7 +1008,7 @@ En este paquete (también en \texttt{rattle}) se emplea uno de los más utilizad
 Estos valores se interpretarían como el coeficiente de determinación en regresión lineal, debería ser próximo a 1.
 Hay otras alternativas (ver \protect\hyperlink{ref-kvaalseth1985cautionary}{Kvålseth, 1985}), pero la idea es que deberían medir la proporción de variabilidad de la respuesta explicada por el modelo, algo que en general no es cierto con el anterior\footnote{Por ejemplo obtendríamos el mismo valor si desplazamos las predicciones sumando una constante (i.e.~no tiene en cuenta el sesgo). Lo que interesaría sería medir la proximidad de los puntos a la recta \(y=x\).}.
 La recomendación sería emplear:
-\[\tilde R^2 = 1 - \frac{\sum_{i=1}^n(y_i - \hat y_i)^2}{\sum_{i=1}^n(y_i - \bar y_i)^2}\]
+\[\tilde R^2 = 1 - \frac{\sum_{i=1}^n(y_i - \hat y_i)^2}{\sum_{i=1}^n(y_i - \bar y)^2}\]
 implementado junto con otras medidas en la siguiente función:
 
 \begin{Shaded}
@@ -5155,7 +5180,7 @@ Realmente, si existe al menos un hiperplano que separa perfectamente los datos d
 
 \begin{center}\includegraphics[width=0.8\linewidth]{04-svm_files/figure-latex/unnamed-chunk-2-1} \end{center}
 
-Matemáticamente, dadas las \(n\) observaciones de entrenamiento \(\mathbf{x_1}, \mathbf{x_2}, \ldots, \mathbf{x_n}\), el clasificador de máximo margen es la solución del problema de optimización
+Matemáticamente, dadas las \(n\) observaciones de entrenamiento \(\mathbf{x}_1, \mathbf{x}_2, \ldots, \mathbf{x}_n\), el clasificador de máximo margen es la solución del problema de optimización
 \[max_{\beta_0, \beta_1,\ldots, \beta_p} M\]
 sujeto a
 \[\sum_{j=1}^p \beta_j^2 = 1\]
@@ -6799,7 +6824,7 @@ Con la función \texttt{plot} se pueden generar gráficos de interés para la di
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-19-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-19-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8050,7 +8075,7 @@ Como ejemplo continuaremos con los datos de clientes de la compañía de distrib
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-50-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-50-1} \end{center}
 
 Como ya se comentó, estableciendo \texttt{family\ =\ binomial} en la llamada a \texttt{glm()} se ajusta un modelo de regresión logística (por defecto \texttt{link\ =\ "logit"}):
 
@@ -8165,6 +8190,7 @@ Para contrastar globalmente el efecto de las covariables también podemos emplea
 \subsection{Selección de variables explicativas}\label{selecciuxf3n-de-variables-explicativas}}
 
 El objetivo sería conseguir un buen ajuste con el menor número de variables explicativas posible.
+Al igual que en el caso del modelo de regresión lineal múltiple, se podría seguir un proceso interactivo, eliminando o añadiendo variables con la función \texttt{update()}, aunque también están disponibles métodos automáticos de selección de variables.
 
 Para obtener el modelo ``óptimo'' lo ideal sería evaluar todos los modelos posibles.
 En este caso no se puede emplear la función \texttt{regsubsets} del paquete \texttt{leaps} (sólo para modelos lineales),
@@ -8173,8 +8199,6 @@ pero por ejemplo el paquete
 proporciona una herramienta equivalente (\texttt{bestglm()}).
 
 En este caso también se podría emplear la función \texttt{stepwise} del paquete \texttt{RcmdrMisc} (interfaz de \texttt{stepAIC} del paquete \texttt{MASS}), para seleccionar el modelo por pasos según criterio AIC o BIC:
-
-seguir un proceso interactivo, eliminando o añadiendo variables con la función \texttt{update()},
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8315,7 +8339,7 @@ Con la función \texttt{plot} se pueden generar gráficos de interés para la di
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-56-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-56-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8334,7 +8358,7 @@ Se pueden generar gráficos parciales de residuos (p.e. \texttt{crPlots()} del p
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-57-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-57-1} \end{center}
 
 Se pueden emplear las mismas funciones vistas en los modelos lineales para obtener medidas de diagnosis de interés (Sección \ref{analisis-reg-multiple}). Por ejemplo:
 
@@ -8434,7 +8458,7 @@ También podemos emplear \texttt{caret}:
 \hypertarget{extensiones}{%
 \subsection{Extensiones}\label{extensiones}}
 
-Se pueden imponer restricciones a las estimaciones de los parámetros de modo análogo al caso de modelos lineales ( y \ref{pca-pls}).
+Se pueden imponer restricciones a las estimaciones de los parámetros de modo análogo al caso de modelos lineales (secciones \ref{shrinkage} y \ref{pca-pls}).
 Por ejemplo, en los métodos de regularización (\emph{ridge}, \emph{lasso} o \emph{elastic net}; Sección \ref{shrinkage}) bastaría con cambiar en la función de pérdidas la suma residual de cuadrados por el logaritmo negativo de la función de verosimilitud.
 
 \begin{exercise}
@@ -10066,7 +10090,7 @@ Para ajustar un modelo \emph{single index} también se podría emplear la funci�
 ## 
 ## Continuous Kernel Type: Second-Order Gaussian
 ## No. Continuous Explanatory Vars.: 1
-## Estimation Time: 6.66 seconds
+## Estimation Time: 6.76 seconds
 \end{verbatim}
 
 \begin{Shaded}

@@ -408,7 +408,7 @@ Por último, se puede realizar una cuantificación de la importancia de las vari
 <p>En conclusión, MARS utiliza splines lineales con una selección automática de los puntos de corte mediante un algoritmo avaricioso similar al empleado en los árboles CART, tratando de añadir más puntos de corte donde aparentemente hay más variaciones en la función de regresión y menos puntos donde esta es más estable.</p>
 <div id="mars-con-el-paquete-earth" class="section level3" number="7.4.1">
 <h3><span class="header-section-number">7.4.1</span> MARS con el paquete <code>earth</code></h3>
-<p>Actualmente el paquete de referencia para MARS es <a href="http://www.milbo.users.sonic.net/earth"><code>earth</code></a> (<em>Enhanced Adaptive Regression Through Hinges</em>)<a href="#fn34" class="footnote-ref" id="fnref34"><sup>34</sup></a>.</p>
+<p>Actualmente el paquete de referencia para MARS es <a href="http://www.milbo.users.sonic.net/earth"><code>earth</code></a> (<em>Enhanced Adaptive Regression Through Hinges</em>)<a href="#fn35" class="footnote-ref" id="fnref35"><sup>35</sup></a>.</p>
 <p>La función principal es <code>earth()</code> y se suelen considerar los siguientes argumentos:</p>
 <div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb459-1"><a href="mars.html#cb459-1" aria-hidden="true" tabindex="-1"></a><span class="fu">earth</span>(formula, data, <span class="at">glm =</span> <span class="cn">NULL</span>, <span class="at">degree =</span> <span class="dv">1</span>, ...) </span></code></pre></div>
 <ul>
@@ -688,8 +688,8 @@ Friedman, J. H. (1991). <span>Multivariate Adaptive Regression Splines</span>. <
 </div>
 <div class="footnotes">
 <hr />
-<ol start="34">
-<li id="fn34"><p>Desarrollado a partir de la función <code>mda::mars()</code> de T. Hastie y R. Tibshirani. Utiliza este nombre porque MARS está registrado para un uso comercial por <a href="https://www.salford-systems.com">Salford Systems</a>.<a href="mars.html#fnref34" class="footnote-back">↩︎</a></p></li>
+<ol start="35">
+<li id="fn35"><p>Desarrollado a partir de la función <code>mda::mars()</code> de T. Hastie y R. Tibshirani. Utiliza este nombre porque MARS está registrado para un uso comercial por <a href="https://www.salford-systems.com">Salford Systems</a>.<a href="mars.html#fnref35" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

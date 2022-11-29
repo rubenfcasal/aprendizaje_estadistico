@@ -382,7 +382,7 @@ Se utilizan tres medidas distintas del error en la región:</p>
 <span class="math display">\[1 - max_{k} (\widehat p_{k})\]</span></p></li>
 <li><p>Índice de Gini:
 <span class="math display">\[\sum_{k=1}^K \widehat p_{k} (1 - \widehat p_{k})\]</span></p></li>
-<li><p>Entropía<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a> (<em>cross-entropy</em>):
+<li><p>Entropía<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a> (<em>cross-entropy</em>):
 <span class="math display">\[- \sum_{k=1}^K \widehat p_{k} \text{log}(\widehat p_{k})\]</span></p></li>
 </ul>
 <p>Aunque la proporción de errores de clasificación es la medida del error más intuitiva, en la práctica sólo se utiliza para la fase de poda. Fijémonos que en el cálculo de esta medida sólo interviene <span class="math inline">\(max_{k} (\widehat p_{k})\)</span>, mientras que en las medidas alternativas intervienen las proporciones <span class="math inline">\(\widehat p_{k}\)</span> de todas las categorías. Para la fase de crecimiento se utilizan indistintamente el índice de Gini o la entropía. Cuando nos interesa el error no en una única región sino en varias (al romper un nodo en dos, o al considerar todos los nodos terminales), se suman los errores de cada región previa ponderación por el número de observaciones que hay en cada una de ellas.</p>
@@ -400,8 +400,8 @@ Shannon, C. E. (1948). A mathematical theory of communication. <em>The Bell Syst
 </div>
 <div class="footnotes">
 <hr />
-<ol start="13">
-<li id="fn13"><p>La entropía es un concepto básico de la teoría de la información <span class="citation">(<a href="#ref-shannon1948mathematical" role="doc-biblioref">Shannon, 1948</a>)</span> y se mide en <em>bits</em> (cuando en la definición se utilizan <span class="math inline">\(log_2\)</span>).<a href="árboles-de-clasificación-cart.html#fnref13" class="footnote-back">↩︎</a></p></li>
+<ol start="14">
+<li id="fn14"><p>La entropía es un concepto básico de la teoría de la información <span class="citation">(<a href="#ref-shannon1948mathematical" role="doc-biblioref">Shannon, 1948</a>)</span> y se mide en <em>bits</em> (cuando en la definición se utilizan <span class="math inline">\(log_2\)</span>).<a href="árboles-de-clasificación-cart.html#fnref14" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

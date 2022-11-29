@@ -378,7 +378,7 @@ Si la respuesta es un factor asumirá que se trata de un problema de clasificaci
 <li><p><code>mtry</code>: número de predictores seleccionados al azar en cada división; por defecto <code>max(floor(p/3), 1)</code> en el caso de regresión y <code>floor(sqrt(p))</code> en clasificación, siendo <code>p = ncol(x) = ncol(data) - 1</code> el número de predictores.</p></li>
 <li><p><code>nodesize</code>: número mínimo de observaciones en un nodo terminal; por defecto 1 en clasificación y 5 en regresión (puede ser recomendable incrementarlo si el conjunto de datos es muy grande, para evitar posibles problemas de sobreajuste, disminuir el tiempo de computación y los requerimientos de memoria; también podría ser considerado como un hiperparámetro).</p></li>
 </ul>
-<p>Otros argumentos que pueden ser de interés<a href="#fn19" class="footnote-ref" id="fnref19"><sup>19</sup></a> son:</p>
+<p>Otros argumentos que pueden ser de interés<a href="#fn20" class="footnote-ref" id="fnref20"><sup>20</sup></a> son:</p>
 <ul>
 <li><p><code>maxnodes</code>: número máximo de nodos terminales (como alternativa para la establecer la complejidad).</p></li>
 <li><p><code>importance = TRUE</code>: permite obtener medidas adicionales de importancia.</p></li>
@@ -641,7 +641,7 @@ plot_min_depth_interactions(rf, k = 5) # solo 5 mejores iteraciones
 </div>
 <div id="ejemplo-bosques-aleatorios-con-caret" class="section level3" number="3.3.3">
 <h3><span class="header-section-number">3.3.3</span> Ejemplo: bosques aleatorios con <code>caret</code></h3>
-<p>En paquete <code>caret</code> hay varias implementaciones de bagging y bosques aleatorios<a href="#fn20" class="footnote-ref" id="fnref20"><sup>20</sup></a>, incluyendo el algoritmo del paquete <code>randomForest</code> considerando como hiperparámetro el número de predictores seleccionados al azar en cada división <code>mtry</code>.
+<p>En paquete <code>caret</code> hay varias implementaciones de bagging y bosques aleatorios<a href="#fn21" class="footnote-ref" id="fnref21"><sup>21</sup></a>, incluyendo el algoritmo del paquete <code>randomForest</code> considerando como hiperparámetro el número de predictores seleccionados al azar en cada división <code>mtry</code>.
 Para ajustar este modelo a una muestra de entrenamiento hay que establecer <code>method = "rf"</code> en la llamada a <code>train()</code>.</p>
 <div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="bagging-rf-r.html#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
 <span id="cb169-2"><a href="bagging-rf-r.html#cb169-2" aria-hidden="true" tabindex="-1"></a><span class="co"># str(getModelInfo(&quot;rf&quot;, regex = FALSE))</span></span>
@@ -703,9 +703,9 @@ Breiman, L. (2001a). Random forests. <em>Machine Learning</em>, <em>45</em>(1), 
 </div>
 <div class="footnotes">
 <hr />
-<ol start="19">
-<li id="fn19"><p>Si se quiere minimizar el uso de memoria, por ejemplo mientras se seleccionan hiperparámetros, se puede establecer <code>keep.forest=FALSE</code>.<a href="bagging-rf-r.html#fnref19" class="footnote-back">↩︎</a></p></li>
-<li id="fn20"><p>Se puede hacer una búsqueda en la tabla del <a href="https://topepo.github.io/caret/available-models.html">Capítulo 6: Available Models</a> del manual.<a href="bagging-rf-r.html#fnref20" class="footnote-back">↩︎</a></p></li>
+<ol start="20">
+<li id="fn20"><p>Si se quiere minimizar el uso de memoria, por ejemplo mientras se seleccionan hiperparámetros, se puede establecer <code>keep.forest=FALSE</code>.<a href="bagging-rf-r.html#fnref20" class="footnote-back">↩︎</a></p></li>
+<li id="fn21"><p>Se puede hacer una búsqueda en la tabla del <a href="https://topepo.github.io/caret/available-models.html">Capítulo 6: Available Models</a> del manual.<a href="bagging-rf-r.html#fnref21" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

@@ -388,7 +388,7 @@ Figura 1.14: Muestra simulada y tendencia teórica.
 <p>Cuando el número de datos es más o menos grande podríamos pensar en predecir la respuesta a partir de lo que ocurre en las observaciones cercanas a la posición de predicción, esta es la idea de los métodos locales (Capítulo <a href="modelos-lineales.html#modelos-lineales">6</a>).
 Uno de los métodos de este tipo más conocidos es el de los <em>k-vecinos más cercanos</em> (<em>k-nearest neighbors</em>; KNN).
 Se trata de un método muy simple, pero que puede ser muy efectivo, que se basa en la idea de que localmente la media condicional (la predicción óptima) es constante.
-Concretamente, dados un entero <span class="math inline">\(k\)</span> (hiperparámetro) y un conjunto de entrenamiento <span class="math inline">\(\mathcal{T}\)</span>, para obtener la predicción correspondiente a un vector de valores de las variables explicativas <span class="math inline">\(\mathbf{x}\)</span>, el método de regresión<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a> KNN promedia las observaciones en un vecindario <span class="math inline">\(\mathcal{N}_k(\mathbf{x}, \mathcal{T})\)</span> formado por las <span class="math inline">\(k\)</span> observaciones más cercanas a <span class="math inline">\(\mathbf{x}\)</span>:
+Concretamente, dados un entero <span class="math inline">\(k\)</span> (hiperparámetro) y un conjunto de entrenamiento <span class="math inline">\(\mathcal{T}\)</span>, para obtener la predicción correspondiente a un vector de valores de las variables explicativas <span class="math inline">\(\mathbf{x}\)</span>, el método de regresión<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a> KNN promedia las observaciones en un vecindario <span class="math inline">\(\mathcal{N}_k(\mathbf{x}, \mathcal{T})\)</span> formado por las <span class="math inline">\(k\)</span> observaciones más cercanas a <span class="math inline">\(\mathbf{x}\)</span>:
 <span class="math display">\[\hat{Y}(\mathbf{x}) = \hat{m}(\mathbf{x}) = \frac{1}{k} \sum_{i \in \mathcal{N}_k(\mathbf{x}, \mathcal{T})} Y_i\]</span>
 (sería necesario definir una distancia, normalmente la distancia euclídea de los predictores estandarizados).</p>
 <p>Este método está implementado en numerosos paquetes, por ejemplo en la función <code>knnreg()</code> del paquete <code>caret</code>:</p>
@@ -448,8 +448,8 @@ Bellman, R. (1961). <em>Adaptive Control Processes: a guided tour</em>. Princeto
 </div>
 <div class="footnotes">
 <hr />
-<ol start="11">
-<li id="fn11"><p>En el caso de clasificación se considerarían las variables indicadoras de las categorías y se obtendrían las frecuencias relativas en el vecindario como estimaciones de las probabilidades de las clases.<a href="dimen-curse.html#fnref11" class="footnote-back">↩︎</a></p></li>
+<ol start="12">
+<li id="fn12"><p>En el caso de clasificación se considerarían las variables indicadoras de las categorías y se obtendrían las frecuencias relativas en el vecindario como estimaciones de las probabilidades de las clases.<a href="dimen-curse.html#fnref12" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

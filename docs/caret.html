@@ -427,7 +427,7 @@ Figura 1.17: Listado de los métodos disponiles en <code>caret::train()</code>.
 <li><p>También admite matrices <code>x</code>, <code>y</code> en lugar de fórmulas (o <em>recetas</em>: <code>recipe()</code>).</p></li>
 <li><p>Si se imputan datos en el preprocesado será necesario establecer <code>na.action = na.pass</code>.</p></li>
 </ul></li>
-<li><p>Predicción: Una de las ventajas es que incorpora un único método <code>predict()</code> para objetos de tipo <code>train</code> con dos únicas opciones<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a> <code>type = c("raw", "prob")</code>, la primera para obtener predicciones de la respuesta y la segunda para obtener estimaciones de las probabilidades (en los métodos de clasificación que lo admitan).</p>
+<li><p>Predicción: Una de las ventajas es que incorpora un único método <code>predict()</code> para objetos de tipo <code>train</code> con dos únicas opciones<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a> <code>type = c("raw", "prob")</code>, la primera para obtener predicciones de la respuesta y la segunda para obtener estimaciones de las probabilidades (en los métodos de clasificación que lo admitan).</p>
 <p>Además, si se incluyo un preprocesado en el entrenamiento, se emplearán las mismas transformaciones en un nuevo conjunto de datos <code>newdata</code>.</p></li>
 <li><p>Evaluación de los modelos</p>
 <ul>
@@ -525,8 +525,8 @@ Kuhn, M., y Wickham, H. (2020). Tidymodels: a collection of packages for modelin
 </div>
 <div class="footnotes">
 <hr />
-<ol start="12">
-<li id="fn12"><p>En lugar de la variedad de opciones que emplean los distintos paquetes (e.g.: <code>type = "response"</code>, <code>"class"</code>, <code>"posterior"</code>, <code>"probability"</code>… ).<a href="caret.html#fnref12" class="footnote-back">↩︎</a></p></li>
+<ol start="13">
+<li id="fn13"><p>En lugar de la variedad de opciones que emplean los distintos paquetes (e.g.: <code>type = "response"</code>, <code>"class"</code>, <code>"posterior"</code>, <code>"probability"</code>… ).<a href="caret.html#fnref13" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

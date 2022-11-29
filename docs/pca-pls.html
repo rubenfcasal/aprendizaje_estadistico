@@ -499,7 +499,7 @@ Aunque podríamos emplear las funciones <code>printcomp()</code> y <code>lm()</c
 pero esto no está relacionado con su utilidad para explicar la respuesta.
 No va a haber problemas de colinealidad aunque incluyamos muchas componentes, pero se tendrán que estimar más coeficientes y va a disminuir su precisión.
 Sería más razonable obtener las componentes principales y después aplicar un método de selección.
-Por ejemplo podemos combinar el método de preprocesado <code>"pca"</code> de <code>caret</code> con un método de selección de variables<a href="#fn26" class="footnote-ref" id="fnref26"><sup>26</sup></a>:</p>
+Por ejemplo podemos combinar el método de preprocesado <code>"pca"</code> de <code>caret</code> con un método de selección de variables<a href="#fn27" class="footnote-ref" id="fnref27"><sup>27</sup></a>:</p>
 <div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="pca-pls.html#cb368-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
 <span id="cb368-2"><a href="pca-pls.html#cb368-2" aria-hidden="true" tabindex="-1"></a>caret.pcrsel <span class="ot">&lt;-</span> <span class="fu">train</span>(fidelida <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">method =</span> <span class="st">&quot;leapSeq&quot;</span>,</span>
 <span id="cb368-3"><a href="pca-pls.html#cb368-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">preProcess =</span> <span class="fu">c</span>(<span class="st">&quot;zv&quot;</span>, <span class="st">&quot;center&quot;</span>, <span class="st">&quot;scale&quot;</span>, <span class="st">&quot;pca&quot;</span>),     </span>
@@ -667,8 +667,8 @@ Wold, S., Martens, H., y Wold, H. (1983). The multivariate calibration problem i
 </div>
 <div class="footnotes">
 <hr />
-<ol start="26">
-<li id="fn26"><p>Esta forma de proceder se podría emplear con otros modelos que puedan tener problemas de colinealidad, como los lineales generalizados.<a href="pca-pls.html#fnref26" class="footnote-back">↩︎</a></p></li>
+<ol start="27">
+<li id="fn27"><p>Esta forma de proceder se podría emplear con otros modelos que puedan tener problemas de colinealidad, como los lineales generalizados.<a href="pca-pls.html#fnref27" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

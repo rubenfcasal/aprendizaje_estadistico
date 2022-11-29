@@ -445,7 +445,7 @@ div.csl-indent {
 ## </code></pre>
 <p>Para obtener las estimaciones de las probabilidades, habría que establecer
 <code>type = "probabilities"</code> al predecir (devolverá una matriz con columnas
-correspondientes a los niveles)<a href="#fn23" class="footnote-ref" id="fnref23"><sup>23</sup></a>:</p>
+correspondientes a los niveles)<a href="#fn24" class="footnote-ref" id="fnref24"><sup>24</sup></a>:</p>
 <div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="svm-con-el-paquete-kernlab.html#cb235-1" aria-hidden="true" tabindex="-1"></a>p.est <span class="ot">&lt;-</span> <span class="fu">predict</span>(svm, <span class="at">newdata =</span> test, <span class="at">type =</span> <span class="st">&quot;probabilities&quot;</span>)</span>
 <span id="cb235-2"><a href="svm-con-el-paquete-kernlab.html#cb235-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(p.est)</span></code></pre></div>
 <pre><code>##           good       bad
@@ -563,8 +563,8 @@ Meyer, D., Dimitriadou, E., Hornik, K., Weingessel, A., y Leisch, F. (2020). <em
 </div>
 <div class="footnotes">
 <hr />
-<ol start="23">
-<li id="fn23"><p>Otras opciones son <code>"votes"</code> y <code>"decision"</code> para obtener matrices con el número de votos o los valores de <span class="math inline">\(m(\mathbf{x})\)</span>.<a href="svm-con-el-paquete-kernlab.html#fnref23" class="footnote-back">↩︎</a></p></li>
+<ol start="24">
+<li id="fn24"><p>Otras opciones son <code>"votes"</code> y <code>"decision"</code> para obtener matrices con el número de votos o los valores de <span class="math inline">\(m(\mathbf{x})\)</span>.<a href="svm-con-el-paquete-kernlab.html#fnref24" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

@@ -388,7 +388,7 @@ reescalando las funciones <em>rigde</em> de forma que tengan media cero y varian
 </div>
 <div id="implementación-en-r-1" class="section level3" number="7.5.2">
 <h3><span class="header-section-number">7.5.2</span> Implementación en R</h3>
-<p>El método PPR (con respuesta multivariante) está implementado en la función <code>ppr()</code> del paquete base de R<a href="#fn35" class="footnote-ref" id="fnref35"><sup>35</sup></a>, y es empleada por el método <code>"ppr"</code> de <code>caret</code>.
+<p>El método PPR (con respuesta multivariante) está implementado en la función <code>ppr()</code> del paquete base de R<a href="#fn36" class="footnote-ref" id="fnref36"><sup>36</sup></a>, y es empleada por el método <code>"ppr"</code> de <code>caret</code>.
 Esta función:</p>
 <div class="sourceCode" id="cb497"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb497-1"><a href="projection-pursuit.html#cb497-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ppr</span>(formula, data, nterms, <span class="at">max.terms =</span> nterms, <span class="at">optlevel =</span> <span class="dv">2</span>,</span>
 <span id="cb497-2"><a href="projection-pursuit.html#cb497-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">sm.method =</span> <span class="fu">c</span>(<span class="st">&quot;supsmu&quot;</span>, <span class="st">&quot;spline&quot;</span>, <span class="st">&quot;gcvspline&quot;</span>),</span>
@@ -516,7 +516,7 @@ Para más detalles ver <code>help(ppr)</code>.</p>
 ## 
 ## Continuous Kernel Type: Second-Order Gaussian
 ## No. Continuous Explanatory Vars.: 1
-## Estimation Time: 7.07 seconds</code></pre>
+## Estimation Time: 6.76 seconds</code></pre>
 <div class="sourceCode" id="cb518"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb518-1"><a href="projection-pursuit.html#cb518-1" aria-hidden="true" tabindex="-1"></a>sindex <span class="ot">&lt;-</span> <span class="fu">npindex</span>(<span class="at">bws =</span> bw, <span class="at">gradients =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb518-2"><a href="projection-pursuit.html#cb518-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sindex)</span></code></pre></div>
 <pre><code>## 
@@ -565,8 +565,8 @@ Venables, W. N., y Ripley, B. D. (2002). <em>Modern Applied Statistics with S</e
 </div>
 <div class="footnotes">
 <hr />
-<ol start="35">
-<li id="fn35"><p>Basada en la función <code>ppreg()</code> de S-PLUS e implementado en R por B.D. Ripley inicialmente para el paquete <code>MASS</code>.<a href="projection-pursuit.html#fnref35" class="footnote-back">↩︎</a></p></li>
+<ol start="36">
+<li id="fn36"><p>Basada en la función <code>ppreg()</code> de S-PLUS e implementado en R por B.D. Ripley inicialmente para el paquete <code>MASS</code>.<a href="projection-pursuit.html#fnref36" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

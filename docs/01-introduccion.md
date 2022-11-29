@@ -3,8 +3,8 @@
 <!-- 
 ---
 title: "Introducción al Aprendizaje Estadístico"
-author: "Aprendizaje Estadístico (MTE, USC)"
-date: "Curso 2021/2022"
+author: "Aprendizaje Estadístico (UDC)"
+date: "Máster en Técnicas Estadísticas"
 bibliography: ["packages.bib", "aprendizaje_estadistico.bib"]
 link-citations: yes
 output: 
@@ -110,7 +110,7 @@ Tradicionalmente ML no se preocupa del origen de los datos e incluso es habitual
 >
 > --- Chris Anderson, físico y periodista, 2008
 
-Por el contrario en el caso del AE se trata de comprender, si es posible, el proceso subyacente del que provienen los datos y si estos son representativos de la población de interés (i.e. si tienen algún tipo de sesgo).
+Por el contrario en el caso del AE se trata de comprender, si es posible, el proceso subyacente del que provienen los datos y si estos son representativos de la población de interés (i.e. si tienen algún tipo de sesgo, especialmente de selección^[También es importante detectar la presencia de algún tipo de error de medición, al menos como primer paso para tratar de predecir la respuesta libre de ruido.]).
 No obstante, en este libro se considerará en general ambos términos como sinónimos.
 
 ML/AE hacen un importante uso de la programación matemática, ya que muchos de sus problemas se plantean en términos de la optimización de funciones bajo restricciones. 
@@ -140,13 +140,30 @@ son las competiciones entre algoritmos predictivos, al estilo del [Netflix Chall
 
 ### Machine Learning vs. Estadística [@dunson2018statistics]
 
+Dunson también expone las diferencias entre ambas culturas, por ejemplo en investigación (la forma en que evolucionan):
+
 - "Machine learning: The main publication outlets tend to be peer-reviewed conference proceedings and the style of research is very fast paced, trendy, and driven by performance metrics in prediction and related tasks".
 
 - "Statistical community: The main publication outlets are peer-reviewed journals, most of which have a long drawn out review process, and the style of research tends to be careful, slower paced, intellectual as opposed to primarily performance driven, emphasizing theoretical support  (e.g., through asymptotic properties), under-stated, and conservative".
 
+también en los principales campos de aplicación y en el tipo de datos que manejan:
+
 - "*Big data* in ML typically means that the number of examples (i.e. sample size) is very large".
 
 - "In statistics (...) it has become common to collect high dimensional, complex and intricately structured data. Often the dimensionality of the data vastly exceeds the available sample size, and the fundamental challenge of the statistical analysis is obtaining new insights from these huge data, while maintaining reproducibility/replicability and reliability of the results".
+
+En las conclusiones, además de alertar de los peligros:
+
+- "Big data that are subject to substantial selection bias and measurement errors, without information in the data about the magnitude,sources and types of errors, should not be used to inform important decisions without substantial care and skepticism".
+
+- "There is vast interest in automated methods for complex data analysis. However, there is a lack of consideration of (1) interpretability, (2) uncertainty quantification, (3) applications with limited training data, and (4) selection bias. Statistical methods can achieve (1)-(4) with a change in focus" (Resumen del artículo).
+
+destaca la importancia de tener en cuenta el punto de vista estadístico.
+
+> "Such developments will likely require a close collaboration between the Stats and ML-communities and mindsets. 
+> The emerging field of data science provides a key opportunity to forge a new approach for analyzing and interpreting large and complex data merging multiple fields."
+>
+> --- Dunson, D.B. (2018).
 
 
 ## Métodos de Aprendizaje Estadístico
@@ -579,7 +596,7 @@ cv.lm0 <- function(formula, datos) {
 ```
 
 La función anterior no es muy eficiente, pero podría modificarse fácilmente para emplear otros métodos de regresión^[También puede ser de interés la función `cv.glm()` del paquete `boot`.]. 
-En el caso de regresión lineal múltiple (y de otros modelos lineales), se pueden obtener fácilmente las predicciones eliminando una de las observaciones a partir del ajuste con todos los datos.
+En el caso de regresión lineal múltiple (y de otros predictores lineales), se pueden obtener fácilmente las predicciones eliminando una de las observaciones a partir del ajuste con todos los datos.
 Por ejemplo, en lugar de la anterior sería preferible emplear la siguiente función (ver `?rstandard`):
 
 
@@ -629,7 +646,7 @@ grado.op
 ## [1] 5
 ```
 En lugar de emplear los valores óptimos de los hiperparámetros, @breiman1984classification propusieron la regla de "un error estándar" para seleccionar la complejidad del modelo.
-La idea es que estamos trabajando con estimaciones de la precisión y pueden presentar variabilidad, 
+La idea es que estamos trabajando con estimaciones de la precisión y pueden presentar variabilidad (si cambiamos la muestra o cambiamos la partición los resultados seguramente cambiarán), 
 por lo que la sugerencia es seleccionar el modelo más simple^[Suponiendo que los modelos se pueden ordenar del más simple al más complejo.] dentro de un error estándar de la precisión del modelo correspondiente al valor óptimo 
 (se consideraría que no hay diferencias significativas en la precisión; 
 además, se mitigaría el efecto de la variabilidad debida a aleatoriedad/semilla).
@@ -738,7 +755,7 @@ En este paquete (también en `rattle`) se emplea uno de los más utilizados, el 
 Estos valores se interpretarían como el coeficiente de determinación en regresión lineal, debería ser próximo a 1. 
 Hay otras alternativas [ver @kvaalseth1985cautionary], pero la idea es que deberían medir la proporción de variabilidad de la respuesta explicada por el modelo, algo que en general no es cierto con el anterior^[Por ejemplo obtendríamos el mismo valor si desplazamos las predicciones sumando una constante (i.e. no tiene en cuenta el sesgo). Lo que interesaría sería medir la proximidad de los puntos a la recta $y=x$.].
 La recomendación sería emplear:
-$$\tilde R^2 = 1 - \frac{\sum_{i=1}^n(y_i - \hat y_i)^2}{\sum_{i=1}^n(y_i - \bar y_i)^2}$$
+$$\tilde R^2 = 1 - \frac{\sum_{i=1}^n(y_i - \hat y_i)^2}{\sum_{i=1}^n(y_i - \bar y)^2}$$
 implementado junto con otras medidas en la siguiente función:
 
 

@@ -404,7 +404,7 @@ Por ejemplo, en el caso del modelo logístico bastará con establecer <code>fami
 <span id="cb391-8"><a href="reg-glm.html#cb391-8" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> df[<span class="sc">-</span>itrain, ]</span>
 <span id="cb391-9"><a href="reg-glm.html#cb391-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb391-10"><a href="reg-glm.html#cb391-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(train, <span class="at">pch =</span> <span class="fu">as.numeric</span>(train<span class="sc">$</span>alianza), <span class="at">col =</span> <span class="fu">as.numeric</span>(train<span class="sc">$</span>alianza))</span></code></pre></div>
-<p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-50-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-50-1.png" width="100%" style="display: block; margin: auto;" /></p>
 <p>Como ya se comentó, estableciendo <code>family = binomial</code> en la llamada a <code>glm()</code> se ajusta un modelo de regresión logística (por defecto <code>link = "logit"</code>):</p>
 <div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="reg-glm.html#cb392-1" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">glm</span>(alianza <span class="sc">~</span> velocida <span class="sc">+</span> calidadp, <span class="at">family =</span> binomial, <span class="at">data =</span> train)</span>
 <span id="cb392-2"><a href="reg-glm.html#cb392-2" aria-hidden="true" tabindex="-1"></a>modelo</span></code></pre></div>
@@ -472,14 +472,14 @@ En este caso hay una reducción de 57.65 con una pérdida de 2 grados de liberta
 </div>
 <div id="selección-de-variables-explicativas" class="section level3" number="6.8.3">
 <h3><span class="header-section-number">6.8.3</span> Selección de variables explicativas</h3>
-<p>El objetivo sería conseguir un buen ajuste con el menor número de variables explicativas posible.</p>
+<p>El objetivo sería conseguir un buen ajuste con el menor número de variables explicativas posible.
+Al igual que en el caso del modelo de regresión lineal múltiple, se podría seguir un proceso interactivo, eliminando o añadiendo variables con la función <code>update()</code>, aunque también están disponibles métodos automáticos de selección de variables.</p>
 <p>Para obtener el modelo “óptimo” lo ideal sería evaluar todos los modelos posibles.
 En este caso no se puede emplear la función <code>regsubsets</code> del paquete <code>leaps</code> (sólo para modelos lineales),
 pero por ejemplo el paquete
 <a href="https://cran.r-project.org/web/packages/bestglm/vignettes/bestglm.pdf"><code>bestglm</code></a>
 proporciona una herramienta equivalente (<code>bestglm()</code>).</p>
 <p>En este caso también se podría emplear la función <code>stepwise</code> del paquete <code>RcmdrMisc</code> (interfaz de <code>stepAIC</code> del paquete <code>MASS</code>), para seleccionar el modelo por pasos según criterio AIC o BIC:</p>
-<p>seguir un proceso interactivo, eliminando o añadiendo variables con la función <code>update()</code>,</p>
 <div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="reg-glm.html#cb402-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(RcmdrMisc)</span></span>
 <span id="cb402-2"><a href="reg-glm.html#cb402-2" aria-hidden="true" tabindex="-1"></a>modelo.completo <span class="ot">&lt;-</span> <span class="fu">glm</span>(alianza <span class="sc">~</span> ., <span class="at">family =</span> binomial, <span class="at">data =</span> train)</span>
 <span id="cb402-3"><a href="reg-glm.html#cb402-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -596,13 +596,13 @@ proporciona una herramienta equivalente (<code>bestglm()</code>).</p>
 <p>Con la función <code>plot</code> se pueden generar gráficos de interés para la diagnosis del modelo:</p>
 <div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="reg-glm.html#cb406-1" aria-hidden="true" tabindex="-1"></a>oldpar <span class="ot">&lt;-</span> <span class="fu">par</span>( <span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
 <span id="cb406-2"><a href="reg-glm.html#cb406-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(modelo)</span></code></pre></div>
-<p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-56-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-56-1.png" width="90%" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="reg-glm.html#cb407-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(oldpar)</span></code></pre></div>
 <p>Aunque su interpretación difiere un poco de la de los modelos lineales…</p>
 <p>Se pueden generar gráficos parciales de residuos (p.e. <code>crPlots()</code> del paquete <code>car</code>):</p>
 <div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="reg-glm.html#cb408-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(car)</span></span>
 <span id="cb408-2"><a href="reg-glm.html#cb408-2" aria-hidden="true" tabindex="-1"></a><span class="fu">crPlots</span>(modelo)</span></code></pre></div>
-<p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-57-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-57-1.png" width="90%" style="display: block; margin: auto;" /></p>
 <p>Se pueden emplear las mismas funciones vistas en los modelos lineales para obtener medidas de diagnosis de interés (Sección <a href="analisis-reg-multiple.html#analisis-reg-multiple">6.4</a>). Por ejemplo:</p>
 <div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="reg-glm.html#cb409-1" aria-hidden="true" tabindex="-1"></a><span class="fu">residuals</span>(model, <span class="at">type =</span> <span class="st">&quot;deviance&quot;</span>)</span></code></pre></div>
 <p>proporcionará los residuos <em>deviance</em>.</p>
@@ -660,7 +660,7 @@ Por ejemplo, para tratar de corregir la falta de linealidad se pueden considerar
 </div>
 <div id="extensiones" class="section level3" number="6.8.6">
 <h3><span class="header-section-number">6.8.6</span> Extensiones</h3>
-<p>Se pueden imponer restricciones a las estimaciones de los parámetros de modo análogo al caso de modelos lineales ( y <a href="pca-pls.html#pca-pls">6.7</a>).
+<p>Se pueden imponer restricciones a las estimaciones de los parámetros de modo análogo al caso de modelos lineales (secciones <a href="shrinkage.html#shrinkage">6.6</a> y <a href="pca-pls.html#pca-pls">6.7</a>).
 Por ejemplo, en los métodos de regularización (<em>ridge</em>, <em>lasso</em> o <em>elastic net</em>; Sección <a href="shrinkage.html#shrinkage">6.6</a>) bastaría con cambiar en la función de pérdidas la suma residual de cuadrados por el logaritmo negativo de la función de verosimilitud.</p>
 
 <div class="exercise">

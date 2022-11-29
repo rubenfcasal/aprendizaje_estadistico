@@ -3,8 +3,8 @@
 <!-- 
 ---
 title: "Modelos lineales y extensiones"
-author: "Aprendizaje Estadístico (MTE, USC)"
-date: "Curso 2021/2022"
+author: "Aprendizaje Estadístico (UDC)"
+date: "Máster en Técnicas Estadísticas"
 bibliography: ["packages.bib", "aprendizaje_estadistico.bib"]
 link-citations: yes
 output: 
@@ -21,6 +21,9 @@ output:
 bookdown::preview_chapter("06-modelos_lineales.Rmd")
 knitr::purl("06-modelos_lineales.Rmd", documentation = 2)
 knitr::spin("06-modelos_lineales.R",knit = FALSE)
+
+Pendiente:
+- Añadir leyendas de figuras (eliminar títulos en gráficos)
 -->
 
 
@@ -858,7 +861,7 @@ plot(modelo)
 
 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-19-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-19-1} \end{center}
 
 ```r
 par(oldpar)
@@ -2028,7 +2031,7 @@ plot(train, pch = as.numeric(train$alianza), col = as.numeric(train$alianza))
 
 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-50-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-50-1} \end{center}
 
 Como ya se comentó, estableciendo `family = binomial` en la llamada a `glm()` se ajusta un modelo de regresión logística  (por defecto `link = "logit"`):
 
@@ -2137,6 +2140,7 @@ anova(modelo.null, modelo, test = "Chi")
 ### Selección de variables explicativas
 
 El objetivo sería conseguir un buen ajuste con el menor número de variables explicativas posible.
+Al igual que en el caso del modelo de regresión lineal múltiple, se podría seguir un proceso interactivo, eliminando o añadiendo variables con la función `update()`, aunque también están disponibles métodos automáticos de selección de variables.
 
 Para obtener el modelo "óptimo" lo ideal sería evaluar todos los modelos posibles.
 En este caso no se puede emplear la función `regsubsets` del paquete `leaps` (sólo para modelos lineales),
@@ -2145,8 +2149,6 @@ pero por ejemplo el paquete
 proporciona una herramienta equivalente (`bestglm()`).
 
 En este caso también se podría emplear la función `stepwise` del paquete `RcmdrMisc` (interfaz de `stepAIC` del paquete `MASS`), para seleccionar el modelo por pasos según criterio AIC o BIC:
-
-seguir un proceso interactivo, eliminando o añadiendo variables con la función `update()`,
 
 
 ```r
@@ -2284,7 +2286,7 @@ plot(modelo)
 
 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-56-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-56-1} \end{center}
 
 ```r
 par(oldpar)
@@ -2302,7 +2304,7 @@ crPlots(modelo)
 
 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-57-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{06-modelos_lineales_files/figure-latex/unnamed-chunk-57-1} \end{center}
 
 Se pueden emplear las mismas funciones vistas en los modelos lineales para obtener medidas de diagnosis de interés (Sección \@ref(analisis-reg-multiple)). Por ejemplo:
 
@@ -2397,7 +2399,7 @@ names(getModelInfo("glm")) # 11 métodos
 
 ### Extensiones
 
-Se pueden imponer restricciones a las estimaciones de los parámetros de modo análogo al caso de modelos lineales ( y \@ref(pca-pls)).
+Se pueden imponer restricciones a las estimaciones de los parámetros de modo análogo al caso de modelos lineales (secciones \@ref(shrinkage) y \@ref(pca-pls)).
 Por ejemplo, en los métodos de regularización (*ridge*, *lasso* o *elastic net*; Sección \@ref(shrinkage)) bastaría con cambiar en la función de pérdidas la suma residual de cuadrados por el logaritmo negativo de la función de verosimilitud.
 
 \BeginKnitrBlock{exercise}

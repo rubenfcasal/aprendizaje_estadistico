@@ -3,8 +3,8 @@
 <!-- 
 ---
 title: "Modelos lineales y extensiones"
-author: "Aprendizaje Estadístico (MTE, USC)"
-date: "Curso 2021/2022"
+author: "Aprendizaje Estadístico (UDC)"
+date: "Máster en Técnicas Estadísticas"
 bibliography: ["packages.bib", "aprendizaje_estadistico.bib"]
 link-citations: yes
 output: 
@@ -21,6 +21,9 @@ output:
 bookdown::preview_chapter("06-modelos_lineales.Rmd")
 knitr::purl("06-modelos_lineales.Rmd", documentation = 2)
 knitr::spin("06-modelos_lineales.R",knit = FALSE)
+
+Pendiente:
+- Añadir leyendas de figuras (eliminar títulos en gráficos)
 -->
 
 ```{r , child = '_global_options.Rmd'}
@@ -506,7 +509,7 @@ Al margen de la colinealidad, si no se verifican las otras hipótesis estructura
 
 Con la función `plot` se pueden generar gráficos de interés para la diagnosis del modelo:
 
-```{r }
+```{r out.width = "90%", fig.dim = c(10, 10)}
 oldpar <- par(mfrow = c(2,2))
 plot(modelo)
 par(oldpar)
@@ -1084,7 +1087,7 @@ Como ya se comentó, muchas de las herramientas y funciones genéricas disponibl
 
 Como ejemplo continuaremos con los datos de clientes de la compañía de distribución industrial HBAT, pero consideraremos como respuesta la variable *alianza* y como predictores las percepciones de HBAT (al igual que en las secciones anteriores consideraremos únicamente variables explicativas continuas, sin interacciones, por comodidad).
 
-```{r }
+```{r out.width = "100%", fig.dim = c(12, 12)}
 # load("data/hbat.RData")
 # as.data.frame(attr(hbat, "variable.labels"))
 df <- hbat[, c(7:19, 24)]  
@@ -1132,6 +1135,7 @@ anova(modelo.null, modelo, test = "Chi")
 ### Selección de variables explicativas
 
 El objetivo sería conseguir un buen ajuste con el menor número de variables explicativas posible.
+Al igual que en el caso del modelo de regresión lineal múltiple, se podría seguir un proceso interactivo, eliminando o añadiendo variables con la función `update()`, aunque también están disponibles métodos automáticos de selección de variables.
 
 Para obtener el modelo "óptimo" lo ideal sería evaluar todos los modelos posibles.
 En este caso no se puede emplear la función `regsubsets` del paquete `leaps` (sólo para modelos lineales),
@@ -1140,8 +1144,6 @@ pero por ejemplo el paquete
 proporciona una herramienta equivalente (`bestglm()`).
 
 En este caso también se podría emplear la función `stepwise` del paquete `RcmdrMisc` (interfaz de `stepAIC` del paquete `MASS`), para seleccionar el modelo por pasos según criterio AIC o BIC:
-
-seguir un proceso interactivo, eliminando o añadiendo variables con la función `update()`,
 
 ```{r }
 # library(RcmdrMisc)
@@ -1157,7 +1159,7 @@ Las hipótesis estructurales del modelo son similares al caso de regresión line
 
 Con la función `plot` se pueden generar gráficos de interés para la diagnosis del modelo:
 
-```{r }
+```{r out.width = "90%", fig.dim = c(10,10)}
 oldpar <- par( mfrow=c(2,2))
 plot(modelo)
 par(oldpar)
@@ -1167,7 +1169,7 @@ Aunque su interpretación difiere un poco de la de los modelos lineales...
 
 Se pueden generar gráficos parciales de residuos (p.e. `crPlots()` del paquete `car`):
 
-```{r }
+```{r out.width = "90%", fig.dim = c(10,10)}
 # library(car)
 crPlots(modelo)
 ```
@@ -1216,7 +1218,7 @@ names(getModelInfo("glm")) # 11 métodos
 
 ### Extensiones
 
-Se pueden imponer restricciones a las estimaciones de los parámetros de modo análogo al caso de modelos lineales ( y \@ref(pca-pls)).
+Se pueden imponer restricciones a las estimaciones de los parámetros de modo análogo al caso de modelos lineales (secciones \@ref(shrinkage) y \@ref(pca-pls)).
 Por ejemplo, en los métodos de regularización (*ridge*, *lasso* o *elastic net*; Sección \@ref(shrinkage)) bastaría con cambiar en la función de pérdidas la suma residual de cuadrados por el logaritmo negativo de la función de verosimilitud.
 
 ```{exercise, label="glmnet"}

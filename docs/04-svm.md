@@ -3,8 +3,8 @@
 <!-- 
 ---
 title: "Máquinas de soporte vectorial"
-author: "Aprendizaje Estadístico (MTE, USC)"
-date: "Curso 2021/2022"
+author: "Aprendizaje Estadístico (UDC)"
+date: "Máster en Técnicas Estadísticas"
 bibliography: ["packages.bib", "aprendizaje_estadistico.bib"]
 link-citations: yes
 output: 
@@ -53,7 +53,7 @@ Realmente, si existe al menos un hiperplano que separa perfectamente los datos d
 
 \begin{center}\includegraphics[width=0.8\linewidth]{04-svm_files/figure-latex/unnamed-chunk-2-1} \end{center}
 
-Matemáticamente, dadas las $n$ observaciones de entrenamiento $\mathbf{x_1}, \mathbf{x_2}, \ldots, \mathbf{x_n}$, el clasificador de máximo margen es la solución del problema de optimización
+Matemáticamente, dadas las $n$ observaciones de entrenamiento $\mathbf{x}_1, \mathbf{x}_2, \ldots, \mathbf{x}_n$, el clasificador de máximo margen es la solución del problema de optimización
 \[max_{\beta_0, \beta_1,\ldots, \beta_p} M\]
 sujeto a
 \[\sum_{j=1}^p \beta_j^2 = 1\]
