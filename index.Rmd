@@ -69,7 +69,7 @@ Este obra está bajo una licencia de [Creative Commons Reconocimiento-NoComercia
 pkgs <- c("caret", "rattle", "gbm", "car", "leaps", "MASS", "RcmdrMisc", 
           "lmtest", "glmnet", "mgcv", "np", "NeuralNetTools", "pdp", "vivid",
           "plot3D", "AppliedPredictiveModeling", "ISLR")
-knitr::write_bib(c(pkgs, "e1071", "KernSmooth"), 'packages.bib')
+knitr::write_bib(c(pkgs, "e1071", "KernSmooth", "tidymodels"), 'packages.bib')
 # Create .nojekyll file in the /docs folder
 file.create('docs/.nojekyll')
 ```

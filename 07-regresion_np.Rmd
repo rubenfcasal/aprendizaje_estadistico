@@ -1,5 +1,9 @@
 # Regresión no paramétrica {#reg-np}
 
+```{r global-options, include=FALSE}
+source("_global_options.R")
+```
+
 <!-- 
 ---
 title: "Regresión no paramétrica"
@@ -8,23 +12,25 @@ date: "Máster en Técnicas Estadísticas"
 bibliography: ["packages.bib", "aprendizaje_estadistico.bib"]
 link-citations: yes
 output: 
+  bookdown::html_document2:
+    pandoc_args: ["--number-offset", "5,0"]
+    toc: yes
+    toc_depth: 3
+    toc_float:
+      collapsed: no
+      smooth_scroll: no    
+    # toc_float: yes 
+    # mathjax: local            # copia local de MathJax, hay que establecer:
+    # self_contained: false     # las dependencias se guardan en ficheros externos 
   bookdown::pdf_document2:
     keep_tex: yes
     toc: yes 
-  bookdown::html_document2:
-    pandoc_args: ["--number-offset", "6,0"]
-    toc: yes 
-    # mathjax: local            # copia local de MathJax, hay que establecer:
-    # self_contained: false     # las dependencias se guardan en ficheros externos 
 ---
 
 bookdown::preview_chapter("07-regresion_np.Rmd")
 knitr::purl("07-regresion_np.Rmd", documentation = 2)
 knitr::spin("07-regresion_np.R",knit = FALSE)
 -->
-
-```{r , child = '_global_options.Rmd'}
-```
 
 Se trata de métodos que no suponen ninguna forma concreta de la media condicional (i.e. no se hacen suposiciones paramétricas sobre el efecto de las variables explicativas):
 $$Y=m\left( X_1, \ldots,  X_p \right) + \varepsilon$$
@@ -61,19 +67,16 @@ Normalmente se considera la distancia euclídea ($d=2$) o la de Manhatan ($d=1$)
 En cualquier caso la recomendación es estandarizar previamente los predictores para que no influya su escala en el cálculo de las distancias.
 
 Como ya se mostró en al final del Capítulo \@ref(intro-AE), este método está implementado en la función `knnreg()` (Sección \@ref(dimen-curse)) y en el método `"knn"` del paquete `caret` (Sección \@ref(caret)).
+Como ejemplo adicional emplearemos el conjunto de datos `MASS::mcycle` que contiene mediciones de la aceleración de la cabeza en una simulación de un accidente de motocicleta, utilizado para probar cascos protectores (considerando el conjunto de datos completo como si fuese la muestra de entrenamiento; ver Figura \@ref(fig:np-knnfit)):
 
-Como ejemplo adicional emplearemos el conjunto de datos `MASS::mcycle` que contiene mediciones de la aceleración de la cabeza en una simulación de un accidente de motocicleta, utilizado para probar cascos protectores (considerando el conjunto de datos completo como si fuese la muestra de entrenamiento).
-
-```{r np-knnfit, fig.cap="Predicciones con el método KNN y distintos vecindarios"}
+```{r np-knnfit, fig.cap="Predicciones con el método KNN y distintos vecindarios."}
 data(mcycle, package = "MASS")
-
 library(caret)
-
 # Ajuste de los modelos
-fit1 <- knnreg(accel ~ times, data = mcycle, k = 5) # 5 observaciones más cercanas (5% de los datos)
+fit1 <- knnreg(accel ~ times, data = mcycle, k = 5) # 5% de los datos
 fit2 <- knnreg(accel ~ times, data = mcycle, k = 10)
 fit3 <- knnreg(accel ~ times, data = mcycle, k = 20)
-
+# Representación
 plot(accel ~ times, data = mcycle, col = 'darkgray') 
 newx <- seq(1 , 60, len = 200)
 newdata <- data.frame(times = newx)
@@ -123,15 +126,8 @@ $(X_i, Y_i)$:
 $$\hat{\mathbf{Y}} = S\mathbf{Y}$$ 
 siendo $S$ la matriz de suavizado con $\mathbf{s}_{X_{i}}^{t}$ en la fila $i$ (este tipo de métodos también se denominan *suavizadores lineales*).
 
-Habitualmente se considera:
-
--   $d=0$: Estimador Nadaraya-Watson.
-
--   $d=1$: Estimador lineal local.
-
+Habitualmente se considera $d=0$, el estimador Nadaraya-Watson, o $d=1$, estimador lineal local.
 Desde el punto de vista asintótico ambos estimadores tienen un comportamiento similar^[Asintóticamente el estimador lineal local tiene un sesgo menor que el de Nadaraya-Watson (pero del mismo orden) y la misma varianza (e.g. @fan1996).], pero en la práctica suele ser preferible el estimador lineal local, sobre todo porque se ve menos afectado por el denominado efecto frontera (Sección \@ref(dimen-curse)).
-
-Aunque el paquete base de `R` incluye herramientas para la estimación tipo núcleo de la regresión (`ksmooth()`, `loess()`), recomiendan el uso del paquete `KernSmooth` [@R-KernSmooth]. 
 
 La ventana $h$ es el (hiper)parámetro de mayor importancia en la predicción y para seleccionarlo se suelen emplear métodos de validación cruzada (Sección \@ref(cv)) o tipo plug-in (reemplazando las funciones desconocidas que aparecen en la expresión de la ventana asintóticamente óptima por estimaciones; e.g. función `dpill()` del paquete `KernSmooth`).
 Por ejemplo, usando el criterio de validación cruzada dejando uno fuera (LOOCV) se trataría de minimizar:
@@ -146,17 +142,17 @@ $$GCV(h)=\frac{1}{n}\sum_{i=1}^n\left(\frac{y_i-\hat{m}(x_i)}{1 - \frac{1}{n}tr(
 (sustituyendo $S_{ii}$ por su promedio). 
 Además, la traza de la matriz de suavizado $tr(S)$ es lo que se conoce como el *número efectivo de parámetros* ($n - tr(S)$ sería una aproximación de los grados de libertad del error).
 
-Continuando con el ejemplo del conjunto de datos `MASS::mcycle` emplearemos la función `locpoly()` del paquete `KernSmooth` para obtener estimaciones lineales locales^[La función `KernSmooth::locpoly()` también admite la estimación de derivadas.] con una venta seleccionada mediante un método plug-in:
+Aunque el paquete base de `R` incluye herramientas para la estimación tipo núcleo de la regresión (`ksmooth()`, `loess()`), recomiendan el uso del paquete `KernSmooth` [@R-KernSmooth]. 
+Continuando con el ejemplo del conjunto de datos `MASS::mcycle` emplearemos la función `locpoly()` de este paquete para obtener estimaciones lineales locales^[La función `KernSmooth::locpoly()` también admite la estimación de derivadas.] con una venta seleccionada mediante un método plug-in `r cite_fig(llr-fit)`:
 
-```{r}
+```{r llr-fit, fig.cap="Ajuste lineal local con ventana plug-in."}
 # data(mcycle, package = "MASS")
-x <- mcycle$times
-y <- mcycle$accel  
-
+times <- mcycle$times
+accel <- mcycle$accel  
 library(KernSmooth)
-h <- dpill(x, y) # Método plug-in de Ruppert, Sheather y Wand (1995)
-fit <- locpoly(x, y, bandwidth = h) # Estimación lineal local
-plot(x, y, col = 'darkgray')
+h <- dpill(times, accel) # Método plug-in de Ruppert, Sheather y Wand (1995)
+fit <- locpoly(times, accel, bandwidth = h) # Estimación lineal local
+plot(times, accel, col = 'darkgray')
 lines(fit)
 ```
 
@@ -164,8 +160,8 @@ Hay que tener en cuenta que el paquete `KernSmooth` no implementa los métodos
 `predict()` y `residuals()`:
 
 ```{r}
-pred <- approx(fit, xout = x)$y # pred <- predict(fit)
-resid <- y - pred # resid <- residuals(fit)
+pred <- approx(fit, xout = times)$y # pred <- predict(fit)
+resid <- accel - pred # resid <- residuals(fit)
 ```
 
 Tampoco calcula medidas de bondad de ajuste, aunque podríamos calcular medidas de la precisión de las predicciones de la forma habitual (en este caso de la muestra de entrenamiento):
@@ -189,12 +185,12 @@ accuracy <- function(pred, obs, na.rm = FALSE,
     r.squared = 1 - sum(err^2)/sum((obs - mean(obs))^2) # Pseudo R-cuadrado
   ))
 }
-accuracy(pred, y)
+accuracy(pred, accel)
 ```
 
 El caso multivariante es análogo, aunque habría que considerar una matriz de ventanas simétrica $H$. También hay extensiones para el caso de predictores categóricos (nominales o ordinales) y para el caso de distribuciones de la respuesta distintas de la normal (máxima verosimilitud local).
 
-Otros paquetes de R incluyen más funcionalidades (`sm`, `locfit`, `r citepkg("npsp","https://rubenfcasal.github.io/npsp")`...), pero hoy en día el paquete `r citepkg("np","https://github.com/JeffreyRacine/R-Package-np")` es el que se podría considerar más completo.
+Otros paquetes de R incluyen más funcionalidades (`sm`, `locfit`, `r cite_pkg_("npsp","https://rubenfcasal.github.io/npsp")`...), pero hoy en día el paquete `r cite_pkg_("np","https://github.com/JeffreyRacine/R-Package-np")` es el que se podría considerar más completo.
 
 
 ### Regresión polinómica local robusta
@@ -202,13 +198,11 @@ Otros paquetes de R incluyen más funcionalidades (`sm`, `locfit`, `r citepkg("n
 También hay versiones robustas del ajuste polinómico local tipo núcleo.
 Estos métodos surgieron en el caso bivariante ($p=1$), por lo que también se denominan *suavizado de diagramas de dispersión* (*scatterplot smoothing*; e.g. función `lowess()`, *locally weighted scatterplot smoothing*, del paquete base).
 Posteriormente se extendieron al caso multivariante (e.g. función `loess()`).
-
 Son métodos muy empleados en análisis descriptivo (no supervisado) y normalmente se emplean ventanas locales tipo vecinos más cercanos (por ejemplo a través de un parámetro `spam` que determina la proporción de observaciones empleadas en el ajuste).
 
-Como ejemplo emplearemos la función `loess()` con ajuste robusto (habrá que establecer `family = "symmetric"` para emplear M-estimadores, por defecto con 4 iteraciones, en lugar de mínimos cuadrados ponderados), seleccionando previamente `spam` por validación cruzada (LOOCV) pero empleando como criterio de error la mediana de los errores en valor absoluto (*median absolute deviation*, MAD)^[En este caso habría dependencia entre las observaciones y los criterios habituales como validación cruzada tenderán a seleccionar ventanas pequeñas, i.e. a infrasuavizar.].
+Como ejemplo emplearemos la función `loess()` con ajuste robusto (habrá que establecer `family = "symmetric"` para emplear M-estimadores, por defecto con 4 iteraciones, en lugar de mínimos cuadrados ponderados), seleccionando previamente `spam` por validación cruzada (LOOCV) pero empleando como criterio de error la mediana de los errores en valor absoluto (*median absolute deviation*, MAD)^[En este caso habría dependencia entre las observaciones y los criterios habituales como validación cruzada tenderán a seleccionar ventanas pequeñas, i.e. a infrasuavizar.] `r cite_fig(loess-cv)`.
 
-
-```{r}
+```{r loess-cv, fig.cap="Error de predicción de validación cruzada (mediana de los errores absolutos) del ajuste LOWESS dependiendo del parámetro de suavizado."}
 cv.loess <- function(formula, datos, span, ...) {
   n <- nrow(datos)
   cv.pred <- numeric(n)
@@ -234,7 +228,11 @@ plot(ventanas, cv.error)
 imin <- which.min(cv.error)
 span.cv <- ventanas[imin]
 points(span.cv, cv.error[imin], pch = 16)
+```
 
+Empleamos el parámetro de suavizado seleccionado para ajustar el modelo final `r cite_fig(loess-fit)`:
+
+```{r loess-fit, fig.cap="Ajuste polinómico local robusto (LOWESS), con el parámetro de suavizado seleccionado mediante validación cruzada."}
 # Ajuste con todos los datos
 plot(accel ~ times, data = mcycle, col = 'darkgray')
 fit <- loess(accel ~ times, mcycle, span = span.cv, family = "symmetric")
@@ -242,51 +240,48 @@ lines(mcycle$times, predict(fit))
 ```
 
 
-## Splines
+## Splines {#splines}
 
-Otra alternativa consiste en trocear los datos en intervalos, fijando unos puntos de corte $z_i$ (denominados nudos; *knots*), con $i = 1, \ldots, k$, y ajustar un polinomio en cada segmento (lo que se conoce como regresión segmentada, *piecewise regression*).
+Otra alternativa consiste en trocear los datos en intervalos, fijando unos puntos de corte $z_i$ (denominados nudos; *knots*), con $i = 1, \ldots, k$, y ajustar un polinomio en cada segmento (lo que se conoce como regresión segmentada, *piecewise regression*; ver Figura \@ref(fig:rsegmentada-fit)).
+De esta forma sin embargo habrá discontinuidades en los puntos de corte, pero podrían añadirse restricciones adicionales de continuidad (o incluso de diferenciabilidad) para evitarlo (e.g. paquete `r cite_pkg_("segmented")`).
 
-```{r echo=FALSE, results=FALSE}
+```{r rsegmentada-fit, echo=FALSE, results=FALSE, fig.cap="Estimación mediante regresión segmentada."}
 nknots <- 9 # nodos internos (11 total); 10 intervalos
-knots <- seq(min(x), max(x), len = nknots + 2)
-fint <- cut(x, knots, include.lowest = TRUE)
-fit <- lm(y ~ x*fint)
-plot(x, y, col = 'darkgray')
+knots <- seq(min(times), max(times), len = nknots + 2)
+fint <- cut(times, knots, include.lowest = TRUE)
+fit <- lm(accel ~ times*fint)
+plot(times, accel, col = 'darkgray')
 
-pdata <- split(data.frame(x = x, pred = predict(fit)), fint)
-lapply(pdata, function(d) lines(d$x, d$pred))
+pdata <- split(data.frame(times = times, pred = predict(fit)), fint)
+lapply(pdata, function(d) lines(d$times, d$pred))
 knots <- knots[-c(1, nknots + 2)]
 abline(v = knots, lty = 3)
 ```
 
-De esta forma sin embargo habrá discontinuidades en los puntos de corte, pero podrían añadirse restricciones adicionales de continuidad (o incluso de diferenciabilidad) para evitarlo (e.g. paquete `r citepkg("segmented")`).
 
-
-### Regression splines {#reg-splines}
+### Splines de regresión {#reg-splines}
 
 Cuando en cada intervalo se ajustan polinomios de orden $d$ y se incluyen restricciones de forma que las derivadas sean continuas hasta el orden $d-1$ se obtienen los denominados splines de regresión (*regression splines*).
-
 Puede verse que este tipo de ajustes equivalen a transformar la variable predictora $X$, considerando por ejemplo la *base de potencias truncadas* (*truncated power basis*):
 $$1, x, \ldots, x^d, (x-z_1)_+^d,\ldots,(x-z_k)_+^d$$
 siendo $(x - z)_+ = \max(0, x - z)$, y posteriormente realizar un ajuste lineal:
 $$m(x) = \beta_0 + \beta_1 b_1(x) +  \beta_2 b_2(x) + \ldots  + \beta_{k+d} b_{k+d}(x)$$
 
 Típicamente se seleccionan polinomios de grado $d=3$, lo que se conoce como splines cúbicos, y nodos equiespaciados.
-Además, se podrían emplear otras bases equivalentes. Por ejemplo, para evitar posibles problemas computacionales con la base anterior, se suele emplear la denominada base $B$-spline [@de1978practical], implementada en la función `bs()` del paquete `splines`.
+Además, se podrían emplear otras bases equivalentes. 
+Por ejemplo, para evitar posibles problemas computacionales con la base anterior, se suele emplear la denominada base $B$-spline [@de1978practical], implementada en la función `bs()` del paquete `splines` `r cite_fig(spline-d012)`:
 
-```{r}
+```{r spline-d012, fig.cap="Ajustes mediante splines de regresión (de grados 1, 2 y 3)."}
 nknots <- 9 # nodos internos; 10 intervalos
-knots <- seq(min(x), max(x), len = nknots + 2)[-c(1, nknots + 2)]
-# knots <- quantile(x, 1:nknots/(nknots + 1)) # bs(x, df = nknots + degree + intercept)
-
+knots <- seq(min(times), max(times), len = nknots + 2)[-c(1, nknots + 2)]
 library(splines)
-fit1 <- lm(y ~ bs(x, knots = knots, degree = 1))
-fit2 <- lm(y ~ bs(x, knots = knots, degree = 2))
-fit3 <- lm(y ~ bs(x, knots = knots)) # degree = 3
-
-plot(x, y, col = 'darkgray')
-newx <- seq(min(x), max(x), len = 200)
-newdata <- data.frame(x = newx)
+fit1 <- lm(accel ~ bs(times, knots = knots, degree = 1))
+fit2 <- lm(accel ~ bs(times, knots = knots, degree = 2))
+fit3 <- lm(accel ~ bs(times, knots = knots)) # degree = 3
+# Representar
+plot(times, accel, col = 'darkgray')
+newx <- seq(min(times), max(times), len = 200)
+newdata <- data.frame(times = newx)
 lines(newx, predict(fit1, newdata), lty = 3)
 lines(newx, predict(fit2, newdata), lty = 2)
 lines(newx, predict(fit3, newdata))
@@ -296,16 +291,23 @@ legend("topright", legend = c("d=1 (df=11)", "d=2 (df=12)", "d=3 (df=13)"),
 ```
 
 El grado del polinomio, pero sobre todo el número de nodos, determinarán la flexibilidad del modelo. 
-Se podrían considerar el número de parámetros en el ajuste lineal, los grados de libertad, como medida de la complejidad (en la función `bs()` se puede especificar `df` en lugar de `knots`, y estos se generarán a partir de los cuantiles de `x`). 
+Se podrían considerar el número de parámetros en el ajuste lineal, los grados de libertad, como medida de la complejidad (en la función `bs()` se puede especificar `df` en lugar de `knots`, y estos se generarán a partir de los cuantiles). 
 
-Como ya se comentó, al aumentar el grado del modelo polinómico se incrementa la variabilidad de las predicciones, especialmente en la frontera.
+<!-- 
+knots <- quantile(times, 1:nknots/(nknots + 1))
+bs(times, df = nknots + degree + intercept)
+-->
+
+Como ya se comentó, al aumentar el grado de un modelo polinómico se incrementa la variabilidad de las predicciones, especialmente en la frontera.
 Para tratar de evitar este problema se suelen emplear los *splines naturales*, que son splines de regresión con restricciones adicionales de forma que el ajuste sea lineal en los intervalos extremos (lo que en general produce estimaciones más estables en la frontera y mejores extrapolaciones).
 Estas restricciones reducen la complejidad (los grados de libertad del modelo), y al igual que en el caso de considerar únicamente las restricciones de continuidad y diferenciabilidad, resultan equivalentes a considerar una nueva base en un ajuste sin restricciones.
-Por ejemplo, se puede emplear la función `splines::ns()` para ajustar un spline natural (cúbico por defecto): 
+Por ejemplo, se puede emplear la función `splines::ns()` para ajustar un spline natural (cúbico por defecto; ver Figura \@ref(fig:spline-ns-bs)): 
 
-```{r}
-plot(x, y, col = 'darkgray')
-fit4 <- lm(y ~ ns(x, knots = knots))
+(ref:spline-ns-bs) Ajuste mediante splines naturales y $B$-splines."}
+
+```{r spline-ns-bs,fig.cap="Ajuste mediante splines naturales (ns) y $B$-splines (bs)."}
+plot(times, accel, col = 'darkgray')
+fit4 <- lm(accel ~ ns(times, knots = knots))
 lines(newx, predict(fit4, newdata))
 lines(newx, predict(fit3, newdata), lty = 2)
 abline(v = knots, lty = 3, col = 'darkgray')
@@ -317,7 +319,7 @@ Sin embargo, sería preferible considerar más nodos donde aparentemente hay má
 Otra alternativa son los splines penalizados, descritos al final de esta sección.
 
 
-### Smoothing splines
+### Splines de suavizado
 
 Los splines de suavizado (*smoothing splines*) se obtienen como la función $s(x)$ suave (dos veces diferenciable) que minimiza la suma de cuadrados residual más una penalización que mide su rugosidad:
 $$\sum_{i=1}^{n} (y_i - s(x_i))^2  + \lambda \int s^{\prime\prime}(x)^2 dx$$
@@ -325,8 +327,9 @@ siendo $0 \leq \lambda < \infty$ el (hiper)parámetro de suavizado.
 
 Puede verse que la solución a este problema, en el caso univariante, es un spline natural cúbico con nodos en $x_1, \ldots, x_n$ y restricciones en los coeficientes determinadas por el valor de $\lambda$ (es una versión regularizada de un spline natural cúbico).
 Por ejemplo si $\lambda = 0$ se interpolarán las observaciones y cuando $\lambda \rightarrow \infty$ el ajuste tenderá a una recta (con segunda derivada nula).
-En el caso multivariante $p> 1$ la solución da lugar a los denominados *thin plate splines*^[Están relacionados con las funciones radiales. También hay versiones con un número reducido de nodos denominados *low-rank thin plate regression splines* empleados en el paquete `mgcv`.].
+En el caso multivariante $p> 1$ la solución da lugar a los denominados *thin plate splines*[^splines-1].
 
+[^splines-1]: Están relacionados con las funciones radiales. También hay versiones con un número reducido de nodos denominados *low-rank thin plate regression splines* empleados en el paquete `mgcv`.
 
 Al igual que en el caso de la regresión polinómica local (Sección \@ref(reg-locpol)), estos métodos son suavizadores lineales:
 $$\hat{\mathbf{Y}} = S_{\lambda}\mathbf{Y}$$
@@ -341,9 +344,9 @@ Análogamente, el número efectivo de parámetros o grados de libertad^[Esto tam
 Este método de suavizado está implementado en la función `smooth.spline()` del paquete base y por defecto emplea GCV para seleccionar el parámetro de suavizado (aunque también admite CV y se puede especificar `lambda` o `df`)^[Además de predicciones, el correspondiente método `predict()` también permite obtener estimaciones de las derivadas.].
 
 ```{r warning=FALSE}
-sspline.gcv <- smooth.spline(x, y)
-sspline.cv <- smooth.spline(x, y, cv = TRUE)
-plot(x, y, col = 'darkgray')
+sspline.gcv <- smooth.spline(times, accel)
+sspline.cv <- smooth.spline(times, accel, cv = TRUE)
+plot(times, accel, col = 'darkgray')
 lines(sspline.gcv)
 lines(sspline.cv, lty = 2)
 ```
@@ -365,7 +368,7 @@ Para más detalles ver por ejemplo las secciones 5.2 y 5.3 de @wood2017generaliz
 Wand, M.P. (2003). Smoothing and Mixed Models. *Computational Statistics*, 18(2), 223–249
 -->
 
-## Modelos aditivos
+## Modelos aditivos {#reg-gam}
 
 Se supone que:
 $$Y= \beta_{0} + f_1(X_1) + f_2(X_2) + \ldots + f_p(X_p)  + \varepsilon$$
@@ -389,17 +392,18 @@ Además de que se podría emplear un método por pasos, permite la selección de
 Al ser más completo que el anterior sería el recomendado en la mayoría de los casos (ver `?mgcv::mgcv.package` para una introducción al paquete).
 Sigue la referencia @wood2017generalized.
 
+<!-- 
+Entre las diferentes extensiones interesantes a los modelos generalizados, destacamos la que ofrece los modelos mixtos [ver @faraway2016extending, @zuur2009mixed], que cubren una amplia variedad de ajustes como la de efectos aleatorios, modelos multinivel o estructuras de correlaciones. Y dentro de los diferentes paquetes de R, la función `mgcv::gamm()` (que requiere usar el paquete `lme`) permite este tipo de ajustes. 
+-->
 
-### Ajuste: función `gam` 
-
-La función `gam()` del paquete `mgcv` permite ajustar modelos aditivos generalizados empleando suavizado mediante splines:
+La función `r cite_fun(gam, mgcv)` del paquete `r cite_cran(mgcv)` permite ajustar modelos aditivos generalizados empleando suavizado mediante splines:
 
 ```{r, eval=FALSE}
-library(mgcv)
 ajuste <- gam(formula, family = gaussian, data, method = "GCV.Cp", select = FALSE, ...)
 ```
 
-(también dispone de la función `bam()` para el ajuste de estos modelos a grandes conjuntos de datos y de la función `gamm()` para el ajuste de modelos aditivos generalizados mixtos). El modelo se establece a partir de la `formula` empleando `s()` para especificar las componentes "suaves" (ver `help(s)` y Sección \@ref(mgcv-diagnosis)).
+(también dispone de la función `bam()` para el ajuste de estos modelos a grandes conjuntos de datos y de la función `gamm()` para el ajuste de modelos aditivos generalizados mixtos, incluyendo dependencia en los errores). 
+El modelo se establece a partir de la `formula` empleando `r cite_fun(s, mgcv)` para especificar las componentes "suaves" (ver [`help(s)`](https://rdrr.io/pkg/mgcv/man/s.html) y Sección \@ref(mgcv-diagnosis)).
 
 Algunas posibilidades de uso son las que siguen:
 
@@ -423,53 +427,72 @@ Algunas posibilidades de uso son las que siguen:
     ajuste <- gam(y ~ s(x1, x2) + s(x3) + x4)
     ```
 
-### Ejemplo
-
 En esta sección utilizaremos como ejemplo el conjunto de datos `Prestige` de la librería `carData`. 
 Se tratará de explicar `prestige` (puntuación de ocupaciones obtenidas a partir de una encuesta) a partir de `income` (media de ingresos en la ocupación) y `education` (media de los años de educación).
 
 ```{r message=FALSE}
-data(Prestige, package = "carData")
 library(mgcv)
+data(Prestige, package = "carData")
 modelo <- gam(prestige ~ s(income) + s(education), data = Prestige)
 summary(modelo)
-# coef(modelo) # El resultado es un modelo lineal en transformaciones de los predictores
+# coef(modelo) 
+# El resultado es un modelo lineal en transformaciones de los predictores
 ```
 
-En este caso el método `plot()` representa los efectos (parciales) estimados de cada predictor:  
+En este caso el método `r cite_method(plot, gam, mgcv)` representa los efectos (parciales) estimados de cada predictor `r cite_fig(gam-eff)`:
 
-```{r}
-par.old <- par(mfrow = c(1, 2))
-plot(modelo, shade = TRUE) # 
+(ref:gam-eff) Estimaciones de los efectos parciales de `income` (izquierda) y `education` (derecha).
+
+```{r gam-eff, out.width="90%", fig.dim=c(10, 6), fig.cap='(ref:gam-eff)'}
+plot(modelo, shade = TRUE, pages = 1) # residuals = FALSE por defecto
+```
+
+<!-- 
+par.old <- par(mfrow = c(1, 2)) 
 par(par.old)
-```
+-->
 
 En general se representa cada componente no paramétrica (salvo que se especifique `all.terms = TRUE`), incluyendo gráficos de contorno para el caso de componentes bivariantes (correspondientes a interacciones entre predictores).
 
-Se dispone también de un método `predict()` para calcular las predicciones de la forma habitual (por defecto devuelve las correspondientes a las observaciones `modelo$fitted.values` y para nuevos datos hay que emplear el argumento `newdata`).
+Se dispone también de un método `r cite_method(predict, gam, mgcv)` para calcular las predicciones de la forma habitual (por defecto devuelve las correspondientes a las observaciones `modelo$fitted.values` y para nuevos datos hay que emplear el argumento `newdata`).
 
 
 ### Superficies de predicción
 
-En el caso bivariante, para representar las estimaciones (la superficie de predicción) obtenidas con el modelo se pueden utilizar las funciones `persp()` o versiones mejoradas como `plot3D::persp3D`. 
+En el caso bivariante, para representar las estimaciones (la superficie de predicción) obtenidas con el modelo se pueden utilizar las funciones `r cite_fun(persp)` o versiones mejoradas como `r cite_fun(plot3D::persp3D)`. 
 Estas funciones requieren que los valores de entrada estén dispuestos en una rejilla bidimensional. 
-Para generar esta rejilla se puede emplear la función `expand.grid(x,y)` que crea todas las combinaciones de los puntos dados en `x` e `y`.
+Para generar esta rejilla se puede emplear la función `expand.grid(x,y)` que crea todas las combinaciones de los puntos dados en `x` e `y` `r cite_fig(rejilla-pred)`:
 
-```{r}
+(ref:rejilla-pred) Observaciones y rejilla de predicción (para los predictores `education` e `income`). 
+
+```{r rejilla-pred, fig.cap='(ref:rejilla-pred)'}
 inc <- with(Prestige, seq(min(income), max(income), len = 25))
 ed <- with(Prestige, seq(min(education), max(education), len = 25))
 newdata <- expand.grid(income = inc, education = ed)
 # Representamos la rejilla
 plot(income ~ education, Prestige, pch = 16)
 abline(h = inc, v = ed, col = "grey")
+```
+
+y usaríamos estos valores para obtener la superficie de predicción, que en este caso[^nota-sup-pred] representamos con la función `r cite_fun(plot3D::persp3D)` `r cite_fig(sup-pred)`:
+
+[^nota-sup-pred]: Alternativamente se podrían emplear las funciones `contour()`, `filled.contour()`, `plot3D::image2D()` o similares.
+
+```{r sup-pred, fig.cap="Superficie de predicción obtenida con el modelo GAM."}
 # Se calculan las predicciones
 pred <- predict(modelo, newdata)
 # Se representan
 pred <- matrix(pred, nrow = 25)
 # persp(inc, ed, pred, theta = -40, phi = 30)
+# contour(inc, ed, pred, xlab = "Income", ylab = "Education")
+# filled.contour(inc, ed, pred, xlab = "Income", ylab = "Education", 
+#                key.title = title("Prestige"))
 plot3D::persp3D(inc, ed, pred, theta = -40, phi = 30, ticktype = "detailed",
                 xlab = "Income", ylab = "Education", zlab = "Prestige")
 ```
+
+<!-- 
+old.par <- par(mfrow = c(1, 2))
 
 Alternativamente se podrían emplear las funciones `contour()`, `filled.contour()`, `plot3D::image2D` o similares:
 
@@ -477,13 +500,14 @@ Alternativamente se podrían emplear las funciones `contour()`, `filled.contour(
 # contour(inc, ed, pred, xlab = "Income", ylab = "Education")
 filled.contour(inc, ed, pred, xlab = "Income", ylab = "Education", key.title = title("Prestige"))
 ```
-
-Puede ser más cómodo emplear el paquete `r citepkg("modelr", "https://modelr.tidyverse.org")` (emplea gráficos `ggplot2`) para trabajar con modelos y predicciones.
+-->
+ 
+Puede ser más cómodo emplear el paquete `r cite_pkg_("modelr", "https://modelr.tidyverse.org")` (emplea gráficos `ggplot2`) para trabajar con modelos y predicciones.
 
 
 ### Comparación y selección de modelos
 
-Además de las medidas de bondad de ajuste como el coeficiente de determinación ajustado, también se puede emplear la función `anova` para la comparación de modelos (y seleccionar las componentes por pasos de forma interactiva).
+Además de las medidas de bondad de ajuste como el coeficiente de determinación ajustado, también se puede emplear la función `anova()` para la comparación de modelos (y seleccionar las componentes por pasos de forma interactiva).
 Por ejemplo, viendo el gráfico de los efectos se podría pensar que el efecto de `education` podría ser lineal:
 
 ```{r}
@@ -500,14 +524,14 @@ Alternativamente, podríamos pensar que hay interacción:
 ```{r}
 modelo2 <- gam(prestige ~ s(income, education), data = Prestige)
 summary(modelo2)
-# plot(modelo2, se = FALSE)
-# plot(modelo2, scheme = 2)
-
 ```
 
 En este caso el coeficiente de determinación ajustado es menor y ya no tendría sentido realizar el contraste.
 
 <!-- 
+# plot(modelo2, se = FALSE)
+# plot(modelo2, scheme = 2)
+
 También podríamos emplear el criterio `AIC()` (o `BIC()`): 
 
 ```{r}
@@ -517,51 +541,59 @@ AIC(modelo2)
 -->
 
 Ademas se pueden seleccionar componentes del modelo (mediante regularización) empleando el parámetro `select = TRUE`. 
-
-```{r}
-example(gam.selection)
-```
-
+Para más detalles consultar la ayuda [`help(gam.selection)`](https://rdrr.io/pkg/mgcv/man/gam.selection.html) o ejecutar `example(gam.selection)`.
 
 
 ### Diagnosis del modelo {#mgcv-diagnosis}
 
-La función `gam.check()` realiza una diagnosis del modelo: 
+La función `r cite_fun(gam.check, mgcv)` realiza una diagnosis descriptiva y gráfica del modelo ajustado `r cite_fig(gam-gof)`:
 
-```{r}
+(ref:gam-gof) Gráficas de diagnóstico del modelo aditivo ajustado.
+
+```{r gam-gof, out.width = "90%", fig.dim = c(10, 10), fig.cap='(ref:gam-gof)'}
 gam.check(modelo)
 ```
 
 Lo ideal sería observar normalidad en los dos gráficos de la izquierda, falta de patrón en el superior derecho, y ajuste a una recta en el inferior derecho. En este caso parece que el modelo se comporta adecuadamente.
 Como se deduce del resultado anterior, podría ser recomendable modificar la dimensión `k` de la base utilizada construir la componente no paramétrica, este valor se puede interpretar como el grado máximo de libertad permitido en ese componente, aunque normalmente no influye demasiado en el resultado (puede influir en el tiempo de computación).
 
-
-También se podría chequear concurvidad (*concurvity*; generalización de la colinealidad) entre las componentes del modelo:
+También se podría chequear concurvidad (generalización de la colinealidad; función `r cite_fun(concurvity, mgcv)`) entre las componentes del modelo:
 
 ```{r}
 concurvity(modelo)
 ```
 
-Esta función devuelve tres medidas por componente, que tratan de medir la proporción de variación de esa componente que está contenida en el resto (similares al complementario de la tolerancia; un valor próximo a 1 indicaría que puede haber problemas de concurvidad).
+Esta función devuelve tres medidas por componente, que tratan de medir la proporción de variación de esa componente que está contenida en el resto (similares al complementario de la tolerancia), un valor próximo a 1 indicaría que puede haber problemas de concurvidad.
 
 
-### GAM en `caret`
+<!-- 
+### GAM en `caret` 
 
-El soporte de GAM en `caret` es como poco deficiente... 
+El soporte de GAM es como poco deficiente... 
+-->
+
+También se puede ajustar modelos GAM empleando `caret`.
+Por ejemplo con los métodos `"gam"` y `"gamLoess"`:
 
 ```{r}
 library(caret)
-names(getModelInfo("gam")) # 4 métodos
+# names(getModelInfo("gam")) # 4 métodos
 modelLookup("gam")
 modelLookup("gamLoess")
 ```
 
-### Ejercicios
+::: {.exercise #adaptive-smooth}
 
-1. Continuando con los datos de `MASS:mcycle`, emplear `mgcv::gam()` para ajustar un spline penalizado para predecir `accel` a partir de `times` con las opciones por defecto y representar el ajuste obtenido. Comparar el ajuste con el obtenido empleando un spline penalizado adaptativo (`bs="ad"`; ver `?adaptive.smooth`).
+Continuando con los datos de `MASS:mcycle`, emplear `mgcv::gam()` para ajustar un spline penalizado para predecir `accel` a partir de `times` con las opciones por defecto y representar el ajuste obtenido. Comparar el ajuste con el obtenido empleando un spline penalizado adaptativo (`bs="ad"`; ver `?adaptive.smooth`).
 
-2. Empleando el conjunto de datos `airquality`, crear una muestra de entrenamiento y otra de test, buscar un modelo aditivo que resulte adecuado para explicar `sqrt(Ozone)` a partir de `Temp`, `Wind` y `Solar.R`.
-Es preferible suponer que hay una interacción entre `Temp` y `Wind`?
+:::
+
+::: {.exercise #gam-airquality}
+
+Empleando el conjunto de datos `airquality`, crear una muestra de entrenamiento y otra de test, buscar un modelo aditivo que resulte adecuado para explicar `sqrt(Ozone)` a partir de `Temp`, `Wind` y `Solar.R`.
+¿Es preferible suponer que hay una interacción entre `Temp` y `Wind`?
+
+:::
 
 
 ## Regresión spline adaptativa multivariante {#mars}
@@ -620,10 +652,10 @@ En conclusión, MARS utiliza splines lineales con una selección automática de 
 
 ### MARS con el paquete `earth`
 
-Actualmente el paquete de referencia para MARS es `r citepkg("earth", "http://www.milbo.users.sonic.net/earth")` (*Enhanced Adaptive Regression Through Hinges*)^[Desarrollado a partir de la función `mda::mars()` de T. Hastie y R. Tibshirani. Utiliza este nombre porque MARS está registrado para un uso comercial por [Salford Systems](https://www.salford-systems.com).].
+Actualmente el paquete de referencia para MARS es `r cite_pkg_("earth", "http://www.milbo.users.sonic.net/earth")` (*Enhanced Adaptive Regression Through Hinges*)^[Desarrollado a partir de la función `mda::mars()` de T. Hastie y R. Tibshirani. Utiliza este nombre porque MARS está registrado para un uso comercial por [Salford Systems](https://www.salford-systems.com).].
 
 
-La función principal es `earth()` y se suelen considerar los siguientes argumentos:
+La función principal es `r cite_fun(earth, earth)` y se suelen considerar los siguientes argumentos:
 
 ```{r eval=FALSE}
 earth(formula, data, glm = NULL, degree = 1, ...) 
@@ -653,31 +685,46 @@ Otros parámetros que pueden ser de interés (afectan a la complejidad del model
 * `varmod.method`: permite seleccionar un método para estimar las varianzas y por ejemplo poder realizar contrastes o construir intervalos de confianza (para más detalles ver `?varmod` o la vignette "Variance models in earth"). 
 
 
-Utilizaremos como ejemplo inicial los datos de `MASS:mcycle`:
+Utilizaremos como ejemplo inicial los datos de `MASS:mcycle` `r cite_fig(earth-fit-plot)`:
 
-```{r }
+(ref:earth-fit-plot) Resultados de validación del modelo MARS univariante (empleando la función `earth()` con parámetros por defecto y `MASS:mcycle`).
+
+```{r earth-fit-plot, out.width="90%", fig.dim=c(10, 10), fig.cap="(ref:earth-fit-plot)"}
 # data(mcycle, package = "MASS")
 library(earth)
 mars <- earth(accel ~ times, data = mcycle)
 # mars
 summary(mars)
 plot(mars)
+```
+
+Por defecto, se representa un resumen de los errores de validación en la selección del modelo, la distribución empírica y el gráfico QQ de los residuos, y los residuos frente a las predicciones (en la muestra de entrenamiento). 
+
+Podemos representar el ajuste obtenido `r cite_fig(earth-fit)`:
+
+(ref:earth-fit) Ajuste del modelo MARS univariante (obtenido con la función `earth()` con parámetros por defecto) para predecir `accel` en función de `times`.
+
+```{r earth-fit, fig.cap="(ref:earth-fit)"}
 plot(accel ~ times, data = mcycle, col = 'darkgray')
 lines(mcycle$times, predict(mars))
 ```
 
-Como con las opciones por defecto el ajuste no es muy bueno (aunque podría ser suficiente), podríamos forzar la complejidad del modelo en el crecimiento  (`minspan = 1` permite que todas las observaciones sean potenciales nodos): 
+Como con las opciones por defecto el ajuste no es muy bueno (aunque puede ser suficiente para un análisis preliminar), podríamos forzar la complejidad del modelo en el crecimiento  (`minspan = 1` permite que todas las observaciones sean potenciales nodos; ver Figura \@ref(fig:earth-fit2)): 
 
-```{r }
+(ref:earth-fit2) Ajuste del modelo MARS univariante (con la función `earth()` con parámetros `minspan = 1` y `thresh = 0`).
+
+```{r earth-fit2, fig.cap="(ref:earth-fit2)"}
 mars2 <- earth(accel ~ times, data = mcycle, minspan = 1, thresh = 0)
 summary(mars2)
 plot(accel ~ times, data = mcycle, col = 'darkgray')
 lines(mcycle$times, predict(mars2))
 ```
 
-Como siguiente ejemplo consideramos los datos de `carData::Prestige`:
+Como siguiente ejemplo consideramos los datos de `carData::Prestige` `r cite_fig(earth-fit3-plot)`:
 
-```{r }
+(ref:earth-fit3-plot) Resultados de validación del ajuste del modelo MARS multivariante (para `carData::Prestige`).
+
+```{r earth-fit3-plot, out.width="90%", fig.dim=c(10, 10), fig.cap="(ref:earth-fit3-plot)"}
 # data(Prestige, package = "carData")
 mars <- earth(prestige ~ education + income + women, data = Prestige,
               degree = 2, nk = 40)
@@ -685,23 +732,28 @@ summary(mars)
 plot(mars)
 ```
 
-Para representar los efectos de las variables importa las herramientas del paquete `plotmo` (del mismo autor; válido también para la mayoría de los modelos tratados en este libro, incluyendo `mgcv::gam()`).
+Para representar los efectos de las variables importa las herramientas del paquete `r cite_cran(plotmo)` (del mismo autor; válido también para la mayoría de los modelos tratados en este libro, incluyendo `mgcv::gam()`; ver Figura \@ref(fig:earth-eff)):
 
-```{r }
+(ref:earth-eff) Efectos parciales de las componentes del modelo MARS ajustado.
+
+```{r earth-eff, out.width="90%", fig.dim=c(10, 10), fig.cap='(ref:earth-eff)'}
 plotmo(mars)
 ```
 
-Podríamos obtener la importancia de las variables:
+También podemos obtener la importancia de las variables (función `r cite_fun(evimp, earth)`) y representarla gráficamente (método `r cite_fun(plot.evimp, earth)`; ver Figura \@ref(fig:evimp-plot)):
 
-```{r }
+```{r evimp-plot, fig.cap="Importancia de los predictores incluidos en el modelo MARS."}
 varimp <- evimp(mars)
 varimp
 plot(varimp)
 ```
 
-Siempre podríamos considerar este modelo de partida para seleccionar componentes de un modelo GAM más flexible:
+Para finalizar, destacar que podríamos tener en cuenta este modelo como punto de partida para ajustar un modelo GAM más flexible (como se mostró en la Sección \@ref(reg-gam)).
+Por ejemplo:
 
-```{r }
+(ref:earth-mgcv-plotmo) Efectos parciales de las componentes del modelo GAM con interacción (para `carData::Prestige`).
+
+```{r earth-mgcv-plotmo, out.width="90%", fig.dim=c(10, 10), fig.cap="(ref:earth-mgcv-plotmo)"}
 # library(mgcv)
 gam <- gam(prestige ~ s(education) + s(income) + s(women), data = Prestige, select = TRUE)
 summary(gam)
@@ -709,13 +761,25 @@ gam2 <- gam(prestige ~ s(education) + s(income, women), data = Prestige)
 summary(gam2)
 anova(gam, gam2, test = "F")
 plotmo(gam2)
+```
+
+En la Figura \@ref(fig:earth-mgcv-plotmo) (generada con `plotmo::plotmo()`) se representan los efectos parciales de las componentes, y en la Figura \@ref(fig:earth-mgcv-plot) el efecto parcial de la interacción (empleando `r cite_method(plot, gam, mgcv)`):
+
+(ref:earth-mgcv-plot) Efecto parcial de la interacción `income:women`.
+
+```{r earth-mgcv-plot, fig.dim=c(9, 7), fig.cap="(ref:earth-mgcv-plot)"}
 plot(gam2, scheme = 2, select = 2)
 ```
 
-Pregunta: ¿Observas algo extraño en el contraste ANOVA anterior? 
-<!-- 
-anova(gam2, gam, test = "F")
--->
+
+::: {.exercise #earth-mgcv-res}
+
+Comentar brevemente los resultados del ajuste del modelo GAM del ejemplo anterior.
+¿Observas algo extraño en el contraste ANOVA? 
+(Probar a ejecutar `anova(gam2, gam, test = "F")`.)
+
+:::
+
 
 ### MARS con el paquete `caret`
 
@@ -731,8 +795,7 @@ train <- df[itrain, ]
 test <- df[-itrain, ]
 ```
 
-`caret` implementa varios métodos basados en `earth`:
-
+`caret` implementa varios métodos basados en `earth`, en este caso emplearemos el algoritmo original:
 
 ```{r }
 library(caret)
@@ -740,9 +803,11 @@ library(caret)
 modelLookup("earth")
 ```
 
-Consideramos una rejilla de búsqueda personalizada:
+Para selección de los hiperparámetros óptimos consideramos una rejilla de búsqueda personalizada:
 
-```{r }
+(ref:earth-caret) Errores RMSE de validación cruzada de los modelos MARS en función del numero de términos `nprune` y del orden máximo de interacción `degree`, resaltando la combinación óptima.
+
+```{r earth-caret, fig.dim = c(8, 6), fig.cap="(ref:earth-caret)"}
 tuneGrid <- expand.grid(degree = 1:2, 
                        nprune = floor(seq(2, 20, len = 10)))
 set.seed(1)
@@ -757,12 +822,24 @@ Podemos analizar el modelo final con las herramientas de `earth`:
 
 ```{r }
 summary(caret.mars$finalModel)
-# plotmo(caret.mars$finalModel, caption = 'ozone$O3 (caret "earth" method)')
-plotmo(caret.mars$finalModel, degree2 = 0, caption = 'ozone$O3 (efectos principales)')
-plotmo(caret.mars$finalModel, degree1 = 0, caption = 'ozone$O3 (interacciones)')
 ```
 
-Finalmente medimos la precisión con el procedimiento habitual:
+Representamos los efectos parciales de las componentes, separando los efectos principales `r cite_fig(earth-caret-plotmo1)` de las interacciones `r cite_fig(earth-caret-plotmo2)`: 
+
+(ref:earth-caret-plotmo1) Efectos parciales principales del modelo MARS ajustado con `caret`.
+
+```{r earth-caret-plotmo1, fig.dim = c(8, 8), out.width = "75%", fig.cap="(ref:earth-caret-plotmo1)"}
+# plotmo(caret.mars$finalModel)
+plotmo(caret.mars$finalModel, degree2 = 0, caption = "")
+```
+
+(ref:earth-caret-plotmo2) Efectos parciales principales de las interacciones del modelo MARS ajustado con `caret`.
+
+```{r earth-caret-plotmo2, fig.dim = c(8, 8), out.width = "75%", fig.cap="(ref:earth-caret-plotmo2)"}
+plotmo(caret.mars$finalModel, degree1 = 0, caption = "")
+```
+
+Finalmente evaluamos la precisión de las predicciones en la muestra de test con el procedimiento habitual:
 
 ```{r }
 pred <- predict(caret.mars, newdata = test)
@@ -776,14 +853,14 @@ accuracy(pred, test$O3)
 Inicialmente se presentó como una técnica gráfica y por ese motivo buscaba proyecciones de dimensión 1 o 2 (proyecciones en rectas o planos), resultando que las direcciones interesantes son aquellas con distribución no normal. 
 La motivación es que cuando se realizan transformaciones lineales lo habitual es que el resultado tenga la apariencia de una distribución normal (por el teorema central del límite), lo cual oculta las singularidades de los datos originales. 
 Se supone que los datos son una trasformación lineal de componentes no gaussianas (variables latentes) y la idea es deshacer esta transformación mediante la optimización de una función objetivo, que en este contexto recibe el nombre de *projection index*.
-Aunque con orígenes distintos, *projection pursuit* es muy similar a *independent component analysis* (Comon, 1994), una técnica de reducción de la dimensión que, en lugar de buscar como es habitual componentes incorreladas (ortogonales), busca componentes independientes y con distribución no normal (ver por ejemplo la documentación del paquete `r citepkg("fastICA")`).
+Aunque con orígenes distintos, *projection pursuit* es muy similar a *independent component analysis* (Comon, 1994), una técnica de reducción de la dimensión que, en lugar de buscar como es habitual componentes incorreladas (ortogonales), busca componentes independientes y con distribución no normal (ver por ejemplo la documentación del paquete `r cite_pkg_("fastICA")`).
 
 Hay extensiones de *projection pursuit* para regresión, clasificación, estimación de la función de densidad, etc.
 
 
 ### Regresión por *projection pursuit* {#ppr}
 
-En el método original de *projection pursuit regression* [PPR; @friedman1981projection] se considera el siguiente modelo semiparamétrico
+En el método original de *projection pursuit regression* [PPR, @friedman1981projection] se considera el siguiente modelo semiparamétrico
 $$m(\mathbf{x}) = \sum_{m=1}^M g_m (\alpha_{1m}x_1 + \alpha_{2m}x_2 + \ldots + \alpha_{pm}x_p)$$
 siendo $\boldsymbol{\alpha}_m = (\alpha_{1m}, \alpha_{2m}, \ldots, \alpha_{pm})$ vectores de parámetros (desconocidos) de módulo unitario y $g_m$ funciones suaves (desconocidas), denominadas funciones *ridge*.
 
@@ -804,7 +881,7 @@ Este procedimiento de regresión está muy relacionado con las redes de neuronas
 
 ### Implementación en R
 
-El método PPR (con respuesta multivariante) está implementado en la función `ppr()` del paquete base de R^[Basada en la función `ppreg()` de S-PLUS e implementado en R por B.D. Ripley inicialmente para el paquete `MASS`.], y es empleada por el método `"ppr"` de `caret`.
+El método PPR (con respuesta multivariante) está implementado en la función `ppr()` del paquete base de R^[Basada en la función `ppreg()` de S-PLUS e implementado en R por B.D. Ripley inicialmente para el paquete `MASS`.], y es también la empleada por el método `"ppr"` de `caret`.
 Esta función:
 
 ```{r eval=FALSE}
@@ -817,11 +894,19 @@ va añadiendo términos *ridge* hasta un máximo de `max.terms` y posteriormente
 Por defecto emplea el *super suavizador* de Friedman (función `supsmu()`, con parámetros `bass` y `spam`), aunque también admite splines (función `smooth.spline()`, fijando los grados de libertad con `df` o seleccionándolos mediante GCV).
 Para más detalles ver `help(ppr)`.
 
-Continuaremos con el ejemplo del conjunto de datos `earth::Ozone1`. En primer lugar ajustamos un modelo PPR con dos términos [incrementando el suavizado por defecto de `supsmu()` siguiendo la recomendación de @Venables2002Modern]:
+Continuaremos con el ejemplo del conjunto de datos `earth::Ozone1`.
+En primer lugar ajustamos un modelo PPR con dos términos [incrementando el suavizado por defecto de `supsmu()` siguiendo la recomendación de @Venables2002Modern]:
 
-```{r fig.height=6, fig.width=12, out.width = "90%"}
+```{r ppr-fit}
 ppreg <- ppr(O3 ~ ., nterms = 2, data = train, bass = 2)
 summary(ppreg)
+```
+
+Representamos las funciones rigde `r cite_fig(ppr-plot)`:
+
+(ref:ppr-plot) Estimaciones de las funciones *ridge* del ajuste PPR.  
+
+```{r ppr-plot, fig.dim = c(12, 6), out.width = "90%", fig.cap='(ref:ppr-plot)'}
 oldpar <- par(mfrow = c(1, 2))
 plot(ppreg)
 par(oldpar)
@@ -832,16 +917,21 @@ Evaluamos las predicciones en la muestra de test:
 ```{r}
 pred <- predict(ppreg, newdata = test)
 obs <- test$O3
+accuracy(pred, obs)
+```
+
+<!-- 
 plot(pred, obs, main = "Observado frente a predicciones",
      xlab = "Predicción", ylab = "Observado")
 abline(a = 0, b = 1)
 abline(lm(obs ~ pred), lty = 2)
-accuracy(pred, obs)
-```
+-->
 
-Empleando el método `"ppr"` de `caret` para seleccionar el número de términos:
+Podemos emplear el método `"ppr"` de `caret` para seleccionar el número de términos `r cite_fig(ppr-caret)`:
 
-```{r }
+(ref:ppr-caret) Errores RMSE de validación cruzada de los modelos PPR en función del numero de términos `nterms`, resaltando el valor óptimo.
+
+```{r ppr-caret, out.width="70%", fig.cap="(ref:ppr-caret)"}
 library(caret)
 modelLookup("ppr")
 set.seed(1)
@@ -849,6 +939,13 @@ caret.ppr <- train(O3 ~ ., data = train, method = "ppr", # bass = 2,
     trControl = trainControl(method = "cv", number = 10))
 caret.ppr
 ggplot(caret.ppr, highlight = TRUE)
+```
+
+Analizamos el modelo final ajustado `r cite_fig(ppr-caret-plot)`:
+
+(ref:ppr-caret-plot) Estimación de la función *ridge* del ajuste PPR (con selección óptima del número de componentes).  
+
+```{r ppr-caret-plot, fig.cap="(ref:ppr-caret-plot)"}
 summary(caret.ppr$finalModel)
 plot(caret.ppr$finalModel)
 # varImp(caret.ppr) # emplea una medida genérica de importancia
@@ -856,24 +953,34 @@ pred <- predict(caret.ppr, newdata = test)
 accuracy(pred, obs)
 ```
 
-Para ajustar un modelo *single index* también se podría emplear la función `npindex()` del paquete  `r citepkg("np","https://github.com/JeffreyRacine/R-Package-np")` [que implementa el método de @ichimura1993, considerando un estimador local constante], aunque en este caso ni el tiempo de computación ni el resultado es satisfactorio:
+Para ajustar un modelo *single index* también se podría emplear la función `r cite_fun(npindex, np)` del paquete  `r cite_pkg(np)` [que implementa el método de @ichimura1993, considerando un estimador local constante], aunque en este caso ni el tiempo de computación ni el resultado es satisfactorio[^np-npindexbw-1]:
 
 ```{r results=FALSE}
 library(np)
-# bw <- npindexbw(O3 ~ ., data = train)
-# Error in terms.formula(formula): '.' in formula and no 'data' argument
-# formula <- reformulate(setdiff(colnames(train), "O3"), response="O3")
-
 bw <- npindexbw(O3 ~ vh + wind + humidity + temp + ibh + dpg + ibt + vis + doy,
                 data = train, optim.method = "BFGS", nmulti = 1) # Por defecto nmulti = 5
-# Nota: por defecto imprime caracteres inválidos para compilar en LaTeX
+# summary(bw)
 ```
 
+[^np-npindexbw-1]: No admite una fórmula del tipo `respuesta ~ .`:
+    ```{r, eval = FALSE}
+    bw <- npindexbw(O3 ~ ., data = train)
+    # Error in terms.formula(formula): '.' in formula and no 'data' argument
+    formula <- reformulate(setdiff(colnames(train), "O3"), response = "O3") # Escribe la formula explícitamente
+    ```
+El valor por defecto de `nmulti = 5` (número de reinicios con punto de partida aleatorio del algoritmo de optimización) incrementa el tiempo de computación.
+Además, los resultados de texto contienen caracteres inválidos para compilar en LaTeX.
 
-```{r }
-summary(bw)
+```{r}
 sindex <- npindex(bws = bw, gradients = TRUE)
 summary(sindex)
+```
+
+Al representar la función *ridge* se observa que aparentemente la ventana seleccionada produce un infrasuavizado (sobreajuste; ver Figura \@ref(fig:npindex-plot)):
+
+(ref:npindex-plot) Estimación de la función *ridge* del modelo *single index* ajustado.
+
+```{r npindex-plot, fig.cap="(ref:npindex-plot)"}
 plot(bw)
 pred <- predict(sindex, newdata = test)
 accuracy(pred, obs)

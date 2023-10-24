@@ -1,5 +1,8 @@
 # Otros métodos de clasificación {#class-otros}
 
+
+
+
 <!-- 
 ---
 title: "Otros métodos de clasificación"
@@ -31,9 +34,6 @@ https://topepo.github.io/caret/train-models-by-tag.html#discriminant-analysis
 - Paquetes Bayes Naive
 -->
 
-
-
-
 En los métodos de clasificación que hemos visto en los capítulos anteriores, uno de los objetivos era estimar la probabilidad a posteriori $P(Y = k | \mathbf{X}=\mathbf{x})$ de que la observación $\mathbf{x}$ pertenezca a la categoría $k$, pero en ningún caso nos preocupábamos por la distribución de las variables predictoras. En la terminología de ML estos métodos se conocen con el nombre de discriminadores (*discriminative methods*). Otro ejemplo de método discriminador es la regresión logística.
 
 En este capítulo vamos a ver métodos que reciben el nombre genérico de métodos generadores (*generative methods*). Se caracterizan porque calculan las probabilidades a posteriori utilizando la distribución conjunta de $(\mathbf{X}, Y)$ y el teorema de Bayes:
@@ -45,7 +45,8 @@ Una vez estimadas las probabilidades a priori $P(Y = k)$ y las densidades (veros
 
 A continuación vamos a ver tres casos particulares de este enfoque, siempre suponiendo normalidad.
 
-## Análisis discriminate lineal 
+
+## Análisis discriminate lineal {#clas-lda}
 
 El análisis lineal discrimintante (LDA) se inicia en @fisher1936use pero es @welch1939note quien lo enfoca utilizando el teorema de Bayes. Asumiendo que $X | Y = k \sim N(\mu_k, \Sigma)$, es decir, que todas las categorías comparten la misma matriz $\Sigma$, se obtienen las funciones discriminantes, lineales en $\mathbf{x}$,
 $$\mathbf{x}^t \Sigma^{-1} \mu_k - \frac{1}{2} \mu_k^t \Sigma^{-1} \mu_k + \mbox{log}(P(Y = k))$$
@@ -54,7 +55,7 @@ La dificultad técnica del método LDA reside en el cálculo de $\Sigma^{-1}$. C
 
 Una generalización de LDA es el *mixture discriminant analysis* [@hastie1996fisher] en el que, siempre con la misma matriz $\Sigma$, se contempla la posibilidad de que dentro de cada categoría haya múltiples subcategorías que únicamente difieren en la media. Las distribuciones dentro de cada clase se agregan mediante una mixtura de las distribuciones multivariantes.
 
-### Ejemplo `MASS::lda`
+A continuación se muestra un ejemplo de análisis discriminante lineal empleando la función [`MASS::lda()`](https://rdrr.io/pkg/MASS/man/lda.html), considerando como respuesta la variable `taste` del conjunto de datos `wintaste`. 
 
 
 ```r
@@ -73,46 +74,60 @@ ld
 ```
 
 ```
-## Call:
-## lda(taste ~ ., data = train)
-## 
-## Prior probabilities of groups:
-##  good   bad 
-## 0.662 0.338 
-## 
-## Group means:
-##      fixed.acidity volatile.acidity citric.acid residual.sugar  chlorides
-## good      6.726888        0.2616994   0.3330211       6.162009 0.04420242
-## bad       7.030030        0.3075148   0.3251775       6.709024 0.05075740
-##      free.sulfur.dioxide total.sulfur.dioxide   density       pH sulphates
-## good            34.75831             132.7568 0.9935342 3.209668 0.4999396
-## bad             35.41124             147.4615 0.9950789 3.166331 0.4763905
-##        alcohol
-## good 10.786959
-## bad   9.845611
-## 
-## Coefficients of linear discriminants:
-##                                LD1
-## fixed.acidity        -4.577255e-02
-## volatile.acidity      5.698858e+00
-## citric.acid          -5.894231e-01
-## residual.sugar       -2.838910e-01
-## chlorides            -6.083210e+00
-## free.sulfur.dioxide   1.039366e-03
-## total.sulfur.dioxide -8.952115e-04
-## density               5.642314e+02
-## pH                   -2.103922e+00
-## sulphates            -2.400004e+00
-## alcohol              -1.996112e-01
+  ## Call:
+  ## lda(taste ~ ., data = train)
+  ## 
+  ## Prior probabilities of groups:
+  ##  good   bad 
+  ## 0.662 0.338 
+  ## 
+  ## Group means:
+  ##      fixed.acidity volatile.acidity citric.acid residual.sugar  chlorides
+  ## good      6.726888        0.2616994   0.3330211       6.162009 0.04420242
+  ## bad       7.030030        0.3075148   0.3251775       6.709024 0.05075740
+  ##      free.sulfur.dioxide total.sulfur.dioxide   density       pH sulphates
+  ## good            34.75831             132.7568 0.9935342 3.209668 0.4999396
+  ## bad             35.41124             147.4615 0.9950789 3.166331 0.4763905
+  ##        alcohol
+  ## good 10.786959
+  ## bad   9.845611
+  ## 
+  ## Coefficients of linear discriminants:
+  ##                                LD1
+  ## fixed.acidity        -4.577255e-02
+  ## volatile.acidity      5.698858e+00
+  ## citric.acid          -5.894231e-01
+  ## residual.sugar       -2.838910e-01
+  ## chlorides            -6.083210e+00
+  ## free.sulfur.dioxide   1.039366e-03
+  ## total.sulfur.dioxide -8.952115e-04
+  ## density               5.642314e+02
+  ## pH                   -2.103922e+00
+  ## sulphates            -2.400004e+00
+  ## alcohol              -1.996112e-01
 ```
+
+En este caso, al haber solo dos categorías se construye una única función discriminante lineal.
+Podemos examinar la distribución de los valores que toma esta función en la muestra de entrenamiento mediante el método [`plot.lda()`](https://rdrr.io/pkg/MASS/man/plot.lda.html):
+
+(ref:lda) Distribución de los valores de la función discriminante lineal en cada clase. 
+ 
 
 ```r
 plot(ld)
 ```
 
+\begin{figure}[!htb]
 
+{\centering \includegraphics[width=0.75\linewidth]{05-otros_metodos_files/figure-latex/lda-1} 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{05-otros_metodos_files/figure-latex/unnamed-chunk-2-1} \end{center}
+}
+
+\caption{(ref:lda)}(\#fig:lda)
+\end{figure}
+
+Podemos evaluar la precisión en la muestra de test empleando la matriz de confusión:
+
 
 ```r
 ld.pred <- predict(ld, newdata = test)
@@ -121,41 +136,45 @@ caret::confusionMatrix(pred, test$taste)
 ```
 
 ```
-## Confusion Matrix and Statistics
-## 
-##           Reference
-## Prediction good bad
-##       good  146  49
-##       bad    20  35
-##                                           
-##                Accuracy : 0.724           
-##                  95% CI : (0.6641, 0.7785)
-##     No Information Rate : 0.664           
-##     P-Value [Acc > NIR] : 0.0247239       
-##                                           
-##                   Kappa : 0.3238          
-##                                           
-##  Mcnemar's Test P-Value : 0.0007495       
-##                                           
-##             Sensitivity : 0.8795          
-##             Specificity : 0.4167          
-##          Pos Pred Value : 0.7487          
-##          Neg Pred Value : 0.6364          
-##              Prevalence : 0.6640          
-##          Detection Rate : 0.5840          
-##    Detection Prevalence : 0.7800          
-##       Balanced Accuracy : 0.6481          
-##                                           
-##        'Positive' Class : good            
-## 
+  ## Confusion Matrix and Statistics
+  ## 
+  ##           Reference
+  ## Prediction good bad
+  ##       good  146  49
+  ##       bad    20  35
+  ##                                           
+  ##                Accuracy : 0.724           
+  ##                  95% CI : (0.6641, 0.7785)
+  ##     No Information Rate : 0.664           
+  ##     P-Value [Acc > NIR] : 0.0247239       
+  ##                                           
+  ##                   Kappa : 0.3238          
+  ##                                           
+  ##  Mcnemar's Test P-Value : 0.0007495       
+  ##                                           
+  ##             Sensitivity : 0.8795          
+  ##             Specificity : 0.4167          
+  ##          Pos Pred Value : 0.7487          
+  ##          Neg Pred Value : 0.6364          
+  ##              Prevalence : 0.6640          
+  ##          Detection Rate : 0.5840          
+  ##    Detection Prevalence : 0.7800          
+  ##       Balanced Accuracy : 0.6481          
+  ##                                           
+  ##        'Positive' Class : good            
+  ## 
 ```
+
+También podríamos examinar las probabilidades estimadas:
+
 
 ```r
 p.est <-ld.pred$posterior
 ```
 
 
-## Análisis discriminante cuadrático
+
+## Análisis discriminante cuadrático {#clas-qda}
 
 El análisis discriminante cuadrático (QDA) relaja la suposición de que todas las categorías tengan la misma estructura de covarianzas, es decir, $X | Y = k \sim N(\mu_k, \Sigma_k)$, obteniendo como solución
 $$-\frac{1}{2} (\mathbf{x} - \mu_k)^t \Sigma^{-1}_k (\mathbf{x} - \mu_k) - \frac{1}{2} \mbox{log}(|\Sigma_k|) + \mbox{log}(P(Y = k))$$
@@ -167,15 +186,12 @@ Si el número de variables predictoras es próximo al tamaño muestral, en la pr
 Al ser QDA una generalización de LDA podemos pensar que siempre va a ser preferible, pero eso no es cierto, ya que QDA requiere estimar muchos más parámetros que LDA y por tanto tiene más riesgo de sobreajustar. Al ser menos flexible, LDA da lugar a modelos más simples: menos varianza pero más sesgo. LDA suele funcionar mejor que QDA cuando hay pocos datos y es por tanto muy importante reducir la varianza. Por el contrario, QDA es recomendable cuando hay muchos datos. 
 
 Una solución intermedia entre LDA y QDA es el análisis discriminante regularizado [RDA, @friedman1989regularized], que utiliza el hiperparámetro $\lambda$ para definir la matriz
-$$\Sigma_{k,\lambda}' = \lambda\Sigma_k + (1 - \lambda) \Sigma
-$$
+$$\Sigma_{k,\lambda}' = \lambda\Sigma_k + (1 - \lambda) \Sigma$$
 
 También hay una versión con dos hiperparámetros, $\lambda$ y $\gamma$,
-$$\Sigma_{k,\lambda,\gamma}' = (1 - \gamma) \Sigma_{k,\lambda}' + \gamma \frac{1}{p} \mbox{tr} (\Sigma_{k,\lambda}')I
-$$
+$$\Sigma_{k,\lambda,\gamma}' = (1 - \gamma) \Sigma_{k,\lambda}' + \gamma \frac{1}{p} \mbox{tr} (\Sigma_{k,\lambda}')I$$
 
-
-### Ejemplo `MASS::qda`
+De modo análogo al caso lineal, podemos realizar un análisis discriminante cuadrático empleando la función [`MASS::qda()`](https://rdrr.io/pkg/MASS/man/qda.html):
 
 
 ```r
@@ -184,73 +200,77 @@ qd
 ```
 
 ```
-## Call:
-## qda(taste ~ ., data = train)
-## 
-## Prior probabilities of groups:
-##  good   bad 
-## 0.662 0.338 
-## 
-## Group means:
-##      fixed.acidity volatile.acidity citric.acid residual.sugar  chlorides
-## good      6.726888        0.2616994   0.3330211       6.162009 0.04420242
-## bad       7.030030        0.3075148   0.3251775       6.709024 0.05075740
-##      free.sulfur.dioxide total.sulfur.dioxide   density       pH sulphates
-## good            34.75831             132.7568 0.9935342 3.209668 0.4999396
-## bad             35.41124             147.4615 0.9950789 3.166331 0.4763905
-##        alcohol
-## good 10.786959
-## bad   9.845611
+  ## Call:
+  ## qda(taste ~ ., data = train)
+  ## 
+  ## Prior probabilities of groups:
+  ##  good   bad 
+  ## 0.662 0.338 
+  ## 
+  ## Group means:
+  ##      fixed.acidity volatile.acidity citric.acid residual.sugar  chlorides
+  ## good      6.726888        0.2616994   0.3330211       6.162009 0.04420242
+  ## bad       7.030030        0.3075148   0.3251775       6.709024 0.05075740
+  ##      free.sulfur.dioxide total.sulfur.dioxide   density       pH sulphates
+  ## good            34.75831             132.7568 0.9935342 3.209668 0.4999396
+  ## bad             35.41124             147.4615 0.9950789 3.166331 0.4763905
+  ##        alcohol
+  ## good 10.786959
+  ## bad   9.845611
 ```
 
 ```r
 qd.pred <- predict(qd, newdata = test)
 pred <- qd.pred$class
+# p.est <- qd.pred$posterior
 caret::confusionMatrix(pred, test$taste)
 ```
 
 ```
-## Confusion Matrix and Statistics
-## 
-##           Reference
-## Prediction good bad
-##       good  147  40
-##       bad    19  44
-##                                           
-##                Accuracy : 0.764           
-##                  95% CI : (0.7064, 0.8152)
-##     No Information Rate : 0.664           
-##     P-Value [Acc > NIR] : 0.0003762       
-##                                           
-##                   Kappa : 0.4363          
-##                                           
-##  Mcnemar's Test P-Value : 0.0092202       
-##                                           
-##             Sensitivity : 0.8855          
-##             Specificity : 0.5238          
-##          Pos Pred Value : 0.7861          
-##          Neg Pred Value : 0.6984          
-##              Prevalence : 0.6640          
-##          Detection Rate : 0.5880          
-##    Detection Prevalence : 0.7480          
-##       Balanced Accuracy : 0.7047          
-##                                           
-##        'Positive' Class : good            
-## 
+  ## Confusion Matrix and Statistics
+  ## 
+  ##           Reference
+  ## Prediction good bad
+  ##       good  147  40
+  ##       bad    19  44
+  ##                                           
+  ##                Accuracy : 0.764           
+  ##                  95% CI : (0.7064, 0.8152)
+  ##     No Information Rate : 0.664           
+  ##     P-Value [Acc > NIR] : 0.0003762       
+  ##                                           
+  ##                   Kappa : 0.4363          
+  ##                                           
+  ##  Mcnemar's Test P-Value : 0.0092202       
+  ##                                           
+  ##             Sensitivity : 0.8855          
+  ##             Specificity : 0.5238          
+  ##          Pos Pred Value : 0.7861          
+  ##          Neg Pred Value : 0.6984          
+  ##              Prevalence : 0.6640          
+  ##          Detection Rate : 0.5880          
+  ##    Detection Prevalence : 0.7480          
+  ##       Balanced Accuracy : 0.7047          
+  ##                                           
+  ##        'Positive' Class : good            
+  ## 
 ```
 
-```r
-p.est <- qd.pred$posterior
-```
+En este caso vemos que se obtienen mejores métricas (en la muestra test) que con el discriminante lineal del ejemplo 
+anterior.
 
 
-## Naive Bayes
+## Naive Bayes {#bayes}
 
-El modelo naive Bayes simplifica los modelos anteriores asumiendo que las variables predictoras son *independientes*. Esta es una suposición extremadamente fuerte y en la práctica difícilmente nos encontraremos con un problema en el que las variables sean independientes, pero a cambio se va a reducir mucho la complejidad del modelo. Esta simplicidad del modelo le va a permitir manejar un gran número de predictores, incluso con un tamaño muestral moderado, situaciones en las que puede ser imposible utilizar LDA o QDA. Otra ventaja asociada con su simplicidad es que el cálculo del modelo se va a poder hacer muy rápido incluso para tamaños muestrales muy grandes. Además, y quizás esto sea lo más sorprendente, en ocasiones su rendimiento es muy competitivo.
+El método *naive Bayes* (Bayes ingenuo) es una simplificación de los métodos anteriores en la que se asume que las variables explicativas son *independientes*. 
+Esta es una suposición extremadamente fuerte y en la práctica difícilmente nos encontraremos con un problema en el que los predictores sean independientes, pero a cambio se va a reducir mucho la complejidad del modelo. 
+Esta simplicidad del modelo le va a permitir manejar un gran número de predictores, incluso con un tamaño muestral moderado, situaciones en las que puede ser imposible utilizar LDA o QDA. 
+Otra ventaja asociada con su simplicidad es que el cálculo de las predicciones va a poder hacer muy rápido incluso para tamaños muestrales muy grandes. 
+Además, y quizás esto sea lo más sorprendente, en ocasiones su rendimiento es muy competitivo.
 
-Asumiendo normalidad, este modelo no es más que un caso particular de QDA con matrices $\Sigma_k$ diagonales. Cuando las variables predictoras son categóricas, lo más habitual es modelizar naive Bayes utilizando distribuciones multinomiales.
-
-### Ejemplo `e1071::naiveBayes`
+Asumiendo normalidad, este modelo no es más que un caso particular de QDA con matrices $\Sigma_k$ diagonales. 
+Cuando las variables predictoras son categóricas, lo más habitual es modelizar su distribución utilizando distribuciones multinomiales.
+Siguiendo con los ejemplos anteriores, empleamos la función [`e1071::naiveBayes()`](https://rdrr.io/pkg/e1071/man/naiveBayes.html) para realizar la clasificación:
 
 
 ```r
@@ -260,113 +280,115 @@ nb
 ```
 
 ```
-## 
-## Naive Bayes Classifier for Discrete Predictors
-## 
-## Call:
-## naiveBayes.default(x = X, y = Y, laplace = laplace)
-## 
-## A-priori probabilities:
-## Y
-##  good   bad 
-## 0.662 0.338 
-## 
-## Conditional probabilities:
-##       fixed.acidity
-## Y          [,1]      [,2]
-##   good 6.726888 0.8175101
-##   bad  7.030030 0.9164467
-## 
-##       volatile.acidity
-## Y           [,1]       [,2]
-##   good 0.2616994 0.08586935
-##   bad  0.3075148 0.11015113
-## 
-##       citric.acid
-## Y           [,1]      [,2]
-##   good 0.3330211 0.1231345
-##   bad  0.3251775 0.1334682
-## 
-##       residual.sugar
-## Y          [,1]     [,2]
-##   good 6.162009 4.945483
-##   bad  6.709024 5.251402
-## 
-##       chlorides
-## Y            [,1]       [,2]
-##   good 0.04420242 0.02237654
-##   bad  0.05075740 0.03001672
-## 
-##       free.sulfur.dioxide
-## Y          [,1]     [,2]
-##   good 34.75831 14.87336
-##   bad  35.41124 19.26304
-## 
-##       total.sulfur.dioxide
-## Y          [,1]     [,2]
-##   good 132.7568 38.05871
-##   bad  147.4615 47.34668
-## 
-##       density
-## Y           [,1]       [,2]
-##   good 0.9935342 0.00285949
-##   bad  0.9950789 0.00256194
-## 
-##       pH
-## Y          [,1]      [,2]
-##   good 3.209668 0.1604529
-##   bad  3.166331 0.1472261
-## 
-##       sulphates
-## Y           [,1]       [,2]
-##   good 0.4999396 0.11564067
-##   bad  0.4763905 0.09623778
-## 
-##       alcohol
-## Y           [,1]      [,2]
-##   good 10.786959 1.2298425
-##   bad   9.845611 0.8710844
+  ## 
+  ## Naive Bayes Classifier for Discrete Predictors
+  ## 
+  ## Call:
+  ## naiveBayes.default(x = X, y = Y, laplace = laplace)
+  ## 
+  ## A-priori probabilities:
+  ## Y
+  ##  good   bad 
+  ## 0.662 0.338 
+  ## 
+  ## Conditional probabilities:
+  ##       fixed.acidity
+  ## Y          [,1]      [,2]
+  ##   good 6.726888 0.8175101
+  ##   bad  7.030030 0.9164467
+  ## 
+  ##       volatile.acidity
+  ## Y           [,1]       [,2]
+  ##   good 0.2616994 0.08586935
+  ##   bad  0.3075148 0.11015113
+  ## 
+  ##       citric.acid
+  ## Y           [,1]      [,2]
+  ##   good 0.3330211 0.1231345
+  ##   bad  0.3251775 0.1334682
+  ## 
+  ##       residual.sugar
+  ## Y          [,1]     [,2]
+  ##   good 6.162009 4.945483
+  ##   bad  6.709024 5.251402
+  ## 
+  ##       chlorides
+  ## Y            [,1]       [,2]
+  ##   good 0.04420242 0.02237654
+  ##   bad  0.05075740 0.03001672
+  ## 
+  ##       free.sulfur.dioxide
+  ## Y          [,1]     [,2]
+  ##   good 34.75831 14.87336
+  ##   bad  35.41124 19.26304
+  ## 
+  ##       total.sulfur.dioxide
+  ## Y          [,1]     [,2]
+  ##   good 132.7568 38.05871
+  ##   bad  147.4615 47.34668
+  ## 
+  ##       density
+  ## Y           [,1]       [,2]
+  ##   good 0.9935342 0.00285949
+  ##   bad  0.9950789 0.00256194
+  ## 
+  ##       pH
+  ## Y          [,1]      [,2]
+  ##   good 3.209668 0.1604529
+  ##   bad  3.166331 0.1472261
+  ## 
+  ##       sulphates
+  ## Y           [,1]       [,2]
+  ##   good 0.4999396 0.11564067
+  ##   bad  0.4763905 0.09623778
+  ## 
+  ##       alcohol
+  ## Y           [,1]      [,2]
+  ##   good 10.786959 1.2298425
+  ##   bad   9.845611 0.8710844
 ```
+
+[^nota-bayes-1]: Aunque al imprimir los resultados aparece `Naive Bayes Classifier for Discrete Predictors`, se trata de un error. En este caso todos los predictores son continuos.   
+
+En las tablas correspondientes a los predictores[^nota-bayes-1], se muestran la media y la desviación típica de sus distribuciones condicionadas a las distintas clases.
+
+En este caso los resultados obtenidos en la muestra de test son peores que con los métodos anteriores:
+
 
 ```r
 pred <- predict(nb, newdata = test)
+# p.est <- predict(nb, newdata = test, type = "raw")
 caret::confusionMatrix(pred, test$taste)
 ```
 
 ```
-## Confusion Matrix and Statistics
-## 
-##           Reference
-## Prediction good bad
-##       good  136  47
-##       bad    30  37
-##                                           
-##                Accuracy : 0.692           
-##                  95% CI : (0.6307, 0.7486)
-##     No Information Rate : 0.664           
-##     P-Value [Acc > NIR] : 0.19255         
-##                                           
-##                   Kappa : 0.2734          
-##                                           
-##  Mcnemar's Test P-Value : 0.06825         
-##                                           
-##             Sensitivity : 0.8193          
-##             Specificity : 0.4405          
-##          Pos Pred Value : 0.7432          
-##          Neg Pred Value : 0.5522          
-##              Prevalence : 0.6640          
-##          Detection Rate : 0.5440          
-##    Detection Prevalence : 0.7320          
-##       Balanced Accuracy : 0.6299          
-##                                           
-##        'Positive' Class : good            
-## 
+  ## Confusion Matrix and Statistics
+  ## 
+  ##           Reference
+  ## Prediction good bad
+  ##       good  136  47
+  ##       bad    30  37
+  ##                                           
+  ##                Accuracy : 0.692           
+  ##                  95% CI : (0.6307, 0.7486)
+  ##     No Information Rate : 0.664           
+  ##     P-Value [Acc > NIR] : 0.19255         
+  ##                                           
+  ##                   Kappa : 0.2734          
+  ##                                           
+  ##  Mcnemar's Test P-Value : 0.06825         
+  ##                                           
+  ##             Sensitivity : 0.8193          
+  ##             Specificity : 0.4405          
+  ##          Pos Pred Value : 0.7432          
+  ##          Neg Pred Value : 0.5522          
+  ##              Prevalence : 0.6640          
+  ##          Detection Rate : 0.5440          
+  ##    Detection Prevalence : 0.7320          
+  ##       Balanced Accuracy : 0.6299          
+  ##                                           
+  ##        'Positive' Class : good            
+  ## 
 ```
-
-```r
-p.est <- predict(nb, newdata = test, type = "raw")
-```
-
-
 
 

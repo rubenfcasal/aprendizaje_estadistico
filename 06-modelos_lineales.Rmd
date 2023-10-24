@@ -1,5 +1,9 @@
 # Modelos lineales y extensiones {#modelos-lineales}
 
+```{r global-options, include=FALSE}
+source("_global_options.R")
+```
+
 <!-- 
 ---
 title: "Modelos lineales y extensiones"
@@ -10,7 +14,12 @@ link-citations: yes
 output: 
   bookdown::html_document2:
     pandoc_args: ["--number-offset", "5,0"]
-    toc: yes 
+    toc: yes
+    toc_depth: 3
+    toc_float:
+      collapsed: no
+      smooth_scroll: no    
+    # toc_float: yes 
     # mathjax: local            # copia local de MathJax, hay que establecer:
     # self_contained: false     # las dependencias se guardan en ficheros externos 
   bookdown::pdf_document2:
@@ -26,8 +35,6 @@ Pendiente:
 - Añadir leyendas de figuras (eliminar títulos en gráficos)
 -->
 
-```{r , child = '_global_options.Rmd'}
-```
 
 En los modelo lineales se supone que la función de regresión es lineal^[Algunos predictores podrían corresponderse con interacciones, $X_i = X_j X_k$, o transformaciones (e.g. $X_i = X_j^2$) de las variables explicativas originales. También se podría haber transformado la respuesta.]:
 $$E( Y | \mathbf{X} ) = \beta_{0}+\beta_{1}X_{1}+\beta_{2}X_{2}+\cdots+\beta_{p}X_{p}$$
@@ -77,14 +84,13 @@ Hipótesis adicional en regresión múltiple:
 En el caso de regresión múltiple es de especial interés el fenómeno de la colinealidad (o multicolinealidad) relacionado con la última de estas hipótesis (que se tratará en la Sección \@ref(colinealidad)).
 Además se da por hecho que el número de observaciones disponible es como mínimo el número de parámetros, $n \geq p + 1$.
 
-
-### Ajuste: función `lm`
+<!-- ### Ajuste: función `lm` -->
 
 El procedimiento habitual para ajustar un modelo de regresión lineal a un conjunto de datos es emplear mínimos cuadrados (ordinarios):
 
 $$\mbox{min}_{\beta_{0},\beta_{1},\ldots,\beta_{p}}  \sum\limits_{i=1}^{n}\left(  y_{i} - \beta_0 - \beta_1 x_{1i} - \cdots - \beta_p x_{pi} \right)^{2}$$
 
-En R podemos emplear la función `lm`:
+En R podemos emplear la función `r cite_fun(lm, stats)`:
 
 ```{r, eval=FALSE}
 ajuste <- lm(formula, data, subset, weights, na.action)
@@ -100,14 +106,14 @@ ajuste <- lm(formula, data, subset, weights, na.action)
 
 -   `na.action`: opción para manejar los datos faltantes; por defecto `na.omit`.
 
-Alternativamente se puede emplear la función `biglm()` del paquete `r citepkg("biglm")` para ajustar modelos lineales a grandes conjuntos de datos (especialmente cuando el número de observaciones es muy grande, incluyendo el caso de que los datos excedan la capacidad de memoria del equipo).
-También se podría utilizar la función `rlm()` del paquete `r citepkg("MASS")` para ajustar modelos lineales empleando un método robusto cuando hay datos atípicos.
+Alternativamente se puede emplear la función `biglm()` del paquete `r cite_cran(biglm)` para ajustar modelos lineales a grandes conjuntos de datos (especialmente cuando el número de observaciones es muy grande, incluyendo el caso de que los datos excedan la capacidad de memoria del equipo).
+También se podría utilizar la función `rlm()` del paquete `r cite_cran(MASS)` para ajustar modelos lineales empleando un método robusto cuando hay datos atípicos.
 
 <!-- 
 Proxeccións demográficas de Galicia 2011-2030. Análise dos resultados. Documentos de Traballo. Análise Económica (IDEGA).  
 -->
 
-### Ejemplo
+<!-- ### Ejemplo -->
 
 Como ejemplo consideraremos el conjunto de datos *hbat.RData* que contiene observaciones de clientes de la compañía de distribución industrial HBAT [@hair1998multivariate].
 Las variables se pueden clasificar en tres grupos: las 6 primeras (categóricas) son características del comprador, las variables de la 7 a la 19 (numéricas) miden percepciones de HBAT por parte del comprador y las 5 últimas son posibles variables de interés (respuestas).
@@ -123,59 +129,87 @@ Como ya se comentó, se trata de un método clásico de Estadística y el proced
 Sin embargo seguiremos el procedimiento habitual en AE y particionaremos los datos en una muestra de entrenamiento y en otra de test.
 
 ```{r}
-df <- hbat[, c(7:19, 23)]  # Nota: realmente no copia el objeto...
+df <- hbat[c(23, 7:19)]  # Nota: realmente no copia el objeto...
 set.seed(1)
 nobs <- nrow(df)
 itrain <- sample(nobs, 0.8 * nobs)
 train <- df[itrain, ]
 test <- df[-itrain, ]
+```
 
-# plot(train)
+El primer paso antes del modelado suele ser realizar un análisis descriptivo. 
+Por ejemplo podemos generar un gráfico de dispersión matricial y calcular la matriz de correlaciones (lineal de Pearson).
+Sin embargo en muchos casos el número de variables es grande y en lugar de emplear gráficos de dispersión puede ser preferible representar gráficamente las correlaciones mediante un mapa de calor o algún gráfico similar.
+Por ejemplo en la Figura \@ref(fig:corrplot) se combinan elipses con colores para representar las correlaciones.
+
+(ref:corrplot) Representación de las correlaciones lineales entre las variables continuas del conjunto de datos HBAT, generada con la función `corrplot::corrplot()`.
+
+```{r corrplot, out.width="80%", fig.cap='(ref:corrplot)'}
+# plot(train) # gráfico de dispersión matricial
 mcor <- cor(train)
 corrplot::corrplot(mcor, method = "ellipse")
 print(mcor, digits = 1)
 ```
 
-<!-- Pendiente: gráfico compacto de correlaciones -->
+<!-- 
+Pendiente: 
+gráfico compacto de correlaciones
+caret::featurePlot(x = train[-1], y = train[1])
+https://plotly.com/ggplot2/splom/
+https://www.statology.org/scatterplot-matrix-in-r/
+https://daviddalpiaz.github.io/r4sl/generative-models.html
+-->
 
-En este caso observamos que aparentemente hay una relación (lineal) entre la respuesta y algunas de las variables explicativas (que en principio no parece adecuado suponer que son independientes).
-Si consideramos un modelo de regresión lineal simple, el mejor ajuste se obtendría empleando `velocida` como variable explicativa:
 
-```{r}
+En este caso observamos que aparentemente hay una relación (lineal) entre la respuesta y algunas de las variables explicativas (que en principio no parece razonable suponer que son independientes).
+Vemos también que, si consideramos un modelo de regresión lineal simple, el mejor ajuste se obtendría empleando `velocida` como variable explicativa `r cite_fig(lm1)`:
+
+(ref:lm1) Gráfico de dispersión y recta de regresión ajustada para `fidelida` en función de la `velocida`.
+
+```{r lm1, fig.cap='(ref:lm1)'}
 modelo <- lm(fidelida ~ velocida, train)
 summary(modelo)
 plot(fidelida ~ velocida, train)
 abline(modelo)
 ```
 
-Para calcular predicciones (estimaciones de la media condicionada), también intervalos de confianza o de predicción, se puede emplear la función `predict()` (consultar la ayuda `help(predict.lm)` para ver todas las opciones disponibles).
+Para calcular predicciones (estimaciones de la media condicionada), también intervalos de confianza o de predicción, se puede emplear el correspondiente método `predict()` (consultar la ayuda de `r cite_fun(predict.lm)` para ver todas las opciones disponibles).
 
 ```{r}
 valores <- seq(1, 6, len = 100)
 newdata <- data.frame(velocida = valores)
 pred <- predict(modelo, newdata = newdata, interval = c("confidence"))
 # head(pred)
+```
+
+Por ejemplo, en la Figura \@ref(fig:lm2) se representan las predicciones, los intervalos de confianza para la media condicional y los intervalos de predicción para nuevas observaciones.
+
+(ref:lm2) Ajuste lineal (predicciones) e intervalos de confianza y predicción (puntuales).
+
+```{r lm2, fig.cap='(ref:lm2)'}
 plot(fidelida ~ velocida, train)
 matlines(valores, pred, lty = c(1, 2, 2), col = 1)
 pred2 <- predict(modelo, newdata = newdata, interval = c("prediction"))
 matlines(valores, pred2[, -1], lty = 3, col = 1)
-legend("topleft", c("Ajuste", "Int. confianza", "Int. predicción"), lty = c(1, 2, 3))
+legend("topleft", c("Ajuste", "Int. confianza", "Int. predicción"), lty = 1:3)
 ```
 
-Para la extracción de información se pueden acceder a los componentes del modelo ajustado o emplear funciones  (genéricas; muchas de ellas válidas para otro tipo de modelos: rlm, glm...). 
-Algunas de las más utilizadas son las siguientes:
+Para la extracción de información se pueden acceder a los componentes del modelo ajustado o emplear funciones (genéricas; muchas de ellas válidas para otro tipo de modelos: rlm, glm...). 
+Algunas de las más utilizadas se muestran en la Tabla \@ref(tab:aux-fun-lm).
 
-Función   |   Descripción
--------   |   ---------------------------------------------------
-`fitted`  |   valores ajustados
-`coef`    |   coeficientes estimados (y errores estándar)
-`confint`   |   intervalos de confianza para los coeficientes
-`residuals` |   residuos
-`plot`    |   gráficos de diagnóstico
-`termplot` |  gráfico de efectos parciales
-`anova`   |   calcula tablas de análisis de varianza (también permite comparar modelos)
-`influence.measures` |   calcula medidas de diagnóstico ("dejando uno fuera"; LOOCV)
-`update`  |   actualiza un modelo (p.e. eliminando o añadiendo variables)
+Table: (\#tab:aux-fun-lm) Listado de las principales funciones auxiliares para modelos ajustados.
+
+Función          |   Descripción
+--------------   |   ---------------------------------------------------
+`fitted()`       |   valores ajustados
+`coef()`         |   coeficientes estimados (y errores estándar)
+`confint()`      |   intervalos de confianza para los coeficientes
+`residuals()`    |   residuos
+`plot()`         |   gráficos de diagnóstico
+`termplot()`     |   gráfico de efectos parciales
+`anova()`        |   calcula tablas de análisis de varianza (también permite comparar modelos)
+`influence.measures()`  |   calcula medidas de diagnóstico ("dejando uno fuera"; LOOCV)
+`update()`      |   actualiza un modelo (p.e. eliminando o añadiendo variables)
 
 Ejemplos (no evaluados):
 
@@ -194,7 +228,6 @@ par(oldpar)
 ## El problema de la colinealidad {#colinealidad}
 
 Si alguna de las variables explicativas no aporta información relevante sobre la respuesta puede aparecer el problema de la colinealidad. 
-
 En regresión múltiple se supone que ninguna de las variables explicativas es combinación lineal de las demás.
 Si una de las variables explicativas (variables independientes) es combinación lineal de las otras, no se pueden determinar los parámetros de forma única (sistema singular).
 Sin llegar a esta situación extrema, cuando algunas variables explicativas estén altamente correlacionadas entre sí, tendremos una situación de alta colinealidad.
@@ -206,7 +239,7 @@ En este caso las estimaciones de los parámetros pueden verse seriamente afectad
     modelo, añadiendo o eliminando una variable o una observación,
     se producirán grandes cambios en las estimaciones de los efectos).
  
-Consideraremos un ejemplo de regresión lineal bidimensional con datos simulados en el que las dos variables explicativas están altamente correlacionadas:
+Consideraremos un ejemplo de regresión lineal bidimensional con datos simulados en el que las dos variables explicativas están altamente correlacionadas (en este caso además solo una de las variables explicativas tiene un efecto lineal sobre la respuesta):
 
 ```{r }
 set.seed(1)
@@ -233,26 +266,28 @@ y.grid <- matrix(mapply(model.teor, xy$x1, xy$x2), nrow = length(x1.grid))
 y.mean <- mapply(model.teor, x1, x2)
 ```
 
-Tendencia teórica y valores de las variables explicativas: 
+Los valores de las variables explicativas y la tendencia teórica se muestran en la Figura \@ref(fig:lm3d): 
 
-```{r message=FALSE, warning=FALSE}
+(ref:lm3d) Modelo teórico y valores de las variables explicativas (altamente correlacionadas, con un coeficiente de determinación de `r sprintf("%.2f", summary(fit.x2)$r.squared)`).
+
+```{r lm3d, fig.cap='(ref:lm3d)', message=FALSE, warning=FALSE}
 library(plot3D)
 ylim <- c(-2, 3) # range(y, y.pred)
 scatter3D(z = y.mean, x = x1, y = x2, pch = 16, cex = 1, clim = ylim, zlim = ylim,
           theta = -40, phi = 20, ticktype = "detailed", 
-          main = "Modelo teórico y valores de las variables explicativas",
-          xlab = "x1", ylab = "x2", zlab = "y", sub = sprintf("R2(x1,x2) = %.2f", summary(fit.x2)$r.squared),
+          xlab = "x1", ylab = "x2", zlab = "y", 
           surf = list(x = x1.grid, y = x2.grid, z = y.grid, facets = NA))
 scatter3D(z = rep(ylim[1], n), x = x1, y = x2, add = TRUE, colkey = FALSE, 
            pch = 16, cex = 1, col = "black")
 x2.pred <- predict(fit.x2, newdata = data.frame(x1 = x1.range))
-lines3D(z = rep(ylim[1], 2), x = x1.range, y = x2.pred, add = TRUE, colkey = FALSE, col = "black") 
+lines3D(z = rep(ylim[1], 2), x = x1.range, y = x2.pred, add = TRUE, 
+        colkey = FALSE, col = "black") 
 ```
 
+Para ilustrar el efecto de la correlación en los predictores, en la Figura \@ref(fig:multicol-movie-plot) se muestran ejemplos de simulaciones bajo colinealidad y los correspondientes modelos ajustados.
+Podemos observar una alta variabilidad en los modelos ajustados (puede haber grandes diferencias en las estimaciones de los coeficientes de los predictores).
 
-Simulación de la respuesta:
-
-```{r multicol-movie, eval=is_html(), fig.show='animate', interval=1, aniopts="loop", ffmpeg.format='gif'}
+```{r multicol-movie, echo=TRUE, eval=is_html(), include=FALSE, fig.show='animate', interval=1, aniopts="loop", ffmpeg.format='gif', fig.path="images/"}
 sd.err <- 0.25
 nsim <- 10
 
@@ -275,40 +310,46 @@ for (isim in 1:nsim) {
 ```
 
 
-```{r multicol-movie-latex, include=is_latex(), fig.dim = c(10, 10),  fig.cap="Ejemplo de simulaciones bajo colinelidad."}
-sd.err <- 0.25
-oldpar <- par(mfrow = c(2,2))
+```{r multicol-movie-plot, echo=FALSE, out.width="90%", fig.dim = c(10, 10), fig.cap="Ejemplo de simulaciones bajo colinelidad y correspondientes modelos ajustados."}
 
-for (isim in 7:10) {
-  set.seed(isim)
-  y <- y.mean + rnorm(n, 0, sd.err)
+if(is_html()) {
+  knitr::include_graphics("images/multicol-movie.gif")
+} else {
+  sd.err <- 0.25
+  oldpar <- par(mfrow = c(2,2))
   
-  # Ajuste lineal y superficie de predicción
-  fit <- lm(y ~ x1 + x2)
-  y.pred <- matrix(predict(fit, newdata = xy), nrow = length(x1.grid)) 
-  
-  # Representar
-  fitpoints <- predict(fit) 
-  scatter3D(z = y, x = x1, y = x2, pch = 16, cex = 1.5, clim = ylim, zlim = ylim,
-            theta = -40, phi = 20, ticktype = "detailed", 
-            main = "Modelo ajustado", xlab = "x1", ylab = "x2", zlab = "y", 
-            surf = list(x = x1.grid, y = x2.grid, z = y.pred, 
-                        facets = NA, fit = fitpoints))
+  for (isim in 7:10) {
+    set.seed(isim)
+    y <- y.mean + rnorm(n, 0, sd.err)
+    
+    # Ajuste lineal y superficie de predicción
+    fit <- lm(y ~ x1 + x2)
+    y.pred <- matrix(predict(fit, newdata = xy), nrow = length(x1.grid)) 
+    
+    # Representar
+    fitpoints <- predict(fit) 
+    scatter3D(z = y, x = x1, y = x2, pch = 16, cex = 1.5, clim = ylim, zlim = ylim,
+              theta = -40, phi = 20, ticktype = "detailed", 
+              main = "Modelo ajustado", xlab = "x1", ylab = "x2", zlab = "y", 
+              surf = list(x = x1.grid, y = x2.grid, z = y.pred, 
+                          facets = NA, fit = fitpoints))
+  }
+  par(oldpar)  
 }
-par(oldpar)
+
 ```
 
 Incluso puede ocurrir que el contraste de regresión sea significativo (alto coeficiente de determinación), pero los contrastes individuales sean no significativos. 
-
 Por ejemplo, en el último ajuste obtendríamos:
 
 ```{r}
 summary(fit)
 ```
 
-Si las variables explicativas no estuviesen correlacionadas:
+Podemos comparar los resultados anteriores con el caso de predictores incorrelados (Ver Figura \@ref(fig:indep-movie-plot)):
 
-```{r indep-movie, eval=is_html(), fig.show='animate', interval=1, aniopts="loop", ffmpeg.format='gif'}
+
+```{r indep-movie, echo=TRUE, eval=is_html(), include=FALSE, fig.show='animate', interval=1, aniopts="loop", ffmpeg.format='gif', fig.path="images/"}
 x2 <- rand.gen(n)
 y.mean <- mapply(model.teor, x1, x2)
 
@@ -332,31 +373,34 @@ for (isim in 1:nsim) {
 ```
 
 
-```{r indep-movie-latex, include=is_latex(), fig.dim = c(10, 10),  fig.cap="Ejemplo de simulaciones bajo independencia."}
-x2 <- rand.gen(n)
-y.mean <- mapply(model.teor, x1, x2)
-oldpar <- par(mfrow = c(2,2))
-
-for (isim in 7:10) {
-  # Simular respuesta
-  set.seed(isim)
-  y <- y.mean + rnorm(n, 0, sd.err)
+```{r indep-movie-plot, echo=FALSE, out.width="90%", fig.dim = c(10, 10), fig.cap="Ejemplo de simulaciones bajo independencia y correspondientes modelos ajustados."}
+if(is_html()) {
+  knitr::include_graphics("images/indep-movie.gif")
+} else {
+  x2 <- rand.gen(n)
+  y.mean <- mapply(model.teor, x1, x2)
+  oldpar <- par(mfrow = c(2,2))
   
-  # Ajuste lineal y superficie de predicción
-  fit2 <- lm(y ~ x1 + x2)
-  y.pred <- matrix(predict(fit2, newdata = xy), nrow = length(x1.grid)) 
-  
-  # Representar
-  fitpoints <- predict(fit2) 
-  scatter3D(z = y, x = x1, y = x2, pch = 16, cex = 1.5, clim = ylim, zlim = ylim,
-            theta = -40, phi = 20, ticktype = "detailed", 
-            main = "Modelo ajustado", xlab = "x1", ylab = "x2", zlab = "y", 
-            surf = list(x = x1.grid, y = x2.grid, z = y.pred, 
-                        facets = NA, fit = fitpoints))
-}
-par(oldpar)
+  for (isim in 7:10) {
+    # Simular respuesta
+    set.seed(isim)
+    y <- y.mean + rnorm(n, 0, sd.err)
+    
+    # Ajuste lineal y superficie de predicción
+    fit2 <- lm(y ~ x1 + x2)
+    y.pred <- matrix(predict(fit2, newdata = xy), nrow = length(x1.grid)) 
+    
+    # Representar
+    fitpoints <- predict(fit2) 
+    scatter3D(z = y, x = x1, y = x2, pch = 16, cex = 1.5, clim = ylim, zlim = ylim,
+              theta = -40, phi = 20, ticktype = "detailed", 
+              main = "Modelo ajustado", xlab = "x1", ylab = "x2", zlab = "y", 
+              surf = list(x = x1.grid, y = x2.grid, z = y.pred, 
+                          facets = NA, fit = fitpoints))
+  }
+  par(oldpar)
+}  
 ```
-
 
 
 Por ejemplo, en el último ajuste obtendríamos:
@@ -365,7 +409,7 @@ summary(fit2)
 ```
 
 En la práctica, para la detección de colinealidad, se puede emplear la función
-`vif()` del paquete `r citepkg("car")` para calcular los factores de inflación de varianza para las variables del modelo.
+`vif()` del paquete `r cite_cran(car)` para calcular los factores de inflación de varianza para las variables del modelo.
 Por ejemplo, en los últimos ajustes obtendríamos:
 ```{r }
 library(car)
@@ -389,26 +433,19 @@ Hay que tener en cuenta también que, además de la dificultad para interpretar 
 
 <!-- Por ejemplo en el último ajuste, bajo las hipótesis del modelo de regresión lineal múltiple, se aceptaría un efecto lineal significativo de x2... -->
 
- 
+
 ## Selección de variables explicativas {#seleccion-reg-lineal}
 
-Cuando se dispone de un conjunto grande de posibles variables explicativas 
-suele ser especialmente importante determinar cuales de estas deberían ser 
-incluidas en el modelo de regresión. Si alguna de las variables no contiene 
-información relevante sobre la respuesta no se debería incluir (se simplificaría 
-la interpretación del modelo, aumentaría la precisión de la estimación y se 
-evitarían problemas como la colinealidad). Se trataría entonces de conseguir 
-un buen ajuste con el menor número de variables explicativas posible.
+Cuando se dispone de un conjunto grande de posibles variables explicativas suele ser especialmente importante determinar cuales de estas deberían ser incluidas en el modelo de regresión. 
+Si alguna de las variables no contiene información relevante sobre la respuesta no se debería incluir (se simplificaría la interpretación del modelo, aumentaría la precisión de la estimación y se evitarían problemas como la colinealidad). 
+Se trataría entonces de conseguir un buen ajuste con el menor número de predictores posible.
 
-Para obtener el modelo "óptimo" lo ideal sería evaluar todos los modelos posibles.
 
 ### Búsqueda exhaustiva
 
-La función `regsubsets` del paquete `leaps` permite seleccionar los mejores modelos
-fijando el número de variables explicativas. 
-Por defecto, evalúa todos los modelos posibles con un determinado número de
-parámetros (variando desde 1 hasta por defecto un máximo de `nvmax = 8`) 
-y selecciona el mejor (`nbest = 1`).
+Para obtener el modelo "óptimo" lo ideal sería evaluar todas las posibles combinaciones de los predictores.
+La función `r cite_fun(regsubsets, leaps)` del paquete `r cite_cran(leaps)` permite seleccionar los mejores modelos fijando el número máximo de variables explicativas. 
+Por defecto, evalúa todos los modelos posibles con un determinado número de parámetros (variando desde 1 hasta por defecto un máximo de `nvmax = 8`) y selecciona el mejor (`nbest = 1`).
 ```{r}
 library(leaps)
 regsel <- regsubsets(fidelida ~ . , data = train)
@@ -417,22 +454,25 @@ regsel <- regsubsets(fidelida ~ . , data = train)
 ```
 
 Al representar el resultado se obtiene un gráfico con los mejores modelos ordenados 
-según el criterio determinado por el argumento `scale = c("bic", "Cp", "adjr2", "r2")`.
-Por ejemplo, en este caso, empleando el coeficiente de determinación ajustado, obtendríamos:
-```{r}
+según el criterio determinado por el argumento `scale = c("bic", "Cp", "adjr2", "r2")` [para detalles sobre estas medidas ver por ejemplo la Sección 6.1.3 de @james2021introduction].
+Se representa una matriz en la que las filas se corresponden con los modelo y las columnas con predictores, indicando los incluidos en cada modelo mediante un sombreado.
+Por ejemplo, en la Figura \@ref(fig:regsel) se muestra el resultado obtenido empleando el coeficiente de determinación ajustado.
+
+```{r regsel,  fig.cap="Modelos obtenidos mediante búsqueda exhaustiva ordenados según su coeficiente de determinación ajustado."}
 plot(regsel, scale = "adjr2")
 ```
 
-En este caso, considerando que es preferible un modelo más simple que una mejora del 2%, podríamos seleccionar como modelo final el modelo con dos predictores.
-Podríamos obtener los coeficientes:
+En este caso, considerando que es preferible un modelo más simple que una mejora del 2% en la proporción de variabilidad explicada, podríamos seleccionar como modelo final el modelo con dos predictores.
+Podemos obtener fácilmente los coeficientes de este modelo:
 
 ```{r}
 coef(regsel, 2)
 ```
+
 pero normalmente nos interesará ajustarlo de nuevo:
 
 ```{r}
-lm(fidelida ~ velocida + calidadp, data = train)
+modelo <- lm(fidelida ~ velocida + calidadp, data = train)
 ```
 
 **Notas**:
@@ -453,33 +493,48 @@ lm(fidelida ~ velocida + calidadp, data = train)
 Si el número de variables es grande (no sería práctico evaluar todas las posibilidades) 
 se suele utilizar alguno (o varios) de los siguientes métodos:
 
--   *Selección progresiva* (forward): Se parte de una situación en la
+-   Selección progresiva (*forward*): Se parte de una situación en la
     que no hay ninguna variable y en cada paso se incluye una aplicando
     un criterio de entrada (hasta que ninguna de las restantes lo
     verifican).
 
--   *Eliminación progresiva* (backward): Se parte del modelo con todas
+-   Eliminación progresiva (*backward*): Se parte del modelo con todas
     las variables y en cada paso se elimina una aplicando un criterio
     de salida (hasta que ninguna de las incluidas lo verifican).
 
--   *Selección paso a paso* (stepwise): El más utilizado, se combina
-    un criterio de entrada y uno de salida. Normalmente se parte sin
-    ninguna variable y en cada paso puede haber una inclusión y una
-    exclusión (forward/backward).
+-   Selección paso a paso (*stepwise*): Se combina un criterio de entrada y uno 
+    de salida. 
+    Normalmente se parte sin ninguna variable y en cada paso puede haber 
+    una inclusión y posteriormente la exclusión de alguna de las anteriormente
+    añadidas (*forward/backward*).
+    Otra posibilidad es partir del modelo con todas las variables y en cada paso 
+    puede haber una exclusión y posteriormente la inclusión de alguna de las
+    anteriormente eliminadas (*backward/forward*).
+    
+Hay que tener en cuenta que se tratan de algoritmos "avariciosos" (también denominados "voraces"), ya que en cada paso tratan de elegir la mejor opción, pero puede que el resultado final no sea la solución global óptima (de hecho es bastante habitual que los modelos finales sean diferentes).  
 
-La función `stepAIC` del paquete `MASS` permite seleccionar el modelo por pasos, hacia delante o hacia atrás según criterio AIC o BIC (también esta disponible una función `step` del paquete base `stats` con menos opciones). 
-La función `stepwise` del paquete `RcmdrMisc` es una interfaz de `stepAIC` que facilita su uso:
+La función `r cite_fun(stepAIC, MASS)` del paquete `r cite_cran(MASS)` permite seleccionar el modelo por pasos^[También está disponible la función `step()` del paquete base `stats` con menos opciones.], hacia delante o hacia atrás según criterio AIC (*Akaike Information Criterion*) o BIC (*Bayesian Information Criterion*). 
+La función `r cite_fun(stepwise, RcmdrMisc)` del paquete `r cite_cran(RcmdrMisc)` es una interfaz de `stepAIC()` que facilita su uso.
+Los métodos disponibles son `"backward/forward"`, `"forward/backward"`, `"backward"` y `"forward"`. 
+Normalmente obtendremos un modelo más simple combinando el método por pasos hacia delante con el criterio BIC:
+
 ```{r, message=FALSE}
 library(MASS)
 library(RcmdrMisc)
 modelo.completo <- lm(fidelida ~ . , data = train)
 modelo <- stepwise(modelo.completo, direction = "forward/backward", criterion = "BIC")
+```
+
+En la salida de texto de esta función, `"<none>"` representa el modelo actual en cada paso y se ordenan las posibles acciones dependiendo del criterio elegido (aunque siempre muestra el valor de AIC).
+El algoritmo se detiene cuando ninguna de ellas mejora el modelo actual.
+Como resultado devuelve el modelo ajustado final:
+
+```{r}
 summary(modelo)
 ```
-Los métodos disponibles son `"backward/forward"`, `"forward/backward"`, `"backward"` y `"forward"`. 
- 
+
 Cuando el número de variables explicativas es muy grande (o si el tamaño de la muestra es pequeño en comparación) pueden aparecer problemas al emplear los métodos anteriores (incluso pueden no ser aplicables). 
-Una alternativa son los métodos de regularización (ridge regression, lasso; Sección \@ref(shrinkage)) o los de reducción de la dimensión (regresión con componentes principales o mínimos cuadrados parciales; Sección \@ref(pca-pls)).
+Una alternativa son los métodos de regularización (ridge regression, LASSO; Sección \@ref(shrinkage)) o los de reducción de la dimensión (regresión con componentes principales o mínimos cuadrados parciales; Sección \@ref(pca-pls)).
 
 Por otra parte en los modelos anteriores no se consideraron interacciones entre predictores [para detalles sobre como incluir interacciones en modelos lineales ver por ejemplo la [Sección 8.6](https://rubenfcasal.github.io/intror/modelos-lineales.html#interacciones) de @fernandez2019intror].
 Por ejemplo podríamos considerar como modelo completo `respuesta ~ .*.`, que incluiría los efectos principales y las interacciones de orden 2 de todos los predictores.
@@ -490,7 +545,7 @@ Como ya vimos en capítulos anteriores, en AE interesan algoritmos que puedan de
 
 ## Análisis e interpretación del modelo {#analisis-reg-multiple}
 
-Al margen de la colinealidad, si no se verifican las otras hipótesis estructurales del modelo (Sección \@ref(reg-multiple)), las conclusiones obtenidas pueden no ser fiables, o incluso totalmente erróneas:
+Al margen de la colinealidad, si no se verifican las otras hipótesis estructurales del modelo (Sección \@ref(reg-multiple)), los resultados y las conclusiones basadas en la teoría estadística pueden no ser fiables, o incluso totalmente erróneas:
 
 -   La falta de linealidad "invalida" las conclusiones obtenidas
     (cuidado con las extrapolaciones).
@@ -507,67 +562,58 @@ Al margen de la colinealidad, si no se verifican las otras hipótesis estructura
 -   La dependencia entre observaciones puede tener un efecto mucho
     más grave.
 
-Con la función `plot` se pueden generar gráficos de interés para la diagnosis del modelo:
+Con el método `r cite_method(plot, lm, stats)` se pueden generar gráficos de interés para la diagnosis del modelo `r cite_fig(lm-plot)`:
 
-```{r out.width = "90%", fig.dim = c(10, 10)}
+```{r lm-plot, out.width = "90%", fig.dim = c(10, 10), fig.cap="Gráficos de diagnóstico del ajuste lineal."}
 oldpar <- par(mfrow = c(2,2))
 plot(modelo)
 par(oldpar)
 ```
-Por defecto se muestran cuatro gráficos (ver `help(plot.lm)` para más detalles). 
-El primero (residuos frente a predicciones) permite detectar falta de
-linealidad o heterocedasticidad (o el efecto de un factor omitido: mala
-especificación del modelo), lo ideal sería no observar ningún patrón.
 
-El segundo gráfico (gráfico QQ), permite diagnosticar la normalidad, 
-los puntos del deberían estar cerca de la diagonal.
-
-El tercer gráfico de dispersión-nivel permite detectar heterocedasticidad (la pendiente debería ser nula) y ayudar a seleccionar una transformación para corregirla (también se podría emplear la función `boxcox()` del paquete `MASS`).
-
+Por defecto se muestran cuatro gráficos (ver [`help(plot.lm)`](https://rdrr.io/r/stats/plot.lm.html) para más detalles). 
+El primero (residuos frente a predicciones) permite detectar falta de linealidad o heterocedasticidad (o el efecto de un factor omitido: mala especificación del modelo), lo ideal sería no observar ningún patrón.
+El segundo gráfico (gráfico QQ), permite diagnosticar la normalidad, los puntos del deberían estar cerca de la diagonal.
+El tercer gráfico de dispersión-nivel permite detectar heterocedasticidad (la pendiente debería ser nula) y ayudar a seleccionar una transformación para corregirla (también se podría emplear la función `r cite_fun(boxcox, MASS)` del paquete `r cite_cran(MASS)`).
 El último gráfico permite detectar valores atípicos o influyentes. Representa los residuos estandarizados en función del valor de influencia (a priori) o leverage ($hii$ que depende de los valores de las variables explicativas, debería ser $< 2(p+1)/2$) y señala las observaciones atípicas (residuos fuera de [-2,2]) e influyentes a posteriori (estadístico de Cook >0.5 y >1).
 
-Si las conclusiones obtenidas dependen en gran medida de una
-observación (normalmente atípica), esta se denomina influyente (a
-posteriori) y debe ser examinada con cuidado por el experimentador.
+Si las conclusiones obtenidas dependen en gran medida de una observación (normalmente atípica), esta se denomina influyente (a posteriori) y debe ser examinada con cuidado por el experimentador.
 Se puede volver a ajustar el modelo eliminando las observaciones influyentes^[Normalmente se sigue un proceso iterativo, eliminando la más influyente cada vez, por ejemplo con `which.max(cooks.distance(modelo))` y `update()`.],
-pero puede ser recomendable emplear regresión lineal robusta, 
-por ejemplo mediante la función `rlm()` del paquete `MASS`.
+pero puede ser recomendable emplear regresión lineal robusta, por ejemplo mediante la función `r cite_fun(rlm, MASS)` del paquete `r cite_cran(MASS)`).
 
 En regresión lineal múltiple, en lugar de generar gráficos de dispersión simple 
-(p.e. gráficos de dispersión matriciales) para analizar los efectos de las variables explicativas y 
-detectar posibles problemas (falta de linealidad...), 
-se pueden generar gráficos parciales de residuos, por ejemplo con el comando:
+(p.e. gráficos de dispersión matriciales) para analizar los efectos de las variables explicativas y detectar posibles problemas (falta de linealidad...), se pueden generar gráficos parciales de residuos, por ejemplo con el comando:
 
 ```{r, eval=FALSE}
 termplot(modelo, partial.resid = TRUE)
 ```
 
-Aunque puede ser preferible emplear las funciones `crPlots` ó `avPlots` del paquete `car`:
+Aunque puede ser preferible emplear las funciones `r cite_fun(crPlots, car)` ó `r cite_fun(avPlots, car)` del paquete `r cite_cran(car)`^[Estas funciones permitirían además detectar puntos atípicos o influyentes 
+mediante el argumento `id`.]:
 
-```{r}
+```{r crPlots, out.width = "90%", fig.dim = c(10,10), fig.cap= "Gráficos parciales de residuos (componentes + residuos) del ajuste lineal."}
 library(car)
-crPlots(modelo)
 # avPlots(modelo)
+crPlots(modelo, main = "")
 ```
-Estas funciones permitirían además detectar puntos atípicos o influyentes 
-(mediante los argumentos `id.method` e `id.n`).
-    
-Para obtener medidas de diagnosis o resúmenes numéricos de interés se pueden emplear
-las siguientes funciones (ver `help(influence.measures)` para un listado más completo):
 
-Función  |  Descripción
--------  |  --------------------------------------------------------------
-rstandard  |  residuos estandarizados (también eliminados)
-rstudent  |  residuos estudentizados 
-cooks.distance  |  valores del estadístico de Cook
-influence  |  valores de influencia, cambios en coeficientes y varianza residual al eliminar cada dato (LOOCV).
+    
+En la tabla \@ref(tab:diag-fun-lm) se incluyen algunas funciones adicionales que permiten obtener medidas de diagnosis o resúmenes numéricos de interés (ver [`help(influence.measures)`](https://rdrr.io/r/stats/influence.measures.html) para un listado más completo).
+
+Table: (\#tab:diag-fun-lm) Listado de las principales funciones auxiliares para modelos ajustados.
+
+Función        |  Descripción
+-------------  |  --------------------------------------------------------------
+`rstandard()`  |  residuos estandarizados (también eliminados)
+`rstudent()`   |  residuos estudentizados 
+`cooks.distance()`  |  valores del estadístico de Cook
+`influence()`  |  valores de influencia, cambios en coeficientes y varianza residual al eliminar cada dato (LOOCV).
 
 Hay muchas herramientas adicionales disponibles en otros paquetes.
 Por ejemplo, como ya se comentó, se puede emplear la función
 `vif()` del paquete `car` para calcular los factores de inflación de varianza, 
 aunque puede ser preferible emplear otras medidas como el *índice de condicionamiento*, 
-implementado en el paquete `r citepkg("mctest")`.
-La librería `r citepkg("lmtest")` proporciona herramientas adicionales para la diagnosis de modelos lineales, 
+implementado en el paquete `r cite_cran(mctest)`.
+La librería `r cite_cran(lmtest)` proporciona herramientas adicionales para la diagnosis de modelos lineales, 
 por ejemplo el test de Breusch-Pagan (para contrastar homocedasticidad) en la función `bptest()` 
 o el de Durbin-Watson (para detectar si hay correlación en serie) en `dwtest()`.
 
@@ -587,8 +633,14 @@ Posibles soluciones cuando no se satisfacen los supuestos básicos:
 -   Si no se logra corregir la falta de linealidad se puede pensar en
     utilizar modelos más flexibles (capítulo siguiente y anteriores).
     
+Otra alternativa es emplear las técnicas de aprendizaje estadístico descritas en la Sección \@ref(const-eval).
+Desde este punto de vista podríamos ignorar las hipótesis estructurales y pensar que los procedimientos clásicos, como por ejemplo el ajuste lineal mediante el método por pasos, son simplemente algoritmos de predicción.
+En ese caso, después de ajustar el modelo en la muestra de entrenamiento, en lugar de emplear medidas como el coeficiente de determinación ajustado, emplearíamos la muestra de test para evaluar la capacidad predictiva en nuevas observaciones.
 
-## Evaluación de la precisión
+Trataremos en primer lugar este último paso y posteriormente, en la Sección \@ref(selec-ae-reg-lineal), se darán algunas nociones de como se podría haber empleado remuestreo para la selección del modelo.
+
+
+## Evaluación de la precisión {#eval-reg-lineal}
 
 Para evaluar la precisión de las predicciones podríamos utilizar el coeficiente de determinación ajustado:
 
@@ -605,19 +657,20 @@ $$R_{ajus}^{2} = 1 - \frac{\hat{S}_{R}^{2}}{\hat{S}_{Y}^{2}}
 siendo $\hat{S}_{R}^{2}=\sum_{i=1}^{n}(y_{i}-\hat{y}_{i})^{2}/(n - p - 1)$. 
 Algo similar ocurriría con otras medidas de bondad de ajuste, como por ejemplo BIC o AIC.
 
-Alternativamente, por si no es razonable asumir estas hipótesis, se pueden emplear el procedimiento tradicional en AE (o alguno de los otros descritos en la Sección \@ref(const-eval)):
+Alternativamente, por si no es razonable asumir estas hipótesis, se pueden emplear el procedimiento tradicional en AE (o alguno de los otros descritos en la Sección \@ref(const-eval)).
 
-```{r}
+Podemos evaluar el modelo ajustado en el conjunto de datos de test y comparar las predicciones frente a los valores reales `r cite_fig(lm-test)`:
+
+```{r lm-test, fig.cap="Gráfico de dispersión de observaciones frente a predicciones, del ajuste lineal en la muestra de test."}
 obs <- test$fidelida
 pred <- predict(modelo, newdata = test)
-
-plot(pred, obs, main = "Observado frente a predicciones",
-     xlab = "Predicción", ylab = "Observado")
+plot(pred, obs, xlab = "Predicción", ylab = "Observado")
 abline(a = 0, b = 1)
-res <- lm(obs ~ pred)
-# summary(res)
+res <- lm(obs ~ pred) # summary(res)
 abline(res, lty = 2)
+```
 
+```{r , echo=FALSE}
 accuracy <- function(pred, obs, na.rm = FALSE, 
                      tol = sqrt(.Machine$double.eps)) {
   err <- obs - pred     # Errores
@@ -636,34 +689,47 @@ accuracy <- function(pred, obs, na.rm = FALSE,
     r.squared = 1 - sum(err^2)/sum((obs - mean(obs))^2) # Pseudo R-cuadrado
   ))
 }
+```
+
+También podemos obtener medidas de error, por ejemplo empleando la función `accuracy()` de la Sección \@ref(eval-reg):
+
+```{r }
 accuracy(pred, obs)
 ```
 
-De igual forma, los métodos de selección de variables descritos en la Sección \@ref(seleccion-reg-lineal) dependen (en mayor o menor medida) de la validez de las hipótesis estructurales. 
-Por este motivo se podría pensar también en emplear alguno de los procedimientos descritos en la Sección \@ref(const-eval) para evaluar la precisión de los distintos modelos.
-Por ejemplo adaptando adecuadamente el algoritmo de validación cruzada empleado en la Sección \@ref(cv).
-Sin embargo, el procedimiento de selección debería realizarse también en cada uno de los conjuntos de entrenamiento utilizados en la validación.
-Esto puede hacerse fácilmente empleando el paquete `caret`.
+<!-- 
+Por ejemplo, el método de selección por pasos hacia atrás, empleando la función `stepAIC` del paquete `MASS`, está implementado en el método `"lmStepAIC"` 
+-->
 
-Por ejemplo, el método de selección por pasos hacia atrás, empleando la función `stepAIC` del paquete `MASS`, está implementado en el método `"lmStepAIC"`:
+
+## Selección del modelo mediante remuestreo {#selec-ae-reg-lineal}
+
+De igual forma, los métodos de selección de variables descritos en la Sección \@ref(seleccion-reg-lineal) dependen (en mayor o menor medida) de la validez de las hipótesis estructurales. 
+Por este motivo se podría pensar en emplear alguno de los procedimientos descritos en la Sección \@ref(const-eval).
+Por ejemplo, podríamos considerar como hiperparámetros la inclusión no de cada una de las posibles variables explicativas y realizar la selección de variables (la complejidad del modelo) mediante remuestreo.
+Sin embargo esto puede presentar dificultades computacionales.
+
+<!-- 
+Para ello se podría intentar adaptar el algoritmo de validación cruzada empleado en la Sección \@ref(cv).
+
+A día de hoy no conocemos ninguna herramienta que implemente esta aproximación.
+
+ejercicios: 
+
+- hacer algo equivalente a regsubsets mediante cv,
+más adelante se podría hacer bagging.
+
+- Implementar una función stepCV
+-->
+
+Otra posibilidad es emplear remuestreo para escoger entre distintos procedimientos de selección o para escoger el número de predictores incluidos en el modelo.
+En este caso, el procedimiento de selección debería realizarse también en cada uno de los conjuntos de entrenamiento utilizados en la validación.
+
+Esto último puede hacerse fácilmente con el paquete `caret`.
+Por ejemplo, este paquete implementa métodos de selección basados en el paquete `leaps`, considerando el número máximo de predictores `nvmax` como hiperparámetro y empleando búsqueda: hacia atrás (`"leapBackward"`), hacia adelante (`"leapForward"`) y por pasos (`"leapSeq"`).
 
 ```{r}
 library(caret)
-# names(getModelInfo("lm")) # 15 métodos
-# names(getModelInfo("leap")) # 3 métodos
-modelLookup("lmStepAIC") 
-caret.lmStepAIC <- train(fidelida ~ ., data = train, method = "lmStepAIC",
-                   trControl = trainControl(method = "cv", number = 5),
-                   trace = 0) # Opción de MASS::stepAIC para no imprimir output...
-caret.lmStepAIC
-caret.lmStepAIC$finalModel
-pred <- predict(caret.lmStepAIC, newdata = test)
-accuracy(pred, obs)
-```
-
-También está implementados métodos de selección basados en el paquete `leaps`, considerando el número máximo de predictores `nvmax` como hiperparámetro y empleando búsqueda: hacia atrás (`"leapBackward"`), hacia adelante (`"leapForward"`) y por pasos (`"leapSeq"`).
-
-```{r}
 modelLookup("leapSeq")
 caret.leapSeq <- train(fidelida ~ ., data = train, method = "leapSeq",
                    trControl = trainControl(method = "cv", number = 10),
@@ -671,6 +737,10 @@ caret.leapSeq <- train(fidelida ~ ., data = train, method = "leapSeq",
 caret.leapSeq
 # summary(caret.leapSeq$finalModel)
 with(caret.leapSeq, coef(finalModel, bestTune$nvmax))
+```
+
+Una vez seleccionado el modelo final^[Se podrían haber entrenado distintos métodos de selección de predictores y comparar los resultados (en las mismas muestras de validación) para escoger el modelo final.], estudiaríamos la eficiencia de las predicciones en la muestra de test:
+```{r}
 pred <- predict(caret.leapSeq, newdata = test)
 accuracy(pred, obs)
 ```
@@ -700,7 +770,7 @@ Hay dos formas básicas de lograr esta simplificación de los parámetros (con l
     sujeto a
     $$\sum_{j=1}^{p}\beta_{j}^{2} \le s$$
 
-- *Lasso* [*least absolute shrinkage and selection operator*, @tibshirani1996regression]
+- LASSO [*least absolute shrinkage and selection operator*, @tibshirani1996regression]
     $$\mbox{min}_{\beta_0, \boldsymbol{\beta}} RSS + \lambda\sum_{j=1}^{p}|\beta_{j}|$$
     
     Equivalentemente,
@@ -711,16 +781,16 @@ Hay dos formas básicas de lograr esta simplificación de los parámetros (con l
 Una formulación unificada consiste en considerar el problema
 $$\mbox{min}_{\beta_0, \boldsymbol{\beta}} RSS + \lambda\sum_{j=1}^{p}|\beta_{j}|^d$$
 
-Si $d=0$, la penalización consiste en el número de variables utilizadas, por tanto se corresponde con el problema de selección de variables; $d=1$ se corresponde con *lasso* y $d=2$ con *ridge*.
+Si $d=0$, la penalización consiste en el número de variables utilizadas, por tanto se corresponde con el problema de selección de variables; $d=1$ se corresponde con LASSO y $d=2$ con *ridge*.
 
-La ventaja de utilizar *lasso* es que va a forzar a que algunos parámetros sean cero, con lo cual también se realiza una selección de las variables más influyentes. 
+La ventaja de utilizar LASSO es que va a forzar a que algunos parámetros sean cero, con lo cual también se realiza una selección de las variables más influyentes. 
 Por el contrario, *ridge regression* va a incluir todas las variables predictoras en el modelo final, si bien es cierto que algunas con parámetros muy próximos a cero: de este modo va a reducir el riesgo del sobreajuste, pero no resuelve el problema de la interpretabilidad. 
-Otra posible ventaja de utilizar *lasso* es que cuando hay variables predictoras correlacionadas tiene tendencia a seleccionar una y anular las demás (esto también se puede ver como un inconveniente, ya que pequeños cambios en los datos pueden dar lugar a distintos modelos), mientras que *ridge* tiende a darles igual peso.
+Otra posible ventaja de utilizar LASSO es que cuando hay variables predictoras correlacionadas tiene tendencia a seleccionar una y anular las demás (esto también se puede ver como un inconveniente, ya que pequeños cambios en los datos pueden dar lugar a distintos modelos), mientras que *ridge* tiende a darles igual peso.
 
-Dos generalizaciones de *lasso* son *least angle regression* [LARS, @efron2004least] y *elastic net* [@zou2005regularization]. 
-*Elastic net* combina las ventajas de *ridge* y *lasso*, minimizando
+Dos generalizaciones de LASSO son *least angle regression* [LARS, @efron2004least] y *elastic net* [@zou2005regularization]. 
+*Elastic net* combina las ventajas de *ridge* y LASSO, minimizando
 $$\mbox{min}_{\beta_0, \boldsymbol{\beta}} \ \mbox{RSS} + \lambda \left( \frac{1 - \alpha}{2}\sum_{j=1}^{p}\beta_{j}^{2} + \alpha \sum_{j=1}^{p}|\beta_{j}| \right)$$ 
-con $0 \leq \alpha \leq 1$.
+siendo $0 \leq \alpha \leq 1$, un hiperparámetro adicional que determina la combinación lineal de ambas penalizaciones.
 
 <!-- LARS parte de coeficientes nulos y, simplificando, los va aumentando en la dirección de mínimos cuadrados (o minimizando otro criterio de error) de forma incremental, añadiendo secuencialmente el coeficiente de la variable que está más correlacionada con los residuos -->
 
@@ -731,12 +801,12 @@ $$\widehat \beta_0 = \bar y =\sum_{i=1}^n \frac{y_i}{n}$$
 
 Los dos métodos de regularización comentados dependen del hiperparámetro $\lambda$ (equivalentemente, $s$). 
 Es muy importante seleccionar adecuadamente el valor del hiperparámetro, por ejemplo utilizando *validación cruzada*. 
-Hay algoritmos muy eficientes que permiten el ajuste, tanto de *ridge regression* como de *lasso* de forma conjunta (simultánea) para todos los valores de $\lambda$.
+Hay algoritmos muy eficientes que permiten el ajuste, tanto de *ridge regression* como de LASSO de forma conjunta (simultánea) para todos los valores de $\lambda$.
 
 
 ### Implementación en R
 
-Hay varios paquetes que implementan estos métodos: `h2o`, `elasticnet`, `penalized`, `lasso2`, `biglasso`, etc., pero el paquete `r citepkg("glmnet", "https://glmnet.stanford.edu")` utiliza una de las más eficientes.
+Hay varios paquetes que implementan estos métodos: `h2o`, `elasticnet`, `penalized`, `lasso2`, `biglasso`, etc., pero el paquete `r cite_pkg(glmnet)` utiliza una de las más eficientes.
 
 ```{r message=FALSE}
 library(glmnet)
@@ -744,9 +814,10 @@ library(glmnet)
 
 El paquete `glmnet` no emplea formulación de modelos, hay que establecer la respuesta `y` y la matriz numérica `x` correspondiente a las variables explicativas.
 Por tanto no se pueden incluir directamente predictores categóricos, habrá que codificarlos empleando variables auxiliares numéricas. 
-Se puede emplear la función `model.matrix()`(o `Matrix::sparse.model.matrix()` si el conjunto de datos es muy grande) para construir la matriz de diseño `x` a partir de una fórmula (alternativamente se pueden emplear la herramientas implementadas en el paquete `caret`). Además, esta función tampoco admite datos faltantes.
+Se puede emplear la función `r cite_fun(model.matrix)` (o `r cite_fun(Matrix::sparse.model.matrix)` si el conjunto de datos es muy grande) para construir la matriz de diseño `x` a partir de una fórmula (alternativamente se pueden emplear la herramientas implementadas en el paquete `caret`). 
+Además, tampoco admite datos faltantes.
 
-La función principal es:
+La función principal es `r cite_fun(glmnet, glmnet)`:
 
 ```{r eval=FALSE}
 glmnet(x, y, family, alpha = 1, lambda = NULL, ...)
@@ -754,35 +825,42 @@ glmnet(x, y, family, alpha = 1, lambda = NULL, ...)
 
  - `family`: familia del modelo lineal generalizado (ver Sección \@ref(reg-glm)); por defecto `"gaussian"` (modelo lineal con ajuste cuadrático), también admite `"binomial"`, `"poisson"`, `"multinomial"`, `"cox"` o `"mgaussian"` (modelo lineal con respuesta multivariante).
 
- - `alpha`:  parámetro $\alpha$ de elasticnet $0 \leq \alpha \leq 1$.  Por defecto `alpha = 1` penalización *lasso* (`alpha = 0` para *ridge regression*).
+ - `alpha`:  parámetro $\alpha$ de elasticnet $0 \leq \alpha \leq 1$.  Por defecto `alpha = 1` penalización LASSO (`alpha = 0` para *ridge regression*).
  
  - `lambda`: secuencia (opcional) de valores de $\lambda$; si no se especifica se establece una secuencia por defecto (en base a los argumentos adicionales `nlambda` y `lambda.min.ratio`). Se devolverán los ajustes para todos los valores de esta secuencia (también se podrán obtener posteriormente para otros valores).
  
 Entre los métodos genéricos disponibles del objeto resultante, `coef()` y `predict()` permiten obtener los coeficientes y las predicciones para un valor concreto de $\lambda$, que se debe especificar mediante el argumento `s = valor` ("For historical reasons we use the symbol 's' rather than 'lambda'").
 
-Aunque para seleccionar el un valor "óptimo" del hiperparámetro $\lambda$ (mediante validación cruzada) se puede emplear:
+Aunque para seleccionar el un valor "óptimo" del hiperparámetro $\lambda$ (mediante validación cruzada) se puede emplear `r cite_fun(cv.glmnet, glmnet)`:
 
 ```{r eval=FALSE}
 cv.glmnet(x, y, family, alpha, lambda, type.measure = "default", nfolds = 10, ...)
 ```
 
 Esta función también devuelve los ajustes con toda la muestra de entrenamiento (en la componente `$glmnet.fit`) y se puede emplear el resultado directamente para predecir o obtener los coeficientes del modelo. 
-Por defecto seleccionando $\lambda$ mediante la regla de "un error estándar" de @breiman1984classification (componente `$lambda.1se`), aunque también calcula el valor óptimo (componente `$lambda.min`; que se puede seleccionar con estableciendo `s = "lambda.min"`).
+Por defecto seleccionando $\lambda$ mediante la regla de "un error estándar" de @breiman1984classification (componente `$lambda.1se`), aunque también calcula el valor óptimo (componente `$lambda.min`; que se puede seleccionar con estableciendo `s = "lambda.min"`). 
+Para más detalles consultar la vignette del paquete "[An Introduction to glmnet](https://glmnet.stanford.edu/articles/glmnet.html)".
 
-Para más detalles consultar la vignette del paquete [An Introduction to glmnet](https://glmnet.stanford.edu/articles/glmnet.html).
-
-Continuaremos con el ejemplo de los datos de clientes de la compañía de distribución industrial HBAT (en este caso todos los predictores son numéricos y no hay datos faltantes):
+Continuaremos con el ejemplo de los datos de clientes de la compañía de distribución industrial HBAT empleado en la Sección \@ref(reg-multiple) (donde solo se consideraban predictores numéricos y tampoco había datos faltantes):
 
 ```{r }
-x <- as.matrix(train[, -14])
+load("data/hbat.RData")
+df <- hbat[c(23, 7:19)]
+set.seed(1)
+nobs <- nrow(df)
+itrain <- sample(nobs, 0.8 * nobs)
+train <- df[itrain, ]
+test <- df[-itrain, ]
+x <- as.matrix(train[-1])
 y <- train$fidelida
 ```
 
 ### Ejemplo: Ridge Regression
 
-Ajustamos los modelos de regresión ridge (con la secuencia de valores de $\lambda$ por defecto) con la función `glmnet()` con `alpha=0` (ridge penalty):
+Podemos ajustar modelos de regresión ridge (con la secuencia de valores de $\lambda$ por defecto) con la función `r cite_fun(glmnet, glmnet)` con `alpha=0` (*ridge penalty*).
+Con el método `r cite_method(plot, glmnet, glmnet)` podemos representar la evolución de los coeficientes en función de la penalización (etiquetando las curvas con el índice de la variable si `label = TRUE`; ver Figura \@ref(fig:ridge-fit)).
 
-```{r }
+```{r ridge-fit, fig.cap="Gráfico de perfil de la evolución de los coeficientes en función del logaritmo de la penalización del ajuste ridge."}
 fit.ridge <- glmnet(x, y, alpha = 0)
 plot(fit.ridge, xvar = "lambda", label = TRUE)
 ```
@@ -792,58 +870,76 @@ Podemos obtener el modelo o predicciones para un valor concreto de $\lambda$:
 coef(fit.ridge, s = 2) # lambda = 2
 ```
 
+Para seleccionar el parámetro de penalización por validación cruzada empleamos `r cite_fun(cv.glmnet, glmnet)` (normalmente emplearíamos esta función en lugar de `glmnet()`).
+El correspondiente método `r cite_method(plot, cv.glmnet, glmnet)` muestra la evolución de los errores de validación cruzada en función de la penalización, incluyendo las bandas de un error estándar de Breiman `r cite_fig(ridge-cv)`.
 
-Para seleccionar el parámetro de penalización por validación cruzada empleamos `cv.glmnet()`:
+(ref:ridge-cv) Error cuadrático medio de validación cruzada en función del logaritmo de la penalización del ajuste ridge, junto con los intervalos de un error estándar. Las líneas verticales se corresponden con `lambda.min` y `lambda.1se`.
 
-```{r }
+```{r ridge-cv, fig.cap="(ref:ridge-cv)"}
 set.seed(1)
 cv.ridge <- cv.glmnet(x, y, alpha = 0)
 plot(cv.ridge)
 ```
 
-En este caso el parámetro óptimo (según la regla de un error estándar) sería:
+[^nota-glmnet-1]: Para obtener el valor óptimo global podemos emplear `cv.ridge$lambda.min`, y añadir el argumento `s = "lambda.min"` a los métodos `coef()` y `predict()` para obtener los correspondientes coeficientes y predicciones.
+
+En este caso el parámetro óptimo, según la regla de un error estándar de Breiman, sería[^nota-glmnet-1]:
 
 ```{r }
 cv.ridge$lambda.1se
-# cv.ridge$lambda.min
 ```
 
 y el correspondiente modelo contiene todas las variables explicativas:
 
 ```{r }
 coef(cv.ridge) # s = "lambda.1se"
-# coef(cv.ridge, s = "lambda.min")
 ```
 
 Finalmente evaluamos la precisión en la muestra de test:
 
 ```{r}
+obs <- test$fidelida
 newx <- as.matrix(test[, -14])
 pred <- predict(cv.ridge, newx = newx) # s = "lambda.1se"
 accuracy(pred, obs)
 ```
 
+<!-- 
+Aunque en este caso no mejoraríamos el ajuste lineal sin penalización o seleccionando el valor el mínimo global [^nota-glmnet-1].
+-->
+
+
 ### Ejemplo: Lasso
 
-También podríamos ajustar modelos lasso con la opción por defecto de `glmnet()` (`alpha = 1`, lasso penalty).
-Pero en este caso lo haremos al mismo tiempo que seleccionamos el parámetro de penalización por validación cruzada:
+También podríamos ajustar modelos LASSO con la opción por defecto de `glmnet()` (`alpha = 1`, *lasso penalty*).
+Pero en este caso lo haremos al mismo tiempo que seleccionamos el parámetro de penalización por validación cruzada `r cite_fig(lasso-cv)`:
 
-```{r }
+(ref:lasso-cv) Error cuadrático medio de validación cruzada en función del logaritmo de la penalización del ajuste LASSO, junto con los intervalos de un error estándar. Las líneas verticales se corresponden con `lambda.min` y `lambda.1se`.
+
+```{r lasso-cv, fig.cap="(ref:lasso-cv)"}
 set.seed(1)
 cv.lasso <- cv.glmnet(x,y)
 plot(cv.lasso)
+```
+
+También podemos generar el gráfico con la evolución de los componentes a partir del ajuste almacenado en la componente `$glmnet.fit`:
+
+(ref:lasso-fit) Evolución de los coeficientes en función del logaritmo de la penalización del ajuste LASSO. Las líneas verticales se corresponden con `lambda.min` y `lambda.1se`.
+
+```{r lasso-fit, fig.cap="(ref:lasso-fit)"}
 plot(cv.lasso$glmnet.fit, xvar = "lambda", label = TRUE) 	
 abline(v = log(cv.lasso$lambda.1se), lty = 2)
 abline(v = log(cv.lasso$lambda.min), lty = 3)
 ```
 
-El modelo resultante (oneSE rule) solo contiene 4 variables explicativas:
+Como podemos observar en la Figura \@ref(fig:lasso-fit), la penalización LASSO tiende a forzar que las estimaciones de los coeficientes sean exactamente cero cuando el parámetro de penalización $\lambda$ es suficientemente grande.
+En este caso, el modelo resultante (empleando la regla *oneSE*) solo contiene 4 variables explicativas:
 
 ```{r }
 coef(cv.lasso) # s = "lambda.1se"
 ```
 
-Por tanto este método también podría ser empleando para la selección de variables (puede hacerse automáticamente estableciendo `relax = TRUE`, ajustará los modelos sin regularización). 
+Por tanto este método también podría ser empleando para la selección de variables (puede hacerse automáticamente; estableciendo `relax = TRUE`, en la llamada a `glmnet()` o `cv.glmnet()`, devolverá los modelos ajustados sin regularización en la componente `$relaxed`). 
 
 Finalmente evaluamos también la precisión en la muestra de test:
 
@@ -854,8 +950,8 @@ accuracy(pred, obs)
 
 ### Ejemplo: Elastic Net
 
-Podemos ajustar modelos elastic net para un valor concreto de `alpha` empleando la función `glmnet()`, pero las opciones del paquete no incluyen la selección de este hiperparámetro.
-Aunque se podría implementar fácilmente (como se muestra en  `help(cv.glmnet)`), resulta mucho más cómodo emplear el método `"glmnet"` de `caret`:
+Podemos ajustar modelos *elastic net* para un valor concreto de `alpha` empleando la función `glmnet()`, pero las opciones del paquete no incluyen la selección de este hiperparámetro.
+Aunque se podría implementar fácilmente (como se muestra en  [`help(cv.glmnet)`](https://glmnet.stanford.edu/reference/cv.glmnet.html)), resulta mucho más cómodo emplear el método `"glmnet"` de `caret`:
 
 ```{r}
 library(caret)
@@ -867,17 +963,34 @@ caret.glmnet <- train(x, y, method = "glmnet",
     preProc = c("zv", "center", "scale"),
     trControl = trainControl(method = "cv", number = 5),
     tuneLength = 5)
-
-
 caret.glmnet
+```
+
+<!-- 
+Pendiente: probar a incluir rejilla con lambda = 0 (sin penalización)
+-->
+
+
+(ref:elastic-caret) Errores RMSE de validación cruzada de los modelos *elastic net* en función de los hiperparámetros de regularización.
+
+Los resultados de la selección de los hiperparámetros $\alpha$ y $\lambda$ de regularización se muestran en la Figura \@ref(fig:elastic-caret):
+
+```{r elastic-caret, fig.dim=c(9, 7), fig.cap='(ref:elastic-caret)'}
 ggplot(caret.glmnet, highlight = TRUE)
+```
+
+Finalmente, se evalúan las predicciones en la muestra de test del modelo ajustado (que en esta ocasión mejoran los resultados del modelo LASSO ajustando en la sección anterior):
+
+```{r }
 pred <- predict(caret.glmnet, newdata = test)
 accuracy(pred, obs)
 ```
 
+<!-- 
+Aunque tampoco mejoraríamos el ajuste lineal sin penalización.
+-->
 
 ## Métodos de reducción de la dimensión {#pca-pls}
-
 
 Otra alternativa, para tratar de reducir la varianza de los modelos lineales, es transformar los predictores considerando $k < p$ combinaciones lineales:
 $$Z_j = a_{1j}X_{1} + a_{2j}X_{2} + \ldots + a_{pj}X_{p}$$
@@ -897,13 +1010,13 @@ Además, podríamos interpretar los coeficientes $\alpha_j$ como los efectos de 
 También hay que tener en cuenta que al considerar combinaciones lineales, si las hipótesis estructurales de linealidad, homocedasticidad, normalidad o independencia no son asumibles en el modelo original, es de esperar que tampoco lo sean en el modelo transformado (se podrían emplear las herramientas descritas en la Sección \@ref(analisis-reg-multiple) para su análisis).
 
 Hay una gran variedad de algoritmos para obtener estas componentes, en esta sección consideraremos las dos aproximaciones más utilizadas: componentes principales y mínimos cuadrados parciales. 
-También hay numerosos paquetes de R que implementan métodos de este tipo (`r citepkg("pls","https://mevik.net/work/software/pls.html")`, `r citepkg("plsRglm", "https://github.com/fbertran/plsRglm")`...), incluyendo `caret`. 
+También hay numerosos paquetes de R que implementan métodos de este tipo (`r cite_pkg_("pls","https://mevik.net/work/software/pls.html")`, `r cite_pkg_("plsRglm", "https://github.com/fbertran/plsRglm")`...), incluyendo `caret`. 
 
 
 ### Regresión por componentes principales (PCR)
 
 Una de las aproximaciones tradicionales, cuando se detecta la presencia de colinealidad, consiste en aplicar el método de componentes principales a los predictores.
-El análisis de componentes principales (*principal component analysis*, PCA) es un método muy utilizado de aprendizaje no supervisado, que permite reducir el número de dimensiones tratando de recoger la mayor parte de la variabilidad de los datos originales [en este caso de los predictores; para más detalles sobre PCA ver por ejemplo el Capítulo 10 de @james2021introduction].
+El análisis de componentes principales (*principal component analysis*, PCA) es un método muy utilizado de aprendizaje no supervisado, que permite reducir el número de dimensiones tratando de recoger la mayor parte de la variabilidad de los datos originales, en este caso de los predictores [para más detalles sobre PCA ver por ejemplo el Capítulo 10 de @james2021introduction].
 
 Al aplicar PCA a los predictores $X_1, \ldots, X_p$ se obtienen componentes ordenados según la variabilidad explicada de forma descendente. 
 El primer componente es el que recoge el mayor porcentaje de la variabilidad total (se corresponde con la dirección de mayor variación de las observaciones). 
@@ -915,27 +1028,55 @@ En la práctica esto puede llevarse a cabo fácilmente a partir de la descomposi
 Por tanto, si se pretende emplear estas componentes para ajustar un modelo de regresión, habrá que conservar los parámetros de estas transformaciones para poder aplicarlas a nuevas observaciones.
 
 Normalmente se seleccionan las primeras $k$ componentes de forma que expliquen la mayor parte de la variabilidad de los datos (los predictores en este caso).
-En PCR [*principal component regression*; @massy1965principal] se confía en que estas componentes recojan también la mayor parte de la información sobre la respuesta, pero podría no ser el caso.
+En PCR [*principal component regression*, @massy1965principal] se confía en que estas componentes recojan también la mayor parte de la información sobre la respuesta, pero podría no ser el caso.
 
 Como ejemplo continuaremos con los datos de clientes de la compañía de distribución industrial HBAT.
-Aunque podríamos emplear las funciones `printcomp()` y `lm()` del paquete base, emplearemos por comodidad la función `pcr()` del paquete `r citepkg("pls","https://mevik.net/work/software/pls.html")` (ya que incorpora validación cruzada para seleccionar el número de componentes y facilita el cálculo de nuevas predicciones).
+Aunque podríamos emplear las funciones `printcomp()` y `lm()` del paquete base, emplearemos por comodidad la función `r cite_fun(pcr, pls)` del paquete `r cite_pkg_("pls","https://mevik.net/work/software/pls.html")`, ya que incorpora validación cruzada para seleccionar el número de componentes y facilita el cálculo de nuevas predicciones.
+Los principales argumentos de esta función son:
+```{r eval=FALSE}
+pcr(formula, ncomp, data, scale = FALSE, center = TRUE, 
+    validation = c("none", "CV", "LOO"), segments = 10, 
+    segment.type = c("random", "consecutive", "interleaved"), ...)
+```
 
-```{r }
+- `ncomp`: número máximo de componentes (ajustará modelos desde 1 hasta `ncomp` componentes).
+
+- `scale`, `center`: normalmente valores lógicos indicando si los predictores serán reescalados (divididos por su desviación estándar y centrados (restando su media). 
+
+- `validation`: determina el tipo de validación, puede ser `"none"` (ninguna, se empleará el modelo ajustado con toda la muestra de entrenamiento), `"LOO"` (VC dejando uno fuera) y `"CV"` (VC por grupos). En este último caso los grupos de validación se especifican mediante `segments` (número de grupos) y `segment.type` (por defecto aleatorios; para más detalles consultar la ayuda de `r cite_fun(mvrCv, pls)`).
+
+Como ejemplo continuaremos con los datos de clientes de la compañía de distribución industrial HBAT.
+Reescalaremos los predictores y emplearemos validación cruzada por grupos para seleccionar el número de componentes:
+
+```{r}
 library(pls)
-# pcr(formula, ncomp, data, scale = FALSE, center = TRUE, 
-#     validation = c("none", "CV", "LOO"), segments = 10)
 set.seed(1)
 pcreg <- pcr(fidelida ~ ., data = train, scale = TRUE, validation = "CV")
+```
+
+Podemos obtener un resumen de los resultados de validación (evolución de los errores de validación cruzada) y del ajuste en la muestra de entrenamiento (evolución de la proporción de variabilidad explicada de los predictores y de la respuesta) con el método `r cite_method(summary, mvr, pls)`:
+
+```{r}
 summary(pcreg)
+```
+
+Aunque suele resultar más cómodo representar gráficamente estos valores `r cite_fig(pcreg-plot)`. 
+Por ejemplo empleando `r cite_fun(RMSEP, pls)` para acceder a los errores de validación^[`"adjCV"` es una estimación de validación cruzada con corrección de sesgo.]:
+
+```{r pcreg-plot, fig.cap="Errores de validación cruzada en función del número de componentes en el ajuste mediante PCR."}
 # validationplot(pcreg, legend = "topright") 
 rmsep.cv <- RMSEP(pcreg)
 plot(rmsep.cv, legend = "topright")
 ncomp.op <- with(rmsep.cv, comps[which.min(val[2, 1, ])]) # mínimo adjCV RMSEP
 ```
 
-Empleando el criterio de menor error de validación cruzada se seleccionaría un número elevado de componentes, el mínimo se alcanzaría con `r ncomp.op` componentes (bastante próximo a ajustar un modelo lineal con todos los predictores).
+En este caso, empleando el criterio de menor error de validación cruzada se seleccionaría un número elevado de componentes, el mínimo se alcanzaría con `r ncomp.op` componentes (bastante próximo a ajustar un modelo lineal con todos los predictores).
 
-Los coeficientes de los predictores originales con el modelo seleccionado serían:
+[^nota-pcreg-1]: También se pueden analizar distintos aspectos del ajuste (predicciones, coeficientes, puntuaciones, cargas, biplots, cargas de correlación o gráficos de validación) con el método `r cite_fun(plot.mvr, pls)`.
+
+<!-- biplot(pcreg) -->
+
+Los coeficientes de los predictores originales con el modelo seleccionado serían[^nota-pcreg-1]:
 
 ```{r}
 coef(pcreg, ncomp = 9, intercept = TRUE)
@@ -948,17 +1089,17 @@ pred <- predict (pcreg , test, ncomp = 9)
 accuracy(pred, obs)
 ```
 
-Empleando el método `"pcr"` de `caret`:
+Alternativamente podríamos emplear el método `"pcr"` de `caret`.
+Por ejemplo seleccionando el número de componentes mediante la regla de un error estándar `r cite_fig(pcr-plot-caret)`:
 
-```{r }
+```{r pcr-plot-caret, fig.cap="Errores de validación cruzada en función del número de componentes en el ajuste mediante PCR y valor óptimo según la regla de un error estándar."}
 library(caret)
 modelLookup("pcr")
 set.seed(1)
+trControl <- trainControl(method = "cv", number = 10, selectionFunction = "oneSE")
 caret.pcr <- train(fidelida ~ ., data = train, method = "pcr",
                    preProcess = c("zv", "center", "scale"),
-                   trControl = trainControl(method = "cv", number = 10),
-                   tuneGrid = data.frame(ncomp = 1:10))
-# También se podía haber incluido `selectionFunction = "oneSE"` en `trControl()`
+                   trControl = trControl, tuneGrid = data.frame(ncomp = 1:10))
 caret.pcr
 ggplot(caret.pcr, highlight = TRUE)
 pred <- predict(caret.pcr, newdata = test)
@@ -969,14 +1110,13 @@ Al incluir más componentes se aumenta la proporción de variabilidad explicada 
 pero esto no está relacionado con su utilidad para explicar la respuesta.
 No va a haber problemas de colinealidad aunque incluyamos muchas componentes, pero se tendrán que estimar más coeficientes y va a disminuir su precisión.
 Sería más razonable obtener las componentes principales y después aplicar un método de selección.
-Por ejemplo podemos combinar el método de preprocesado `"pca"` de `caret` con un método de selección de variables^[Esta forma de proceder se podría emplear con otros modelos que puedan tener problemas de colinealidad, como los lineales generalizados.]:
+Por ejemplo podemos combinar el método de preprocesado `"pca"` de `caret` con un método de selección de variables^[Esta forma de proceder se podría emplear con otros modelos que puedan tener problemas de colinealidad, como los lineales generalizados.] `r cite_fig(pcr2-plot-caret)`:
 
-```{r }
+```{r pcr2-plot-caret, fig.cap="Errores de validación cruzada en función del número de componentes en el ajuste mediante PCR con selección por pasos y valor óptimo según la regla de un error estándar."}
 set.seed(1)
 caret.pcrsel <- train(fidelida ~ ., data = train, method = "leapSeq",
                    preProcess = c("zv", "center", "scale", "pca"),     
-                   trControl = trainControl(method = "cv", number = 10),
-                   tuneGrid = data.frame(nvmax = 1:10))
+                   trControl = trControl, tuneGrid = data.frame(nvmax = 1:10))
 caret.pcrsel
 ggplot(caret.pcrsel, highlight = TRUE)
 with(caret.pcrsel, coef(finalModel, bestTune$nvmax))
@@ -988,15 +1128,15 @@ accuracy(pred, obs)
 ### Regresión por mínimos cuadrados parciales (PLSR)
 
 Como ya se comentó, en PCR las componentes se determinan con el objetivo de explicar la variabilidad de los predictores, ignorando por completo la respuesta.
-Por el contrario, en PLSR [*partial least squares regression*; @wold1983multivariate] se construyen las componentes $Z_1, \ldots, Z_k$ teniendo en cuenta desde un principio el objetivo final de predecir linealmente la respuesta.
+Por el contrario, en PLSR [*partial least squares regression*, @wold1983multivariate] se construyen las componentes $Z_1, \ldots, Z_k$ teniendo en cuenta desde un principio el objetivo final de predecir linealmente la respuesta.
 
 Hay varios procedimientos para seleccionar los pesos $a_{ij}$, pero la idea es asignar mayor peso a los predictores que están más correlacionados con la respuesta (o con los correspondientes residuos al ir obteniendo nuevos componentes), considerando siempre direcciones ortogonales [ver por ejemplo la Sección 6.3.2 de @james2021introduction].
 
-Continuando con el ejemplo anterior, emplearemos en primer lugar la función `plsr()` del paquete `pls` [este paquete implementa distintas proyecciones, ver `help(pls.options)`, o @Mevik2007pls]:
+Continuando con el ejemplo anterior, emplearemos en primer lugar la función `r cite_fun(plsr, pls)` del paquete `r cite_pkg_("pls","https://mevik.net/work/software/pls.html")`, que tiene los mismos argumentos que la función `pcr()` descrita en la sección anterior[^nota-plsr-1]:
 
-```{r }
-# plsr(formula, ncomp, data, scale = FALSE, center = TRUE, 
-#      validation = c("none", "CV", "LOO"), segments = 10)
+[^nota-plsr-1]: Realmente ambas funciones llaman internamente a `r cite_fun(mvr, pls)` donde están implementadas distintas proyecciones [ver  [`help(pls.options)`](https://rdrr.io/pkg/pls/man/pls.options.html), o @Mevik2007pls].
+
+```{r plsr-plot, fig.cap="Error cuadrático medio de validación cruzada en función del número de componentes en el ajuste mediante PLS."}
 set.seed(1)
 plsreg <- plsr(fidelida ~ ., data = train, scale = TRUE, validation = "CV")
 summary(plsreg)
@@ -1006,11 +1146,11 @@ plot(rmsep.cv, legend = "topright")
 ncomp.op <- with(rmsep.cv, comps[which.min(val[2, 1, ])]) # mínimo adjCV RMSEP
 ```
 
-En este caso el mínimo se alcanza con `r ncomp.op` componentes pero 4 sería un valor razonable.
+En este caso el mínimo se alcanza con `r ncomp.op` componentes pero, a la vista de la Figura \@ref(fig:plsr-plot), parece que 4 sería un valor razonable.
 Podríamos obtener los coeficientes de los predictores del modelo seleccionado:
 
 ```{r}
-coef(pcreg, ncomp = 4, intercept = TRUE)
+coef(plsreg, ncomp = 4, intercept = TRUE)
 ```
 
 y evaluar su precisión:
@@ -1020,19 +1160,16 @@ pred <- predict(plsreg , test, ncomp = 4)
 accuracy(pred, obs)
 ```
 
-También se puede emplear el método `"pls"` de `caret`:
+Empleamos también el método `"pls"` de `caret` seleccionando el número de componentes mediante la regla de un error estándar`r cite_fig(plsr-plot-caret)`:
 
-```{r }
+```{r plsr-plot-caret, fig.cap="Errores de validación cruzada en función del número de componentes en el ajuste mediante PLS."}
 modelLookup("pls")
 set.seed(1)
 caret.pls <- train(fidelida ~ ., data = train, method = "pls",
                    preProcess = c("zv", "center", "scale"),
-                   trControl = trainControl(method = "cv", number = 10),
-                   tuneGrid = data.frame(ncomp = 1:10))
+                   trControl = trControl, tuneGrid = data.frame(ncomp = 1:10))
 caret.pls
 ggplot(caret.pls, highlight = TRUE)
-# Podía ser preferible incluir `trControl(selectionFunction = "oneSE")`
-
 pred <- predict(caret.pls, newdata = test)
 accuracy(pred, obs)
 ```
@@ -1052,17 +1189,15 @@ $$\operatorname{logit}(p(\mathbf{X}))=\log\left( \frac{p(\mathbf{X})}{1-p(\mathb
 (que proyecta el intervalo $[0, 1]$ en $\mathbb{R}$), siendo su inversa la función logística
 $$p(\mathbf{X}) = \frac{e^{\beta_{0}+\beta_{1}X_{1}+\beta_{2}X_{2}+\cdots+\beta_{p}X_{p}}}{1 + e^{\beta_{0}+\beta_{1}X_{1}+\beta_{2}X_{2}+\cdots+\beta_{p}X_{p}}}$$
 Esto da lugar al modelo de regresión logística (múltiple), que será el que utilizaremos como ejemplo en esta sección.
-Para un tratamiento más completo de los métodos de regresión lineal generalizada se recomienda consultar @faraway2014linear.
+Para un tratamiento más completo de los métodos de regresión lineal generalizada se recomienda consultar alguno de los libros de referencia, como @faraway2014linear, @hastie2017generalized, @dunn2018generalized o @mccullagh2019generalized.
 
+<!-- ### Ajuste: función `glm` -->
 
-### Ajuste: función `glm`
-
-Para el ajuste (estimación de los parámetros) de un modelo lineal generalizado a un conjunto de datos (por máxima verosimilitud) se emplea la función `glm()` (la mayoría de los principales parámetros coinciden con los de la función `lm()`):
+Para el ajuste (estimación de los parámetros) de un modelo lineal generalizado a un conjunto de datos (por máxima verosimilitud) se emplea la función `r cite_fun(glm, stats)` (la mayoría de los principales parámetros coinciden con los de la función `lm()`):
 
 ```{r eval=FALSE}
 ajuste <- glm(formula, family = gaussian, data, weights, subset, na.action, ...)
 ```
-
 
 El parámetro `family` especifica la distribución y opcionalmente la función de enlace. 
 Por ejemplo:
@@ -1075,32 +1210,49 @@ Por ejemplo:
 
 -   `Gamma(link = "inverse")`
 
-Para cada distribución se toma por defecto una función de enlace (el denominado *enlace canónico*, mostrada en primer lugar en la lista anterior; ver `help(family)` para más detalles).
+Para cada distribución se toma por defecto una función de enlace (el denominado *enlace canónico*, mostrada en primer lugar en la lista anterior; ver [`help(family)`](https://rdrr.io/r/stats/family.html) para más detalles).
 Por ejemplo, en el caso del modelo logístico bastará con establecer `family = binomial`.
 
-También se podría emplear la función `bigglm()` del paquete `r citepkg("biglm")` para ajustar modelos lineales generalizados a grandes conjuntos de datos, aunque en este caso los requerimientos computacionales pueden ser mayores.
+También se podría emplear la función `bigglm()` del paquete `r cite_cran(biglm)` para ajustar modelos lineales generalizados a grandes conjuntos de datos, aunque en este caso los requerimientos computacionales pueden ser mayores.
 
-Como ya se comentó, muchas de las herramientas y funciones genéricas disponibles para los modelos lineales son válidas también para este tipo de modelos: `summary`, `coef`, `confint`, `predict`, `anova`...
+Como se comentó en la Sección \@ref(reg-multiple), muchas de las herramientas y funciones genéricas disponibles para los modelos lineales son válidas también para este tipo de modelos, como por ejemplo las mostradas en las tablas \@ref(tab:aux-fun-lm) y \@ref(tab:diag-fun-lm).
 
-
-### Ejemplo: Regresión logística
+<!-- ### Ejemplo: Regresión logística -->
 
 Como ejemplo continuaremos con los datos de clientes de la compañía de distribución industrial HBAT, pero consideraremos como respuesta la variable *alianza* y como predictores las percepciones de HBAT (al igual que en las secciones anteriores consideraremos únicamente variables explicativas continuas, sin interacciones, por comodidad).
 
-```{r out.width = "100%", fig.dim = c(12, 12)}
-# load("data/hbat.RData")
-# as.data.frame(attr(hbat, "variable.labels"))
-df <- hbat[, c(7:19, 24)]  
+<!-- 
+load("data/hbat.RData") 
+as.data.frame(attr(hbat, "variable.labels"))
+-->
+
+```{r }
+df <- hbat[c(24, 7:19)]
 set.seed(1)
 nobs <- nrow(df)
 itrain <- sample(nobs, 0.8 * nobs)
 train <- df[itrain, ]
 test <- df[-itrain, ]
-
-plot(train, pch = as.numeric(train$alianza), col = as.numeric(train$alianza))
 ```
 
-Como ya se comentó, estableciendo `family = binomial` en la llamada a `glm()` se ajusta un modelo de regresión logística  (por defecto `link = "logit"`):
+En primer lugar se suele realizar un análisis descriptivo. 
+Por ejemplo, si el número de variables no es muy grande, podemos generar un gráfico de dispersión matricial, diferenciando las observaciones pertenecientes a las distintas clases `r cite_fig(plot-df-class)`.
+
+(ref:plot-df-class) Gráfico de dispersión matricial, con colores y símbolos dependiendo de `alianza`.
+
+```{r plot-df-class, out.width = "100%", fig.dim = c(12, 12), fig.cap="(ref:plot-df-class)"}
+plot(train[-1], pch = as.numeric(train$alianza), col = as.numeric(train$alianza))
+```
+
+<!-- 
+https://plotly.com/ggplot2/splom/
+https://www.statology.org/scatterplot-matrix-in-r/
+https://daviddalpiaz.github.io/r4sl/generative-models.html
+-->
+
+
+
+Para ajustar un modelo de regresión logística bastaría con establecer el argumento `family = binomial` en la llamada a `glm()` (por defecto utiliza `link = "logit"`):
 
 ```{r }
 modelo <- glm(alianza ~ velocida + calidadp, family = binomial, data = train)
@@ -1114,7 +1266,7 @@ exp(coef(modelo))  # Razones de ventajas ("odds ratios")
 exp(confint(modelo))
 ```
 
-Para obtener un resumen más completo del ajuste también se utiliza `summary()`
+Para obtener un resumen más completo del ajuste también se utiliza `summary()`:
 
 ```{r }
 summary(modelo)
@@ -1142,46 +1294,39 @@ En este caso no se puede emplear la función `regsubsets` del paquete `leaps` (s
 pero por ejemplo el paquete
 [`bestglm`](https://cran.r-project.org/web/packages/bestglm/vignettes/bestglm.pdf)
 proporciona una herramienta equivalente (`bestglm()`).
-
-En este caso también se podría emplear la función `stepwise` del paquete `RcmdrMisc` (interfaz de `stepAIC` del paquete `MASS`), para seleccionar el modelo por pasos según criterio AIC o BIC:
+También se podría emplear la función `r cite_fun(stepwise, RcmdrMisc)` del paquete `r cite_cran(RcmdrMisc)` para seleccionar un modelo por pasos según criterio AIC o BIC:
 
 ```{r }
 # library(RcmdrMisc)
 modelo.completo <- glm(alianza ~ ., family = binomial, data = train)
-
 modelo <- stepwise(modelo.completo, direction='forward/backward', criterion='BIC')
 summary(modelo)
 ```
 
 ### Análisis e interpretación del modelo {#analisis-glm}
 
-Las hipótesis estructurales del modelo son similares al caso de regresión lineal (aunque algunas como la linealidad se suponen en la escala transformada) y si no se verifican los resultados pueden no ser fiables o totalmente erróneos.
+Las hipótesis estructurales del modelo son similares al caso de regresión lineal (aunque algunas como la linealidad se suponen en la escala transformada).
+Si no se verifican, los resultados basados en la teoría estadística pueden no ser fiables o totalmente erróneos.
 
-Con la función `plot` se pueden generar gráficos de interés para la diagnosis del modelo:
+Con el método `r cite_method(plot, lm, stats)` se pueden generar gráficos de interés para la diagnosis del modelo `r cite_fig(glm-plot)`:
 
-```{r out.width = "90%", fig.dim = c(10,10)}
+```{r glm-plot,out.width = "90%", fig.dim = c(10, 10), fig.cap="Gráficos de diagnóstico del ajuste lineal generalizado."}
 oldpar <- par( mfrow=c(2,2))
 plot(modelo)
 par(oldpar)
 ```
 
-Aunque su interpretación difiere un poco de la de los modelos lineales...
+Su interpretación es similar a la de los modelos lineales (consultar las referencias incluidas al principio de la sección para más detalles).
+En este caso destacan tres posibles datos atípicos, aunque aparentemente no son muy influyentes a posteriori (en el modelo ajustado).
+Adicionalmente se pueden generar gráficos parciales de residuos, por ejemplo con la función `r cite_fun(crPlots, car)` del paquete `r cite_cran(car)` `r cite_fig(crPlots-glm)`:
 
-Se pueden generar gráficos parciales de residuos (p.e. `crPlots()` del paquete `car`):
-
-```{r out.width = "90%", fig.dim = c(10,10)}
+```{r crPlots-glm, out.width = "90%", fig.dim = c(10,10), fig.cap= "Gráficos parciales de residuos del ajuste generalizado."}
 # library(car)
-crPlots(modelo)
+id <- list(method = which(abs(residuals(modelo, type = "pearson")) > 3), col = 2)
+crPlots(modelo, id = id, main = "")
 ```
 
-Se pueden emplear las mismas funciones vistas en los modelos lineales para obtener medidas de diagnosis de interés (Sección \@ref(analisis-reg-multiple)). Por ejemplo:
-
-```{r eval=FALSE}
-residuals(model, type = "deviance")
-```
-
-proporcionará los residuos *deviance*.
-
+Se pueden emplear las mismas funciones vistas en los modelos lineales para obtener medidas de diagnosis de interés (tablas \@ref(tab:aux-fun-lm) y \@ref(tab:diag-fun-lm)). Por ejemplo `residuals(model, type = "deviance")` proporcionará los residuos *deviance*.
 Por supuesto también pueden aparecer problemas de colinealidad, y podemos emplear las mismas herramientas para detectarla:
 
 ```{r }
@@ -1189,13 +1334,13 @@ Por supuesto también pueden aparecer problemas de colinealidad, y podemos emple
 vif(modelo)
 ```
 
-Si no se satisfacen los supuestos básicos también se pueden intentar distintas alternativas (en este caso se pueden cambiar además la función de enlace y la familia de distribuciones, que puede incluir parámetros para modelar dispersión).
-Por ejemplo, para tratar de corregir la falta de linealidad se pueden considerar ajustes polinómicos o emplear métodos no paramétricos, como la función `gam()` del paquete `mgcv`.
+Si no se satisfacen los supuestos básicos también se pueden intentar distintas alternativas (se puede cambiar la función de enlace y la familia de distribuciones, que puede incluir parámetros para modelar dispersión, además de las descritas en la Sección \@ref(analisis-reg-multiple)), incluyendo emplear modelos más flexibles o técnicas de aprendizaje estadístico que no dependan de ellas (sustancialmente).
 
 
 ### Evaluación de la precisión
 
-Como ya se mostró en la Sección \@ref(eval-class), podemos obtener las estimaciones de la probabilidad de la segunda categoría empleando `predict()` con `type = "response"`:
+Para evaluar la calidad de la predicción en nuevas observaciones podemos seguir los pasos mostrados en la Sección \@ref(eval-class).
+Obteniendo las estimaciones de la probabilidad (de la segunda categoría) empleando `predict()` con `type = "response"`:
 
 ```{r }
 p.est <- predict(modelo, type = "response", newdata = test)
@@ -1208,34 +1353,37 @@ y las medidas de precisión de la predicción (además de los criterios AIC o BI
 caret::confusionMatrix(pred, test$alianza, positive = "Si", mode = "everything")
 ```
 
-También podemos emplear `caret`:
+o de las estimaciones de las probabilidades (como el AUC).
+
+<!-- 
+También podemos emplear `caret`: 
 
 ```{r }
 # library(caret)
 names(getModelInfo("glm")) # 11 métodos
 ```
-
+-->
 
 ### Extensiones
 
 Se pueden imponer restricciones a las estimaciones de los parámetros de modo análogo al caso de modelos lineales (secciones \@ref(shrinkage) y \@ref(pca-pls)).
-Por ejemplo, en los métodos de regularización (*ridge*, *lasso* o *elastic net*; Sección \@ref(shrinkage)) bastaría con cambiar en la función de pérdidas la suma residual de cuadrados por el logaritmo negativo de la función de verosimilitud.
+Por ejemplo, en los métodos de regularización (*ridge*, LASSO o *elastic net*; Sección \@ref(shrinkage)) bastaría con cambiar en la función de pérdidas la suma residual de cuadrados por el logaritmo negativo de la función de verosimilitud.
 
-```{exercise, label="glmnet"}
+::: {.exercise #glmnet}
 
-Emplear el paquete `glmnet` para ajustar modelos logísticos con penalización *ridge* y *lasso* a la muestra de entrenamiento de los datos de clientes de la compañía de distribución industrial HBAT, considerando como respuesta la variable *alianza* y seleccionando un valor "óptimo" del hiperparámetro $\lambda$.
+Emplear el paquete `glmnet` para ajustar modelos logísticos con penalización *ridge* y LASSO a la muestra de entrenamiento de los datos de clientes de la compañía de distribución industrial HBAT, considerando como respuesta la variable *alianza* y seleccionando un valor "óptimo" del hiperparámetro $\lambda$.
 Ajustar también un modelo con penalización *elastic net* empleando `caret` (seleccionando los valores óptimos de los hiperparámetros).
 
-```
+:::
 
  
 El método PCR (Sección \@ref(pca-pls)) se extendería de forma inmediata al caso de modelos generalizados, simplemente cambiando el modelo ajustado.
 También están disponibles métodos PLSR para modelos generalizados.
 
 
-```{exercise, label="glm-reduccion"}
+::: {.exercise #glm-reduccion}
 
 Emplear el paquete `caret` para ajustar modelos logísticos con reducción de la dimensión a los datos de clientes de la compañía de distribución industrial HBAT. Comparar el modelo obtenido con preprocesado `"pca"` y el método `"glmStepAIC"`, con el obtenido empleando el método `"plsRglm"`.
 
-```
+:::
 

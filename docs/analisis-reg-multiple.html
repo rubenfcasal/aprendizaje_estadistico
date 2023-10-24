@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>6.4 Análisis e interpretación del modelo | Aprendizaje Estadístico</title>
   <meta name="description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="6.4 Análisis e interpretación del modelo | Aprendizaje Estadístico" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
   <meta name="github-repo" content="rubenfcasal/aprendizaje_estadistico" />
@@ -33,8 +32,7 @@
   
   
 <link rel="prev" href="seleccion-reg-lineal.html"/>
-<link rel="next" href="evaluación-de-la-precisión.html"/>
-<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<link rel="next" href="eval-reg-lineal.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -52,14 +50,15 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.19/datatables.js"></script>
-<link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="libs/datatables-binding-0.26/datatables.js"></script>
+<link href="libs/dt-core-1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.12.1/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.12.1/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
 
@@ -102,7 +101,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -115,7 +114,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -171,11 +170,11 @@ div.csl-indent {
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prólogo</a></li>
 <li class="chapter" data-level="1" data-path="intro-AE.html"><a href="intro-AE.html"><i class="fa fa-check"></i><b>1</b> Introducción al Aprendizaje Estadístico</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs.html"><a href="aprendizaje-estadístico-vs.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje Estadístico vs. Aprendizaje Automático</a>
+<li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje Estadístico vs. Aprendizaje Automático</a>
 <ul>
-<li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs.html"><a href="aprendizaje-estadístico-vs.html#machine-learning-vs.-data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
-<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs.html"><a href="aprendizaje-estadístico-vs.html#las-dos-culturas-breiman2001statistical"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas <span class="citation">(<span>Breiman, 2001b</span>)</span></a></li>
-<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs.html"><a href="aprendizaje-estadístico-vs.html#machine-learning-vs.-estadística-dunson2018statistics"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística <span class="citation">(<span>Dunson, 2018</span>)</span></a></li>
+<li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#machine-learning-vs.-data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
+<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#las-dos-culturas"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas</a></li>
+<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#machine-learning-vs.-estadística"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística</a></li>
 </ul></li>
 <li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de Aprendizaje Estadístico</a>
 <ul>
@@ -230,7 +229,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="3.5.1" data-path="boosting-en-r.html"><a href="boosting-en-r.html#ejemplo-clasificación-con-el-paquete-ada"><i class="fa fa-check"></i><b>3.5.1</b> Ejemplo: clasificación con el paquete <code>ada</code></a></li>
 <li class="chapter" data-level="3.5.2" data-path="boosting-en-r.html"><a href="boosting-en-r.html#ejemplo-regresión-con-el-paquete-gbm"><i class="fa fa-check"></i><b>3.5.2</b> Ejemplo: regresión con el paquete <code>gbm</code></a></li>
-<li class="chapter" data-level="3.5.3" data-path="boosting-en-r.html"><a href="boosting-en-r.html#ejemplo-xgboost-con-el-paquete-caret"><i class="fa fa-check"></i><b>3.5.3</b> Ejemplo: XGBoost con el paquete <code>caret</code></a></li>
+<li class="chapter" data-level="3.5.3" data-path="boosting-en-r.html"><a href="boosting-en-r.html#xgb-caret"><i class="fa fa-check"></i><b>3.5.3</b> Ejemplo: XGBoost con el paquete <code>caret</code></a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>4</b> Máquinas de soporte vectorial</a>
@@ -239,34 +238,20 @@ div.csl-indent {
 <li class="chapter" data-level="4.2" data-path="clasificadores-de-soporte-vectorial.html"><a href="clasificadores-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>4.2</b> Clasificadores de soporte vectorial</a></li>
 <li class="chapter" data-level="4.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>4.3</b> Máquinas de soporte vectorial</a>
 <ul>
-<li class="chapter" data-level="4.3.1" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#clasificación-con-más-de-dos-categorías"><i class="fa fa-check"></i><b>4.3.1</b> Clasificación con más de dos categorías</a></li>
-<li class="chapter" data-level="4.3.2" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#regresión"><i class="fa fa-check"></i><b>4.3.2</b> Regresión</a></li>
-<li class="chapter" data-level="4.3.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#ventajas-e-incovenientes"><i class="fa fa-check"></i><b>4.3.3</b> Ventajas e incovenientes</a></li>
+<li class="chapter" data-level="4.3.1" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#regresión-con-svm"><i class="fa fa-check"></i><b>4.3.1</b> Regresión con SVM</a></li>
+<li class="chapter" data-level="4.3.2" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#ventajas-e-incovenientes"><i class="fa fa-check"></i><b>4.3.2</b> Ventajas e incovenientes</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="svm-con-el-paquete-kernlab.html"><a href="svm-con-el-paquete-kernlab.html"><i class="fa fa-check"></i><b>4.4</b> SVM con el paquete <code>kernlab</code></a></li>
+<li class="chapter" data-level="4.4" data-path="svm-kernlab.html"><a href="svm-kernlab.html"><i class="fa fa-check"></i><b>4.4</b> SVM con el paquete <code>kernlab</code></a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="class-otros.html"><a href="class-otros.html"><i class="fa fa-check"></i><b>5</b> Otros métodos de clasificación</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="análisis-discriminate-lineal.html"><a href="análisis-discriminate-lineal.html"><i class="fa fa-check"></i><b>5.1</b> Análisis discriminate lineal</a>
-<ul>
-<li class="chapter" data-level="5.1.1" data-path="análisis-discriminate-lineal.html"><a href="análisis-discriminate-lineal.html#ejemplo-masslda"><i class="fa fa-check"></i><b>5.1.1</b> Ejemplo <code>MASS::lda</code></a></li>
-</ul></li>
-<li class="chapter" data-level="5.2" data-path="análisis-discriminante-cuadrático.html"><a href="análisis-discriminante-cuadrático.html"><i class="fa fa-check"></i><b>5.2</b> Análisis discriminante cuadrático</a>
-<ul>
-<li class="chapter" data-level="5.2.1" data-path="análisis-discriminante-cuadrático.html"><a href="análisis-discriminante-cuadrático.html#ejemplo-massqda"><i class="fa fa-check"></i><b>5.2.1</b> Ejemplo <code>MASS::qda</code></a></li>
-</ul></li>
-<li class="chapter" data-level="5.3" data-path="naive-bayes.html"><a href="naive-bayes.html"><i class="fa fa-check"></i><b>5.3</b> Naive Bayes</a>
-<ul>
-<li class="chapter" data-level="5.3.1" data-path="naive-bayes.html"><a href="naive-bayes.html#ejemplo-e1071naivebayes"><i class="fa fa-check"></i><b>5.3.1</b> Ejemplo <code>e1071::naiveBayes</code></a></li>
-</ul></li>
+<li class="chapter" data-level="5.1" data-path="clas-lda.html"><a href="clas-lda.html"><i class="fa fa-check"></i><b>5.1</b> Análisis discriminate lineal</a></li>
+<li class="chapter" data-level="5.2" data-path="clas-qda.html"><a href="clas-qda.html"><i class="fa fa-check"></i><b>5.2</b> Análisis discriminante cuadrático</a></li>
+<li class="chapter" data-level="5.3" data-path="bayes.html"><a href="bayes.html"><i class="fa fa-check"></i><b>5.3</b> Naive Bayes</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="modelos-lineales.html"><a href="modelos-lineales.html"><i class="fa fa-check"></i><b>6</b> Modelos lineales y extensiones</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="reg-multiple.html"><a href="reg-multiple.html"><i class="fa fa-check"></i><b>6.1</b> Regresión lineal múltiple</a>
-<ul>
-<li class="chapter" data-level="6.1.1" data-path="reg-multiple.html"><a href="reg-multiple.html#ajuste-función-lm"><i class="fa fa-check"></i><b>6.1.1</b> Ajuste: función <code>lm</code></a></li>
-<li class="chapter" data-level="6.1.2" data-path="reg-multiple.html"><a href="reg-multiple.html#ejemplo-2"><i class="fa fa-check"></i><b>6.1.2</b> Ejemplo</a></li>
-</ul></li>
+<li class="chapter" data-level="6.1" data-path="reg-multiple.html"><a href="reg-multiple.html"><i class="fa fa-check"></i><b>6.1</b> Regresión lineal múltiple</a></li>
 <li class="chapter" data-level="6.2" data-path="colinealidad.html"><a href="colinealidad.html"><i class="fa fa-check"></i><b>6.2</b> El problema de la colinealidad</a></li>
 <li class="chapter" data-level="6.3" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html"><i class="fa fa-check"></i><b>6.3</b> Selección de variables explicativas</a>
 <ul>
@@ -274,27 +259,26 @@ div.csl-indent {
 <li class="chapter" data-level="6.3.2" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html#selección-por-pasos"><i class="fa fa-check"></i><b>6.3.2</b> Selección por pasos</a></li>
 </ul></li>
 <li class="chapter" data-level="6.4" data-path="analisis-reg-multiple.html"><a href="analisis-reg-multiple.html"><i class="fa fa-check"></i><b>6.4</b> Análisis e interpretación del modelo</a></li>
-<li class="chapter" data-level="6.5" data-path="evaluación-de-la-precisión.html"><a href="evaluación-de-la-precisión.html"><i class="fa fa-check"></i><b>6.5</b> Evaluación de la precisión</a></li>
-<li class="chapter" data-level="6.6" data-path="shrinkage.html"><a href="shrinkage.html"><i class="fa fa-check"></i><b>6.6</b> Métodos de regularización</a>
+<li class="chapter" data-level="6.5" data-path="eval-reg-lineal.html"><a href="eval-reg-lineal.html"><i class="fa fa-check"></i><b>6.5</b> Evaluación de la precisión</a></li>
+<li class="chapter" data-level="6.6" data-path="selec-ae-reg-lineal.html"><a href="selec-ae-reg-lineal.html"><i class="fa fa-check"></i><b>6.6</b> Selección del modelo mediante remuestreo</a></li>
+<li class="chapter" data-level="6.7" data-path="shrinkage.html"><a href="shrinkage.html"><i class="fa fa-check"></i><b>6.7</b> Métodos de regularización</a>
 <ul>
-<li class="chapter" data-level="6.6.1" data-path="shrinkage.html"><a href="shrinkage.html#implementación-en-r"><i class="fa fa-check"></i><b>6.6.1</b> Implementación en R</a></li>
-<li class="chapter" data-level="6.6.2" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-ridge-regression"><i class="fa fa-check"></i><b>6.6.2</b> Ejemplo: Ridge Regression</a></li>
-<li class="chapter" data-level="6.6.3" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-lasso"><i class="fa fa-check"></i><b>6.6.3</b> Ejemplo: Lasso</a></li>
-<li class="chapter" data-level="6.6.4" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-elastic-net"><i class="fa fa-check"></i><b>6.6.4</b> Ejemplo: Elastic Net</a></li>
+<li class="chapter" data-level="6.7.1" data-path="shrinkage.html"><a href="shrinkage.html#implementación-en-r"><i class="fa fa-check"></i><b>6.7.1</b> Implementación en R</a></li>
+<li class="chapter" data-level="6.7.2" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-ridge-regression"><i class="fa fa-check"></i><b>6.7.2</b> Ejemplo: Ridge Regression</a></li>
+<li class="chapter" data-level="6.7.3" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-lasso"><i class="fa fa-check"></i><b>6.7.3</b> Ejemplo: Lasso</a></li>
+<li class="chapter" data-level="6.7.4" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-elastic-net"><i class="fa fa-check"></i><b>6.7.4</b> Ejemplo: Elastic Net</a></li>
 </ul></li>
-<li class="chapter" data-level="6.7" data-path="pca-pls.html"><a href="pca-pls.html"><i class="fa fa-check"></i><b>6.7</b> Métodos de reducción de la dimensión</a>
+<li class="chapter" data-level="6.8" data-path="pca-pls.html"><a href="pca-pls.html"><i class="fa fa-check"></i><b>6.8</b> Métodos de reducción de la dimensión</a>
 <ul>
-<li class="chapter" data-level="6.7.1" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-componentes-principales-pcr"><i class="fa fa-check"></i><b>6.7.1</b> Regresión por componentes principales (PCR)</a></li>
-<li class="chapter" data-level="6.7.2" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-mínimos-cuadrados-parciales-plsr"><i class="fa fa-check"></i><b>6.7.2</b> Regresión por mínimos cuadrados parciales (PLSR)</a></li>
+<li class="chapter" data-level="6.8.1" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-componentes-principales-pcr"><i class="fa fa-check"></i><b>6.8.1</b> Regresión por componentes principales (PCR)</a></li>
+<li class="chapter" data-level="6.8.2" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-mínimos-cuadrados-parciales-plsr"><i class="fa fa-check"></i><b>6.8.2</b> Regresión por mínimos cuadrados parciales (PLSR)</a></li>
 </ul></li>
-<li class="chapter" data-level="6.8" data-path="reg-glm.html"><a href="reg-glm.html"><i class="fa fa-check"></i><b>6.8</b> Modelos lineales generalizados</a>
+<li class="chapter" data-level="6.9" data-path="reg-glm.html"><a href="reg-glm.html"><i class="fa fa-check"></i><b>6.9</b> Modelos lineales generalizados</a>
 <ul>
-<li class="chapter" data-level="6.8.1" data-path="reg-glm.html"><a href="reg-glm.html#ajuste-función-glm"><i class="fa fa-check"></i><b>6.8.1</b> Ajuste: función <code>glm</code></a></li>
-<li class="chapter" data-level="6.8.2" data-path="reg-glm.html"><a href="reg-glm.html#ejemplo-regresión-logística"><i class="fa fa-check"></i><b>6.8.2</b> Ejemplo: Regresión logística</a></li>
-<li class="chapter" data-level="6.8.3" data-path="reg-glm.html"><a href="reg-glm.html#selección-de-variables-explicativas"><i class="fa fa-check"></i><b>6.8.3</b> Selección de variables explicativas</a></li>
-<li class="chapter" data-level="6.8.4" data-path="reg-glm.html"><a href="reg-glm.html#analisis-glm"><i class="fa fa-check"></i><b>6.8.4</b> Análisis e interpretación del modelo</a></li>
-<li class="chapter" data-level="6.8.5" data-path="reg-glm.html"><a href="reg-glm.html#evaluación-de-la-precisión-1"><i class="fa fa-check"></i><b>6.8.5</b> Evaluación de la precisión</a></li>
-<li class="chapter" data-level="6.8.6" data-path="reg-glm.html"><a href="reg-glm.html#extensiones"><i class="fa fa-check"></i><b>6.8.6</b> Extensiones</a></li>
+<li class="chapter" data-level="6.9.1" data-path="reg-glm.html"><a href="reg-glm.html#selección-de-variables-explicativas"><i class="fa fa-check"></i><b>6.9.1</b> Selección de variables explicativas</a></li>
+<li class="chapter" data-level="6.9.2" data-path="reg-glm.html"><a href="reg-glm.html#analisis-glm"><i class="fa fa-check"></i><b>6.9.2</b> Análisis e interpretación del modelo</a></li>
+<li class="chapter" data-level="6.9.3" data-path="reg-glm.html"><a href="reg-glm.html#evaluación-de-la-precisión"><i class="fa fa-check"></i><b>6.9.3</b> Evaluación de la precisión</a></li>
+<li class="chapter" data-level="6.9.4" data-path="reg-glm.html"><a href="reg-glm.html#extensiones"><i class="fa fa-check"></i><b>6.9.4</b> Extensiones</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="reg-np.html"><a href="reg-np.html"><i class="fa fa-check"></i><b>7</b> Regresión no paramétrica</a>
@@ -307,19 +291,15 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="7.2" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>7.2</b> Splines</a>
 <ul>
-<li class="chapter" data-level="7.2.1" data-path="splines.html"><a href="splines.html#reg-splines"><i class="fa fa-check"></i><b>7.2.1</b> Regression splines</a></li>
-<li class="chapter" data-level="7.2.2" data-path="splines.html"><a href="splines.html#smoothing-splines"><i class="fa fa-check"></i><b>7.2.2</b> Smoothing splines</a></li>
+<li class="chapter" data-level="7.2.1" data-path="splines.html"><a href="splines.html#reg-splines"><i class="fa fa-check"></i><b>7.2.1</b> Splines de regresión</a></li>
+<li class="chapter" data-level="7.2.2" data-path="splines.html"><a href="splines.html#splines-de-suavizado"><i class="fa fa-check"></i><b>7.2.2</b> Splines de suavizado</a></li>
 <li class="chapter" data-level="7.2.3" data-path="splines.html"><a href="splines.html#splines-penalizados"><i class="fa fa-check"></i><b>7.2.3</b> Splines penalizados</a></li>
 </ul></li>
-<li class="chapter" data-level="7.3" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html"><i class="fa fa-check"></i><b>7.3</b> Modelos aditivos</a>
+<li class="chapter" data-level="7.3" data-path="reg-gam.html"><a href="reg-gam.html"><i class="fa fa-check"></i><b>7.3</b> Modelos aditivos</a>
 <ul>
-<li class="chapter" data-level="7.3.1" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#ajuste-función-gam"><i class="fa fa-check"></i><b>7.3.1</b> Ajuste: función <code>gam</code></a></li>
-<li class="chapter" data-level="7.3.2" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#ejemplo-3"><i class="fa fa-check"></i><b>7.3.2</b> Ejemplo</a></li>
-<li class="chapter" data-level="7.3.3" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#superficies-de-predicción"><i class="fa fa-check"></i><b>7.3.3</b> Superficies de predicción</a></li>
-<li class="chapter" data-level="7.3.4" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#comparación-y-selección-de-modelos"><i class="fa fa-check"></i><b>7.3.4</b> Comparación y selección de modelos</a></li>
-<li class="chapter" data-level="7.3.5" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#mgcv-diagnosis"><i class="fa fa-check"></i><b>7.3.5</b> Diagnosis del modelo</a></li>
-<li class="chapter" data-level="7.3.6" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#gam-en-caret"><i class="fa fa-check"></i><b>7.3.6</b> GAM en <code>caret</code></a></li>
-<li class="chapter" data-level="7.3.7" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#ejercicios"><i class="fa fa-check"></i><b>7.3.7</b> Ejercicios</a></li>
+<li class="chapter" data-level="7.3.1" data-path="reg-gam.html"><a href="reg-gam.html#superficies-de-predicción"><i class="fa fa-check"></i><b>7.3.1</b> Superficies de predicción</a></li>
+<li class="chapter" data-level="7.3.2" data-path="reg-gam.html"><a href="reg-gam.html#comparación-y-selección-de-modelos"><i class="fa fa-check"></i><b>7.3.2</b> Comparación y selección de modelos</a></li>
+<li class="chapter" data-level="7.3.3" data-path="reg-gam.html"><a href="reg-gam.html#mgcv-diagnosis"><i class="fa fa-check"></i><b>7.3.3</b> Diagnosis del modelo</a></li>
 </ul></li>
 <li class="chapter" data-level="7.4" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>7.4</b> Regresión spline adaptativa multivariante</a>
 <ul>
@@ -362,9 +342,9 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="analisis-reg-multiple" class="section level2" number="6.4">
-<h2><span class="header-section-number">6.4</span> Análisis e interpretación del modelo</h2>
-<p>Al margen de la colinealidad, si no se verifican las otras hipótesis estructurales del modelo (Sección <a href="reg-multiple.html#reg-multiple">6.1</a>), las conclusiones obtenidas pueden no ser fiables, o incluso totalmente erróneas:</p>
+<div id="analisis-reg-multiple" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> Análisis e interpretación del modelo<a href="analisis-reg-multiple.html#analisis-reg-multiple" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Al margen de la colinealidad, si no se verifican las otras hipótesis estructurales del modelo (Sección <a href="reg-multiple.html#reg-multiple">6.1</a>), los resultados y las conclusiones basadas en la teoría estadística pueden no ser fiables, o incluso totalmente erróneas:</p>
 <ul>
 <li><p>La falta de linealidad “invalida” las conclusiones obtenidas
 (cuidado con las extrapolaciones).</p></li>
@@ -378,43 +358,43 @@ intervalos de confianza y contrastes podrían verse afectados.</p></li>
 <li><p>La dependencia entre observaciones puede tener un efecto mucho
 más grave.</p></li>
 </ul>
-<p>Con la función <code>plot</code> se pueden generar gráficos de interés para la diagnosis del modelo:</p>
-<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="analisis-reg-multiple.html#cb298-1" aria-hidden="true" tabindex="-1"></a>oldpar <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb298-2"><a href="analisis-reg-multiple.html#cb298-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(modelo)</span></code></pre></div>
-<p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-19-1.png" width="90%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="analisis-reg-multiple.html#cb299-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(oldpar)</span></code></pre></div>
-<p>Por defecto se muestran cuatro gráficos (ver <code>help(plot.lm)</code> para más detalles).
-El primero (residuos frente a predicciones) permite detectar falta de
-linealidad o heterocedasticidad (o el efecto de un factor omitido: mala
-especificación del modelo), lo ideal sería no observar ningún patrón.</p>
-<p>El segundo gráfico (gráfico QQ), permite diagnosticar la normalidad,
-los puntos del deberían estar cerca de la diagonal.</p>
-<p>El tercer gráfico de dispersión-nivel permite detectar heterocedasticidad (la pendiente debería ser nula) y ayudar a seleccionar una transformación para corregirla (también se podría emplear la función <code>boxcox()</code> del paquete <code>MASS</code>).</p>
-<p>El último gráfico permite detectar valores atípicos o influyentes. Representa los residuos estandarizados en función del valor de influencia (a priori) o leverage (<span class="math inline">\(hii\)</span> que depende de los valores de las variables explicativas, debería ser <span class="math inline">\(&lt; 2(p+1)/2\)</span>) y señala las observaciones atípicas (residuos fuera de [-2,2]) e influyentes a posteriori (estadístico de Cook &gt;0.5 y &gt;1).</p>
-<p>Si las conclusiones obtenidas dependen en gran medida de una
-observación (normalmente atípica), esta se denomina influyente (a
-posteriori) y debe ser examinada con cuidado por el experimentador.
-Se puede volver a ajustar el modelo eliminando las observaciones influyentes<a href="#fn26" class="footnote-ref" id="fnref26"><sup>26</sup></a>,
-pero puede ser recomendable emplear regresión lineal robusta,
-por ejemplo mediante la función <code>rlm()</code> del paquete <code>MASS</code>.</p>
+<p>Con el método <a href="https://rdrr.io/r/stats/plot.lm.html"><code>plot()</code></a> se pueden generar gráficos de interés para la diagnosis del modelo (ver Figura <a href="analisis-reg-multiple.html#fig:lm-plot">6.8</a>):</p>
+<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="analisis-reg-multiple.html#cb290-1" aria-hidden="true" tabindex="-1"></a>oldpar <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb290-2"><a href="analisis-reg-multiple.html#cb290-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(modelo)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:lm-plot"></span>
+<img src="06-modelos_lineales_files/figure-html/lm-plot-1.png" alt="Gráficos de diagnóstico del ajuste lineal." width="90%" />
+<p class="caption">
+Figura 6.8: Gráficos de diagnóstico del ajuste lineal.
+</p>
+</div>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="analisis-reg-multiple.html#cb291-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(oldpar)</span></code></pre></div>
+<p>Por defecto se muestran cuatro gráficos (ver <a href="https://rdrr.io/r/stats/plot.lm.html"><code>help(plot.lm)</code></a> para más detalles).
+El primero (residuos frente a predicciones) permite detectar falta de linealidad o heterocedasticidad (o el efecto de un factor omitido: mala especificación del modelo), lo ideal sería no observar ningún patrón.
+El segundo gráfico (gráfico QQ), permite diagnosticar la normalidad, los puntos del deberían estar cerca de la diagonal.
+El tercer gráfico de dispersión-nivel permite detectar heterocedasticidad (la pendiente debería ser nula) y ayudar a seleccionar una transformación para corregirla (también se podría emplear la función <a href="https://rdrr.io/pkg/MASS/man/boxcox.html"><code>boxcox()</code></a> del paquete <a href="https://CRAN.R-project.org/package=MASS"><code>MASS</code></a>).
+El último gráfico permite detectar valores atípicos o influyentes. Representa los residuos estandarizados en función del valor de influencia (a priori) o leverage (<span class="math inline">\(hii\)</span> que depende de los valores de las variables explicativas, debería ser <span class="math inline">\(&lt; 2(p+1)/2\)</span>) y señala las observaciones atípicas (residuos fuera de [-2,2]) e influyentes a posteriori (estadístico de Cook &gt;0.5 y &gt;1).</p>
+<p>Si las conclusiones obtenidas dependen en gran medida de una observación (normalmente atípica), esta se denomina influyente (a posteriori) y debe ser examinada con cuidado por el experimentador.
+Se puede volver a ajustar el modelo eliminando las observaciones influyentes<a href="#fn34" class="footnote-ref" id="fnref34"><sup>34</sup></a>,
+pero puede ser recomendable emplear regresión lineal robusta, por ejemplo mediante la función <a href="https://rdrr.io/pkg/MASS/man/rlm.html"><code>rlm()</code></a> del paquete <a href="https://CRAN.R-project.org/package=MASS"><code>MASS</code></a>).</p>
 <p>En regresión lineal múltiple, en lugar de generar gráficos de dispersión simple
-(p.e. gráficos de dispersión matriciales) para analizar los efectos de las variables explicativas y
-detectar posibles problemas (falta de linealidad…),
-se pueden generar gráficos parciales de residuos, por ejemplo con el comando:</p>
-<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="analisis-reg-multiple.html#cb300-1" aria-hidden="true" tabindex="-1"></a><span class="fu">termplot</span>(modelo, <span class="at">partial.resid =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<p>Aunque puede ser preferible emplear las funciones <code>crPlots</code> ó <code>avPlots</code> del paquete <code>car</code>:</p>
-<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="analisis-reg-multiple.html#cb301-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
-<span id="cb301-2"><a href="analisis-reg-multiple.html#cb301-2" aria-hidden="true" tabindex="-1"></a><span class="fu">crPlots</span>(modelo)</span></code></pre></div>
-<p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-21-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="analisis-reg-multiple.html#cb302-1" aria-hidden="true" tabindex="-1"></a><span class="co"># avPlots(modelo)</span></span></code></pre></div>
-<p>Estas funciones permitirían además detectar puntos atípicos o influyentes
-(mediante los argumentos <code>id.method</code> e <code>id.n</code>).</p>
-<p>Para obtener medidas de diagnosis o resúmenes numéricos de interés se pueden emplear
-las siguientes funciones (ver <code>help(influence.measures)</code> para un listado más completo):</p>
+(p.e. gráficos de dispersión matriciales) para analizar los efectos de las variables explicativas y detectar posibles problemas (falta de linealidad…), se pueden generar gráficos parciales de residuos, por ejemplo con el comando:</p>
+<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="analisis-reg-multiple.html#cb292-1" aria-hidden="true" tabindex="-1"></a><span class="fu">termplot</span>(modelo, <span class="at">partial.resid =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>Aunque puede ser preferible emplear las funciones <a href="https://rdrr.io/pkg/car/man/crPlots.html"><code>crPlots()</code></a> ó <a href="https://rdrr.io/pkg/car/man/avPlots.html"><code>avPlots()</code></a> del paquete <a href="https://CRAN.R-project.org/package=car"><code>car</code></a><a href="#fn35" class="footnote-ref" id="fnref35"><sup>35</sup></a>:</p>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="analisis-reg-multiple.html#cb293-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb293-2"><a href="analisis-reg-multiple.html#cb293-2" aria-hidden="true" tabindex="-1"></a><span class="co"># avPlots(modelo)</span></span>
+<span id="cb293-3"><a href="analisis-reg-multiple.html#cb293-3" aria-hidden="true" tabindex="-1"></a><span class="fu">crPlots</span>(modelo, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:crPlots"></span>
+<img src="06-modelos_lineales_files/figure-html/crPlots-1.png" alt="Gráficos parciales de residuos (componentes + residuos) del ajuste lineal." width="90%" />
+<p class="caption">
+Figura 6.9: Gráficos parciales de residuos (componentes + residuos) del ajuste lineal.
+</p>
+</div>
+<p>En la tabla <a href="analisis-reg-multiple.html#tab:diag-fun-lm">6.2</a> se incluyen algunas funciones adicionales que permiten obtener medidas de diagnosis o resúmenes numéricos de interés (ver <a href="https://rdrr.io/r/stats/influence.measures.html"><code>help(influence.measures)</code></a> para un listado más completo).</p>
 <table>
+<caption><span id="tab:diag-fun-lm">Tabla 6.2: </span> Listado de las principales funciones auxiliares para modelos ajustados.</caption>
 <colgroup>
-<col width="10%" />
-<col width="89%" />
+<col width="17%" />
+<col width="82%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -424,19 +404,19 @@ las siguientes funciones (ver <code>help(influence.measures)</code> para un list
 </thead>
 <tbody>
 <tr class="odd">
-<td>rstandard</td>
+<td><code>rstandard()</code></td>
 <td>residuos estandarizados (también eliminados)</td>
 </tr>
 <tr class="even">
-<td>rstudent</td>
+<td><code>rstudent()</code></td>
 <td>residuos estudentizados</td>
 </tr>
 <tr class="odd">
-<td>cooks.distance</td>
+<td><code>cooks.distance()</code></td>
 <td>valores del estadístico de Cook</td>
 </tr>
 <tr class="even">
-<td>influence</td>
+<td><code>influence()</code></td>
 <td>valores de influencia, cambios en coeficientes y varianza residual al eliminar cada dato (LOOCV).</td>
 </tr>
 </tbody>
@@ -462,11 +442,17 @@ cuadrados generalizados.</p></li>
 <li><p>Si no se logra corregir la falta de linealidad se puede pensar en
 utilizar modelos más flexibles (capítulo siguiente y anteriores).</p></li>
 </ul>
+<p>Otra alternativa es emplear las técnicas de aprendizaje estadístico descritas en la Sección <a href="const-eval.html#const-eval">1.3</a>.
+Desde este punto de vista podríamos ignorar las hipótesis estructurales y pensar que los procedimientos clásicos, como por ejemplo el ajuste lineal mediante el método por pasos, son simplemente algoritmos de predicción.
+En ese caso, después de ajustar el modelo en la muestra de entrenamiento, en lugar de emplear medidas como el coeficiente de determinación ajustado, emplearíamos la muestra de test para evaluar la capacidad predictiva en nuevas observaciones.</p>
+<p>Trataremos en primer lugar este último paso y posteriormente, en la Sección <a href="selec-ae-reg-lineal.html#selec-ae-reg-lineal">6.6</a>, se darán algunas nociones de como se podría haber empleado remuestreo para la selección del modelo.</p>
 </div>
 <div class="footnotes">
 <hr />
-<ol start="26">
-<li id="fn26"><p>Normalmente se sigue un proceso iterativo, eliminando la más influyente cada vez, por ejemplo con <code>which.max(cooks.distance(modelo))</code> y <code>update()</code>.<a href="analisis-reg-multiple.html#fnref26" class="footnote-back">↩︎</a></p></li>
+<ol start="34">
+<li id="fn34"><p>Normalmente se sigue un proceso iterativo, eliminando la más influyente cada vez, por ejemplo con <code>which.max(cooks.distance(modelo))</code> y <code>update()</code>.<a href="analisis-reg-multiple.html#fnref34" class="footnote-back">↩︎</a></p></li>
+<li id="fn35"><p>Estas funciones permitirían además detectar puntos atípicos o influyentes
+mediante el argumento <code>id</code>.<a href="analisis-reg-multiple.html#fnref35" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -475,7 +461,7 @@ utilizar modelos más flexibles (capítulo siguiente y anteriores).</p></li>
         </div>
       </div>
 <a href="seleccion-reg-lineal.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="evaluación-de-la-precisión.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="eval-reg-lineal.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -535,7 +521,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

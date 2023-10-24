@@ -1,5 +1,7 @@
 # Árboles de decisión {#trees}
 
+
+
 <!-- 
 ---
 title: "Árboles de decisión"
@@ -23,9 +25,6 @@ knitr::purl("02-arboles.Rmd", documentation = 2)
 knitr::spin("02-arboles.R",knit = FALSE)
 -->
 
-
-
-
 Los *árboles de decisión* son uno de los métodos más simples y fáciles de interpretar para realizar predicciones en problemas de clasificación y de regresión. 
 Se desarrollan a partir de los años 70 del siglo pasado como una alternativa versátil a los métodos clásicos de la estadística, fuertemente basados en las hipótesis de linealidad y de normalidad, y enseguida se convierten en una técnica básica del aprendizaje automático. 
 Aunque su calidad predictiva es mediocre (especialmente en el caso de regresión), constituyen la base de otros métodos altamente competitivos (bagging, bosques aleatorios, boosting) en los que se combinan múltiples árboles para mejorar la predicción, pagando el precio, eso sí, de hacer más difícil la interpretación del modelo resultante.
@@ -37,7 +36,7 @@ Una vez construido el árbol, la predicción se realizará en cada nodo terminal
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/arbol-1} 
+{\centering \includegraphics[width=0.75\linewidth]{02-arboles_files/figure-latex/arbol-1} 
 
 }
 
@@ -57,7 +56,7 @@ Como vemos, la simplicidad del modelo es su principal argumento, pero también s
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/predictor-1} 
+{\centering \includegraphics[width=0.75\linewidth]{02-arboles_files/figure-latex/predictor-1} 
 
 }
 
@@ -256,7 +255,7 @@ En la introducción de este tema se comentó que los árboles de decisión admit
 
 La metodología CART está implementada en el paquete [`rpart`](https://CRAN.R-project.org/package=rpart) 
 (Recursive PARTitioning)^[El paquete [`tree`](https://CRAN.R-project.org/package=tree) es una traducción del original en S.]. 
-La función principal es `rpart()` y habitualmente se emplea de la forma:
+La función principal es [`rpart()`](https://rdrr.io/pkg/rpart/man/rpart.html) y habitualmente se emplea de la forma:
 
 `rpart(formula, data, method, parms, control, ...)`  
 
@@ -279,8 +278,11 @@ La función principal es `rpart()` y habitualmente se emplea de la forma:
 * `control`: lista de opciones que controlan el algoritmo de partición, por defecto se seleccionan mediante la función `rpart.control`, 
   aunque también se pueden establecer en la llamada a la función principal, y los principales parámetros son:
   
-    `rpart.control(minsplit = 20, minbucket = round(minsplit/3), cp = 0.01, xval = 10, maxdepth = 30, ...)`
-  
+    ```
+    rpart.control(minsplit = 20, minbucket = round(minsplit/3), cp = 0.01, 
+                  xval = 10, maxdepth = 30, ...)
+    ```
+
     - `cp` es el parámetro de complejidad $\tilde \alpha$ para la poda del árbol, de forma que un valor de 1 se corresponde con un árbol sin divisiones y un valor de 0 con un árbol de profundidad máxima. 
       Adicionalmente, para reducir el tiempo de computación, el algoritmo empleado no realiza una partición si la proporción de reducción del error es inferior a este valor (valores más grandes simplifican el modelo y reducen el tiempo de computación).
       
@@ -293,13 +295,16 @@ La función principal es `rpart()` y habitualmente se emplea de la forma:
 
 Para más detalles consultar la documentación de esta función o la vignette [*Introduction to Rpart*](https://cran.r-project.org/web/packages/rpart/vignettes/longintro.pdf).
 
+
 ### Ejemplo: regresión
 
 Emplearemos el conjunto de datos *winequality.RData* [ver @cortez2009modeling], que contiene información fisico-química 
 (`fixed.acidity`, `volatile.acidity`, `citric.acid`, `residual.sugar`, `chlorides`, `free.sulfur.dioxide`, 
 `total.sulfur.dioxide`, `density`, `pH`, `sulphates` y `alcohol`) y sensorial (`quality`) 
 de una muestra de 1250 vinos portugueses de la variedad *Vinho Verde*.
-Como respuesta consideraremos la variable `quality`  , mediana de al menos 3 evaluaciones de la calidad del vino realizadas por expertos, que los evaluaron entre 0 (muy malo) y 10 (muy excelente) como puede observarse en el gráfico de barras de la Figura \@ref(fig:barplot).
+Como respuesta consideraremos la variable `quality`, mediana de al menos 3 evaluaciones de la calidad del vino realizadas por expertos, que los evaluaron entre 0 (muy malo) y 10 (muy excelente) como puede observarse en el gráfico de barras de la Figura \@ref(fig:barplot).
+
+(ref:barplot) Distribución de las evaluaciones de la calidad del vino (`winequality$quality`).
 
 
 ```r
@@ -308,32 +313,32 @@ str(winequality)
 ```
 
 ```
-## 'data.frame':	1250 obs. of  12 variables:
-##  $ fixed.acidity       : num  6.8 7.1 6.9 7.5 8.6 7.7 5.4 6.8 6.1 5.5 ...
-##  $ volatile.acidity    : num  0.37 0.24 0.32 0.23 0.36 0.28 0.59 0.16 0.28 0.28 ...
-##  $ citric.acid         : num  0.47 0.34 0.13 0.49 0.26 0.63 0.07 0.36 0.27 0.21 ...
-##  $ residual.sugar      : num  11.2 1.2 7.8 7.7 11.1 11.1 7 1.3 4.7 1.6 ...
-##  $ chlorides           : num  0.071 0.045 0.042 0.049 0.03 0.039 0.045 0.034 0.03 0.032 ...
-##  $ free.sulfur.dioxide : num  44 6 11 61 43.5 58 36 32 56 23 ...
-##  $ total.sulfur.dioxide: num  136 132 117 209 171 179 147 98 140 85 ...
-##  $ density             : num  0.997 0.991 0.996 0.994 0.995 ...
-##  $ pH                  : num  2.98 3.16 3.23 3.14 3.03 3.08 3.34 3.02 3.16 3.42 ...
-##  $ sulphates           : num  0.88 0.46 0.37 0.3 0.49 0.44 0.57 0.58 0.42 0.42 ...
-##  $ alcohol             : num  9.2 11.2 9.2 11.1 12 8.8 9.7 11.3 12.5 12.5 ...
-##  $ quality             : int  5 4 5 7 5 4 6 6 8 5 ...
+  ## 'data.frame':	1250 obs. of  12 variables:
+  ##  $ fixed.acidity       : num  6.8 7.1 6.9 7.5 8.6 7.7 5.4 6.8 6.1 5.5 ...
+  ##  $ volatile.acidity    : num  0.37 0.24 0.32 0.23 0.36 0.28 0.59 0.16 0.28 0.2..
+  ##  $ citric.acid         : num  0.47 0.34 0.13 0.49 0.26 0.63 0.07 0.36 0.27 0.2..
+  ##  $ residual.sugar      : num  11.2 1.2 7.8 7.7 11.1 11.1 7 1.3 4.7 1.6 ...
+  ##  $ chlorides           : num  0.071 0.045 0.042 0.049 0.03 0.039 0.045 0.034 0..
+  ##  $ free.sulfur.dioxide : num  44 6 11 61 43.5 58 36 32 56 23 ...
+  ##  $ total.sulfur.dioxide: num  136 132 117 209 171 179 147 98 140 85 ...
+  ##  $ density             : num  0.997 0.991 0.996 0.994 0.995 ...
+  ##  $ pH                  : num  2.98 3.16 3.23 3.14 3.03 3.08 3.34 3.02 3.16 3.4..
+  ##  $ sulphates           : num  0.88 0.46 0.37 0.3 0.49 0.44 0.57 0.58 0.42 0.42..
+  ##  $ alcohol             : num  9.2 11.2 9.2 11.1 12 8.8 9.7 11.3 12.5 12.5 ...
+  ##  $ quality             : int  5 4 5 7 5 4 6 6 8 5 ...
 ```
 
 ```r
-barplot(table(winequality$quality))
+barplot(table(winequality$quality), xlab = "Calidad", ylab = "Frecuencia")
 ```
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/barplot-1} 
+{\centering \includegraphics[width=0.75\linewidth]{02-arboles_files/figure-latex/barplot-1} 
 
 }
 
-\caption{Distribución de frecuencias de la calidad del vino (`winequality$quality`).}(\#fig:barplot)
+\caption{(ref:barplot)}(\#fig:barplot)
 \end{figure}
 
 En primer lugar se selecciona el 80\% de los datos como muestra de entrenamiento y el 20\% restante como muestra de test:
@@ -364,33 +369,35 @@ tree
 ```
 
 ```
-## n= 1000 
-## 
-## node), split, n, deviance, yval
-##       * denotes terminal node
-## 
-##  1) root 1000 768.95600 5.862000  
-##    2) alcohol< 10.75 622 340.81190 5.586817  
-##      4) volatile.acidity>=0.2575 329 154.75990 5.370821  
-##        8) total.sulfur.dioxide< 98.5 24  12.50000 4.750000 *
-##        9) total.sulfur.dioxide>=98.5 305 132.28200 5.419672  
-##         18) pH< 3.315 269 101.44980 5.353160 *
-##         19) pH>=3.315 36  20.75000 5.916667 *
-##      5) volatile.acidity< 0.2575 293 153.46760 5.829352  
-##       10) sulphates< 0.475 144  80.32639 5.659722 *
-##       11) sulphates>=0.475 149  64.99329 5.993289 *
-##    3) alcohol>=10.75 378 303.53700 6.314815  
-##      6) alcohol< 11.775 200 173.87500 6.075000  
-##       12) free.sulfur.dioxide< 11.5 15  10.93333 4.933333 *
-##       13) free.sulfur.dioxide>=11.5 185 141.80540 6.167568  
-##         26) volatile.acidity>=0.395 7  12.85714 5.142857 *
-##         27) volatile.acidity< 0.395 178 121.30900 6.207865  
-##           54) citric.acid>=0.385 31  21.93548 5.741935 *
-##           55) citric.acid< 0.385 147  91.22449 6.306122 *
-##      7) alcohol>=11.775 178 105.23600 6.584270 *
+  ## n= 1000 
+  ## 
+  ## node), split, n, deviance, yval
+  ##       * denotes terminal node
+  ## 
+  ##  1) root 1000 768.95600 5.862000  
+  ##    2) alcohol< 10.75 622 340.81190 5.586817  
+  ##      4) volatile.acidity>=0.2575 329 154.75990 5.370821  
+  ##        8) total.sulfur.dioxide< 98.5 24  12.50000 4.750000 *
+  ##        9) total.sulfur.dioxide>=98.5 305 132.28200 5.419672  
+  ##         18) pH< 3.315 269 101.44980 5.353160 *
+  ##         19) pH>=3.315 36  20.75000 5.916667 *
+  ##      5) volatile.acidity< 0.2575 293 153.46760 5.829352  
+  ##       10) sulphates< 0.475 144  80.32639 5.659722 *
+  ##       11) sulphates>=0.475 149  64.99329 5.993289 *
+  ##    3) alcohol>=10.75 378 303.53700 6.314815  
+  ##      6) alcohol< 11.775 200 173.87500 6.075000  
+  ##       12) free.sulfur.dioxide< 11.5 15  10.93333 4.933333 *
+  ##       13) free.sulfur.dioxide>=11.5 185 141.80540 6.167568  
+  ##         26) volatile.acidity>=0.395 7  12.85714 5.142857 *
+  ##         27) volatile.acidity< 0.395 178 121.30900 6.207865  
+  ##           54) citric.acid>=0.385 31  21.93548 5.741935 *
+  ##           55) citric.acid< 0.385 147  91.22449 6.306122 *
+  ##      7) alcohol>=11.775 178 105.23600 6.584270 *
 ```
 
-Para representarlo se puede emplear las herramientas del paquete [`rpart`](https://CRAN.R-project.org/package=rpart)  (ver Figura \@ref(fig:arbolrpart)).
+Para representarlo se puede emplear las herramientas del paquete [`rpart`](https://CRAN.R-project.org/package=rpart)  (ver Figura \@ref(fig:arbolrpart)):
+
+(ref:arbolrpart) Árbol de regresión para predecir `winequality$quality` (obtenido con las opciones por defecto de [`rpart()`](https://rdrr.io/pkg/rpart/man/rpart.html)).
 
 
 ```r
@@ -400,14 +407,16 @@ text(tree)
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/arbolrpart-1} 
+{\centering \includegraphics[width=0.75\linewidth]{02-arboles_files/figure-latex/arbolrpart-1} 
 
 }
 
-\caption{Árbol de regresión para predecir `winequality$quality` (obtenido con las opciones por defecto de `rpart()`).}(\#fig:arbolrpart)
+\caption{(ref:arbolrpart)}(\#fig:arbolrpart)
 \end{figure}
 
-Pero puede ser preferible emplear el paquete [`rpart.plot`](https://CRAN.R-project.org/package=rpart.plot)  (ver Figura \@ref(fig:arbolrpartplot)).
+Pero puede ser preferible emplear el paquete [`rpart.plot`](https://CRAN.R-project.org/package=rpart.plot)  (ver Figura \@ref(fig:arbolrpartplot)):
+
+(ref:arbolrpartplot) Representación del árbol de regresión generada con [`rpart.plot()`](https://rdrr.io/pkg/rpart.plot/man/rpart.plot.html).
 
 
 ```r
@@ -417,11 +426,11 @@ rpart.plot(tree)
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/arbolrpartplot-1} 
+{\centering \includegraphics[width=0.75\linewidth]{02-arboles_files/figure-latex/arbolrpartplot-1} 
 
 }
 
-\caption{Representación del árbol de regresión obtenida con `rpart.plot()`.}(\#fig:arbolrpartplot)
+\caption{(ref:arbolrpartplot)}(\#fig:arbolrpartplot)
 \end{figure}
 
 Nos interesa como se clasificaría a una nueva observación en los nodos terminales (en los nodos intermedios solo nos interesarían las condiciones, y el orden de las variables consideradas, hasta llegar a las hojas) y las correspondientes predicciones (la media de la respuesta en el correspondiente nodo terminal).
@@ -433,56 +442,56 @@ rpart.rules(tree, style = "tall")
 ```
 
 ```
-## quality is 4.8 when
-##     alcohol < 11
-##     volatile.acidity >= 0.26
-##     total.sulfur.dioxide < 99
-## 
-## quality is 4.9 when
-##     alcohol is 11 to 12
-##     free.sulfur.dioxide < 12
-## 
-## quality is 5.1 when
-##     alcohol is 11 to 12
-##     volatile.acidity >= 0.40
-##     free.sulfur.dioxide >= 12
-## 
-## quality is 5.4 when
-##     alcohol < 11
-##     volatile.acidity >= 0.26
-##     total.sulfur.dioxide >= 99
-##     pH < 3.3
-## 
-## quality is 5.7 when
-##     alcohol < 11
-##     volatile.acidity < 0.26
-##     sulphates < 0.48
-## 
-## quality is 5.7 when
-##     alcohol is 11 to 12
-##     volatile.acidity < 0.40
-##     free.sulfur.dioxide >= 12
-##     citric.acid >= 0.39
-## 
-## quality is 5.9 when
-##     alcohol < 11
-##     volatile.acidity >= 0.26
-##     total.sulfur.dioxide >= 99
-##     pH >= 3.3
-## 
-## quality is 6.0 when
-##     alcohol < 11
-##     volatile.acidity < 0.26
-##     sulphates >= 0.48
-## 
-## quality is 6.3 when
-##     alcohol is 11 to 12
-##     volatile.acidity < 0.40
-##     free.sulfur.dioxide >= 12
-##     citric.acid < 0.39
-## 
-## quality is 6.6 when
-##     alcohol >= 12
+  ## quality is 4.8 when
+  ##     alcohol < 11
+  ##     volatile.acidity >= 0.26
+  ##     total.sulfur.dioxide < 99
+  ## 
+  ## quality is 4.9 when
+  ##     alcohol is 11 to 12
+  ##     free.sulfur.dioxide < 12
+  ## 
+  ## quality is 5.1 when
+  ##     alcohol is 11 to 12
+  ##     volatile.acidity >= 0.40
+  ##     free.sulfur.dioxide >= 12
+  ## 
+  ## quality is 5.4 when
+  ##     alcohol < 11
+  ##     volatile.acidity >= 0.26
+  ##     total.sulfur.dioxide >= 99
+  ##     pH < 3.3
+  ## 
+  ## quality is 5.7 when
+  ##     alcohol < 11
+  ##     volatile.acidity < 0.26
+  ##     sulphates < 0.48
+  ## 
+  ## quality is 5.7 when
+  ##     alcohol is 11 to 12
+  ##     volatile.acidity < 0.40
+  ##     free.sulfur.dioxide >= 12
+  ##     citric.acid >= 0.39
+  ## 
+  ## quality is 5.9 when
+  ##     alcohol < 11
+  ##     volatile.acidity >= 0.26
+  ##     total.sulfur.dioxide >= 99
+  ##     pH >= 3.3
+  ## 
+  ## quality is 6.0 when
+  ##     alcohol < 11
+  ##     volatile.acidity < 0.26
+  ##     sulphates >= 0.48
+  ## 
+  ## quality is 6.3 when
+  ##     alcohol is 11 to 12
+  ##     volatile.acidity < 0.40
+  ##     free.sulfur.dioxide >= 12
+  ##     citric.acid < 0.39
+  ## 
+  ## quality is 6.6 when
+  ##     alcohol >= 12
 ```
 
 Por defecto se poda el árbol considerando `cp = 0.01`, que puede ser adecuado en muchos casos.
@@ -496,9 +505,9 @@ En primer lugar habría que establecer `cp = 0` para construir el árbol complet
 tree <- rpart(quality ~ ., data = train, cp = 0)
 ```
 
-Posteriormente podemos emplear las funciones `printcp()` (o `plotcp()`) para obtener (representar) 
+Posteriormente podemos emplear las funciones [`printcp()`](https://rdrr.io/pkg/rpart/man/printcp.html) (o [`plotcp()`](https://rdrr.io/pkg/rpart/man/plotcp.html)) para obtener (representar) 
 los valores de CP para los árboles (óptimos) de menor tamaño junto con su error de validación cruzada 
-`xerror` (reescalado de forma que el máximo de `rel error` es 1)^[Realmente en la tabla de texto se muestra el valor mínimo de CP, ya que se obtendría la misma solución para un rango de valores de CP (desde ese valor hasta el anterior, sin incluirlo), mientras que en el gráfico generado por `plotcp()` se representa la media geométrica de los extremos de ese intervalo (ver Figura \@ref(fig:cp)).]:
+`xerror` (reescalado de forma que el máximo de `rel error` es 1)^[Realmente en la tabla de texto se muestra el valor mínimo de CP, ya que se obtendría la misma solución para un rango de valores de CP (desde ese valor hasta el anterior, sin incluirlo), mientras que en el gráfico generado por [`plotcp()`](https://rdrr.io/pkg/rpart/man/plotcp.html) se representa la media geométrica de los extremos de ese intervalo (ver Figura \@ref(fig:cp)).]:
 
 
 ```r
@@ -506,81 +515,34 @@ printcp(tree)
 ```
 
 ```
-## 
-## Regression tree:
-## rpart(formula = quality ~ ., data = train, cp = 0)
-## 
-## Variables actually used in tree construction:
-##  [1] alcohol              chlorides            citric.acid         
-##  [4] density              fixed.acidity        free.sulfur.dioxide 
-##  [7] pH                   residual.sugar       sulphates           
-## [10] total.sulfur.dioxide volatile.acidity    
-## 
-## Root node error: 768.96/1000 = 0.76896
-## 
-## n= 1000 
-## 
-##            CP nsplit rel error  xerror     xstd
-## 1  0.16204707      0   1.00000 1.00203 0.048591
-## 2  0.04237491      1   0.83795 0.85779 0.043646
-## 3  0.03176525      2   0.79558 0.82810 0.043486
-## 4  0.02748696      3   0.76381 0.81350 0.042814
-## 5  0.01304370      4   0.73633 0.77038 0.039654
-## 6  0.01059605      6   0.71024 0.78168 0.039353
-## 7  0.01026605      7   0.69964 0.78177 0.039141
-## 8  0.00840800      9   0.67911 0.78172 0.039123
-## 9  0.00813924     10   0.67070 0.80117 0.039915
-## 10 0.00780567     11   0.66256 0.80020 0.040481
-## 11 0.00684175     13   0.64695 0.79767 0.040219
-## 12 0.00673843     15   0.63327 0.81381 0.040851
-## 13 0.00643577     18   0.61305 0.82059 0.041240
-## 14 0.00641137     19   0.60662 0.82323 0.041271
-## 15 0.00549694     21   0.59379 0.84187 0.042714
-## 16 0.00489406     23   0.58280 0.84748 0.042744
-## 17 0.00483045     24   0.57791 0.85910 0.043897
-## 18 0.00473741     25   0.57308 0.86553 0.045463
-## 19 0.00468372     26   0.56834 0.86455 0.045413
-## 20 0.00450496     28   0.55897 0.87049 0.045777
-## 21 0.00448365     32   0.54095 0.87263 0.045824
-## 22 0.00437484     33   0.53647 0.87260 0.045846
-## 23 0.00435280     35   0.52772 0.87772 0.046022
-## 24 0.00428623     36   0.52337 0.87999 0.046124
-## 25 0.00412515     37   0.51908 0.88151 0.046505
-## 26 0.00390866     39   0.51083 0.89242 0.047068
-## 27 0.00375301     42   0.49910 0.90128 0.047319
-## 28 0.00370055     43   0.49535 0.90965 0.047991
-## 29 0.00351987     45   0.48795 0.91404 0.048079
-## 30 0.00308860     47   0.48091 0.92132 0.048336
-## 31 0.00305781     49   0.47473 0.93168 0.049699
-## 32 0.00299018     51   0.46862 0.93258 0.049701
-## 33 0.00295148     52   0.46563 0.93062 0.049644
-## 34 0.00286138     54   0.45972 0.93786 0.050366
-## 35 0.00283972     55   0.45686 0.93474 0.050404
-## 36 0.00274809     56   0.45402 0.93307 0.050390
-## 37 0.00273457     58   0.44853 0.93642 0.050406
-## 38 0.00260607     59   0.44579 0.93726 0.050543
-## 39 0.00252978     60   0.44318 0.93692 0.050323
-## 40 0.00252428     62   0.43813 0.93778 0.050381
-## 41 0.00250804     64   0.43308 0.93778 0.050381
-## 42 0.00232226     65   0.43057 0.93642 0.050081
-## 43 0.00227625     66   0.42825 0.93915 0.050166
-## 44 0.00225146     67   0.42597 0.94101 0.050195
-## 45 0.00224774     68   0.42372 0.94101 0.050195
-## 46 0.00216406     69   0.42147 0.94067 0.050124
-## 47 0.00204851     70   0.41931 0.94263 0.050366
-## 48 0.00194517     72   0.41521 0.94203 0.050360
-## 49 0.00188139     73   0.41326 0.93521 0.050349
-## 50 0.00154129     75   0.40950 0.93500 0.050277
-## 51 0.00143642     76   0.40796 0.93396 0.050329
-## 52 0.00118294     77   0.40652 0.93289 0.050325
-## 53 0.00117607     78   0.40534 0.93738 0.050406
-## 54 0.00108561     79   0.40417 0.93738 0.050406
-## 55 0.00097821     80   0.40308 0.93670 0.050406
-## 56 0.00093107     81   0.40210 0.93752 0.050589
-## 57 0.00090075     82   0.40117 0.93752 0.050589
-## 58 0.00082968     83   0.40027 0.93634 0.050561
-## 59 0.00048303     85   0.39861 0.93670 0.050557
-## 60 0.00000000     86   0.39813 0.93745 0.050558
+  ## 
+  ## Regression tree:
+  ## rpart(formula = quality ~ ., data = train, cp = 0)
+  ## 
+  ## Variables actually used in tree construction:
+  ##  [1] alcohol              chlorides            citric.acid         
+  ##  [4] density              fixed.acidity        free.sulfur.dioxide 
+  ##  [7] pH                   residual.sugar       sulphates           
+  ## [10] total.sulfur.dioxide volatile.acidity    
+  ## 
+  ## Root node error: 768.96/1000 = 0.76896
+  ## 
+  ## n= 1000 
+  ## 
+  ##            CP nsplit rel error  xerror     xstd
+  ## 1  0.16204707      0   1.00000 1.00203 0.048591
+  ## 2  0.04237491      1   0.83795 0.85779 0.043646
+  ## 3  0.03176525      2   0.79558 0.82810 0.043486
+  ## 4  0.02748696      3   0.76381 0.81350 0.042814
+  ## 5  0.01304370      4   0.73633 0.77038 0.039654
+  ## 6  0.01059605      6   0.71024 0.78168 0.039353
+  ## 7  0.01026605      7   0.69964 0.78177 0.039141
+  ## 8  0.00840800      9   0.67911 0.78172 0.039123
+  ## 9  0.00813924     10   0.67070 0.80117 0.039915
+  ## 10 0.00780567     11   0.66256 0.80020 0.040481
+  ## 11 0.00684175     13   0.64695 0.79767 0.040219
+  ## 12 0.00673843     15   0.63327 0.81381 0.040851
+  ##  [ reached getOption("max.print") -- omitted 48 rows ]
 ```
 
 ```r
@@ -589,7 +551,7 @@ plotcp(tree)
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/cp-1} 
+{\centering \includegraphics[width=0.75\linewidth]{02-arboles_files/figure-latex/cp-1} 
 
 }
 
@@ -605,17 +567,17 @@ head(tree$cptable, 10)
 ```
 
 ```
-##             CP nsplit rel error    xerror       xstd
-## 1  0.162047069      0 1.0000000 1.0020304 0.04859127
-## 2  0.042374911      1 0.8379529 0.8577876 0.04364585
-## 3  0.031765253      2 0.7955780 0.8281010 0.04348571
-## 4  0.027486958      3 0.7638128 0.8134957 0.04281430
-## 5  0.013043701      4 0.7363258 0.7703804 0.03965433
-## 6  0.010596054      6 0.7102384 0.7816774 0.03935308
-## 7  0.010266055      7 0.6996424 0.7817716 0.03914071
-## 8  0.008408003      9 0.6791102 0.7817177 0.03912344
-## 9  0.008139238     10 0.6707022 0.8011719 0.03991498
-## 10 0.007805674     11 0.6625630 0.8001996 0.04048088
+  ##             CP nsplit rel error    xerror       xstd
+  ## 1  0.162047069      0 1.0000000 1.0020304 0.04859127
+  ## 2  0.042374911      1 0.8379529 0.8577876 0.04364585
+  ## 3  0.031765253      2 0.7955780 0.8281010 0.04348571
+  ## 4  0.027486958      3 0.7638128 0.8134957 0.04281430
+  ## 5  0.013043701      4 0.7363258 0.7703804 0.03965433
+  ## 6  0.010596054      6 0.7102384 0.7816774 0.03935308
+  ## 7  0.010266055      7 0.6996424 0.7817716 0.03914071
+  ## 8  0.008408003      9 0.6791102 0.7817177 0.03912344
+  ## 9  0.008139238     10 0.6707022 0.8011719 0.03991498
+  ## 10 0.007805674     11 0.6625630 0.8001996 0.04048088
 ```
 
 A partir de la que podríamos seleccionar el valor óptimo de forma automática, 
@@ -630,8 +592,8 @@ tree$cptable[imin.xerror, ]
 ```
 
 ```
-##         CP     nsplit  rel error     xerror       xstd 
-## 0.01304370 4.00000000 0.73632581 0.77038039 0.03965433
+  ##         CP     nsplit  rel error     xerror       xstd 
+  ## 0.01304370 4.00000000 0.73632581 0.77038039 0.03965433
 ```
 
 ```r
@@ -653,7 +615,7 @@ rpart.plot(tree)
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/arbolpoda-1} 
+{\centering \includegraphics[width=0.75\linewidth]{02-arboles_files/figure-latex/arbolpoda-1} 
 
 }
 
@@ -661,7 +623,7 @@ rpart.plot(tree)
 \end{figure}
 
 
-Podríamos estudiar el modelo final, por ejemplo mediante el método `summary()`, que entre otras cosas muestra una medida (en porcentaje) de la importancia de las variables explicativas para la predicción de la respuesta (teniendo en cuenta todas las particiones, principales y secundarias, en las que se emplea cada variable explicativa). 
+Podríamos estudiar el modelo final, por ejemplo mediante el método [`summary.rpart()`](https://rdrr.io/pkg/rpart/man/summary.rpart.html), que entre otras cosas muestra una medida (en porcentaje) de la importancia de las variables explicativas para la predicción de la respuesta (teniendo en cuenta todas las particiones, principales y secundarias, en las que se emplea cada variable explicativa). 
 Alternativamente podríamos emplear el siguiente código:
 
 
@@ -673,36 +635,36 @@ importance[importance >= 1]
 ```
 
 ```
-##              alcohol              density            chlorides 
-##                 36.1                 21.7                 11.3 
-##     volatile.acidity total.sulfur.dioxide  free.sulfur.dioxide 
-##                  8.7                  8.5                  5.0 
-##       residual.sugar            sulphates          citric.acid 
-##                  4.0                  1.9                  1.1 
-##                   pH 
-##                  1.1
+  ##              alcohol              density            chlorides 
+  ##                 36.1                 21.7                 11.3 
+  ##     volatile.acidity total.sulfur.dioxide  free.sulfur.dioxide 
+  ##                  8.7                  8.5                  5.0 
+  ##       residual.sugar            sulphates          citric.acid 
+  ##                  4.0                  1.9                  1.1 
+  ##                   pH 
+  ##                  1.1
 ```
 
-El último paso sería evaluarlo en la muestra de test siguiendo los pasos descritos en la Sección \@ref(eval-reg). A continuación se muestra el código necesario (la Figura \@ref(fig:obsXpred) muestra dicho rendimiento a través de remuestreo).
+El último paso sería evaluarlo en la muestra de test siguiendo los pasos descritos en la Sección \@ref(eval-reg) (ver Figura \@ref(fig:obsXpred)):
+
+(ref:obsXpred) Gráfico de observaciones frente a predicciones (`test$quality`; se añade una perturbación para mostrar la distribución de los valores)
 
 
 ```r
 obs <- test$quality
 pred <- predict(tree, newdata = test)
-
-# plot(pred, obs, main = "Observado frente a predicciones (quality)",
-#      xlab = "Predicción", ylab = "Observado")
+# plot(pred, obs, xlab = "Predicción", ylab = "Observado")
 plot(jitter(pred), jitter(obs), xlab = "Predicción", ylab = "Observado")
 abline(a = 0, b = 1)
 ```
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/obsXpred-1} 
+{\centering \includegraphics[width=0.75\linewidth]{02-arboles_files/figure-latex/obsXpred-1} 
 
 }
 
-\caption{Gráfico de observaciones frente a predicciones (`test$quality`; se añade una perturbación para mostrar la distribución de los valores).}(\#fig:obsXpred)
+\caption{(ref:obsXpred)}(\#fig:obsXpred)
 \end{figure}
 
 ```r
@@ -711,8 +673,8 @@ caret::postResample(pred, obs)
 ```
 
 ```
-##      RMSE  Rsquared       MAE 
-## 0.8145614 0.1969485 0.6574264
+  ##      RMSE  Rsquared       MAE 
+  ## 0.8145614 0.1969485 0.6574264
 ```
 
 ```r
@@ -739,17 +701,15 @@ accuracy(pred, test$quality)
 ```
 
 ```
-##           me         rmse          mae          mpe         mape    r.squared 
-## -0.001269398  0.814561435  0.657426365 -1.952342173 11.576716037  0.192007721
+  ##           me         rmse          mae          mpe         mape    r.squared 
+  ## -0.001269398  0.814561435  0.657426365 -1.952342173 11.576716037  0.192007721
 ```
 
 Como se puede observar el ajuste del modelo es bastante malo, como ya se comentó esto es habitual en árboles de regresión (especialmente si son tan pequeños) y normalmente solo se utilizan en un análisis exploratorio inicial (o como base para modelos más avanzados como los mostrados en el siguiente capítulo).
 En problemas de clasificación es más habitual que se puedan llegar a obtener buenos ajustes con árboles de decisión.
 
 
-\BeginKnitrBlock{exercise}
-<span class="exercise" id="exr:efecto-semilla"><strong>(\#exr:efecto-semilla) </strong></span>
-\EndKnitrBlock{exercise}
+::: {.exercise #efecto-semilla}
 
 Como se comentó en la introducción del Capítulo \@ref(intro-AE) al emplear el procedimiento habitual en AE de particionar los datos no se garantiza la reproducibilidad/repetibilidad de los resultados ya que dependen de la semilla. 
 El modelo ajustado puede cambiar al variar la semilla (sobre todo si el conjunto de entrenamiento es pequeño; además, en algunos modelos el método de ajuste depende también de la semilla) pero normalmente no hay grandes cambios en las predicciones.
@@ -770,29 +730,27 @@ ntest <- 10
 test <- winequality[1:ntest, ]
 df <- winequality[-(1:ntest), ]
 nobs <- nrow(df)
-
 # Para las distintas semillas
 set.seed(semilla)
 itrain <- sample(nobs, 0.8 * nobs)
 train <- df[itrain, ]
-
 # tree <- ...
 ```
 
 Como comentario final, en este caso el conjunto de datos no es muy grande y tampoco se obtuvo un buen ajuste con un árbol de regresión, por lo que sería de esperar que se observaran más diferencias.
 
+:::
 
 
-\BeginKnitrBlock{exercise}
-<span class="exercise" id="exr:train-validate-test-tree"><strong>(\#exr:train-validate-test-tree) </strong></span>
-\EndKnitrBlock{exercise}
+::: {.exercise #train-validate-test-tree}
 
 Como ya se mostró, el paquete `rpart` implementa la selección del parámetro de complejidad mediante validación cruzada. 
 Como alternativa, siguiendo la idea del Ejercicio \@ref(exr:train-validate-test), y considerando de nuevo el ejemplo anterior, particionar la muestra en datos de entrenamiento (70\%), de validación (15\%) y de test (15\%), para ajustar los árboles de decisión, seleccionar el parámetro de complejidad (el hiperparámetro) y evaluar las predicciones del modelo final, respectivamente.
 
-\BeginKnitrBlock{exercise}
-<span class="exercise" id="exr:train-boot-tree"><strong>(\#exr:train-boot-tree) </strong></span>
-\EndKnitrBlock{exercise}
+:::
+
+
+::: {.exercise #train-boot-tree}
 
 Una alternativa a particionar en entrenamiento y validación sería emplear bootstrap.
 La idea es emplear una remuestra bootstrap del conjunto de datos de entrenamiento para ajustar el modelo y utilizar las observaciones no seleccionadas (se suelen denominar datos *out of bag*) como conjunto de validación.
@@ -805,7 +763,6 @@ nobs <- nrow(winequality)
 itrain <- sample(nobs, 0.8 * nobs)
 train <- winequality[itrain, ]
 test <- winequality[-itrain, ]
-
 # Indice muestra de entrenamiento bootstrap
 set.seed(1)
 ntrain <- nrow(train)
@@ -823,7 +780,7 @@ ntrain - length(unique(itrain.boot))
 ```
 
 ```
-## [1] 370
+  ## [1] 370
 ```
 
 ```r
@@ -832,10 +789,11 @@ ntrain - length(unique(itrain.boot))
 oob <- train[-itrain.boot, ]
 ```
 
-
 El resto sería igual que el caso anterior cambiando `train` por `train.boot` y `validate` por `oob`.
 
 Como comentario final, lo recomendable sería repetir el proceso un número grande de veces y promediar los errores (esto está relacionado con el método de *bagging* descrito en el siguiente capítulo), especialmente cuando el tamaño muestral es pequeño, pero por simplicidad consideraremos únicamente una muestra boostrap.
+
+:::
 
 
 ### Ejemplo: modelo de clasificación {#class-rpart}
@@ -846,24 +804,25 @@ Para ilustrar los árboles de clasificación CART, podemos emplear los datos ant
 ```r
 # load("data/winetaste.RData")
 winetaste <- winequality[, colnames(winequality)!="quality"]
-winetaste$taste <- factor(winequality$quality < 6, labels = c('good', 'bad')) # levels = c('FALSE', 'TRUE')
+winetaste$taste <- factor(winequality$quality < 6, # levels = c('FALSE', 'TRUE')
+                          labels = c('good', 'bad')) 
 str(winetaste)
 ```
 
 ```
-## 'data.frame':	1250 obs. of  12 variables:
-##  $ fixed.acidity       : num  6.8 7.1 6.9 7.5 8.6 7.7 5.4 6.8 6.1 5.5 ...
-##  $ volatile.acidity    : num  0.37 0.24 0.32 0.23 0.36 0.28 0.59 0.16 0.28 0.28 ...
-##  $ citric.acid         : num  0.47 0.34 0.13 0.49 0.26 0.63 0.07 0.36 0.27 0.21 ...
-##  $ residual.sugar      : num  11.2 1.2 7.8 7.7 11.1 11.1 7 1.3 4.7 1.6 ...
-##  $ chlorides           : num  0.071 0.045 0.042 0.049 0.03 0.039 0.045 0.034 0.03 0.032 ...
-##  $ free.sulfur.dioxide : num  44 6 11 61 43.5 58 36 32 56 23 ...
-##  $ total.sulfur.dioxide: num  136 132 117 209 171 179 147 98 140 85 ...
-##  $ density             : num  0.997 0.991 0.996 0.994 0.995 ...
-##  $ pH                  : num  2.98 3.16 3.23 3.14 3.03 3.08 3.34 3.02 3.16 3.42 ...
-##  $ sulphates           : num  0.88 0.46 0.37 0.3 0.49 0.44 0.57 0.58 0.42 0.42 ...
-##  $ alcohol             : num  9.2 11.2 9.2 11.1 12 8.8 9.7 11.3 12.5 12.5 ...
-##  $ taste               : Factor w/ 2 levels "good","bad": 2 2 2 1 2 2 1 1 1 2 ...
+  ## 'data.frame':	1250 obs. of  12 variables:
+  ##  $ fixed.acidity       : num  6.8 7.1 6.9 7.5 8.6 7.7 5.4 6.8 6.1 5.5 ...
+  ##  $ volatile.acidity    : num  0.37 0.24 0.32 0.23 0.36 0.28 0.59 0.16 0.28 0.2..
+  ##  $ citric.acid         : num  0.47 0.34 0.13 0.49 0.26 0.63 0.07 0.36 0.27 0.2..
+  ##  $ residual.sugar      : num  11.2 1.2 7.8 7.7 11.1 11.1 7 1.3 4.7 1.6 ...
+  ##  $ chlorides           : num  0.071 0.045 0.042 0.049 0.03 0.039 0.045 0.034 0..
+  ##  $ free.sulfur.dioxide : num  44 6 11 61 43.5 58 36 32 56 23 ...
+  ##  $ total.sulfur.dioxide: num  136 132 117 209 171 179 147 98 140 85 ...
+  ##  $ density             : num  0.997 0.991 0.996 0.994 0.995 ...
+  ##  $ pH                  : num  2.98 3.16 3.23 3.14 3.03 3.08 3.34 3.02 3.16 3.4..
+  ##  $ sulphates           : num  0.88 0.46 0.37 0.3 0.49 0.44 0.57 0.58 0.42 0.42..
+  ##  $ alcohol             : num  9.2 11.2 9.2 11.1 12 8.8 9.7 11.3 12.5 12.5 ...
+  ##  $ taste               : Factor w/ 2 levels "good","bad": 2 2 2 1 2 2 1 1 1 2 ..
 ```
 
 ```r
@@ -871,9 +830,9 @@ table(winetaste$taste)
 ```
 
 ```
-## 
-## good  bad 
-##  828  422
+  ## 
+  ## good  bad 
+  ##  828  422
 ```
 
 Como en el caso anterior, se contruyen las muestras de entrenamiento (80\%) y de test (20\%):
@@ -902,35 +861,38 @@ tree
 ```
 
 ```
-## n= 1000 
-## 
-## node), split, n, loss, yval, (yprob)
-##       * denotes terminal node
-## 
-##  1) root 1000 338 good (0.6620000 0.3380000)  
-##    2) alcohol>=10.11667 541 100 good (0.8151571 0.1848429)  
-##      4) free.sulfur.dioxide>=8.5 522  87 good (0.8333333 0.1666667)  
-##        8) fixed.acidity< 8.55 500  73 good (0.8540000 0.1460000) *
-##        9) fixed.acidity>=8.55 22   8 bad (0.3636364 0.6363636) *
-##      5) free.sulfur.dioxide< 8.5 19   6 bad (0.3157895 0.6842105) *
-##    3) alcohol< 10.11667 459 221 bad (0.4814815 0.5185185)  
-##      6) volatile.acidity< 0.2875 264 102 good (0.6136364 0.3863636)  
-##       12) fixed.acidity< 7.45 213  71 good (0.6666667 0.3333333)  
-##         24) citric.acid>=0.265 160  42 good (0.7375000 0.2625000) *
-##         25) citric.acid< 0.265 53  24 bad (0.4528302 0.5471698)  
-##           50) free.sulfur.dioxide< 42.5 33  13 good (0.6060606 0.3939394) *
-##           51) free.sulfur.dioxide>=42.5 20   4 bad (0.2000000 0.8000000) *
-##       13) fixed.acidity>=7.45 51  20 bad (0.3921569 0.6078431)  
-##         26) total.sulfur.dioxide>=150 26  10 good (0.6153846 0.3846154) *
-##         27) total.sulfur.dioxide< 150 25   4 bad (0.1600000 0.8400000) *
-##      7) volatile.acidity>=0.2875 195  59 bad (0.3025641 0.6974359)  
-##       14) pH>=3.235 49  24 bad (0.4897959 0.5102041)  
-##         28) chlorides< 0.0465 18   4 good (0.7777778 0.2222222) *
-##         29) chlorides>=0.0465 31  10 bad (0.3225806 0.6774194) *
-##       15) pH< 3.235 146  35 bad (0.2397260 0.7602740) *
+  ## n= 1000 
+  ## 
+  ## node), split, n, loss, yval, (yprob)
+  ##       * denotes terminal node
+  ## 
+  ##  1) root 1000 338 good (0.6620000 0.3380000)  
+  ##    2) alcohol>=10.11667 541 100 good (0.8151571 0.1848429)  
+  ##      4) free.sulfur.dioxide>=8.5 522  87 good (0.8333333 0.1666667)  
+  ##        8) fixed.acidity< 8.55 500  73 good (0.8540000 0.1460000) *
+  ##        9) fixed.acidity>=8.55 22   8 bad (0.3636364 0.6363636) *
+  ##      5) free.sulfur.dioxide< 8.5 19   6 bad (0.3157895 0.6842105) *
+  ##    3) alcohol< 10.11667 459 221 bad (0.4814815 0.5185185)  
+  ##      6) volatile.acidity< 0.2875 264 102 good (0.6136364 0.3863636)  
+  ##       12) fixed.acidity< 7.45 213  71 good (0.6666667 0.3333333)  
+  ##         24) citric.acid>=0.265 160  42 good (0.7375000 0.2625000) *
+  ##         25) citric.acid< 0.265 53  24 bad (0.4528302 0.5471698)  
+  ##           50) free.sulfur.dioxide< 42.5 33  13 good (0.6060606 0.3939394) *
+  ##           51) free.sulfur.dioxide>=42.5 20   4 bad (0.2000000 0.8000000) *
+  ##       13) fixed.acidity>=7.45 51  20 bad (0.3921569 0.6078431)  
+  ##         26) total.sulfur.dioxide>=150 26  10 good (0.6153846 0.3846154) *
+  ##         27) total.sulfur.dioxide< 150 25   4 bad (0.1600000 0.8400000) *
+  ##      7) volatile.acidity>=0.2875 195  59 bad (0.3025641 0.6974359)  
+  ##       14) pH>=3.235 49  24 bad (0.4897959 0.5102041)  
+  ##         28) chlorides< 0.0465 18   4 good (0.7777778 0.2222222) *
+  ##         29) chlorides>=0.0465 31  10 bad (0.3225806 0.6774194) *
+  ##       15) pH< 3.235 146  35 bad (0.2397260 0.7602740) *
 ```
 
-También puede ser preferible emplear el paquete [`rpart.plot`](https://CRAN.R-project.org/package=rpart.plot) para representarlo (ver Figura \@ref(fig:arbolclassif)).
+También puede ser preferible emplear el paquete [`rpart.plot`](https://CRAN.R-project.org/package=rpart.plot) para representarlo (ver Figura \@ref(fig:arbolclassif)):
+
+
+(ref:arbolclassif) Árbol de clasificación de `winetaste$taste` (obtenido con las opciones por defecto).
 
 
 ```r
@@ -940,15 +902,19 @@ rpart.plot(tree) # Alternativa: rattle::fancyRpartPlot
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/arbolclassif-1} 
+{\centering \includegraphics[width=0.75\linewidth]{02-arboles_files/figure-latex/arbolclassif-1} 
 
 }
 
-\caption{Árbol de clasificación de `winetaste$taste` (obtenido con las opciones por defecto).}(\#fig:arbolclassif)
+\caption{(ref:arbolclassif)}(\#fig:arbolclassif)
 \end{figure}
 
 
-Nos interesa como se clasificaría a una nueva observación (como se llega a los nodos terminales) y su probabilidad estimada (la frecuencia relativa de la clase más frecuente en el correspondiente nodo terminal). Para ello se puede modificar la información que se muestra en cada nodo (ver Figura \@ref(fig:arbolextra)).
+Nos interesa como se clasificaría a una nueva observación (como se llega a los nodos terminales) y su probabilidad estimada (la frecuencia relativa de la clase más frecuente en el correspondiente nodo terminal). 
+Para ello se puede modificar la información que se muestra en cada nodo (ver Figura \@ref(fig:arbolextra)):
+
+(ref:arbolextra) Representación del árbol de clasificación de `winetaste$taste` con opciones adicionales.
+
 
 ```r
 rpart.plot(tree, 
@@ -961,11 +927,11 @@ rpart.plot(tree,
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/arbolextra-1} 
+{\centering \includegraphics[width=0.75\linewidth]{02-arboles_files/figure-latex/arbolextra-1} 
 
 }
 
-\caption{Representación del árbol de clasificación de `winetaste$taste` incluyendo información adicional en los nodos.}(\#fig:arbolextra)
+\caption{(ref:arbolextra)}(\#fig:arbolextra)
 \end{figure}
 Al igual que en el caso de regresión, puede ser de utilidad imprimir las reglas:
 
@@ -975,68 +941,68 @@ rpart.rules(tree, style = "tall")
 ```
 
 ```
-## taste is 0.15 when
-##     alcohol >= 10
-##     fixed.acidity < 8.6
-##     free.sulfur.dioxide >= 8.5
-## 
-## taste is 0.22 when
-##     alcohol < 10
-##     volatile.acidity >= 0.29
-##     pH >= 3.2
-##     chlorides < 0.047
-## 
-## taste is 0.26 when
-##     alcohol < 10
-##     volatile.acidity < 0.29
-##     fixed.acidity < 7.5
-##     citric.acid >= 0.27
-## 
-## taste is 0.38 when
-##     alcohol < 10
-##     volatile.acidity < 0.29
-##     fixed.acidity >= 7.5
-##     total.sulfur.dioxide >= 150
-## 
-## taste is 0.39 when
-##     alcohol < 10
-##     volatile.acidity < 0.29
-##     fixed.acidity < 7.5
-##     free.sulfur.dioxide < 42.5
-##     citric.acid < 0.27
-## 
-## taste is 0.64 when
-##     alcohol >= 10
-##     fixed.acidity >= 8.6
-##     free.sulfur.dioxide >= 8.5
-## 
-## taste is 0.68 when
-##     alcohol < 10
-##     volatile.acidity >= 0.29
-##     pH >= 3.2
-##     chlorides >= 0.047
-## 
-## taste is 0.68 when
-##     alcohol >= 10
-##     free.sulfur.dioxide < 8.5
-## 
-## taste is 0.76 when
-##     alcohol < 10
-##     volatile.acidity >= 0.29
-##     pH < 3.2
-## 
-## taste is 0.80 when
-##     alcohol < 10
-##     volatile.acidity < 0.29
-##     fixed.acidity < 7.5
-##     free.sulfur.dioxide >= 42.5
-##     citric.acid < 0.27
-## 
-## taste is 0.84 when
-##     alcohol < 10
-##     volatile.acidity < 0.29
-##     fixed.acidity >= 7.5
-##     total.sulfur.dioxide < 150
+  ## taste is 0.15 when
+  ##     alcohol >= 10
+  ##     fixed.acidity < 8.6
+  ##     free.sulfur.dioxide >= 8.5
+  ## 
+  ## taste is 0.22 when
+  ##     alcohol < 10
+  ##     volatile.acidity >= 0.29
+  ##     pH >= 3.2
+  ##     chlorides < 0.047
+  ## 
+  ## taste is 0.26 when
+  ##     alcohol < 10
+  ##     volatile.acidity < 0.29
+  ##     fixed.acidity < 7.5
+  ##     citric.acid >= 0.27
+  ## 
+  ## taste is 0.38 when
+  ##     alcohol < 10
+  ##     volatile.acidity < 0.29
+  ##     fixed.acidity >= 7.5
+  ##     total.sulfur.dioxide >= 150
+  ## 
+  ## taste is 0.39 when
+  ##     alcohol < 10
+  ##     volatile.acidity < 0.29
+  ##     fixed.acidity < 7.5
+  ##     free.sulfur.dioxide < 42.5
+  ##     citric.acid < 0.27
+  ## 
+  ## taste is 0.64 when
+  ##     alcohol >= 10
+  ##     fixed.acidity >= 8.6
+  ##     free.sulfur.dioxide >= 8.5
+  ## 
+  ## taste is 0.68 when
+  ##     alcohol < 10
+  ##     volatile.acidity >= 0.29
+  ##     pH >= 3.2
+  ##     chlorides >= 0.047
+  ## 
+  ## taste is 0.68 when
+  ##     alcohol >= 10
+  ##     free.sulfur.dioxide < 8.5
+  ## 
+  ## taste is 0.76 when
+  ##     alcohol < 10
+  ##     volatile.acidity >= 0.29
+  ##     pH < 3.2
+  ## 
+  ## taste is 0.80 when
+  ##     alcohol < 10
+  ##     volatile.acidity < 0.29
+  ##     fixed.acidity < 7.5
+  ##     free.sulfur.dioxide >= 42.5
+  ##     citric.acid < 0.27
+  ## 
+  ## taste is 0.84 when
+  ##     alcohol < 10
+  ##     volatile.acidity < 0.29
+  ##     fixed.acidity >= 7.5
+  ##     total.sulfur.dioxide < 150
 ```
 
 También se suele emplear el mismo procedimiento para seleccionar un valor óptimo del (hiper)parámetro de complejidad, se construye un árbol de decisión completo y se emplea validación cruzada para podarlo.
@@ -1057,6 +1023,9 @@ tree <- rpart(taste ~ ., data = train, cp = 0)
 
 Representamos los errores (reescalados) de validación cruzada (ver Figura \@ref(fig:errorclassif))
 
+(ref:errorclassif) Evolución del error (reescalado) de validación cruzada en función del parámetro de complejidad.
+
+
 ```r
 # printcp(tree)
 plotcp(tree)
@@ -1064,14 +1033,16 @@ plotcp(tree)
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/errorclassif-1} 
+{\centering \includegraphics[width=0.75\linewidth]{02-arboles_files/figure-latex/errorclassif-1} 
 
 }
 
-\caption{Evolución del error (reescalado) de validación cruzada en función del parámetro de complejidad.}(\#fig:errorclassif)
+\caption{(ref:errorclassif)}(\#fig:errorclassif)
 \end{figure}
 
 Para obtener el modelo final, seleccionamos el valor óptimo de complejidad siguiendo el criterio de un error estándar de @breiman1984classification y podamos el árbol (ver Figura \@ref(fig:arbolclassifpoda)).
+
+(ref:arbolclassifpoda) Árbol de clasificación de `winetaste$taste` obtenido después de la poda (modelo final).
 
 
 ```r
@@ -1092,15 +1063,15 @@ rpart.plot(tree) #, main="Classification tree winetaste"
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/arbolclassifpoda-1} 
+{\centering \includegraphics[width=0.75\linewidth]{02-arboles_files/figure-latex/arbolclassifpoda-1} 
 
 }
 
-\caption{Árbol de clasificación de `winetaste$taste` obtenido después de la poda (modelo final).}(\#fig:arbolclassifpoda)
+\caption{(ref:arbolclassifpoda)}(\#fig:arbolclassifpoda)
 \end{figure}
 
 El último paso sería evaluarlo en la muestra de test siguiendo los pasos descritos en la Sección \@ref(eval-class).
-El método `predict()` por defecto (`type = "prob"`) devuelve una matriz con las probabilidades de cada clase, habrá que establecer `type = "class"` (para más detalles consultar la ayuda de `predic.rpart()`).
+El método [`predict.rpart()`](https://rdrr.io/pkg/rpart/man/predict.rpart.html) devuelve por defecto (`type = "prob"`) una matriz con las probabilidades de cada clase, por lo que habrá que establecer `type = "class"` (para más detalles consultar la ayuda de esta función).
 
 
 ```r
@@ -1109,13 +1080,13 @@ head(predict(tree, newdata = test))
 ```
 
 ```
-##         good       bad
-## 1  0.3025641 0.6974359
-## 4  0.8151571 0.1848429
-## 9  0.8151571 0.1848429
-## 10 0.8151571 0.1848429
-## 12 0.8151571 0.1848429
-## 16 0.8151571 0.1848429
+  ##         good       bad
+  ## 1  0.3025641 0.6974359
+  ## 4  0.8151571 0.1848429
+  ## 9  0.8151571 0.1848429
+  ## 10 0.8151571 0.1848429
+  ## 12 0.8151571 0.1848429
+  ## 16 0.8151571 0.1848429
 ```
 
 ```r
@@ -1124,10 +1095,10 @@ table(obs, pred)
 ```
 
 ```
-##       pred
-## obs    good bad
-##   good  153  13
-##   bad    54  30
+  ##       pred
+  ## obs    good bad
+  ##   good  153  13
+  ##   bad    54  30
 ```
 
 ```r
@@ -1135,33 +1106,33 @@ caret::confusionMatrix(pred, obs)
 ```
 
 ```
-## Confusion Matrix and Statistics
-## 
-##           Reference
-## Prediction good bad
-##       good  153  54
-##       bad    13  30
-##                                           
-##                Accuracy : 0.732           
-##                  95% CI : (0.6725, 0.7859)
-##     No Information Rate : 0.664           
-##     P-Value [Acc > NIR] : 0.01247         
-##                                           
-##                   Kappa : 0.3171          
-##                                           
-##  Mcnemar's Test P-Value : 1.025e-06       
-##                                           
-##             Sensitivity : 0.9217          
-##             Specificity : 0.3571          
-##          Pos Pred Value : 0.7391          
-##          Neg Pred Value : 0.6977          
-##              Prevalence : 0.6640          
-##          Detection Rate : 0.6120          
-##    Detection Prevalence : 0.8280          
-##       Balanced Accuracy : 0.6394          
-##                                           
-##        'Positive' Class : good            
-## 
+  ## Confusion Matrix and Statistics
+  ## 
+  ##           Reference
+  ## Prediction good bad
+  ##       good  153  54
+  ##       bad    13  30
+  ##                                           
+  ##                Accuracy : 0.732           
+  ##                  95% CI : (0.6725, 0.7859)
+  ##     No Information Rate : 0.664           
+  ##     P-Value [Acc > NIR] : 0.01247         
+  ##                                           
+  ##                   Kappa : 0.3171          
+  ##                                           
+  ##  Mcnemar's Test P-Value : 1.025e-06       
+  ##                                           
+  ##             Sensitivity : 0.9217          
+  ##             Specificity : 0.3571          
+  ##          Pos Pred Value : 0.7391          
+  ##          Neg Pred Value : 0.6977          
+  ##              Prevalence : 0.6640          
+  ##          Detection Rate : 0.6120          
+  ##    Detection Prevalence : 0.8280          
+  ##       Balanced Accuracy : 0.6394          
+  ##                                           
+  ##        'Positive' Class : good            
+  ## 
 ```
 
 
@@ -1169,59 +1140,57 @@ caret::confusionMatrix(pred, obs)
 
 En `caret` podemos ajustar un árbol CART seleccionando `method = "rpart"`.
 Por defecto emplea bootstrap de las observaciones para seleccionar el valor óptimo del hiperparámetro `cp` (considerando únicamente tres posibles valores).
-Si queremos emplear validación cruzada como en el caso anterior podemos emplear la función auxiliar `trainControl()` y para considerar un mayor rango de posibles valores, el argumento `tuneLength` (ver Figura \@ref(fig:arbolclassifggplot)).
+Si queremos emplear validación cruzada como en el caso anterior podemos emplear la función auxiliar [`trainControl()`](https://rdrr.io/pkg/caret/man/trainControl.html) y para considerar un mayor rango de posibles valores, el argumento `tuneLength` (ver Figura \@ref(fig:arbolclassifggplot)).
 
 
 ```r
 library(caret)
-# names(getModelInfo()) # Listado de todos los métodos disponibles
 # modelLookup("rpart")  # Información sobre hiperparámetros
 set.seed(1)
 # itrain <- createDataPartition(winetaste$taste, p = 0.8, list = FALSE)
 # train <- winetaste[itrain, ]
 # test <- winetaste[-itrain, ]
-caret.rpart <- train(taste ~ ., method = "rpart", data = train, 
-                     tuneLength = 20,
+caret.rpart <- train(taste ~ ., method = "rpart", data = train, tuneLength = 20,
                      trControl = trainControl(method = "cv", number = 10)) 
 caret.rpart
 ```
 
 ```
-## CART 
-## 
-## 1000 samples
-##   11 predictor
-##    2 classes: 'good', 'bad' 
-## 
-## No pre-processing
-## Resampling: Cross-Validated (10 fold) 
-## Summary of sample sizes: 901, 900, 900, 900, 900, 900, ... 
-## Resampling results across tuning parameters:
-## 
-##   cp           Accuracy   Kappa    
-##   0.000000000  0.7018843  0.3487338
-##   0.005995017  0.7330356  0.3870552
-##   0.011990034  0.7410655  0.3878517
-##   0.017985051  0.7230748  0.3374518
-##   0.023980069  0.7360748  0.3698691
-##   0.029975086  0.7340748  0.3506377
-##   0.035970103  0.7320748  0.3418235
-##   0.041965120  0.7350849  0.3422651
-##   0.047960137  0.7350849  0.3422651
-##   0.053955154  0.7350849  0.3422651
-##   0.059950171  0.7350849  0.3422651
-##   0.065945188  0.7350849  0.3422651
-##   0.071940206  0.7350849  0.3422651
-##   0.077935223  0.7350849  0.3422651
-##   0.083930240  0.7350849  0.3422651
-##   0.089925257  0.7350849  0.3422651
-##   0.095920274  0.7350849  0.3422651
-##   0.101915291  0.7350849  0.3422651
-##   0.107910308  0.7229637  0.2943312
-##   0.113905325  0.6809637  0.1087694
-## 
-## Accuracy was used to select the optimal model using the largest value.
-## The final value used for the model was cp = 0.01199003.
+  ## CART 
+  ## 
+  ## 1000 samples
+  ##   11 predictor
+  ##    2 classes: 'good', 'bad' 
+  ## 
+  ## No pre-processing
+  ## Resampling: Cross-Validated (10 fold) 
+  ## Summary of sample sizes: 901, 900, 900, 900, 900, 900, ... 
+  ## Resampling results across tuning parameters:
+  ## 
+  ##   cp           Accuracy   Kappa    
+  ##   0.000000000  0.7018843  0.3487338
+  ##   0.005995017  0.7330356  0.3870552
+  ##   0.011990034  0.7410655  0.3878517
+  ##   0.017985051  0.7230748  0.3374518
+  ##   0.023980069  0.7360748  0.3698691
+  ##   0.029975086  0.7340748  0.3506377
+  ##   0.035970103  0.7320748  0.3418235
+  ##   0.041965120  0.7350849  0.3422651
+  ##   0.047960137  0.7350849  0.3422651
+  ##   0.053955154  0.7350849  0.3422651
+  ##   0.059950171  0.7350849  0.3422651
+  ##   0.065945188  0.7350849  0.3422651
+  ##   0.071940206  0.7350849  0.3422651
+  ##   0.077935223  0.7350849  0.3422651
+  ##   0.083930240  0.7350849  0.3422651
+  ##   0.089925257  0.7350849  0.3422651
+  ##   0.095920274  0.7350849  0.3422651
+  ##   0.101915291  0.7350849  0.3422651
+  ##   0.107910308  0.7229637  0.2943312
+  ##   0.113905325  0.6809637  0.1087694
+  ## 
+  ## Accuracy was used to select the optimal model using the largest value.
+  ## The final value used for the model was cp = 0.01199003.
 ```
 
 ```r
@@ -1230,108 +1199,114 @@ ggplot(caret.rpart)
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/arbolclassifggplot-1} 
+{\centering \includegraphics[width=0.75\linewidth]{02-arboles_files/figure-latex/arbolclassifggplot-1} 
 
 }
 
 \caption{Evolución de la precisión (obtenida mediante validación cruzada) dependiendo del parámetro de complejidad.}(\#fig:arbolclassifggplot)
 \end{figure}
-El modelo final es el siguiente (ver Figura \@ref(fig:arbolfinalcaret))
+El modelo final se devuelve en la componente `$finalModel` (ver Figura \@ref(fig:arbolfinalcaret)):
+
+(ref:arbolfinalcaret) Árbol de clasificación de `winetaste$taste`, obtenido con la complejidad "óptima" (empleando `caret`).
+
 
 ```r
 caret.rpart$finalModel
 ```
 
 ```
-## n= 1000 
-## 
-## node), split, n, loss, yval, (yprob)
-##       * denotes terminal node
-## 
-##  1) root 1000 338 good (0.6620000 0.3380000)  
-##    2) alcohol>=10.11667 541 100 good (0.8151571 0.1848429)  
-##      4) free.sulfur.dioxide>=8.5 522  87 good (0.8333333 0.1666667)  
-##        8) fixed.acidity< 8.55 500  73 good (0.8540000 0.1460000) *
-##        9) fixed.acidity>=8.55 22   8 bad (0.3636364 0.6363636) *
-##      5) free.sulfur.dioxide< 8.5 19   6 bad (0.3157895 0.6842105) *
-##    3) alcohol< 10.11667 459 221 bad (0.4814815 0.5185185)  
-##      6) volatile.acidity< 0.2875 264 102 good (0.6136364 0.3863636)  
-##       12) fixed.acidity< 7.45 213  71 good (0.6666667 0.3333333)  
-##         24) citric.acid>=0.265 160  42 good (0.7375000 0.2625000) *
-##         25) citric.acid< 0.265 53  24 bad (0.4528302 0.5471698)  
-##           50) free.sulfur.dioxide< 42.5 33  13 good (0.6060606 0.3939394) *
-##           51) free.sulfur.dioxide>=42.5 20   4 bad (0.2000000 0.8000000) *
-##       13) fixed.acidity>=7.45 51  20 bad (0.3921569 0.6078431)  
-##         26) total.sulfur.dioxide>=150 26  10 good (0.6153846 0.3846154) *
-##         27) total.sulfur.dioxide< 150 25   4 bad (0.1600000 0.8400000) *
-##      7) volatile.acidity>=0.2875 195  59 bad (0.3025641 0.6974359)  
-##       14) pH>=3.235 49  24 bad (0.4897959 0.5102041)  
-##         28) chlorides< 0.0465 18   4 good (0.7777778 0.2222222) *
-##         29) chlorides>=0.0465 31  10 bad (0.3225806 0.6774194) *
-##       15) pH< 3.235 146  35 bad (0.2397260 0.7602740) *
+  ## n= 1000 
+  ## 
+  ## node), split, n, loss, yval, (yprob)
+  ##       * denotes terminal node
+  ## 
+  ##  1) root 1000 338 good (0.6620000 0.3380000)  
+  ##    2) alcohol>=10.11667 541 100 good (0.8151571 0.1848429)  
+  ##      4) free.sulfur.dioxide>=8.5 522  87 good (0.8333333 0.1666667)  
+  ##        8) fixed.acidity< 8.55 500  73 good (0.8540000 0.1460000) *
+  ##        9) fixed.acidity>=8.55 22   8 bad (0.3636364 0.6363636) *
+  ##      5) free.sulfur.dioxide< 8.5 19   6 bad (0.3157895 0.6842105) *
+  ##    3) alcohol< 10.11667 459 221 bad (0.4814815 0.5185185)  
+  ##      6) volatile.acidity< 0.2875 264 102 good (0.6136364 0.3863636)  
+  ##       12) fixed.acidity< 7.45 213  71 good (0.6666667 0.3333333)  
+  ##         24) citric.acid>=0.265 160  42 good (0.7375000 0.2625000) *
+  ##         25) citric.acid< 0.265 53  24 bad (0.4528302 0.5471698)  
+  ##           50) free.sulfur.dioxide< 42.5 33  13 good (0.6060606 0.3939394) *
+  ##           51) free.sulfur.dioxide>=42.5 20   4 bad (0.2000000 0.8000000) *
+  ##       13) fixed.acidity>=7.45 51  20 bad (0.3921569 0.6078431)  
+  ##         26) total.sulfur.dioxide>=150 26  10 good (0.6153846 0.3846154) *
+  ##         27) total.sulfur.dioxide< 150 25   4 bad (0.1600000 0.8400000) *
+  ##      7) volatile.acidity>=0.2875 195  59 bad (0.3025641 0.6974359)  
+  ##       14) pH>=3.235 49  24 bad (0.4897959 0.5102041)  
+  ##         28) chlorides< 0.0465 18   4 good (0.7777778 0.2222222) *
+  ##         29) chlorides>=0.0465 31  10 bad (0.3225806 0.6774194) *
+  ##       15) pH< 3.235 146  35 bad (0.2397260 0.7602740) *
 ```
 
 ```r
-rpart.plot(caret.rpart$finalModel) #, main="Classification tree winetaste"
+rpart.plot(caret.rpart$finalModel)
 ```
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/arbolfinalcaret-1} 
+{\centering \includegraphics[width=0.75\linewidth]{02-arboles_files/figure-latex/arbolfinalcaret-1} 
 
 }
 
-\caption{Árbol de clasificación de `winetaste$taste`, obtenido con la complejidad "óptima" (empleando `caret`).}(\#fig:arbolfinalcaret)
+\caption{(ref:arbolfinalcaret)}(\#fig:arbolfinalcaret)
 \end{figure}
 
-Para utilizar la regla de "un error estándar" se puede añadir `selectionFunction = "oneSE"`. A continuacióno se muestra dicho código y en la Figura \@ref(fig:arbolclassifoneSE) el árbol resultante.
+Para utilizar la regla de "un error estándar" se puede añadir `selectionFunction = "oneSE"` en las opciones de entrenamiento[^rpart-1](ver Figura \@ref(fig:arbolclassifoneSE)):
+
+[^rpart-1]: En principio también se podría utilizar la regla de un error estándar estableciendo `method = "rpart1SE"` en la llamada a `train()`, pero `caret` implementa internamente este método y en ocasiones no se obtienen los resultados esperados.
+
+(ref:arbolclassifoneSE) Árbol de clasificación de `winetaste$taste`,  obtenido con la regla de un error estándar para seleccionar la complejidad (empleando `caret`).
 
 
 ```r
 set.seed(1)
-caret.rpart <- train(taste ~ ., method = "rpart", data = train, 
-                     tuneLength = 20,
+caret.rpart <- train(taste ~ ., method = "rpart", data = train, tuneLength = 20,
                      trControl = trainControl(method = "cv", number = 10,
                                               selectionFunction = "oneSE")) 
 caret.rpart
 ```
 
 ```
-## CART 
-## 
-## 1000 samples
-##   11 predictor
-##    2 classes: 'good', 'bad' 
-## 
-## No pre-processing
-## Resampling: Cross-Validated (10 fold) 
-## Summary of sample sizes: 901, 900, 900, 900, 900, 900, ... 
-## Resampling results across tuning parameters:
-## 
-##   cp           Accuracy   Kappa    
-##   0.000000000  0.7018843  0.3487338
-##   0.005995017  0.7330356  0.3870552
-##   0.011990034  0.7410655  0.3878517
-##   0.017985051  0.7230748  0.3374518
-##   0.023980069  0.7360748  0.3698691
-##   0.029975086  0.7340748  0.3506377
-##   0.035970103  0.7320748  0.3418235
-##   0.041965120  0.7350849  0.3422651
-##   0.047960137  0.7350849  0.3422651
-##   0.053955154  0.7350849  0.3422651
-##   0.059950171  0.7350849  0.3422651
-##   0.065945188  0.7350849  0.3422651
-##   0.071940206  0.7350849  0.3422651
-##   0.077935223  0.7350849  0.3422651
-##   0.083930240  0.7350849  0.3422651
-##   0.089925257  0.7350849  0.3422651
-##   0.095920274  0.7350849  0.3422651
-##   0.101915291  0.7350849  0.3422651
-##   0.107910308  0.7229637  0.2943312
-##   0.113905325  0.6809637  0.1087694
-## 
-## Accuracy was used to select the optimal model using  the one SE rule.
-## The final value used for the model was cp = 0.1019153.
+  ## CART 
+  ## 
+  ## 1000 samples
+  ##   11 predictor
+  ##    2 classes: 'good', 'bad' 
+  ## 
+  ## No pre-processing
+  ## Resampling: Cross-Validated (10 fold) 
+  ## Summary of sample sizes: 901, 900, 900, 900, 900, 900, ... 
+  ## Resampling results across tuning parameters:
+  ## 
+  ##   cp           Accuracy   Kappa    
+  ##   0.000000000  0.7018843  0.3487338
+  ##   0.005995017  0.7330356  0.3870552
+  ##   0.011990034  0.7410655  0.3878517
+  ##   0.017985051  0.7230748  0.3374518
+  ##   0.023980069  0.7360748  0.3698691
+  ##   0.029975086  0.7340748  0.3506377
+  ##   0.035970103  0.7320748  0.3418235
+  ##   0.041965120  0.7350849  0.3422651
+  ##   0.047960137  0.7350849  0.3422651
+  ##   0.053955154  0.7350849  0.3422651
+  ##   0.059950171  0.7350849  0.3422651
+  ##   0.065945188  0.7350849  0.3422651
+  ##   0.071940206  0.7350849  0.3422651
+  ##   0.077935223  0.7350849  0.3422651
+  ##   0.083930240  0.7350849  0.3422651
+  ##   0.089925257  0.7350849  0.3422651
+  ##   0.095920274  0.7350849  0.3422651
+  ##   0.101915291  0.7350849  0.3422651
+  ##   0.107910308  0.7229637  0.2943312
+  ##   0.113905325  0.6809637  0.1087694
+  ## 
+  ## Accuracy was used to select the optimal model using  the one SE rule.
+  ## The final value used for the model was cp = 0.1019153.
 ```
 
 ```r
@@ -1340,29 +1315,29 @@ caret.rpart$finalModel
 ```
 
 ```
-## n= 1000 
-## 
-## node), split, n, loss, yval, (yprob)
-##       * denotes terminal node
-## 
-## 1) root 1000 338 good (0.6620000 0.3380000)  
-##   2) alcohol>=10.11667 541 100 good (0.8151571 0.1848429) *
-##   3) alcohol< 10.11667 459 221 bad (0.4814815 0.5185185)  
-##     6) volatile.acidity< 0.2875 264 102 good (0.6136364 0.3863636) *
-##     7) volatile.acidity>=0.2875 195  59 bad (0.3025641 0.6974359) *
+  ## n= 1000 
+  ## 
+  ## node), split, n, loss, yval, (yprob)
+  ##       * denotes terminal node
+  ## 
+  ## 1) root 1000 338 good (0.6620000 0.3380000)  
+  ##   2) alcohol>=10.11667 541 100 good (0.8151571 0.1848429) *
+  ##   3) alcohol< 10.11667 459 221 bad (0.4814815 0.5185185)  
+  ##     6) volatile.acidity< 0.2875 264 102 good (0.6136364 0.3863636) *
+  ##     7) volatile.acidity>=0.2875 195  59 bad (0.3025641 0.6974359) *
 ```
 
 ```r
-rpart.plot(caret.rpart$finalModel)#, main = "Classification tree winetaste"
+rpart.plot(caret.rpart$finalModel)
 ```
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/arbolclassifoneSE-1} 
+{\centering \includegraphics[width=0.75\linewidth]{02-arboles_files/figure-latex/arbolclassifoneSE-1} 
 
 }
 
-\caption{Árbol de clasificación de `winetaste$taste`,  obtenido con la regla de un error estándar para seleccionar la complejidad (empleando `caret`).}(\#fig:arbolclassifoneSE)
+\caption{(ref:arbolclassifoneSE)}(\#fig:arbolclassifoneSE)
 \end{figure}
 
 
@@ -1373,14 +1348,14 @@ plot(var.imp)
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/arbolImpor-1} 
+{\centering \includegraphics[width=0.75\linewidth]{02-arboles_files/figure-latex/arbolImpor-1} 
 
 }
 
 \caption{Importancia de los (posibles) predictores según el modelo obtenido con la regla de un error estándar.}(\#fig:arbolImpor)
 \end{figure}
 
-Para calcular las predicciones (o las estimaciones de las probabilidades) podemos emplear el método `predict.train()` y posteriormente `confusionMatrix()` para evaluar su precisión:
+Para calcular las predicciones (o las estimaciones de las probabilidades) podemos emplear el método [`predict.train()`](https://rdrr.io/pkg/caret/man/predict.train.html) y posteriormente [`confusionMatrix()`](https://rdrr.io/pkg/caret/man/confusionMatrix.html) para evaluar su precisión:
 
 
 ```r
@@ -1390,34 +1365,37 @@ confusionMatrix(pred, test$taste)
 ```
 
 ```
-## Confusion Matrix and Statistics
-## 
-##           Reference
-## Prediction good bad
-##       good  153  54
-##       bad    13  30
-##                                           
-##                Accuracy : 0.732           
-##                  95% CI : (0.6725, 0.7859)
-##     No Information Rate : 0.664           
-##     P-Value [Acc > NIR] : 0.01247         
-##                                           
-##                   Kappa : 0.3171          
-##                                           
-##  Mcnemar's Test P-Value : 1.025e-06       
-##                                           
-##             Sensitivity : 0.9217          
-##             Specificity : 0.3571          
-##          Pos Pred Value : 0.7391          
-##          Neg Pred Value : 0.6977          
-##              Prevalence : 0.6640          
-##          Detection Rate : 0.6120          
-##    Detection Prevalence : 0.8280          
-##       Balanced Accuracy : 0.6394          
-##                                           
-##        'Positive' Class : good            
-## 
+  ## Confusion Matrix and Statistics
+  ## 
+  ##           Reference
+  ## Prediction good bad
+  ##       good  153  54
+  ##       bad    13  30
+  ##                                           
+  ##                Accuracy : 0.732           
+  ##                  95% CI : (0.6725, 0.7859)
+  ##     No Information Rate : 0.664           
+  ##     P-Value [Acc > NIR] : 0.01247         
+  ##                                           
+  ##                   Kappa : 0.3171          
+  ##                                           
+  ##  Mcnemar's Test P-Value : 1.025e-06       
+  ##                                           
+  ##             Sensitivity : 0.9217          
+  ##             Specificity : 0.3571          
+  ##          Pos Pred Value : 0.7391          
+  ##          Neg Pred Value : 0.6977          
+  ##              Prevalence : 0.6640          
+  ##          Detection Rate : 0.6120          
+  ##    Detection Prevalence : 0.8280          
+  ##       Balanced Accuracy : 0.6394          
+  ##                                           
+  ##        'Positive' Class : good            
+  ## 
 ```
+
+
+<!-- 
 
 NOTA: En principio también se podría utilizar la regla de "un error estándar" seleccionando `method = "rpart1SE"` (pero `caret` implementa internamente este método y en ocasiones no se obtienen los resultados esperados).
 
@@ -1432,12 +1410,11 @@ rpart.plot(caret.rpart$finalModel) #, main = "Classification tree winetaste"
 varImp(caret.rpart)
 ```
 
+Como alternativas al uso de la metodología CART desde `caret` se  puede considerar las opciones de los metapaquetes: 
 
-Como alternativas al uso de la metodología CART desde `cartet` se  puede considerar las opciones de los metapaquetes:
-
-* [`mlr3`](https://mlr3book.mlr-org.com/mlr3book.pdf), que incorpora una llamada a `rpart::rpart()` desde sus **learners** `lrn("regr.rpart")` y `lrn("classif.rpart")`.
+* [`mlr3`](https://mlr-org.com), que incorpora una llamada a `rpart::rpart()` desde sus **learners** `lrn("regr.rpart")` y `lrn("classif.rpart")`.
 * [`h2o`](https://www.h2o.ai/blog/finally-you-can-plot-h2o-decision-trees-in-r/), que aunque no ofrece una implementación de los árboles CART, sí ofrece dos alternativas más sofisticadas usando bosques aleatorios `h2o.randomForest()` y los procedimientos basados en el aumento del gradiente `h2o.gbm()`.
-
+-->
 
 ## Alternativas a los árboles CART
 
@@ -1467,7 +1444,7 @@ Como se desea trabajar con árboles binarios (si se admite que de un nodo salga 
 Se van haciendo pruebas chi-cuadrado entre pares de categorías y la variable respuesta, y se fusiona el par con el *p*-valor más alto, ya que se trata de fusionar las categorías que sean más similares.
 
 Para árboles de regresión hay metodologías que, al igual que CHAID, se basan en el cálculo de *p*-valores, en este caso de contrastes de igualdes de medias.
-Una de las más utilizadas son los *conditional inference trees* [@hothorn2006unbiased]^[Otra alternativa es GUIDE (Generalized, Unbiased, Interaction Detection and Estimation; @loh2002regression).], implementada en la función `ctree()` del paquete [`party`](https://CRAN.R-project.org/package=party).
+Una de las más utilizadas son los *conditional inference trees* [@hothorn2006unbiased]^[Otra alternativa es GUIDE (Generalized, Unbiased, Interaction Detection and Estimation; @loh2002regression).], implementada en la función [`ctree()`](https://rdrr.io/pkg/party/man/ctree.html) del paquete [`party`](https://CRAN.R-project.org/package=party).
 
 Un problema conocido de los árboles CART es que sufren un sesgo de selección de variables: los predictores con más valores distintos son favorecidos. 
 Esta es una de las motivaciones de utilizar estos métodos basados en contrastes de hipótesis. 
@@ -1479,6 +1456,9 @@ Por otra parte hay que ser conscientes de que los contrastes de hipótesis y la 
 Siguiendo con el problema de clasificación anterior, podríamos ajustar un árbol de decisión empleando la metodología de *inferencia condicional* mediante el siguiente código:
 
 
+(ref:ctree-plot) Árbol de decisión para clasificar la calidad del vino (`winetaste$taste`) obtenido con el método condicional.
+
+
 ```r
 library(party)
 tree2 <- ctree(taste ~ ., data = train) 
@@ -1487,11 +1467,11 @@ plot(tree2)
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.8\linewidth]{02-arboles_files/figure-latex/ctree-plot-1} 
+{\centering \includegraphics[width=0.75\linewidth]{02-arboles_files/figure-latex/ctree-plot-1} 
 
 }
 
-\caption{Árbol de decisión para clasificar la calidad del vino (`winetaste$taste`) obtenido con el método condicional.}(\#fig:ctree-plot)
+\caption{(ref:ctree-plot)}(\#fig:ctree-plot)
 \end{figure}
 
 Para más detalles ver la vignette del paquete [*party: A Laboratory for Recursive Partytioning*](https://cran.r-project.org/web/packages/party/vignettes/party.pdf).

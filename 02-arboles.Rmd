@@ -1,4 +1,10 @@
+<!-- Capítulo \@ref(trees) -->
+
 # Árboles de decisión {#trees}
+
+```{r global-options, include=FALSE}
+source("_global_options.R")
+```
 
 <!-- 
 ---
@@ -22,9 +28,6 @@ bookdown::preview_chapter("02-arboles.Rmd")
 knitr::purl("02-arboles.Rmd", documentation = 2)
 knitr::spin("02-arboles.R",knit = FALSE)
 -->
-
-```{r , child = '_global_options.Rmd'}
-```
 
 Los *árboles de decisión* son uno de los métodos más simples y fáciles de interpretar para realizar predicciones en problemas de clasificación y de regresión. 
 Se desarrollan a partir de los años 70 del siglo pasado como una alternativa versátil a los métodos clásicos de la estadística, fuertemente basados en las hipótesis de linealidad y de normalidad, y enseguida se convierten en una técnica básica del aprendizaje automático. 
@@ -71,7 +74,7 @@ fig.cap="Izquierda: ejemplo de un árbol obtenido al realizar una partición bin
 -->
 
 
-Al final de este proceso iterativo el espacio predictor se ha particionado en regiones de forma rectangular en la que la predicción de la respuesta es constante  `r citefig("predictor")`. 
+Al final de este proceso iterativo el espacio predictor se ha particionado en regiones de forma rectangular en la que la predicción de la respuesta es constante  `r cite_fig(predictor)`. 
 Si la relación entre las variables predictoras y la variable respuesta no se puede describir adecuadamente mediante rectángulos, la calidad predictiva del árbol será limitada. 
 Como vemos, la simplicidad del modelo es su principal argumento, pero también su talón de Aquiles.
 
@@ -272,9 +275,9 @@ En la introducción de este tema se comentó que los árboles de decisión admit
 
 ## CART con el paquete `rpart`
 
-La metodología CART está implementada en el paquete `r citepkg("rpart")` 
-(Recursive PARTitioning)^[El paquete `r citepkg("tree")` es una traducción del original en S.]. 
-La función principal es `rpart()` y habitualmente se emplea de la forma:
+La metodología CART está implementada en el paquete `r cite_cran(rpart)` 
+(Recursive PARTitioning)^[El paquete `r cite_cran(tree)` es una traducción del original en S.]. 
+La función principal es `r cite_fun(rpart, rpart)` y habitualmente se emplea de la forma:
 
 `rpart(formula, data, method, parms, control, ...)`  
 
@@ -297,8 +300,11 @@ La función principal es `rpart()` y habitualmente se emplea de la forma:
 * `control`: lista de opciones que controlan el algoritmo de partición, por defecto se seleccionan mediante la función `rpart.control`, 
   aunque también se pueden establecer en la llamada a la función principal, y los principales parámetros son:
   
-    `rpart.control(minsplit = 20, minbucket = round(minsplit/3), cp = 0.01, xval = 10, maxdepth = 30, ...)`
-  
+    ```
+    rpart.control(minsplit = 20, minbucket = round(minsplit/3), cp = 0.01, 
+                  xval = 10, maxdepth = 30, ...)
+    ```
+
     - `cp` es el parámetro de complejidad $\tilde \alpha$ para la poda del árbol, de forma que un valor de 1 se corresponde con un árbol sin divisiones y un valor de 0 con un árbol de profundidad máxima. 
       Adicionalmente, para reducir el tiempo de computación, el algoritmo empleado no realiza una partición si la proporción de reducción del error es inferior a este valor (valores más grandes simplifican el modelo y reducen el tiempo de computación).
       
@@ -311,18 +317,21 @@ La función principal es `rpart()` y habitualmente se emplea de la forma:
 
 Para más detalles consultar la documentación de esta función o la vignette [*Introduction to Rpart*](https://cran.r-project.org/web/packages/rpart/vignettes/longintro.pdf).
 
+
 ### Ejemplo: regresión
 
 Emplearemos el conjunto de datos *winequality.RData* [ver @cortez2009modeling], que contiene información fisico-química 
 (`fixed.acidity`, `volatile.acidity`, `citric.acid`, `residual.sugar`, `chlorides`, `free.sulfur.dioxide`, 
 `total.sulfur.dioxide`, `density`, `pH`, `sulphates` y `alcohol`) y sensorial (`quality`) 
 de una muestra de 1250 vinos portugueses de la variedad *Vinho Verde*.
-Como respuesta consideraremos la variable `quality`  , mediana de al menos 3 evaluaciones de la calidad del vino realizadas por expertos, que los evaluaron entre 0 (muy malo) y 10 (muy excelente) como puede observarse en el gráfico de barras de la Figura \@ref(fig:barplot).
+Como respuesta consideraremos la variable `quality`, mediana de al menos 3 evaluaciones de la calidad del vino realizadas por expertos, que los evaluaron entre 0 (muy malo) y 10 (muy excelente) como puede observarse en el gráfico de barras de la Figura \@ref(fig:barplot).
 
-```{r barplot, fig.cap="Distribución de frecuencias de la calidad del vino (`winequality$quality`)."}
+(ref:barplot) Distribución de las evaluaciones de la calidad del vino (`winequality$quality`).
+
+```{r barplot, fig.cap='(ref:barplot)'}
 load("data/winequality.RData")
 str(winequality)
-barplot(table(winequality$quality))
+barplot(table(winequality$quality), xlab = "Calidad", ylab = "Frecuencia")
 ```
 
 En primer lugar se selecciona el 80\% de los datos como muestra de entrenamiento y el 20\% restante como muestra de test:
@@ -349,16 +358,20 @@ marcando con un `*` los nodos terminales.
 tree
 ```
 
-Para representarlo se puede emplear las herramientas del paquete `r citepkg("rpart")`  `r citefig("arbolrpart")`.
+Para representarlo se puede emplear las herramientas del paquete `r cite_cran("rpart")`  `r cite_fig(arbolrpart)`:
 
-```{r arbolrpart,fig.cap="Árbol de regresión para predecir `winequality$quality` (obtenido con las opciones por defecto de `rpart()`)."}
+(ref:arbolrpart) Árbol de regresión para predecir `winequality$quality` (obtenido con las opciones por defecto de `r cite_fun(rpart, rpart)`).
+
+```{r arbolrpart, fig.cap='(ref:arbolrpart)'}
 plot(tree)
 text(tree)
 ```
 
-Pero puede ser preferible emplear el paquete `r citepkg("rpart.plot")`  `r citefig("arbolrpartplot")`.
+Pero puede ser preferible emplear el paquete `r cite_cran("rpart.plot")`  `r cite_fig(arbolrpartplot)`:
 
-```{r arbolrpartplot,fig.cap="Representación del árbol de regresión obtenida con `rpart.plot()`."}
+(ref:arbolrpartplot) Representación del árbol de regresión generada con `r cite_fun(rpart.plot, rpart.plot)`.
+
+```{r arbolrpartplot, fig.cap='(ref:arbolrpartplot)'}
 library(rpart.plot)
 rpart.plot(tree)  
 ```
@@ -380,9 +393,9 @@ En primer lugar habría que establecer `cp = 0` para construir el árbol complet
 tree <- rpart(quality ~ ., data = train, cp = 0)
 ```
 
-Posteriormente podemos emplear las funciones `printcp()` (o `plotcp()`) para obtener (representar) 
+Posteriormente podemos emplear las funciones `r cite_fun(printcp, rpart)` (o `r cite_fun(plotcp, rpart)`) para obtener (representar) 
 los valores de CP para los árboles (óptimos) de menor tamaño junto con su error de validación cruzada 
-`xerror` (reescalado de forma que el máximo de `rel error` es 1)^[Realmente en la tabla de texto se muestra el valor mínimo de CP, ya que se obtendría la misma solución para un rango de valores de CP (desde ese valor hasta el anterior, sin incluirlo), mientras que en el gráfico generado por `plotcp()` se representa la media geométrica de los extremos de ese intervalo `r citefig("cp")`.]:
+`xerror` (reescalado de forma que el máximo de `rel error` es 1)^[Realmente en la tabla de texto se muestra el valor mínimo de CP, ya que se obtendría la misma solución para un rango de valores de CP (desde ese valor hasta el anterior, sin incluirlo), mientras que en el gráfico generado por `r cite_fun(plotcp, rpart)` se representa la media geométrica de los extremos de ese intervalo `r cite_fig(cp)`.]:
 
 ```{r cp, fig.cap="Error de validación cruzada (reescalado) dependiendo del parámetro de complejidad CP empleado en el ajuste del árbol de decisión."}
 printcp(tree)
@@ -410,7 +423,7 @@ icp <- min(which(xerror <= upper.xerror))
 cp <- tree$cptable[icp, "CP"]
 ```
 
-Para obtener el modelo final `r citefig("arbolpoda")` podamos el árbol con el valor de complejidad obtenido `r cp` que en este caso coincide con el valor óptimo).
+Para obtener el modelo final `r cite_fig(arbolpoda)` podamos el árbol con el valor de complejidad obtenido `r cp` que en este caso coincide con el valor óptimo).
 
 ```{r eval=F,echo=F}
 tree <- prune(tree, cp = cp) #quitar este chunk
@@ -423,7 +436,7 @@ rpart.plot(tree)
 ```
 
 
-Podríamos estudiar el modelo final, por ejemplo mediante el método `summary()`, que entre otras cosas muestra una medida (en porcentaje) de la importancia de las variables explicativas para la predicción de la respuesta (teniendo en cuenta todas las particiones, principales y secundarias, en las que se emplea cada variable explicativa). 
+Podríamos estudiar el modelo final, por ejemplo mediante el método `r cite_fun(summary.rpart, rpart)`, que entre otras cosas muestra una medida (en porcentaje) de la importancia de las variables explicativas para la predicción de la respuesta (teniendo en cuenta todas las particiones, principales y secundarias, en las que se emplea cada variable explicativa). 
 Alternativamente podríamos emplear el siguiente código:
 
 ```{r }
@@ -433,14 +446,14 @@ importance <- round(100*importance/sum(importance), 1)
 importance[importance >= 1]
 ```
 
-El último paso sería evaluarlo en la muestra de test siguiendo los pasos descritos en la Sección \@ref(eval-reg). A continuación se muestra el código necesario (la Figura \@ref(fig:obsXpred) muestra dicho rendimiento a través de remuestreo).
+El último paso sería evaluarlo en la muestra de test siguiendo los pasos descritos en la Sección \@ref(eval-reg) `r cite_fig(obsXpred)`:
 
-```{r obsXpred,fig.cap="Gráfico de observaciones frente a predicciones (`test$quality`; se añade una perturbación para mostrar la distribución de los valores)."}
+(ref:obsXpred) Gráfico de observaciones frente a predicciones (`test$quality`; se añade una perturbación para mostrar la distribución de los valores)
+
+```{r obsXpred, fig.cap='(ref:obsXpred)'}
 obs <- test$quality
 pred <- predict(tree, newdata = test)
-
-# plot(pred, obs, main = "Observado frente a predicciones (quality)",
-#      xlab = "Predicción", ylab = "Observado")
+# plot(pred, obs, xlab = "Predicción", ylab = "Observado")
 plot(jitter(pred), jitter(obs), xlab = "Predicción", ylab = "Observado")
 abline(a = 0, b = 1)
 
@@ -473,8 +486,7 @@ Como se puede observar el ajuste del modelo es bastante malo, como ya se coment�
 En problemas de clasificación es más habitual que se puedan llegar a obtener buenos ajustes con árboles de decisión.
 
 
-```{exercise, label="efecto-semilla"}
-```
+::: {.exercise #efecto-semilla}
 
 Como se comentó en la introducción del Capítulo \@ref(intro-AE) al emplear el procedimiento habitual en AE de particionar los datos no se garantiza la reproducibilidad/repetibilidad de los resultados ya que dependen de la semilla. 
 El modelo ajustado puede cambiar al variar la semilla (sobre todo si el conjunto de entrenamiento es pequeño; además, en algunos modelos el método de ajuste depende también de la semilla) pero normalmente no hay grandes cambios en las predicciones.
@@ -494,27 +506,27 @@ ntest <- 10
 test <- winequality[1:ntest, ]
 df <- winequality[-(1:ntest), ]
 nobs <- nrow(df)
-
 # Para las distintas semillas
 set.seed(semilla)
 itrain <- sample(nobs, 0.8 * nobs)
 train <- df[itrain, ]
-
 # tree <- ...
 ```
 
 Como comentario final, en este caso el conjunto de datos no es muy grande y tampoco se obtuvo un buen ajuste con un árbol de regresión, por lo que sería de esperar que se observaran más diferencias.
 
+:::
 
 
-```{exercise, label="train-validate-test-tree"}
-```
+::: {.exercise #train-validate-test-tree}
 
 Como ya se mostró, el paquete `rpart` implementa la selección del parámetro de complejidad mediante validación cruzada. 
 Como alternativa, siguiendo la idea del Ejercicio \@ref(exr:train-validate-test), y considerando de nuevo el ejemplo anterior, particionar la muestra en datos de entrenamiento (70\%), de validación (15\%) y de test (15\%), para ajustar los árboles de decisión, seleccionar el parámetro de complejidad (el hiperparámetro) y evaluar las predicciones del modelo final, respectivamente.
 
-```{exercise, label="train-boot-tree"}
-```
+:::
+
+
+::: {.exercise #train-boot-tree}
 
 Una alternativa a particionar en entrenamiento y validación sería emplear bootstrap.
 La idea es emplear una remuestra bootstrap del conjunto de datos de entrenamiento para ajustar el modelo y utilizar las observaciones no seleccionadas (se suelen denominar datos *out of bag*) como conjunto de validación.
@@ -526,7 +538,6 @@ nobs <- nrow(winequality)
 itrain <- sample(nobs, 0.8 * nobs)
 train <- winequality[itrain, ]
 test <- winequality[-itrain, ]
-
 # Indice muestra de entrenamiento bootstrap
 set.seed(1)
 ntrain <- nrow(train)
@@ -546,10 +557,11 @@ ntrain - length(unique(itrain.boot))
 oob <- train[-itrain.boot, ]
 ```
 
-
 El resto sería igual que el caso anterior cambiando `train` por `train.boot` y `validate` por `oob`.
 
 Como comentario final, lo recomendable sería repetir el proceso un número grande de veces y promediar los errores (esto está relacionado con el método de *bagging* descrito en el siguiente capítulo), especialmente cuando el tamaño muestral es pequeño, pero por simplicidad consideraremos únicamente una muestra boostrap.
+
+:::
 
 
 ### Ejemplo: modelo de clasificación {#class-rpart}
@@ -559,7 +571,8 @@ Para ilustrar los árboles de clasificación CART, podemos emplear los datos ant
 ```{r}
 # load("data/winetaste.RData")
 winetaste <- winequality[, colnames(winequality)!="quality"]
-winetaste$taste <- factor(winequality$quality < 6, labels = c('good', 'bad')) # levels = c('FALSE', 'TRUE')
+winetaste$taste <- factor(winequality$quality < 6, # levels = c('FALSE', 'TRUE')
+                          labels = c('good', 'bad')) 
 str(winetaste)
 table(winetaste$taste)
 ```
@@ -586,16 +599,23 @@ En este caso al imprimirlo como información de los nodos se muestra (además de
 tree
 ```
 
-También puede ser preferible emplear el paquete `r citepkg("rpart.plot")` para representarlo `r citefig("arbolclassif")`.
+También puede ser preferible emplear el paquete `r cite_cran("rpart.plot")` para representarlo `r cite_fig(arbolclassif)`:
 
-```{r arbolclassif,fig.cap="Árbol de clasificación de `winetaste$taste` (obtenido con las opciones por defecto)."}
+
+(ref:arbolclassif) Árbol de clasificación de `winetaste$taste` (obtenido con las opciones por defecto).
+
+```{r arbolclassif, fig.cap='(ref:arbolclassif)'}
 library(rpart.plot)
 rpart.plot(tree) # Alternativa: rattle::fancyRpartPlot
 ```
 
 
-Nos interesa como se clasificaría a una nueva observación (como se llega a los nodos terminales) y su probabilidad estimada (la frecuencia relativa de la clase más frecuente en el correspondiente nodo terminal). Para ello se puede modificar la información que se muestra en cada nodo `r citefig("arbolextra")`.
-```{r arbolextra,fig.cap="Representación del árbol de clasificación de `winetaste$taste` incluyendo información adicional en los nodos."}
+Nos interesa como se clasificaría a una nueva observación (como se llega a los nodos terminales) y su probabilidad estimada (la frecuencia relativa de la clase más frecuente en el correspondiente nodo terminal). 
+Para ello se puede modificar la información que se muestra en cada nodo `r cite_fig(arbolextra)`:
+
+(ref:arbolextra) Representación del árbol de clasificación de `winetaste$taste` con opciones adicionales.
+
+```{r arbolextra, fig.cap='(ref:arbolextra)'}
 rpart.plot(tree, 
            extra = 104,          # show fitted class, probs, percentages
            box.palette = "GnBu", # color scheme
@@ -623,15 +643,20 @@ En este caso mantenemos el resto de valores por defecto:
 tree <- rpart(taste ~ ., data = train, cp = 0)
 ```
 
-Representamos los errores (reescalados) de validación cruzada `r citefig("errorclassif")`
-```{r errorclassif,fig.cap="Evolución del error (reescalado) de validación cruzada en función del parámetro de complejidad."}
+Representamos los errores (reescalados) de validación cruzada `r cite_fig(errorclassif)`
+
+(ref:errorclassif) Evolución del error (reescalado) de validación cruzada en función del parámetro de complejidad.
+
+```{r errorclassif, fig.cap='(ref:errorclassif)'}
 # printcp(tree)
 plotcp(tree)
 ```
 
-Para obtener el modelo final, seleccionamos el valor óptimo de complejidad siguiendo el criterio de un error estándar de @breiman1984classification y podamos el árbol `r citefig("arbolclassifpoda")`.
+Para obtener el modelo final, seleccionamos el valor óptimo de complejidad siguiendo el criterio de un error estándar de @breiman1984classification y podamos el árbol `r cite_fig(arbolclassifpoda)`.
 
-```{r arbolclassifpoda,fig.cap="Árbol de clasificación de `winetaste$taste` obtenido después de la poda (modelo final)."}
+(ref:arbolclassifpoda) Árbol de clasificación de `winetaste$taste` obtenido después de la poda (modelo final).
+
+```{r arbolclassifpoda, fig.cap='(ref:arbolclassifpoda)'}
 xerror <- tree$cptable[,"xerror"]
 imin.xerror <- which.min(xerror)
 upper.xerror <- xerror[imin.xerror] + tree$cptable[imin.xerror, "xstd"]
@@ -648,7 +673,7 @@ rpart.plot(tree) #, main="Classification tree winetaste"
 ```
 
 El último paso sería evaluarlo en la muestra de test siguiendo los pasos descritos en la Sección \@ref(eval-class).
-El método `predict()` por defecto (`type = "prob"`) devuelve una matriz con las probabilidades de cada clase, habrá que establecer `type = "class"` (para más detalles consultar la ayuda de `predic.rpart()`).
+El método `r cite_fun(predict.rpart, rpart)` devuelve por defecto (`type = "prob"`) una matriz con las probabilidades de cada clase, por lo que habrá que establecer `type = "class"` (para más detalles consultar la ayuda de esta función).
 
 ```{r }
 obs <- test$taste
@@ -664,41 +689,45 @@ caret::confusionMatrix(pred, obs)
 
 En `caret` podemos ajustar un árbol CART seleccionando `method = "rpart"`.
 Por defecto emplea bootstrap de las observaciones para seleccionar el valor óptimo del hiperparámetro `cp` (considerando únicamente tres posibles valores).
-Si queremos emplear validación cruzada como en el caso anterior podemos emplear la función auxiliar `trainControl()` y para considerar un mayor rango de posibles valores, el argumento `tuneLength` `r citefig("arbolclassifggplot")`.
+Si queremos emplear validación cruzada como en el caso anterior podemos emplear la función auxiliar `r cite_fun(trainControl, caret)` y para considerar un mayor rango de posibles valores, el argumento `tuneLength` `r cite_fig(arbolclassifggplot)`.
 
 ```{r arbolclassifggplot,fig.cap="Evolución de la precisión (obtenida mediante validación cruzada) dependiendo del parámetro de complejidad."}
 
 library(caret)
-# names(getModelInfo()) # Listado de todos los métodos disponibles
 # modelLookup("rpart")  # Información sobre hiperparámetros
 set.seed(1)
 # itrain <- createDataPartition(winetaste$taste, p = 0.8, list = FALSE)
 # train <- winetaste[itrain, ]
 # test <- winetaste[-itrain, ]
-caret.rpart <- train(taste ~ ., method = "rpart", data = train, 
-                     tuneLength = 20,
+caret.rpart <- train(taste ~ ., method = "rpart", data = train, tuneLength = 20,
                      trControl = trainControl(method = "cv", number = 10)) 
 caret.rpart
 ggplot(caret.rpart)
 ```
-El modelo final es el siguiente `r citefig("arbolfinalcaret")`
-```{r arbolfinalcaret,fig.cap='Árbol de clasificación de `winetaste$taste`, obtenido con la complejidad "óptima" (empleando `caret`).'}
+El modelo final se devuelve en la componente `$finalModel` `r cite_fig(arbolfinalcaret)`:
+
+(ref:arbolfinalcaret) Árbol de clasificación de `winetaste$taste`, obtenido con la complejidad "óptima" (empleando `caret`).
+
+```{r arbolfinalcaret, fig.cap='(ref:arbolfinalcaret)'}
 caret.rpart$finalModel
-rpart.plot(caret.rpart$finalModel) #, main="Classification tree winetaste"
+rpart.plot(caret.rpart$finalModel)
 ```
 
-Para utilizar la regla de "un error estándar" se puede añadir `selectionFunction = "oneSE"`. A continuacióno se muestra dicho código y en la Figura \@ref(fig:arbolclassifoneSE) el árbol resultante.
+Para utilizar la regla de "un error estándar" se puede añadir `selectionFunction = "oneSE"` en las opciones de entrenamiento[^rpart-1]`r cite_fig(arbolclassifoneSE)`:
 
-```{r arbolclassifoneSE,fig.cap="Árbol de clasificación de `winetaste$taste`,  obtenido con la regla de un error estándar para seleccionar la complejidad (empleando `caret`)."}
+[^rpart-1]: En principio también se podría utilizar la regla de un error estándar estableciendo `method = "rpart1SE"` en la llamada a `train()`, pero `caret` implementa internamente este método y en ocasiones no se obtienen los resultados esperados.
+
+(ref:arbolclassifoneSE) Árbol de clasificación de `winetaste$taste`,  obtenido con la regla de un error estándar para seleccionar la complejidad (empleando `caret`).
+
+```{r arbolclassifoneSE, fig.cap='(ref:arbolclassifoneSE)'}
 set.seed(1)
-caret.rpart <- train(taste ~ ., method = "rpart", data = train, 
-                     tuneLength = 20,
+caret.rpart <- train(taste ~ ., method = "rpart", data = train, tuneLength = 20,
                      trControl = trainControl(method = "cv", number = 10,
                                               selectionFunction = "oneSE")) 
 caret.rpart
 # ggplot(caret.rpart)
 caret.rpart$finalModel
-rpart.plot(caret.rpart$finalModel)#, main = "Classification tree winetaste"
+rpart.plot(caret.rpart$finalModel)
 ```
 
 ```{r arbolImpor,fig.cap="Importancia de los (posibles) predictores según el modelo obtenido con la regla de un error estándar."}
@@ -706,13 +735,16 @@ var.imp <- varImp(caret.rpart)
 plot(var.imp)
 ```
 
-Para calcular las predicciones (o las estimaciones de las probabilidades) podemos emplear el método `predict.train()` y posteriormente `confusionMatrix()` para evaluar su precisión:
+Para calcular las predicciones (o las estimaciones de las probabilidades) podemos emplear el método `r cite_fun(predict.train, caret)` y posteriormente `r cite_fun(confusionMatrix, caret)` para evaluar su precisión:
 
 ```{r}
 pred <- predict(caret.rpart, newdata = test)
 # p.est <- predict(caret.rpart, newdata = test, type = "prob")
 confusionMatrix(pred, test$taste)
 ```
+
+
+<!-- 
 
 NOTA: En principio también se podría utilizar la regla de "un error estándar" seleccionando `method = "rpart1SE"` (pero `caret` implementa internamente este método y en ocasiones no se obtienen los resultados esperados).
 
@@ -726,22 +758,21 @@ rpart.plot(caret.rpart$finalModel) #, main = "Classification tree winetaste"
 varImp(caret.rpart)
 ```
 
+Como alternativas al uso de la metodología CART desde `caret` se  puede considerar las opciones de los metapaquetes: 
 
-Como alternativas al uso de la metodología CART desde `cartet` se  puede considerar las opciones de los metapaquetes:
-
-* `r citepkg("mlr3", "https://mlr3book.mlr-org.com/mlr3book.pdf")`, que incorpora una llamada a `rpart::rpart()` desde sus **learners** `lrn("regr.rpart")` y `lrn("classif.rpart")`.
-* `r citepkg("h2o", "https://www.h2o.ai/blog/finally-you-can-plot-h2o-decision-trees-in-r/")`, que aunque no ofrece una implementación de los árboles CART, sí ofrece dos alternativas más sofisticadas usando bosques aleatorios `h2o.randomForest()` y los procedimientos basados en el aumento del gradiente `h2o.gbm()`.
-
+* `r cite_pkg_("mlr3", "https://mlr-org.com")`, que incorpora una llamada a `rpart::rpart()` desde sus **learners** `lrn("regr.rpart")` y `lrn("classif.rpart")`.
+* `r cite_pkg_("h2o", "https://www.h2o.ai/blog/finally-you-can-plot-h2o-decision-trees-in-r/")`, que aunque no ofrece una implementación de los árboles CART, sí ofrece dos alternativas más sofisticadas usando bosques aleatorios `h2o.randomForest()` y los procedimientos basados en el aumento del gradiente `h2o.gbm()`.
+-->
 
 ## Alternativas a los árboles CART
 
 Una de las alternativas más populares es la metodología C4.5 [@quinlan1993c4], evolución de ID3 (1986), que en estos momentos se encuentra en la versión C5.0 (y es ya muy similar a CART). 
 C5.0 se utiliza sólo para clasificación e incorpora *boosting* (que veremos en el tema siguiente).
-Esta metodología está implementada en el paquete `r citepkg("C50", "https://topepo.github.io/C5.0/index.html")`. 
+Esta metodología está implementada en el paquete `r cite_pkg_("C50", "https://topepo.github.io/C5.0/index.html")`. 
 
 Ross Quinlan desarrolló también la metodologia M5 [@quinlan1992learning] para regresión. 
 Su principal característica es que los nodos terminales, en lugar de contener un número, contienen un modelo (de regresión) lineal. 
-El paquete `r citepkg("Cubist", "https://topepo.github.io/Cubist")` es una evolución de M5 que incorpora un método *ensemble* similar a *boosting*.
+El paquete `r cite_pkg_("Cubist", "https://topepo.github.io/Cubist")` es una evolución de M5 que incorpora un método *ensemble* similar a *boosting*.
 
 La motivación detrás de M5 es que, si la predicción que aporta un nodo terminal se limita a un único número (como hace la metodología CART), entonces el modelo va a predecir muy mal los valores que *realmente* son muy extremos, ya que el número de posibles valores predichos está limitado por el número de nodos terminales, y en cada uno de ellos se utiliza una media. 
 Por ello M5 le asocia a cada nodo un modelo de regresión lineal, para cuyo ajuste se utilizan los datos del nodo y todas las variables que están en la ruta del nodo. 
@@ -761,7 +792,7 @@ Como se desea trabajar con árboles binarios (si se admite que de un nodo salga 
 Se van haciendo pruebas chi-cuadrado entre pares de categorías y la variable respuesta, y se fusiona el par con el *p*-valor más alto, ya que se trata de fusionar las categorías que sean más similares.
 
 Para árboles de regresión hay metodologías que, al igual que CHAID, se basan en el cálculo de *p*-valores, en este caso de contrastes de igualdes de medias.
-Una de las más utilizadas son los *conditional inference trees* [@hothorn2006unbiased]^[Otra alternativa es GUIDE (Generalized, Unbiased, Interaction Detection and Estimation; @loh2002regression).], implementada en la función `ctree()` del paquete `r citepkg("party")`.
+Una de las más utilizadas son los *conditional inference trees* [@hothorn2006unbiased]^[Otra alternativa es GUIDE (Generalized, Unbiased, Interaction Detection and Estimation; @loh2002regression).], implementada en la función `r cite_fun(ctree, party)` del paquete `r cite_cran("party")`.
 
 Un problema conocido de los árboles CART es que sufren un sesgo de selección de variables: los predictores con más valores distintos son favorecidos. 
 Esta es una de las motivaciones de utilizar estos métodos basados en contrastes de hipótesis. 
@@ -772,7 +803,10 @@ Por otra parte hay que ser conscientes de que los contrastes de hipótesis y la 
 
 Siguiendo con el problema de clasificación anterior, podríamos ajustar un árbol de decisión empleando la metodología de *inferencia condicional* mediante el siguiente código:
 
-```{r ctree-plot, fig.cap="Árbol de decisión para clasificar la calidad del vino (`winetaste$taste`) obtenido con el método condicional.", fig.height=8, fig.width=10}
+
+(ref:ctree-plot) Árbol de decisión para clasificar la calidad del vino (`winetaste$taste`) obtenido con el método condicional.
+
+```{r ctree-plot, fig.cap='(ref:ctree-plot)', fig.height=8, fig.width=10}
 library(party)
 tree2 <- ctree(taste ~ ., data = train) 
 plot(tree2)

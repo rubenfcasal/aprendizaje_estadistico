@@ -1,5 +1,7 @@
 # Máquinas de soporte vectorial {#svm}
 
+
+
 <!-- 
 ---
 title: "Máquinas de soporte vectorial"
@@ -23,19 +25,22 @@ knitr::purl("04-svm.Rmd", documentation = 2)
 knitr::spin("04-svm.R",knit = FALSE)
 -->
 
+Las máquinas de soporte vectorial (*support vector machines*, SVM) son métodos estadísticos que Vladimir Vapnik empezó a desarrollar a mediados de 1960, inicialmente para problemas de clasificación binaria (problemas de clasificación con dos categorias), basados en la idea de separar los datos mediante hiperplanos. 
+Actualmente existen extensiones dentro de esta metodología para clasificación con más de dos categorías, para regresión y para detección de datos atípicos. 
+El nombre proviene de la utilización de vectores que hacen de soporte para maximizar la separación entre los datos y el hiperplano.
 
-
-
-Las máquinas de soporte vectorial (*support vector machines*, SVM) son métodos estadísticos que Vladimir Vapnik empezó a desarrollar a mediados de 1960, inicialmente para problemas de clasificación binaria (problemas de clasificación con dos categorias), basados en la idea de separar los datos mediante hiperplanos. Actualmente existen extensiones dentro de esta metodología para clasificación con más de dos categorías, para regresión y para detección de datos atípicos. El nombre proviene de la utilización de vectores que hacen de soporte para maximizar la separación entre los datos y el hiperplano.
-
-La popularidad de las máquinas de soporte vectorial creció a partir de los años 90 cuando los incorpora la comunidad informática. Se considera una metodología muy flexible y con buen rendimiento en un amplio abanico de situaciones, aunque por lo general no es la que consigue los mejores rendimientos. Dos referencias ya clásicas son @vapnik1998 y @vapnik2013nature.
+La popularidad de las máquinas de soporte vectorial creció a partir de los años 90 cuando los incorpora la comunidad informática. 
+Se considera una metodología muy flexible y con buen rendimiento en un amplio abanico de situaciones, aunque por lo general no es la que consigue los mejores rendimientos. 
+Dos referencias ya clásicas son @vapnik1998 y @vapnik2013nature.
 
 Siguiendo a @james2021introduction distinguiremos en nuestra exposición entre clasificadores de máximo margen (*maximal margin classifiers*), clasificadores de soporte vectorial (*support vector classifiers*) y máquinas de soporte vectorial (*support vector machines*).
 
 
 ## Clasificadores de máximo margen 
 
-Los clasificadores de máximo margen (*maximal margin classifiers*; también denominados *hard margin classifiers*) son un método de clasificación binaria que se utiliza cuando hay una frontera lineal que separa perfectamente los datos de entrenamiento de una categoría de los de la otra. Por conveniencia, etiquetamos las dos categorías como +1/-1, es decir, los valores de la variable respuesta $Y \in \{-1, 1\}$. Y suponemos que existe un hiperplano
+Los clasificadores de máximo margen (*maximal margin classifiers*; también denominados *hard margin classifiers*) son un método de clasificación binaria que se utiliza cuando hay una frontera lineal que separa perfectamente los datos de entrenamiento de una categoría de los de la otra. 
+Por conveniencia, etiquetamos las dos categorías como +1/-1, es decir, los valores de la variable respuesta $Y \in \{-1, 1\}$. 
+Y suponemos que existe un hiperplano
 \[ \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_p X_p = 0,\]
 donde $p$ es el número de variables predictoras, que tiene la propiedad de separar los datos de entrenamiento según la categoría a la que pertenecen, es decir, 
 \[ y_i(\beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \ldots + \beta_p x_{pi}) > 0\]
@@ -43,15 +48,30 @@ para todo $i = 1, 2, \ldots, n$, siendo $n$ el número de datos de entrenamiento
 
 Una vez tenemos el hiperplano, clasificar una nueva observación $\mathbf{x}$ se reduce a calcular el signo de
 \[m(\mathbf{x}) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \ldots + \beta_p x_p\]
-Si el signo es positivo, se clasifica como perteneciente a la categoría +1, y si es negativo a la categoría -1. Además, el valor absoluto de $m(\mathbf{x})$ nos da una idea de la distancia entre la observación y la frontera que define el hiperplano. En concreto 
+Si el signo es positivo, se clasifica como perteneciente a la categoría +1, y si es negativo a la categoría -1. 
+Además, el valor absoluto de $m(\mathbf{x})$ nos da una idea de la distancia entre la observación y la frontera que define el hiperplano. 
+En concreto 
 $$\frac{y_i}{\sqrt {\sum_{j=1}^p \beta_j^2}}(\beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \ldots + \beta_p x_{pi})$$
 sería la distancia de la observación $i$-ésima al hiperplano.
-Por supuesto, aunque clasifique los datos de entrenamiento sin error, no hay ninguna garantía de que clasifique bien nuevas observaciones, por ejemplo los datos de test. De hecho, si $p$ es grande es fácil que haya un sobreajuste.
+Por supuesto, aunque clasifique los datos de entrenamiento sin error, no hay ninguna garantía de que clasifique bien nuevas observaciones, por ejemplo los datos de test. 
+De hecho, si $p$ es grande es fácil que haya un sobreajuste.
 
-Realmente, si existe al menos un hiperplano que separa perfectamente los datos de entrenamiento de las dos categorías, entonces va a haber infinitos. El objetivo es seleccionar un hiperplano. Para ello, dado un hiperplano, se calculan sus distancias a todos los datos de entrenamiento y se define el *margen* como la menor de esas distancias. El método *maximal margin classifier* lo que hace es seleccionar, de los infinitos hiperplanos, aquel que tiene el mayor margen. Fijémonos en que siempre va a haber varias observaciones que equidistan del hiperplano de máximo margen, y cuya distancia es precisamente el margen. Esas observaciones reciben el nombre de *vectores soporte* y son las que dan nombre a esta metodología.
+Realmente, si existe al menos un hiperplano que separa perfectamente los datos de entrenamiento de las dos categorías, entonces va a haber infinitos. 
+El objetivo es seleccionar un hiperplano que separe los datos lo mejor posible. 
+Para ello, dado un hiperplano de separación, se calculan sus distancias a todos los datos de entrenamiento y se define el *margen* como la menor de esas distancias. 
+El método *maximal margin classifier* lo que hace es seleccionar, de los infinitos hiperplanos, aquel que tiene el mayor margen. 
+Fijémonos en que siempre va a haber varias observaciones que equidistan del hiperplano de máximo margen, y cuya distancia es precisamente el margen. 
+Esas observaciones reciben el nombre de *vectores soporte* (podemos obtener el hiperplano a partir de ellas) y son las que dan nombre a esta metodología (ver Figura \@ref(fig:margin)). 
 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{04-svm_files/figure-latex/unnamed-chunk-2-1} \end{center}
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.75\linewidth]{04-svm_files/figure-latex/margin-1} 
+
+}
+
+\caption{Ilustración de un clasificador de máximo margen con dos predictores (con datos simulados; los puntos se corresponden con las observaciones y el color, negro o rojo, con la clase). La línea sólida es el hiperplano de máximo margen y los puntos sólidos los vectores de soporte (las líneas discontinuas se corresponden con la máxima distancia del hiperplano a las observaciones).}(\#fig:margin)
+\end{figure}
 
 Matemáticamente, dadas las $n$ observaciones de entrenamiento $\mathbf{x}_1, \mathbf{x}_2, \ldots, \mathbf{x}_n$, el clasificador de máximo margen es la solución del problema de optimización
 \[max_{\beta_0, \beta_1,\ldots, \beta_p} M\]
@@ -84,7 +104,13 @@ sujeto a
 \[\sum_{i=1}^n \epsilon_i \le K\]
 \[\epsilon_i \ge 0 \ \ \forall i\]
 
-Las variables $\epsilon_i$ son las variables de holgura (*slack variables*). Quizás resultase más intuitivo introducir las holguras en términos absolutos, como $M -\epsilon_i$, pero eso daría lugar a un problema no convexo, mientras que escribiendo la restricción en términos relativos como $M(1 - \epsilon_i)$ el problema pasa a ser convexo. Pero en esta formulación el elemento clave es la introducción del hiperparámetro $K$, necesariamente no negativo, que se puede interpretar como la tolerancia al error. De hecho, es fácil ver que no puede haber más de $K$ datos de entrenamiento incorrectamente clasificados, ya que si un dato está mal clasificado entonces $\epsilon_i > 1$. En el caso extremo de utilizar $K = 0$, estaríamos en el caso de un *hard margin classifier*. La elección del valor de $K$ también se puede interpretar como una penalización por la complejidad del modelo, y por tanto en términos del balance entre el sesgo y la varianza: valores pequeños van a dar lugar a modelos muy complejos, con mucha varianza y poco sesgo (con el consiguiente riesgo de sobreajuste); y valores grandes a modelos con mucho sesgo y poca varianza. El hiperparámetro $K$ se puede seleccionar de modo óptimo por los procedimientos ya conocidos, tipo bootstrap o validación cruzada.
+Las variables $\epsilon_i$ son las variables de holgura (*slack variables*). 
+Quizás resultase más intuitivo introducir las holguras en términos absolutos, como $M -\epsilon_i$, pero eso daría lugar a un problema no convexo, mientras que escribiendo la restricción en términos relativos como $M(1 - \epsilon_i)$ el problema pasa a ser convexo. 
+Pero en esta formulación el elemento clave es la introducción del hiperparámetro $K$, necesariamente no negativo, que se puede interpretar como la tolerancia al error. 
+De hecho, es fácil ver que no puede haber más de $K$ datos de entrenamiento incorrectamente clasificados, ya que si un dato está mal clasificado entonces $\epsilon_i > 1$. 
+En el caso extremo de utilizar $K = 0$, estaríamos en el caso de un *hard margin classifier*. 
+La elección del valor de $K$ también se puede interpretar como una penalización por la complejidad del modelo, y por tanto en términos del balance entre el sesgo y la varianza: valores pequeños van a dar lugar a modelos muy complejos, con mucha varianza y poco sesgo (con el consiguiente riesgo de sobreajuste); y valores grandes a modelos con mucho sesgo y poca varianza. 
+El hiperparámetro $K$ se puede seleccionar de modo óptimo por los procedimientos ya conocidos, tipo bootstrap o validación cruzada.
 
 Una forma equivalente de formular el problema (cuadrático con restricciones lineales) es
 \[\mbox{min}_{\beta_0, \boldsymbol{\beta}} \lVert \boldsymbol{\beta} \rVert\]
@@ -99,10 +125,20 @@ sujeto a
 \[ y_i(\beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \ldots + \beta_p x_{pi}) \ge 1 - \epsilon_i \ \ \forall i\]
 \[\epsilon_i \ge 0 \ \ \forall i\]
 
-Aunque el problema a resolver es el mismo, y por tanto también la solución, hay que tener cuidado con la interpretación, pues el hiperparámetro $K$ se ha sustituido por $C$. Este nuevo parámetro es el que nos vamos a encontrar en los ejercicios prácticos y tiene una interpretación inversa a $K$. El parámetro $C$ es la penalización por mala clasificación (coste que supone que un dato de entrenamiento esté mal clasificado), y por tanto el *hard margin classifier* se obtiene para valores muy grandes ($C = \infty$ se corresponde con $K = 0$). Esto es algo confuso, ya que no se corresponde con la interpretación habitual de *penalización por complejidad*.
+Aunque el problema a resolver es el mismo, y por tanto también la solución, hay que tener cuidado con la interpretación, pues el hiperparámetro $K$ se ha sustituido por $C$. Este nuevo parámetro es el que nos vamos a encontrar en los ejercicios prácticos y tiene una interpretación inversa a $K$. El parámetro $C$ es la penalización por mala clasificación (coste que supone que un dato de entrenamiento esté mal clasificado), y por tanto el *hard margin classifier* se obtiene para valores muy grandes ($C = \infty$ se corresponde con $K = 0$), véase la Figura \@ref(fig:margin2). Esto es algo confuso, ya que no se corresponde con la interpretación habitual de *penalización por complejidad*.
 
+<!--(ref:magin2) Izquierda, ejemplo de un margen débil (*soft margin*)  parámetro de coste pequeño. Derecha, ejemplo de un margen duro (*hard  margin*), parámetro de coste C grande. -->
 
-\begin{center}\includegraphics[width=0.9\linewidth]{04-svm_files/figure-latex/unnamed-chunk-3-1} \end{center}
+(ref:margin2) Ejemplo de clasificadores de soporte vectorial (margen débil), con parámetro de coste "pequeño" (izquierda) y "grande" (derecha). 
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.9\linewidth]{04-svm_files/figure-latex/margin2-1} 
+
+}
+
+\caption{(ref:margin2)}(\#fig:margin2)
+\end{figure}
 
 En este contexto, los vectores soporte van a ser no solo los datos de entrenamiento que están (correctamente clasificados) a una distancia $M$ del hiperplano, sino también aquellos que están incorrectamente clasificados e incluso los que están a una distancia inferior a $M$. Como se comentó en la sección anterior, estos son los datos que definen el modelo, que es por tanto robusto a las observaciones que están lejos del hiperplano.
 
@@ -113,9 +149,10 @@ puede representarse como
 donde $\mathbf{x}^t \mathbf{x}_i$ es el producto escalar entre el vector $\mathbf{x}$ del dato a clasificar y el vector $\mathbf{x}_i$ del dato de entrenamiento $i$-ésimo. Asimismo, los coeficientes $\beta_0, \alpha_1, \ldots, \alpha_n$ se obtienen (exclusivamente) a partir de los productos escalares $\mathbf{x}_i^t \mathbf{x}_j$ de los distintos pares de datos de entrenamiento y de las respuestas $y_i$. Y más aún, el sumatorio anterior se puede reducir a los índices que corresponden a vectores soporte ($i\in S$), al ser los demás coeficientes nulos:
 \[m(\mathbf{x}) = \beta_0 + \sum_{i\in S} \alpha_i \mathbf{x}^t \mathbf{x}_i\]
 
+
 ## Máquinas de soporte vectorial
 
-De la misma manera que en el capítulo dedicado a árboles se comentó que estos serán efectivos en la medida en la que los datos se separen adecuadamente utilizando particiones basadas en rectángulos, los dos métodos de clasificación que hemos visto hasta ahora serán efectivos si hay una frontera lineal que separe los datos de las dos categorías. En caso contrario, un clasificador de soporte vectorial resultará inadecuado. Una solución natural es sustituir el hiperplano, lineal en esencia, por otra función que dependa de las variables predictoras $X_1,X_2, \ldots, X_n$, utilizando por ejemplo una expresión polinómica o incluso una expresión que no sea aditiva en los predictores. Pero esta solución puede resultar muy compleja computacionalmente. 
+De la misma manera que en el Capítulo \@ref(trees)  dedicado a árboles se comentó que estos serán efectivos en la medida en la que los datos se separen adecuadamente utilizando particiones basadas en rectángulos, los dos métodos de clasificación que hemos visto hasta ahora serán efectivos si hay una frontera lineal que separe los datos de las dos categorías. En caso contrario, un clasificador de soporte vectorial resultará inadecuado. Una solución natural es sustituir el hiperplano, lineal en esencia, por otra función que dependa de las variables predictoras $X_1,X_2, \ldots, X_n$, utilizando por ejemplo una expresión polinómica o incluso una expresión que no sea aditiva en los predictores. Pero esta solución puede resultar muy compleja computacionalmente. 
 
 En Boser *et al.* (1992) se propuso sustituir, en todos los cálculos que conducen a la expresión
 \[m(\mathbf{x}) = \beta_0 + \sum_{i\in S} \alpha_i \mathbf{x}^t \mathbf{x}_i\]
@@ -136,21 +173,26 @@ Algunas de las funciones kernel más utilizadas son:
 - Tangente hiperbólica
     \[K(\mathbf{x}, \mathbf{y}) = \mbox{tanh} (1 + \gamma \mathbf{x}^t \mathbf{y})\]
 
-Antes de construir el modelo, es recomendable centrar y reescalar los datos para evitar que los valores grandes *ahoguen* al resto de los datos. Por supuesto, tiene que hacerse la misma transformación a todos los datos, incluidos los datos de test. La posibilidad de utilizar distintos kernels da mucha flexibilidad a esta metodología, pero es muy importante seleccionar adecuadamente los parámetros de la función kernel ($\gamma,d$) y el parámetro $C$ para evitar sobreajustes.
+(ref:magin3) Ejemplos de máquinas de soporte vectorial con diferentes valores de los hiperparámetros ($\gamma$ inverso de la ventana de la función kernel y coste $C$).
+
+Antes de construir el modelo, es recomendable centrar y reescalar los datos para evitar que los valores grandes *ahoguen* al resto de los datos. Por supuesto, tiene que hacerse la misma transformación a todos los datos, incluidos los datos de test. La posibilidad de utilizar distintos kernels da mucha flexibilidad a esta metodología, pero es muy importante seleccionar adecuadamente los parámetros de la función kernel ($\gamma,d$) y el parámetro $C$ para evitar sobreajustes como se puede ver en la Figura \@ref(fig:magin3).
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.9\linewidth]{04-svm_files/figure-latex/magin3-1} 
+
+}
+
+\caption{(ref:magin3)}(\#fig:magin3)
+\end{figure}
+
+La metodología *support vector machine* está específicamente diseñada para clasificar cuando hay exactamente dos categorías. 
+En la literatura se pueden encontrar varias propuestas para extenderla al caso de más de dos categorías, aunque las dos más populares son las comentadas en la Sección \@ref(notacion): "uno contra todos" (*One-vs-Rest*, OVR) y "uno contra uno" (*One-vs-One*, OVO)[^nota-svm-1].
+
+[^nota-svm-1]: Esta última es la que implementa la función `kernlab::ksvm()`, empleada como ejemplo en la Sección \@ref(svm-kernlab).
 
 
-\begin{center}\includegraphics[width=0.9\linewidth]{04-svm_files/figure-latex/unnamed-chunk-4-1} \end{center}
-
-### Clasificación con más de dos categorías
-
-La metodología *support vector machine* está específicamente diseñada para clasificar cuando hay exactamente dos categorías. En la literatura se pueden encontrar varias propuestas para extenderla al caso de más de dos categorías, aunque las dos más populares son también las más sencillas.
-
-La primera opción consiste en construir tantos modelos como parejas de categorías hay, en un enfoque de *uno contra uno*. Dada una nueva observación a clasificar, se mira en cada uno de los modelos en que categoría la clasifica. Finalmente se hace un recuento y gana la categoría con más *votos*.
-
-La alternativa es llevar a cabo un enfoque de *uno contra todos*. Para cada categoría se contruye el modelo que considera esa categoría frente a todas las demás agrupadas como una sola y, para la observación a clasificar, se considera su distancia con la frontera. Se clasifica la observación como perteneciente a la categoría con mayor distancia.
-
-
-### Regresión
+### Regresión con SVM
 
 Aunque la metodología SVM está concebida para problemas de clasificación, ha habido varios intentos de adaptar su filosofía a problemas de regresión. En esta sección vamos a comentar muy por encima el enfoque seguido en @drucker1997support, con un fuerte enfoque en la robustez. Recordemos que, en el contexto de la clasificación, el modelo SVM va a depender de unos pocos datos: los vectores soporte. En regresión, si se utiliza RSS como criterio de error, todos los datos van a influir en el modelo y además, al estar los errores al cuadrado, los valores atípicos van a tener mucha influencia, muy superior a la que se tendría si se utilizase, por ejemplo, el valor absoluto. Una alternativa, poco intuitiva pero efectiva, es fijar los hiperparámetros $\epsilon,c > 0$ como umbral y coste, respectivamente, y definir la función de pérdidas 
 \[
@@ -195,18 +237,16 @@ Inconvenientes:
 <!-- Realmente si todos los predictores fuesen categóricos se podrían emplear distancias/núcleos adecuados -->
 
 
-## SVM con el paquete `kernlab`
+## SVM con el paquete `kernlab` {#svm-kernlab}
 
 Hay varios paquetes que implementan este procedimiento [e.g. [`e1071`](https://CRAN.R-project.org/package=e1071), @R-e1071; [`svmpath`](https://CRAN.R-project.org/package=svmpath), ver @hastie2004entire], aunque se considera que el más completo es [`kernlab`](https://CRAN.R-project.org/package=kernlab) [@kernlab2004].
 
-La función principal es `ksvm()` y se suelen considerar los siguientes argumentos:
+La función principal es [`ksvm()`](https://rdrr.io/pkg/kernlab/man/ksvm.html) y se suelen considerar los siguientes argumentos:
 
 
 ```r
-ksvm(formula, data, scaled = TRUE, type,
-  kernel ="rbfdot", kpar = "automatic",
-  C = 1, epsilon = 0.1, prob.model = FALSE, 
-  class.weights, cross = 0)
+ksvm(formula, data, scaled = TRUE, type, kernel ="rbfdot", kpar = "automatic",
+     C = 1, epsilon = 0.1, prob.model = FALSE, class.weights, cross = 0)
 ```
 
 * `formula` y `data` (opcional): permiten especificar la respuesta y las variables predictoras de la forma habitual (e.g. `respuesta ~ .`; también admite matrices).
@@ -245,26 +285,27 @@ test <- df[-itrain, ]
 
 library(kernlab)
 set.seed(1) 
-# Selección de sigma = mean(sigest(taste ~ ., data = train)[-2]) # depende de la semilla
+# Selección de sigma = mean(sigest(taste ~ ., data = train)[-2]) 
+# (depende de la semilla)
 svm <- ksvm(taste ~ ., data = train,
             kernel = "rbfdot", prob.model = TRUE)
 svm
 ```
 
 ```
-## Support Vector Machine object of class "ksvm" 
-## 
-## SV type: C-svc  (classification) 
-##  parameter : cost C = 1 
-## 
-## Gaussian Radial Basis kernel function. 
-##  Hyperparameter : sigma =  0.0751133799772488 
-## 
-## Number of Support Vectors : 594 
-## 
-## Objective Function Value : -494.1409 
-## Training error : 0.198 
-## Probability model included.
+  ## Support Vector Machine object of class "ksvm" 
+  ## 
+  ## SV type: C-svc  (classification) 
+  ##  parameter : cost C = 1 
+  ## 
+  ## Gaussian Radial Basis kernel function. 
+  ##  Hyperparameter : sigma =  0.0751133799772488 
+  ## 
+  ## Number of Support Vectors : 594 
+  ## 
+  ## Objective Function Value : -494.1409 
+  ## Training error : 0.198 
+  ## Probability model included.
 ```
 
 ```r
@@ -280,33 +321,33 @@ caret::confusionMatrix(pred, test$taste)
 ```
 
 ```
-## Confusion Matrix and Statistics
-## 
-##           Reference
-## Prediction good bad
-##       good  147  45
-##       bad    19  39
-##                                           
-##                Accuracy : 0.744           
-##                  95% CI : (0.6852, 0.7969)
-##     No Information Rate : 0.664           
-##     P-Value [Acc > NIR] : 0.003886        
-##                                           
-##                   Kappa : 0.3788          
-##                                           
-##  Mcnemar's Test P-Value : 0.001778        
-##                                           
-##             Sensitivity : 0.8855          
-##             Specificity : 0.4643          
-##          Pos Pred Value : 0.7656          
-##          Neg Pred Value : 0.6724          
-##              Prevalence : 0.6640          
-##          Detection Rate : 0.5880          
-##    Detection Prevalence : 0.7680          
-##       Balanced Accuracy : 0.6749          
-##                                           
-##        'Positive' Class : good            
-## 
+  ## Confusion Matrix and Statistics
+  ## 
+  ##           Reference
+  ## Prediction good bad
+  ##       good  147  45
+  ##       bad    19  39
+  ##                                           
+  ##                Accuracy : 0.744           
+  ##                  95% CI : (0.6852, 0.7969)
+  ##     No Information Rate : 0.664           
+  ##     P-Value [Acc > NIR] : 0.003886        
+  ##                                           
+  ##                   Kappa : 0.3788          
+  ##                                           
+  ##  Mcnemar's Test P-Value : 0.001778        
+  ##                                           
+  ##             Sensitivity : 0.8855          
+  ##             Specificity : 0.4643          
+  ##          Pos Pred Value : 0.7656          
+  ##          Neg Pred Value : 0.6724          
+  ##              Prevalence : 0.6640          
+  ##          Detection Rate : 0.5880          
+  ##    Detection Prevalence : 0.7680          
+  ##       Balanced Accuracy : 0.6749          
+  ##                                           
+  ##        'Positive' Class : good            
+  ## 
 ```
 
 Para obtener las estimaciones de las probabilidades, habría que establecer 
@@ -320,13 +361,13 @@ head(p.est)
 ```
 
 ```
-##           good       bad
-## [1,] 0.4761934 0.5238066
-## [2,] 0.7089338 0.2910662
-## [3,] 0.8893454 0.1106546
-## [4,] 0.8424003 0.1575997
-## [5,] 0.6640875 0.3359125
-## [6,] 0.3605543 0.6394457
+  ##           good       bad
+  ## [1,] 0.4761934 0.5238066
+  ## [2,] 0.7089338 0.2910662
+  ## [3,] 0.8893454 0.1106546
+  ## [4,] 0.8424003 0.1575997
+  ## [5,] 0.6640875 0.3359125
+  ## [6,] 0.3605543 0.6394457
 ```
 
 <!-- 
@@ -345,9 +386,9 @@ modelLookup("svmRadial")
 ```
 
 ```
-##       model parameter label forReg forClass probModel
-## 1 svmRadial     sigma Sigma   TRUE     TRUE      TRUE
-## 2 svmRadial         C  Cost   TRUE     TRUE      TRUE
+  ##       model parameter label forReg forClass probModel
+  ## 1 svmRadial     sigma Sigma   TRUE     TRUE      TRUE
+  ## 2 svmRadial         C  Cost   TRUE     TRUE      TRUE
 ```
 
 En este caso la función `train()` por defecto evaluará únicamente tres valores del hiperparámetro `C = c(0.25, 0.5, 1)` y fijará el valor de `sigma`. 
@@ -358,33 +399,33 @@ Alternativamente podríamos establecer la rejilla de búsqueda, por ejemplo:
 tuneGrid <- data.frame(sigma = kernelf(svm)@kpar$sigma, # Emplea clases S4
                        C = c(0.5, 1, 5))
 set.seed(1)
-caret.svm <- train(taste ~ ., data = train,
-    method = "svmRadial", preProcess = c("center", "scale"),
-    trControl = trainControl(method = "cv", number = 5),
-    tuneGrid = tuneGrid, prob.model = TRUE)
+caret.svm <- train(taste ~ ., data = train, method = "svmRadial", 
+                   preProcess = c("center", "scale"),
+                   trControl = trainControl(method = "cv", number = 5),
+                   tuneGrid = tuneGrid, prob.model = TRUE)
 caret.svm
 ```
 
 ```
-## Support Vector Machines with Radial Basis Function Kernel 
-## 
-## 1000 samples
-##   11 predictor
-##    2 classes: 'good', 'bad' 
-## 
-## Pre-processing: centered (11), scaled (11) 
-## Resampling: Cross-Validated (5 fold) 
-## Summary of sample sizes: 800, 801, 800, 800, 799 
-## Resampling results across tuning parameters:
-## 
-##   C    Accuracy   Kappa    
-##   0.5  0.7549524  0.4205204
-##   1.0  0.7599324  0.4297468
-##   5.0  0.7549374  0.4192217
-## 
-## Tuning parameter 'sigma' was held constant at a value of 0.07511338
-## Accuracy was used to select the optimal model using the largest value.
-## The final values used for the model were sigma = 0.07511338 and C = 1.
+  ## Support Vector Machines with Radial Basis Function Kernel 
+  ## 
+  ## 1000 samples
+  ##   11 predictor
+  ##    2 classes: 'good', 'bad' 
+  ## 
+  ## Pre-processing: centered (11), scaled (11) 
+  ## Resampling: Cross-Validated (5 fold) 
+  ## Summary of sample sizes: 800, 801, 800, 800, 799 
+  ## Resampling results across tuning parameters:
+  ## 
+  ##   C    Accuracy   Kappa    
+  ##   0.5  0.7549524  0.4205204
+  ##   1.0  0.7599324  0.4297468
+  ##   5.0  0.7549374  0.4192217
+  ## 
+  ## Tuning parameter 'sigma' was held constant at a value of 0.07511338
+  ## Accuracy was used to select the optimal model using the largest value.
+  ## The final values used for the model were sigma = 0.07511338 and C = 1.
 ```
 
 ```r
@@ -392,20 +433,20 @@ varImp(caret.svm)
 ```
 
 ```
-## ROC curve variable importance
-## 
-##                      Importance
-## alcohol                 100.000
-## density                  73.616
-## chlorides                60.766
-## volatile.acidity         57.076
-## total.sulfur.dioxide     45.500
-## fixed.acidity            42.606
-## pH                       34.972
-## sulphates                25.546
-## citric.acid               6.777
-## residual.sugar            6.317
-## free.sulfur.dioxide       0.000
+  ## ROC curve variable importance
+  ## 
+  ##                      Importance
+  ## alcohol                 100.000
+  ## density                  73.616
+  ## chlorides                60.766
+  ## volatile.acidity         57.076
+  ## total.sulfur.dioxide     45.500
+  ## fixed.acidity            42.606
+  ## pH                       34.972
+  ## sulphates                25.546
+  ## citric.acid               6.777
+  ## residual.sugar            6.317
+  ## free.sulfur.dioxide       0.000
 ```
 
 ```r
@@ -413,41 +454,52 @@ confusionMatrix(predict(caret.svm, newdata = test), test$taste)
 ```
 
 ```
-## Confusion Matrix and Statistics
-## 
-##           Reference
-## Prediction good bad
-##       good  147  45
-##       bad    19  39
-##                                           
-##                Accuracy : 0.744           
-##                  95% CI : (0.6852, 0.7969)
-##     No Information Rate : 0.664           
-##     P-Value [Acc > NIR] : 0.003886        
-##                                           
-##                   Kappa : 0.3788          
-##                                           
-##  Mcnemar's Test P-Value : 0.001778        
-##                                           
-##             Sensitivity : 0.8855          
-##             Specificity : 0.4643          
-##          Pos Pred Value : 0.7656          
-##          Neg Pred Value : 0.6724          
-##              Prevalence : 0.6640          
-##          Detection Rate : 0.5880          
-##    Detection Prevalence : 0.7680          
-##       Balanced Accuracy : 0.6749          
-##                                           
-##        'Positive' Class : good            
-## 
+  ## Confusion Matrix and Statistics
+  ## 
+  ##           Reference
+  ## Prediction good bad
+  ##       good  147  45
+  ##       bad    19  39
+  ##                                           
+  ##                Accuracy : 0.744           
+  ##                  95% CI : (0.6852, 0.7969)
+  ##     No Information Rate : 0.664           
+  ##     P-Value [Acc > NIR] : 0.003886        
+  ##                                           
+  ##                   Kappa : 0.3788          
+  ##                                           
+  ##  Mcnemar's Test P-Value : 0.001778        
+  ##                                           
+  ##             Sensitivity : 0.8855          
+  ##             Specificity : 0.4643          
+  ##          Pos Pred Value : 0.7656          
+  ##          Neg Pred Value : 0.6724          
+  ##              Prevalence : 0.6640          
+  ##          Detection Rate : 0.5880          
+  ##    Detection Prevalence : 0.7680          
+  ##       Balanced Accuracy : 0.6749          
+  ##                                           
+  ##        'Positive' Class : good            
+  ## 
 ```
 
 <!-- 
+::: {.exercise #svm-caret-classProbs}
+
 Ejercicio: 
 Emplear classProbs = TRUE en caret::trainControl() en lugar de prob.model = TRUE
 Cambiar el criterio de error en train() a AUC en lugar de precisión:
   summaryFunction = twoClassSummary
   metric = "ROC"
+  
+::: 
+
+::: {.exercise #svm-caret-tuneGrid}
+
+tuneGrid <- data.frame(sigma = with(kernelf(svm)@kpar, c(sigma/2, sigma, 2*sigma), 
+                       C = c(0.5, 1, 5))
+
+:::  
 -->
 
 

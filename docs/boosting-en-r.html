@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>3.5 Boosting en R | Aprendizaje Estadístico</title>
   <meta name="description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="3.5 Boosting en R | Aprendizaje Estadístico" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
   <meta name="github-repo" content="rubenfcasal/aprendizaje_estadistico" />
@@ -34,7 +33,6 @@
   
 <link rel="prev" href="boosting.html"/>
 <link rel="next" href="svm.html"/>
-<script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -52,14 +50,15 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.19/datatables.js"></script>
-<link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="libs/datatables-binding-0.26/datatables.js"></script>
+<link href="libs/dt-core-1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.12.1/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.12.1/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
 
@@ -102,7 +101,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -115,7 +114,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -171,11 +170,11 @@ div.csl-indent {
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prólogo</a></li>
 <li class="chapter" data-level="1" data-path="intro-AE.html"><a href="intro-AE.html"><i class="fa fa-check"></i><b>1</b> Introducción al Aprendizaje Estadístico</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs.html"><a href="aprendizaje-estadístico-vs.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje Estadístico vs. Aprendizaje Automático</a>
+<li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje Estadístico vs. Aprendizaje Automático</a>
 <ul>
-<li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs.html"><a href="aprendizaje-estadístico-vs.html#machine-learning-vs.-data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
-<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs.html"><a href="aprendizaje-estadístico-vs.html#las-dos-culturas-breiman2001statistical"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas <span class="citation">(<span>Breiman, 2001b</span>)</span></a></li>
-<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs.html"><a href="aprendizaje-estadístico-vs.html#machine-learning-vs.-estadística-dunson2018statistics"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística <span class="citation">(<span>Dunson, 2018</span>)</span></a></li>
+<li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#machine-learning-vs.-data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
+<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#las-dos-culturas"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas</a></li>
+<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#machine-learning-vs.-estadística"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística</a></li>
 </ul></li>
 <li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de Aprendizaje Estadístico</a>
 <ul>
@@ -230,7 +229,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="3.5.1" data-path="boosting-en-r.html"><a href="boosting-en-r.html#ejemplo-clasificación-con-el-paquete-ada"><i class="fa fa-check"></i><b>3.5.1</b> Ejemplo: clasificación con el paquete <code>ada</code></a></li>
 <li class="chapter" data-level="3.5.2" data-path="boosting-en-r.html"><a href="boosting-en-r.html#ejemplo-regresión-con-el-paquete-gbm"><i class="fa fa-check"></i><b>3.5.2</b> Ejemplo: regresión con el paquete <code>gbm</code></a></li>
-<li class="chapter" data-level="3.5.3" data-path="boosting-en-r.html"><a href="boosting-en-r.html#ejemplo-xgboost-con-el-paquete-caret"><i class="fa fa-check"></i><b>3.5.3</b> Ejemplo: XGBoost con el paquete <code>caret</code></a></li>
+<li class="chapter" data-level="3.5.3" data-path="boosting-en-r.html"><a href="boosting-en-r.html#xgb-caret"><i class="fa fa-check"></i><b>3.5.3</b> Ejemplo: XGBoost con el paquete <code>caret</code></a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>4</b> Máquinas de soporte vectorial</a>
@@ -239,34 +238,20 @@ div.csl-indent {
 <li class="chapter" data-level="4.2" data-path="clasificadores-de-soporte-vectorial.html"><a href="clasificadores-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>4.2</b> Clasificadores de soporte vectorial</a></li>
 <li class="chapter" data-level="4.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>4.3</b> Máquinas de soporte vectorial</a>
 <ul>
-<li class="chapter" data-level="4.3.1" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#clasificación-con-más-de-dos-categorías"><i class="fa fa-check"></i><b>4.3.1</b> Clasificación con más de dos categorías</a></li>
-<li class="chapter" data-level="4.3.2" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#regresión"><i class="fa fa-check"></i><b>4.3.2</b> Regresión</a></li>
-<li class="chapter" data-level="4.3.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#ventajas-e-incovenientes"><i class="fa fa-check"></i><b>4.3.3</b> Ventajas e incovenientes</a></li>
+<li class="chapter" data-level="4.3.1" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#regresión-con-svm"><i class="fa fa-check"></i><b>4.3.1</b> Regresión con SVM</a></li>
+<li class="chapter" data-level="4.3.2" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#ventajas-e-incovenientes"><i class="fa fa-check"></i><b>4.3.2</b> Ventajas e incovenientes</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="svm-con-el-paquete-kernlab.html"><a href="svm-con-el-paquete-kernlab.html"><i class="fa fa-check"></i><b>4.4</b> SVM con el paquete <code>kernlab</code></a></li>
+<li class="chapter" data-level="4.4" data-path="svm-kernlab.html"><a href="svm-kernlab.html"><i class="fa fa-check"></i><b>4.4</b> SVM con el paquete <code>kernlab</code></a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="class-otros.html"><a href="class-otros.html"><i class="fa fa-check"></i><b>5</b> Otros métodos de clasificación</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="análisis-discriminate-lineal.html"><a href="análisis-discriminate-lineal.html"><i class="fa fa-check"></i><b>5.1</b> Análisis discriminate lineal</a>
-<ul>
-<li class="chapter" data-level="5.1.1" data-path="análisis-discriminate-lineal.html"><a href="análisis-discriminate-lineal.html#ejemplo-masslda"><i class="fa fa-check"></i><b>5.1.1</b> Ejemplo <code>MASS::lda</code></a></li>
-</ul></li>
-<li class="chapter" data-level="5.2" data-path="análisis-discriminante-cuadrático.html"><a href="análisis-discriminante-cuadrático.html"><i class="fa fa-check"></i><b>5.2</b> Análisis discriminante cuadrático</a>
-<ul>
-<li class="chapter" data-level="5.2.1" data-path="análisis-discriminante-cuadrático.html"><a href="análisis-discriminante-cuadrático.html#ejemplo-massqda"><i class="fa fa-check"></i><b>5.2.1</b> Ejemplo <code>MASS::qda</code></a></li>
-</ul></li>
-<li class="chapter" data-level="5.3" data-path="naive-bayes.html"><a href="naive-bayes.html"><i class="fa fa-check"></i><b>5.3</b> Naive Bayes</a>
-<ul>
-<li class="chapter" data-level="5.3.1" data-path="naive-bayes.html"><a href="naive-bayes.html#ejemplo-e1071naivebayes"><i class="fa fa-check"></i><b>5.3.1</b> Ejemplo <code>e1071::naiveBayes</code></a></li>
-</ul></li>
+<li class="chapter" data-level="5.1" data-path="clas-lda.html"><a href="clas-lda.html"><i class="fa fa-check"></i><b>5.1</b> Análisis discriminate lineal</a></li>
+<li class="chapter" data-level="5.2" data-path="clas-qda.html"><a href="clas-qda.html"><i class="fa fa-check"></i><b>5.2</b> Análisis discriminante cuadrático</a></li>
+<li class="chapter" data-level="5.3" data-path="bayes.html"><a href="bayes.html"><i class="fa fa-check"></i><b>5.3</b> Naive Bayes</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="modelos-lineales.html"><a href="modelos-lineales.html"><i class="fa fa-check"></i><b>6</b> Modelos lineales y extensiones</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="reg-multiple.html"><a href="reg-multiple.html"><i class="fa fa-check"></i><b>6.1</b> Regresión lineal múltiple</a>
-<ul>
-<li class="chapter" data-level="6.1.1" data-path="reg-multiple.html"><a href="reg-multiple.html#ajuste-función-lm"><i class="fa fa-check"></i><b>6.1.1</b> Ajuste: función <code>lm</code></a></li>
-<li class="chapter" data-level="6.1.2" data-path="reg-multiple.html"><a href="reg-multiple.html#ejemplo-2"><i class="fa fa-check"></i><b>6.1.2</b> Ejemplo</a></li>
-</ul></li>
+<li class="chapter" data-level="6.1" data-path="reg-multiple.html"><a href="reg-multiple.html"><i class="fa fa-check"></i><b>6.1</b> Regresión lineal múltiple</a></li>
 <li class="chapter" data-level="6.2" data-path="colinealidad.html"><a href="colinealidad.html"><i class="fa fa-check"></i><b>6.2</b> El problema de la colinealidad</a></li>
 <li class="chapter" data-level="6.3" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html"><i class="fa fa-check"></i><b>6.3</b> Selección de variables explicativas</a>
 <ul>
@@ -274,27 +259,26 @@ div.csl-indent {
 <li class="chapter" data-level="6.3.2" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html#selección-por-pasos"><i class="fa fa-check"></i><b>6.3.2</b> Selección por pasos</a></li>
 </ul></li>
 <li class="chapter" data-level="6.4" data-path="analisis-reg-multiple.html"><a href="analisis-reg-multiple.html"><i class="fa fa-check"></i><b>6.4</b> Análisis e interpretación del modelo</a></li>
-<li class="chapter" data-level="6.5" data-path="evaluación-de-la-precisión.html"><a href="evaluación-de-la-precisión.html"><i class="fa fa-check"></i><b>6.5</b> Evaluación de la precisión</a></li>
-<li class="chapter" data-level="6.6" data-path="shrinkage.html"><a href="shrinkage.html"><i class="fa fa-check"></i><b>6.6</b> Métodos de regularización</a>
+<li class="chapter" data-level="6.5" data-path="eval-reg-lineal.html"><a href="eval-reg-lineal.html"><i class="fa fa-check"></i><b>6.5</b> Evaluación de la precisión</a></li>
+<li class="chapter" data-level="6.6" data-path="selec-ae-reg-lineal.html"><a href="selec-ae-reg-lineal.html"><i class="fa fa-check"></i><b>6.6</b> Selección del modelo mediante remuestreo</a></li>
+<li class="chapter" data-level="6.7" data-path="shrinkage.html"><a href="shrinkage.html"><i class="fa fa-check"></i><b>6.7</b> Métodos de regularización</a>
 <ul>
-<li class="chapter" data-level="6.6.1" data-path="shrinkage.html"><a href="shrinkage.html#implementación-en-r"><i class="fa fa-check"></i><b>6.6.1</b> Implementación en R</a></li>
-<li class="chapter" data-level="6.6.2" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-ridge-regression"><i class="fa fa-check"></i><b>6.6.2</b> Ejemplo: Ridge Regression</a></li>
-<li class="chapter" data-level="6.6.3" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-lasso"><i class="fa fa-check"></i><b>6.6.3</b> Ejemplo: Lasso</a></li>
-<li class="chapter" data-level="6.6.4" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-elastic-net"><i class="fa fa-check"></i><b>6.6.4</b> Ejemplo: Elastic Net</a></li>
+<li class="chapter" data-level="6.7.1" data-path="shrinkage.html"><a href="shrinkage.html#implementación-en-r"><i class="fa fa-check"></i><b>6.7.1</b> Implementación en R</a></li>
+<li class="chapter" data-level="6.7.2" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-ridge-regression"><i class="fa fa-check"></i><b>6.7.2</b> Ejemplo: Ridge Regression</a></li>
+<li class="chapter" data-level="6.7.3" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-lasso"><i class="fa fa-check"></i><b>6.7.3</b> Ejemplo: Lasso</a></li>
+<li class="chapter" data-level="6.7.4" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-elastic-net"><i class="fa fa-check"></i><b>6.7.4</b> Ejemplo: Elastic Net</a></li>
 </ul></li>
-<li class="chapter" data-level="6.7" data-path="pca-pls.html"><a href="pca-pls.html"><i class="fa fa-check"></i><b>6.7</b> Métodos de reducción de la dimensión</a>
+<li class="chapter" data-level="6.8" data-path="pca-pls.html"><a href="pca-pls.html"><i class="fa fa-check"></i><b>6.8</b> Métodos de reducción de la dimensión</a>
 <ul>
-<li class="chapter" data-level="6.7.1" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-componentes-principales-pcr"><i class="fa fa-check"></i><b>6.7.1</b> Regresión por componentes principales (PCR)</a></li>
-<li class="chapter" data-level="6.7.2" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-mínimos-cuadrados-parciales-plsr"><i class="fa fa-check"></i><b>6.7.2</b> Regresión por mínimos cuadrados parciales (PLSR)</a></li>
+<li class="chapter" data-level="6.8.1" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-componentes-principales-pcr"><i class="fa fa-check"></i><b>6.8.1</b> Regresión por componentes principales (PCR)</a></li>
+<li class="chapter" data-level="6.8.2" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-mínimos-cuadrados-parciales-plsr"><i class="fa fa-check"></i><b>6.8.2</b> Regresión por mínimos cuadrados parciales (PLSR)</a></li>
 </ul></li>
-<li class="chapter" data-level="6.8" data-path="reg-glm.html"><a href="reg-glm.html"><i class="fa fa-check"></i><b>6.8</b> Modelos lineales generalizados</a>
+<li class="chapter" data-level="6.9" data-path="reg-glm.html"><a href="reg-glm.html"><i class="fa fa-check"></i><b>6.9</b> Modelos lineales generalizados</a>
 <ul>
-<li class="chapter" data-level="6.8.1" data-path="reg-glm.html"><a href="reg-glm.html#ajuste-función-glm"><i class="fa fa-check"></i><b>6.8.1</b> Ajuste: función <code>glm</code></a></li>
-<li class="chapter" data-level="6.8.2" data-path="reg-glm.html"><a href="reg-glm.html#ejemplo-regresión-logística"><i class="fa fa-check"></i><b>6.8.2</b> Ejemplo: Regresión logística</a></li>
-<li class="chapter" data-level="6.8.3" data-path="reg-glm.html"><a href="reg-glm.html#selección-de-variables-explicativas"><i class="fa fa-check"></i><b>6.8.3</b> Selección de variables explicativas</a></li>
-<li class="chapter" data-level="6.8.4" data-path="reg-glm.html"><a href="reg-glm.html#analisis-glm"><i class="fa fa-check"></i><b>6.8.4</b> Análisis e interpretación del modelo</a></li>
-<li class="chapter" data-level="6.8.5" data-path="reg-glm.html"><a href="reg-glm.html#evaluación-de-la-precisión-1"><i class="fa fa-check"></i><b>6.8.5</b> Evaluación de la precisión</a></li>
-<li class="chapter" data-level="6.8.6" data-path="reg-glm.html"><a href="reg-glm.html#extensiones"><i class="fa fa-check"></i><b>6.8.6</b> Extensiones</a></li>
+<li class="chapter" data-level="6.9.1" data-path="reg-glm.html"><a href="reg-glm.html#selección-de-variables-explicativas"><i class="fa fa-check"></i><b>6.9.1</b> Selección de variables explicativas</a></li>
+<li class="chapter" data-level="6.9.2" data-path="reg-glm.html"><a href="reg-glm.html#analisis-glm"><i class="fa fa-check"></i><b>6.9.2</b> Análisis e interpretación del modelo</a></li>
+<li class="chapter" data-level="6.9.3" data-path="reg-glm.html"><a href="reg-glm.html#evaluación-de-la-precisión"><i class="fa fa-check"></i><b>6.9.3</b> Evaluación de la precisión</a></li>
+<li class="chapter" data-level="6.9.4" data-path="reg-glm.html"><a href="reg-glm.html#extensiones"><i class="fa fa-check"></i><b>6.9.4</b> Extensiones</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="reg-np.html"><a href="reg-np.html"><i class="fa fa-check"></i><b>7</b> Regresión no paramétrica</a>
@@ -307,19 +291,15 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="7.2" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>7.2</b> Splines</a>
 <ul>
-<li class="chapter" data-level="7.2.1" data-path="splines.html"><a href="splines.html#reg-splines"><i class="fa fa-check"></i><b>7.2.1</b> Regression splines</a></li>
-<li class="chapter" data-level="7.2.2" data-path="splines.html"><a href="splines.html#smoothing-splines"><i class="fa fa-check"></i><b>7.2.2</b> Smoothing splines</a></li>
+<li class="chapter" data-level="7.2.1" data-path="splines.html"><a href="splines.html#reg-splines"><i class="fa fa-check"></i><b>7.2.1</b> Splines de regresión</a></li>
+<li class="chapter" data-level="7.2.2" data-path="splines.html"><a href="splines.html#splines-de-suavizado"><i class="fa fa-check"></i><b>7.2.2</b> Splines de suavizado</a></li>
 <li class="chapter" data-level="7.2.3" data-path="splines.html"><a href="splines.html#splines-penalizados"><i class="fa fa-check"></i><b>7.2.3</b> Splines penalizados</a></li>
 </ul></li>
-<li class="chapter" data-level="7.3" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html"><i class="fa fa-check"></i><b>7.3</b> Modelos aditivos</a>
+<li class="chapter" data-level="7.3" data-path="reg-gam.html"><a href="reg-gam.html"><i class="fa fa-check"></i><b>7.3</b> Modelos aditivos</a>
 <ul>
-<li class="chapter" data-level="7.3.1" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#ajuste-función-gam"><i class="fa fa-check"></i><b>7.3.1</b> Ajuste: función <code>gam</code></a></li>
-<li class="chapter" data-level="7.3.2" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#ejemplo-3"><i class="fa fa-check"></i><b>7.3.2</b> Ejemplo</a></li>
-<li class="chapter" data-level="7.3.3" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#superficies-de-predicción"><i class="fa fa-check"></i><b>7.3.3</b> Superficies de predicción</a></li>
-<li class="chapter" data-level="7.3.4" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#comparación-y-selección-de-modelos"><i class="fa fa-check"></i><b>7.3.4</b> Comparación y selección de modelos</a></li>
-<li class="chapter" data-level="7.3.5" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#mgcv-diagnosis"><i class="fa fa-check"></i><b>7.3.5</b> Diagnosis del modelo</a></li>
-<li class="chapter" data-level="7.3.6" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#gam-en-caret"><i class="fa fa-check"></i><b>7.3.6</b> GAM en <code>caret</code></a></li>
-<li class="chapter" data-level="7.3.7" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#ejercicios"><i class="fa fa-check"></i><b>7.3.7</b> Ejercicios</a></li>
+<li class="chapter" data-level="7.3.1" data-path="reg-gam.html"><a href="reg-gam.html#superficies-de-predicción"><i class="fa fa-check"></i><b>7.3.1</b> Superficies de predicción</a></li>
+<li class="chapter" data-level="7.3.2" data-path="reg-gam.html"><a href="reg-gam.html#comparación-y-selección-de-modelos"><i class="fa fa-check"></i><b>7.3.2</b> Comparación y selección de modelos</a></li>
+<li class="chapter" data-level="7.3.3" data-path="reg-gam.html"><a href="reg-gam.html#mgcv-diagnosis"><i class="fa fa-check"></i><b>7.3.3</b> Diagnosis del modelo</a></li>
 </ul></li>
 <li class="chapter" data-level="7.4" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>7.4</b> Regresión spline adaptativa multivariante</a>
 <ul>
@@ -362,22 +342,22 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="boosting-en-r" class="section level2" number="3.5">
-<h2><span class="header-section-number">3.5</span> Boosting en R</h2>
+<div id="boosting-en-r" class="section level2 hasAnchor" number="3.5">
+<h2><span class="header-section-number">3.5</span> Boosting en R<a href="boosting-en-r.html#boosting-en-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- 
 Búsquedas en caret: boost 
 Ver [CRAN Task View: Machine Learning & Statistical Learning](https://cran.r-project.org/web/views/MachineLearning.html))
 -->
 <p>Estos métodos son también de los más populares en AE y están implementados en numerosos paquetes de R: <a href="https://CRAN.R-project.org/package=ada"><code>ada</code></a>, <a href="https://CRAN.R-project.org/package=adabag"><code>adabag</code></a>, <a href="https://CRAN.R-project.org/package=mboost"><code>mboost</code></a>, <a href="https://CRAN.R-project.org/package=gbm"><code>gbm</code></a>, <a href="https://github.com/dmlc/xgboost/tree/master/R-package"><code>xgboost</code></a>…</p>
-<div id="ejemplo-clasificación-con-el-paquete-ada" class="section level3" number="3.5.1">
-<h3><span class="header-section-number">3.5.1</span> Ejemplo: clasificación con el paquete <code>ada</code></h3>
+<div id="ejemplo-clasificación-con-el-paquete-ada" class="section level3 hasAnchor" number="3.5.1">
+<h3><span class="header-section-number">3.5.1</span> Ejemplo: clasificación con el paquete <code>ada</code><a href="boosting-en-r.html#ejemplo-clasificación-con-el-paquete-ada" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>La función <code>ada()</code> del paquete <a href="https://CRAN.R-project.org/package=ada"><code>ada</code></a> <span class="citation">(<a href="#ref-culp2006ada" role="doc-biblioref">Culp et al., 2006</a>)</span> implementa diversos métodos boosting (incluyendo el algoritmo original AdaBoost).
 Emplea <code>rpart</code> para la construcción de los árboles, aunque solo admite respuestas dicotómicas y dos funciones de pérdida (exponencial y logística).
 Además, un posible problema al emplear esta función es que ordena alfabéticamente los niveles del factor, lo que puede llevar a una mala interpretación de los resultados.</p>
 <p>Los principales parámetros son los siguientes:</p>
-<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="boosting-en-r.html#cb174-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ada</span>(formula, data, <span class="at">loss =</span> <span class="fu">c</span>(<span class="st">&quot;exponential&quot;</span>, <span class="st">&quot;logistic&quot;</span>),</span>
-<span id="cb174-2"><a href="boosting-en-r.html#cb174-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="fu">c</span>(<span class="st">&quot;discrete&quot;</span>, <span class="st">&quot;real&quot;</span>, <span class="st">&quot;gentle&quot;</span>), <span class="at">iter =</span> <span class="dv">50</span>, </span>
-<span id="cb174-3"><a href="boosting-en-r.html#cb174-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">nu =</span> <span class="fl">0.1</span>, <span class="at">bag.frac =</span> <span class="fl">0.5</span>, ...)</span></code></pre></div>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="boosting-en-r.html#cb170-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ada</span>(formula, data, <span class="at">loss =</span> <span class="fu">c</span>(<span class="st">&quot;exponential&quot;</span>, <span class="st">&quot;logistic&quot;</span>),</span>
+<span id="cb170-2"><a href="boosting-en-r.html#cb170-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="fu">c</span>(<span class="st">&quot;discrete&quot;</span>, <span class="st">&quot;real&quot;</span>, <span class="st">&quot;gentle&quot;</span>), <span class="at">iter =</span> <span class="dv">50</span>, </span>
+<span id="cb170-3"><a href="boosting-en-r.html#cb170-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">nu =</span> <span class="fl">0.1</span>, <span class="at">bag.frac =</span> <span class="fl">0.5</span>, ...)</span></code></pre></div>
 <ul>
 <li><p><code>formula</code> y <code>data</code> (opcional): permiten especificar la respuesta y las variables predictoras de la forma habitual (típicamente <code>respuesta ~ .</code>; también admite matrices <code>x</code> e <code>y</code> en lugar de fórmulas).</p></li>
 <li><p><code>loss</code>: función de pérdida; por defecto <code>"exponential"</code> (algoritmo AdaBoost).</p></li>
@@ -388,23 +368,23 @@ Además, un posible problema al emplear esta función es que ordena alfabéticam
 <li><p><code>...</code>: argumentos adicionales para <code>rpart.control</code>; por defecto <code>rpart.control(maxdepth = 1, cp = -1, minsplit = 0, xval = 0)</code>.</p></li>
 </ul>
 <p>Como ejemplo consideraremos el conjunto de datos de calidad de vino empleado en las secciones <a href="cart-con-el-paquete-rpart.html#class-rpart">2.3.2</a> y <a href="bagging-rf-r.html#bagging-rf-r">3.3</a>, pero para evitar problemas reordenamos alfabéticamente los niveles de la respuesta.</p>
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="boosting-en-r.html#cb175-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/winetaste.RData&quot;</span>)</span>
-<span id="cb175-2"><a href="boosting-en-r.html#cb175-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Reordenar alfabéticamente los niveles de winetaste$taste</span></span>
-<span id="cb175-3"><a href="boosting-en-r.html#cb175-3" aria-hidden="true" tabindex="-1"></a><span class="co"># winetaste$taste &lt;- factor(winetaste$taste, sort(levels(winetaste$taste)))</span></span>
-<span id="cb175-4"><a href="boosting-en-r.html#cb175-4" aria-hidden="true" tabindex="-1"></a>winetaste<span class="sc">$</span>taste <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">as.character</span>(winetaste<span class="sc">$</span>taste))</span>
-<span id="cb175-5"><a href="boosting-en-r.html#cb175-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Partición de los datos</span></span>
-<span id="cb175-6"><a href="boosting-en-r.html#cb175-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb175-7"><a href="boosting-en-r.html#cb175-7" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> winetaste</span>
-<span id="cb175-8"><a href="boosting-en-r.html#cb175-8" aria-hidden="true" tabindex="-1"></a>nobs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
-<span id="cb175-9"><a href="boosting-en-r.html#cb175-9" aria-hidden="true" tabindex="-1"></a>itrain <span class="ot">&lt;-</span> <span class="fu">sample</span>(nobs, <span class="fl">0.8</span> <span class="sc">*</span> nobs)</span>
-<span id="cb175-10"><a href="boosting-en-r.html#cb175-10" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> df[itrain, ]</span>
-<span id="cb175-11"><a href="boosting-en-r.html#cb175-11" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> df[<span class="sc">-</span>itrain, ]</span></code></pre></div>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="boosting-en-r.html#cb171-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/winetaste.RData&quot;</span>)</span>
+<span id="cb171-2"><a href="boosting-en-r.html#cb171-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Reordenar alfabéticamente los niveles de winetaste$taste</span></span>
+<span id="cb171-3"><a href="boosting-en-r.html#cb171-3" aria-hidden="true" tabindex="-1"></a><span class="co"># winetaste$taste &lt;- factor(winetaste$taste, sort(levels(winetaste$taste)))</span></span>
+<span id="cb171-4"><a href="boosting-en-r.html#cb171-4" aria-hidden="true" tabindex="-1"></a>winetaste<span class="sc">$</span>taste <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">as.character</span>(winetaste<span class="sc">$</span>taste))</span>
+<span id="cb171-5"><a href="boosting-en-r.html#cb171-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Partición de los datos</span></span>
+<span id="cb171-6"><a href="boosting-en-r.html#cb171-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb171-7"><a href="boosting-en-r.html#cb171-7" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> winetaste</span>
+<span id="cb171-8"><a href="boosting-en-r.html#cb171-8" aria-hidden="true" tabindex="-1"></a>nobs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
+<span id="cb171-9"><a href="boosting-en-r.html#cb171-9" aria-hidden="true" tabindex="-1"></a>itrain <span class="ot">&lt;-</span> <span class="fu">sample</span>(nobs, <span class="fl">0.8</span> <span class="sc">*</span> nobs)</span>
+<span id="cb171-10"><a href="boosting-en-r.html#cb171-10" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> df[itrain, ]</span>
+<span id="cb171-11"><a href="boosting-en-r.html#cb171-11" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> df[<span class="sc">-</span>itrain, ]</span></code></pre></div>
 <p>Por ejemplo, el siguiente código llama a la función <code>ada()</code> con la opción para estimar probabilidades (<code>type = "real"</code>, Real AdaBoost), considerando interacciones (de orden 2) entre los predictores (<code>maxdepth = 2</code>), disminuyendo ligeramente el valor del parámetro de aprendizaje y aumentando el número de iteraciones:</p>
-<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="boosting-en-r.html#cb176-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ada)</span>
-<span id="cb176-2"><a href="boosting-en-r.html#cb176-2" aria-hidden="true" tabindex="-1"></a>ada.boost <span class="ot">&lt;-</span> <span class="fu">ada</span>(taste <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">type =</span> <span class="st">&quot;real&quot;</span>,</span>
-<span id="cb176-3"><a href="boosting-en-r.html#cb176-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">control =</span> <span class="fu">rpart.control</span>(<span class="at">maxdepth =</span> <span class="dv">2</span>, <span class="at">cp =</span> <span class="dv">0</span>, <span class="at">minsplit =</span> <span class="dv">10</span>, <span class="at">xval =</span> <span class="dv">0</span>),</span>
-<span id="cb176-4"><a href="boosting-en-r.html#cb176-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">iter =</span> <span class="dv">100</span>, <span class="at">nu =</span> <span class="fl">0.05</span>)</span>
-<span id="cb176-5"><a href="boosting-en-r.html#cb176-5" aria-hidden="true" tabindex="-1"></a>ada.boost</span></code></pre></div>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="boosting-en-r.html#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ada)</span>
+<span id="cb172-2"><a href="boosting-en-r.html#cb172-2" aria-hidden="true" tabindex="-1"></a>ada.boost <span class="ot">&lt;-</span> <span class="fu">ada</span>(taste <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">type =</span> <span class="st">&quot;real&quot;</span>,</span>
+<span id="cb172-3"><a href="boosting-en-r.html#cb172-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">control =</span> <span class="fu">rpart.control</span>(<span class="at">maxdepth =</span> <span class="dv">2</span>, <span class="at">cp =</span> <span class="dv">0</span>, <span class="at">minsplit =</span> <span class="dv">10</span>, <span class="at">xval =</span> <span class="dv">0</span>),</span>
+<span id="cb172-4"><a href="boosting-en-r.html#cb172-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">iter =</span> <span class="dv">100</span>, <span class="at">nu =</span> <span class="fl">0.05</span>)</span>
+<span id="cb172-5"><a href="boosting-en-r.html#cb172-5" aria-hidden="true" tabindex="-1"></a>ada.boost</span></code></pre></div>
 <pre><code>## Call:
 ## ada(taste ~ ., data = train, type = &quot;real&quot;, control = rpart.control(maxdepth = 2, 
 ##     cp = 0, minsplit = 10, xval = 0), iter = 100, nu = 0.05)
@@ -426,9 +406,10 @@ Además, un posible problema al emplear esta función es que ordena alfabéticam
 ## train.err1 train.kap1 
 ##         93         93</code></pre>
 <p>Con el método <code>plot()</code> podemos representar la evolución del error de clasificación al aumentar el número de iteraciones (ver Figura <a href="boosting-en-r.html#fig:ada-plot">3.11</a>):</p>
-<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="boosting-en-r.html#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ada.boost)</span></code></pre></div>
+
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="boosting-en-r.html#cb174-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ada.boost)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ada-plot"></span>
-<img src="03-bagging_boosting_files/figure-html/ada-plot-1.png" alt="Evolución de la tasa de error utilizando `ada()`." width="80%" />
+<img src="03-bagging_boosting_files/figure-html/ada-plot-1.png" alt="Evolución de la tasa de error utilizando ada()." width="75%" />
 <p class="caption">
 Figura 3.11: Evolución de la tasa de error utilizando <code>ada()</code>.
 </p>
@@ -441,7 +422,7 @@ Con la función `varplot()` podemos representar la importancia de las variables 
 res <- varplot(ada.boost, type = "scores")
 ```
 
-<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-3-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="03-bagging_boosting_files/figure-html/unnamed-chunk-2-1.png" width="75%" style="display: block; margin: auto;" />
 
 ```r
 res
@@ -459,8 +440,8 @@ res
 ```
 -->
 <p>Podemos evaluar la precisión en la muestra de test empleando el procedimiento habitual:</p>
-<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="boosting-en-r.html#cb179-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(ada.boost, <span class="at">newdata =</span> test)</span>
-<span id="cb179-2"><a href="boosting-en-r.html#cb179-2" aria-hidden="true" tabindex="-1"></a>caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(pred, test<span class="sc">$</span>taste, <span class="at">positive =</span> <span class="st">&quot;good&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="boosting-en-r.html#cb175-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(ada.boost, <span class="at">newdata =</span> test)</span>
+<span id="cb175-2"><a href="boosting-en-r.html#cb175-2" aria-hidden="true" tabindex="-1"></a>caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(pred, test<span class="sc">$</span>taste, <span class="at">positive =</span> <span class="st">&quot;good&quot;</span>)</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -489,8 +470,8 @@ res
 ##        &#39;Positive&#39; Class : good            
 ## </code></pre>
 <p>Para obtener las estimaciones de las probabilidades, habría que establecer <code>type = "probs"</code> al predecir (devolverá una matriz con columnas correspondientes a los niveles):</p>
-<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="boosting-en-r.html#cb181-1" aria-hidden="true" tabindex="-1"></a>p.est <span class="ot">&lt;-</span> <span class="fu">predict</span>(ada.boost, <span class="at">newdata =</span> test, <span class="at">type =</span> <span class="st">&quot;probs&quot;</span>)</span>
-<span id="cb181-2"><a href="boosting-en-r.html#cb181-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(p.est)</span></code></pre></div>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="boosting-en-r.html#cb177-1" aria-hidden="true" tabindex="-1"></a>p.est <span class="ot">&lt;-</span> <span class="fu">predict</span>(ada.boost, <span class="at">newdata =</span> test, <span class="at">type =</span> <span class="st">&quot;probs&quot;</span>)</span>
+<span id="cb177-2"><a href="boosting-en-r.html#cb177-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(p.est)</span></code></pre></div>
 <pre><code>##          [,1]      [,2]
 ## 1  0.49877103 0.5012290
 ## 4  0.30922187 0.6907781
@@ -499,17 +480,17 @@ res
 ## 12 0.44274407 0.5572559
 ## 16 0.37375910 0.6262409</code></pre>
 <p>Este procedimiento también está implementado en el paquete <code>caret</code> seleccionando el método <code>"ada"</code>, que considera como hiperparámetros:</p>
-<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="boosting-en-r.html#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
-<span id="cb183-2"><a href="boosting-en-r.html#cb183-2" aria-hidden="true" tabindex="-1"></a><span class="fu">modelLookup</span>(<span class="st">&quot;ada&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="boosting-en-r.html#cb179-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb179-2"><a href="boosting-en-r.html#cb179-2" aria-hidden="true" tabindex="-1"></a><span class="fu">modelLookup</span>(<span class="st">&quot;ada&quot;</span>)</span></code></pre></div>
 <pre><code>##   model parameter          label forReg forClass probModel
 ## 1   ada      iter         #Trees  FALSE     TRUE      TRUE
 ## 2   ada  maxdepth Max Tree Depth  FALSE     TRUE      TRUE
 ## 3   ada        nu  Learning Rate  FALSE     TRUE      TRUE</code></pre>
 <p>Aunque por defecto la función <code>train()</code> solo considera nueve combinaciones de hiperparámetros:</p>
-<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="boosting-en-r.html#cb185-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb185-2"><a href="boosting-en-r.html#cb185-2" aria-hidden="true" tabindex="-1"></a>caret.ada0 <span class="ot">&lt;-</span> <span class="fu">train</span>(taste <span class="sc">~</span> ., <span class="at">method =</span> <span class="st">&quot;ada&quot;</span>, <span class="at">data =</span> train,</span>
-<span id="cb185-3"><a href="boosting-en-r.html#cb185-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">trControl =</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>))</span>
-<span id="cb185-4"><a href="boosting-en-r.html#cb185-4" aria-hidden="true" tabindex="-1"></a>caret.ada0</span></code></pre></div>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="boosting-en-r.html#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb181-2"><a href="boosting-en-r.html#cb181-2" aria-hidden="true" tabindex="-1"></a>caret.ada0 <span class="ot">&lt;-</span> <span class="fu">train</span>(taste <span class="sc">~</span> ., <span class="at">method =</span> <span class="st">&quot;ada&quot;</span>, <span class="at">data =</span> train,</span>
+<span id="cb181-3"><a href="boosting-en-r.html#cb181-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">trControl =</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>))</span>
+<span id="cb181-4"><a href="boosting-en-r.html#cb181-4" aria-hidden="true" tabindex="-1"></a>caret.ada0</span></code></pre></div>
 <pre><code>## Boosted Classification Trees 
 ## 
 ## 1000 samples
@@ -535,7 +516,7 @@ res
 ## Tuning parameter &#39;nu&#39; was held constant at a value of 0.1
 ## Accuracy was used to select the optimal model using the largest value.
 ## The final values used for the model were iter = 150, maxdepth = 3 and nu = 0.1.</code></pre>
-<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="boosting-en-r.html#cb187-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confusionMatrix</span>(<span class="fu">predict</span>(caret.ada0, <span class="at">newdata =</span> test), test<span class="sc">$</span>taste, <span class="at">positive =</span> <span class="st">&quot;good&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="boosting-en-r.html#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confusionMatrix</span>(<span class="fu">predict</span>(caret.ada0, <span class="at">newdata =</span> test), test<span class="sc">$</span>taste, <span class="at">positive =</span> <span class="st">&quot;good&quot;</span>)</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -565,12 +546,12 @@ res
 ## </code></pre>
 <p>Se puede aumentar el número de combinaciones empleando <code>tuneLength</code> o <code>tuneGrid</code> pero la búsqueda en una rejilla completa puede incrementar considerablemente el tiempo de computación.
 Por este motivo se suelen seguir distintos procedimientos de búsqueda. Por ejemplo, fijar la tasa de aprendizaje (inicialmente a un valor alto) para seleccionar primero un número de interaciones y la complejidad del árbol, y posteriormente fijar estos valores para seleccionar una nueva tasa de aprendizaje (repitiendo el proceso, si es necesario, hasta convergencia).</p>
-<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="boosting-en-r.html#cb189-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb189-2"><a href="boosting-en-r.html#cb189-2" aria-hidden="true" tabindex="-1"></a>caret.ada1 <span class="ot">&lt;-</span> <span class="fu">train</span>(taste <span class="sc">~</span> ., <span class="at">method =</span> <span class="st">&quot;ada&quot;</span>, <span class="at">data =</span> train,</span>
-<span id="cb189-3"><a href="boosting-en-r.html#cb189-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">tuneGrid =</span> <span class="fu">data.frame</span>(<span class="at">iter =</span>  <span class="dv">150</span>, <span class="at">maxdepth =</span> <span class="dv">3</span>,</span>
-<span id="cb189-4"><a href="boosting-en-r.html#cb189-4" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">nu =</span> <span class="fu">c</span>(<span class="fl">0.3</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>, <span class="fl">0.01</span>, <span class="fl">0.005</span>)),</span>
-<span id="cb189-5"><a href="boosting-en-r.html#cb189-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">trControl =</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>))</span>
-<span id="cb189-6"><a href="boosting-en-r.html#cb189-6" aria-hidden="true" tabindex="-1"></a>caret.ada1</span></code></pre></div>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="boosting-en-r.html#cb185-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb185-2"><a href="boosting-en-r.html#cb185-2" aria-hidden="true" tabindex="-1"></a>caret.ada1 <span class="ot">&lt;-</span> <span class="fu">train</span>(taste <span class="sc">~</span> ., <span class="at">method =</span> <span class="st">&quot;ada&quot;</span>, <span class="at">data =</span> train,</span>
+<span id="cb185-3"><a href="boosting-en-r.html#cb185-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">tuneGrid =</span> <span class="fu">data.frame</span>(<span class="at">iter =</span>  <span class="dv">150</span>, <span class="at">maxdepth =</span> <span class="dv">3</span>,</span>
+<span id="cb185-4"><a href="boosting-en-r.html#cb185-4" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">nu =</span> <span class="fu">c</span>(<span class="fl">0.3</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>, <span class="fl">0.01</span>, <span class="fl">0.005</span>)),</span>
+<span id="cb185-5"><a href="boosting-en-r.html#cb185-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">trControl =</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>))</span>
+<span id="cb185-6"><a href="boosting-en-r.html#cb185-6" aria-hidden="true" tabindex="-1"></a>caret.ada1</span></code></pre></div>
 <pre><code>## Boosted Classification Trees 
 ## 
 ## 1000 samples
@@ -594,7 +575,7 @@ Por este motivo se suelen seguir distintos procedimientos de búsqueda. Por ejem
 ##  parameter &#39;maxdepth&#39; was held constant at a value of 3
 ## Accuracy was used to select the optimal model using the largest value.
 ## The final values used for the model were iter = 150, maxdepth = 3 and nu = 0.1.</code></pre>
-<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="boosting-en-r.html#cb191-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confusionMatrix</span>(<span class="fu">predict</span>(caret.ada1, <span class="at">newdata =</span> test), test<span class="sc">$</span>taste, <span class="at">positive =</span> <span class="st">&quot;good&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="boosting-en-r.html#cb187-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confusionMatrix</span>(<span class="fu">predict</span>(caret.ada1, <span class="at">newdata =</span> test), test<span class="sc">$</span>taste, <span class="at">positive =</span> <span class="st">&quot;good&quot;</span>)</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -623,14 +604,14 @@ Por este motivo se suelen seguir distintos procedimientos de búsqueda. Por ejem
 ##        &#39;Positive&#39; Class : good           
 ## </code></pre>
 </div>
-<div id="ejemplo-regresión-con-el-paquete-gbm" class="section level3" number="3.5.2">
-<h3><span class="header-section-number">3.5.2</span> Ejemplo: regresión con el paquete <code>gbm</code></h3>
-<p>El paquete <a href="https://CRAN.R-project.org/package=gbm"><code>gbm</code></a> implementa el algoritmo SGB de <span class="citation"><a href="#ref-friedman2002stochastic" role="doc-biblioref">Friedman</a> (<a href="#ref-friedman2002stochastic" role="doc-biblioref">2002</a>)</span> y admite varios tipos de respuesta considerando distintas funciones de pérdida (aunque en el caso de variables dicotómicas éstas deben tomar valores en <span class="math inline">\(\{0, 1\}\)</span><a href="#fn22" class="footnote-ref" id="fnref22"><sup>22</sup></a>).
-La función principal es <code>gbm()</code> y se suelen considerar los siguientes argumentos:</p>
-<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="boosting-en-r.html#cb193-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gbm</span>( formula, <span class="at">distribution =</span> <span class="st">&quot;bernoulli&quot;</span>, data, <span class="at">n.trees =</span> <span class="dv">100</span>, </span>
-<span id="cb193-2"><a href="boosting-en-r.html#cb193-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">interaction.depth =</span> <span class="dv">1</span>, <span class="at">n.minobsinnode =</span> <span class="dv">10</span>,</span>
-<span id="cb193-3"><a href="boosting-en-r.html#cb193-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">shrinkage =</span> <span class="fl">0.1</span>, <span class="at">bag.fraction =</span> <span class="fl">0.5</span>, </span>
-<span id="cb193-4"><a href="boosting-en-r.html#cb193-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">cv.folds =</span> <span class="dv">0</span>, <span class="at">n.cores =</span> <span class="cn">NULL</span>)</span></code></pre></div>
+<div id="ejemplo-regresión-con-el-paquete-gbm" class="section level3 hasAnchor" number="3.5.2">
+<h3><span class="header-section-number">3.5.2</span> Ejemplo: regresión con el paquete <code>gbm</code><a href="boosting-en-r.html#ejemplo-regresión-con-el-paquete-gbm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El paquete <a href="https://CRAN.R-project.org/package=gbm"><code>gbm</code></a> implementa el algoritmo SGB de <span class="citation">Friedman (<a href="#ref-friedman2002stochastic" role="doc-biblioref">2002</a>)</span> y admite varios tipos de respuesta considerando distintas funciones de pérdida (aunque en el caso de variables dicotómicas éstas deben tomar valores en <span class="math inline">\(\{0, 1\}\)</span><a href="#fn26" class="footnote-ref" id="fnref26"><sup>26</sup></a>).
+La función principal es <a href="https://rdrr.io/pkg/gbm/man/gbm.html"><code>gbm()</code></a> y se suelen considerar los siguientes argumentos:</p>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="boosting-en-r.html#cb189-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gbm</span>( formula, <span class="at">distribution =</span> <span class="st">&quot;bernoulli&quot;</span>, data, <span class="at">n.trees =</span> <span class="dv">100</span>, </span>
+<span id="cb189-2"><a href="boosting-en-r.html#cb189-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">interaction.depth =</span> <span class="dv">1</span>, <span class="at">n.minobsinnode =</span> <span class="dv">10</span>,</span>
+<span id="cb189-3"><a href="boosting-en-r.html#cb189-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">shrinkage =</span> <span class="fl">0.1</span>, <span class="at">bag.fraction =</span> <span class="fl">0.5</span>, </span>
+<span id="cb189-4"><a href="boosting-en-r.html#cb189-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">cv.folds =</span> <span class="dv">0</span>, <span class="at">n.cores =</span> <span class="cn">NULL</span>)</span></code></pre></div>
 <ul>
 <li><p><code>formula</code> y <code>data</code> (opcional): permiten especificar la respuesta y las variables predictoras de la forma habitual (típicamente <code>respuesta ~ .</code>; también está disponible una interfaz con matrices <code>gbm.fit()</code>).</p></li>
 <li><p><code>distribution</code> (opcional): texto con el nombre de la distribución (o lista con el nombre en <code>name</code> y parámetros adicionales en los demás componentes) que determina la función de pérdida.
@@ -645,26 +626,27 @@ Otras opciones que pueden ser de interés son: <code>"laplace"</code> (error abs
 <li><p><code>n.cores</code>: número de núcleos para el procesamiento en paralelo.</p></li>
 </ul>
 <p>Como ejemplo consideraremos el conjunto de datos <em>winequality.RData</em>:</p>
-<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="boosting-en-r.html#cb194-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/winequality.RData&quot;</span>)</span>
-<span id="cb194-2"><a href="boosting-en-r.html#cb194-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb194-3"><a href="boosting-en-r.html#cb194-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> winequality</span>
-<span id="cb194-4"><a href="boosting-en-r.html#cb194-4" aria-hidden="true" tabindex="-1"></a>nobs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
-<span id="cb194-5"><a href="boosting-en-r.html#cb194-5" aria-hidden="true" tabindex="-1"></a>itrain <span class="ot">&lt;-</span> <span class="fu">sample</span>(nobs, <span class="fl">0.8</span> <span class="sc">*</span> nobs)</span>
-<span id="cb194-6"><a href="boosting-en-r.html#cb194-6" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> df[itrain, ]</span>
-<span id="cb194-7"><a href="boosting-en-r.html#cb194-7" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> df[<span class="sc">-</span>itrain, ]</span>
-<span id="cb194-8"><a href="boosting-en-r.html#cb194-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb194-9"><a href="boosting-en-r.html#cb194-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gbm)</span>
-<span id="cb194-10"><a href="boosting-en-r.html#cb194-10" aria-hidden="true" tabindex="-1"></a>gbm.fit <span class="ot">&lt;-</span> <span class="fu">gbm</span>(quality <span class="sc">~</span> ., <span class="at">data =</span> train)</span></code></pre></div>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="boosting-en-r.html#cb190-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/winequality.RData&quot;</span>)</span>
+<span id="cb190-2"><a href="boosting-en-r.html#cb190-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb190-3"><a href="boosting-en-r.html#cb190-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> winequality</span>
+<span id="cb190-4"><a href="boosting-en-r.html#cb190-4" aria-hidden="true" tabindex="-1"></a>nobs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
+<span id="cb190-5"><a href="boosting-en-r.html#cb190-5" aria-hidden="true" tabindex="-1"></a>itrain <span class="ot">&lt;-</span> <span class="fu">sample</span>(nobs, <span class="fl">0.8</span> <span class="sc">*</span> nobs)</span>
+<span id="cb190-6"><a href="boosting-en-r.html#cb190-6" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> df[itrain, ]</span>
+<span id="cb190-7"><a href="boosting-en-r.html#cb190-7" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> df[<span class="sc">-</span>itrain, ]</span>
+<span id="cb190-8"><a href="boosting-en-r.html#cb190-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb190-9"><a href="boosting-en-r.html#cb190-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gbm)</span>
+<span id="cb190-10"><a href="boosting-en-r.html#cb190-10" aria-hidden="true" tabindex="-1"></a>gbm.fit <span class="ot">&lt;-</span> <span class="fu">gbm</span>(quality <span class="sc">~</span> ., <span class="at">data =</span> train)</span></code></pre></div>
 <pre><code>## Distribution not specified, assuming gaussian ...</code></pre>
-<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="boosting-en-r.html#cb196-1" aria-hidden="true" tabindex="-1"></a>gbm.fit</span></code></pre></div>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="boosting-en-r.html#cb192-1" aria-hidden="true" tabindex="-1"></a>gbm.fit</span></code></pre></div>
 <pre><code>## gbm(formula = quality ~ ., data = train)
 ## A gradient boosted model with gaussian loss function.
 ## 100 iterations were performed.
 ## There were 11 predictors of which 11 had non-zero influence.</code></pre>
 <p>El método <code>summary()</code> calcula las medidas de influencia de los predictores y las representa gráficamente (ver Figura <a href="boosting-en-r.html#fig:gbm-summary">3.12</a>):</p>
-<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="boosting-en-r.html#cb198-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gbm.fit)</span></code></pre></div>
+
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="boosting-en-r.html#cb194-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gbm.fit)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:gbm-summary"></span>
-<img src="03-bagging_boosting_files/figure-html/gbm-summary-1.png" alt="Importancia de las variables predictoras (con los valores por defecto de `gbm()`)." width="80%" />
+<img src="03-bagging_boosting_files/figure-html/gbm-summary-1.png" alt="Importancia de las variables predictoras (con los valores por defecto de gbm())." width="75%" />
 <p class="caption">
 Figura 3.12: Importancia de las variables predictoras (con los valores por defecto de <code>gbm()</code>).
 </p>
@@ -682,62 +664,63 @@ Figura 3.12: Importancia de las variables predictoras (con los valores por defec
 ## density                           density  1.918442
 ## pH                                     pH  1.088152</code></pre>
 <p>Para estudiar el efecto de un predictor se pueden generar gráficos de los efectos parciales mediante el método <code>plot()</code> (ver Figura <a href="boosting-en-r.html#fig:gbm-plot">3.13</a>):</p>
-<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="boosting-en-r.html#cb200-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">plot</span>(gbm.fit, <span class="at">i =</span> <span class="fu">c</span>(<span class="st">&quot;alcohol&quot;</span>))</span>
-<span id="cb200-2"><a href="boosting-en-r.html#cb200-2" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">plot</span>(gbm.fit, <span class="at">i =</span> <span class="fu">c</span>(<span class="st">&quot;density&quot;</span>))</span>
-<span id="cb200-3"><a href="boosting-en-r.html#cb200-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(p1, p2, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
+
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="boosting-en-r.html#cb196-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">plot</span>(gbm.fit, <span class="at">i =</span> <span class="st">&quot;alcohol&quot;</span>)</span>
+<span id="cb196-2"><a href="boosting-en-r.html#cb196-2" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">plot</span>(gbm.fit, <span class="at">i =</span> <span class="st">&quot;density&quot;</span>)</span>
+<span id="cb196-3"><a href="boosting-en-r.html#cb196-3" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(gbm.fit, i = c(&quot;alcohol&quot;, &quot;density&quot;)) # interacción</span></span>
+<span id="cb196-4"><a href="boosting-en-r.html#cb196-4" aria-hidden="true" tabindex="-1"></a>gridExtra<span class="sc">::</span><span class="fu">grid.arrange</span>(p1, p2, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:gbm-plot"></span>
-<img src="03-bagging_boosting_files/figure-html/gbm-plot-1.png" alt="Efecto parcíal del alcohol (panel izquierdo) y la densidad (panel derecho) sobre la respuesta (con `gbm()`)." width="90%" />
+<img src="03-bagging_boosting_files/figure-html/gbm-plot-1.png" alt="Efecto parcial del alcohol (panel izquierdo) y la densidad (panel derecho) sobre la respuesta (con gbm())." width="90%" />
 <p class="caption">
-Figura 3.13: Efecto parcíal del alcohol (panel izquierdo) y la densidad (panel derecho) sobre la respuesta (con <code>gbm()</code>).
+Figura 3.13: Efecto parcial del alcohol (panel izquierdo) y la densidad (panel derecho) sobre la respuesta (con <code>gbm()</code>).
 </p>
 </div>
-<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="boosting-en-r.html#cb201-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(gbm.fit, i = c(&quot;alcohol&quot;,&quot;density&quot;)) # interacción</span></span></code></pre></div>
 <p>Finalmente podemos evaluar la precisión en la muestra de test empleando el código habitual:</p>
-<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="boosting-en-r.html#cb202-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(gbm.fit, <span class="at">newdata =</span> test)</span>
-<span id="cb202-2"><a href="boosting-en-r.html#cb202-2" aria-hidden="true" tabindex="-1"></a>obs <span class="ot">&lt;-</span> test<span class="sc">$</span>quality</span>
-<span id="cb202-3"><a href="boosting-en-r.html#cb202-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb202-4"><a href="boosting-en-r.html#cb202-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Con el paquete caret</span></span>
-<span id="cb202-5"><a href="boosting-en-r.html#cb202-5" aria-hidden="true" tabindex="-1"></a>caret<span class="sc">::</span><span class="fu">postResample</span>(pred, obs)</span></code></pre></div>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="boosting-en-r.html#cb197-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(gbm.fit, <span class="at">newdata =</span> test)</span>
+<span id="cb197-2"><a href="boosting-en-r.html#cb197-2" aria-hidden="true" tabindex="-1"></a>obs <span class="ot">&lt;-</span> test<span class="sc">$</span>quality</span>
+<span id="cb197-3"><a href="boosting-en-r.html#cb197-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb197-4"><a href="boosting-en-r.html#cb197-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Con el paquete caret</span></span>
+<span id="cb197-5"><a href="boosting-en-r.html#cb197-5" aria-hidden="true" tabindex="-1"></a>caret<span class="sc">::</span><span class="fu">postResample</span>(pred, obs)</span></code></pre></div>
 <pre><code>##      RMSE  Rsquared       MAE 
 ## 0.7586208 0.3001401 0.6110442</code></pre>
-<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="boosting-en-r.html#cb204-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Con la función accuracy()</span></span>
-<span id="cb204-2"><a href="boosting-en-r.html#cb204-2" aria-hidden="true" tabindex="-1"></a>accuracy <span class="ot">&lt;-</span> <span class="cf">function</span>(pred, obs, <span class="at">na.rm =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb204-3"><a href="boosting-en-r.html#cb204-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">tol =</span> <span class="fu">sqrt</span>(.Machine<span class="sc">$</span>double.eps)) {</span>
-<span id="cb204-4"><a href="boosting-en-r.html#cb204-4" aria-hidden="true" tabindex="-1"></a>  err <span class="ot">&lt;-</span> obs <span class="sc">-</span> pred     <span class="co"># Errores</span></span>
-<span id="cb204-5"><a href="boosting-en-r.html#cb204-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(na.rm) {</span>
-<span id="cb204-6"><a href="boosting-en-r.html#cb204-6" aria-hidden="true" tabindex="-1"></a>    is.a <span class="ot">&lt;-</span> <span class="sc">!</span><span class="fu">is.na</span>(err)</span>
-<span id="cb204-7"><a href="boosting-en-r.html#cb204-7" aria-hidden="true" tabindex="-1"></a>    err <span class="ot">&lt;-</span> err[is.a]</span>
-<span id="cb204-8"><a href="boosting-en-r.html#cb204-8" aria-hidden="true" tabindex="-1"></a>    obs <span class="ot">&lt;-</span> obs[is.a]</span>
-<span id="cb204-9"><a href="boosting-en-r.html#cb204-9" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb204-10"><a href="boosting-en-r.html#cb204-10" aria-hidden="true" tabindex="-1"></a>  perr <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span>err<span class="sc">/</span><span class="fu">pmax</span>(obs, tol)  <span class="co"># Errores porcentuales</span></span>
-<span id="cb204-11"><a href="boosting-en-r.html#cb204-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">c</span>(</span>
-<span id="cb204-12"><a href="boosting-en-r.html#cb204-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">me =</span> <span class="fu">mean</span>(err),           <span class="co"># Error medio</span></span>
-<span id="cb204-13"><a href="boosting-en-r.html#cb204-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">rmse =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(err<span class="sc">^</span><span class="dv">2</span>)), <span class="co"># Raíz del error cuadrático medio</span></span>
-<span id="cb204-14"><a href="boosting-en-r.html#cb204-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">mae =</span> <span class="fu">mean</span>(<span class="fu">abs</span>(err)),     <span class="co"># Error absoluto medio</span></span>
-<span id="cb204-15"><a href="boosting-en-r.html#cb204-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">mpe =</span> <span class="fu">mean</span>(perr),         <span class="co"># Error porcentual medio</span></span>
-<span id="cb204-16"><a href="boosting-en-r.html#cb204-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">mape =</span> <span class="fu">mean</span>(<span class="fu">abs</span>(perr)),   <span class="co"># Error porcentual absoluto medio</span></span>
-<span id="cb204-17"><a href="boosting-en-r.html#cb204-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">r.squared =</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">sum</span>(err<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="fu">sum</span>((obs <span class="sc">-</span> <span class="fu">mean</span>(obs))<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb204-18"><a href="boosting-en-r.html#cb204-18" aria-hidden="true" tabindex="-1"></a>  ))</span>
-<span id="cb204-19"><a href="boosting-en-r.html#cb204-19" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb204-20"><a href="boosting-en-r.html#cb204-20" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(pred, obs)</span></code></pre></div>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="boosting-en-r.html#cb199-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Con la función accuracy()</span></span>
+<span id="cb199-2"><a href="boosting-en-r.html#cb199-2" aria-hidden="true" tabindex="-1"></a>accuracy <span class="ot">&lt;-</span> <span class="cf">function</span>(pred, obs, <span class="at">na.rm =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb199-3"><a href="boosting-en-r.html#cb199-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">tol =</span> <span class="fu">sqrt</span>(.Machine<span class="sc">$</span>double.eps)) {</span>
+<span id="cb199-4"><a href="boosting-en-r.html#cb199-4" aria-hidden="true" tabindex="-1"></a>  err <span class="ot">&lt;-</span> obs <span class="sc">-</span> pred     <span class="co"># Errores</span></span>
+<span id="cb199-5"><a href="boosting-en-r.html#cb199-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(na.rm) {</span>
+<span id="cb199-6"><a href="boosting-en-r.html#cb199-6" aria-hidden="true" tabindex="-1"></a>    is.a <span class="ot">&lt;-</span> <span class="sc">!</span><span class="fu">is.na</span>(err)</span>
+<span id="cb199-7"><a href="boosting-en-r.html#cb199-7" aria-hidden="true" tabindex="-1"></a>    err <span class="ot">&lt;-</span> err[is.a]</span>
+<span id="cb199-8"><a href="boosting-en-r.html#cb199-8" aria-hidden="true" tabindex="-1"></a>    obs <span class="ot">&lt;-</span> obs[is.a]</span>
+<span id="cb199-9"><a href="boosting-en-r.html#cb199-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb199-10"><a href="boosting-en-r.html#cb199-10" aria-hidden="true" tabindex="-1"></a>  perr <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span>err<span class="sc">/</span><span class="fu">pmax</span>(obs, tol)  <span class="co"># Errores porcentuales</span></span>
+<span id="cb199-11"><a href="boosting-en-r.html#cb199-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">c</span>(</span>
+<span id="cb199-12"><a href="boosting-en-r.html#cb199-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">me =</span> <span class="fu">mean</span>(err),           <span class="co"># Error medio</span></span>
+<span id="cb199-13"><a href="boosting-en-r.html#cb199-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">rmse =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(err<span class="sc">^</span><span class="dv">2</span>)), <span class="co"># Raíz del error cuadrático medio</span></span>
+<span id="cb199-14"><a href="boosting-en-r.html#cb199-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">mae =</span> <span class="fu">mean</span>(<span class="fu">abs</span>(err)),     <span class="co"># Error absoluto medio</span></span>
+<span id="cb199-15"><a href="boosting-en-r.html#cb199-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">mpe =</span> <span class="fu">mean</span>(perr),         <span class="co"># Error porcentual medio</span></span>
+<span id="cb199-16"><a href="boosting-en-r.html#cb199-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">mape =</span> <span class="fu">mean</span>(<span class="fu">abs</span>(perr)),   <span class="co"># Error porcentual absoluto medio</span></span>
+<span id="cb199-17"><a href="boosting-en-r.html#cb199-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">r.squared =</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">sum</span>(err<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="fu">sum</span>((obs <span class="sc">-</span> <span class="fu">mean</span>(obs))<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb199-18"><a href="boosting-en-r.html#cb199-18" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb199-19"><a href="boosting-en-r.html#cb199-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb199-20"><a href="boosting-en-r.html#cb199-20" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(pred, obs)</span></code></pre></div>
 <pre><code>##          me        rmse         mae         mpe        mape   r.squared 
 ## -0.01463661  0.75862081  0.61104421 -2.00702056 10.69753668  0.29917590</code></pre>
 <!-- 
 Pendiente: ejercicio regresión con el conjunto de datos Boston empleando error absoluto para evitar la influencia de datos atípicos. 
 -->
 <p>Este procedimiento también está implementado en el paquete <code>caret</code> seleccionando el método <code>"gbm"</code>, que considera como hiperparámetros:</p>
-<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="boosting-en-r.html#cb206-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
-<span id="cb206-2"><a href="boosting-en-r.html#cb206-2" aria-hidden="true" tabindex="-1"></a><span class="fu">modelLookup</span>(<span class="st">&quot;gbm&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="boosting-en-r.html#cb201-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb201-2"><a href="boosting-en-r.html#cb201-2" aria-hidden="true" tabindex="-1"></a><span class="fu">modelLookup</span>(<span class="st">&quot;gbm&quot;</span>)</span></code></pre></div>
 <pre><code>##   model         parameter                   label forReg forClass probModel
 ## 1   gbm           n.trees   # Boosting Iterations   TRUE     TRUE      TRUE
 ## 2   gbm interaction.depth          Max Tree Depth   TRUE     TRUE      TRUE
 ## 3   gbm         shrinkage               Shrinkage   TRUE     TRUE      TRUE
 ## 4   gbm    n.minobsinnode Min. Terminal Node Size   TRUE     TRUE      TRUE</code></pre>
 <p>Aunque por defecto la función <code>train()</code> solo considera nueve combinaciones de hiperparámetros. Para hacer una búsqueda más completa se podría seguir un procedimiento análogo al empleado con el método anterior:</p>
-<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="boosting-en-r.html#cb208-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb208-2"><a href="boosting-en-r.html#cb208-2" aria-hidden="true" tabindex="-1"></a>caret.gbm0 <span class="ot">&lt;-</span> <span class="fu">train</span>(quality <span class="sc">~</span> ., <span class="at">method =</span> <span class="st">&quot;gbm&quot;</span>, <span class="at">data =</span> train,</span>
-<span id="cb208-3"><a href="boosting-en-r.html#cb208-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">trControl =</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>))</span></code></pre></div>
-<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="boosting-en-r.html#cb209-1" aria-hidden="true" tabindex="-1"></a>caret.gbm0</span></code></pre></div>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="boosting-en-r.html#cb203-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb203-2"><a href="boosting-en-r.html#cb203-2" aria-hidden="true" tabindex="-1"></a>caret.gbm0 <span class="ot">&lt;-</span> <span class="fu">train</span>(quality <span class="sc">~</span> ., <span class="at">method =</span> <span class="st">&quot;gbm&quot;</span>, <span class="at">data =</span> train,</span>
+<span id="cb203-3"><a href="boosting-en-r.html#cb203-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">trControl =</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="boosting-en-r.html#cb204-1" aria-hidden="true" tabindex="-1"></a>caret.gbm0</span></code></pre></div>
 <pre><code>## Stochastic Gradient Boosting 
 ## 
 ## 1000 samples
@@ -765,12 +748,12 @@ Pendiente: ejercicio regresión con el conjunto de datos Boston empleando error 
 ## RMSE was used to select the optimal model using the smallest value.
 ## The final values used for the model were n.trees = 100, interaction.depth =
 ##  2, shrinkage = 0.1 and n.minobsinnode = 10.</code></pre>
-<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="boosting-en-r.html#cb211-1" aria-hidden="true" tabindex="-1"></a>caret.gbm1 <span class="ot">&lt;-</span> <span class="fu">train</span>(quality <span class="sc">~</span> ., <span class="at">method =</span> <span class="st">&quot;gbm&quot;</span>, <span class="at">data =</span> train,</span>
-<span id="cb211-2"><a href="boosting-en-r.html#cb211-2" aria-hidden="true" tabindex="-1"></a>   <span class="at">tuneGrid =</span> <span class="fu">data.frame</span>(<span class="at">n.trees =</span>  <span class="dv">100</span>, <span class="at">interaction.depth =</span> <span class="dv">2</span>, </span>
-<span id="cb211-3"><a href="boosting-en-r.html#cb211-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">shrinkage =</span> <span class="fu">c</span>(<span class="fl">0.3</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>, <span class="fl">0.01</span>, <span class="fl">0.005</span>),</span>
-<span id="cb211-4"><a href="boosting-en-r.html#cb211-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">n.minobsinnode =</span> <span class="dv">10</span>),</span>
-<span id="cb211-5"><a href="boosting-en-r.html#cb211-5" aria-hidden="true" tabindex="-1"></a>   <span class="at">trControl =</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>))</span></code></pre></div>
-<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="boosting-en-r.html#cb212-1" aria-hidden="true" tabindex="-1"></a>caret.gbm1</span></code></pre></div>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="boosting-en-r.html#cb206-1" aria-hidden="true" tabindex="-1"></a>caret.gbm1 <span class="ot">&lt;-</span> <span class="fu">train</span>(quality <span class="sc">~</span> ., <span class="at">method =</span> <span class="st">&quot;gbm&quot;</span>, <span class="at">data =</span> train,</span>
+<span id="cb206-2"><a href="boosting-en-r.html#cb206-2" aria-hidden="true" tabindex="-1"></a>   <span class="at">tuneGrid =</span> <span class="fu">data.frame</span>(<span class="at">n.trees =</span>  <span class="dv">100</span>, <span class="at">interaction.depth =</span> <span class="dv">2</span>, </span>
+<span id="cb206-3"><a href="boosting-en-r.html#cb206-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">shrinkage =</span> <span class="fu">c</span>(<span class="fl">0.3</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>, <span class="fl">0.01</span>, <span class="fl">0.005</span>),</span>
+<span id="cb206-4"><a href="boosting-en-r.html#cb206-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">n.minobsinnode =</span> <span class="dv">10</span>),</span>
+<span id="cb206-5"><a href="boosting-en-r.html#cb206-5" aria-hidden="true" tabindex="-1"></a>   <span class="at">trControl =</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="boosting-en-r.html#cb207-1" aria-hidden="true" tabindex="-1"></a>caret.gbm1</span></code></pre></div>
 <pre><code>## Stochastic Gradient Boosting 
 ## 
 ## 1000 samples
@@ -796,7 +779,7 @@ Pendiente: ejercicio regresión con el conjunto de datos Boston empleando error 
 ## RMSE was used to select the optimal model using the smallest value.
 ## The final values used for the model were n.trees = 100, interaction.depth =
 ##  2, shrinkage = 0.1 and n.minobsinnode = 10.</code></pre>
-<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="boosting-en-r.html#cb214-1" aria-hidden="true" tabindex="-1"></a><span class="fu">varImp</span>(caret.gbm1)</span></code></pre></div>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="boosting-en-r.html#cb209-1" aria-hidden="true" tabindex="-1"></a><span class="fu">varImp</span>(caret.gbm1)</span></code></pre></div>
 <pre><code>## gbm variable importance
 ## 
 ##                       Overall
@@ -811,22 +794,22 @@ Pendiente: ejercicio regresión con el conjunto de datos Boston empleando error 
 ## chlorides              4.5106
 ## pH                     0.1096
 ## sulphates              0.0000</code></pre>
-<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="boosting-en-r.html#cb216-1" aria-hidden="true" tabindex="-1"></a><span class="fu">postResample</span>(<span class="fu">predict</span>(caret.gbm1, <span class="at">newdata =</span> test), test<span class="sc">$</span>quality)</span></code></pre></div>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="boosting-en-r.html#cb211-1" aria-hidden="true" tabindex="-1"></a><span class="fu">postResample</span>(<span class="fu">predict</span>(caret.gbm1, <span class="at">newdata =</span> test), test<span class="sc">$</span>quality)</span></code></pre></div>
 <pre><code>##      RMSE  Rsquared       MAE 
 ## 0.7403768 0.3329751 0.6017281</code></pre>
 </div>
-<div id="ejemplo-xgboost-con-el-paquete-caret" class="section level3" number="3.5.3">
-<h3><span class="header-section-number">3.5.3</span> Ejemplo: XGBoost con el paquete <code>caret</code></h3>
+<div id="xgb-caret" class="section level3 hasAnchor" number="3.5.3">
+<h3><span class="header-section-number">3.5.3</span> Ejemplo: XGBoost con el paquete <code>caret</code><a href="boosting-en-r.html#xgb-caret" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>El método boosting implementado en el paquete <a href="https://github.com/dmlc/xgboost/tree/master/R-package"><code>xgboost</code></a> es uno de los más populares hoy en día.
 Esta implementación proporciona parámetros adicionales de regularización para controlar la complejidad del modelo y tratar de evitar el sobreajuste.
 También incluye criterios de parada, para detener la evaluación del modelo cuando los árboles adicionales no ofrecen ninguna mejora.
 Dispone de una interfaz simple <code>xgboost()</code> y otra más avanzada <code>xgb.train()</code>, que admite funciones de pérdida y evaluación personalizadas.
 Normalmente es necesario un preprocesado de los datos antes de llamar a estas funciones, ya que requieren de una matriz para los predictores y de un vector para la respuesta (además en el caso de que sea dicotómica debe tomar valores en <span class="math inline">\(\{0, 1\}\)</span>). Por tanto es necesario recodificar las variables categóricas como numéricas.
 Por este motivo puede ser preferible emplear la interfaz de <code>caret</code>.</p>
-<p>El algoritmo estándar <em>XGBoost</em>, que emplea árboles como modelo base, está implementado en el método <code>"xgbTree"</code> de <code>caret</code><a href="#fn23" class="footnote-ref" id="fnref23"><sup>23</sup></a>.</p>
-<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="boosting-en-r.html#cb218-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
-<span id="cb218-2"><a href="boosting-en-r.html#cb218-2" aria-hidden="true" tabindex="-1"></a><span class="co"># names(getModelInfo(&quot;xgb&quot;))</span></span>
-<span id="cb218-3"><a href="boosting-en-r.html#cb218-3" aria-hidden="true" tabindex="-1"></a><span class="fu">modelLookup</span>(<span class="st">&quot;xgbTree&quot;</span>)</span></code></pre></div>
+<p>El algoritmo estándar <em>XGBoost</em>, que emplea árboles como modelo base, está implementado en el método <code>"xgbTree"</code> de <code>caret</code><a href="#fn27" class="footnote-ref" id="fnref27"><sup>27</sup></a>:</p>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="boosting-en-r.html#cb213-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb213-2"><a href="boosting-en-r.html#cb213-2" aria-hidden="true" tabindex="-1"></a><span class="co"># names(getModelInfo(&quot;xgb&quot;))</span></span>
+<span id="cb213-3"><a href="boosting-en-r.html#cb213-3" aria-hidden="true" tabindex="-1"></a><span class="fu">modelLookup</span>(<span class="st">&quot;xgbTree&quot;</span>)</span></code></pre></div>
 <pre><code>##     model        parameter                          label forReg forClass
 ## 1 xgbTree          nrounds          # Boosting Iterations   TRUE     TRUE
 ## 2 xgbTree        max_depth                 Max Tree Depth   TRUE     TRUE
@@ -853,19 +836,20 @@ Por este motivo puede ser preferible emplear la interfaz de <code>caret</code>.<
 <li><p><code>"min_child_weight"</code>: suma mínima de peso (hessiana) para hacer una partición adicional en un nodo del árbol; por defecto 1.</p></li>
 <li><p><code>"subsample"</code>: proporción de observaciones seleccionadas al azar en cada iteración boosting; por defecto 1.</p></li>
 </ul>
-<p>Para más información sobre parámetros adicionales se puede consultar la ayuda de <code>xgboost::xgboost()</code> o la lista detallada disponible en la Sección <a href="https://xgboost.readthedocs.io/en/latest/parameter.html">XGBoost Parameters</a> del <a href="https://xgboost.readthedocs.io">Manual de XGBoost</a>.</p>
+<p>Para más información sobre parámetros adicionales se puede consultar la ayuda de <a href="https://rdrr.io/pkg/xgboost/man/xgb.train.html"><code>xgboost::xgboost()</code></a> o la lista detallada disponible en la Sección <a href="https://xgboost.readthedocs.io/en/latest/parameter.html">XGBoost Parameters</a> del <a href="https://xgboost.readthedocs.io">Manual de XGBoost</a>.</p>
 <p>Como ejemplo consideraremos el problema de clasificación empleando el conjunto de datos de calidad de vino:</p>
-<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="boosting-en-r.html#cb220-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/winetaste.RData&quot;</span>)</span>
-<span id="cb220-2"><a href="boosting-en-r.html#cb220-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb220-3"><a href="boosting-en-r.html#cb220-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> winetaste</span>
-<span id="cb220-4"><a href="boosting-en-r.html#cb220-4" aria-hidden="true" tabindex="-1"></a>nobs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
-<span id="cb220-5"><a href="boosting-en-r.html#cb220-5" aria-hidden="true" tabindex="-1"></a>itrain <span class="ot">&lt;-</span> <span class="fu">sample</span>(nobs, <span class="fl">0.8</span> <span class="sc">*</span> nobs)</span>
-<span id="cb220-6"><a href="boosting-en-r.html#cb220-6" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> df[itrain, ]</span>
-<span id="cb220-7"><a href="boosting-en-r.html#cb220-7" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> df[<span class="sc">-</span>itrain, ]</span></code></pre></div>
-<p>En este caso la función <code>train()</code> considera por defecto 108 combinaciones de hiperparámetros y el tiempo de computación puede ser excesivo.</p>
-<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="boosting-en-r.html#cb221-1" aria-hidden="true" tabindex="-1"></a>caret.xgb <span class="ot">&lt;-</span> <span class="fu">train</span>(taste <span class="sc">~</span> ., <span class="at">method =</span> <span class="st">&quot;xgbTree&quot;</span>, <span class="at">data =</span> train,</span>
-<span id="cb221-2"><a href="boosting-en-r.html#cb221-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">trControl =</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>))</span>
-<span id="cb221-3"><a href="boosting-en-r.html#cb221-3" aria-hidden="true" tabindex="-1"></a>caret.xgb</span></code></pre></div>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="boosting-en-r.html#cb215-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/winetaste.RData&quot;</span>)</span>
+<span id="cb215-2"><a href="boosting-en-r.html#cb215-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb215-3"><a href="boosting-en-r.html#cb215-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> winetaste</span>
+<span id="cb215-4"><a href="boosting-en-r.html#cb215-4" aria-hidden="true" tabindex="-1"></a>nobs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
+<span id="cb215-5"><a href="boosting-en-r.html#cb215-5" aria-hidden="true" tabindex="-1"></a>itrain <span class="ot">&lt;-</span> <span class="fu">sample</span>(nobs, <span class="fl">0.8</span> <span class="sc">*</span> nobs)</span>
+<span id="cb215-6"><a href="boosting-en-r.html#cb215-6" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> df[itrain, ]</span>
+<span id="cb215-7"><a href="boosting-en-r.html#cb215-7" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> df[<span class="sc">-</span>itrain, ]</span></code></pre></div>
+<p>En este caso la función <code>train()</code> considera por defecto 108 combinaciones de hiperparámetros y el tiempo de computación puede ser excesivo<a href="#fn28" class="footnote-ref" id="fnref28"><sup>28</sup></a>:</p>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="boosting-en-r.html#cb216-1" aria-hidden="true" tabindex="-1"></a>caret.xgb <span class="ot">&lt;-</span> <span class="fu">train</span>(taste <span class="sc">~</span> ., <span class="at">method =</span> <span class="st">&quot;xgbTree&quot;</span>, <span class="at">data =</span> train,</span>
+<span id="cb216-2"><a href="boosting-en-r.html#cb216-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">trControl =</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>), </span>
+<span id="cb216-3"><a href="boosting-en-r.html#cb216-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">verbosity =</span> <span class="dv">0</span>)</span>
+<span id="cb216-4"><a href="boosting-en-r.html#cb216-4" aria-hidden="true" tabindex="-1"></a>caret.xgb</span></code></pre></div>
 <pre><code>## eXtreme Gradient Boosting 
 ## 
 ## 1000 samples
@@ -886,106 +870,7 @@ Por este motivo puede ser preferible emplear la interfaz de <code>caret</code>.<
 ##   0.3  1          0.6               0.75       150      0.7519900  0.4194354
 ##   0.3  1          0.6               1.00        50      0.7479450  0.3933223
 ##   0.3  1          0.6               1.00       100      0.7439499  0.3946755
-##   0.3  1          0.6               1.00       150      0.7479699  0.4054549
-##   0.3  1          0.8               0.50        50      0.7279446  0.3514309
-##   0.3  1          0.8               0.50       100      0.7379647  0.3901818
-##   0.3  1          0.8               0.50       150      0.7289797  0.3702869
-##   0.3  1          0.8               0.75        50      0.7419548  0.3853122
-##   0.3  1          0.8               0.75       100      0.7419798  0.3939408
-##   0.3  1          0.8               0.75       150      0.7490050  0.4119554
-##   0.3  1          0.8               1.00        50      0.7469399  0.3903359
-##   0.3  1          0.8               1.00       100      0.7469349  0.3994462
-##   0.3  1          0.8               1.00       150      0.7429499  0.3930019
-##   0.3  2          0.6               0.50        50      0.7469800  0.4072389
-##   0.3  2          0.6               0.50       100      0.7560152  0.4315043
-##   0.3  2          0.6               0.50       150      0.7470550  0.4202096
-##   0.3  2          0.6               0.75        50      0.7419347  0.3991878
-##   0.3  2          0.6               0.75       100      0.7419398  0.3985245
-##   0.3  2          0.6               0.75       150      0.7408999  0.4048017
-##   0.3  2          0.6               1.00        50      0.7529250  0.4183744
-##   0.3  2          0.6               1.00       100      0.7559601  0.4332161
-##   0.3  2          0.6               1.00       150      0.7439798  0.4082169
-##   0.3  2          0.8               0.50        50      0.7479801  0.4039828
-##   0.3  2          0.8               0.50       100      0.7439500  0.4017708
-##   0.3  2          0.8               0.50       150      0.7409099  0.4002330
-##   0.3  2          0.8               0.75        50      0.7549701  0.4309398
-##   0.3  2          0.8               0.75       100      0.7469550  0.4077312
-##   0.3  2          0.8               0.75       150      0.7529701  0.4282530
-##   0.3  2          0.8               1.00        50      0.7509800  0.4151042
-##   0.3  2          0.8               1.00       100      0.7479899  0.4164189
-##   0.3  2          0.8               1.00       150      0.7439498  0.4044785
-##   0.3  3          0.6               0.50        50      0.7529851  0.4322174
-##   0.3  3          0.6               0.50       100      0.7479900  0.4200214
-##   0.3  3          0.6               0.50       150      0.7499800  0.4307546
-##   0.3  3          0.6               0.75        50      0.7499550  0.4263366
-##   0.3  3          0.6               0.75       100      0.7519201  0.4321688
-##   0.3  3          0.6               0.75       150      0.7459449  0.4177412
-##   0.3  3          0.6               1.00        50      0.7529251  0.4220849
-##   0.3  3          0.6               1.00       100      0.7519400  0.4237486
-##   0.3  3          0.6               1.00       150      0.7519500  0.4294623
-##   0.3  3          0.8               0.50        50      0.7510299  0.4327919
-##   0.3  3          0.8               0.50       100      0.7519799  0.4405268
-##   0.3  3          0.8               0.50       150      0.7619652  0.4559423
-##   0.3  3          0.8               0.75        50      0.7470501  0.4131934
-##   0.3  3          0.8               0.75       100      0.7479849  0.4129185
-##   0.3  3          0.8               0.75       150      0.7509850  0.4261251
-##   0.3  3          0.8               1.00        50      0.7449099  0.4008981
-##   0.3  3          0.8               1.00       100      0.7610054  0.4422136
-##   0.3  3          0.8               1.00       150      0.7569803  0.4382787
-##   0.4  1          0.6               0.50        50      0.7370397  0.3774680
-##   0.4  1          0.6               0.50       100      0.7340546  0.3874281
-##   0.4  1          0.6               0.50       150      0.7490550  0.4204110
-##   0.4  1          0.6               0.75        50      0.7330097  0.3695029
-##   0.4  1          0.6               0.75       100      0.7269447  0.3595653
-##   0.4  1          0.6               0.75       150      0.7409999  0.3999882
-##   0.4  1          0.6               1.00        50      0.7389548  0.3787453
-##   0.4  1          0.6               1.00       100      0.7479499  0.4061188
-##   0.4  1          0.6               1.00       150      0.7410049  0.3940049
-##   0.4  1          0.8               0.50        50      0.7269246  0.3647893
-##   0.4  1          0.8               0.50       100      0.7459551  0.4088011
-##   0.4  1          0.8               0.50       150      0.7359947  0.3910800
-##   0.4  1          0.8               0.75        50      0.7369797  0.3798786
-##   0.4  1          0.8               0.75       100      0.7329997  0.3808412
-##   0.4  1          0.8               0.75       150      0.7410149  0.4007794
-##   0.4  1          0.8               1.00        50      0.7429449  0.3889734
-##   0.4  1          0.8               1.00       100      0.7549401  0.4194777
-##   0.4  1          0.8               1.00       150      0.7499600  0.4117257
-##   0.4  2          0.6               0.50        50      0.7340497  0.3817464
-##   0.4  2          0.6               0.50       100      0.7330547  0.3836073
-##   0.4  2          0.6               0.50       150      0.7429900  0.4086515
-##   0.4  2          0.6               0.75        50      0.7490100  0.4065411
-##   0.4  2          0.6               0.75       100      0.7399647  0.4013642
-##   0.4  2          0.6               0.75       150      0.7480149  0.4165452
-##   0.4  2          0.6               1.00        50      0.7519601  0.4189103
-##   0.4  2          0.6               1.00       100      0.7559751  0.4326368
-##   0.4  2          0.6               1.00       150      0.7649804  0.4559090
-##   0.4  2          0.8               0.50        50      0.7430148  0.4088033
-##   0.4  2          0.8               0.50       100      0.7459399  0.4110881
-##   0.4  2          0.8               0.50       150      0.7359897  0.3929835
-##   0.4  2          0.8               0.75        50      0.7509801  0.4207733
-##   0.4  2          0.8               0.75       100      0.7399848  0.3993503
-##   0.4  2          0.8               0.75       150      0.7429548  0.4092104
-##   0.4  2          0.8               1.00        50      0.7609753  0.4402344
-##   0.4  2          0.8               1.00       100      0.7669804  0.4572722
-##   0.4  2          0.8               1.00       150      0.7559651  0.4339887
-##   0.4  3          0.6               0.50        50      0.7440298  0.4091740
-##   0.4  3          0.6               0.50       100      0.7559752  0.4388366
-##   0.4  3          0.6               0.50       150      0.7659354  0.4555764
-##   0.4  3          0.6               0.75        50      0.7560301  0.4384091
-##   0.4  3          0.6               0.75       100      0.7540000  0.4330182
-##   0.4  3          0.6               0.75       150      0.7549501  0.4357856
-##   0.4  3          0.6               1.00        50      0.7449599  0.4072659
-##   0.4  3          0.6               1.00       100      0.7569501  0.4386990
-##   0.4  3          0.6               1.00       150      0.7589451  0.4502683
-##   0.4  3          0.8               0.50        50      0.7420546  0.4035922
-##   0.4  3          0.8               0.50       100      0.7489598  0.4278516
-##   0.4  3          0.8               0.50       150      0.7439448  0.4158271
-##   0.4  3          0.8               0.75        50      0.7509599  0.4200445
-##   0.4  3          0.8               0.75       100      0.7459798  0.4164791
-##   0.4  3          0.8               0.75       150      0.7599402  0.4479586
-##   0.4  3          0.8               1.00        50      0.7569851  0.4333259
-##   0.4  3          0.8               1.00       100      0.7439549  0.4063617
-##   0.4  3          0.8               1.00       150      0.7459649  0.4162883
+##  [ reached getOption(&quot;max.print&quot;) -- omitted 100 rows ]
 ## 
 ## Tuning parameter &#39;gamma&#39; was held constant at a value of 0
 ## Tuning
@@ -994,10 +879,10 @@ Por este motivo puede ser preferible emplear la interfaz de <code>caret</code>.<
 ## The final values used for the model were nrounds = 100, max_depth = 2, eta
 ##  = 0.4, gamma = 0, colsample_bytree = 0.8, min_child_weight = 1 and subsample
 ##  = 1.</code></pre>
-<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="boosting-en-r.html#cb223-1" aria-hidden="true" tabindex="-1"></a>caret.xgb<span class="sc">$</span>bestTune</span></code></pre></div>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="boosting-en-r.html#cb218-1" aria-hidden="true" tabindex="-1"></a>caret.xgb<span class="sc">$</span>bestTune</span></code></pre></div>
 <pre><code>##    nrounds max_depth eta gamma colsample_bytree min_child_weight subsample
 ## 89     100         2 0.4     0              0.8                1         1</code></pre>
-<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="boosting-en-r.html#cb225-1" aria-hidden="true" tabindex="-1"></a><span class="fu">varImp</span>(caret.xgb)</span></code></pre></div>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="boosting-en-r.html#cb220-1" aria-hidden="true" tabindex="-1"></a><span class="fu">varImp</span>(caret.xgb)</span></code></pre></div>
 <pre><code>## xgbTree variable importance
 ## 
 ##                      Overall
@@ -1012,7 +897,7 @@ Por este motivo puede ser preferible emplear la interfaz de <code>caret</code>.<
 ## sulphates              3.598
 ## pH                     2.925
 ## total.sulfur.dioxide   0.000</code></pre>
-<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="boosting-en-r.html#cb227-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confusionMatrix</span>(<span class="fu">predict</span>(caret.xgb, <span class="at">newdata =</span> test), test<span class="sc">$</span>taste)</span></code></pre></div>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="boosting-en-r.html#cb222-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confusionMatrix</span>(<span class="fu">predict</span>(caret.xgb, <span class="at">newdata =</span> test), test<span class="sc">$</span>taste)</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -1041,6 +926,10 @@ Por este motivo puede ser preferible emplear la interfaz de <code>caret</code>.<
 ##        &#39;Positive&#39; Class : good           
 ## </code></pre>
 <p>Se podría seguir una estrategia de búsqueda similar a la empleada en los métodos anteriores.</p>
+<!-- 
+Ejercicio:
+Emplear una estrategia de búsqueda similar a la empleada en los métodos anteriores
+-->
 
 </div>
 </div>
@@ -1062,9 +951,11 @@ Vinayak, R. K., y Gilad-Bachrach, R. (2015). Dart: Dropouts meet multiple additi
 </div>
 <div class="footnotes">
 <hr />
-<ol start="22">
-<li id="fn22"><p>Se puede evitar este inconveniente empleando la interfaz de <code>caret</code>.<a href="boosting-en-r.html#fnref22" class="footnote-back">↩︎</a></p></li>
-<li id="fn23"><p>Otras alternativas son: <code>"xgbDART"</code> que también emplean árboles como modelo base, pero incluye el método DART <span class="citation">(<a href="#ref-vinayak2015dart" role="doc-biblioref">Vinayak y Gilad-Bachrach, 2015</a>)</span> para evitar sobreajuste (básicamente descarta árboles al azar en la secuencia), y<code>"xgbLinear"</code> que emplea modelos lineales.<a href="boosting-en-r.html#fnref23" class="footnote-back">↩︎</a></p></li>
+<ol start="26">
+<li id="fn26"><p>Se puede evitar este inconveniente empleando la interfaz de <code>caret</code>.<a href="boosting-en-r.html#fnref26" class="footnote-back">↩︎</a></p></li>
+<li id="fn27"><p>Otras alternativas son: <code>"xgbDART"</code> que también emplean árboles como modelo base, pero incluye el método DART <span class="citation">(<a href="#ref-vinayak2015dart" role="doc-biblioref">Vinayak y Gilad-Bachrach, 2015</a>)</span> para evitar sobreajuste (básicamente descarta árboles al azar en la secuencia), y <code>"xgbLinear"</code> que emplea modelos lineales.<a href="boosting-en-r.html#fnref27" class="footnote-back">↩︎</a></p></li>
+<li id="fn28"><p>Además, se establece <code>verbosity = 0</code> para evitar (cientos de) warnings:
+<code>WARNING: src/c_api/c_api.cc:935: "ntree_limit" is deprecated, use "iteration_range" instead</code>.<a href="boosting-en-r.html#fnref28" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -1133,7 +1024,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

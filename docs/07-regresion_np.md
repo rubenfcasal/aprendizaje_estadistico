@@ -1,5 +1,7 @@
 # Regresión no paramétrica {#reg-np}
 
+
+
 <!-- 
 ---
 title: "Regresión no paramétrica"
@@ -8,23 +10,25 @@ date: "Máster en Técnicas Estadísticas"
 bibliography: ["packages.bib", "aprendizaje_estadistico.bib"]
 link-citations: yes
 output: 
+  bookdown::html_document2:
+    pandoc_args: ["--number-offset", "5,0"]
+    toc: yes
+    toc_depth: 3
+    toc_float:
+      collapsed: no
+      smooth_scroll: no    
+    # toc_float: yes 
+    # mathjax: local            # copia local de MathJax, hay que establecer:
+    # self_contained: false     # las dependencias se guardan en ficheros externos 
   bookdown::pdf_document2:
     keep_tex: yes
     toc: yes 
-  bookdown::html_document2:
-    pandoc_args: ["--number-offset", "6,0"]
-    toc: yes 
-    # mathjax: local            # copia local de MathJax, hay que establecer:
-    # self_contained: false     # las dependencias se guardan en ficheros externos 
 ---
 
 bookdown::preview_chapter("07-regresion_np.Rmd")
 knitr::purl("07-regresion_np.Rmd", documentation = 2)
 knitr::spin("07-regresion_np.R",knit = FALSE)
 -->
-
-
-
 
 Se trata de métodos que no suponen ninguna forma concreta de la media condicional (i.e. no se hacen suposiciones paramétricas sobre el efecto de las variables explicativas):
 $$Y=m\left( X_1, \ldots,  X_p \right) + \varepsilon$$
@@ -61,20 +65,17 @@ Normalmente se considera la distancia euclídea ($d=2$) o la de Manhatan ($d=1$)
 En cualquier caso la recomendación es estandarizar previamente los predictores para que no influya su escala en el cálculo de las distancias.
 
 Como ya se mostró en al final del Capítulo \@ref(intro-AE), este método está implementado en la función `knnreg()` (Sección \@ref(dimen-curse)) y en el método `"knn"` del paquete `caret` (Sección \@ref(caret)).
-
-Como ejemplo adicional emplearemos el conjunto de datos `MASS::mcycle` que contiene mediciones de la aceleración de la cabeza en una simulación de un accidente de motocicleta, utilizado para probar cascos protectores (considerando el conjunto de datos completo como si fuese la muestra de entrenamiento).
+Como ejemplo adicional emplearemos el conjunto de datos `MASS::mcycle` que contiene mediciones de la aceleración de la cabeza en una simulación de un accidente de motocicleta, utilizado para probar cascos protectores (considerando el conjunto de datos completo como si fuese la muestra de entrenamiento; ver Figura \@ref(fig:np-knnfit)):
 
 
 ```r
 data(mcycle, package = "MASS")
-
 library(caret)
-
 # Ajuste de los modelos
-fit1 <- knnreg(accel ~ times, data = mcycle, k = 5) # 5 observaciones más cercanas (5% de los datos)
+fit1 <- knnreg(accel ~ times, data = mcycle, k = 5) # 5% de los datos
 fit2 <- knnreg(accel ~ times, data = mcycle, k = 10)
 fit3 <- knnreg(accel ~ times, data = mcycle, k = 20)
-
+# Representación
 plot(accel ~ times, data = mcycle, col = 'darkgray') 
 newx <- seq(1 , 60, len = 200)
 newdata <- data.frame(times = newx)
@@ -87,11 +88,11 @@ legend("topright", legend = c("5-NN", "10-NN", "20-NN"),
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/np-knnfit-1} 
+{\centering \includegraphics[width=0.75\linewidth]{07-regresion_np_files/figure-latex/np-knnfit-1} 
 
 }
 
-\caption{Predicciones con el método KNN y distintos vecindarios}(\#fig:np-knnfit)
+\caption{Predicciones con el método KNN y distintos vecindarios.}(\#fig:np-knnfit)
 \end{figure}
 
 El hiperparámetro $k$ (número de vecinos más cercanos) determina la complejidad del modelo, de forma que valores más pequeños de $k$ se corresponden con modelos más complejos (en el caso extremo $k = 1$ se interpolarían las observaciones).
@@ -133,15 +134,8 @@ $(X_i, Y_i)$:
 $$\hat{\mathbf{Y}} = S\mathbf{Y}$$ 
 siendo $S$ la matriz de suavizado con $\mathbf{s}_{X_{i}}^{t}$ en la fila $i$ (este tipo de métodos también se denominan *suavizadores lineales*).
 
-Habitualmente se considera:
-
--   $d=0$: Estimador Nadaraya-Watson.
-
--   $d=1$: Estimador lineal local.
-
+Habitualmente se considera $d=0$, el estimador Nadaraya-Watson, o $d=1$, estimador lineal local.
 Desde el punto de vista asintótico ambos estimadores tienen un comportamiento similar^[Asintóticamente el estimador lineal local tiene un sesgo menor que el de Nadaraya-Watson (pero del mismo orden) y la misma varianza (e.g. @fan1996).], pero en la práctica suele ser preferible el estimador lineal local, sobre todo porque se ve menos afectado por el denominado efecto frontera (Sección \@ref(dimen-curse)).
-
-Aunque el paquete base de `R` incluye herramientas para la estimación tipo núcleo de la regresión (`ksmooth()`, `loess()`), recomiendan el uso del paquete `KernSmooth` [@R-KernSmooth]. 
 
 La ventana $h$ es el (hiper)parámetro de mayor importancia en la predicción y para seleccionarlo se suelen emplear métodos de validación cruzada (Sección \@ref(cv)) o tipo plug-in (reemplazando las funciones desconocidas que aparecen en la expresión de la ventana asintóticamente óptima por estimaciones; e.g. función `dpill()` del paquete `KernSmooth`).
 Por ejemplo, usando el criterio de validación cruzada dejando uno fuera (LOOCV) se trataría de minimizar:
@@ -156,32 +150,37 @@ $$GCV(h)=\frac{1}{n}\sum_{i=1}^n\left(\frac{y_i-\hat{m}(x_i)}{1 - \frac{1}{n}tr(
 (sustituyendo $S_{ii}$ por su promedio). 
 Además, la traza de la matriz de suavizado $tr(S)$ es lo que se conoce como el *número efectivo de parámetros* ($n - tr(S)$ sería una aproximación de los grados de libertad del error).
 
-Continuando con el ejemplo del conjunto de datos `MASS::mcycle` emplearemos la función `locpoly()` del paquete `KernSmooth` para obtener estimaciones lineales locales^[La función `KernSmooth::locpoly()` también admite la estimación de derivadas.] con una venta seleccionada mediante un método plug-in:
+Aunque el paquete base de `R` incluye herramientas para la estimación tipo núcleo de la regresión (`ksmooth()`, `loess()`), recomiendan el uso del paquete `KernSmooth` [@R-KernSmooth]. 
+Continuando con el ejemplo del conjunto de datos `MASS::mcycle` emplearemos la función `locpoly()` de este paquete para obtener estimaciones lineales locales^[La función `KernSmooth::locpoly()` también admite la estimación de derivadas.] con una venta seleccionada mediante un método plug-in (ver Figura \@ref(fig:llr-fit)):
 
 
 ```r
 # data(mcycle, package = "MASS")
-x <- mcycle$times
-y <- mcycle$accel  
-
+times <- mcycle$times
+accel <- mcycle$accel  
 library(KernSmooth)
-h <- dpill(x, y) # Método plug-in de Ruppert, Sheather y Wand (1995)
-fit <- locpoly(x, y, bandwidth = h) # Estimación lineal local
-plot(x, y, col = 'darkgray')
+h <- dpill(times, accel) # Método plug-in de Ruppert, Sheather y Wand (1995)
+fit <- locpoly(times, accel, bandwidth = h) # Estimación lineal local
+plot(times, accel, col = 'darkgray')
 lines(fit)
 ```
 
+\begin{figure}[!htb]
 
+{\centering \includegraphics[width=0.75\linewidth]{07-regresion_np_files/figure-latex/llr-fit-1} 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-2-1} \end{center}
+}
+
+\caption{Ajuste lineal local con ventana plug-in.}(\#fig:llr-fit)
+\end{figure}
 
 Hay que tener en cuenta que el paquete `KernSmooth` no implementa los métodos
 `predict()` y `residuals()`:
 
 
 ```r
-pred <- approx(fit, xout = x)$y # pred <- predict(fit)
-resid <- y - pred # resid <- residuals(fit)
+pred <- approx(fit, xout = times)$y # pred <- predict(fit)
+resid <- accel - pred # resid <- residuals(fit)
 ```
 
 Tampoco calcula medidas de bondad de ajuste, aunque podríamos calcular medidas de la precisión de las predicciones de la forma habitual (en este caso de la muestra de entrenamiento):
@@ -206,14 +205,14 @@ accuracy <- function(pred, obs, na.rm = FALSE,
     r.squared = 1 - sum(err^2)/sum((obs - mean(obs))^2) # Pseudo R-cuadrado
   ))
 }
-accuracy(pred, y)
+accuracy(pred, accel)
 ```
 
 ```
-##            me          rmse           mae           mpe          mape 
-## -2.712378e-01  2.140005e+01  1.565921e+01 -2.460832e+10  7.559223e+10 
-##     r.squared 
-##  8.023864e-01
+  ##            me          rmse           mae           mpe          mape 
+  ## -2.712378e-01  2.140005e+01  1.565921e+01 -2.460832e+10  7.559223e+10 
+  ##     r.squared 
+  ##  8.023864e-01
 ```
 
 El caso multivariante es análogo, aunque habría que considerar una matriz de ventanas simétrica $H$. También hay extensiones para el caso de predictores categóricos (nominales o ordinales) y para el caso de distribuciones de la respuesta distintas de la normal (máxima verosimilitud local).
@@ -226,11 +225,9 @@ Otros paquetes de R incluyen más funcionalidades (`sm`, `locfit`, [`npsp`](http
 También hay versiones robustas del ajuste polinómico local tipo núcleo.
 Estos métodos surgieron en el caso bivariante ($p=1$), por lo que también se denominan *suavizado de diagramas de dispersión* (*scatterplot smoothing*; e.g. función `lowess()`, *locally weighted scatterplot smoothing*, del paquete base).
 Posteriormente se extendieron al caso multivariante (e.g. función `loess()`).
-
 Son métodos muy empleados en análisis descriptivo (no supervisado) y normalmente se emplean ventanas locales tipo vecinos más cercanos (por ejemplo a través de un parámetro `spam` que determina la proporción de observaciones empleadas en el ajuste).
 
-Como ejemplo emplearemos la función `loess()` con ajuste robusto (habrá que establecer `family = "symmetric"` para emplear M-estimadores, por defecto con 4 iteraciones, en lugar de mínimos cuadrados ponderados), seleccionando previamente `spam` por validación cruzada (LOOCV) pero empleando como criterio de error la mediana de los errores en valor absoluto (*median absolute deviation*, MAD)^[En este caso habría dependencia entre las observaciones y los criterios habituales como validación cruzada tenderán a seleccionar ventanas pequeñas, i.e. a infrasuavizar.].
-
+Como ejemplo emplearemos la función `loess()` con ajuste robusto (habrá que establecer `family = "symmetric"` para emplear M-estimadores, por defecto con 4 iteraciones, en lugar de mínimos cuadrados ponderados), seleccionando previamente `spam` por validación cruzada (LOOCV) pero empleando como criterio de error la mediana de los errores en valor absoluto (*median absolute deviation*, MAD)^[En este caso habría dependencia entre las observaciones y los criterios habituales como validación cruzada tenderán a seleccionar ventanas pequeñas, i.e. a infrasuavizar.] (ver Figura \@ref(fig:loess-cv)).
 
 
 ```r
@@ -261,9 +258,17 @@ span.cv <- ventanas[imin]
 points(span.cv, cv.error[imin], pch = 16)
 ```
 
+\begin{figure}[!htb]
 
+{\centering \includegraphics[width=0.75\linewidth]{07-regresion_np_files/figure-latex/loess-cv-1} 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-5-1} \end{center}
+}
+
+\caption{Error de predicción de validación cruzada (mediana de los errores absolutos) del ajuste LOWESS dependiendo del parámetro de suavizado.}(\#fig:loess-cv)
+\end{figure}
+
+Empleamos el parámetro de suavizado seleccionado para ajustar el modelo final (ver Figura \@ref(fig:loess-fit)):
+
 
 ```r
 # Ajuste con todos los datos
@@ -272,47 +277,55 @@ fit <- loess(accel ~ times, mcycle, span = span.cv, family = "symmetric")
 lines(mcycle$times, predict(fit))
 ```
 
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.75\linewidth]{07-regresion_np_files/figure-latex/loess-fit-1} 
+
+}
+
+\caption{Ajuste polinómico local robusto (LOWESS), con el parámetro de suavizado seleccionado mediante validación cruzada.}(\#fig:loess-fit)
+\end{figure}
 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-5-2} \end{center}
+## Splines {#splines}
+
+Otra alternativa consiste en trocear los datos en intervalos, fijando unos puntos de corte $z_i$ (denominados nudos; *knots*), con $i = 1, \ldots, k$, y ajustar un polinomio en cada segmento (lo que se conoce como regresión segmentada, *piecewise regression*; ver Figura \@ref(fig:rsegmentada-fit)).
+De esta forma sin embargo habrá discontinuidades en los puntos de corte, pero podrían añadirse restricciones adicionales de continuidad (o incluso de diferenciabilidad) para evitarlo (e.g. paquete [`segmented`](NA)).
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.75\linewidth]{07-regresion_np_files/figure-latex/rsegmentada-fit-1} 
+
+}
+
+\caption{Estimación mediante regresión segmentada.}(\#fig:rsegmentada-fit)
+\end{figure}
 
 
-## Splines
-
-Otra alternativa consiste en trocear los datos en intervalos, fijando unos puntos de corte $z_i$ (denominados nudos; *knots*), con $i = 1, \ldots, k$, y ajustar un polinomio en cada segmento (lo que se conoce como regresión segmentada, *piecewise regression*).
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-6-1} \end{center}
-
-De esta forma sin embargo habrá discontinuidades en los puntos de corte, pero podrían añadirse restricciones adicionales de continuidad (o incluso de diferenciabilidad) para evitarlo (e.g. paquete [`segmented`](https://CRAN.R-project.org/package=segmented)).
-
-
-### Regression splines {#reg-splines}
+### Splines de regresión {#reg-splines}
 
 Cuando en cada intervalo se ajustan polinomios de orden $d$ y se incluyen restricciones de forma que las derivadas sean continuas hasta el orden $d-1$ se obtienen los denominados splines de regresión (*regression splines*).
-
 Puede verse que este tipo de ajustes equivalen a transformar la variable predictora $X$, considerando por ejemplo la *base de potencias truncadas* (*truncated power basis*):
 $$1, x, \ldots, x^d, (x-z_1)_+^d,\ldots,(x-z_k)_+^d$$
 siendo $(x - z)_+ = \max(0, x - z)$, y posteriormente realizar un ajuste lineal:
 $$m(x) = \beta_0 + \beta_1 b_1(x) +  \beta_2 b_2(x) + \ldots  + \beta_{k+d} b_{k+d}(x)$$
 
 Típicamente se seleccionan polinomios de grado $d=3$, lo que se conoce como splines cúbicos, y nodos equiespaciados.
-Además, se podrían emplear otras bases equivalentes. Por ejemplo, para evitar posibles problemas computacionales con la base anterior, se suele emplear la denominada base $B$-spline [@de1978practical], implementada en la función `bs()` del paquete `splines`.
+Además, se podrían emplear otras bases equivalentes. 
+Por ejemplo, para evitar posibles problemas computacionales con la base anterior, se suele emplear la denominada base $B$-spline [@de1978practical], implementada en la función `bs()` del paquete `splines` (ver Figura \@ref(fig:spline-d012)):
 
 
 ```r
 nknots <- 9 # nodos internos; 10 intervalos
-knots <- seq(min(x), max(x), len = nknots + 2)[-c(1, nknots + 2)]
-# knots <- quantile(x, 1:nknots/(nknots + 1)) # bs(x, df = nknots + degree + intercept)
-
+knots <- seq(min(times), max(times), len = nknots + 2)[-c(1, nknots + 2)]
 library(splines)
-fit1 <- lm(y ~ bs(x, knots = knots, degree = 1))
-fit2 <- lm(y ~ bs(x, knots = knots, degree = 2))
-fit3 <- lm(y ~ bs(x, knots = knots)) # degree = 3
-
-plot(x, y, col = 'darkgray')
-newx <- seq(min(x), max(x), len = 200)
-newdata <- data.frame(x = newx)
+fit1 <- lm(accel ~ bs(times, knots = knots, degree = 1))
+fit2 <- lm(accel ~ bs(times, knots = knots, degree = 2))
+fit3 <- lm(accel ~ bs(times, knots = knots)) # degree = 3
+# Representar
+plot(times, accel, col = 'darkgray')
+newx <- seq(min(times), max(times), len = 200)
+newdata <- data.frame(times = newx)
 lines(newx, predict(fit1, newdata), lty = 3)
 lines(newx, predict(fit2, newdata), lty = 2)
 lines(newx, predict(fit3, newdata))
@@ -321,38 +334,55 @@ legend("topright", legend = c("d=1 (df=11)", "d=2 (df=12)", "d=3 (df=13)"),
        lty = c(3, 2, 1))
 ```
 
+\begin{figure}[!htb]
 
+{\centering \includegraphics[width=0.75\linewidth]{07-regresion_np_files/figure-latex/spline-d012-1} 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-7-1} \end{center}
+}
+
+\caption{Ajustes mediante splines de regresión (de grados 1, 2 y 3).}(\#fig:spline-d012)
+\end{figure}
 
 El grado del polinomio, pero sobre todo el número de nodos, determinarán la flexibilidad del modelo. 
-Se podrían considerar el número de parámetros en el ajuste lineal, los grados de libertad, como medida de la complejidad (en la función `bs()` se puede especificar `df` en lugar de `knots`, y estos se generarán a partir de los cuantiles de `x`). 
+Se podrían considerar el número de parámetros en el ajuste lineal, los grados de libertad, como medida de la complejidad (en la función `bs()` se puede especificar `df` en lugar de `knots`, y estos se generarán a partir de los cuantiles). 
 
-Como ya se comentó, al aumentar el grado del modelo polinómico se incrementa la variabilidad de las predicciones, especialmente en la frontera.
+<!-- 
+knots <- quantile(times, 1:nknots/(nknots + 1))
+bs(times, df = nknots + degree + intercept)
+-->
+
+Como ya se comentó, al aumentar el grado de un modelo polinómico se incrementa la variabilidad de las predicciones, especialmente en la frontera.
 Para tratar de evitar este problema se suelen emplear los *splines naturales*, que son splines de regresión con restricciones adicionales de forma que el ajuste sea lineal en los intervalos extremos (lo que en general produce estimaciones más estables en la frontera y mejores extrapolaciones).
 Estas restricciones reducen la complejidad (los grados de libertad del modelo), y al igual que en el caso de considerar únicamente las restricciones de continuidad y diferenciabilidad, resultan equivalentes a considerar una nueva base en un ajuste sin restricciones.
-Por ejemplo, se puede emplear la función `splines::ns()` para ajustar un spline natural (cúbico por defecto): 
+Por ejemplo, se puede emplear la función `splines::ns()` para ajustar un spline natural (cúbico por defecto; ver Figura \@ref(fig:spline-ns-bs)): 
+
+(ref:spline-ns-bs) Ajuste mediante splines naturales y $B$-splines."}
 
 
 ```r
-plot(x, y, col = 'darkgray')
-fit4 <- lm(y ~ ns(x, knots = knots))
+plot(times, accel, col = 'darkgray')
+fit4 <- lm(accel ~ ns(times, knots = knots))
 lines(newx, predict(fit4, newdata))
 lines(newx, predict(fit3, newdata), lty = 2)
 abline(v = knots, lty = 3, col = 'darkgray')
 legend("topright", legend = c("ns (d=3, df=11)", "bs (d=3, df=13)"), lty = c(1, 2))
 ```
 
+\begin{figure}[!htb]
 
+{\centering \includegraphics[width=0.75\linewidth]{07-regresion_np_files/figure-latex/spline-ns-bs-1} 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-8-1} \end{center}
+}
+
+\caption{Ajuste mediante splines naturales (ns) y $B$-splines (bs).}(\#fig:spline-ns-bs)
+\end{figure}
 
 La dificultad está en la selección de los nodos $z_i$. Si se consideran equiespaciados (o se emplea otro criterio como los cuantiles), se podría seleccionar su número (equivalentemente los grados de libertad) empleando algún método de validación cruzada.
 Sin embargo, sería preferible considerar más nodos donde aparentemente hay más variaciones en la función de regresión y menos donde es más estable, esta es la idea de la regresión spline adaptativa descrita en la Sección \@ref(mars).
 Otra alternativa son los splines penalizados, descritos al final de esta sección.
 
 
-### Smoothing splines
+### Splines de suavizado
 
 Los splines de suavizado (*smoothing splines*) se obtienen como la función $s(x)$ suave (dos veces diferenciable) que minimiza la suma de cuadrados residual más una penalización que mide su rugosidad:
 $$\sum_{i=1}^{n} (y_i - s(x_i))^2  + \lambda \int s^{\prime\prime}(x)^2 dx$$
@@ -360,8 +390,9 @@ siendo $0 \leq \lambda < \infty$ el (hiper)parámetro de suavizado.
 
 Puede verse que la solución a este problema, en el caso univariante, es un spline natural cúbico con nodos en $x_1, \ldots, x_n$ y restricciones en los coeficientes determinadas por el valor de $\lambda$ (es una versión regularizada de un spline natural cúbico).
 Por ejemplo si $\lambda = 0$ se interpolarán las observaciones y cuando $\lambda \rightarrow \infty$ el ajuste tenderá a una recta (con segunda derivada nula).
-En el caso multivariante $p> 1$ la solución da lugar a los denominados *thin plate splines*^[Están relacionados con las funciones radiales. También hay versiones con un número reducido de nodos denominados *low-rank thin plate regression splines* empleados en el paquete `mgcv`.].
+En el caso multivariante $p> 1$ la solución da lugar a los denominados *thin plate splines*[^splines-1].
 
+[^splines-1]: Están relacionados con las funciones radiales. También hay versiones con un número reducido de nodos denominados *low-rank thin plate regression splines* empleados en el paquete `mgcv`.
 
 Al igual que en el caso de la regresión polinómica local (Sección \@ref(reg-locpol)), estos métodos son suavizadores lineales:
 $$\hat{\mathbf{Y}} = S_{\lambda}\mathbf{Y}$$
@@ -377,16 +408,16 @@ Este método de suavizado está implementado en la función `smooth.spline()` de
 
 
 ```r
-sspline.gcv <- smooth.spline(x, y)
-sspline.cv <- smooth.spline(x, y, cv = TRUE)
-plot(x, y, col = 'darkgray')
+sspline.gcv <- smooth.spline(times, accel)
+sspline.cv <- smooth.spline(times, accel, cv = TRUE)
+plot(times, accel, col = 'darkgray')
 lines(sspline.gcv)
 lines(sspline.cv, lty = 2)
 ```
 
 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-9-1} \end{center}
+\begin{center}\includegraphics[width=0.75\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-3-1} \end{center}
 
 Cuando el número de observaciones es muy grande, y por tanto el número de nodos, pueden aparecer problemas computacionales al emplear estos métodos.
 
@@ -405,7 +436,7 @@ Para más detalles ver por ejemplo las secciones 5.2 y 5.3 de @wood2017generaliz
 Wand, M.P. (2003). Smoothing and Mixed Models. *Computational Statistics*, 18(2), 223–249
 -->
 
-## Modelos aditivos
+## Modelos aditivos {#reg-gam}
 
 Se supone que:
 $$Y= \beta_{0} + f_1(X_1) + f_2(X_2) + \ldots + f_p(X_p)  + \varepsilon$$
@@ -429,18 +460,19 @@ Además de que se podría emplear un método por pasos, permite la selección de
 Al ser más completo que el anterior sería el recomendado en la mayoría de los casos (ver `?mgcv::mgcv.package` para una introducción al paquete).
 Sigue la referencia @wood2017generalized.
 
+<!-- 
+Entre las diferentes extensiones interesantes a los modelos generalizados, destacamos la que ofrece los modelos mixtos [ver @faraway2016extending, @zuur2009mixed], que cubren una amplia variedad de ajustes como la de efectos aleatorios, modelos multinivel o estructuras de correlaciones. Y dentro de los diferentes paquetes de R, la función `mgcv::gamm()` (que requiere usar el paquete `lme`) permite este tipo de ajustes. 
+-->
 
-### Ajuste: función `gam` 
-
-La función `gam()` del paquete `mgcv` permite ajustar modelos aditivos generalizados empleando suavizado mediante splines:
+La función [`gam()`](https://rdrr.io/pkg/mgcv/man/gam.html) del paquete [`mgcv`](https://CRAN.R-project.org/package=mgcv) permite ajustar modelos aditivos generalizados empleando suavizado mediante splines:
 
 
 ```r
-library(mgcv)
 ajuste <- gam(formula, family = gaussian, data, method = "GCV.Cp", select = FALSE, ...)
 ```
 
-(también dispone de la función `bam()` para el ajuste de estos modelos a grandes conjuntos de datos y de la función `gamm()` para el ajuste de modelos aditivos generalizados mixtos). El modelo se establece a partir de la `formula` empleando `s()` para especificar las componentes "suaves" (ver `help(s)` y Sección \@ref(mgcv-diagnosis)).
+(también dispone de la función `bam()` para el ajuste de estos modelos a grandes conjuntos de datos y de la función `gamm()` para el ajuste de modelos aditivos generalizados mixtos, incluyendo dependencia en los errores). 
+El modelo se establece a partir de la `formula` empleando [`s()`](https://rdrr.io/pkg/mgcv/man/s.html) para especificar las componentes "suaves" (ver [`help(s)`](https://rdrr.io/pkg/mgcv/man/s.html) y Sección \@ref(mgcv-diagnosis)).
 
 Algunas posibilidades de uso son las que siguen:
 
@@ -468,74 +500,82 @@ Algunas posibilidades de uso son las que siguen:
     ajuste <- gam(y ~ s(x1, x2) + s(x3) + x4)
     ```
 
-### Ejemplo
-
 En esta sección utilizaremos como ejemplo el conjunto de datos `Prestige` de la librería `carData`. 
 Se tratará de explicar `prestige` (puntuación de ocupaciones obtenidas a partir de una encuesta) a partir de `income` (media de ingresos en la ocupación) y `education` (media de los años de educación).
 
 
 ```r
-data(Prestige, package = "carData")
 library(mgcv)
+data(Prestige, package = "carData")
 modelo <- gam(prestige ~ s(income) + s(education), data = Prestige)
 summary(modelo)
 ```
 
 ```
-## 
-## Family: gaussian 
-## Link function: identity 
-## 
-## Formula:
-## prestige ~ s(income) + s(education)
-## 
-## Parametric coefficients:
-##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  46.8333     0.6889   67.98   <2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Approximate significance of smooth terms:
-##                edf Ref.df     F p-value    
-## s(income)    3.118  3.877 14.61  <2e-16 ***
-## s(education) 3.177  3.952 38.78  <2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## R-sq.(adj) =  0.836   Deviance explained = 84.7%
-## GCV = 52.143  Scale est. = 48.414    n = 102
+  ## 
+  ## Family: gaussian 
+  ## Link function: identity 
+  ## 
+  ## Formula:
+  ## prestige ~ s(income) + s(education)
+  ## 
+  ## Parametric coefficients:
+  ##             Estimate Std. Error t value Pr(>|t|)    
+  ## (Intercept)  46.8333     0.6889   67.98   <2e-16 ***
+  ## ---
+  ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+  ## 
+  ## Approximate significance of smooth terms:
+  ##                edf Ref.df     F p-value    
+  ## s(income)    3.118  3.877 14.61  <2e-16 ***
+  ## s(education) 3.177  3.952 38.78  <2e-16 ***
+  ## ---
+  ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+  ## 
+  ## R-sq.(adj) =  0.836   Deviance explained = 84.7%
+  ## GCV = 52.143  Scale est. = 48.414    n = 102
 ```
 
 ```r
-# coef(modelo) # El resultado es un modelo lineal en transformaciones de los predictores
+# coef(modelo) 
+# El resultado es un modelo lineal en transformaciones de los predictores
 ```
 
-En este caso el método `plot()` representa los efectos (parciales) estimados de cada predictor:  
+En este caso el método [`plot()`](https://rdrr.io/pkg/mgcv/man/plot.gam.html) representa los efectos (parciales) estimados de cada predictor (ver Figura \@ref(fig:gam-eff)):
+
+(ref:gam-eff) Estimaciones de los efectos parciales de `income` (izquierda) y `education` (derecha).
 
 
 ```r
-par.old <- par(mfrow = c(1, 2))
-plot(modelo, shade = TRUE) # 
+plot(modelo, shade = TRUE, pages = 1) # residuals = FALSE por defecto
 ```
 
+\begin{figure}[!htb]
 
+{\centering \includegraphics[width=0.9\linewidth]{07-regresion_np_files/figure-latex/gam-eff-1} 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-16-1} \end{center}
+}
 
-```r
+\caption{(ref:gam-eff)}(\#fig:gam-eff)
+\end{figure}
+
+<!-- 
+par.old <- par(mfrow = c(1, 2)) 
 par(par.old)
-```
+-->
 
 En general se representa cada componente no paramétrica (salvo que se especifique `all.terms = TRUE`), incluyendo gráficos de contorno para el caso de componentes bivariantes (correspondientes a interacciones entre predictores).
 
-Se dispone también de un método `predict()` para calcular las predicciones de la forma habitual (por defecto devuelve las correspondientes a las observaciones `modelo$fitted.values` y para nuevos datos hay que emplear el argumento `newdata`).
+Se dispone también de un método [`predict()`](https://rdrr.io/pkg/mgcv/man/predict.gam.html) para calcular las predicciones de la forma habitual (por defecto devuelve las correspondientes a las observaciones `modelo$fitted.values` y para nuevos datos hay que emplear el argumento `newdata`).
 
 
 ### Superficies de predicción
 
-En el caso bivariante, para representar las estimaciones (la superficie de predicción) obtenidas con el modelo se pueden utilizar las funciones `persp()` o versiones mejoradas como `plot3D::persp3D`. 
+En el caso bivariante, para representar las estimaciones (la superficie de predicción) obtenidas con el modelo se pueden utilizar las funciones [`persp()`](https://rdrr.io/r/graphics/persp.html) o versiones mejoradas como [`plot3D::persp3D()`](https://rdrr.io/pkg/plot3D/man/persp3D.html). 
 Estas funciones requieren que los valores de entrada estén dispuestos en una rejilla bidimensional. 
-Para generar esta rejilla se puede emplear la función `expand.grid(x,y)` que crea todas las combinaciones de los puntos dados en `x` e `y`.
+Para generar esta rejilla se puede emplear la función `expand.grid(x,y)` que crea todas las combinaciones de los puntos dados en `x` e `y` (ver Figura \@ref(fig:rejilla-pred)):
+
+(ref:rejilla-pred) Observaciones y rejilla de predicción (para los predictores `education` e `income`). 
 
 
 ```r
@@ -547,9 +587,19 @@ plot(income ~ education, Prestige, pch = 16)
 abline(h = inc, v = ed, col = "grey")
 ```
 
+\begin{figure}[!htb]
 
+{\centering \includegraphics[width=0.75\linewidth]{07-regresion_np_files/figure-latex/rejilla-pred-1} 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-17-1} \end{center}
+}
+
+\caption{(ref:rejilla-pred)}(\#fig:rejilla-pred)
+\end{figure}
+
+y usaríamos estos valores para obtener la superficie de predicción, que en este caso[^nota-sup-pred] representamos con la función [`plot3D::persp3D()`](https://rdrr.io/pkg/plot3D/man/persp3D.html) (ver Figura \@ref(fig:sup-pred)):
+
+[^nota-sup-pred]: Alternativamente se podrían emplear las funciones `contour()`, `filled.contour()`, `plot3D::image2D()` o similares.
+
 
 ```r
 # Se calculan las predicciones
@@ -557,13 +607,24 @@ pred <- predict(modelo, newdata)
 # Se representan
 pred <- matrix(pred, nrow = 25)
 # persp(inc, ed, pred, theta = -40, phi = 30)
+# contour(inc, ed, pred, xlab = "Income", ylab = "Education")
+# filled.contour(inc, ed, pred, xlab = "Income", ylab = "Education", 
+#                key.title = title("Prestige"))
 plot3D::persp3D(inc, ed, pred, theta = -40, phi = 30, ticktype = "detailed",
                 xlab = "Income", ylab = "Education", zlab = "Prestige")
 ```
 
+\begin{figure}[!htb]
 
+{\centering \includegraphics[width=0.75\linewidth]{07-regresion_np_files/figure-latex/sup-pred-1} 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-17-2} \end{center}
+}
+
+\caption{Superficie de predicción obtenida con el modelo GAM.}(\#fig:sup-pred)
+\end{figure}
+
+<!-- 
+old.par <- par(mfrow = c(1, 2))
 
 Alternativamente se podrían emplear las funciones `contour()`, `filled.contour()`, `plot3D::image2D` o similares:
 
@@ -575,14 +636,15 @@ filled.contour(inc, ed, pred, xlab = "Income", ylab = "Education", key.title = t
 
 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-18-1} \end{center}
-
+\begin{center}\includegraphics[width=0.75\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-10-1} \end{center}
+-->
+ 
 Puede ser más cómodo emplear el paquete [`modelr`](https://modelr.tidyverse.org) (emplea gráficos `ggplot2`) para trabajar con modelos y predicciones.
 
 
 ### Comparación y selección de modelos
 
-Además de las medidas de bondad de ajuste como el coeficiente de determinación ajustado, también se puede emplear la función `anova` para la comparación de modelos (y seleccionar las componentes por pasos de forma interactiva).
+Además de las medidas de bondad de ajuste como el coeficiente de determinación ajustado, también se puede emplear la función `anova()` para la comparación de modelos (y seleccionar las componentes por pasos de forma interactiva).
 Por ejemplo, viendo el gráfico de los efectos se podría pensar que el efecto de `education` podría ser lineal:
 
 
@@ -593,28 +655,28 @@ summary(modelo0)
 ```
 
 ```
-## 
-## Family: gaussian 
-## Link function: identity 
-## 
-## Formula:
-## prestige ~ s(income) + education
-## 
-## Parametric coefficients:
-##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)   4.2240     3.7323   1.132    0.261    
-## education     3.9681     0.3412  11.630   <2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Approximate significance of smooth terms:
-##            edf Ref.df    F p-value    
-## s(income) 3.58  4.441 13.6  <2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## R-sq.(adj) =  0.825   Deviance explained = 83.3%
-## GCV = 54.798  Scale est. = 51.8      n = 102
+  ## 
+  ## Family: gaussian 
+  ## Link function: identity 
+  ## 
+  ## Formula:
+  ## prestige ~ s(income) + education
+  ## 
+  ## Parametric coefficients:
+  ##             Estimate Std. Error t value Pr(>|t|)    
+  ## (Intercept)   4.2240     3.7323   1.132    0.261    
+  ## education     3.9681     0.3412  11.630   <2e-16 ***
+  ## ---
+  ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+  ## 
+  ## Approximate significance of smooth terms:
+  ##            edf Ref.df    F p-value    
+  ## s(income) 3.58  4.441 13.6  <2e-16 ***
+  ## ---
+  ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+  ## 
+  ## R-sq.(adj) =  0.825   Deviance explained = 83.3%
+  ## GCV = 54.798  Scale est. = 51.8      n = 102
 ```
 
 ```r
@@ -622,15 +684,15 @@ anova(modelo0, modelo, test="F")
 ```
 
 ```
-## Analysis of Deviance Table
-## 
-## Model 1: prestige ~ s(income) + education
-## Model 2: prestige ~ s(income) + s(education)
-##   Resid. Df Resid. Dev     Df Deviance      F Pr(>F)  
-## 1    95.559     4994.6                                
-## 2    93.171     4585.0 2.3886   409.58 3.5418 0.0257 *
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+  ## Analysis of Deviance Table
+  ## 
+  ## Model 1: prestige ~ s(income) + education
+  ## Model 2: prestige ~ s(income) + s(education)
+  ##   Resid. Df Resid. Dev     Df Deviance      F Pr(>F)  
+  ## 1    95.559     4994.6                                
+  ## 2    93.171     4585.0 2.3886   409.58 3.5418 0.0257 *
+  ## ---
+  ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 
 En este caso aceptaríamos que el modelo original es significativamente mejor.
@@ -644,37 +706,35 @@ summary(modelo2)
 ```
 
 ```
-## 
-## Family: gaussian 
-## Link function: identity 
-## 
-## Formula:
-## prestige ~ s(income, education)
-## 
-## Parametric coefficients:
-##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  46.8333     0.7138   65.61   <2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Approximate significance of smooth terms:
-##                      edf Ref.df     F p-value    
-## s(income,education) 4.94  6.303 75.41  <2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## R-sq.(adj) =  0.824   Deviance explained = 83.3%
-## GCV = 55.188  Scale est. = 51.974    n = 102
-```
-
-```r
-# plot(modelo2, se = FALSE)
-# plot(modelo2, scheme = 2)
+  ## 
+  ## Family: gaussian 
+  ## Link function: identity 
+  ## 
+  ## Formula:
+  ## prestige ~ s(income, education)
+  ## 
+  ## Parametric coefficients:
+  ##             Estimate Std. Error t value Pr(>|t|)    
+  ## (Intercept)  46.8333     0.7138   65.61   <2e-16 ***
+  ## ---
+  ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+  ## 
+  ## Approximate significance of smooth terms:
+  ##                      edf Ref.df     F p-value    
+  ## s(income,education) 4.94  6.303 75.41  <2e-16 ***
+  ## ---
+  ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+  ## 
+  ## R-sq.(adj) =  0.824   Deviance explained = 83.3%
+  ## GCV = 55.188  Scale est. = 51.974    n = 102
 ```
 
 En este caso el coeficiente de determinación ajustado es menor y ya no tendría sentido realizar el contraste.
 
 <!-- 
+# plot(modelo2, se = FALSE)
+# plot(modelo2, scheme = 2)
+
 También podríamos emplear el criterio `AIC()` (o `BIC()`): 
 
 
@@ -683,7 +743,7 @@ AIC(modelo)
 ```
 
 ```
-## [1] 694.222
+  ## [1] 694.222
 ```
 
 ```r
@@ -691,103 +751,54 @@ AIC(modelo2)
 ```
 
 ```
-## [1] 700.1994
+  ## [1] 700.1994
 ```
 -->
 
 Ademas se pueden seleccionar componentes del modelo (mediante regularización) empleando el parámetro `select = TRUE`. 
-
-
-```r
-example(gam.selection)
-```
-
-```
-## 
-## gm.slc> ## an example of automatic model selection via null space penalization
-## gm.slc> library(mgcv)
-## 
-## gm.slc> set.seed(3);n<-200
-## 
-## gm.slc> dat <- gamSim(1,n=n,scale=.15,dist="poisson") ## simulate data
-## Gu & Wahba 4 term additive model
-## 
-## gm.slc> dat$x4 <- runif(n, 0, 1);dat$x5 <- runif(n, 0, 1) ## spurious
-## 
-## gm.slc> b<-gam(y~s(x0)+s(x1)+s(x2)+s(x3)+s(x4)+s(x5),data=dat,
-## gm.slc+          family=poisson,select=TRUE,method="REML")
-## 
-## gm.slc> summary(b)
-## 
-## Family: poisson 
-## Link function: log 
-## 
-## Formula:
-## y ~ s(x0) + s(x1) + s(x2) + s(x3) + s(x4) + s(x5)
-## 
-## Parametric coefficients:
-##             Estimate Std. Error z value Pr(>|z|)    
-## (Intercept)  1.21758    0.04082   29.83   <2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Approximate significance of smooth terms:
-##             edf Ref.df  Chi.sq p-value    
-## s(x0) 1.7655088      9   5.264  0.0392 *  
-## s(x1) 1.9271040      9  65.356  <2e-16 ***
-## s(x2) 6.1351414      9 156.204  <2e-16 ***
-## s(x3) 0.0002849      9   0.000  0.4181    
-## s(x4) 0.0003044      9   0.000  0.9703    
-## s(x5) 0.1756926      9   0.195  0.3018    
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## R-sq.(adj) =  0.545   Deviance explained = 51.6%
-## -REML = 430.78  Scale est. = 1         n = 200
-## 
-## gm.slc> plot(b,pages=1)
-```
-
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-22-1} \end{center}
-
+Para más detalles consultar la ayuda [`help(gam.selection)`](https://rdrr.io/pkg/mgcv/man/gam.selection.html) o ejecutar `example(gam.selection)`.
 
 
 ### Diagnosis del modelo {#mgcv-diagnosis}
 
-La función `gam.check()` realiza una diagnosis del modelo: 
+La función [`gam.check()`](https://rdrr.io/pkg/mgcv/man/gam.check.html) realiza una diagnosis descriptiva y gráfica del modelo ajustado (ver Figura \@ref(fig:gam-gof)):
+
+(ref:gam-gof) Gráficas de diagnóstico del modelo aditivo ajustado.
 
 
 ```r
 gam.check(modelo)
 ```
 
+\begin{figure}[!htb]
 
+{\centering \includegraphics[width=0.9\linewidth]{07-regresion_np_files/figure-latex/gam-gof-1} 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-23-1} \end{center}
+}
+
+\caption{(ref:gam-gof)}(\#fig:gam-gof)
+\end{figure}
 
 ```
-## 
-## Method: GCV   Optimizer: magic
-## Smoothing parameter selection converged after 4 iterations.
-## The RMS GCV score gradient at convergence was 9.783945e-05 .
-## The Hessian was positive definite.
-## Model rank =  19 / 19 
-## 
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-## 
-##                k'  edf k-index p-value
-## s(income)    9.00 3.12    0.98    0.42
-## s(education) 9.00 3.18    1.03    0.54
+  ## 
+  ## Method: GCV   Optimizer: magic
+  ## Smoothing parameter selection converged after 4 iterations.
+  ## The RMS GCV score gradient at convergence was 9.783945e-05 .
+  ## The Hessian was positive definite.
+  ## Model rank =  19 / 19 
+  ## 
+  ## Basis dimension (k) checking results. Low p-value (k-index<1) may
+  ## indicate that k is too low, especially if edf is close to k'.
+  ## 
+  ##                k'  edf k-index p-value
+  ## s(income)    9.00 3.12    0.98    0.39
+  ## s(education) 9.00 3.18    1.03    0.48
 ```
 
 Lo ideal sería observar normalidad en los dos gráficos de la izquierda, falta de patrón en el superior derecho, y ajuste a una recta en el inferior derecho. En este caso parece que el modelo se comporta adecuadamente.
 Como se deduce del resultado anterior, podría ser recomendable modificar la dimensión `k` de la base utilizada construir la componente no paramétrica, este valor se puede interpretar como el grado máximo de libertad permitido en ese componente, aunque normalmente no influye demasiado en el resultado (puede influir en el tiempo de computación).
 
-
-También se podría chequear concurvidad (*concurvity*; generalización de la colinealidad) entre las componentes del modelo:
+También se podría chequear concurvidad (generalización de la colinealidad; función [`concurvity()`](https://rdrr.io/pkg/mgcv/man/concurvity.html)) entre las componentes del modelo:
 
 
 ```r
@@ -795,37 +806,35 @@ concurvity(modelo)
 ```
 
 ```
-##                  para s(income) s(education)
-## worst    3.107241e-23 0.5931528    0.5931528
-## observed 3.107241e-23 0.4065402    0.4398639
-## estimate 3.107241e-23 0.3613674    0.4052251
+  ##                  para s(income) s(education)
+  ## worst    3.107241e-23 0.5931528    0.5931528
+  ## observed 3.107241e-23 0.4065402    0.4398639
+  ## estimate 3.107241e-23 0.3613674    0.4052251
 ```
 
-Esta función devuelve tres medidas por componente, que tratan de medir la proporción de variación de esa componente que está contenida en el resto (similares al complementario de la tolerancia; un valor próximo a 1 indicaría que puede haber problemas de concurvidad).
+Esta función devuelve tres medidas por componente, que tratan de medir la proporción de variación de esa componente que está contenida en el resto (similares al complementario de la tolerancia), un valor próximo a 1 indicaría que puede haber problemas de concurvidad.
 
 
-### GAM en `caret`
+<!-- 
+### GAM en `caret` 
 
-El soporte de GAM en `caret` es como poco deficiente... 
+El soporte de GAM es como poco deficiente... 
+-->
+
+También se puede ajustar modelos GAM empleando `caret`.
+Por ejemplo con los métodos `"gam"` y `"gamLoess"`:
 
 
 ```r
 library(caret)
-names(getModelInfo("gam")) # 4 métodos
-```
-
-```
-## [1] "gam"       "gamboost"  "gamLoess"  "gamSpline"
-```
-
-```r
+# names(getModelInfo("gam")) # 4 métodos
 modelLookup("gam")
 ```
 
 ```
-##   model parameter             label forReg forClass probModel
-## 1   gam    select Feature Selection   TRUE     TRUE      TRUE
-## 2   gam    method            Method   TRUE     TRUE      TRUE
+  ##   model parameter             label forReg forClass probModel
+  ## 1   gam    select Feature Selection   TRUE     TRUE      TRUE
+  ## 2   gam    method            Method   TRUE     TRUE      TRUE
 ```
 
 ```r
@@ -833,17 +842,23 @@ modelLookup("gamLoess")
 ```
 
 ```
-##      model parameter  label forReg forClass probModel
-## 1 gamLoess      span   Span   TRUE     TRUE      TRUE
-## 2 gamLoess    degree Degree   TRUE     TRUE      TRUE
+  ##      model parameter  label forReg forClass probModel
+  ## 1 gamLoess      span   Span   TRUE     TRUE      TRUE
+  ## 2 gamLoess    degree Degree   TRUE     TRUE      TRUE
 ```
 
-### Ejercicios
+::: {.exercise #adaptive-smooth}
 
-1. Continuando con los datos de `MASS:mcycle`, emplear `mgcv::gam()` para ajustar un spline penalizado para predecir `accel` a partir de `times` con las opciones por defecto y representar el ajuste obtenido. Comparar el ajuste con el obtenido empleando un spline penalizado adaptativo (`bs="ad"`; ver `?adaptive.smooth`).
+Continuando con los datos de `MASS:mcycle`, emplear `mgcv::gam()` para ajustar un spline penalizado para predecir `accel` a partir de `times` con las opciones por defecto y representar el ajuste obtenido. Comparar el ajuste con el obtenido empleando un spline penalizado adaptativo (`bs="ad"`; ver `?adaptive.smooth`).
 
-2. Empleando el conjunto de datos `airquality`, crear una muestra de entrenamiento y otra de test, buscar un modelo aditivo que resulte adecuado para explicar `sqrt(Ozone)` a partir de `Temp`, `Wind` y `Solar.R`.
-Es preferible suponer que hay una interacción entre `Temp` y `Wind`?
+:::
+
+::: {.exercise #gam-airquality}
+
+Empleando el conjunto de datos `airquality`, crear una muestra de entrenamiento y otra de test, buscar un modelo aditivo que resulte adecuado para explicar `sqrt(Ozone)` a partir de `Temp`, `Wind` y `Solar.R`.
+¿Es preferible suponer que hay una interacción entre `Temp` y `Wind`?
+
+:::
 
 
 ## Regresión spline adaptativa multivariante {#mars}
@@ -905,7 +920,7 @@ En conclusión, MARS utiliza splines lineales con una selección automática de 
 Actualmente el paquete de referencia para MARS es [`earth`](http://www.milbo.users.sonic.net/earth) (*Enhanced Adaptive Regression Through Hinges*)^[Desarrollado a partir de la función `mda::mars()` de T. Hastie y R. Tibshirani. Utiliza este nombre porque MARS está registrado para un uso comercial por [Salford Systems](https://www.salford-systems.com).].
 
 
-La función principal es `earth()` y se suelen considerar los siguientes argumentos:
+La función principal es [`earth()`](https://rdrr.io/pkg/earth/man/earth.html) y se suelen considerar los siguientes argumentos:
 
 
 ```r
@@ -936,7 +951,9 @@ Otros parámetros que pueden ser de interés (afectan a la complejidad del model
 * `varmod.method`: permite seleccionar un método para estimar las varianzas y por ejemplo poder realizar contrastes o construir intervalos de confianza (para más detalles ver `?varmod` o la vignette "Variance models in earth"). 
 
 
-Utilizaremos como ejemplo inicial los datos de `MASS:mcycle`:
+Utilizaremos como ejemplo inicial los datos de `MASS:mcycle` (ver Figura \@ref(fig:earth-fit-plot)):
+
+(ref:earth-fit-plot) Resultados de validación del modelo MARS univariante (empleando la función `earth()` con parámetros por defecto y `MASS:mcycle`).
 
 
 ```r
@@ -948,39 +965,58 @@ summary(mars)
 ```
 
 ```
-## Call: earth(formula=accel~times, data=mcycle)
-## 
-##               coefficients
-## (Intercept)     -90.992956
-## h(19.4-times)     8.072585
-## h(times-19.4)     9.249999
-## h(times-31.2)   -10.236495
-## 
-## Selected 4 of 6 terms, and 1 of 1 predictors
-## Termination condition: RSq changed by less than 0.001 at 6 terms
-## Importance: times
-## Number of terms at each degree of interaction: 1 3 (additive model)
-## GCV 1119.813    RSS 133670.3    GRSq 0.5240328    RSq 0.5663192
+  ## Call: earth(formula=accel~times, data=mcycle)
+  ## 
+  ##               coefficients
+  ## (Intercept)     -90.992956
+  ## h(19.4-times)     8.072585
+  ## h(times-19.4)     9.249999
+  ## h(times-31.2)   -10.236495
+  ## 
+  ## Selected 4 of 6 terms, and 1 of 1 predictors
+  ## Termination condition: RSq changed by less than 0.001 at 6 terms
+  ## Importance: times
+  ## Number of terms at each degree of interaction: 1 3 (additive model)
+  ## GCV 1119.813    RSS 133670.3    GRSq 0.5240328    RSq 0.5663192
 ```
 
 ```r
 plot(mars)
 ```
 
+\begin{figure}[!htb]
 
+{\centering \includegraphics[width=0.9\linewidth]{07-regresion_np_files/figure-latex/earth-fit-plot-1} 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-27-1} \end{center}
+}
+
+\caption{(ref:earth-fit-plot)}(\#fig:earth-fit-plot)
+\end{figure}
+
+Por defecto, se representa un resumen de los errores de validación en la selección del modelo, la distribución empírica y el gráfico QQ de los residuos, y los residuos frente a las predicciones (en la muestra de entrenamiento). 
+
+Podemos representar el ajuste obtenido (ver Figura \@ref(fig:earth-fit)):
+
+(ref:earth-fit) Ajuste del modelo MARS univariante (obtenido con la función `earth()` con parámetros por defecto) para predecir `accel` en función de `times`.
+
 
 ```r
 plot(accel ~ times, data = mcycle, col = 'darkgray')
 lines(mcycle$times, predict(mars))
 ```
 
+\begin{figure}[!htb]
 
+{\centering \includegraphics[width=0.75\linewidth]{07-regresion_np_files/figure-latex/earth-fit-1} 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-27-2} \end{center}
+}
 
-Como con las opciones por defecto el ajuste no es muy bueno (aunque podría ser suficiente), podríamos forzar la complejidad del modelo en el crecimiento  (`minspan = 1` permite que todas las observaciones sean potenciales nodos): 
+\caption{(ref:earth-fit)}(\#fig:earth-fit)
+\end{figure}
+
+Como con las opciones por defecto el ajuste no es muy bueno (aunque puede ser suficiente para un análisis preliminar), podríamos forzar la complejidad del modelo en el crecimiento  (`minspan = 1` permite que todas las observaciones sean potenciales nodos; ver Figura \@ref(fig:earth-fit2)): 
+
+(ref:earth-fit2) Ajuste del modelo MARS univariante (con la función `earth()` con parámetros `minspan = 1` y `thresh = 0`).
 
 
 ```r
@@ -989,22 +1025,22 @@ summary(mars2)
 ```
 
 ```
-## Call: earth(formula=accel~times, data=mcycle, minspan=1, thresh=0)
-## 
-##               coefficients
-## (Intercept)      -6.274366
-## h(times-14.6)   -25.333056
-## h(times-19.2)    32.979264
-## h(times-25.4)   153.699248
-## h(times-25.6)  -145.747392
-## h(times-32)     -30.041076
-## h(times-35.2)    13.723887
-## 
-## Selected 7 of 12 terms, and 1 of 1 predictors
-## Termination condition: Reached nk 21
-## Importance: times
-## Number of terms at each degree of interaction: 1 6 (additive model)
-## GCV 623.5209    RSS 67509.03    GRSq 0.7349776    RSq 0.7809732
+  ## Call: earth(formula=accel~times, data=mcycle, minspan=1, thresh=0)
+  ## 
+  ##               coefficients
+  ## (Intercept)      -6.274366
+  ## h(times-14.6)   -25.333056
+  ## h(times-19.2)    32.979264
+  ## h(times-25.4)   153.699248
+  ## h(times-25.6)  -145.747392
+  ## h(times-32)     -30.041076
+  ## h(times-35.2)    13.723887
+  ## 
+  ## Selected 7 of 12 terms, and 1 of 1 predictors
+  ## Termination condition: Reached nk 21
+  ## Importance: times
+  ## Number of terms at each degree of interaction: 1 6 (additive model)
+  ## GCV 623.5209    RSS 67509.03    GRSq 0.7349776    RSq 0.7809732
 ```
 
 ```r
@@ -1012,11 +1048,18 @@ plot(accel ~ times, data = mcycle, col = 'darkgray')
 lines(mcycle$times, predict(mars2))
 ```
 
+\begin{figure}[!htb]
 
+{\centering \includegraphics[width=0.75\linewidth]{07-regresion_np_files/figure-latex/earth-fit2-1} 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-28-1} \end{center}
+}
 
-Como siguiente ejemplo consideramos los datos de `carData::Prestige`:
+\caption{(ref:earth-fit2)}(\#fig:earth-fit2)
+\end{figure}
+
+Como siguiente ejemplo consideramos los datos de `carData::Prestige` (ver Figura \@ref(fig:earth-fit3-plot)):
+
+(ref:earth-fit3-plot) Resultados de validación del ajuste del modelo MARS multivariante (para `carData::Prestige`).
 
 
 ```r
@@ -1027,34 +1070,41 @@ summary(mars)
 ```
 
 ```
-## Call: earth(formula=prestige~education+income+women, data=Prestige, degree=2,
-##             nk=40)
-## 
-##                                coefficients
-## (Intercept)                      19.9845240
-## h(education-9.93)                 5.7683265
-## h(income-3161)                    0.0085297
-## h(income-5795)                   -0.0080222
-## h(women-33.57)                    0.2154367
-## h(income-5299) * h(women-4.14)   -0.0005163
-## h(income-5795) * h(women-4.28)    0.0005409
-## 
-## Selected 7 of 31 terms, and 3 of 3 predictors
-## Termination condition: Reached nk 40
-## Importance: education, income, women
-## Number of terms at each degree of interaction: 1 4 2
-## GCV 53.08737    RSS 3849.355    GRSq 0.8224057    RSq 0.8712393
+  ## Call: earth(formula=prestige~education+income+women, data=Prestige, degree=2,
+  ##             nk=40)
+  ## 
+  ##                                coefficients
+  ## (Intercept)                      19.9845240
+  ## h(education-9.93)                 5.7683265
+  ## h(income-3161)                    0.0085297
+  ## h(income-5795)                   -0.0080222
+  ## h(women-33.57)                    0.2154367
+  ## h(income-5299) * h(women-4.14)   -0.0005163
+  ## h(income-5795) * h(women-4.28)    0.0005409
+  ## 
+  ## Selected 7 of 31 terms, and 3 of 3 predictors
+  ## Termination condition: Reached nk 40
+  ## Importance: education, income, women
+  ## Number of terms at each degree of interaction: 1 4 2
+  ## GCV 53.08737    RSS 3849.355    GRSq 0.8224057    RSq 0.8712393
 ```
 
 ```r
 plot(mars)
 ```
 
+\begin{figure}[!htb]
 
+{\centering \includegraphics[width=0.9\linewidth]{07-regresion_np_files/figure-latex/earth-fit3-plot-1} 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-29-1} \end{center}
+}
 
-Para representar los efectos de las variables importa las herramientas del paquete `plotmo` (del mismo autor; válido también para la mayoría de los modelos tratados en este libro, incluyendo `mgcv::gam()`).
+\caption{(ref:earth-fit3-plot)}(\#fig:earth-fit3-plot)
+\end{figure}
+
+Para representar los efectos de las variables importa las herramientas del paquete [`plotmo`](https://CRAN.R-project.org/package=plotmo) (del mismo autor; válido también para la mayoría de los modelos tratados en este libro, incluyendo `mgcv::gam()`; ver Figura \@ref(fig:earth-eff)):
+
+(ref:earth-eff) Efectos parciales de las componentes del modelo MARS ajustado.
 
 
 ```r
@@ -1062,15 +1112,20 @@ plotmo(mars)
 ```
 
 ```
-##  plotmo grid:    education income women
-##                      10.54   5930  13.6
+  ##  plotmo grid:    education income women
+  ##                      10.54   5930  13.6
 ```
 
+\begin{figure}[!htb]
 
+{\centering \includegraphics[width=0.9\linewidth]{07-regresion_np_files/figure-latex/earth-eff-1} 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-30-1} \end{center}
+}
 
-Podríamos obtener la importancia de las variables:
+\caption{(ref:earth-eff)}(\#fig:earth-eff)
+\end{figure}
+
+También podemos obtener la importancia de las variables (función [`evimp()`](https://rdrr.io/pkg/earth/man/evimp.html)) y representarla gráficamente (método [`plot.evimp()`](https://rdrr.io/pkg/earth/man/plot.evimp.html); ver Figura \@ref(fig:evimp-plot)):
 
 
 ```r
@@ -1079,21 +1134,29 @@ varimp
 ```
 
 ```
-##           nsubsets   gcv    rss
-## education        6 100.0  100.0
-## income           5  36.0   40.3
-## women            3  16.3   22.0
+  ##           nsubsets   gcv    rss
+  ## education        6 100.0  100.0
+  ## income           5  36.0   40.3
+  ## women            3  16.3   22.0
 ```
 
 ```r
 plot(varimp)
 ```
 
+\begin{figure}[!htb]
 
+{\centering \includegraphics[width=0.75\linewidth]{07-regresion_np_files/figure-latex/evimp-plot-1} 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-31-1} \end{center}
+}
 
-Siempre podríamos considerar este modelo de partida para seleccionar componentes de un modelo GAM más flexible:
+\caption{Importancia de los predictores incluidos en el modelo MARS.}(\#fig:evimp-plot)
+\end{figure}
+
+Para finalizar, destacar que podríamos tener en cuenta este modelo como punto de partida para ajustar un modelo GAM más flexible (como se mostró en la Sección \@ref(reg-gam)).
+Por ejemplo:
+
+(ref:earth-mgcv-plotmo) Efectos parciales de las componentes del modelo GAM con interacción (para `carData::Prestige`).
 
 
 ```r
@@ -1103,29 +1166,29 @@ summary(gam)
 ```
 
 ```
-## 
-## Family: gaussian 
-## Link function: identity 
-## 
-## Formula:
-## prestige ~ s(education) + s(income) + s(women)
-## 
-## Parametric coefficients:
-##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  46.8333     0.6461   72.49   <2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Approximate significance of smooth terms:
-##                edf Ref.df     F p-value    
-## s(education) 2.349      9 9.926 < 2e-16 ***
-## s(income)    6.289      9 7.420 < 2e-16 ***
-## s(women)     1.964      9 1.309 0.00149 ** 
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## R-sq.(adj) =  0.856   Deviance explained = 87.1%
-## GCV = 48.046  Scale est. = 42.58     n = 102
+  ## 
+  ## Family: gaussian 
+  ## Link function: identity 
+  ## 
+  ## Formula:
+  ## prestige ~ s(education) + s(income) + s(women)
+  ## 
+  ## Parametric coefficients:
+  ##             Estimate Std. Error t value Pr(>|t|)    
+  ## (Intercept)  46.8333     0.6461   72.49   <2e-16 ***
+  ## ---
+  ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+  ## 
+  ## Approximate significance of smooth terms:
+  ##                edf Ref.df     F p-value    
+  ## s(education) 2.349      9 9.926 < 2e-16 ***
+  ## s(income)    6.289      9 7.420 < 2e-16 ***
+  ## s(women)     1.964      9 1.309 0.00149 ** 
+  ## ---
+  ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+  ## 
+  ## R-sq.(adj) =  0.856   Deviance explained = 87.1%
+  ## GCV = 48.046  Scale est. = 42.58     n = 102
 ```
 
 ```r
@@ -1134,28 +1197,28 @@ summary(gam2)
 ```
 
 ```
-## 
-## Family: gaussian 
-## Link function: identity 
-## 
-## Formula:
-## prestige ~ s(education) + s(income, women)
-## 
-## Parametric coefficients:
-##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)   46.833      0.679   68.97   <2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Approximate significance of smooth terms:
-##                   edf Ref.df     F p-value    
-## s(education)    2.802  3.489 25.09  <2e-16 ***
-## s(income,women) 4.895  6.286 10.03  <2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## R-sq.(adj) =  0.841   Deviance explained = 85.3%
-## GCV = 51.416  Scale est. = 47.032    n = 102
+  ## 
+  ## Family: gaussian 
+  ## Link function: identity 
+  ## 
+  ## Formula:
+  ## prestige ~ s(education) + s(income, women)
+  ## 
+  ## Parametric coefficients:
+  ##             Estimate Std. Error t value Pr(>|t|)    
+  ## (Intercept)   46.833      0.679   68.97   <2e-16 ***
+  ## ---
+  ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+  ## 
+  ## Approximate significance of smooth terms:
+  ##                   edf Ref.df     F p-value    
+  ## s(education)    2.802  3.489 25.09  <2e-16 ***
+  ## s(income,women) 4.895  6.286 10.03  <2e-16 ***
+  ## ---
+  ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+  ## 
+  ## R-sq.(adj) =  0.841   Deviance explained = 85.3%
+  ## GCV = 51.416  Scale est. = 47.032    n = 102
 ```
 
 ```r
@@ -1163,15 +1226,15 @@ anova(gam, gam2, test = "F")
 ```
 
 ```
-## Analysis of Deviance Table
-## 
-## Model 1: prestige ~ s(education) + s(income) + s(women)
-## Model 2: prestige ~ s(education) + s(income, women)
-##   Resid. Df Resid. Dev      Df Deviance      F  Pr(>F)   
-## 1    88.325     3849.1                                   
-## 2    91.225     4388.3 -2.9001  -539.16 4.3661 0.00705 **
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+  ## Analysis of Deviance Table
+  ## 
+  ## Model 1: prestige ~ s(education) + s(income) + s(women)
+  ## Model 2: prestige ~ s(education) + s(income, women)
+  ##   Resid. Df Resid. Dev      Df Deviance      F  Pr(>F)   
+  ## 1    88.325     3849.1                                   
+  ## 2    91.225     4388.3 -2.9001  -539.16 4.3661 0.00705 **
+  ## ---
+  ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 
 ```r
@@ -1179,26 +1242,46 @@ plotmo(gam2)
 ```
 
 ```
-##  plotmo grid:    education income women
-##                      10.54   5930  13.6
+  ##  plotmo grid:    education income women
+  ##                      10.54   5930  13.6
 ```
 
+\begin{figure}[!htb]
 
+{\centering \includegraphics[width=0.9\linewidth]{07-regresion_np_files/figure-latex/earth-mgcv-plotmo-1} 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-32-1} \end{center}
+}
+
+\caption{(ref:earth-mgcv-plotmo)}(\#fig:earth-mgcv-plotmo)
+\end{figure}
+
+En la Figura \@ref(fig:earth-mgcv-plotmo) (generada con `plotmo::plotmo()`) se representan los efectos parciales de las componentes, y en la Figura \@ref(fig:earth-mgcv-plot) el efecto parcial de la interacción (empleando [`plot()`](https://rdrr.io/pkg/mgcv/man/plot.gam.html)):
+
+(ref:earth-mgcv-plot) Efecto parcial de la interacción `income:women`.
+
 
 ```r
 plot(gam2, scheme = 2, select = 2)
 ```
 
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.75\linewidth]{07-regresion_np_files/figure-latex/earth-mgcv-plot-1} 
+
+}
+
+\caption{(ref:earth-mgcv-plot)}(\#fig:earth-mgcv-plot)
+\end{figure}
 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-32-2} \end{center}
+::: {.exercise #earth-mgcv-res}
 
-Pregunta: ¿Observas algo extraño en el contraste ANOVA anterior? 
-<!-- 
-anova(gam2, gam, test = "F")
--->
+Comentar brevemente los resultados del ajuste del modelo GAM del ejemplo anterior.
+¿Observas algo extraño en el contraste ANOVA? 
+(Probar a ejecutar `anova(gam2, gam, test = "F")`.)
+
+:::
+
 
 ### MARS con el paquete `caret`
 
@@ -1215,8 +1298,7 @@ train <- df[itrain, ]
 test <- df[-itrain, ]
 ```
 
-`caret` implementa varios métodos basados en `earth`:
-
+`caret` implementa varios métodos basados en `earth`, en este caso emplearemos el algoritmo original:
 
 
 ```r
@@ -1226,12 +1308,14 @@ modelLookup("earth")
 ```
 
 ```
-##   model parameter          label forReg forClass probModel
-## 1 earth    nprune         #Terms   TRUE     TRUE      TRUE
-## 2 earth    degree Product Degree   TRUE     TRUE      TRUE
+  ##   model parameter          label forReg forClass probModel
+  ## 1 earth    nprune         #Terms   TRUE     TRUE      TRUE
+  ## 2 earth    degree Product Degree   TRUE     TRUE      TRUE
 ```
 
-Consideramos una rejilla de búsqueda personalizada:
+Para selección de los hiperparámetros óptimos consideramos una rejilla de búsqueda personalizada:
+
+(ref:earth-caret) Errores RMSE de validación cruzada de los modelos MARS en función del numero de términos `nprune` y del orden máximo de interacción `degree`, resaltando la combinación óptima.
 
 
 ```r
@@ -1245,49 +1329,47 @@ caret.mars
 ```
 
 ```
-## Multivariate Adaptive Regression Spline 
-## 
-## 264 samples
-##   9 predictor
-## 
-## No pre-processing
-## Resampling: Cross-Validated (10 fold) 
-## Summary of sample sizes: 238, 238, 238, 236, 237, 239, ... 
-## Resampling results across tuning parameters:
-## 
-##   degree  nprune  RMSE      Rsquared   MAE     
-##   1        2      4.842924  0.6366661  3.803870
-##   1        4      4.558953  0.6834467  3.488040
-##   1        6      4.345781  0.7142046  3.413213
-##   1        8      4.256592  0.7295113  3.220256
-##   1       10      4.158604  0.7436812  3.181941
-##   1       12      4.128416  0.7509562  3.142176
-##   1       14      4.069714  0.7600561  3.061458
-##   1       16      4.058769  0.7609245  3.058843
-##   1       18      4.058769  0.7609245  3.058843
-##   1       20      4.058769  0.7609245  3.058843
-##   2        2      4.842924  0.6366661  3.803870
-##   2        4      4.652783  0.6725979  3.540031
-##   2        6      4.462122  0.7039134  3.394627
-##   2        8      4.188539  0.7358147  3.209399
-##   2       10      3.953353  0.7658754  2.988747
-##   2       12      4.028546  0.7587781  3.040408
-##   2       14      4.084860  0.7514781  3.076990
-##   2       16      4.091340  0.7510666  3.081559
-##   2       18      4.091340  0.7510666  3.081559
-##   2       20      4.091340  0.7510666  3.081559
-## 
-## RMSE was used to select the optimal model using the smallest value.
-## The final values used for the model were nprune = 10 and degree = 2.
+  ## Multivariate Adaptive Regression Spline 
+  ## 
+  ## 264 samples
+  ##   9 predictor
+  ## 
+  ## No pre-processing
+  ## Resampling: Cross-Validated (10 fold) 
+  ## Summary of sample sizes: 238, 238, 238, 236, 237, 239, ... 
+  ## Resampling results across tuning parameters:
+  ## 
+  ##   degree  nprune  RMSE      Rsquared   MAE     
+  ##   1        2      4.842924  0.6366661  3.803870
+  ##   1        4      4.558953  0.6834467  3.488040
+  ##   1        6      4.345781  0.7142046  3.413213
+  ##   1        8      4.256592  0.7295113  3.220256
+  ##   1       10      4.158604  0.7436812  3.181941
+  ##   1       12      4.128416  0.7509562  3.142176
+  ##   1       14      4.069714  0.7600561  3.061458
+  ##   1       16      4.058769  0.7609245  3.058843
+  ##   1       18      4.058769  0.7609245  3.058843
+  ##   1       20      4.058769  0.7609245  3.058843
+  ##   2        2      4.842924  0.6366661  3.803870
+  ##   2        4      4.652783  0.6725979  3.540031
+  ##  [ reached getOption("max.print") -- omitted 8 rows ]
+  ## 
+  ## RMSE was used to select the optimal model using the smallest value.
+  ## The final values used for the model were nprune = 10 and degree = 2.
 ```
 
 ```r
 ggplot(caret.mars, highlight = TRUE)
 ```
 
+\begin{figure}[!htb]
 
+{\centering \includegraphics[width=0.75\linewidth]{07-regresion_np_files/figure-latex/earth-caret-1} 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-35-1} \end{center}
+}
+
+\caption{(ref:earth-caret)}(\#fig:earth-caret)
+\end{figure}
 
 Podemos analizar el modelo final con las herramientas de `earth`:
 
@@ -1297,51 +1379,69 @@ summary(caret.mars$finalModel)
 ```
 
 ```
-## Call: earth(x=matrix[264,9], y=c(4,13,16,3,6,2...), keepxy=TRUE, degree=2,
-##             nprune=10)
-## 
-##                             coefficients
-## (Intercept)                   11.6481994
-## h(dpg-15)                     -0.0743900
-## h(ibt-110)                     0.1224848
-## h(17-vis)                     -0.3363332
-## h(vis-17)                     -0.0110360
-## h(101-doy)                    -0.1041604
-## h(doy-101)                    -0.0236813
-## h(wind-3) * h(1046-ibh)       -0.0023406
-## h(humidity-52) * h(15-dpg)    -0.0047940
-## h(60-humidity) * h(ibt-110)   -0.0027632
-## 
-## Selected 10 of 21 terms, and 7 of 9 predictors (nprune=10)
-## Termination condition: Reached nk 21
-## Importance: humidity, ibt, dpg, doy, wind, ibh, vis, temp-unused, ...
-## Number of terms at each degree of interaction: 1 6 3
-## GCV 13.84161    RSS 3032.585    GRSq 0.7846289    RSq 0.8199031
+  ## Call: earth(x=matrix[264,9], y=c(4,13,16,3,6,2...), keepxy=TRUE, degree=2,
+  ##             nprune=10)
+  ## 
+  ##                             coefficients
+  ## (Intercept)                   11.6481994
+  ## h(dpg-15)                     -0.0743900
+  ## h(ibt-110)                     0.1224848
+  ## h(17-vis)                     -0.3363332
+  ## h(vis-17)                     -0.0110360
+  ## h(101-doy)                    -0.1041604
+  ## h(doy-101)                    -0.0236813
+  ## h(wind-3) * h(1046-ibh)       -0.0023406
+  ## h(humidity-52) * h(15-dpg)    -0.0047940
+  ## h(60-humidity) * h(ibt-110)   -0.0027632
+  ## 
+  ## Selected 10 of 21 terms, and 7 of 9 predictors (nprune=10)
+  ## Termination condition: Reached nk 21
+  ## Importance: humidity, ibt, dpg, doy, wind, ibh, vis, temp-unused, ...
+  ## Number of terms at each degree of interaction: 1 6 3
+  ## GCV 13.84161    RSS 3032.585    GRSq 0.7846289    RSq 0.8199031
 ```
+
+Representamos los efectos parciales de las componentes, separando los efectos principales (ver Figura \@ref(fig:earth-caret-plotmo1)) de las interacciones (ver Figura \@ref(fig:earth-caret-plotmo2)): 
+
+(ref:earth-caret-plotmo1) Efectos parciales principales del modelo MARS ajustado con `caret`.
+
 
 ```r
-# plotmo(caret.mars$finalModel, caption = 'ozone$O3 (caret "earth" method)')
-plotmo(caret.mars$finalModel, degree2 = 0, caption = 'ozone$O3 (efectos principales)')
+# plotmo(caret.mars$finalModel)
+plotmo(caret.mars$finalModel, degree2 = 0, caption = "")
 ```
 
 ```
-##  plotmo grid:    vh wind humidity temp    ibh dpg   ibt vis   doy
-##                5770    5     64.5   62 2046.5  24 169.5 100 213.5
+  ##  plotmo grid:    vh wind humidity temp    ibh dpg   ibt vis   doy
+  ##                5770    5     64.5   62 2046.5  24 169.5 100 213.5
 ```
 
+\begin{figure}[!htb]
 
+{\centering \includegraphics[width=0.75\linewidth]{07-regresion_np_files/figure-latex/earth-caret-plotmo1-1} 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-36-1} \end{center}
+}
+
+\caption{(ref:earth-caret-plotmo1)}(\#fig:earth-caret-plotmo1)
+\end{figure}
+
+(ref:earth-caret-plotmo2) Efectos parciales principales de las interacciones del modelo MARS ajustado con `caret`.
+
 
 ```r
-plotmo(caret.mars$finalModel, degree1 = 0, caption = 'ozone$O3 (interacciones)')
+plotmo(caret.mars$finalModel, degree1 = 0, caption = "")
 ```
 
+\begin{figure}[!htb]
 
+{\centering \includegraphics[width=0.75\linewidth]{07-regresion_np_files/figure-latex/earth-caret-plotmo2-1} 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-36-2} \end{center}
+}
 
-Finalmente medimos la precisión con el procedimiento habitual:
+\caption{(ref:earth-caret-plotmo2)}(\#fig:earth-caret-plotmo2)
+\end{figure}
+
+Finalmente evaluamos la precisión de las predicciones en la muestra de test con el procedimiento habitual:
 
 
 ```r
@@ -1350,8 +1450,8 @@ accuracy(pred, test$O3)
 ```
 
 ```
-##          me        rmse         mae         mpe        mape   r.squared 
-##   0.4817913   4.0952444   3.0764376 -14.1288949  41.2602037   0.7408061
+  ##          me        rmse         mae         mpe        mape   r.squared 
+  ##   0.4817913   4.0952444   3.0764376 -14.1288949  41.2602037   0.7408061
 ```
 
 
@@ -1361,14 +1461,14 @@ accuracy(pred, test$O3)
 Inicialmente se presentó como una técnica gráfica y por ese motivo buscaba proyecciones de dimensión 1 o 2 (proyecciones en rectas o planos), resultando que las direcciones interesantes son aquellas con distribución no normal. 
 La motivación es que cuando se realizan transformaciones lineales lo habitual es que el resultado tenga la apariencia de una distribución normal (por el teorema central del límite), lo cual oculta las singularidades de los datos originales. 
 Se supone que los datos son una trasformación lineal de componentes no gaussianas (variables latentes) y la idea es deshacer esta transformación mediante la optimización de una función objetivo, que en este contexto recibe el nombre de *projection index*.
-Aunque con orígenes distintos, *projection pursuit* es muy similar a *independent component analysis* (Comon, 1994), una técnica de reducción de la dimensión que, en lugar de buscar como es habitual componentes incorreladas (ortogonales), busca componentes independientes y con distribución no normal (ver por ejemplo la documentación del paquete [`fastICA`](https://CRAN.R-project.org/package=fastICA)).
+Aunque con orígenes distintos, *projection pursuit* es muy similar a *independent component analysis* (Comon, 1994), una técnica de reducción de la dimensión que, en lugar de buscar como es habitual componentes incorreladas (ortogonales), busca componentes independientes y con distribución no normal (ver por ejemplo la documentación del paquete [`fastICA`](NA)).
 
 Hay extensiones de *projection pursuit* para regresión, clasificación, estimación de la función de densidad, etc.
 
 
 ### Regresión por *projection pursuit* {#ppr}
 
-En el método original de *projection pursuit regression* [PPR; @friedman1981projection] se considera el siguiente modelo semiparamétrico
+En el método original de *projection pursuit regression* [PPR, @friedman1981projection] se considera el siguiente modelo semiparamétrico
 $$m(\mathbf{x}) = \sum_{m=1}^M g_m (\alpha_{1m}x_1 + \alpha_{2m}x_2 + \ldots + \alpha_{pm}x_p)$$
 siendo $\boldsymbol{\alpha}_m = (\alpha_{1m}, \alpha_{2m}, \ldots, \alpha_{pm})$ vectores de parámetros (desconocidos) de módulo unitario y $g_m$ funciones suaves (desconocidas), denominadas funciones *ridge*.
 
@@ -1389,7 +1489,7 @@ Este procedimiento de regresión está muy relacionado con las redes de neuronas
 
 ### Implementación en R
 
-El método PPR (con respuesta multivariante) está implementado en la función `ppr()` del paquete base de R^[Basada en la función `ppreg()` de S-PLUS e implementado en R por B.D. Ripley inicialmente para el paquete `MASS`.], y es empleada por el método `"ppr"` de `caret`.
+El método PPR (con respuesta multivariante) está implementado en la función `ppr()` del paquete base de R^[Basada en la función `ppreg()` de S-PLUS e implementado en R por B.D. Ripley inicialmente para el paquete `MASS`.], y es también la empleada por el método `"ppr"` de `caret`.
 Esta función:
 
 
@@ -1403,7 +1503,8 @@ va añadiendo términos *ridge* hasta un máximo de `max.terms` y posteriormente
 Por defecto emplea el *super suavizador* de Friedman (función `supsmu()`, con parámetros `bass` y `spam`), aunque también admite splines (función `smooth.spline()`, fijando los grados de libertad con `df` o seleccionándolos mediante GCV).
 Para más detalles ver `help(ppr)`.
 
-Continuaremos con el ejemplo del conjunto de datos `earth::Ozone1`. En primer lugar ajustamos un modelo PPR con dos términos [incrementando el suavizado por defecto de `supsmu()` siguiendo la recomendación de @Venables2002Modern]:
+Continuaremos con el ejemplo del conjunto de datos `earth::Ozone1`.
+En primer lugar ajustamos un modelo PPR con dos términos [incrementando el suavizado por defecto de `supsmu()` siguiendo la recomendación de @Venables2002Modern]:
 
 
 ```r
@@ -1412,38 +1513,48 @@ summary(ppreg)
 ```
 
 ```
-## Call:
-## ppr(formula = O3 ~ ., data = train, nterms = 2, bass = 2)
-## 
-## Goodness of fit:
-##  2 terms 
-## 4033.668 
-## 
-## Projection direction vectors ('alpha'):
-##          term 1       term 2      
-## vh       -0.016617786  0.047417127
-## wind     -0.317867945 -0.544266150
-## humidity  0.238454606 -0.786483702
-## temp      0.892051760 -0.012563393
-## ibh      -0.001707214 -0.001794245
-## dpg       0.033476907  0.285956216
-## ibt       0.205536326  0.026984921
-## vis      -0.026255153 -0.014173612
-## doy      -0.044819013 -0.010405236
-## 
-## Coefficients of ridge terms ('beta'):
-##   term 1   term 2 
-## 6.790447 1.531222
+  ## Call:
+  ## ppr(formula = O3 ~ ., data = train, nterms = 2, bass = 2)
+  ## 
+  ## Goodness of fit:
+  ##  2 terms 
+  ## 4033.668 
+  ## 
+  ## Projection direction vectors ('alpha'):
+  ##          term 1       term 2      
+  ## vh       -0.016617786  0.047417127
+  ## wind     -0.317867945 -0.544266150
+  ## humidity  0.238454606 -0.786483702
+  ## temp      0.892051760 -0.012563393
+  ## ibh      -0.001707214 -0.001794245
+  ## dpg       0.033476907  0.285956216
+  ## ibt       0.205536326  0.026984921
+  ## vis      -0.026255153 -0.014173612
+  ## doy      -0.044819013 -0.010405236
+  ## 
+  ## Coefficients of ridge terms ('beta'):
+  ##   term 1   term 2 
+  ## 6.790447 1.531222
 ```
+
+Representamos las funciones rigde (ver Figura \@ref(fig:ppr-plot)):
+
+(ref:ppr-plot) Estimaciones de las funciones *ridge* del ajuste PPR.  
+
 
 ```r
 oldpar <- par(mfrow = c(1, 2))
 plot(ppreg)
 ```
 
+\begin{figure}[!htb]
 
+{\centering \includegraphics[width=0.9\linewidth]{07-regresion_np_files/figure-latex/ppr-plot-1} 
 
-\begin{center}\includegraphics[width=0.9\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-39-1} \end{center}
+}
+
+\caption{(ref:ppr-plot)}(\#fig:ppr-plot)
+\end{figure}
 
 ```r
 par(oldpar)
@@ -1455,26 +1566,24 @@ Evaluamos las predicciones en la muestra de test:
 ```r
 pred <- predict(ppreg, newdata = test)
 obs <- test$O3
-plot(pred, obs, main = "Observado frente a predicciones",
-     xlab = "Predicción", ylab = "Observado")
-abline(a = 0, b = 1)
-abline(lm(obs ~ pred), lty = 2)
-```
-
-
-
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-40-1} \end{center}
-
-```r
 accuracy(pred, obs)
 ```
 
 ```
-##         me       rmse        mae        mpe       mape  r.squared 
-##  0.4819794  3.2330060  2.5941476 -6.1203121 34.8728543  0.8384607
+  ##         me       rmse        mae        mpe       mape  r.squared 
+  ##  0.4819794  3.2330060  2.5941476 -6.1203121 34.8728543  0.8384607
 ```
 
-Empleando el método `"ppr"` de `caret` para seleccionar el número de términos:
+<!-- 
+plot(pred, obs, main = "Observado frente a predicciones",
+     xlab = "Predicción", ylab = "Observado")
+abline(a = 0, b = 1)
+abline(lm(obs ~ pred), lty = 2)
+-->
+
+Podemos emplear el método `"ppr"` de `caret` para seleccionar el número de términos (ver Figura \@ref(fig:ppr-caret)):
+
+(ref:ppr-caret) Errores RMSE de validación cruzada de los modelos PPR en función del numero de términos `nterms`, resaltando el valor óptimo.
 
 
 ```r
@@ -1483,8 +1592,8 @@ modelLookup("ppr")
 ```
 
 ```
-##   model parameter   label forReg forClass probModel
-## 1   ppr    nterms # Terms   TRUE    FALSE     FALSE
+  ##   model parameter   label forReg forClass probModel
+  ## 1   ppr    nterms # Terms   TRUE    FALSE     FALSE
 ```
 
 ```r
@@ -1495,63 +1604,78 @@ caret.ppr
 ```
 
 ```
-## Projection Pursuit Regression 
-## 
-## 264 samples
-##   9 predictor
-## 
-## No pre-processing
-## Resampling: Cross-Validated (10 fold) 
-## Summary of sample sizes: 238, 238, 238, 236, 237, 239, ... 
-## Resampling results across tuning parameters:
-## 
-##   nterms  RMSE      Rsquared   MAE     
-##   1       4.366022  0.7069042  3.306658
-##   2       4.479282  0.6914678  3.454853
-##   3       4.624943  0.6644089  3.568929
-## 
-## RMSE was used to select the optimal model using the smallest value.
-## The final value used for the model was nterms = 1.
+  ## Projection Pursuit Regression 
+  ## 
+  ## 264 samples
+  ##   9 predictor
+  ## 
+  ## No pre-processing
+  ## Resampling: Cross-Validated (10 fold) 
+  ## Summary of sample sizes: 238, 238, 238, 236, 237, 239, ... 
+  ## Resampling results across tuning parameters:
+  ## 
+  ##   nterms  RMSE      Rsquared   MAE     
+  ##   1       4.366022  0.7069042  3.306658
+  ##   2       4.479282  0.6914678  3.454853
+  ##   3       4.624943  0.6644089  3.568929
+  ## 
+  ## RMSE was used to select the optimal model using the smallest value.
+  ## The final value used for the model was nterms = 1.
 ```
 
 ```r
 ggplot(caret.ppr, highlight = TRUE)
 ```
 
+\begin{figure}[!htb]
 
+{\centering \includegraphics[width=0.7\linewidth]{07-regresion_np_files/figure-latex/ppr-caret-1} 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-41-1} \end{center}
+}
+
+\caption{(ref:ppr-caret)}(\#fig:ppr-caret)
+\end{figure}
+
+Analizamos el modelo final ajustado (ver Figura \@ref(fig:ppr-caret-plot)):
+
+(ref:ppr-caret-plot) Estimación de la función *ridge* del ajuste PPR (con selección óptima del número de componentes).  
+
 
 ```r
 summary(caret.ppr$finalModel)
 ```
 
 ```
-## Call:
-## ppr(x = as.matrix(x), y = y, nterms = param$nterms)
-## 
-## Goodness of fit:
-##  1 terms 
-## 4436.727 
-## 
-## Projection direction vectors ('alpha'):
-##           vh         wind     humidity         temp          ibh          dpg 
-## -0.016091543 -0.167891347  0.351773894  0.907301452 -0.001828865  0.026901492 
-##          ibt          vis          doy 
-##  0.148021198 -0.026470384 -0.035703896 
-## 
-## Coefficients of ridge terms ('beta'):
-##   term 1 
-## 6.853971
+  ## Call:
+  ## ppr(x = as.matrix(x), y = y, nterms = param$nterms)
+  ## 
+  ## Goodness of fit:
+  ##  1 terms 
+  ## 4436.727 
+  ## 
+  ## Projection direction vectors ('alpha'):
+  ##           vh         wind     humidity         temp          ibh          dpg 
+  ## -0.016091543 -0.167891347  0.351773894  0.907301452 -0.001828865  0.026901492 
+  ##          ibt          vis          doy 
+  ##  0.148021198 -0.026470384 -0.035703896 
+  ## 
+  ## Coefficients of ridge terms ('beta'):
+  ##   term 1 
+  ## 6.853971
 ```
 
 ```r
 plot(caret.ppr$finalModel)
 ```
 
+\begin{figure}[!htb]
 
+{\centering \includegraphics[width=0.75\linewidth]{07-regresion_np_files/figure-latex/ppr-caret-plot-1} 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-41-2} \end{center}
+}
+
+\caption{(ref:ppr-caret-plot)}(\#fig:ppr-caret-plot)
+\end{figure}
 
 ```r
 # varImp(caret.ppr) # emplea una medida genérica de importancia
@@ -1560,51 +1684,30 @@ accuracy(pred, obs)
 ```
 
 ```
-##          me        rmse         mae         mpe        mape   r.squared 
-##   0.3135877   3.3652891   2.7061615 -10.7532705  33.8333646   0.8249710
+  ##          me        rmse         mae         mpe        mape   r.squared 
+  ##   0.3135877   3.3652891   2.7061615 -10.7532705  33.8333646   0.8249710
 ```
 
-Para ajustar un modelo *single index* también se podría emplear la función `npindex()` del paquete  [`np`](https://github.com/JeffreyRacine/R-Package-np) [que implementa el método de @ichimura1993, considerando un estimador local constante], aunque en este caso ni el tiempo de computación ni el resultado es satisfactorio:
+Para ajustar un modelo *single index* también se podría emplear la función [`npindex()`](https://rdrr.io/pkg/np/man/np.singleindex.html) del paquete  [`np`](https://github.com/JeffreyRacine/R-Package-np) [que implementa el método de @ichimura1993, considerando un estimador local constante], aunque en este caso ni el tiempo de computación ni el resultado es satisfactorio[^np-npindexbw-1]:
 
 
 ```r
 library(np)
-# bw <- npindexbw(O3 ~ ., data = train)
-# Error in terms.formula(formula): '.' in formula and no 'data' argument
-# formula <- reformulate(setdiff(colnames(train), "O3"), response="O3")
-
 bw <- npindexbw(O3 ~ vh + wind + humidity + temp + ibh + dpg + ibt + vis + doy,
                 data = train, optim.method = "BFGS", nmulti = 1) # Por defecto nmulti = 5
-# Nota: por defecto imprime caracteres inválidos para compilar en LaTeX
+# summary(bw)
 ```
 
+[^np-npindexbw-1]: No admite una fórmula del tipo `respuesta ~ .`:
+    
+    ```r
+    bw <- npindexbw(O3 ~ ., data = train)
+    # Error in terms.formula(formula): '.' in formula and no 'data' argument
+    formula <- reformulate(setdiff(colnames(train), "O3"), response = "O3") # Escribe la formula explícitamente
+    ```
+El valor por defecto de `nmulti = 5` (número de reinicios con punto de partida aleatorio del algoritmo de optimización) incrementa el tiempo de computación.
+Además, los resultados de texto contienen caracteres inválidos para compilar en LaTeX.
 
-
-```r
-summary(bw)
-```
-
-```
-## 
-## Single Index Model
-## Regression data (264 observations, 9 variable(s)):
-## 
-##       vh     wind humidity     temp       ibh      dpg      ibt        vis
-## Beta:  1 4.338446 6.146688 10.44244 0.0926648 3.464211 5.017786 -0.5646063
-##             doy
-## Beta: -1.048745
-## Bandwidth:  16.54751
-## Optimisation Method:  BFGS
-## Regression Type: Local-Constant
-## Bandwidth Selection Method: Ichimura
-## Formula: O3 ~ vh + wind + humidity + temp + ibh + dpg + ibt + vis + doy
-## Bandwidth Type: Fixed
-## Objective Function Value: 18.87884 (achieved on multistart 1)
-## 
-## Continuous Kernel Type: Second-Order Gaussian
-## No. Continuous Explanatory Vars.: 1
-## Estimation Time: 6.76 seconds
-```
 
 ```r
 sindex <- npindex(bws = bw, gradients = TRUE)
@@ -1612,31 +1715,41 @@ summary(sindex)
 ```
 
 ```
-## 
-## Single Index Model
-## Regression Data: 264 training points, in 9 variable(s)
-## 
-##       vh     wind humidity     temp       ibh      dpg      ibt        vis
-## Beta:  1 4.338446 6.146688 10.44244 0.0926648 3.464211 5.017786 -0.5646063
-##             doy
-## Beta: -1.048745
-## Bandwidth: 16.54751
-## Kernel Regression Estimator: Local-Constant
-## 
-## Residual standard error: 3.520037
-## R-squared: 0.806475
-## 
-## Continuous Kernel Type: Second-Order Gaussian
-## No. Continuous Explanatory Vars.: 1
+  ## 
+  ## Single Index Model
+  ## Regression Data: 264 training points, in 9 variable(s)
+  ## 
+  ##       vh     wind humidity     temp       ibh      dpg      ibt        vis
+  ## Beta:  1 4.338446 6.146688 10.44244 0.0926648 3.464211 5.017786 -0.5646063
+  ##             doy
+  ## Beta: -1.048745
+  ## Bandwidth: 16.54751
+  ## Kernel Regression Estimator: Local-Constant
+  ## 
+  ## Residual standard error: 3.520037
+  ## R-squared: 0.806475
+  ## 
+  ## Continuous Kernel Type: Second-Order Gaussian
+  ## No. Continuous Explanatory Vars.: 1
 ```
+
+Al representar la función *ridge* se observa que aparentemente la ventana seleccionada produce un infrasuavizado (sobreajuste; ver Figura \@ref(fig:npindex-plot)):
+
+(ref:npindex-plot) Estimación de la función *ridge* del modelo *single index* ajustado.
+
 
 ```r
 plot(bw)
 ```
 
+\begin{figure}[!htb]
 
+{\centering \includegraphics[width=0.75\linewidth]{07-regresion_np_files/figure-latex/npindex-plot-1} 
 
-\begin{center}\includegraphics[width=0.8\linewidth]{07-regresion_np_files/figure-latex/unnamed-chunk-43-1} \end{center}
+}
+
+\caption{(ref:npindex-plot)}(\#fig:npindex-plot)
+\end{figure}
 
 ```r
 pred <- predict(sindex, newdata = test)
@@ -1644,6 +1757,6 @@ accuracy(pred, obs)
 ```
 
 ```
-##          me        rmse         mae         mpe        mape   r.squared 
-##   0.1712457   4.3725067   3.1789199 -10.2320531  35.2010284   0.7045213
+  ##          me        rmse         mae         mpe        mape   r.squared 
+  ##   0.1712457   4.3725067   3.1789199 -10.2320531  35.2010284   0.7045213
 ```

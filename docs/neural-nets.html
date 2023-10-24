@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Capítulo 8 Redes neuronales | Aprendizaje Estadístico</title>
   <meta name="description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Capítulo 8 Redes neuronales | Aprendizaje Estadístico" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
   <meta name="github-repo" content="rubenfcasal/aprendizaje_estadistico" />
@@ -34,7 +33,6 @@
   
 <link rel="prev" href="projection-pursuit.html"/>
 <link rel="next" href="single-hidden-layer-feedforward-network.html"/>
-<script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -52,14 +50,15 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.19/datatables.js"></script>
-<link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="libs/datatables-binding-0.26/datatables.js"></script>
+<link href="libs/dt-core-1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.12.1/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.12.1/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
 
@@ -102,7 +101,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -115,7 +114,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -171,11 +170,11 @@ div.csl-indent {
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prólogo</a></li>
 <li class="chapter" data-level="1" data-path="intro-AE.html"><a href="intro-AE.html"><i class="fa fa-check"></i><b>1</b> Introducción al Aprendizaje Estadístico</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs.html"><a href="aprendizaje-estadístico-vs.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje Estadístico vs. Aprendizaje Automático</a>
+<li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje Estadístico vs. Aprendizaje Automático</a>
 <ul>
-<li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs.html"><a href="aprendizaje-estadístico-vs.html#machine-learning-vs.-data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
-<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs.html"><a href="aprendizaje-estadístico-vs.html#las-dos-culturas-breiman2001statistical"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas <span class="citation">(<span>Breiman, 2001b</span>)</span></a></li>
-<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs.html"><a href="aprendizaje-estadístico-vs.html#machine-learning-vs.-estadística-dunson2018statistics"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística <span class="citation">(<span>Dunson, 2018</span>)</span></a></li>
+<li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#machine-learning-vs.-data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
+<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#las-dos-culturas"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas</a></li>
+<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#machine-learning-vs.-estadística"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística</a></li>
 </ul></li>
 <li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de Aprendizaje Estadístico</a>
 <ul>
@@ -230,7 +229,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="3.5.1" data-path="boosting-en-r.html"><a href="boosting-en-r.html#ejemplo-clasificación-con-el-paquete-ada"><i class="fa fa-check"></i><b>3.5.1</b> Ejemplo: clasificación con el paquete <code>ada</code></a></li>
 <li class="chapter" data-level="3.5.2" data-path="boosting-en-r.html"><a href="boosting-en-r.html#ejemplo-regresión-con-el-paquete-gbm"><i class="fa fa-check"></i><b>3.5.2</b> Ejemplo: regresión con el paquete <code>gbm</code></a></li>
-<li class="chapter" data-level="3.5.3" data-path="boosting-en-r.html"><a href="boosting-en-r.html#ejemplo-xgboost-con-el-paquete-caret"><i class="fa fa-check"></i><b>3.5.3</b> Ejemplo: XGBoost con el paquete <code>caret</code></a></li>
+<li class="chapter" data-level="3.5.3" data-path="boosting-en-r.html"><a href="boosting-en-r.html#xgb-caret"><i class="fa fa-check"></i><b>3.5.3</b> Ejemplo: XGBoost con el paquete <code>caret</code></a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>4</b> Máquinas de soporte vectorial</a>
@@ -239,34 +238,20 @@ div.csl-indent {
 <li class="chapter" data-level="4.2" data-path="clasificadores-de-soporte-vectorial.html"><a href="clasificadores-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>4.2</b> Clasificadores de soporte vectorial</a></li>
 <li class="chapter" data-level="4.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>4.3</b> Máquinas de soporte vectorial</a>
 <ul>
-<li class="chapter" data-level="4.3.1" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#clasificación-con-más-de-dos-categorías"><i class="fa fa-check"></i><b>4.3.1</b> Clasificación con más de dos categorías</a></li>
-<li class="chapter" data-level="4.3.2" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#regresión"><i class="fa fa-check"></i><b>4.3.2</b> Regresión</a></li>
-<li class="chapter" data-level="4.3.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#ventajas-e-incovenientes"><i class="fa fa-check"></i><b>4.3.3</b> Ventajas e incovenientes</a></li>
+<li class="chapter" data-level="4.3.1" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#regresión-con-svm"><i class="fa fa-check"></i><b>4.3.1</b> Regresión con SVM</a></li>
+<li class="chapter" data-level="4.3.2" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#ventajas-e-incovenientes"><i class="fa fa-check"></i><b>4.3.2</b> Ventajas e incovenientes</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="svm-con-el-paquete-kernlab.html"><a href="svm-con-el-paquete-kernlab.html"><i class="fa fa-check"></i><b>4.4</b> SVM con el paquete <code>kernlab</code></a></li>
+<li class="chapter" data-level="4.4" data-path="svm-kernlab.html"><a href="svm-kernlab.html"><i class="fa fa-check"></i><b>4.4</b> SVM con el paquete <code>kernlab</code></a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="class-otros.html"><a href="class-otros.html"><i class="fa fa-check"></i><b>5</b> Otros métodos de clasificación</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="análisis-discriminate-lineal.html"><a href="análisis-discriminate-lineal.html"><i class="fa fa-check"></i><b>5.1</b> Análisis discriminate lineal</a>
-<ul>
-<li class="chapter" data-level="5.1.1" data-path="análisis-discriminate-lineal.html"><a href="análisis-discriminate-lineal.html#ejemplo-masslda"><i class="fa fa-check"></i><b>5.1.1</b> Ejemplo <code>MASS::lda</code></a></li>
-</ul></li>
-<li class="chapter" data-level="5.2" data-path="análisis-discriminante-cuadrático.html"><a href="análisis-discriminante-cuadrático.html"><i class="fa fa-check"></i><b>5.2</b> Análisis discriminante cuadrático</a>
-<ul>
-<li class="chapter" data-level="5.2.1" data-path="análisis-discriminante-cuadrático.html"><a href="análisis-discriminante-cuadrático.html#ejemplo-massqda"><i class="fa fa-check"></i><b>5.2.1</b> Ejemplo <code>MASS::qda</code></a></li>
-</ul></li>
-<li class="chapter" data-level="5.3" data-path="naive-bayes.html"><a href="naive-bayes.html"><i class="fa fa-check"></i><b>5.3</b> Naive Bayes</a>
-<ul>
-<li class="chapter" data-level="5.3.1" data-path="naive-bayes.html"><a href="naive-bayes.html#ejemplo-e1071naivebayes"><i class="fa fa-check"></i><b>5.3.1</b> Ejemplo <code>e1071::naiveBayes</code></a></li>
-</ul></li>
+<li class="chapter" data-level="5.1" data-path="clas-lda.html"><a href="clas-lda.html"><i class="fa fa-check"></i><b>5.1</b> Análisis discriminate lineal</a></li>
+<li class="chapter" data-level="5.2" data-path="clas-qda.html"><a href="clas-qda.html"><i class="fa fa-check"></i><b>5.2</b> Análisis discriminante cuadrático</a></li>
+<li class="chapter" data-level="5.3" data-path="bayes.html"><a href="bayes.html"><i class="fa fa-check"></i><b>5.3</b> Naive Bayes</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="modelos-lineales.html"><a href="modelos-lineales.html"><i class="fa fa-check"></i><b>6</b> Modelos lineales y extensiones</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="reg-multiple.html"><a href="reg-multiple.html"><i class="fa fa-check"></i><b>6.1</b> Regresión lineal múltiple</a>
-<ul>
-<li class="chapter" data-level="6.1.1" data-path="reg-multiple.html"><a href="reg-multiple.html#ajuste-función-lm"><i class="fa fa-check"></i><b>6.1.1</b> Ajuste: función <code>lm</code></a></li>
-<li class="chapter" data-level="6.1.2" data-path="reg-multiple.html"><a href="reg-multiple.html#ejemplo-2"><i class="fa fa-check"></i><b>6.1.2</b> Ejemplo</a></li>
-</ul></li>
+<li class="chapter" data-level="6.1" data-path="reg-multiple.html"><a href="reg-multiple.html"><i class="fa fa-check"></i><b>6.1</b> Regresión lineal múltiple</a></li>
 <li class="chapter" data-level="6.2" data-path="colinealidad.html"><a href="colinealidad.html"><i class="fa fa-check"></i><b>6.2</b> El problema de la colinealidad</a></li>
 <li class="chapter" data-level="6.3" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html"><i class="fa fa-check"></i><b>6.3</b> Selección de variables explicativas</a>
 <ul>
@@ -274,27 +259,26 @@ div.csl-indent {
 <li class="chapter" data-level="6.3.2" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html#selección-por-pasos"><i class="fa fa-check"></i><b>6.3.2</b> Selección por pasos</a></li>
 </ul></li>
 <li class="chapter" data-level="6.4" data-path="analisis-reg-multiple.html"><a href="analisis-reg-multiple.html"><i class="fa fa-check"></i><b>6.4</b> Análisis e interpretación del modelo</a></li>
-<li class="chapter" data-level="6.5" data-path="evaluación-de-la-precisión.html"><a href="evaluación-de-la-precisión.html"><i class="fa fa-check"></i><b>6.5</b> Evaluación de la precisión</a></li>
-<li class="chapter" data-level="6.6" data-path="shrinkage.html"><a href="shrinkage.html"><i class="fa fa-check"></i><b>6.6</b> Métodos de regularización</a>
+<li class="chapter" data-level="6.5" data-path="eval-reg-lineal.html"><a href="eval-reg-lineal.html"><i class="fa fa-check"></i><b>6.5</b> Evaluación de la precisión</a></li>
+<li class="chapter" data-level="6.6" data-path="selec-ae-reg-lineal.html"><a href="selec-ae-reg-lineal.html"><i class="fa fa-check"></i><b>6.6</b> Selección del modelo mediante remuestreo</a></li>
+<li class="chapter" data-level="6.7" data-path="shrinkage.html"><a href="shrinkage.html"><i class="fa fa-check"></i><b>6.7</b> Métodos de regularización</a>
 <ul>
-<li class="chapter" data-level="6.6.1" data-path="shrinkage.html"><a href="shrinkage.html#implementación-en-r"><i class="fa fa-check"></i><b>6.6.1</b> Implementación en R</a></li>
-<li class="chapter" data-level="6.6.2" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-ridge-regression"><i class="fa fa-check"></i><b>6.6.2</b> Ejemplo: Ridge Regression</a></li>
-<li class="chapter" data-level="6.6.3" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-lasso"><i class="fa fa-check"></i><b>6.6.3</b> Ejemplo: Lasso</a></li>
-<li class="chapter" data-level="6.6.4" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-elastic-net"><i class="fa fa-check"></i><b>6.6.4</b> Ejemplo: Elastic Net</a></li>
+<li class="chapter" data-level="6.7.1" data-path="shrinkage.html"><a href="shrinkage.html#implementación-en-r"><i class="fa fa-check"></i><b>6.7.1</b> Implementación en R</a></li>
+<li class="chapter" data-level="6.7.2" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-ridge-regression"><i class="fa fa-check"></i><b>6.7.2</b> Ejemplo: Ridge Regression</a></li>
+<li class="chapter" data-level="6.7.3" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-lasso"><i class="fa fa-check"></i><b>6.7.3</b> Ejemplo: Lasso</a></li>
+<li class="chapter" data-level="6.7.4" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-elastic-net"><i class="fa fa-check"></i><b>6.7.4</b> Ejemplo: Elastic Net</a></li>
 </ul></li>
-<li class="chapter" data-level="6.7" data-path="pca-pls.html"><a href="pca-pls.html"><i class="fa fa-check"></i><b>6.7</b> Métodos de reducción de la dimensión</a>
+<li class="chapter" data-level="6.8" data-path="pca-pls.html"><a href="pca-pls.html"><i class="fa fa-check"></i><b>6.8</b> Métodos de reducción de la dimensión</a>
 <ul>
-<li class="chapter" data-level="6.7.1" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-componentes-principales-pcr"><i class="fa fa-check"></i><b>6.7.1</b> Regresión por componentes principales (PCR)</a></li>
-<li class="chapter" data-level="6.7.2" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-mínimos-cuadrados-parciales-plsr"><i class="fa fa-check"></i><b>6.7.2</b> Regresión por mínimos cuadrados parciales (PLSR)</a></li>
+<li class="chapter" data-level="6.8.1" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-componentes-principales-pcr"><i class="fa fa-check"></i><b>6.8.1</b> Regresión por componentes principales (PCR)</a></li>
+<li class="chapter" data-level="6.8.2" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-mínimos-cuadrados-parciales-plsr"><i class="fa fa-check"></i><b>6.8.2</b> Regresión por mínimos cuadrados parciales (PLSR)</a></li>
 </ul></li>
-<li class="chapter" data-level="6.8" data-path="reg-glm.html"><a href="reg-glm.html"><i class="fa fa-check"></i><b>6.8</b> Modelos lineales generalizados</a>
+<li class="chapter" data-level="6.9" data-path="reg-glm.html"><a href="reg-glm.html"><i class="fa fa-check"></i><b>6.9</b> Modelos lineales generalizados</a>
 <ul>
-<li class="chapter" data-level="6.8.1" data-path="reg-glm.html"><a href="reg-glm.html#ajuste-función-glm"><i class="fa fa-check"></i><b>6.8.1</b> Ajuste: función <code>glm</code></a></li>
-<li class="chapter" data-level="6.8.2" data-path="reg-glm.html"><a href="reg-glm.html#ejemplo-regresión-logística"><i class="fa fa-check"></i><b>6.8.2</b> Ejemplo: Regresión logística</a></li>
-<li class="chapter" data-level="6.8.3" data-path="reg-glm.html"><a href="reg-glm.html#selección-de-variables-explicativas"><i class="fa fa-check"></i><b>6.8.3</b> Selección de variables explicativas</a></li>
-<li class="chapter" data-level="6.8.4" data-path="reg-glm.html"><a href="reg-glm.html#analisis-glm"><i class="fa fa-check"></i><b>6.8.4</b> Análisis e interpretación del modelo</a></li>
-<li class="chapter" data-level="6.8.5" data-path="reg-glm.html"><a href="reg-glm.html#evaluación-de-la-precisión-1"><i class="fa fa-check"></i><b>6.8.5</b> Evaluación de la precisión</a></li>
-<li class="chapter" data-level="6.8.6" data-path="reg-glm.html"><a href="reg-glm.html#extensiones"><i class="fa fa-check"></i><b>6.8.6</b> Extensiones</a></li>
+<li class="chapter" data-level="6.9.1" data-path="reg-glm.html"><a href="reg-glm.html#selección-de-variables-explicativas"><i class="fa fa-check"></i><b>6.9.1</b> Selección de variables explicativas</a></li>
+<li class="chapter" data-level="6.9.2" data-path="reg-glm.html"><a href="reg-glm.html#analisis-glm"><i class="fa fa-check"></i><b>6.9.2</b> Análisis e interpretación del modelo</a></li>
+<li class="chapter" data-level="6.9.3" data-path="reg-glm.html"><a href="reg-glm.html#evaluación-de-la-precisión"><i class="fa fa-check"></i><b>6.9.3</b> Evaluación de la precisión</a></li>
+<li class="chapter" data-level="6.9.4" data-path="reg-glm.html"><a href="reg-glm.html#extensiones"><i class="fa fa-check"></i><b>6.9.4</b> Extensiones</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="reg-np.html"><a href="reg-np.html"><i class="fa fa-check"></i><b>7</b> Regresión no paramétrica</a>
@@ -307,19 +291,15 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="7.2" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>7.2</b> Splines</a>
 <ul>
-<li class="chapter" data-level="7.2.1" data-path="splines.html"><a href="splines.html#reg-splines"><i class="fa fa-check"></i><b>7.2.1</b> Regression splines</a></li>
-<li class="chapter" data-level="7.2.2" data-path="splines.html"><a href="splines.html#smoothing-splines"><i class="fa fa-check"></i><b>7.2.2</b> Smoothing splines</a></li>
+<li class="chapter" data-level="7.2.1" data-path="splines.html"><a href="splines.html#reg-splines"><i class="fa fa-check"></i><b>7.2.1</b> Splines de regresión</a></li>
+<li class="chapter" data-level="7.2.2" data-path="splines.html"><a href="splines.html#splines-de-suavizado"><i class="fa fa-check"></i><b>7.2.2</b> Splines de suavizado</a></li>
 <li class="chapter" data-level="7.2.3" data-path="splines.html"><a href="splines.html#splines-penalizados"><i class="fa fa-check"></i><b>7.2.3</b> Splines penalizados</a></li>
 </ul></li>
-<li class="chapter" data-level="7.3" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html"><i class="fa fa-check"></i><b>7.3</b> Modelos aditivos</a>
+<li class="chapter" data-level="7.3" data-path="reg-gam.html"><a href="reg-gam.html"><i class="fa fa-check"></i><b>7.3</b> Modelos aditivos</a>
 <ul>
-<li class="chapter" data-level="7.3.1" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#ajuste-función-gam"><i class="fa fa-check"></i><b>7.3.1</b> Ajuste: función <code>gam</code></a></li>
-<li class="chapter" data-level="7.3.2" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#ejemplo-3"><i class="fa fa-check"></i><b>7.3.2</b> Ejemplo</a></li>
-<li class="chapter" data-level="7.3.3" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#superficies-de-predicción"><i class="fa fa-check"></i><b>7.3.3</b> Superficies de predicción</a></li>
-<li class="chapter" data-level="7.3.4" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#comparación-y-selección-de-modelos"><i class="fa fa-check"></i><b>7.3.4</b> Comparación y selección de modelos</a></li>
-<li class="chapter" data-level="7.3.5" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#mgcv-diagnosis"><i class="fa fa-check"></i><b>7.3.5</b> Diagnosis del modelo</a></li>
-<li class="chapter" data-level="7.3.6" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#gam-en-caret"><i class="fa fa-check"></i><b>7.3.6</b> GAM en <code>caret</code></a></li>
-<li class="chapter" data-level="7.3.7" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#ejercicios"><i class="fa fa-check"></i><b>7.3.7</b> Ejercicios</a></li>
+<li class="chapter" data-level="7.3.1" data-path="reg-gam.html"><a href="reg-gam.html#superficies-de-predicción"><i class="fa fa-check"></i><b>7.3.1</b> Superficies de predicción</a></li>
+<li class="chapter" data-level="7.3.2" data-path="reg-gam.html"><a href="reg-gam.html#comparación-y-selección-de-modelos"><i class="fa fa-check"></i><b>7.3.2</b> Comparación y selección de modelos</a></li>
+<li class="chapter" data-level="7.3.3" data-path="reg-gam.html"><a href="reg-gam.html#mgcv-diagnosis"><i class="fa fa-check"></i><b>7.3.3</b> Diagnosis del modelo</a></li>
 </ul></li>
 <li class="chapter" data-level="7.4" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>7.4</b> Regresión spline adaptativa multivariante</a>
 <ul>
@@ -362,8 +342,8 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="neural-nets" class="section level1" number="8">
-<h1><span class="header-section-number">Capítulo 8</span> Redes neuronales</h1>
+<div id="neural-nets" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">Capítulo 8</span> Redes neuronales<a href="neural-nets.html#neural-nets" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <!-- 
 ---
 title: "Redes neuronales"
@@ -372,14 +352,14 @@ date: "Máster en Técnicas Estadísticas"
 bibliography: ["packages.bib", "aprendizaje_estadistico.bib"]
 link-citations: yes
 output: 
+  bookdown::pdf_document2:
+    keep_tex: yes
+    toc: yes 
   bookdown::html_document2:
     pandoc_args: ["--number-offset", "7,0"]
     toc: yes 
     # mathjax: local            # copia local de MathJax, hay que establecer:
     # self_contained: false     # las dependencias se guardan en ficheros externos 
-  bookdown::pdf_document2:
-    keep_tex: yes
-    toc: yes 
 ---
 
 bookdown::preview_chapter("08-redes_neuronales.Rmd")
@@ -388,15 +368,34 @@ knitr::spin("08-redes_neuronales.R",knit = FALSE)
 -->
 <p>Las redes neuronales <span class="citation">(<a href="#ref-mcculloch1943logical" role="doc-biblioref">McCulloch y Pitts, 1943</a>)</span>, también conocidas como redes de neuronas artificiales (<em>artificial neural network</em>; ANN), son una metodología de aprendizaje supervisado que destaca porque da lugar a modelos con un número muy elevado de parámetros, adecuada para abordar problemas con estructuras subyacentes muy complejas, pero de muy difícil interpretación.
 Con la aparición de los métodos SVM y boosting, ANN perdió popularidad, pero en los últimos años ha vuelto a ganarla, también gracias al aumento de las capacidades de computación.
-El diseño y el entrenamiento de una ANN suele requerir de más tiempo y experimentación que otros algoritmos de AE/ML. Además el gran número de hiperparámetros lo convierte en un problema de optimización complicado.
+El diseño y el entrenamiento de una ANN suele requerir de más tiempo y experimentación que otros algoritmos de AE/ML.
+Además el gran número de hiperparámetros lo convierte en un problema de optimización complicado.
 En este capítulo se va a hacer una breve introducción a estos métodos, para poder emplearlos con solvencia en la práctica sería muy recomendable profundizar más en esta metodología <span class="citation">(por ejemplo se podría consultar <a href="#ref-chollet2018deep" role="doc-biblioref">Chollet y Allaire, 2018</a>, para un tratamiento más detallado)</span>.</p>
-<p>En los métodos de aprendizaje supervisado se realizan una o varias transformaciones del espacio de las variables predictoras buscando una representación <em>óptima</em> de los datos, para así poder conseguir una buena predicción. Los modelos que realizan una o dos transformaciones reciben el nombre de modelos superficiales (<em>shallow models</em>). Por el contrario, cuando se realizan muchas transformaciones se habla de aprendizaje profundo (<em>deep learning</em>). No nos debemos dejar engañar por la publicidad: que un aprendizaje sea profundo no significa que sea mejor que el superficial. Aunque es verdad que ahora mismo la metodología que está de moda son las redes neuronales profundas (<em>deep neural networks</em>), hay que ser muy consciente de que dependiendo del contexto será más conveniente un tipo de modelos u otro. Se trata de una metodología adecuada para problemas muy complejos y no tanto para problemas con pocas observaciones o pocos predictores. Hay que tener en cuenta que no existe ninguna metodología que sea <em>transversalmente</em> la mejor [lo que se conoce como el teorema <em>no free lunch</em>; <span class="citation"><a href="#ref-wolpert1997no" role="doc-biblioref">Wolpert y Macready</a> (<a href="#ref-wolpert1997no" role="doc-biblioref">1997</a>)</span>].</p>
-<p>Una red neuronal básica va a realizar dos transformaciones de los datos, y por tanto es un modelo con tres capas: una capa de entrada (<em>input layer</em>) consistente en las variables originales <span class="math inline">\(\mathbf{X} = (X_1,X_2,\ldots, X_p)\)</span>, otra capa oculta (<em>hidden layer</em>) con <span class="math inline">\(M\)</span> nodos, y la capa de salida (<em>output layer</em>) con la predicción (o predicciones) final <span class="math inline">\(m(\mathbf{X})\)</span>.</p>
-<p><img src="08-redes_neuronales_files/figure-html/unnamed-chunk-2-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<p>Para que las redes neuronales tengan un rendimiento aceptable se requiere disponer de tamaños muestrales grandes, debido a que son modelos hiperparametrizados (y por tanto de difícil interpretación). Son modelos muy demandantes computacionalmente y solo desde fechas recientes es viable utilizarlos con un número elevado de capas (<em>deep neural networks</em>).</p>
-<p>Son modelos muy sensibles a las escala de los predictores y requieren un preprocesado en el que se homogeneicen sus escalas.</p>
-<p>Una de las fortalezas de las redes neuronales es que sus modelos son muy robustos frente a predictores irrelevantes. Esto la convierte en una metodología muy interesante cuando se dispone de datos de dimensión muy alta. Otros métodos requieren un preprocesado muy costoso, pero las redes neuronales lo realizan de forma automática en las capas intermedias, que de forma sucesiva se van centrado en aspectos relevantes de los datos. Y una de sus debilidades es que conforme aumentan las capas se hace más difícil la interpretación del modelo, hasta convertirse en una auténtica caja negra.</p>
-<p>Hay distintas formas de construir redes neuronales. La básica recibe el nombre de <em>feedforward</em> (o también <em>multilayer perceptron</em>). Otras formas, con sus campos de aplicación principales, son:</p>
+<p>En los métodos de aprendizaje supervisado se realizan una o varias transformaciones del espacio de las variables predictoras buscando una representación <em>óptima</em> de los datos, para así poder conseguir una buena predicción.
+Los modelos que realizan una o dos transformaciones reciben el nombre de modelos superficiales (<em>shallow models</em>).
+Por el contrario, cuando se realizan muchas transformaciones se habla de aprendizaje profundo (<em>deep learning</em>).
+No nos debemos dejar engañar por la publicidad: que un aprendizaje sea profundo no significa que sea mejor que el superficial.
+Aunque es verdad que ahora mismo la metodología que está de moda son las redes neuronales profundas (<em>deep neural networks</em>), hay que ser muy consciente de que dependiendo del contexto será más conveniente un tipo de modelos u otro.
+Se trata de una metodología adecuada para problemas muy complejos y no tanto para problemas con pocas observaciones o pocos predictores.
+Hay que tener en cuenta que no existe ninguna metodología que sea <em>transversalmente</em> la mejor <span class="citation">(lo que se conoce como el teorema <em>no free lunch</em>, <a href="#ref-wolpert1997no" role="doc-biblioref">Wolpert y Macready, 1997</a>)</span>.</p>
+<p>Una red neuronal básica, como la representada en la Figura <a href="neural-nets.html#fig:nnet-def">8.1</a>, va a realizar dos transformaciones de los datos, y por tanto es un modelo con tres capas: una capa de entrada (<em>input layer</em>) consistente en las variables originales <span class="math inline">\(\mathbf{X} = (X_1,X_2,\ldots, X_p)\)</span>, otra capa oculta (<em>hidden layer</em>) con <span class="math inline">\(M\)</span> nodos, y la capa de salida (<em>output layer</em>) con la predicción (o predicciones) final <span class="math inline">\(m(\mathbf{X})\)</span>.</p>
+
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:nnet-def"></span>
+<img src="08-redes_neuronales_files/figure-html/nnet-def-1.png" alt="Diagrama de una red neuronal." width="75%" />
+<p class="caption">
+Figura 8.1: Diagrama de una red neuronal.
+</p>
+</div>
+<p>Para que las redes neuronales tengan un rendimiento aceptable se requiere disponer de tamaños muestrales grandes, debido a que son modelos hiperparametrizados (y por tanto de difícil interpretación).
+El ajuste de estos modelos puede requerir de mucho de tiempo de computación, incluso si están implementados de forma muy eficiente (computación en paralelo con GPUs), y solo desde fechas recientes es viable utilizarlos con un número elevado de capas (<em>deep neural networks</em>).
+También son muy sensibles a la escala de los predictores, por lo que requerirían de un preprocesado en el que se homogeneicen (también podrían tener problemas de colinealidad).</p>
+<p>Una de las fortalezas de las redes neuronales es que sus modelos son muy robustos frente a predictores irrelevantes.
+Esto la convierte en una metodología muy interesante cuando se dispone de datos de dimensión muy alta.
+Otros métodos requieren un preprocesado muy costoso, pero las redes neuronales lo realizan de forma automática en las capas intermedias, que de forma sucesiva se van centrado en aspectos relevantes de los datos.
+Y una de sus debilidades es que conforme aumentan las capas se hace más difícil la interpretación del modelo, hasta convertirse en una auténtica caja negra.</p>
+<p>Hay distintas formas de construir redes neuronales.
+La básica recibe el nombre de <em>feedforward</em> (o también <em>multilayer perceptron</em>).
+Otras formas, con sus campos de aplicación principales, son:</p>
 <ul>
 <li><p><em>Convolutional neural networks</em> para reconocimiento de imagen y vídeo.</p></li>
 <li><p><em>Recurrent neural networks</em> para reconocimiento de voz.</p></li>
@@ -481,7 +480,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

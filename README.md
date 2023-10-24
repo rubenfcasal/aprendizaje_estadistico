@@ -5,7 +5,7 @@
 
 Este libro contiene los apuntes de la asignatura de [Aprendizaje Estadístico](http://eamo.usc.es/pub/mte/index.php?option=com_content&view=article&id=74) del [Máster en Técnicas Estadísticas](http://eio.usc.es/pub/mte). 
 
-El libro ha sido escrito en [R-Markdown](http://rmarkdown.rstudio.com) empleando el paquete [`bookdown`](https://bookdown.org/yihui/bookdown/) y está disponible en el repositorio Github: [rubenfcasal/simbook](https://github.com/rubenfcasal/aprendizaje_estadistico). 
+El libro ha sido escrito en [R-Markdown](http://rmarkdown.rstudio.com) empleando el paquete [`bookdown`](https://bookdown.org/yihui/bookdown/) y está disponible en el repositorio Github: [rubenfcasal/aprendizaje_estadistico](https://github.com/rubenfcasal/aprendizaje_estadistico). 
 Se puede acceder a la versión en línea a través del siguiente enlace:
 
 <https://rubenfcasal.github.io/aprendizaje_estadistico/index.html>.

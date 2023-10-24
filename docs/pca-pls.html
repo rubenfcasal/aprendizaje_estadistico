@@ -4,19 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>6.7 Métodos de reducción de la dimensión | Aprendizaje Estadístico</title>
+  <title>6.8 Métodos de reducción de la dimensión | Aprendizaje Estadístico</title>
   <meta name="description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="6.7 Métodos de reducción de la dimensión | Aprendizaje Estadístico" />
+  <meta property="og:title" content="6.8 Métodos de reducción de la dimensión | Aprendizaje Estadístico" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
   <meta name="github-repo" content="rubenfcasal/aprendizaje_estadistico" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="6.7 Métodos de reducción de la dimensión | Aprendizaje Estadístico" />
+  <meta name="twitter:title" content="6.8 Métodos de reducción de la dimensión | Aprendizaje Estadístico" />
   
   <meta name="twitter:description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
   
@@ -34,7 +33,6 @@
   
 <link rel="prev" href="shrinkage.html"/>
 <link rel="next" href="reg-glm.html"/>
-<script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -52,14 +50,15 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.19/datatables.js"></script>
-<link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="libs/datatables-binding-0.26/datatables.js"></script>
+<link href="libs/dt-core-1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.12.1/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.12.1/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
 
@@ -102,7 +101,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -115,7 +114,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -171,11 +170,11 @@ div.csl-indent {
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prólogo</a></li>
 <li class="chapter" data-level="1" data-path="intro-AE.html"><a href="intro-AE.html"><i class="fa fa-check"></i><b>1</b> Introducción al Aprendizaje Estadístico</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs.html"><a href="aprendizaje-estadístico-vs.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje Estadístico vs. Aprendizaje Automático</a>
+<li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje Estadístico vs. Aprendizaje Automático</a>
 <ul>
-<li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs.html"><a href="aprendizaje-estadístico-vs.html#machine-learning-vs.-data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
-<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs.html"><a href="aprendizaje-estadístico-vs.html#las-dos-culturas-breiman2001statistical"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas <span class="citation">(<span>Breiman, 2001b</span>)</span></a></li>
-<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs.html"><a href="aprendizaje-estadístico-vs.html#machine-learning-vs.-estadística-dunson2018statistics"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística <span class="citation">(<span>Dunson, 2018</span>)</span></a></li>
+<li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#machine-learning-vs.-data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
+<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#las-dos-culturas"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas</a></li>
+<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#machine-learning-vs.-estadística"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística</a></li>
 </ul></li>
 <li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de Aprendizaje Estadístico</a>
 <ul>
@@ -230,7 +229,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="3.5.1" data-path="boosting-en-r.html"><a href="boosting-en-r.html#ejemplo-clasificación-con-el-paquete-ada"><i class="fa fa-check"></i><b>3.5.1</b> Ejemplo: clasificación con el paquete <code>ada</code></a></li>
 <li class="chapter" data-level="3.5.2" data-path="boosting-en-r.html"><a href="boosting-en-r.html#ejemplo-regresión-con-el-paquete-gbm"><i class="fa fa-check"></i><b>3.5.2</b> Ejemplo: regresión con el paquete <code>gbm</code></a></li>
-<li class="chapter" data-level="3.5.3" data-path="boosting-en-r.html"><a href="boosting-en-r.html#ejemplo-xgboost-con-el-paquete-caret"><i class="fa fa-check"></i><b>3.5.3</b> Ejemplo: XGBoost con el paquete <code>caret</code></a></li>
+<li class="chapter" data-level="3.5.3" data-path="boosting-en-r.html"><a href="boosting-en-r.html#xgb-caret"><i class="fa fa-check"></i><b>3.5.3</b> Ejemplo: XGBoost con el paquete <code>caret</code></a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>4</b> Máquinas de soporte vectorial</a>
@@ -239,34 +238,20 @@ div.csl-indent {
 <li class="chapter" data-level="4.2" data-path="clasificadores-de-soporte-vectorial.html"><a href="clasificadores-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>4.2</b> Clasificadores de soporte vectorial</a></li>
 <li class="chapter" data-level="4.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>4.3</b> Máquinas de soporte vectorial</a>
 <ul>
-<li class="chapter" data-level="4.3.1" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#clasificación-con-más-de-dos-categorías"><i class="fa fa-check"></i><b>4.3.1</b> Clasificación con más de dos categorías</a></li>
-<li class="chapter" data-level="4.3.2" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#regresión"><i class="fa fa-check"></i><b>4.3.2</b> Regresión</a></li>
-<li class="chapter" data-level="4.3.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#ventajas-e-incovenientes"><i class="fa fa-check"></i><b>4.3.3</b> Ventajas e incovenientes</a></li>
+<li class="chapter" data-level="4.3.1" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#regresión-con-svm"><i class="fa fa-check"></i><b>4.3.1</b> Regresión con SVM</a></li>
+<li class="chapter" data-level="4.3.2" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#ventajas-e-incovenientes"><i class="fa fa-check"></i><b>4.3.2</b> Ventajas e incovenientes</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="svm-con-el-paquete-kernlab.html"><a href="svm-con-el-paquete-kernlab.html"><i class="fa fa-check"></i><b>4.4</b> SVM con el paquete <code>kernlab</code></a></li>
+<li class="chapter" data-level="4.4" data-path="svm-kernlab.html"><a href="svm-kernlab.html"><i class="fa fa-check"></i><b>4.4</b> SVM con el paquete <code>kernlab</code></a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="class-otros.html"><a href="class-otros.html"><i class="fa fa-check"></i><b>5</b> Otros métodos de clasificación</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="análisis-discriminate-lineal.html"><a href="análisis-discriminate-lineal.html"><i class="fa fa-check"></i><b>5.1</b> Análisis discriminate lineal</a>
-<ul>
-<li class="chapter" data-level="5.1.1" data-path="análisis-discriminate-lineal.html"><a href="análisis-discriminate-lineal.html#ejemplo-masslda"><i class="fa fa-check"></i><b>5.1.1</b> Ejemplo <code>MASS::lda</code></a></li>
-</ul></li>
-<li class="chapter" data-level="5.2" data-path="análisis-discriminante-cuadrático.html"><a href="análisis-discriminante-cuadrático.html"><i class="fa fa-check"></i><b>5.2</b> Análisis discriminante cuadrático</a>
-<ul>
-<li class="chapter" data-level="5.2.1" data-path="análisis-discriminante-cuadrático.html"><a href="análisis-discriminante-cuadrático.html#ejemplo-massqda"><i class="fa fa-check"></i><b>5.2.1</b> Ejemplo <code>MASS::qda</code></a></li>
-</ul></li>
-<li class="chapter" data-level="5.3" data-path="naive-bayes.html"><a href="naive-bayes.html"><i class="fa fa-check"></i><b>5.3</b> Naive Bayes</a>
-<ul>
-<li class="chapter" data-level="5.3.1" data-path="naive-bayes.html"><a href="naive-bayes.html#ejemplo-e1071naivebayes"><i class="fa fa-check"></i><b>5.3.1</b> Ejemplo <code>e1071::naiveBayes</code></a></li>
-</ul></li>
+<li class="chapter" data-level="5.1" data-path="clas-lda.html"><a href="clas-lda.html"><i class="fa fa-check"></i><b>5.1</b> Análisis discriminate lineal</a></li>
+<li class="chapter" data-level="5.2" data-path="clas-qda.html"><a href="clas-qda.html"><i class="fa fa-check"></i><b>5.2</b> Análisis discriminante cuadrático</a></li>
+<li class="chapter" data-level="5.3" data-path="bayes.html"><a href="bayes.html"><i class="fa fa-check"></i><b>5.3</b> Naive Bayes</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="modelos-lineales.html"><a href="modelos-lineales.html"><i class="fa fa-check"></i><b>6</b> Modelos lineales y extensiones</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="reg-multiple.html"><a href="reg-multiple.html"><i class="fa fa-check"></i><b>6.1</b> Regresión lineal múltiple</a>
-<ul>
-<li class="chapter" data-level="6.1.1" data-path="reg-multiple.html"><a href="reg-multiple.html#ajuste-función-lm"><i class="fa fa-check"></i><b>6.1.1</b> Ajuste: función <code>lm</code></a></li>
-<li class="chapter" data-level="6.1.2" data-path="reg-multiple.html"><a href="reg-multiple.html#ejemplo-2"><i class="fa fa-check"></i><b>6.1.2</b> Ejemplo</a></li>
-</ul></li>
+<li class="chapter" data-level="6.1" data-path="reg-multiple.html"><a href="reg-multiple.html"><i class="fa fa-check"></i><b>6.1</b> Regresión lineal múltiple</a></li>
 <li class="chapter" data-level="6.2" data-path="colinealidad.html"><a href="colinealidad.html"><i class="fa fa-check"></i><b>6.2</b> El problema de la colinealidad</a></li>
 <li class="chapter" data-level="6.3" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html"><i class="fa fa-check"></i><b>6.3</b> Selección de variables explicativas</a>
 <ul>
@@ -274,27 +259,26 @@ div.csl-indent {
 <li class="chapter" data-level="6.3.2" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html#selección-por-pasos"><i class="fa fa-check"></i><b>6.3.2</b> Selección por pasos</a></li>
 </ul></li>
 <li class="chapter" data-level="6.4" data-path="analisis-reg-multiple.html"><a href="analisis-reg-multiple.html"><i class="fa fa-check"></i><b>6.4</b> Análisis e interpretación del modelo</a></li>
-<li class="chapter" data-level="6.5" data-path="evaluación-de-la-precisión.html"><a href="evaluación-de-la-precisión.html"><i class="fa fa-check"></i><b>6.5</b> Evaluación de la precisión</a></li>
-<li class="chapter" data-level="6.6" data-path="shrinkage.html"><a href="shrinkage.html"><i class="fa fa-check"></i><b>6.6</b> Métodos de regularización</a>
+<li class="chapter" data-level="6.5" data-path="eval-reg-lineal.html"><a href="eval-reg-lineal.html"><i class="fa fa-check"></i><b>6.5</b> Evaluación de la precisión</a></li>
+<li class="chapter" data-level="6.6" data-path="selec-ae-reg-lineal.html"><a href="selec-ae-reg-lineal.html"><i class="fa fa-check"></i><b>6.6</b> Selección del modelo mediante remuestreo</a></li>
+<li class="chapter" data-level="6.7" data-path="shrinkage.html"><a href="shrinkage.html"><i class="fa fa-check"></i><b>6.7</b> Métodos de regularización</a>
 <ul>
-<li class="chapter" data-level="6.6.1" data-path="shrinkage.html"><a href="shrinkage.html#implementación-en-r"><i class="fa fa-check"></i><b>6.6.1</b> Implementación en R</a></li>
-<li class="chapter" data-level="6.6.2" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-ridge-regression"><i class="fa fa-check"></i><b>6.6.2</b> Ejemplo: Ridge Regression</a></li>
-<li class="chapter" data-level="6.6.3" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-lasso"><i class="fa fa-check"></i><b>6.6.3</b> Ejemplo: Lasso</a></li>
-<li class="chapter" data-level="6.6.4" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-elastic-net"><i class="fa fa-check"></i><b>6.6.4</b> Ejemplo: Elastic Net</a></li>
+<li class="chapter" data-level="6.7.1" data-path="shrinkage.html"><a href="shrinkage.html#implementación-en-r"><i class="fa fa-check"></i><b>6.7.1</b> Implementación en R</a></li>
+<li class="chapter" data-level="6.7.2" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-ridge-regression"><i class="fa fa-check"></i><b>6.7.2</b> Ejemplo: Ridge Regression</a></li>
+<li class="chapter" data-level="6.7.3" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-lasso"><i class="fa fa-check"></i><b>6.7.3</b> Ejemplo: Lasso</a></li>
+<li class="chapter" data-level="6.7.4" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-elastic-net"><i class="fa fa-check"></i><b>6.7.4</b> Ejemplo: Elastic Net</a></li>
 </ul></li>
-<li class="chapter" data-level="6.7" data-path="pca-pls.html"><a href="pca-pls.html"><i class="fa fa-check"></i><b>6.7</b> Métodos de reducción de la dimensión</a>
+<li class="chapter" data-level="6.8" data-path="pca-pls.html"><a href="pca-pls.html"><i class="fa fa-check"></i><b>6.8</b> Métodos de reducción de la dimensión</a>
 <ul>
-<li class="chapter" data-level="6.7.1" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-componentes-principales-pcr"><i class="fa fa-check"></i><b>6.7.1</b> Regresión por componentes principales (PCR)</a></li>
-<li class="chapter" data-level="6.7.2" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-mínimos-cuadrados-parciales-plsr"><i class="fa fa-check"></i><b>6.7.2</b> Regresión por mínimos cuadrados parciales (PLSR)</a></li>
+<li class="chapter" data-level="6.8.1" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-componentes-principales-pcr"><i class="fa fa-check"></i><b>6.8.1</b> Regresión por componentes principales (PCR)</a></li>
+<li class="chapter" data-level="6.8.2" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-mínimos-cuadrados-parciales-plsr"><i class="fa fa-check"></i><b>6.8.2</b> Regresión por mínimos cuadrados parciales (PLSR)</a></li>
 </ul></li>
-<li class="chapter" data-level="6.8" data-path="reg-glm.html"><a href="reg-glm.html"><i class="fa fa-check"></i><b>6.8</b> Modelos lineales generalizados</a>
+<li class="chapter" data-level="6.9" data-path="reg-glm.html"><a href="reg-glm.html"><i class="fa fa-check"></i><b>6.9</b> Modelos lineales generalizados</a>
 <ul>
-<li class="chapter" data-level="6.8.1" data-path="reg-glm.html"><a href="reg-glm.html#ajuste-función-glm"><i class="fa fa-check"></i><b>6.8.1</b> Ajuste: función <code>glm</code></a></li>
-<li class="chapter" data-level="6.8.2" data-path="reg-glm.html"><a href="reg-glm.html#ejemplo-regresión-logística"><i class="fa fa-check"></i><b>6.8.2</b> Ejemplo: Regresión logística</a></li>
-<li class="chapter" data-level="6.8.3" data-path="reg-glm.html"><a href="reg-glm.html#selección-de-variables-explicativas"><i class="fa fa-check"></i><b>6.8.3</b> Selección de variables explicativas</a></li>
-<li class="chapter" data-level="6.8.4" data-path="reg-glm.html"><a href="reg-glm.html#analisis-glm"><i class="fa fa-check"></i><b>6.8.4</b> Análisis e interpretación del modelo</a></li>
-<li class="chapter" data-level="6.8.5" data-path="reg-glm.html"><a href="reg-glm.html#evaluación-de-la-precisión-1"><i class="fa fa-check"></i><b>6.8.5</b> Evaluación de la precisión</a></li>
-<li class="chapter" data-level="6.8.6" data-path="reg-glm.html"><a href="reg-glm.html#extensiones"><i class="fa fa-check"></i><b>6.8.6</b> Extensiones</a></li>
+<li class="chapter" data-level="6.9.1" data-path="reg-glm.html"><a href="reg-glm.html#selección-de-variables-explicativas"><i class="fa fa-check"></i><b>6.9.1</b> Selección de variables explicativas</a></li>
+<li class="chapter" data-level="6.9.2" data-path="reg-glm.html"><a href="reg-glm.html#analisis-glm"><i class="fa fa-check"></i><b>6.9.2</b> Análisis e interpretación del modelo</a></li>
+<li class="chapter" data-level="6.9.3" data-path="reg-glm.html"><a href="reg-glm.html#evaluación-de-la-precisión"><i class="fa fa-check"></i><b>6.9.3</b> Evaluación de la precisión</a></li>
+<li class="chapter" data-level="6.9.4" data-path="reg-glm.html"><a href="reg-glm.html#extensiones"><i class="fa fa-check"></i><b>6.9.4</b> Extensiones</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="reg-np.html"><a href="reg-np.html"><i class="fa fa-check"></i><b>7</b> Regresión no paramétrica</a>
@@ -307,19 +291,15 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="7.2" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>7.2</b> Splines</a>
 <ul>
-<li class="chapter" data-level="7.2.1" data-path="splines.html"><a href="splines.html#reg-splines"><i class="fa fa-check"></i><b>7.2.1</b> Regression splines</a></li>
-<li class="chapter" data-level="7.2.2" data-path="splines.html"><a href="splines.html#smoothing-splines"><i class="fa fa-check"></i><b>7.2.2</b> Smoothing splines</a></li>
+<li class="chapter" data-level="7.2.1" data-path="splines.html"><a href="splines.html#reg-splines"><i class="fa fa-check"></i><b>7.2.1</b> Splines de regresión</a></li>
+<li class="chapter" data-level="7.2.2" data-path="splines.html"><a href="splines.html#splines-de-suavizado"><i class="fa fa-check"></i><b>7.2.2</b> Splines de suavizado</a></li>
 <li class="chapter" data-level="7.2.3" data-path="splines.html"><a href="splines.html#splines-penalizados"><i class="fa fa-check"></i><b>7.2.3</b> Splines penalizados</a></li>
 </ul></li>
-<li class="chapter" data-level="7.3" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html"><i class="fa fa-check"></i><b>7.3</b> Modelos aditivos</a>
+<li class="chapter" data-level="7.3" data-path="reg-gam.html"><a href="reg-gam.html"><i class="fa fa-check"></i><b>7.3</b> Modelos aditivos</a>
 <ul>
-<li class="chapter" data-level="7.3.1" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#ajuste-función-gam"><i class="fa fa-check"></i><b>7.3.1</b> Ajuste: función <code>gam</code></a></li>
-<li class="chapter" data-level="7.3.2" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#ejemplo-3"><i class="fa fa-check"></i><b>7.3.2</b> Ejemplo</a></li>
-<li class="chapter" data-level="7.3.3" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#superficies-de-predicción"><i class="fa fa-check"></i><b>7.3.3</b> Superficies de predicción</a></li>
-<li class="chapter" data-level="7.3.4" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#comparación-y-selección-de-modelos"><i class="fa fa-check"></i><b>7.3.4</b> Comparación y selección de modelos</a></li>
-<li class="chapter" data-level="7.3.5" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#mgcv-diagnosis"><i class="fa fa-check"></i><b>7.3.5</b> Diagnosis del modelo</a></li>
-<li class="chapter" data-level="7.3.6" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#gam-en-caret"><i class="fa fa-check"></i><b>7.3.6</b> GAM en <code>caret</code></a></li>
-<li class="chapter" data-level="7.3.7" data-path="modelos-aditivos.html"><a href="modelos-aditivos.html#ejercicios"><i class="fa fa-check"></i><b>7.3.7</b> Ejercicios</a></li>
+<li class="chapter" data-level="7.3.1" data-path="reg-gam.html"><a href="reg-gam.html#superficies-de-predicción"><i class="fa fa-check"></i><b>7.3.1</b> Superficies de predicción</a></li>
+<li class="chapter" data-level="7.3.2" data-path="reg-gam.html"><a href="reg-gam.html#comparación-y-selección-de-modelos"><i class="fa fa-check"></i><b>7.3.2</b> Comparación y selección de modelos</a></li>
+<li class="chapter" data-level="7.3.3" data-path="reg-gam.html"><a href="reg-gam.html#mgcv-diagnosis"><i class="fa fa-check"></i><b>7.3.3</b> Diagnosis del modelo</a></li>
 </ul></li>
 <li class="chapter" data-level="7.4" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>7.4</b> Regresión spline adaptativa multivariante</a>
 <ul>
@@ -362,8 +342,8 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="pca-pls" class="section level2" number="6.7">
-<h2><span class="header-section-number">6.7</span> Métodos de reducción de la dimensión</h2>
+<div id="pca-pls" class="section level2 hasAnchor" number="6.8">
+<h2><span class="header-section-number">6.8</span> Métodos de reducción de la dimensión<a href="pca-pls.html#pca-pls" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Otra alternativa, para tratar de reducir la varianza de los modelos lineales, es transformar los predictores considerando <span class="math inline">\(k &lt; p\)</span> combinaciones lineales:
 <span class="math display">\[Z_j = a_{1j}X_{1} + a_{2j}X_{2} + \ldots + a_{pj}X_{p}\]</span>
 con <span class="math inline">\(j = 1, \ldots, k\)</span>, denominadas componentes (o variables latentes),
@@ -380,10 +360,10 @@ Además, podríamos interpretar los coeficientes <span class="math inline">\(\al
 <p>También hay que tener en cuenta que al considerar combinaciones lineales, si las hipótesis estructurales de linealidad, homocedasticidad, normalidad o independencia no son asumibles en el modelo original, es de esperar que tampoco lo sean en el modelo transformado (se podrían emplear las herramientas descritas en la Sección <a href="analisis-reg-multiple.html#analisis-reg-multiple">6.4</a> para su análisis).</p>
 <p>Hay una gran variedad de algoritmos para obtener estas componentes, en esta sección consideraremos las dos aproximaciones más utilizadas: componentes principales y mínimos cuadrados parciales.
 También hay numerosos paquetes de R que implementan métodos de este tipo (<a href="https://mevik.net/work/software/pls.html"><code>pls</code></a>, <a href="https://github.com/fbertran/plsRglm"><code>plsRglm</code></a>…), incluyendo <code>caret</code>.</p>
-<div id="regresión-por-componentes-principales-pcr" class="section level3" number="6.7.1">
-<h3><span class="header-section-number">6.7.1</span> Regresión por componentes principales (PCR)</h3>
+<div id="regresión-por-componentes-principales-pcr" class="section level3 hasAnchor" number="6.8.1">
+<h3><span class="header-section-number">6.8.1</span> Regresión por componentes principales (PCR)<a href="pca-pls.html#regresión-por-componentes-principales-pcr" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Una de las aproximaciones tradicionales, cuando se detecta la presencia de colinealidad, consiste en aplicar el método de componentes principales a los predictores.
-El análisis de componentes principales (<em>principal component analysis</em>, PCA) es un método muy utilizado de aprendizaje no supervisado, que permite reducir el número de dimensiones tratando de recoger la mayor parte de la variabilidad de los datos originales <span class="citation">(en este caso de los predictores; para más detalles sobre PCA ver por ejemplo el Capítulo 10 de <a href="#ref-james2021introduction" role="doc-biblioref">James et al., 2021</a>)</span>.</p>
+El análisis de componentes principales (<em>principal component analysis</em>, PCA) es un método muy utilizado de aprendizaje no supervisado, que permite reducir el número de dimensiones tratando de recoger la mayor parte de la variabilidad de los datos originales, en este caso de los predictores <span class="citation">(para más detalles sobre PCA ver por ejemplo el Capítulo 10 de <a href="#ref-james2021introduction" role="doc-biblioref">James et al., 2021</a>)</span>.</p>
 <p>Al aplicar PCA a los predictores <span class="math inline">\(X_1, \ldots, X_p\)</span> se obtienen componentes ordenados según la variabilidad explicada de forma descendente.
 El primer componente es el que recoge el mayor porcentaje de la variabilidad total (se corresponde con la dirección de mayor variación de las observaciones).
 Las siguientes componentes se seleccionan entre las direcciones ortogonales a las anteriores y de forma que recojan la mayor parte de la variabilidad restante.
@@ -393,15 +373,25 @@ Además estas componentes son normalizadas, de forma que:
 En la práctica esto puede llevarse a cabo fácilmente a partir de la descomposición espectral de la matriz de covarianzas muestrales, aunque normalmente se estandarizan previamente los datos (i.e., se emplea la matriz de correlaciones).
 Por tanto, si se pretende emplear estas componentes para ajustar un modelo de regresión, habrá que conservar los parámetros de estas transformaciones para poder aplicarlas a nuevas observaciones.</p>
 <p>Normalmente se seleccionan las primeras <span class="math inline">\(k\)</span> componentes de forma que expliquen la mayor parte de la variabilidad de los datos (los predictores en este caso).
-En PCR [<em>principal component regression</em>; <span class="citation"><a href="#ref-massy1965principal" role="doc-biblioref">Massy</a> (<a href="#ref-massy1965principal" role="doc-biblioref">1965</a>)</span>] se confía en que estas componentes recojan también la mayor parte de la información sobre la respuesta, pero podría no ser el caso.</p>
+En PCR <span class="citation">(<em>principal component regression</em>, <a href="#ref-massy1965principal" role="doc-biblioref">Massy, 1965</a>)</span> se confía en que estas componentes recojan también la mayor parte de la información sobre la respuesta, pero podría no ser el caso.</p>
 <p>Como ejemplo continuaremos con los datos de clientes de la compañía de distribución industrial HBAT.
-Aunque podríamos emplear las funciones <code>printcomp()</code> y <code>lm()</code> del paquete base, emplearemos por comodidad la función <code>pcr()</code> del paquete <a href="https://mevik.net/work/software/pls.html"><code>pls</code></a> (ya que incorpora validación cruzada para seleccionar el número de componentes y facilita el cálculo de nuevas predicciones).</p>
-<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="pca-pls.html#cb353-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pls)</span>
-<span id="cb353-2"><a href="pca-pls.html#cb353-2" aria-hidden="true" tabindex="-1"></a><span class="co"># pcr(formula, ncomp, data, scale = FALSE, center = TRUE, </span></span>
-<span id="cb353-3"><a href="pca-pls.html#cb353-3" aria-hidden="true" tabindex="-1"></a><span class="co">#     validation = c(&quot;none&quot;, &quot;CV&quot;, &quot;LOO&quot;), segments = 10)</span></span>
-<span id="cb353-4"><a href="pca-pls.html#cb353-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb353-5"><a href="pca-pls.html#cb353-5" aria-hidden="true" tabindex="-1"></a>pcreg <span class="ot">&lt;-</span> <span class="fu">pcr</span>(fidelida <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">validation =</span> <span class="st">&quot;CV&quot;</span>)</span>
-<span id="cb353-6"><a href="pca-pls.html#cb353-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pcreg)</span></code></pre></div>
+Aunque podríamos emplear las funciones <code>printcomp()</code> y <code>lm()</code> del paquete base, emplearemos por comodidad la función <a href="https://rdrr.io/pkg/pls/man/mvr.html"><code>pcr()</code></a> del paquete <a href="https://mevik.net/work/software/pls.html"><code>pls</code></a>, ya que incorpora validación cruzada para seleccionar el número de componentes y facilita el cálculo de nuevas predicciones.
+Los principales argumentos de esta función son:</p>
+<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="pca-pls.html#cb334-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pcr</span>(formula, ncomp, data, <span class="at">scale =</span> <span class="cn">FALSE</span>, <span class="at">center =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb334-2"><a href="pca-pls.html#cb334-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">validation =</span> <span class="fu">c</span>(<span class="st">&quot;none&quot;</span>, <span class="st">&quot;CV&quot;</span>, <span class="st">&quot;LOO&quot;</span>), <span class="at">segments =</span> <span class="dv">10</span>, </span>
+<span id="cb334-3"><a href="pca-pls.html#cb334-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">segment.type =</span> <span class="fu">c</span>(<span class="st">&quot;random&quot;</span>, <span class="st">&quot;consecutive&quot;</span>, <span class="st">&quot;interleaved&quot;</span>), ...)</span></code></pre></div>
+<ul>
+<li><p><code>ncomp</code>: número máximo de componentes (ajustará modelos desde 1 hasta <code>ncomp</code> componentes).</p></li>
+<li><p><code>scale</code>, <code>center</code>: normalmente valores lógicos indicando si los predictores serán reescalados (divididos por su desviación estándar y centrados (restando su media).</p></li>
+<li><p><code>validation</code>: determina el tipo de validación, puede ser <code>"none"</code> (ninguna, se empleará el modelo ajustado con toda la muestra de entrenamiento), <code>"LOO"</code> (VC dejando uno fuera) y <code>"CV"</code> (VC por grupos). En este último caso los grupos de validación se especifican mediante <code>segments</code> (número de grupos) y <code>segment.type</code> (por defecto aleatorios; para más detalles consultar la ayuda de <a href="https://rdrr.io/pkg/pls/man/mvrCv.html"><code>mvrCv()</code></a>).</p></li>
+</ul>
+<p>Como ejemplo continuaremos con los datos de clientes de la compañía de distribución industrial HBAT.
+Reescalaremos los predictores y emplearemos validación cruzada por grupos para seleccionar el número de componentes:</p>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="pca-pls.html#cb335-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pls)</span>
+<span id="cb335-2"><a href="pca-pls.html#cb335-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb335-3"><a href="pca-pls.html#cb335-3" aria-hidden="true" tabindex="-1"></a>pcreg <span class="ot">&lt;-</span> <span class="fu">pcr</span>(fidelida <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">validation =</span> <span class="st">&quot;CV&quot;</span>)</span></code></pre></div>
+<p>Podemos obtener un resumen de los resultados de validación (evolución de los errores de validación cruzada) y del ajuste en la muestra de entrenamiento (evolución de la proporción de variabilidad explicada de los predictores y de la respuesta) con el método <a href="https://rdrr.io/pkg/pls/man/summary.mvr.html"><code>summary()</code></a>:</p>
+<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="pca-pls.html#cb336-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pcreg)</span></code></pre></div>
 <pre><code>## Data:    X dimension: 160 13 
 ##  Y dimension: 160 1
 ## Fit method: svdpc
@@ -423,14 +413,22 @@ Aunque podríamos emplear las funciones <code>printcomp()</code> y <code>lm()</c
 ##           8 comps  9 comps  10 comps  11 comps  12 comps  13 comps
 ## X           94.14    96.39     97.86     99.00     99.93    100.00
 ## fidelida    72.13    75.12     75.12     75.78     76.00     76.14</code></pre>
-<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="pca-pls.html#cb355-1" aria-hidden="true" tabindex="-1"></a><span class="co"># validationplot(pcreg, legend = &quot;topright&quot;) </span></span>
-<span id="cb355-2"><a href="pca-pls.html#cb355-2" aria-hidden="true" tabindex="-1"></a>rmsep.cv <span class="ot">&lt;-</span> <span class="fu">RMSEP</span>(pcreg)</span>
-<span id="cb355-3"><a href="pca-pls.html#cb355-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rmsep.cv, <span class="at">legend =</span> <span class="st">&quot;topright&quot;</span>)</span></code></pre></div>
-<p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-40-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="pca-pls.html#cb356-1" aria-hidden="true" tabindex="-1"></a>ncomp.op <span class="ot">&lt;-</span> <span class="fu">with</span>(rmsep.cv, comps[<span class="fu">which.min</span>(val[<span class="dv">2</span>, <span class="dv">1</span>, ])]) <span class="co"># mínimo adjCV RMSEP</span></span></code></pre></div>
-<p>Empleando el criterio de menor error de validación cruzada se seleccionaría un número elevado de componentes, el mínimo se alcanzaría con 9 componentes (bastante próximo a ajustar un modelo lineal con todos los predictores).</p>
-<p>Los coeficientes de los predictores originales con el modelo seleccionado serían:</p>
-<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="pca-pls.html#cb357-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(pcreg, <span class="at">ncomp =</span> <span class="dv">9</span>, <span class="at">intercept =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>Aunque suele resultar más cómodo representar gráficamente estos valores (ver Figura <a href="pca-pls.html#fig:pcreg-plot">6.16</a>).
+Por ejemplo empleando <a href="https://rdrr.io/pkg/pls/man/mvrVal.html"><code>RMSEP()</code></a> para acceder a los errores de validación<a href="#fn38" class="footnote-ref" id="fnref38"><sup>38</sup></a>:</p>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="pca-pls.html#cb338-1" aria-hidden="true" tabindex="-1"></a><span class="co"># validationplot(pcreg, legend = &quot;topright&quot;) </span></span>
+<span id="cb338-2"><a href="pca-pls.html#cb338-2" aria-hidden="true" tabindex="-1"></a>rmsep.cv <span class="ot">&lt;-</span> <span class="fu">RMSEP</span>(pcreg)</span>
+<span id="cb338-3"><a href="pca-pls.html#cb338-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rmsep.cv, <span class="at">legend =</span> <span class="st">&quot;topright&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:pcreg-plot"></span>
+<img src="06-modelos_lineales_files/figure-html/pcreg-plot-1.png" alt="Errores de validación cruzada en función del número de componentes en el ajuste mediante PCR." width="75%" />
+<p class="caption">
+Figura 6.16: Errores de validación cruzada en función del número de componentes en el ajuste mediante PCR.
+</p>
+</div>
+<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="pca-pls.html#cb339-1" aria-hidden="true" tabindex="-1"></a>ncomp.op <span class="ot">&lt;-</span> <span class="fu">with</span>(rmsep.cv, comps[<span class="fu">which.min</span>(val[<span class="dv">2</span>, <span class="dv">1</span>, ])]) <span class="co"># mínimo adjCV RMSEP</span></span></code></pre></div>
+<p>En este caso, empleando el criterio de menor error de validación cruzada se seleccionaría un número elevado de componentes, el mínimo se alcanzaría con 9 componentes (bastante próximo a ajustar un modelo lineal con todos los predictores).</p>
+<!-- biplot(pcreg) -->
+<p>Los coeficientes de los predictores originales con el modelo seleccionado serían<a href="#fn39" class="footnote-ref" id="fnref39"><sup>39</sup></a>:</p>
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="pca-pls.html#cb340-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(pcreg, <span class="at">ncomp =</span> <span class="dv">9</span>, <span class="at">intercept =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## , , 9 comps
 ## 
 ##                fidelida
@@ -449,22 +447,22 @@ Aunque podríamos emplear las funciones <code>printcomp()</code> y <code>lm()</c
 ## flexprec     0.72941138
 ## velocida     2.27911181</code></pre>
 <p>Finalmente evaluamos su precisión:</p>
-<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="pca-pls.html#cb359-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span> (pcreg , test, <span class="at">ncomp =</span> <span class="dv">9</span>)</span>
-<span id="cb359-2"><a href="pca-pls.html#cb359-2" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(pred, obs)</span></code></pre></div>
+<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="pca-pls.html#cb342-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span> (pcreg , test, <span class="at">ncomp =</span> <span class="dv">9</span>)</span>
+<span id="cb342-2"><a href="pca-pls.html#cb342-2" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(pred, obs)</span></code></pre></div>
 <pre><code>##         me       rmse        mae        mpe       mape  r.squared 
 ## 0.54240746 4.39581553 3.46755308 0.08093351 6.15004687 0.81060798</code></pre>
-<p>Empleando el método <code>"pcr"</code> de <code>caret</code>:</p>
-<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="pca-pls.html#cb361-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
-<span id="cb361-2"><a href="pca-pls.html#cb361-2" aria-hidden="true" tabindex="-1"></a><span class="fu">modelLookup</span>(<span class="st">&quot;pcr&quot;</span>)</span></code></pre></div>
+<p>Alternativamente podríamos emplear el método <code>"pcr"</code> de <code>caret</code>.
+Por ejemplo seleccionando el número de componentes mediante la regla de un error estándar (ver Figura <a href="pca-pls.html#fig:pcr-plot-caret">6.17</a>):</p>
+<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="pca-pls.html#cb344-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb344-2"><a href="pca-pls.html#cb344-2" aria-hidden="true" tabindex="-1"></a><span class="fu">modelLookup</span>(<span class="st">&quot;pcr&quot;</span>)</span></code></pre></div>
 <pre><code>##   model parameter       label forReg forClass probModel
 ## 1   pcr     ncomp #Components   TRUE    FALSE     FALSE</code></pre>
-<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="pca-pls.html#cb363-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb363-2"><a href="pca-pls.html#cb363-2" aria-hidden="true" tabindex="-1"></a>caret.pcr <span class="ot">&lt;-</span> <span class="fu">train</span>(fidelida <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">method =</span> <span class="st">&quot;pcr&quot;</span>,</span>
-<span id="cb363-3"><a href="pca-pls.html#cb363-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">preProcess =</span> <span class="fu">c</span>(<span class="st">&quot;zv&quot;</span>, <span class="st">&quot;center&quot;</span>, <span class="st">&quot;scale&quot;</span>),</span>
-<span id="cb363-4"><a href="pca-pls.html#cb363-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">trControl =</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">10</span>),</span>
-<span id="cb363-5"><a href="pca-pls.html#cb363-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">tuneGrid =</span> <span class="fu">data.frame</span>(<span class="at">ncomp =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>))</span>
-<span id="cb363-6"><a href="pca-pls.html#cb363-6" aria-hidden="true" tabindex="-1"></a><span class="co"># También se podía haber incluido `selectionFunction = &quot;oneSE&quot;` en `trControl()`</span></span>
-<span id="cb363-7"><a href="pca-pls.html#cb363-7" aria-hidden="true" tabindex="-1"></a>caret.pcr</span></code></pre></div>
+<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="pca-pls.html#cb346-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb346-2"><a href="pca-pls.html#cb346-2" aria-hidden="true" tabindex="-1"></a>trControl <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">10</span>, <span class="at">selectionFunction =</span> <span class="st">&quot;oneSE&quot;</span>)</span>
+<span id="cb346-3"><a href="pca-pls.html#cb346-3" aria-hidden="true" tabindex="-1"></a>caret.pcr <span class="ot">&lt;-</span> <span class="fu">train</span>(fidelida <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">method =</span> <span class="st">&quot;pcr&quot;</span>,</span>
+<span id="cb346-4"><a href="pca-pls.html#cb346-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">preProcess =</span> <span class="fu">c</span>(<span class="st">&quot;zv&quot;</span>, <span class="st">&quot;center&quot;</span>, <span class="st">&quot;scale&quot;</span>),</span>
+<span id="cb346-5"><a href="pca-pls.html#cb346-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">trControl =</span> trControl, <span class="at">tuneGrid =</span> <span class="fu">data.frame</span>(<span class="at">ncomp =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>))</span>
+<span id="cb346-6"><a href="pca-pls.html#cb346-6" aria-hidden="true" tabindex="-1"></a>caret.pcr</span></code></pre></div>
 <pre><code>## Principal Component Analysis 
 ## 
 ## 160 samples
@@ -487,25 +485,29 @@ Aunque podríamos emplear las funciones <code>printcomp()</code> y <code>lm()</c
 ##    9     4.511374  0.7295536  3.371115
 ##   10     4.551134  0.7260848  3.405876
 ## 
-## RMSE was used to select the optimal model using the smallest value.
-## The final value used for the model was ncomp = 9.</code></pre>
-<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="pca-pls.html#cb365-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(caret.pcr, <span class="at">highlight =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-43-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="pca-pls.html#cb366-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(caret.pcr, <span class="at">newdata =</span> test)</span>
-<span id="cb366-2"><a href="pca-pls.html#cb366-2" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(pred, obs)</span></code></pre></div>
-<pre><code>##         me       rmse        mae        mpe       mape  r.squared 
-## 0.54240746 4.39581553 3.46755308 0.08093351 6.15004687 0.81060798</code></pre>
+## RMSE was used to select the optimal model using  the one SE rule.
+## The final value used for the model was ncomp = 6.</code></pre>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="pca-pls.html#cb348-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(caret.pcr, <span class="at">highlight =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:pcr-plot-caret"></span>
+<img src="06-modelos_lineales_files/figure-html/pcr-plot-caret-1.png" alt="Errores de validación cruzada en función del número de componentes en el ajuste mediante PCR y valor óptimo según la regla de un error estándar." width="75%" />
+<p class="caption">
+Figura 6.17: Errores de validación cruzada en función del número de componentes en el ajuste mediante PCR y valor óptimo según la regla de un error estándar.
+</p>
+</div>
+<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="pca-pls.html#cb349-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(caret.pcr, <span class="at">newdata =</span> test)</span>
+<span id="cb349-2"><a href="pca-pls.html#cb349-2" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(pred, obs)</span></code></pre></div>
+<pre><code>##        me      rmse       mae       mpe      mape r.squared 
+## 0.9287609 5.0118766 4.0669487 0.6031423 7.2300043 0.7538026</code></pre>
 <p>Al incluir más componentes se aumenta la proporción de variabilidad explicada de los predictores,
 pero esto no está relacionado con su utilidad para explicar la respuesta.
 No va a haber problemas de colinealidad aunque incluyamos muchas componentes, pero se tendrán que estimar más coeficientes y va a disminuir su precisión.
 Sería más razonable obtener las componentes principales y después aplicar un método de selección.
-Por ejemplo podemos combinar el método de preprocesado <code>"pca"</code> de <code>caret</code> con un método de selección de variables<a href="#fn27" class="footnote-ref" id="fnref27"><sup>27</sup></a>:</p>
-<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="pca-pls.html#cb368-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb368-2"><a href="pca-pls.html#cb368-2" aria-hidden="true" tabindex="-1"></a>caret.pcrsel <span class="ot">&lt;-</span> <span class="fu">train</span>(fidelida <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">method =</span> <span class="st">&quot;leapSeq&quot;</span>,</span>
-<span id="cb368-3"><a href="pca-pls.html#cb368-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">preProcess =</span> <span class="fu">c</span>(<span class="st">&quot;zv&quot;</span>, <span class="st">&quot;center&quot;</span>, <span class="st">&quot;scale&quot;</span>, <span class="st">&quot;pca&quot;</span>),     </span>
-<span id="cb368-4"><a href="pca-pls.html#cb368-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">trControl =</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">10</span>),</span>
-<span id="cb368-5"><a href="pca-pls.html#cb368-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">tuneGrid =</span> <span class="fu">data.frame</span>(<span class="at">nvmax =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>))</span>
-<span id="cb368-6"><a href="pca-pls.html#cb368-6" aria-hidden="true" tabindex="-1"></a>caret.pcrsel</span></code></pre></div>
+Por ejemplo podemos combinar el método de preprocesado <code>"pca"</code> de <code>caret</code> con un método de selección de variables<a href="#fn40" class="footnote-ref" id="fnref40"><sup>40</sup></a> (ver Figura <a href="pca-pls.html#fig:pcr2-plot-caret">6.18</a>):</p>
+<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="pca-pls.html#cb351-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb351-2"><a href="pca-pls.html#cb351-2" aria-hidden="true" tabindex="-1"></a>caret.pcrsel <span class="ot">&lt;-</span> <span class="fu">train</span>(fidelida <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">method =</span> <span class="st">&quot;leapSeq&quot;</span>,</span>
+<span id="cb351-3"><a href="pca-pls.html#cb351-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">preProcess =</span> <span class="fu">c</span>(<span class="st">&quot;zv&quot;</span>, <span class="st">&quot;center&quot;</span>, <span class="st">&quot;scale&quot;</span>, <span class="st">&quot;pca&quot;</span>),     </span>
+<span id="cb351-4"><a href="pca-pls.html#cb351-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">trControl =</span> trControl, <span class="at">tuneGrid =</span> <span class="fu">data.frame</span>(<span class="at">nvmax =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>))</span>
+<span id="cb351-5"><a href="pca-pls.html#cb351-5" aria-hidden="true" tabindex="-1"></a>caret.pcrsel</span></code></pre></div>
 <pre><code>## Linear Regression with Stepwise Selection 
 ## 
 ## 160 samples
@@ -529,31 +531,34 @@ Por ejemplo podemos combinar el método de preprocesado <code>"pca"</code> de <c
 ##    9     4.511374  0.7295536  3.371115
 ##   10     4.511374  0.7295536  3.371115
 ## 
-## RMSE was used to select the optimal model using the smallest value.
-## The final value used for the model was nvmax = 9.</code></pre>
-<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="pca-pls.html#cb370-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(caret.pcrsel, <span class="at">highlight =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-44-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="pca-pls.html#cb371-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(caret.pcrsel, <span class="fu">coef</span>(finalModel, bestTune<span class="sc">$</span>nvmax))</span></code></pre></div>
+## RMSE was used to select the optimal model using  the one SE rule.
+## The final value used for the model was nvmax = 6.</code></pre>
+<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="pca-pls.html#cb353-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(caret.pcrsel, <span class="at">highlight =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:pcr2-plot-caret"></span>
+<img src="06-modelos_lineales_files/figure-html/pcr2-plot-caret-1.png" alt="Errores de validación cruzada en función del número de componentes en el ajuste mediante PCR con selección por pasos y valor óptimo según la regla de un error estándar." width="75%" />
+<p class="caption">
+Figura 6.18: Errores de validación cruzada en función del número de componentes en el ajuste mediante PCR con selección por pasos y valor óptimo según la regla de un error estándar.
+</p>
+</div>
+<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="pca-pls.html#cb354-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(caret.pcrsel, <span class="fu">coef</span>(finalModel, bestTune<span class="sc">$</span>nvmax))</span></code></pre></div>
 <pre><code>## (Intercept)         PC1         PC2         PC3         PC4         PC5 
 ##  58.0375000   2.7256200  -2.0882164   1.5167199  -1.1761229  -0.3588877 
-##         PC6         PC7         PC8         PC9 
-##  -3.3571851   0.8032460  -1.4655909   2.7670125</code></pre>
-<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="pca-pls.html#cb373-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(caret.pcrsel, <span class="at">newdata =</span> test)</span>
-<span id="cb373-2"><a href="pca-pls.html#cb373-2" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(pred, obs)</span></code></pre></div>
-<pre><code>##         me       rmse        mae        mpe       mape  r.squared 
-## 0.54240746 4.39581553 3.46755308 0.08093351 6.15004687 0.81060798</code></pre>
+##         PC6 
+##  -3.3571851</code></pre>
+<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="pca-pls.html#cb356-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(caret.pcrsel, <span class="at">newdata =</span> test)</span>
+<span id="cb356-2"><a href="pca-pls.html#cb356-2" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(pred, obs)</span></code></pre></div>
+<pre><code>##        me      rmse       mae       mpe      mape r.squared 
+## 0.9287609 5.0118766 4.0669487 0.6031423 7.2300043 0.7538026</code></pre>
 </div>
-<div id="regresión-por-mínimos-cuadrados-parciales-plsr" class="section level3" number="6.7.2">
-<h3><span class="header-section-number">6.7.2</span> Regresión por mínimos cuadrados parciales (PLSR)</h3>
+<div id="regresión-por-mínimos-cuadrados-parciales-plsr" class="section level3 hasAnchor" number="6.8.2">
+<h3><span class="header-section-number">6.8.2</span> Regresión por mínimos cuadrados parciales (PLSR)<a href="pca-pls.html#regresión-por-mínimos-cuadrados-parciales-plsr" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Como ya se comentó, en PCR las componentes se determinan con el objetivo de explicar la variabilidad de los predictores, ignorando por completo la respuesta.
-Por el contrario, en PLSR [<em>partial least squares regression</em>; <span class="citation"><a href="#ref-wold1983multivariate" role="doc-biblioref">Wold et al.</a> (<a href="#ref-wold1983multivariate" role="doc-biblioref">1983</a>)</span>] se construyen las componentes <span class="math inline">\(Z_1, \ldots, Z_k\)</span> teniendo en cuenta desde un principio el objetivo final de predecir linealmente la respuesta.</p>
+Por el contrario, en PLSR <span class="citation">(<em>partial least squares regression</em>, <a href="#ref-wold1983multivariate" role="doc-biblioref">Wold et al., 1983</a>)</span> se construyen las componentes <span class="math inline">\(Z_1, \ldots, Z_k\)</span> teniendo en cuenta desde un principio el objetivo final de predecir linealmente la respuesta.</p>
 <p>Hay varios procedimientos para seleccionar los pesos <span class="math inline">\(a_{ij}\)</span>, pero la idea es asignar mayor peso a los predictores que están más correlacionados con la respuesta (o con los correspondientes residuos al ir obteniendo nuevos componentes), considerando siempre direcciones ortogonales <span class="citation">(ver por ejemplo la Sección 6.3.2 de <a href="#ref-james2021introduction" role="doc-biblioref">James et al., 2021</a>)</span>.</p>
-<p>Continuando con el ejemplo anterior, emplearemos en primer lugar la función <code>plsr()</code> del paquete <code>pls</code> <span class="citation">(este paquete implementa distintas proyecciones, ver <code>help(pls.options)</code>, o <a href="#ref-Mevik2007pls" role="doc-biblioref">Mevik y Wehrens, 2007</a>)</span>:</p>
-<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="pca-pls.html#cb375-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plsr(formula, ncomp, data, scale = FALSE, center = TRUE, </span></span>
-<span id="cb375-2"><a href="pca-pls.html#cb375-2" aria-hidden="true" tabindex="-1"></a><span class="co">#      validation = c(&quot;none&quot;, &quot;CV&quot;, &quot;LOO&quot;), segments = 10)</span></span>
-<span id="cb375-3"><a href="pca-pls.html#cb375-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb375-4"><a href="pca-pls.html#cb375-4" aria-hidden="true" tabindex="-1"></a>plsreg <span class="ot">&lt;-</span> <span class="fu">plsr</span>(fidelida <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">validation =</span> <span class="st">&quot;CV&quot;</span>)</span>
-<span id="cb375-5"><a href="pca-pls.html#cb375-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(plsreg)</span></code></pre></div>
+<p>Continuando con el ejemplo anterior, emplearemos en primer lugar la función <a href="https://rdrr.io/pkg/pls/man/mvr.html"><code>plsr()</code></a> del paquete <a href="https://mevik.net/work/software/pls.html"><code>pls</code></a>, que tiene los mismos argumentos que la función <code>pcr()</code> descrita en la sección anterior<a href="#fn41" class="footnote-ref" id="fnref41"><sup>41</sup></a>:</p>
+<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="pca-pls.html#cb358-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb358-2"><a href="pca-pls.html#cb358-2" aria-hidden="true" tabindex="-1"></a>plsreg <span class="ot">&lt;-</span> <span class="fu">plsr</span>(fidelida <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">validation =</span> <span class="st">&quot;CV&quot;</span>)</span>
+<span id="cb358-3"><a href="pca-pls.html#cb358-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(plsreg)</span></code></pre></div>
 <pre><code>## Data:    X dimension: 160 13 
 ##  Y dimension: 160 1
 ## Fit method: kernelpls
@@ -575,46 +580,50 @@ Por el contrario, en PLSR [<em>partial least squares regression</em>; <span clas
 ##           8 comps  9 comps  10 comps  11 comps  12 comps  13 comps
 ## X           90.98    93.83     95.23     97.59     98.53    100.00
 ## fidelida    76.03    76.04     76.09     76.12     76.14     76.14</code></pre>
-<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="pca-pls.html#cb377-1" aria-hidden="true" tabindex="-1"></a><span class="co"># validationplot(plsreg, legend = &quot;topright&quot;)</span></span>
-<span id="cb377-2"><a href="pca-pls.html#cb377-2" aria-hidden="true" tabindex="-1"></a>rmsep.cv <span class="ot">&lt;-</span> <span class="fu">RMSEP</span>(plsreg)</span>
-<span id="cb377-3"><a href="pca-pls.html#cb377-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rmsep.cv, <span class="at">legend =</span> <span class="st">&quot;topright&quot;</span>)</span></code></pre></div>
-<p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-45-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="pca-pls.html#cb378-1" aria-hidden="true" tabindex="-1"></a>ncomp.op <span class="ot">&lt;-</span> <span class="fu">with</span>(rmsep.cv, comps[<span class="fu">which.min</span>(val[<span class="dv">2</span>, <span class="dv">1</span>, ])]) <span class="co"># mínimo adjCV RMSEP</span></span></code></pre></div>
-<p>En este caso el mínimo se alcanza con 5 componentes pero 4 sería un valor razonable.
+<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="pca-pls.html#cb360-1" aria-hidden="true" tabindex="-1"></a><span class="co"># validationplot(plsreg, legend = &quot;topright&quot;)</span></span>
+<span id="cb360-2"><a href="pca-pls.html#cb360-2" aria-hidden="true" tabindex="-1"></a>rmsep.cv <span class="ot">&lt;-</span> <span class="fu">RMSEP</span>(plsreg)</span>
+<span id="cb360-3"><a href="pca-pls.html#cb360-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rmsep.cv, <span class="at">legend =</span> <span class="st">&quot;topright&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:plsr-plot"></span>
+<img src="06-modelos_lineales_files/figure-html/plsr-plot-1.png" alt="Error cuadrático medio de validación cruzada en función del número de componentes en el ajuste mediante PLS." width="75%" />
+<p class="caption">
+Figura 6.19: Error cuadrático medio de validación cruzada en función del número de componentes en el ajuste mediante PLS.
+</p>
+</div>
+<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="pca-pls.html#cb361-1" aria-hidden="true" tabindex="-1"></a>ncomp.op <span class="ot">&lt;-</span> <span class="fu">with</span>(rmsep.cv, comps[<span class="fu">which.min</span>(val[<span class="dv">2</span>, <span class="dv">1</span>, ])]) <span class="co"># mínimo adjCV RMSEP</span></span></code></pre></div>
+<p>En este caso el mínimo se alcanza con 5 componentes pero, a la vista de la Figura <a href="pca-pls.html#fig:plsr-plot">6.19</a>, parece que 4 sería un valor razonable.
 Podríamos obtener los coeficientes de los predictores del modelo seleccionado:</p>
-<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="pca-pls.html#cb379-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(pcreg, <span class="at">ncomp =</span> <span class="dv">4</span>, <span class="at">intercept =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="pca-pls.html#cb362-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(plsreg, <span class="at">ncomp =</span> <span class="dv">4</span>, <span class="at">intercept =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## , , 4 comps
 ## 
-##               fidelida
-## (Intercept) 20.7676017
-## calidadp     1.3800150
-## web          0.4380180
-## soporte     -0.4201579
-## quejas       1.4368692
-## publi        0.7988489
-## producto     2.0103817
-## imgfvent     0.4806218
-## precio      -1.2171454
-## garantia    -0.2287305
-## nprod        0.5953945
-## facturac     1.3296997
-## flexprec    -0.3569203
-## velocida     1.5624947</code></pre>
+##                fidelida
+## (Intercept) -8.29699768
+## calidadp     4.63190425
+## web          0.94145378
+## soporte     -0.40668608
+## quejas       1.53320821
+## publi        0.09443857
+## producto     1.94009838
+## imgfvent     0.11088335
+## precio       1.18534756
+## garantia     0.07078050
+## nprod       -0.08382899
+## facturac    -0.03154511
+## flexprec     0.63288585
+## velocida     2.53362229</code></pre>
 <p>y evaluar su precisión:</p>
-<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="pca-pls.html#cb381-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(plsreg , test, <span class="at">ncomp =</span> <span class="dv">4</span>)</span>
-<span id="cb381-2"><a href="pca-pls.html#cb381-2" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(pred, obs)</span></code></pre></div>
+<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="pca-pls.html#cb364-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(plsreg , test, <span class="at">ncomp =</span> <span class="dv">4</span>)</span>
+<span id="cb364-2"><a href="pca-pls.html#cb364-2" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(pred, obs)</span></code></pre></div>
 <pre><code>##        me      rmse       mae       mpe      mape r.squared 
 ## 0.5331010 4.4027291 3.4983343 0.0461853 6.2529706 0.8100118</code></pre>
-<p>También se puede emplear el método <code>"pls"</code> de <code>caret</code>:</p>
-<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="pca-pls.html#cb383-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modelLookup</span>(<span class="st">&quot;pls&quot;</span>)</span></code></pre></div>
+<p>Empleamos también el método <code>"pls"</code> de <code>caret</code> seleccionando el número de componentes mediante la regla de un error estándar(ver Figura <a href="pca-pls.html#fig:plsr-plot-caret">6.20</a>):</p>
+<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="pca-pls.html#cb366-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modelLookup</span>(<span class="st">&quot;pls&quot;</span>)</span></code></pre></div>
 <pre><code>##   model parameter       label forReg forClass probModel
 ## 1   pls     ncomp #Components   TRUE     TRUE      TRUE</code></pre>
-<div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="pca-pls.html#cb385-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb385-2"><a href="pca-pls.html#cb385-2" aria-hidden="true" tabindex="-1"></a>caret.pls <span class="ot">&lt;-</span> <span class="fu">train</span>(fidelida <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">method =</span> <span class="st">&quot;pls&quot;</span>,</span>
-<span id="cb385-3"><a href="pca-pls.html#cb385-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">preProcess =</span> <span class="fu">c</span>(<span class="st">&quot;zv&quot;</span>, <span class="st">&quot;center&quot;</span>, <span class="st">&quot;scale&quot;</span>),</span>
-<span id="cb385-4"><a href="pca-pls.html#cb385-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">trControl =</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">10</span>),</span>
-<span id="cb385-5"><a href="pca-pls.html#cb385-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">tuneGrid =</span> <span class="fu">data.frame</span>(<span class="at">ncomp =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>))</span>
-<span id="cb385-6"><a href="pca-pls.html#cb385-6" aria-hidden="true" tabindex="-1"></a>caret.pls</span></code></pre></div>
+<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="pca-pls.html#cb368-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb368-2"><a href="pca-pls.html#cb368-2" aria-hidden="true" tabindex="-1"></a>caret.pls <span class="ot">&lt;-</span> <span class="fu">train</span>(fidelida <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">method =</span> <span class="st">&quot;pls&quot;</span>,</span>
+<span id="cb368-3"><a href="pca-pls.html#cb368-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">preProcess =</span> <span class="fu">c</span>(<span class="st">&quot;zv&quot;</span>, <span class="st">&quot;center&quot;</span>, <span class="st">&quot;scale&quot;</span>),</span>
+<span id="cb368-4"><a href="pca-pls.html#cb368-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">trControl =</span> trControl, <span class="at">tuneGrid =</span> <span class="fu">data.frame</span>(<span class="at">ncomp =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>))</span>
+<span id="cb368-5"><a href="pca-pls.html#cb368-5" aria-hidden="true" tabindex="-1"></a>caret.pls</span></code></pre></div>
 <pre><code>## Partial Least Squares 
 ## 
 ## 160 samples
@@ -637,16 +646,19 @@ Podríamos obtener los coeficientes de los predictores del modelo seleccionado:<
 ##    9     4.492672  0.7308291  3.379606
 ##   10     4.483548  0.7316750  3.368064
 ## 
-## RMSE was used to select the optimal model using the smallest value.
-## The final value used for the model was ncomp = 7.</code></pre>
-<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="pca-pls.html#cb387-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(caret.pls, <span class="at">highlight =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<p><img src="06-modelos_lineales_files/figure-html/unnamed-chunk-48-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="pca-pls.html#cb388-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Podía ser preferible incluir `trControl(selectionFunction = &quot;oneSE&quot;)`</span></span>
-<span id="cb388-2"><a href="pca-pls.html#cb388-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb388-3"><a href="pca-pls.html#cb388-3" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(caret.pls, <span class="at">newdata =</span> test)</span>
-<span id="cb388-4"><a href="pca-pls.html#cb388-4" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(pred, obs)</span></code></pre></div>
-<pre><code>##         me       rmse        mae        mpe       mape  r.squared 
-## 0.52838223 4.32029848 3.46711182 0.08674838 6.18085646 0.81705933</code></pre>
+## RMSE was used to select the optimal model using  the one SE rule.
+## The final value used for the model was ncomp = 3.</code></pre>
+<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="pca-pls.html#cb370-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(caret.pls, <span class="at">highlight =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:plsr-plot-caret"></span>
+<img src="06-modelos_lineales_files/figure-html/plsr-plot-caret-1.png" alt="Errores de validación cruzada en función del número de componentes en el ajuste mediante PLS." width="75%" />
+<p class="caption">
+Figura 6.20: Errores de validación cruzada en función del número de componentes en el ajuste mediante PLS.
+</p>
+</div>
+<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="pca-pls.html#cb371-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(caret.pls, <span class="at">newdata =</span> test)</span>
+<span id="cb371-2"><a href="pca-pls.html#cb371-2" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(pred, obs)</span></code></pre></div>
+<pre><code>##        me      rmse       mae       mpe      mape r.squared 
+## 0.8028426 4.6565051 3.7577014 0.4673422 6.6186253 0.7874785</code></pre>
 <p>Como comentario final, en la práctica se suelen obtener resultados muy similares empleando PCR, PLSR o <em>ridge regression</em>.</p>
 </div>
 </div>
@@ -667,8 +679,11 @@ Wold, S., Martens, H., y Wold, H. (1983). The multivariate calibration problem i
 </div>
 <div class="footnotes">
 <hr />
-<ol start="27">
-<li id="fn27"><p>Esta forma de proceder se podría emplear con otros modelos que puedan tener problemas de colinealidad, como los lineales generalizados.<a href="pca-pls.html#fnref27" class="footnote-back">↩︎</a></p></li>
+<ol start="38">
+<li id="fn38"><p><code>"adjCV"</code> es una estimación de validación cruzada con corrección de sesgo.<a href="pca-pls.html#fnref38" class="footnote-back">↩︎</a></p></li>
+<li id="fn39"><p>También se pueden analizar distintos aspectos del ajuste (predicciones, coeficientes, puntuaciones, cargas, biplots, cargas de correlación o gráficos de validación) con el método <a href="https://rdrr.io/pkg/pls/man/plot.mvr.html"><code>plot.mvr()</code></a>.<a href="pca-pls.html#fnref39" class="footnote-back">↩︎</a></p></li>
+<li id="fn40"><p>Esta forma de proceder se podría emplear con otros modelos que puedan tener problemas de colinealidad, como los lineales generalizados.<a href="pca-pls.html#fnref40" class="footnote-back">↩︎</a></p></li>
+<li id="fn41"><p>Realmente ambas funciones llaman internamente a <a href="https://rdrr.io/pkg/pls/man/mvr.html"><code>mvr()</code></a> donde están implementadas distintas proyecciones <span class="citation">(ver <a href="https://rdrr.io/pkg/pls/man/pls.options.html" role="doc-biblioref"><code>help(pls.options)</code></a>, o <a href="#ref-Mevik2007pls" role="doc-biblioref">Mevik y Wehrens, 2007</a>)</span>.<a href="pca-pls.html#fnref41" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -737,7 +752,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');
