@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>1.4 La maldición de la dimensionalidad | Aprendizaje Estadístico</title>
   <meta name="description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
   <meta property="og:title" content="1.4 La maldición de la dimensionalidad | Aprendizaje Estadístico" />
   <meta property="og:type" content="book" />
@@ -53,12 +53,12 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.26/datatables.js"></script>
-<link href="libs/dt-core-1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="libs/dt-core-1.12.1/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="libs/dt-core-1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="libs/datatables-binding-0.30/datatables.js"></script>
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.13.4/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
 
@@ -128,6 +128,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -352,33 +356,33 @@ La idea es que en la “frontera” del rango de valores de una variable explica
 <p>Cuando el número de datos es más o menos grande podríamos pensar en predecir la respuesta a partir de lo que ocurre en las observaciones cercanas a la posición de predicción, esta es la idea de los métodos locales (Capítulo <a href="modelos-lineales.html#modelos-lineales">6</a>).
 Uno de los métodos de este tipo más conocidos es el de los <em>k-vecinos más cercanos</em> (<em>k-nearest neighbors</em>; KNN).
 Se trata de un método muy simple, pero que puede ser muy efectivo, que se basa en la idea de que localmente la media condicional (la predicción óptima) es constante.
-Concretamente, dados un entero <span class="math inline">\(k\)</span> (hiperparámetro) y un conjunto de entrenamiento <span class="math inline">\(\mathcal{T}\)</span>, para obtener la predicción correspondiente a un vector de valores de las variables explicativas <span class="math inline">\(\mathbf{x}\)</span>, el método de regresión<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a> KNN promedia las observaciones en un vecindario <span class="math inline">\(\mathcal{N}_k(\mathbf{x}, \mathcal{T})\)</span> formado por las <span class="math inline">\(k\)</span> observaciones más cercanas a <span class="math inline">\(\mathbf{x}\)</span>: <span class="math display">\[\hat{Y}(\mathbf{x}) = \hat{m}(\mathbf{x}) = \frac{1}{k} \sum_{i \in \mathcal{N}_k(\mathbf{x}, \mathcal{T})} Y_i\]</span> (sería necesario definir una distancia, normalmente la distancia euclídea de los predictores estandarizados).
+Concretamente, dados un entero <span class="math inline">\(k\)</span> (hiperparámetro) y un conjunto de entrenamiento <span class="math inline">\(\mathcal{T}\)</span>, para obtener la predicción correspondiente a un vector de valores de las variables explicativas <span class="math inline">\(\mathbf{x}\)</span>, el método de regresión<a href="#fn15" class="footnote-ref" id="fnref15"><sup>15</sup></a> KNN promedia las observaciones en un vecindario <span class="math inline">\(\mathcal{N}_k(\mathbf{x}, \mathcal{T})\)</span> formado por las <span class="math inline">\(k\)</span> observaciones más cercanas a <span class="math inline">\(\mathbf{x}\)</span>: <span class="math display">\[\hat{Y}(\mathbf{x}) = \hat{m}(\mathbf{x}) = \frac{1}{k} \sum_{i \in \mathcal{N}_k(\mathbf{x}, \mathcal{T})} Y_i\]</span> (sería necesario definir una distancia, normalmente la distancia euclídea de los predictores estandarizados).
 Este método está implementado en numerosos paquetes, por ejemplo en la función <code>knnreg()</code> del paquete <code>caret</code>.</p>
 <p>Como ejemplo consideraremos un problema de regresión simple, con un conjunto de datos simulados (del proceso ya considerado en la Sección <a href="const-eval.html#bias-variance">1.3.1</a>) con 100 observaciones (que ya podríamos considerar que no es muy pequeño):</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="dimen-curse.html#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulación datos</span></span>
-<span id="cb54-2"><a href="dimen-curse.html#cb54-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb54-3"><a href="dimen-curse.html#cb54-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length =</span> n)</span>
-<span id="cb54-4"><a href="dimen-curse.html#cb54-4" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">+</span> <span class="dv">4</span><span class="sc">*</span>(<span class="dv">5</span><span class="sc">*</span>x <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">*</span>(<span class="dv">4</span><span class="sc">*</span>x <span class="sc">-</span> <span class="dv">2</span>)<span class="sc">*</span>(x <span class="sc">-</span> <span class="fl">0.8</span>)<span class="sc">^</span><span class="dv">2</span> <span class="co"># grado 4</span></span>
-<span id="cb54-5"><a href="dimen-curse.html#cb54-5" aria-hidden="true" tabindex="-1"></a>sd <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
-<span id="cb54-6"><a href="dimen-curse.html#cb54-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb54-7"><a href="dimen-curse.html#cb54-7" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> mu <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, sd)</span>
-<span id="cb54-8"><a href="dimen-curse.html#cb54-8" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)</span>
-<span id="cb54-9"><a href="dimen-curse.html#cb54-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Representar</span></span>
-<span id="cb54-10"><a href="dimen-curse.html#cb54-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y)</span>
-<span id="cb54-11"><a href="dimen-curse.html#cb54-11" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x, mu, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;lightgray&quot;</span>)</span>
-<span id="cb54-12"><a href="dimen-curse.html#cb54-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajuste de los modelos</span></span>
-<span id="cb54-13"><a href="dimen-curse.html#cb54-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
-<span id="cb54-14"><a href="dimen-curse.html#cb54-14" aria-hidden="true" tabindex="-1"></a><span class="co"># k = número de observaciones más cercanas</span></span>
-<span id="cb54-15"><a href="dimen-curse.html#cb54-15" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">knnreg</span>(y <span class="sc">~</span> x, <span class="at">data =</span> datos, <span class="at">k =</span> <span class="dv">5</span>) <span class="co"># 5% de los datos (n = 100)</span></span>
-<span id="cb54-16"><a href="dimen-curse.html#cb54-16" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">knnreg</span>(y <span class="sc">~</span> x, <span class="at">data =</span> datos, <span class="at">k =</span> <span class="dv">10</span>)</span>
-<span id="cb54-17"><a href="dimen-curse.html#cb54-17" aria-hidden="true" tabindex="-1"></a>fit3 <span class="ot">&lt;-</span> <span class="fu">knnreg</span>(y <span class="sc">~</span> x, <span class="at">data =</span> datos, <span class="at">k =</span> <span class="dv">20</span>)</span>
-<span id="cb54-18"><a href="dimen-curse.html#cb54-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Añadir predicciones y leyenda</span></span>
-<span id="cb54-19"><a href="dimen-curse.html#cb54-19" aria-hidden="true" tabindex="-1"></a>newdata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x)</span>
-<span id="cb54-20"><a href="dimen-curse.html#cb54-20" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x, <span class="fu">predict</span>(fit1, newdata), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span>
-<span id="cb54-21"><a href="dimen-curse.html#cb54-21" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x, <span class="fu">predict</span>(fit2, newdata), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb54-22"><a href="dimen-curse.html#cb54-22" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x, <span class="fu">predict</span>(fit3, newdata), <span class="at">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb54-23"><a href="dimen-curse.html#cb54-23" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Verdadero&quot;</span>, <span class="st">&quot;5-NN&quot;</span>, <span class="st">&quot;10-NN&quot;</span>, <span class="st">&quot;20-NN&quot;</span>), </span>
-<span id="cb54-24"><a href="dimen-curse.html#cb54-24" aria-hidden="true" tabindex="-1"></a>       <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;lightgray&quot;</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="dimen-curse.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulación datos</span></span>
+<span id="cb55-2"><a href="dimen-curse.html#cb55-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb55-3"><a href="dimen-curse.html#cb55-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length =</span> n)</span>
+<span id="cb55-4"><a href="dimen-curse.html#cb55-4" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">+</span> <span class="dv">4</span><span class="sc">*</span>(<span class="dv">5</span><span class="sc">*</span>x <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">*</span>(<span class="dv">4</span><span class="sc">*</span>x <span class="sc">-</span> <span class="dv">2</span>)<span class="sc">*</span>(x <span class="sc">-</span> <span class="fl">0.8</span>)<span class="sc">^</span><span class="dv">2</span> <span class="co"># grado 4</span></span>
+<span id="cb55-5"><a href="dimen-curse.html#cb55-5" aria-hidden="true" tabindex="-1"></a>sd <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb55-6"><a href="dimen-curse.html#cb55-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb55-7"><a href="dimen-curse.html#cb55-7" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> mu <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, sd)</span>
+<span id="cb55-8"><a href="dimen-curse.html#cb55-8" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)</span>
+<span id="cb55-9"><a href="dimen-curse.html#cb55-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Representar</span></span>
+<span id="cb55-10"><a href="dimen-curse.html#cb55-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y)</span>
+<span id="cb55-11"><a href="dimen-curse.html#cb55-11" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x, mu, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;lightgray&quot;</span>)</span>
+<span id="cb55-12"><a href="dimen-curse.html#cb55-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajuste de los modelos</span></span>
+<span id="cb55-13"><a href="dimen-curse.html#cb55-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb55-14"><a href="dimen-curse.html#cb55-14" aria-hidden="true" tabindex="-1"></a><span class="co"># k = número de observaciones más cercanas</span></span>
+<span id="cb55-15"><a href="dimen-curse.html#cb55-15" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">knnreg</span>(y <span class="sc">~</span> x, <span class="at">data =</span> datos, <span class="at">k =</span> <span class="dv">5</span>) <span class="co"># 5% de los datos (n = 100)</span></span>
+<span id="cb55-16"><a href="dimen-curse.html#cb55-16" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">knnreg</span>(y <span class="sc">~</span> x, <span class="at">data =</span> datos, <span class="at">k =</span> <span class="dv">10</span>)</span>
+<span id="cb55-17"><a href="dimen-curse.html#cb55-17" aria-hidden="true" tabindex="-1"></a>fit3 <span class="ot">&lt;-</span> <span class="fu">knnreg</span>(y <span class="sc">~</span> x, <span class="at">data =</span> datos, <span class="at">k =</span> <span class="dv">20</span>)</span>
+<span id="cb55-18"><a href="dimen-curse.html#cb55-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Añadir predicciones y leyenda</span></span>
+<span id="cb55-19"><a href="dimen-curse.html#cb55-19" aria-hidden="true" tabindex="-1"></a>newdata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x)</span>
+<span id="cb55-20"><a href="dimen-curse.html#cb55-20" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x, <span class="fu">predict</span>(fit1, newdata), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span>
+<span id="cb55-21"><a href="dimen-curse.html#cb55-21" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x, <span class="fu">predict</span>(fit2, newdata), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb55-22"><a href="dimen-curse.html#cb55-22" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x, <span class="fu">predict</span>(fit3, newdata), <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb55-23"><a href="dimen-curse.html#cb55-23" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Verdadero&quot;</span>, <span class="st">&quot;5-NN&quot;</span>, <span class="st">&quot;10-NN&quot;</span>, <span class="st">&quot;20-NN&quot;</span>), </span>
+<span id="cb55-24"><a href="dimen-curse.html#cb55-24" aria-hidden="true" tabindex="-1"></a>       <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;lightgray&quot;</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:knnfit2"></span>
 <img src="01-introduccion_files/figure-html/knnfit2-1.png" alt="Predicciones con el método KNN y distintos vecindarios." width="75%" />
 <p class="caption">
@@ -390,13 +394,13 @@ Habría que seleccionar un valor óptimo de <span class="math inline">\(k\)</spa
 En este caso, para <span class="math inline">\(k=5\)</span>, podríamos pensar que el efecto frontera aparece en el 10% más externo del rango de la variable explicativa (con un número mayor de datos podría bajar al 1%).
 Al aumentar el número de variables explicativas, considerando que el 10% más externo del rango de cada una de ellas constituye la “frontera” de los datos, tendríamos que la proporción de frontera sería <span class="math inline">\(1-0.9^d\)</span>, siendo <span class="math inline">\(d\)</span> el número de dimensiones.
 Lo que se traduce que con <span class="math inline">\(d = 10\)</span> el 65% del espacio predictivo sería frontera y en torno al 88% para <span class="math inline">\(d=20\)</span>, es decir, al aumentar el número de dimensiones el problema del efecto frontera será generalizado.</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="dimen-curse.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.9</span><span class="sc">^</span>x, <span class="dv">0</span>, <span class="dv">200</span>, <span class="at">ylab =</span> <span class="st">&#39;Proporción de frontera&#39;</span>, </span>
-<span id="cb55-2"><a href="dimen-curse.html#cb55-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">&#39;Número de dimensiones&#39;</span>)</span>
-<span id="cb55-3"><a href="dimen-curse.html#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.95</span><span class="sc">^</span>x, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb55-4"><a href="dimen-curse.html#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.99</span><span class="sc">^</span>x, <span class="at">lty =</span> <span class="dv">3</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb55-5"><a href="dimen-curse.html#cb55-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fl">0.5</span>, <span class="at">col =</span> <span class="st">&quot;lightgray&quot;</span>)</span>
-<span id="cb55-6"><a href="dimen-curse.html#cb55-6" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;bottomright&quot;</span>, <span class="at">title =</span> <span class="st">&quot;Rango en cada dimensión&quot;</span>, </span>
-<span id="cb55-7"><a href="dimen-curse.html#cb55-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;10%&quot;</span> , <span class="st">&quot;5%&quot;</span>, <span class="st">&quot;1%&quot;</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="dimen-curse.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.9</span><span class="sc">^</span>x, <span class="dv">0</span>, <span class="dv">200</span>, <span class="at">ylab =</span> <span class="st">&#39;Proporción de frontera&#39;</span>, </span>
+<span id="cb56-2"><a href="dimen-curse.html#cb56-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">&#39;Número de dimensiones&#39;</span>)</span>
+<span id="cb56-3"><a href="dimen-curse.html#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.95</span><span class="sc">^</span>x, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb56-4"><a href="dimen-curse.html#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.99</span><span class="sc">^</span>x, <span class="at">lty =</span> <span class="dv">3</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb56-5"><a href="dimen-curse.html#cb56-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fl">0.5</span>, <span class="at">col =</span> <span class="st">&quot;lightgray&quot;</span>)</span>
+<span id="cb56-6"><a href="dimen-curse.html#cb56-6" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;bottomright&quot;</span>, <span class="at">title =</span> <span class="st">&quot;Rango en cada dimensión&quot;</span>, </span>
+<span id="cb56-7"><a href="dimen-curse.html#cb56-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;10%&quot;</span> , <span class="st">&quot;5%&quot;</span>, <span class="st">&quot;1%&quot;</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:pfrontera"></span>
 <img src="01-introduccion_files/figure-html/pfrontera-1.png" alt="Proporción de &quot;frontera&quot; dependiendo del número de dimensiones y del porcentaje de valores considerados extremos en cada dimensión." width="75%" />
 <p class="caption">
@@ -422,8 +426,8 @@ Bellman, R. (1961). <em>Adaptive Control Processes: a guided tour</em>. Princeto
 </div>
 <div class="footnotes">
 <hr />
-<ol start="14">
-<li id="fn14"><p>En el caso de clasificación se considerarían las variables indicadoras de las categorías y se obtendrían las frecuencias relativas en el vecindario como estimaciones de las probabilidades de las clases.<a href="dimen-curse.html#fnref14" class="footnote-back">↩︎</a></p></li>
+<ol start="15">
+<li id="fn15"><p>En el caso de clasificación se considerarían las variables indicadoras de las categorías y se obtendrían las frecuencias relativas en el vecindario como estimaciones de las probabilidades de las clases.<a href="dimen-curse.html#fnref15" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

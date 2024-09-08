@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>6.6 Selección del modelo mediante remuestreo | Aprendizaje Estadístico</title>
   <meta name="description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
   <meta property="og:title" content="6.6 Selección del modelo mediante remuestreo | Aprendizaje Estadístico" />
   <meta property="og:type" content="book" />
@@ -53,12 +53,12 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.26/datatables.js"></script>
-<link href="libs/dt-core-1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="libs/dt-core-1.12.1/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="libs/dt-core-1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="libs/datatables-binding-0.30/datatables.js"></script>
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.13.4/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
 
@@ -128,6 +128,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -364,14 +368,14 @@ más adelante se podría hacer bagging.
 En este caso, el procedimiento de selección debería realizarse también en cada uno de los conjuntos de entrenamiento utilizados en la validación.</p>
 <p>Esto último puede hacerse fácilmente con el paquete <code>caret</code>.
 Por ejemplo, este paquete implementa métodos de selección basados en el paquete <code>leaps</code>, considerando el número máximo de predictores <code>nvmax</code> como hiperparámetro y empleando búsqueda: hacia atrás (<code>"leapBackward"</code>), hacia adelante (<code>"leapForward"</code>) y por pasos (<code>"leapSeq"</code>).</p>
-<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="selec-ae-reg-lineal.html#cb299-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
-<span id="cb299-2"><a href="selec-ae-reg-lineal.html#cb299-2" aria-hidden="true" tabindex="-1"></a><span class="fu">modelLookup</span>(<span class="st">&quot;leapSeq&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="selec-ae-reg-lineal.html#cb300-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb300-2"><a href="selec-ae-reg-lineal.html#cb300-2" aria-hidden="true" tabindex="-1"></a><span class="fu">modelLookup</span>(<span class="st">&quot;leapSeq&quot;</span>)</span></code></pre></div>
 <pre><code>##     model parameter                        label forReg forClass probModel
 ## 1 leapSeq     nvmax Maximum Number of Predictors   TRUE    FALSE     FALSE</code></pre>
-<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="selec-ae-reg-lineal.html#cb301-1" aria-hidden="true" tabindex="-1"></a>caret.leapSeq <span class="ot">&lt;-</span> <span class="fu">train</span>(fidelida <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">method =</span> <span class="st">&quot;leapSeq&quot;</span>,</span>
-<span id="cb301-2"><a href="selec-ae-reg-lineal.html#cb301-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">trControl =</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">10</span>),</span>
-<span id="cb301-3"><a href="selec-ae-reg-lineal.html#cb301-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">tuneGrid =</span> <span class="fu">data.frame</span>(<span class="at">nvmax =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>))</span>
-<span id="cb301-4"><a href="selec-ae-reg-lineal.html#cb301-4" aria-hidden="true" tabindex="-1"></a>caret.leapSeq</span></code></pre></div>
+<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="selec-ae-reg-lineal.html#cb302-1" aria-hidden="true" tabindex="-1"></a>caret.leapSeq <span class="ot">&lt;-</span> <span class="fu">train</span>(fidelida <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">method =</span> <span class="st">&quot;leapSeq&quot;</span>,</span>
+<span id="cb302-2"><a href="selec-ae-reg-lineal.html#cb302-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">trControl =</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">10</span>),</span>
+<span id="cb302-3"><a href="selec-ae-reg-lineal.html#cb302-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">tuneGrid =</span> <span class="fu">data.frame</span>(<span class="at">nvmax =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>))</span>
+<span id="cb302-4"><a href="selec-ae-reg-lineal.html#cb302-4" aria-hidden="true" tabindex="-1"></a>caret.leapSeq</span></code></pre></div>
 <pre><code>## Linear Regression with Stepwise Selection 
 ## 
 ## 160 samples
@@ -392,13 +396,13 @@ Por ejemplo, este paquete implementa métodos de selección basados en el paquet
 ## 
 ## RMSE was used to select the optimal model using the smallest value.
 ## The final value used for the model was nvmax = 4.</code></pre>
-<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="selec-ae-reg-lineal.html#cb303-1" aria-hidden="true" tabindex="-1"></a><span class="co"># summary(caret.leapSeq$finalModel)</span></span>
-<span id="cb303-2"><a href="selec-ae-reg-lineal.html#cb303-2" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(caret.leapSeq, <span class="fu">coef</span>(finalModel, bestTune<span class="sc">$</span>nvmax))</span></code></pre></div>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="selec-ae-reg-lineal.html#cb304-1" aria-hidden="true" tabindex="-1"></a><span class="co"># summary(caret.leapSeq$finalModel)</span></span>
+<span id="cb304-2"><a href="selec-ae-reg-lineal.html#cb304-2" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(caret.leapSeq, <span class="fu">coef</span>(finalModel, bestTune<span class="sc">$</span>nvmax))</span></code></pre></div>
 <pre><code>## (Intercept)    calidadp         web      precio    velocida 
 ##  -5.3610807   3.4712306   1.2471721   0.4190875   7.4382584</code></pre>
-<p>Una vez seleccionado el modelo final<a href="#fn36" class="footnote-ref" id="fnref36"><sup>36</sup></a>, estudiaríamos la eficiencia de las predicciones en la muestra de test:</p>
-<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="selec-ae-reg-lineal.html#cb305-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(caret.leapSeq, <span class="at">newdata =</span> test)</span>
-<span id="cb305-2"><a href="selec-ae-reg-lineal.html#cb305-2" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(pred, obs)</span></code></pre></div>
+<p>Una vez seleccionado el modelo final<a href="#fn37" class="footnote-ref" id="fnref37"><sup>37</sup></a>, estudiaríamos la eficiencia de las predicciones en la muestra de test:</p>
+<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="selec-ae-reg-lineal.html#cb306-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(caret.leapSeq, <span class="at">newdata =</span> test)</span>
+<span id="cb306-2"><a href="selec-ae-reg-lineal.html#cb306-2" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(pred, obs)</span></code></pre></div>
 <pre><code>##         me       rmse        mae        mpe       mape  r.squared 
 ##  0.2886512  4.1741220  3.2946370 -0.3413883  5.9590279  0.8292294</code></pre>
 <p>Además, en el caso de ajustes de modelos de este tipo, puede resultar de interés realizar un preprocesado de los datos para eliminar predictores correlados o con varianza próxima a cero,
@@ -406,8 +410,8 @@ estableciendo por ejemplo <code>preProc = c("nzv", "corr")</code> en la llamada 
 </div>
 <div class="footnotes">
 <hr />
-<ol start="36">
-<li id="fn36"><p>Se podrían haber entrenado distintos métodos de selección de predictores y comparar los resultados (en las mismas muestras de validación) para escoger el modelo final.<a href="selec-ae-reg-lineal.html#fnref36" class="footnote-back">↩︎</a></p></li>
+<ol start="37">
+<li id="fn37"><p>Se podrían haber entrenado distintos métodos de selección de predictores y comparar los resultados (en las mismas muestras de validación) para escoger el modelo final.<a href="selec-ae-reg-lineal.html#fnref37" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

@@ -4,7 +4,7 @@ author:
   - "Rubén Fernández Casal (ruben.fcasal@udc.es)"
   - "Julián Costa Bouzas (julian.costa@udc.es)"
   - "Manuel Oviedo de la Fuente (manuel.oviedo@udc.es)"
-date: "Edición: Septiembre de 2021. Impresión: 2023-10-13"
+date: "Edición: Septiembre de 2021. Impresión: 2024-09-09"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
@@ -31,24 +31,26 @@ Se puede acceder a la versión en línea a través del siguiente enlace:
 
 donde puede descargarse en formato [pdf](https://rubenfcasal.github.io/aprendizaje_estadistico/aprendizaje_estadistico.pdf).
 
-Para ejecutar los ejemplos mostrados en el libro sería necesario tener instalados los siguientes paquetes:
-[`caret`](https://CRAN.R-project.org/package=caret), [`rattle`](https://CRAN.R-project.org/package=rattle), [`gbm`](https://CRAN.R-project.org/package=gbm), [`car`](https://CRAN.R-project.org/package=car), [`leaps`](https://CRAN.R-project.org/package=leaps), [`MASS`](https://CRAN.R-project.org/package=MASS), [`RcmdrMisc`](https://CRAN.R-project.org/package=RcmdrMisc), [`lmtest`](https://CRAN.R-project.org/package=lmtest), [`glmnet`](https://CRAN.R-project.org/package=glmnet), [`mgcv`](https://CRAN.R-project.org/package=mgcv), [`np`](https://CRAN.R-project.org/package=np), [`NeuralNetTools`](https://CRAN.R-project.org/package=NeuralNetTools), [`pdp`](https://CRAN.R-project.org/package=pdp), [`vivid`](https://CRAN.R-project.org/package=vivid), [`plot3D`](https://CRAN.R-project.org/package=plot3D), [`AppliedPredictiveModeling`](https://CRAN.R-project.org/package=AppliedPredictiveModeling), [`ISLR`](https://CRAN.R-project.org/package=ISLR).
-<!-- 
-Comprobar si es necesario añadir: "pls"
-Para el gráfico de red: "network", "sna", "intergraph" 
--->
-Por ejemplo mediante los siguientes comandos:
+Este libro tiene asociado el paquete de R [`mpae`](https://rubenfcasal.github.io/mpae) [*Métodos Predictivos de Aprendizaje Estadístico*, @R-mpae], que incluye funciones y conjuntos de datos utilizados a lo largo del texto.
+Este paquete está disponible en CRAN y puede instalarse ejecutando el siguiente código[^instalacion-1]:
+
 
 ```r
-pkgs <- c("caret", "rattle", "gbm", "car", "leaps", "MASS", "RcmdrMisc", 
-          "lmtest", "glmnet", "mgcv", "np", "NeuralNetTools", "pdp", "vivid",
-          "plot3D", "AppliedPredictiveModeling", "ISLR")
-
-install.packages(setdiff(pkgs, installed.packages()[,"Package"]), dependencies = TRUE)
-# Si aparecen errores (normalmente debidos a incompatibilidades con versiones ya instaladas), 
-# probar a ejecutar en lugar de lo anterior:
-# install.packages(pkgs, dependencies=TRUE) # Instala todos...
+install.packages("mpae")
 ```
+
+[^instalacion-1]: Alternativamente, se puede instalar la versión en desarrollo disponible en el repositorio [rubenfcasal/mpae](https://github.com/rubenfcasal/mpae) de GitHub.
+Por ejemplo, el comando `remotes::install_github("rubenfcasal/mpae", INSTALL_opts = "--with-keep.source")` instala el paquete incluyendo los comentarios en el código y opcionalmente las dependencias. 
+
+Sin embargo, para poder ejecutar todos los ejemplos mostrados en el libro, es necesario instalar también los siguientes paquetes:
+[`caret`](https://CRAN.R-project.org/package=caret), [`gbm`](https://CRAN.R-project.org/package=gbm), [`car`](https://CRAN.R-project.org/package=car), [`leaps`](https://CRAN.R-project.org/package=leaps), [`MASS`](https://CRAN.R-project.org/package=MASS), [`RcmdrMisc`](https://CRAN.R-project.org/package=RcmdrMisc), [`lmtest`](https://CRAN.R-project.org/package=lmtest), [`glmnet`](https://CRAN.R-project.org/package=glmnet), [`mgcv`](https://CRAN.R-project.org/package=mgcv), [`np`](https://CRAN.R-project.org/package=np), [`NeuralNetTools`](https://CRAN.R-project.org/package=NeuralNetTools), [`pdp`](https://CRAN.R-project.org/package=pdp), [`vivid`](https://CRAN.R-project.org/package=vivid), [`plot3D`](https://CRAN.R-project.org/package=plot3D), [`AppliedPredictiveModeling`](https://CRAN.R-project.org/package=AppliedPredictiveModeling), [`ISLR`](https://CRAN.R-project.org/package=ISLR).
+Para ello, en lugar del código anterior, bastaría con ejecutar:
+
+
+```r
+install.packages("mpae", dependencies = TRUE)
+```
+
 Para generar el libro (compilar) serán necesarios paquetes adicionales, 
 para lo que se recomendaría consultar el libro de ["Escritura de libros con bookdown" ](https://rubenfcasal.github.io/bookdown_intro) en castellano.
 

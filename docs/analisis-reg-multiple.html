@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>6.4 Análisis e interpretación del modelo | Aprendizaje Estadístico</title>
   <meta name="description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
   <meta property="og:title" content="6.4 Análisis e interpretación del modelo | Aprendizaje Estadístico" />
   <meta property="og:type" content="book" />
@@ -53,12 +53,12 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.26/datatables.js"></script>
-<link href="libs/dt-core-1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="libs/dt-core-1.12.1/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="libs/dt-core-1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="libs/datatables-binding-0.30/datatables.js"></script>
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.13.4/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
 
@@ -128,6 +128,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -359,30 +363,30 @@ intervalos de confianza y contrastes podrían verse afectados.</p></li>
 más grave.</p></li>
 </ul>
 <p>Con el método <a href="https://rdrr.io/r/stats/plot.lm.html"><code>plot()</code></a> se pueden generar gráficos de interés para la diagnosis del modelo (ver Figura <a href="analisis-reg-multiple.html#fig:lm-plot">6.8</a>):</p>
-<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="analisis-reg-multiple.html#cb290-1" aria-hidden="true" tabindex="-1"></a>oldpar <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb290-2"><a href="analisis-reg-multiple.html#cb290-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(modelo)</span></code></pre></div>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="analisis-reg-multiple.html#cb291-1" aria-hidden="true" tabindex="-1"></a>oldpar <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb291-2"><a href="analisis-reg-multiple.html#cb291-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(modelo)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:lm-plot"></span>
 <img src="06-modelos_lineales_files/figure-html/lm-plot-1.png" alt="Gráficos de diagnóstico del ajuste lineal." width="90%" />
 <p class="caption">
 Figura 6.8: Gráficos de diagnóstico del ajuste lineal.
 </p>
 </div>
-<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="analisis-reg-multiple.html#cb291-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(oldpar)</span></code></pre></div>
+<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="analisis-reg-multiple.html#cb292-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(oldpar)</span></code></pre></div>
 <p>Por defecto se muestran cuatro gráficos (ver <a href="https://rdrr.io/r/stats/plot.lm.html"><code>help(plot.lm)</code></a> para más detalles).
 El primero (residuos frente a predicciones) permite detectar falta de linealidad o heterocedasticidad (o el efecto de un factor omitido: mala especificación del modelo), lo ideal sería no observar ningún patrón.
 El segundo gráfico (gráfico QQ), permite diagnosticar la normalidad, los puntos del deberían estar cerca de la diagonal.
 El tercer gráfico de dispersión-nivel permite detectar heterocedasticidad (la pendiente debería ser nula) y ayudar a seleccionar una transformación para corregirla (también se podría emplear la función <a href="https://rdrr.io/pkg/MASS/man/boxcox.html"><code>boxcox()</code></a> del paquete <a href="https://CRAN.R-project.org/package=MASS"><code>MASS</code></a>).
 El último gráfico permite detectar valores atípicos o influyentes. Representa los residuos estandarizados en función del valor de influencia (a priori) o leverage (<span class="math inline">\(hii\)</span> que depende de los valores de las variables explicativas, debería ser <span class="math inline">\(&lt; 2(p+1)/2\)</span>) y señala las observaciones atípicas (residuos fuera de [-2,2]) e influyentes a posteriori (estadístico de Cook &gt;0.5 y &gt;1).</p>
 <p>Si las conclusiones obtenidas dependen en gran medida de una observación (normalmente atípica), esta se denomina influyente (a posteriori) y debe ser examinada con cuidado por el experimentador.
-Se puede volver a ajustar el modelo eliminando las observaciones influyentes<a href="#fn34" class="footnote-ref" id="fnref34"><sup>34</sup></a>,
+Se puede volver a ajustar el modelo eliminando las observaciones influyentes<a href="#fn35" class="footnote-ref" id="fnref35"><sup>35</sup></a>,
 pero puede ser recomendable emplear regresión lineal robusta, por ejemplo mediante la función <a href="https://rdrr.io/pkg/MASS/man/rlm.html"><code>rlm()</code></a> del paquete <a href="https://CRAN.R-project.org/package=MASS"><code>MASS</code></a>).</p>
 <p>En regresión lineal múltiple, en lugar de generar gráficos de dispersión simple
 (p.e. gráficos de dispersión matriciales) para analizar los efectos de las variables explicativas y detectar posibles problemas (falta de linealidad…), se pueden generar gráficos parciales de residuos, por ejemplo con el comando:</p>
-<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="analisis-reg-multiple.html#cb292-1" aria-hidden="true" tabindex="-1"></a><span class="fu">termplot</span>(modelo, <span class="at">partial.resid =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<p>Aunque puede ser preferible emplear las funciones <a href="https://rdrr.io/pkg/car/man/crPlots.html"><code>crPlots()</code></a> ó <a href="https://rdrr.io/pkg/car/man/avPlots.html"><code>avPlots()</code></a> del paquete <a href="https://CRAN.R-project.org/package=car"><code>car</code></a><a href="#fn35" class="footnote-ref" id="fnref35"><sup>35</sup></a>:</p>
-<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="analisis-reg-multiple.html#cb293-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
-<span id="cb293-2"><a href="analisis-reg-multiple.html#cb293-2" aria-hidden="true" tabindex="-1"></a><span class="co"># avPlots(modelo)</span></span>
-<span id="cb293-3"><a href="analisis-reg-multiple.html#cb293-3" aria-hidden="true" tabindex="-1"></a><span class="fu">crPlots</span>(modelo, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="analisis-reg-multiple.html#cb293-1" aria-hidden="true" tabindex="-1"></a><span class="fu">termplot</span>(modelo, <span class="at">partial.resid =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>Aunque puede ser preferible emplear las funciones <a href="https://rdrr.io/pkg/car/man/crPlots.html"><code>crPlots()</code></a> ó <a href="https://rdrr.io/pkg/car/man/avPlots.html"><code>avPlots()</code></a> del paquete <a href="https://CRAN.R-project.org/package=car"><code>car</code></a><a href="#fn36" class="footnote-ref" id="fnref36"><sup>36</sup></a>:</p>
+<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="analisis-reg-multiple.html#cb294-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb294-2"><a href="analisis-reg-multiple.html#cb294-2" aria-hidden="true" tabindex="-1"></a><span class="co"># avPlots(modelo)</span></span>
+<span id="cb294-3"><a href="analisis-reg-multiple.html#cb294-3" aria-hidden="true" tabindex="-1"></a><span class="fu">crPlots</span>(modelo, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:crPlots"></span>
 <img src="06-modelos_lineales_files/figure-html/crPlots-1.png" alt="Gráficos parciales de residuos (componentes + residuos) del ajuste lineal." width="90%" />
 <p class="caption">
@@ -449,10 +453,10 @@ En ese caso, después de ajustar el modelo en la muestra de entrenamiento, en lu
 </div>
 <div class="footnotes">
 <hr />
-<ol start="34">
-<li id="fn34"><p>Normalmente se sigue un proceso iterativo, eliminando la más influyente cada vez, por ejemplo con <code>which.max(cooks.distance(modelo))</code> y <code>update()</code>.<a href="analisis-reg-multiple.html#fnref34" class="footnote-back">↩︎</a></p></li>
-<li id="fn35"><p>Estas funciones permitirían además detectar puntos atípicos o influyentes
-mediante el argumento <code>id</code>.<a href="analisis-reg-multiple.html#fnref35" class="footnote-back">↩︎</a></p></li>
+<ol start="35">
+<li id="fn35"><p>Normalmente se sigue un proceso iterativo, eliminando la más influyente cada vez, por ejemplo con <code>which.max(cooks.distance(modelo))</code> y <code>update()</code>.<a href="analisis-reg-multiple.html#fnref35" class="footnote-back">↩︎</a></p></li>
+<li id="fn36"><p>Estas funciones permitirían además detectar puntos atípicos o influyentes
+mediante el argumento <code>id</code>.<a href="analisis-reg-multiple.html#fnref36" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

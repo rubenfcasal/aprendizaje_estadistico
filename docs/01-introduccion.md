@@ -922,10 +922,6 @@ summary(modelo)
   ## Call:
   ## glm(formula = fmedv ~ lstat, family = binomial, data = train)
   ## 
-  ## Deviance Residuals: 
-  ##     Min       1Q   Median       3Q      Max  
-  ## -1.9749  -0.4161  -0.0890   0.3785   3.6450  
-  ## 
   ## Coefficients:
   ##             Estimate Std. Error z value Pr(>|z|)    
   ## (Intercept)  3.74366    0.47901   7.815 5.48e-15 ***

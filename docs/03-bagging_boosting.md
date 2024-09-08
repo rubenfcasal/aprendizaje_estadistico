@@ -70,7 +70,7 @@ De este modo, para cada observación se pueden utilizar los árboles para los qu
 Repitiendo el proceso para todas las observaciones se obtiene una medida del error.
 
 Una decisión que hay que tomar es cuántas muestras bootstrap se toman (o lo que es lo mismo, cuántos árboles se construyen). 
-Realmente se trata de una aproximación Monte Carlo, por lo que típicamente se estudia gráficamente la convergencia del error OOB al aumentar el número de árboles [para más detalles ver p.e. @fernandez2020simbook, [Sección 4.1](https://rubenfcasal.github.io/simbook/convergencia.html)].
+Realmente se trata de una aproximación Monte Carlo, por lo que típicamente se estudia gráficamente la convergencia del error OOB al aumentar el número de árboles [para más detalles ver p.e. @fernandez2023simbook, [Sección 4.1](https://rubenfcasal.github.io/simbook/convergencia.html)].
 Si aparentemente hay convergencia con unos pocos cientos de árboles, no va a variar mucho el nivel de error al aumentar el número. 
 Por tanto aumentar mucho el número de árboles no mejora las predicciones, aunque tampoco aumenta el riesgo de sobreajuste.
 Los costes computacionales aumentan con el número de árboles, pero la construcción y evaluación del modelo son fácilmente paralelizables (aunque pueden llegar a requerir mucha memoria si el conjunto de datos es muy grande).

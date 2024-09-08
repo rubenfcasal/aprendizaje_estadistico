@@ -215,7 +215,7 @@
 
 \title{Aprendizaje Estadístico}
 \author{Rubén Fernández Casal (\href{mailto:ruben.fcasal@udc.es}{\nolinkurl{ruben.fcasal@udc.es}}) \and Julián Costa Bouzas (\href{mailto:julian.costa@udc.es}{\nolinkurl{julian.costa@udc.es}}) \and Manuel Oviedo de la Fuente (\href{mailto:manuel.oviedo@udc.es}{\nolinkurl{manuel.oviedo@udc.es}})}
-\date{Edición: Septiembre de 2021. Impresión: 2023-10-13}
+\date{Edición: Septiembre de 2021. Impresión: 2024-09-09}
 
 \begin{document}
 \maketitle
@@ -237,20 +237,23 @@ Se puede acceder a la versión en línea a través del siguiente enlace:
 
 donde puede descargarse en formato \href{https://rubenfcasal.github.io/aprendizaje_estadistico/aprendizaje_estadistico.pdf}{pdf}.
 
-Para ejecutar los ejemplos mostrados en el libro sería necesario tener instalados los siguientes paquetes:
-\href{https://CRAN.R-project.org/package=caret}{\texttt{caret}}, \href{https://CRAN.R-project.org/package=rattle}{\texttt{rattle}}, \href{https://CRAN.R-project.org/package=gbm}{\texttt{gbm}}, \href{https://CRAN.R-project.org/package=car}{\texttt{car}}, \href{https://CRAN.R-project.org/package=leaps}{\texttt{leaps}}, \href{https://CRAN.R-project.org/package=MASS}{\texttt{MASS}}, \href{https://CRAN.R-project.org/package=RcmdrMisc}{\texttt{RcmdrMisc}}, \href{https://CRAN.R-project.org/package=lmtest}{\texttt{lmtest}}, \href{https://CRAN.R-project.org/package=glmnet}{\texttt{glmnet}}, \href{https://CRAN.R-project.org/package=mgcv}{\texttt{mgcv}}, \href{https://CRAN.R-project.org/package=np}{\texttt{np}}, \href{https://CRAN.R-project.org/package=NeuralNetTools}{\texttt{NeuralNetTools}}, \href{https://CRAN.R-project.org/package=pdp}{\texttt{pdp}}, \href{https://CRAN.R-project.org/package=vivid}{\texttt{vivid}}, \href{https://CRAN.R-project.org/package=plot3D}{\texttt{plot3D}}, \href{https://CRAN.R-project.org/package=AppliedPredictiveModeling}{\texttt{AppliedPredictiveModeling}}, \href{https://CRAN.R-project.org/package=ISLR}{\texttt{ISLR}}.
-Por ejemplo mediante los siguientes comandos:
+Este libro tiene asociado el paquete de R \href{https://rubenfcasal.github.io/mpae}{\texttt{mpae}} (\emph{Métodos Predictivos de Aprendizaje Estadístico}, \protect\hyperlink{ref-R-mpae}{Fernandez-Casal et~al., 2024}), que incluye funciones y conjuntos de datos utilizados a lo largo del texto.
+Este paquete está disponible en CRAN y puede instalarse ejecutando el siguiente código\footnote{Alternativamente, se puede instalar la versión en desarrollo disponible en el repositorio \href{https://github.com/rubenfcasal/mpae}{rubenfcasal/mpae} de GitHub.
+  Por ejemplo, el comando \texttt{remotes::install\_github("rubenfcasal/mpae",\ INSTALL\_opts\ =\ "-\/-with-keep.source")} instala el paquete incluyendo los comentarios en el código y opcionalmente las dependencias.}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{pkgs }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"caret"}\NormalTok{, }\StringTok{"rattle"}\NormalTok{, }\StringTok{"gbm"}\NormalTok{, }\StringTok{"car"}\NormalTok{, }\StringTok{"leaps"}\NormalTok{, }\StringTok{"MASS"}\NormalTok{, }\StringTok{"RcmdrMisc"}\NormalTok{, }
-          \StringTok{"lmtest"}\NormalTok{, }\StringTok{"glmnet"}\NormalTok{, }\StringTok{"mgcv"}\NormalTok{, }\StringTok{"np"}\NormalTok{, }\StringTok{"NeuralNetTools"}\NormalTok{, }\StringTok{"pdp"}\NormalTok{, }\StringTok{"vivid"}\NormalTok{,}
-          \StringTok{"plot3D"}\NormalTok{, }\StringTok{"AppliedPredictiveModeling"}\NormalTok{, }\StringTok{"ISLR"}\NormalTok{)}
+\FunctionTok{install.packages}\NormalTok{(}\StringTok{"mpae"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
-\FunctionTok{install.packages}\NormalTok{(}\FunctionTok{setdiff}\NormalTok{(pkgs, }\FunctionTok{installed.packages}\NormalTok{()[,}\StringTok{"Package"}\NormalTok{]), }\AttributeTok{dependencies =} \ConstantTok{TRUE}\NormalTok{)}
-\CommentTok{\# Si aparecen errores (normalmente debidos a incompatibilidades con versiones ya instaladas), }
-\CommentTok{\# probar a ejecutar en lugar de lo anterior:}
-\CommentTok{\# install.packages(pkgs, dependencies=TRUE) \# Instala todos...}
+Sin embargo, para poder ejecutar todos los ejemplos mostrados en el libro, es necesario instalar también los siguientes paquetes:
+\href{https://CRAN.R-project.org/package=caret}{\texttt{caret}}, \href{https://CRAN.R-project.org/package=gbm}{\texttt{gbm}}, \href{https://CRAN.R-project.org/package=car}{\texttt{car}}, \href{https://CRAN.R-project.org/package=leaps}{\texttt{leaps}}, \href{https://CRAN.R-project.org/package=MASS}{\texttt{MASS}}, \href{https://CRAN.R-project.org/package=RcmdrMisc}{\texttt{RcmdrMisc}}, \href{https://CRAN.R-project.org/package=lmtest}{\texttt{lmtest}}, \href{https://CRAN.R-project.org/package=glmnet}{\texttt{glmnet}}, \href{https://CRAN.R-project.org/package=mgcv}{\texttt{mgcv}}, \href{https://CRAN.R-project.org/package=np}{\texttt{np}}, \href{https://CRAN.R-project.org/package=NeuralNetTools}{\texttt{NeuralNetTools}}, \href{https://CRAN.R-project.org/package=pdp}{\texttt{pdp}}, \href{https://CRAN.R-project.org/package=vivid}{\texttt{vivid}}, \href{https://CRAN.R-project.org/package=plot3D}{\texttt{plot3D}}, \href{https://CRAN.R-project.org/package=AppliedPredictiveModeling}{\texttt{AppliedPredictiveModeling}}, \href{https://CRAN.R-project.org/package=ISLR}{\texttt{ISLR}}.
+Para ello, en lugar del código anterior, bastaría con ejecutar:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{install.packages}\NormalTok{(}\StringTok{"mpae"}\NormalTok{, }\AttributeTok{dependencies =} \ConstantTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -560,7 +563,7 @@ También existen paquetes de \texttt{R} que permiten utilizar plataformas de ML 
 
 Como todos estos paquetes emplean opciones, estructuras y convenciones sintácticas diferentes, se han desarrollado paquetes que proporcionan interfaces unificadas a muchas de estas implementaciones.
 Entre ellos podríamos citar \href{https://topepo.github.io/caret}{\texttt{caret}}, \href{https://mlr3.mlr-org.com}{\texttt{mlr3}} y \href{https://www.tidymodels.org}{\texttt{tidymodels}}.
-En la Sección \ref{caret} se incluye una breve introducción al paquete \href{https://topepo.github.io/caret}{\texttt{caret}} (\protect\hyperlink{ref-R-caret}{Kuhn, 2022}; ver también \protect\hyperlink{ref-kuhn2013applied}{Kuhn y Johnson, 2013}) que será empleado en diversas ocasiones a lo largo del presente libro.
+En la Sección \ref{caret} se incluye una breve introducción al paquete \href{https://topepo.github.io/caret}{\texttt{caret}} (\protect\hyperlink{ref-R-caret}{Kuhn, 2023}; ver también \protect\hyperlink{ref-kuhn2013applied}{Kuhn y Johnson, 2013}) que será empleado en diversas ocasiones a lo largo del presente libro.
 
 Adicionalmente hay paquetes de R que disponen de entornos gráficos que permiten emplear estos métodos evitando el uso de comandos.
 Entre ellos estarían R-Commander con el plugin FactoMineR (\texttt{Rcmdr}, \texttt{RcmdrPlugin.FactoMineR}), \href{https://rattle.togaware.com}{\texttt{rattle}} (\protect\hyperlink{ref-R-rattle}{Williams, 2022}; ver también \protect\hyperlink{ref-williams2011data}{Williams, 2011}) y \href{https://github.com/radiant-rstats/radiant}{\texttt{radiant}}.
@@ -1213,10 +1216,6 @@ El siguiente código realiza la partición de los datos y posteriormente ajusta 
   ## 
   ## Call:
   ## glm(formula = fmedv ~ lstat, family = binomial, data = train)
-  ## 
-  ## Deviance Residuals: 
-  ##     Min       1Q   Median       3Q      Max  
-  ## -1.9749  -0.4161  -0.0890   0.3785   3.6450  
   ## 
   ## Coefficients:
   ##             Estimate Std. Error z value Pr(>|z|)    
@@ -1891,7 +1890,7 @@ Como comenta el autor del paquete \texttt{caret} (y coautor en \protect\hyperlin
 --- Max Kuhn (actualmente ingeniero de software en RStudio).
 \end{quote}
 
-este paquete ha dejado de desarrollarse de forma activa, aunque consideramos que la alternativa \href{https://www.tidymodels.org}{\texttt{tidymodels}} (\protect\hyperlink{ref-R-tidymodels}{Kuhn y Wickham, 2022}) todavía está en fase de desarrollo\footnote{Sin embargo, desde la publicación del libro Kuhn y Silge (\protect\hyperlink{ref-kuhn2022tidy}{2022}), disponible en línea en \url{https://www.tmwr.org}, ya podríamos considerar que ha superado la fase inicial de desarrollo.} y su uso requiere de más tiempo de aprendizaje.
+este paquete ha dejado de desarrollarse de forma activa, aunque consideramos que la alternativa \href{https://www.tidymodels.org}{\texttt{tidymodels}} (\protect\hyperlink{ref-R-tidymodels}{Kuhn y Wickham, 2023}) todavía está en fase de desarrollo\footnote{Sin embargo, desde la publicación del libro Kuhn y Silge (\protect\hyperlink{ref-kuhn2022tidy}{2022}), disponible en línea en \url{https://www.tmwr.org}, ya podríamos considerar que ha superado la fase inicial de desarrollo.} y su uso requiere de más tiempo de aprendizaje.
 Este es uno de los motivos por los que se ha optado por mantener el uso de \texttt{caret} en este libro, aunque la intención es incluir apéndices adicionales en próximas ediciones ilustrando el uso de otras herramientas (como \texttt{tidymodels}, ver \protect\hyperlink{ref-kuhn2022tidy}{Kuhn y Silge, 2022}; o incluso \texttt{mlr3}, \protect\hyperlink{ref-becker2021mlr3}{Becker et~al., 2021}).
 
 \hypertarget{trees}{%
@@ -3428,7 +3427,7 @@ De este modo, para cada observación se pueden utilizar los árboles para los qu
 Repitiendo el proceso para todas las observaciones se obtiene una medida del error.
 
 Una decisión que hay que tomar es cuántas muestras bootstrap se toman (o lo que es lo mismo, cuántos árboles se construyen).
-Realmente se trata de una aproximación Monte Carlo, por lo que típicamente se estudia gráficamente la convergencia del error OOB al aumentar el número de árboles (para más detalles ver p.e. \protect\hyperlink{ref-fernandez2020simbook}{Fernández-Casal y Cao, 2020, pp. Sección 4.1}).
+Realmente se trata de una aproximación Monte Carlo, por lo que típicamente se estudia gráficamente la convergencia del error OOB al aumentar el número de árboles (para más detalles ver p.e. \protect\hyperlink{ref-fernandez2023simbook}{Fernández-Casal et~al., 2023, pp. Sección 4.1}).
 Si aparentemente hay convergencia con unos pocos cientos de árboles, no va a variar mucho el nivel de error al aumentar el número.
 Por tanto aumentar mucho el número de árboles no mejora las predicciones, aunque tampoco aumenta el riesgo de sobreajuste.
 Los costes computacionales aumentan con el número de árboles, pero la construcción y evaluación del modelo son fácilmente paralelizables (aunque pueden llegar a requerir mucha memoria si el conjunto de datos es muy grande).
@@ -7645,7 +7644,7 @@ Por ejemplo podemos combinar el método de preprocesado \texttt{"pca"} de \textt
   ## (Intercept)         PC1         PC2         PC3         PC4         PC5 
   ##  58.0375000   2.7256200  -2.0882164   1.5167199  -1.1761229  -0.3588877 
   ##         PC6 
-  ##  -3.3571851
+  ##   3.3571851
 \end{verbatim}
 
 \begin{Shaded}
@@ -7987,10 +7986,6 @@ Para obtener un resumen más completo del ajuste también se utiliza \texttt{sum
   ## glm(formula = alianza ~ velocida + calidadp, family = binomial, 
   ##     data = train)
   ## 
-  ## Deviance Residuals: 
-  ##     Min       1Q   Median       3Q      Max  
-  ## -1.8273  -0.7622  -0.2998   0.7837   1.8375  
-  ## 
   ## Coefficients:
   ##             Estimate Std. Error z value Pr(>|z|)    
   ## (Intercept) -12.5218     2.0758  -6.032 1.62e-09 ***
@@ -8147,10 +8142,6 @@ También se podría emplear la función \href{https://rdrr.io/pkg/RcmdrMisc/man/
   ## Call:
   ## glm(formula = alianza ~ velocida + calidadp + imgfvent, family = binomial, 
   ##     data = train)
-  ## 
-  ## Deviance Residuals: 
-  ##     Min       1Q   Median       3Q      Max  
-  ## -2.6527  -0.6822  -0.1482   0.7631   2.0561  
   ## 
   ## Coefficients:
   ##             Estimate Std. Error z value Pr(>|z|)    
@@ -8439,7 +8430,7 @@ Alternativamente se podría emplear \emph{validación cruzada generalizada} (\pr
 (sustituyendo \(S_{ii}\) por su promedio).
 Además, la traza de la matriz de suavizado \(tr(S)\) es lo que se conoce como el \emph{número efectivo de parámetros} (\(n - tr(S)\) sería una aproximación de los grados de libertad del error).
 
-Aunque el paquete base de \texttt{R} incluye herramientas para la estimación tipo núcleo de la regresión (\texttt{ksmooth()}, \texttt{loess()}), recomiendan el uso del paquete \texttt{KernSmooth} (\protect\hyperlink{ref-R-KernSmooth}{Wand, 2021}).
+Aunque el paquete base de \texttt{R} incluye herramientas para la estimación tipo núcleo de la regresión (\texttt{ksmooth()}, \texttt{loess()}), recomiendan el uso del paquete \texttt{KernSmooth} (\protect\hyperlink{ref-R-KernSmooth}{\textbf{R-KernSmooth?}}).
 Continuando con el ejemplo del conjunto de datos \texttt{MASS::mcycle} emplearemos la función \texttt{locpoly()} de este paquete para obtener estimaciones lineales locales\footnote{La función \texttt{KernSmooth::locpoly()} también admite la estimación de derivadas.} con una venta seleccionada mediante un método plug-in (ver Figura \ref{fig:llr-fit}):
 
 \begin{Shaded}
@@ -9049,8 +9040,8 @@ La función \href{https://rdrr.io/pkg/mgcv/man/gam.check.html}{\texttt{gam.check
   ## indicate that k is too low, especially if edf is close to k'.
   ## 
   ##                k'  edf k-index p-value
-  ## s(income)    9.00 3.12    0.98    0.39
-  ## s(education) 9.00 3.18    1.03    0.48
+  ## s(income)    9.00 3.12    0.98    0.42
+  ## s(education) 9.00 3.18    1.03    0.59
 \end{verbatim}
 
 Lo ideal sería observar normalidad en los dos gráficos de la izquierda, falta de patrón en el superior derecho, y ajuste a una recta en el inferior derecho. En este caso parece que el modelo se comporta adecuadamente.
@@ -9066,9 +9057,9 @@ También se podría chequear concurvidad (generalización de la colinealidad; fu
 
 \begin{verbatim}
   ##                  para s(income) s(education)
-  ## worst    3.107241e-23 0.5931528    0.5931528
-  ## observed 3.107241e-23 0.4065402    0.4398639
-  ## estimate 3.107241e-23 0.3613674    0.4052251
+  ## worst    3.061188e-23 0.5931528    0.5931528
+  ## observed 3.061188e-23 0.4065402    0.4398639
+  ## estimate 3.061188e-23 0.3613674    0.4052251
 \end{verbatim}
 
 Esta función devuelve tres medidas por componente, que tratan de medir la proporción de variación de esa componente que está contenida en el resto (similares al complementario de la tolerancia), un valor próximo a 1 indicaría que puede haber problemas de concurvidad.
@@ -10016,15 +10007,15 @@ Para ajustar un modelo \emph{single index} también se podría emplear la funci�
   ## Single Index Model
   ## Regression Data: 264 training points, in 9 variable(s)
   ## 
-  ##       vh     wind humidity     temp       ibh      dpg      ibt        vis
-  ## Beta:  1 4.338446 6.146688 10.44244 0.0926648 3.464211 5.017786 -0.5646063
-  ##             doy
-  ## Beta: -1.048745
-  ## Bandwidth: 16.54751
+  ##       vh     wind humidity     temp        ibh      dpg      ibt       vis
+  ## Beta:  1 10.85006 6.264221 8.855986 0.09266013 4.003849 5.662514 -0.661448
+  ##            doy
+  ## Beta: -1.11846
+  ## Bandwidth: 13.79708
   ## Kernel Regression Estimator: Local-Constant
   ## 
-  ## Residual standard error: 3.520037
-  ## R-squared: 0.806475
+  ## Residual standard error: 3.261427
+  ## R-squared: 0.8339121
   ## 
   ## Continuous Kernel Type: Second-Order Gaussian
   ## No. Continuous Explanatory Vars.: 1
@@ -10057,8 +10048,8 @@ Al representar la función \emph{ridge} se observa que aparentemente la ventana 
 \end{Shaded}
 
 \begin{verbatim}
-  ##          me        rmse         mae         mpe        mape   r.squared 
-  ##   0.1712457   4.3725067   3.1789199 -10.2320531  35.2010284   0.7045213
+  ##         me       rmse        mae        mpe       mape  r.squared 
+  ##  0.3502566  4.7723853  3.6367933 -8.8225529 38.2419105  0.6480052
 \end{verbatim}
 
 \hypertarget{neural-nets}{%
@@ -10429,8 +10420,11 @@ Fan, J., y Gijbels, I. (1996). \emph{Local Polynomial Modelling and Its Applicat
 \leavevmode\vadjust pre{\hypertarget{ref-faraway2014linear}{}}%
 Faraway, J. J. (2016). \emph{Linear Models with R} (Second). CRC Press.
 
-\leavevmode\vadjust pre{\hypertarget{ref-fernandez2020simbook}{}}%
-Fernández-Casal, R., y Cao, R. (2020). \emph{Simulación Estadística}. \url{https://rubenfcasal.github.io/simbook}
+\leavevmode\vadjust pre{\hypertarget{ref-R-mpae}{}}%
+Fernandez-Casal, R., Oviedo-de la Fuente, M., y Costa-Bouzas, J. (2024). \emph{mpae: Metodos Predictivos de Aprendizaje Estadistico (Statistical Learning Predictive Methods)}. \url{https://github.com/rubenfcasal/mpae}
+
+\leavevmode\vadjust pre{\hypertarget{ref-fernandez2023simbook}{}}%
+Fernández-Casal, R., Cao, R., y Costa, J. (2023). \emph{Técnicas de simulación y remuestreo}. \url{https://rubenfcasal.github.io/simbook}
 
 \leavevmode\vadjust pre{\hypertarget{ref-fernandez2019intror}{}}%
 Fernández-Casal, R., Roca-Pardiñas, J., y Costa, J. (2019). \emph{Introducción al Análisis de Datos con R}. \url{https://rubenfcasal.github.io/intror}
@@ -10511,7 +10505,7 @@ Kruskal, J. B. (1969). Toward a practical method which helps uncover the structu
 Kuhn, M. (2008). Building Predictive Models in R Using the caret Package. \emph{Journal of Statistical Software}, \emph{28}(5), 1-26. \url{https://doi.org/10.18637/jss.v028.i05}
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-caret}{}}%
-Kuhn, M. (2022). \emph{caret: Classification and Regression Training}. \url{https://github.com/topepo/caret/}
+Kuhn, M. (2023). \emph{caret: Classification and Regression Training}. \url{https://github.com/topepo/caret/}
 
 \leavevmode\vadjust pre{\hypertarget{ref-kuhn2013applied}{}}%
 Kuhn, M., y Johnson, K. (2013). \emph{Applied predictive modeling} (Vol. 26). Springer. \url{https://doi.org/10.1007/978-1-4614-6849-3}
@@ -10520,7 +10514,7 @@ Kuhn, M., y Johnson, K. (2013). \emph{Applied predictive modeling} (Vol. 26). Sp
 Kuhn, M., y Silge, J. (2022). \emph{Tidy Modeling with R}. O'Reilly Media. \url{https://www.tmwr.org}
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-tidymodels}{}}%
-Kuhn, M., y Wickham, H. (2022). \emph{tidymodels: Easily Install and Load the Tidymodels Packages}. \url{https://CRAN.R-project.org/package=tidymodels}
+Kuhn, M., y Wickham, H. (2023). \emph{tidymodels: Easily Install and Load the Tidymodels Packages}. \url{https://tidymodels.tidymodels.org}
 
 \leavevmode\vadjust pre{\hypertarget{ref-kvaalseth1985cautionary}{}}%
 Kvålseth, T. O. (1985). Cautionary note about R 2. \emph{The American Statistician}, \emph{39}(4), 279-285. \url{https://doi.org/10.1080/00031305.1985.10479448}
@@ -10584,9 +10578,6 @@ Venables, W. N., y Ripley, B. D. (2002). \emph{Modern Applied Statistics with S}
 
 \leavevmode\vadjust pre{\hypertarget{ref-vinayak2015dart}{}}%
 Vinayak, R. K., y Gilad-Bachrach, R. (2015). Dart: Dropouts meet multiple additive regression trees. \emph{Artificial Intelligence and Statistics}, 489-497.
-
-\leavevmode\vadjust pre{\hypertarget{ref-R-KernSmooth}{}}%
-Wand, M. (2021). \emph{KernSmooth: Functions for Kernel Smoothing Supporting Wand \& Jones (1995)}. \url{https://CRAN.R-project.org/package=KernSmooth}
 
 \leavevmode\vadjust pre{\hypertarget{ref-welch1939note}{}}%
 Welch, B. L. (1939). Note on Discriminant Functions. \emph{Biometrika}, \emph{31}(1/2), 218-220. \url{https://doi.org/10.2307/2334985}

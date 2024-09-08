@@ -791,8 +791,8 @@ gam.check(modelo)
   ## indicate that k is too low, especially if edf is close to k'.
   ## 
   ##                k'  edf k-index p-value
-  ## s(income)    9.00 3.12    0.98    0.39
-  ## s(education) 9.00 3.18    1.03    0.48
+  ## s(income)    9.00 3.12    0.98    0.42
+  ## s(education) 9.00 3.18    1.03    0.59
 ```
 
 Lo ideal sería observar normalidad en los dos gráficos de la izquierda, falta de patrón en el superior derecho, y ajuste a una recta en el inferior derecho. En este caso parece que el modelo se comporta adecuadamente.
@@ -807,9 +807,9 @@ concurvity(modelo)
 
 ```
   ##                  para s(income) s(education)
-  ## worst    3.107241e-23 0.5931528    0.5931528
-  ## observed 3.107241e-23 0.4065402    0.4398639
-  ## estimate 3.107241e-23 0.3613674    0.4052251
+  ## worst    3.061188e-23 0.5931528    0.5931528
+  ## observed 3.061188e-23 0.4065402    0.4398639
+  ## estimate 3.061188e-23 0.3613674    0.4052251
 ```
 
 Esta función devuelve tres medidas por componente, que tratan de medir la proporción de variación de esa componente que está contenida en el resto (similares al complementario de la tolerancia), un valor próximo a 1 indicaría que puede haber problemas de concurvidad.
@@ -1719,15 +1719,15 @@ summary(sindex)
   ## Single Index Model
   ## Regression Data: 264 training points, in 9 variable(s)
   ## 
-  ##       vh     wind humidity     temp       ibh      dpg      ibt        vis
-  ## Beta:  1 4.338446 6.146688 10.44244 0.0926648 3.464211 5.017786 -0.5646063
-  ##             doy
-  ## Beta: -1.048745
-  ## Bandwidth: 16.54751
+  ##       vh     wind humidity     temp        ibh      dpg      ibt       vis
+  ## Beta:  1 10.85006 6.264221 8.855986 0.09266013 4.003849 5.662514 -0.661448
+  ##            doy
+  ## Beta: -1.11846
+  ## Bandwidth: 13.79708
   ## Kernel Regression Estimator: Local-Constant
   ## 
-  ## Residual standard error: 3.520037
-  ## R-squared: 0.806475
+  ## Residual standard error: 3.261427
+  ## R-squared: 0.8339121
   ## 
   ## Continuous Kernel Type: Second-Order Gaussian
   ## No. Continuous Explanatory Vars.: 1
@@ -1757,6 +1757,6 @@ accuracy(pred, obs)
 ```
 
 ```
-  ##          me        rmse         mae         mpe        mape   r.squared 
-  ##   0.1712457   4.3725067   3.1789199 -10.2320531  35.2010284   0.7045213
+  ##         me       rmse        mae        mpe       mape  r.squared 
+  ##  0.3502566  4.7723853  3.6367933 -8.8225529 38.2419105  0.6480052
 ```

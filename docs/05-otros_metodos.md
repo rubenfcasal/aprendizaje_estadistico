@@ -26,6 +26,7 @@ knitr::purl("05-otros_metodos.Rmd", documentation = 2)
 knitr::spin("05-otros_metodos.R",knit = FALSE)
 
 Pendiente:
+Referencia https://daviddalpiaz.github.io/r4sl/generative-models.html
 https://topepo.github.io/caret/train-models-by-tag.html#discriminant-analysis
 - Selección de predictores
   caret: method = "stepLDA", "stepQDA", 

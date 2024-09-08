@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>5.2 Análisis discriminante cuadrático | Aprendizaje Estadístico</title>
   <meta name="description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
   <meta property="og:title" content="5.2 Análisis discriminante cuadrático | Aprendizaje Estadístico" />
   <meta property="og:type" content="book" />
@@ -53,12 +53,12 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.26/datatables.js"></script>
-<link href="libs/dt-core-1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="libs/dt-core-1.12.1/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="libs/dt-core-1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="libs/datatables-binding-0.30/datatables.js"></script>
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.13.4/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
 
@@ -128,6 +128,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -354,8 +358,8 @@ div.csl-indent {
 <p>También hay una versión con dos hiperparámetros, <span class="math inline">\(\lambda\)</span> y <span class="math inline">\(\gamma\)</span>,
 <span class="math display">\[\Sigma_{k,\lambda,\gamma}&#39; = (1 - \gamma) \Sigma_{k,\lambda}&#39; + \gamma \frac{1}{p} \mbox{tr} (\Sigma_{k,\lambda}&#39;)I\]</span></p>
 <p>De modo análogo al caso lineal, podemos realizar un análisis discriminante cuadrático empleando la función <a href="https://rdrr.io/pkg/MASS/man/qda.html"><code>MASS::qda()</code></a>:</p>
-<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="clas-qda.html#cb246-1" aria-hidden="true" tabindex="-1"></a>qd <span class="ot">&lt;-</span> <span class="fu">qda</span>(taste <span class="sc">~</span> ., <span class="at">data =</span> train)</span>
-<span id="cb246-2"><a href="clas-qda.html#cb246-2" aria-hidden="true" tabindex="-1"></a>qd</span></code></pre></div>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="clas-qda.html#cb247-1" aria-hidden="true" tabindex="-1"></a>qd <span class="ot">&lt;-</span> <span class="fu">qda</span>(taste <span class="sc">~</span> ., <span class="at">data =</span> train)</span>
+<span id="cb247-2"><a href="clas-qda.html#cb247-2" aria-hidden="true" tabindex="-1"></a>qd</span></code></pre></div>
 <pre><code>## Call:
 ## qda(taste ~ ., data = train)
 ## 
@@ -373,10 +377,10 @@ div.csl-indent {
 ##        alcohol
 ## good 10.786959
 ## bad   9.845611</code></pre>
-<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="clas-qda.html#cb248-1" aria-hidden="true" tabindex="-1"></a>qd.pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(qd, <span class="at">newdata =</span> test)</span>
-<span id="cb248-2"><a href="clas-qda.html#cb248-2" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> qd.pred<span class="sc">$</span>class</span>
-<span id="cb248-3"><a href="clas-qda.html#cb248-3" aria-hidden="true" tabindex="-1"></a><span class="co"># p.est &lt;- qd.pred$posterior</span></span>
-<span id="cb248-4"><a href="clas-qda.html#cb248-4" aria-hidden="true" tabindex="-1"></a>caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(pred, test<span class="sc">$</span>taste)</span></code></pre></div>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="clas-qda.html#cb249-1" aria-hidden="true" tabindex="-1"></a>qd.pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(qd, <span class="at">newdata =</span> test)</span>
+<span id="cb249-2"><a href="clas-qda.html#cb249-2" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> qd.pred<span class="sc">$</span>class</span>
+<span id="cb249-3"><a href="clas-qda.html#cb249-3" aria-hidden="true" tabindex="-1"></a><span class="co"># p.est &lt;- qd.pred$posterior</span></span>
+<span id="cb249-4"><a href="clas-qda.html#cb249-4" aria-hidden="true" tabindex="-1"></a>caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(pred, test<span class="sc">$</span>taste)</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference

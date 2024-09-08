@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>7.1 Regresión local | Aprendizaje Estadístico</title>
   <meta name="description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
   <meta property="og:title" content="7.1 Regresión local | Aprendizaje Estadístico" />
   <meta property="og:type" content="book" />
@@ -53,12 +53,12 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.26/datatables.js"></script>
-<link href="libs/dt-core-1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="libs/dt-core-1.12.1/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="libs/dt-core-1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="libs/datatables-binding-0.30/datatables.js"></script>
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.13.4/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
 
@@ -128,6 +128,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -361,21 +365,21 @@ Normalmente se considera la distancia euclídea (<span class="math inline">\(d=2
 En cualquier caso la recomendación es estandarizar previamente los predictores para que no influya su escala en el cálculo de las distancias.</p>
 <p>Como ya se mostró en al final del Capítulo <a href="intro-AE.html#intro-AE">1</a>, este método está implementado en la función <code>knnreg()</code> (Sección <a href="dimen-curse.html#dimen-curse">1.4</a>) y en el método <code>"knn"</code> del paquete <code>caret</code> (Sección <a href="caret.html#caret">1.6</a>).
 Como ejemplo adicional emplearemos el conjunto de datos <code>MASS::mcycle</code> que contiene mediciones de la aceleración de la cabeza en una simulación de un accidente de motocicleta, utilizado para probar cascos protectores (considerando el conjunto de datos completo como si fuese la muestra de entrenamiento; ver Figura <a href="reg-local.html#fig:np-knnfit">7.1</a>):</p>
-<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="reg-local.html#cb398-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(mcycle, <span class="at">package =</span> <span class="st">&quot;MASS&quot;</span>)</span>
-<span id="cb398-2"><a href="reg-local.html#cb398-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
-<span id="cb398-3"><a href="reg-local.html#cb398-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajuste de los modelos</span></span>
-<span id="cb398-4"><a href="reg-local.html#cb398-4" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">knnreg</span>(accel <span class="sc">~</span> times, <span class="at">data =</span> mcycle, <span class="at">k =</span> <span class="dv">5</span>) <span class="co"># 5% de los datos</span></span>
-<span id="cb398-5"><a href="reg-local.html#cb398-5" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">knnreg</span>(accel <span class="sc">~</span> times, <span class="at">data =</span> mcycle, <span class="at">k =</span> <span class="dv">10</span>)</span>
-<span id="cb398-6"><a href="reg-local.html#cb398-6" aria-hidden="true" tabindex="-1"></a>fit3 <span class="ot">&lt;-</span> <span class="fu">knnreg</span>(accel <span class="sc">~</span> times, <span class="at">data =</span> mcycle, <span class="at">k =</span> <span class="dv">20</span>)</span>
-<span id="cb398-7"><a href="reg-local.html#cb398-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Representación</span></span>
-<span id="cb398-8"><a href="reg-local.html#cb398-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(accel <span class="sc">~</span> times, <span class="at">data =</span> mcycle, <span class="at">col =</span> <span class="st">&#39;darkgray&#39;</span>) </span>
-<span id="cb398-9"><a href="reg-local.html#cb398-9" aria-hidden="true" tabindex="-1"></a>newx <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span> , <span class="dv">60</span>, <span class="at">len =</span> <span class="dv">200</span>)</span>
-<span id="cb398-10"><a href="reg-local.html#cb398-10" aria-hidden="true" tabindex="-1"></a>newdata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">times =</span> newx)</span>
-<span id="cb398-11"><a href="reg-local.html#cb398-11" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx, <span class="fu">predict</span>(fit1, newdata), <span class="at">lty =</span> <span class="dv">3</span>)</span>
-<span id="cb398-12"><a href="reg-local.html#cb398-12" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx, <span class="fu">predict</span>(fit2, newdata), <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb398-13"><a href="reg-local.html#cb398-13" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx, <span class="fu">predict</span>(fit3, newdata))</span>
-<span id="cb398-14"><a href="reg-local.html#cb398-14" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;5-NN&quot;</span>, <span class="st">&quot;10-NN&quot;</span>, <span class="st">&quot;20-NN&quot;</span>), </span>
-<span id="cb398-15"><a href="reg-local.html#cb398-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>), <span class="at">lwd =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="reg-local.html#cb399-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(mcycle, <span class="at">package =</span> <span class="st">&quot;MASS&quot;</span>)</span>
+<span id="cb399-2"><a href="reg-local.html#cb399-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb399-3"><a href="reg-local.html#cb399-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajuste de los modelos</span></span>
+<span id="cb399-4"><a href="reg-local.html#cb399-4" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">knnreg</span>(accel <span class="sc">~</span> times, <span class="at">data =</span> mcycle, <span class="at">k =</span> <span class="dv">5</span>) <span class="co"># 5% de los datos</span></span>
+<span id="cb399-5"><a href="reg-local.html#cb399-5" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">knnreg</span>(accel <span class="sc">~</span> times, <span class="at">data =</span> mcycle, <span class="at">k =</span> <span class="dv">10</span>)</span>
+<span id="cb399-6"><a href="reg-local.html#cb399-6" aria-hidden="true" tabindex="-1"></a>fit3 <span class="ot">&lt;-</span> <span class="fu">knnreg</span>(accel <span class="sc">~</span> times, <span class="at">data =</span> mcycle, <span class="at">k =</span> <span class="dv">20</span>)</span>
+<span id="cb399-7"><a href="reg-local.html#cb399-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Representación</span></span>
+<span id="cb399-8"><a href="reg-local.html#cb399-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(accel <span class="sc">~</span> times, <span class="at">data =</span> mcycle, <span class="at">col =</span> <span class="st">&#39;darkgray&#39;</span>) </span>
+<span id="cb399-9"><a href="reg-local.html#cb399-9" aria-hidden="true" tabindex="-1"></a>newx <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span> , <span class="dv">60</span>, <span class="at">len =</span> <span class="dv">200</span>)</span>
+<span id="cb399-10"><a href="reg-local.html#cb399-10" aria-hidden="true" tabindex="-1"></a>newdata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">times =</span> newx)</span>
+<span id="cb399-11"><a href="reg-local.html#cb399-11" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx, <span class="fu">predict</span>(fit1, newdata), <span class="at">lty =</span> <span class="dv">3</span>)</span>
+<span id="cb399-12"><a href="reg-local.html#cb399-12" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx, <span class="fu">predict</span>(fit2, newdata), <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb399-13"><a href="reg-local.html#cb399-13" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx, <span class="fu">predict</span>(fit3, newdata))</span>
+<span id="cb399-14"><a href="reg-local.html#cb399-14" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;5-NN&quot;</span>, <span class="st">&quot;10-NN&quot;</span>, <span class="st">&quot;20-NN&quot;</span>), </span>
+<span id="cb399-15"><a href="reg-local.html#cb399-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>), <span class="at">lwd =</span> <span class="dv">1</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:np-knnfit"></span>
 <img src="07-regresion_np_files/figure-html/np-knnfit-1.png" alt="Predicciones con el método KNN y distintos vecindarios." width="75%" />
 <p class="caption">
@@ -394,7 +398,7 @@ por mínimos cuadrados ponderados, con pesos
 <span class="math display">\[w_{i} = K_h(x - x_0) = \frac{1}{h}K\left(\frac{x-x_0}{h}\right)\]</span>
 donde <span class="math inline">\(K\)</span> es una función núcleo (normalmente una densidad simétrica en torno al cero) y <span class="math inline">\(h&gt;0\)</span> es un parámetro de suavizado, llamado ventana, que regula el tamaño del entorno que se usa para llevar a cabo el ajuste
 (esta ventana también se puede suponer local, <span class="math inline">\(h \equiv h(x_0)\)</span>; por ejemplo el método KNN se puede considerar un caso particular, con <span class="math inline">\(d=0\)</span> y <span class="math inline">\(K\)</span> la densidad de una <span class="math inline">\(\mathcal{U}(-1, 1)\)</span>).
-A partir de este ajuste<a href="#fn42" class="footnote-ref" id="fnref42"><sup>42</sup></a>:</p>
+A partir de este ajuste<a href="#fn43" class="footnote-ref" id="fnref43"><sup>43</sup></a>:</p>
 <ul>
 <li><p>La estimación en <span class="math inline">\(x_0\)</span> es <span class="math inline">\(\hat{m}_{h}(x_0)=\hat{\beta}_0\)</span>.</p></li>
 <li><p>Podemos obtener también estimaciones de las derivadas:
@@ -417,7 +421,7 @@ es la matriz de pesos, e <span class="math inline">\(\mathbf{Y} = \left( Y_1, \c
 <span class="math display">\[\hat{\mathbf{Y}} = S\mathbf{Y}\]</span>
 siendo <span class="math inline">\(S\)</span> la matriz de suavizado con <span class="math inline">\(\mathbf{s}_{X_{i}}^{t}\)</span> en la fila <span class="math inline">\(i\)</span> (este tipo de métodos también se denominan <em>suavizadores lineales</em>).</p>
 <p>Habitualmente se considera <span class="math inline">\(d=0\)</span>, el estimador Nadaraya-Watson, o <span class="math inline">\(d=1\)</span>, estimador lineal local.
-Desde el punto de vista asintótico ambos estimadores tienen un comportamiento similar<a href="#fn43" class="footnote-ref" id="fnref43"><sup>43</sup></a>, pero en la práctica suele ser preferible el estimador lineal local, sobre todo porque se ve menos afectado por el denominado efecto frontera (Sección <a href="dimen-curse.html#dimen-curse">1.4</a>).</p>
+Desde el punto de vista asintótico ambos estimadores tienen un comportamiento similar<a href="#fn44" class="footnote-ref" id="fnref44"><sup>44</sup></a>, pero en la práctica suele ser preferible el estimador lineal local, sobre todo porque se ve menos afectado por el denominado efecto frontera (Sección <a href="dimen-curse.html#dimen-curse">1.4</a>).</p>
 <p>La ventana <span class="math inline">\(h\)</span> es el (hiper)parámetro de mayor importancia en la predicción y para seleccionarlo se suelen emplear métodos de validación cruzada (Sección <a href="const-eval.html#cv">1.3.3</a>) o tipo plug-in (reemplazando las funciones desconocidas que aparecen en la expresión de la ventana asintóticamente óptima por estimaciones; e.g. función <code>dpill()</code> del paquete <code>KernSmooth</code>).
 Por ejemplo, usando el criterio de validación cruzada dejando uno fuera (LOOCV) se trataría de minimizar:
 <span class="math display">\[CV(h)=\frac{1}{n}\sum_{i=1}^n(y_i-\hat{m}_{-i}(x_i))^2\]</span>
@@ -429,16 +433,16 @@ siendo <span class="math inline">\(S_{ii}\)</span> el elemento <span class="math
 <span class="math display">\[GCV(h)=\frac{1}{n}\sum_{i=1}^n\left(\frac{y_i-\hat{m}(x_i)}{1 - \frac{1}{n}tr(S)}\right)^2\]</span>
 (sustituyendo <span class="math inline">\(S_{ii}\)</span> por su promedio).
 Además, la traza de la matriz de suavizado <span class="math inline">\(tr(S)\)</span> es lo que se conoce como el <em>número efectivo de parámetros</em> (<span class="math inline">\(n - tr(S)\)</span> sería una aproximación de los grados de libertad del error).</p>
-<p>Aunque el paquete base de <code>R</code> incluye herramientas para la estimación tipo núcleo de la regresión (<code>ksmooth()</code>, <code>loess()</code>), recomiendan el uso del paquete <code>KernSmooth</code> <span class="citation">(<a href="#ref-R-KernSmooth" role="doc-biblioref">Wand, 2021</a>)</span>.
-Continuando con el ejemplo del conjunto de datos <code>MASS::mcycle</code> emplearemos la función <code>locpoly()</code> de este paquete para obtener estimaciones lineales locales<a href="#fn44" class="footnote-ref" id="fnref44"><sup>44</sup></a> con una venta seleccionada mediante un método plug-in (ver Figura <a href="reg-local.html#fig:llr-fit">7.2</a>):</p>
-<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="reg-local.html#cb399-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data(mcycle, package = &quot;MASS&quot;)</span></span>
-<span id="cb399-2"><a href="reg-local.html#cb399-2" aria-hidden="true" tabindex="-1"></a>times <span class="ot">&lt;-</span> mcycle<span class="sc">$</span>times</span>
-<span id="cb399-3"><a href="reg-local.html#cb399-3" aria-hidden="true" tabindex="-1"></a>accel <span class="ot">&lt;-</span> mcycle<span class="sc">$</span>accel  </span>
-<span id="cb399-4"><a href="reg-local.html#cb399-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(KernSmooth)</span>
-<span id="cb399-5"><a href="reg-local.html#cb399-5" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="fu">dpill</span>(times, accel) <span class="co"># Método plug-in de Ruppert, Sheather y Wand (1995)</span></span>
-<span id="cb399-6"><a href="reg-local.html#cb399-6" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">locpoly</span>(times, accel, <span class="at">bandwidth =</span> h) <span class="co"># Estimación lineal local</span></span>
-<span id="cb399-7"><a href="reg-local.html#cb399-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(times, accel, <span class="at">col =</span> <span class="st">&#39;darkgray&#39;</span>)</span>
-<span id="cb399-8"><a href="reg-local.html#cb399-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(fit)</span></code></pre></div>
+<p>Aunque el paquete base de <code>R</code> incluye herramientas para la estimación tipo núcleo de la regresión (<code>ksmooth()</code>, <code>loess()</code>), recomiendan el uso del paquete <code>KernSmooth</code> <span class="citation">(<a href="#ref-R-KernSmooth" role="doc-biblioref"><strong>R-KernSmooth?</strong></a>)</span>.
+Continuando con el ejemplo del conjunto de datos <code>MASS::mcycle</code> emplearemos la función <code>locpoly()</code> de este paquete para obtener estimaciones lineales locales<a href="#fn45" class="footnote-ref" id="fnref45"><sup>45</sup></a> con una venta seleccionada mediante un método plug-in (ver Figura <a href="reg-local.html#fig:llr-fit">7.2</a>):</p>
+<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="reg-local.html#cb400-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data(mcycle, package = &quot;MASS&quot;)</span></span>
+<span id="cb400-2"><a href="reg-local.html#cb400-2" aria-hidden="true" tabindex="-1"></a>times <span class="ot">&lt;-</span> mcycle<span class="sc">$</span>times</span>
+<span id="cb400-3"><a href="reg-local.html#cb400-3" aria-hidden="true" tabindex="-1"></a>accel <span class="ot">&lt;-</span> mcycle<span class="sc">$</span>accel  </span>
+<span id="cb400-4"><a href="reg-local.html#cb400-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(KernSmooth)</span>
+<span id="cb400-5"><a href="reg-local.html#cb400-5" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="fu">dpill</span>(times, accel) <span class="co"># Método plug-in de Ruppert, Sheather y Wand (1995)</span></span>
+<span id="cb400-6"><a href="reg-local.html#cb400-6" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">locpoly</span>(times, accel, <span class="at">bandwidth =</span> h) <span class="co"># Estimación lineal local</span></span>
+<span id="cb400-7"><a href="reg-local.html#cb400-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(times, accel, <span class="at">col =</span> <span class="st">&#39;darkgray&#39;</span>)</span>
+<span id="cb400-8"><a href="reg-local.html#cb400-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(fit)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:llr-fit"></span>
 <img src="07-regresion_np_files/figure-html/llr-fit-1.png" alt="Ajuste lineal local con ventana plug-in." width="75%" />
 <p class="caption">
@@ -447,28 +451,28 @@ Figura 7.2: Ajuste lineal local con ventana plug-in.
 </div>
 <p>Hay que tener en cuenta que el paquete <code>KernSmooth</code> no implementa los métodos
 <code>predict()</code> y <code>residuals()</code>:</p>
-<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="reg-local.html#cb400-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">approx</span>(fit, <span class="at">xout =</span> times)<span class="sc">$</span>y <span class="co"># pred &lt;- predict(fit)</span></span>
-<span id="cb400-2"><a href="reg-local.html#cb400-2" aria-hidden="true" tabindex="-1"></a>resid <span class="ot">&lt;-</span> accel <span class="sc">-</span> pred <span class="co"># resid &lt;- residuals(fit)</span></span></code></pre></div>
+<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="reg-local.html#cb401-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">approx</span>(fit, <span class="at">xout =</span> times)<span class="sc">$</span>y <span class="co"># pred &lt;- predict(fit)</span></span>
+<span id="cb401-2"><a href="reg-local.html#cb401-2" aria-hidden="true" tabindex="-1"></a>resid <span class="ot">&lt;-</span> accel <span class="sc">-</span> pred <span class="co"># resid &lt;- residuals(fit)</span></span></code></pre></div>
 <p>Tampoco calcula medidas de bondad de ajuste, aunque podríamos calcular medidas de la precisión de las predicciones de la forma habitual (en este caso de la muestra de entrenamiento):</p>
-<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="reg-local.html#cb401-1" aria-hidden="true" tabindex="-1"></a>accuracy <span class="ot">&lt;-</span> <span class="cf">function</span>(pred, obs, <span class="at">na.rm =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb401-2"><a href="reg-local.html#cb401-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">tol =</span> <span class="fu">sqrt</span>(.Machine<span class="sc">$</span>double.eps)) {</span>
-<span id="cb401-3"><a href="reg-local.html#cb401-3" aria-hidden="true" tabindex="-1"></a>  err <span class="ot">&lt;-</span> obs <span class="sc">-</span> pred     <span class="co"># Errores</span></span>
-<span id="cb401-4"><a href="reg-local.html#cb401-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(na.rm) {</span>
-<span id="cb401-5"><a href="reg-local.html#cb401-5" aria-hidden="true" tabindex="-1"></a>    is.a <span class="ot">&lt;-</span> <span class="sc">!</span><span class="fu">is.na</span>(err)</span>
-<span id="cb401-6"><a href="reg-local.html#cb401-6" aria-hidden="true" tabindex="-1"></a>    err <span class="ot">&lt;-</span> err[is.a]</span>
-<span id="cb401-7"><a href="reg-local.html#cb401-7" aria-hidden="true" tabindex="-1"></a>    obs <span class="ot">&lt;-</span> obs[is.a]</span>
-<span id="cb401-8"><a href="reg-local.html#cb401-8" aria-hidden="true" tabindex="-1"></a>  }  </span>
-<span id="cb401-9"><a href="reg-local.html#cb401-9" aria-hidden="true" tabindex="-1"></a>  perr <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span>err<span class="sc">/</span><span class="fu">pmax</span>(obs, tol)  <span class="co"># Errores porcentuales</span></span>
-<span id="cb401-10"><a href="reg-local.html#cb401-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">c</span>(</span>
-<span id="cb401-11"><a href="reg-local.html#cb401-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">me =</span> <span class="fu">mean</span>(err),           <span class="co"># Error medio</span></span>
-<span id="cb401-12"><a href="reg-local.html#cb401-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">rmse =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(err<span class="sc">^</span><span class="dv">2</span>)), <span class="co"># Raíz del error cuadrático medio </span></span>
-<span id="cb401-13"><a href="reg-local.html#cb401-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">mae =</span> <span class="fu">mean</span>(<span class="fu">abs</span>(err)),     <span class="co"># Error absoluto medio</span></span>
-<span id="cb401-14"><a href="reg-local.html#cb401-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">mpe =</span> <span class="fu">mean</span>(perr),         <span class="co"># Error porcentual medio</span></span>
-<span id="cb401-15"><a href="reg-local.html#cb401-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">mape =</span> <span class="fu">mean</span>(<span class="fu">abs</span>(perr)),   <span class="co"># Error porcentual absoluto medio</span></span>
-<span id="cb401-16"><a href="reg-local.html#cb401-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">r.squared =</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">sum</span>(err<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="fu">sum</span>((obs <span class="sc">-</span> <span class="fu">mean</span>(obs))<span class="sc">^</span><span class="dv">2</span>) <span class="co"># Pseudo R-cuadrado</span></span>
-<span id="cb401-17"><a href="reg-local.html#cb401-17" aria-hidden="true" tabindex="-1"></a>  ))</span>
-<span id="cb401-18"><a href="reg-local.html#cb401-18" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb401-19"><a href="reg-local.html#cb401-19" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(pred, accel)</span></code></pre></div>
+<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="reg-local.html#cb402-1" aria-hidden="true" tabindex="-1"></a>accuracy <span class="ot">&lt;-</span> <span class="cf">function</span>(pred, obs, <span class="at">na.rm =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb402-2"><a href="reg-local.html#cb402-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">tol =</span> <span class="fu">sqrt</span>(.Machine<span class="sc">$</span>double.eps)) {</span>
+<span id="cb402-3"><a href="reg-local.html#cb402-3" aria-hidden="true" tabindex="-1"></a>  err <span class="ot">&lt;-</span> obs <span class="sc">-</span> pred     <span class="co"># Errores</span></span>
+<span id="cb402-4"><a href="reg-local.html#cb402-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(na.rm) {</span>
+<span id="cb402-5"><a href="reg-local.html#cb402-5" aria-hidden="true" tabindex="-1"></a>    is.a <span class="ot">&lt;-</span> <span class="sc">!</span><span class="fu">is.na</span>(err)</span>
+<span id="cb402-6"><a href="reg-local.html#cb402-6" aria-hidden="true" tabindex="-1"></a>    err <span class="ot">&lt;-</span> err[is.a]</span>
+<span id="cb402-7"><a href="reg-local.html#cb402-7" aria-hidden="true" tabindex="-1"></a>    obs <span class="ot">&lt;-</span> obs[is.a]</span>
+<span id="cb402-8"><a href="reg-local.html#cb402-8" aria-hidden="true" tabindex="-1"></a>  }  </span>
+<span id="cb402-9"><a href="reg-local.html#cb402-9" aria-hidden="true" tabindex="-1"></a>  perr <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span>err<span class="sc">/</span><span class="fu">pmax</span>(obs, tol)  <span class="co"># Errores porcentuales</span></span>
+<span id="cb402-10"><a href="reg-local.html#cb402-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">c</span>(</span>
+<span id="cb402-11"><a href="reg-local.html#cb402-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">me =</span> <span class="fu">mean</span>(err),           <span class="co"># Error medio</span></span>
+<span id="cb402-12"><a href="reg-local.html#cb402-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">rmse =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(err<span class="sc">^</span><span class="dv">2</span>)), <span class="co"># Raíz del error cuadrático medio </span></span>
+<span id="cb402-13"><a href="reg-local.html#cb402-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">mae =</span> <span class="fu">mean</span>(<span class="fu">abs</span>(err)),     <span class="co"># Error absoluto medio</span></span>
+<span id="cb402-14"><a href="reg-local.html#cb402-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">mpe =</span> <span class="fu">mean</span>(perr),         <span class="co"># Error porcentual medio</span></span>
+<span id="cb402-15"><a href="reg-local.html#cb402-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">mape =</span> <span class="fu">mean</span>(<span class="fu">abs</span>(perr)),   <span class="co"># Error porcentual absoluto medio</span></span>
+<span id="cb402-16"><a href="reg-local.html#cb402-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">r.squared =</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">sum</span>(err<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="fu">sum</span>((obs <span class="sc">-</span> <span class="fu">mean</span>(obs))<span class="sc">^</span><span class="dv">2</span>) <span class="co"># Pseudo R-cuadrado</span></span>
+<span id="cb402-17"><a href="reg-local.html#cb402-17" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb402-18"><a href="reg-local.html#cb402-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb402-19"><a href="reg-local.html#cb402-19" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(pred, accel)</span></code></pre></div>
 <pre><code>##            me          rmse           mae           mpe          mape 
 ## -2.712378e-01  2.140005e+01  1.565921e+01 -2.460832e+10  7.559223e+10 
 ##     r.squared 
@@ -482,32 +486,32 @@ Figura 7.2: Ajuste lineal local con ventana plug-in.
 Estos métodos surgieron en el caso bivariante (<span class="math inline">\(p=1\)</span>), por lo que también se denominan <em>suavizado de diagramas de dispersión</em> (<em>scatterplot smoothing</em>; e.g. función <code>lowess()</code>, <em>locally weighted scatterplot smoothing</em>, del paquete base).
 Posteriormente se extendieron al caso multivariante (e.g. función <code>loess()</code>).
 Son métodos muy empleados en análisis descriptivo (no supervisado) y normalmente se emplean ventanas locales tipo vecinos más cercanos (por ejemplo a través de un parámetro <code>spam</code> que determina la proporción de observaciones empleadas en el ajuste).</p>
-<p>Como ejemplo emplearemos la función <code>loess()</code> con ajuste robusto (habrá que establecer <code>family = "symmetric"</code> para emplear M-estimadores, por defecto con 4 iteraciones, en lugar de mínimos cuadrados ponderados), seleccionando previamente <code>spam</code> por validación cruzada (LOOCV) pero empleando como criterio de error la mediana de los errores en valor absoluto (<em>median absolute deviation</em>, MAD)<a href="#fn45" class="footnote-ref" id="fnref45"><sup>45</sup></a> (ver Figura <a href="reg-local.html#fig:loess-cv">7.3</a>).</p>
-<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="reg-local.html#cb403-1" aria-hidden="true" tabindex="-1"></a>cv.loess <span class="ot">&lt;-</span> <span class="cf">function</span>(formula, datos, span, ...) {</span>
-<span id="cb403-2"><a href="reg-local.html#cb403-2" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(datos)</span>
-<span id="cb403-3"><a href="reg-local.html#cb403-3" aria-hidden="true" tabindex="-1"></a>  cv.pred <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n)</span>
-<span id="cb403-4"><a href="reg-local.html#cb403-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) {</span>
-<span id="cb403-5"><a href="reg-local.html#cb403-5" aria-hidden="true" tabindex="-1"></a>    modelo <span class="ot">&lt;-</span> <span class="fu">loess</span>(formula, datos[<span class="sc">-</span>i, ], <span class="at">span =</span> span, </span>
-<span id="cb403-6"><a href="reg-local.html#cb403-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">control =</span> <span class="fu">loess.control</span>(<span class="at">surface =</span> <span class="st">&quot;direct&quot;</span>), ...)</span>
-<span id="cb403-7"><a href="reg-local.html#cb403-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># control = loess.control(surface = &quot;direct&quot;) permite extrapolaciones</span></span>
-<span id="cb403-8"><a href="reg-local.html#cb403-8" aria-hidden="true" tabindex="-1"></a>    cv.pred[i] <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo, <span class="at">newdata =</span> datos[i, ])</span>
-<span id="cb403-9"><a href="reg-local.html#cb403-9" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb403-10"><a href="reg-local.html#cb403-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(cv.pred)</span>
-<span id="cb403-11"><a href="reg-local.html#cb403-11" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb403-12"><a href="reg-local.html#cb403-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb403-13"><a href="reg-local.html#cb403-13" aria-hidden="true" tabindex="-1"></a>ventanas <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="at">len =</span> <span class="dv">10</span>)</span>
-<span id="cb403-14"><a href="reg-local.html#cb403-14" aria-hidden="true" tabindex="-1"></a>np <span class="ot">&lt;-</span> <span class="fu">length</span>(ventanas)</span>
-<span id="cb403-15"><a href="reg-local.html#cb403-15" aria-hidden="true" tabindex="-1"></a>cv.error <span class="ot">&lt;-</span> <span class="fu">numeric</span>(np)</span>
-<span id="cb403-16"><a href="reg-local.html#cb403-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(p <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>np){</span>
-<span id="cb403-17"><a href="reg-local.html#cb403-17" aria-hidden="true" tabindex="-1"></a>  cv.pred <span class="ot">&lt;-</span> <span class="fu">cv.loess</span>(accel <span class="sc">~</span> times, mcycle, ventanas[p], <span class="at">family =</span> <span class="st">&quot;symmetric&quot;</span>)</span>
-<span id="cb403-18"><a href="reg-local.html#cb403-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># cv.error[p] &lt;- mean((cv.pred - mcycle$accel)^2)</span></span>
-<span id="cb403-19"><a href="reg-local.html#cb403-19" aria-hidden="true" tabindex="-1"></a>  cv.error[p] <span class="ot">&lt;-</span> <span class="fu">median</span>(<span class="fu">abs</span>(cv.pred <span class="sc">-</span> mcycle<span class="sc">$</span>accel))</span>
-<span id="cb403-20"><a href="reg-local.html#cb403-20" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb403-21"><a href="reg-local.html#cb403-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb403-22"><a href="reg-local.html#cb403-22" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ventanas, cv.error)</span>
-<span id="cb403-23"><a href="reg-local.html#cb403-23" aria-hidden="true" tabindex="-1"></a>imin <span class="ot">&lt;-</span> <span class="fu">which.min</span>(cv.error)</span>
-<span id="cb403-24"><a href="reg-local.html#cb403-24" aria-hidden="true" tabindex="-1"></a>span.cv <span class="ot">&lt;-</span> ventanas[imin]</span>
-<span id="cb403-25"><a href="reg-local.html#cb403-25" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(span.cv, cv.error[imin], <span class="at">pch =</span> <span class="dv">16</span>)</span></code></pre></div>
+<p>Como ejemplo emplearemos la función <code>loess()</code> con ajuste robusto (habrá que establecer <code>family = "symmetric"</code> para emplear M-estimadores, por defecto con 4 iteraciones, en lugar de mínimos cuadrados ponderados), seleccionando previamente <code>spam</code> por validación cruzada (LOOCV) pero empleando como criterio de error la mediana de los errores en valor absoluto (<em>median absolute deviation</em>, MAD)<a href="#fn46" class="footnote-ref" id="fnref46"><sup>46</sup></a> (ver Figura <a href="reg-local.html#fig:loess-cv">7.3</a>).</p>
+<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="reg-local.html#cb404-1" aria-hidden="true" tabindex="-1"></a>cv.loess <span class="ot">&lt;-</span> <span class="cf">function</span>(formula, datos, span, ...) {</span>
+<span id="cb404-2"><a href="reg-local.html#cb404-2" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(datos)</span>
+<span id="cb404-3"><a href="reg-local.html#cb404-3" aria-hidden="true" tabindex="-1"></a>  cv.pred <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n)</span>
+<span id="cb404-4"><a href="reg-local.html#cb404-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) {</span>
+<span id="cb404-5"><a href="reg-local.html#cb404-5" aria-hidden="true" tabindex="-1"></a>    modelo <span class="ot">&lt;-</span> <span class="fu">loess</span>(formula, datos[<span class="sc">-</span>i, ], <span class="at">span =</span> span, </span>
+<span id="cb404-6"><a href="reg-local.html#cb404-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">control =</span> <span class="fu">loess.control</span>(<span class="at">surface =</span> <span class="st">&quot;direct&quot;</span>), ...)</span>
+<span id="cb404-7"><a href="reg-local.html#cb404-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># control = loess.control(surface = &quot;direct&quot;) permite extrapolaciones</span></span>
+<span id="cb404-8"><a href="reg-local.html#cb404-8" aria-hidden="true" tabindex="-1"></a>    cv.pred[i] <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo, <span class="at">newdata =</span> datos[i, ])</span>
+<span id="cb404-9"><a href="reg-local.html#cb404-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb404-10"><a href="reg-local.html#cb404-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(cv.pred)</span>
+<span id="cb404-11"><a href="reg-local.html#cb404-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb404-12"><a href="reg-local.html#cb404-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb404-13"><a href="reg-local.html#cb404-13" aria-hidden="true" tabindex="-1"></a>ventanas <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="at">len =</span> <span class="dv">10</span>)</span>
+<span id="cb404-14"><a href="reg-local.html#cb404-14" aria-hidden="true" tabindex="-1"></a>np <span class="ot">&lt;-</span> <span class="fu">length</span>(ventanas)</span>
+<span id="cb404-15"><a href="reg-local.html#cb404-15" aria-hidden="true" tabindex="-1"></a>cv.error <span class="ot">&lt;-</span> <span class="fu">numeric</span>(np)</span>
+<span id="cb404-16"><a href="reg-local.html#cb404-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(p <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>np){</span>
+<span id="cb404-17"><a href="reg-local.html#cb404-17" aria-hidden="true" tabindex="-1"></a>  cv.pred <span class="ot">&lt;-</span> <span class="fu">cv.loess</span>(accel <span class="sc">~</span> times, mcycle, ventanas[p], <span class="at">family =</span> <span class="st">&quot;symmetric&quot;</span>)</span>
+<span id="cb404-18"><a href="reg-local.html#cb404-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># cv.error[p] &lt;- mean((cv.pred - mcycle$accel)^2)</span></span>
+<span id="cb404-19"><a href="reg-local.html#cb404-19" aria-hidden="true" tabindex="-1"></a>  cv.error[p] <span class="ot">&lt;-</span> <span class="fu">median</span>(<span class="fu">abs</span>(cv.pred <span class="sc">-</span> mcycle<span class="sc">$</span>accel))</span>
+<span id="cb404-20"><a href="reg-local.html#cb404-20" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb404-21"><a href="reg-local.html#cb404-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb404-22"><a href="reg-local.html#cb404-22" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ventanas, cv.error)</span>
+<span id="cb404-23"><a href="reg-local.html#cb404-23" aria-hidden="true" tabindex="-1"></a>imin <span class="ot">&lt;-</span> <span class="fu">which.min</span>(cv.error)</span>
+<span id="cb404-24"><a href="reg-local.html#cb404-24" aria-hidden="true" tabindex="-1"></a>span.cv <span class="ot">&lt;-</span> ventanas[imin]</span>
+<span id="cb404-25"><a href="reg-local.html#cb404-25" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(span.cv, cv.error[imin], <span class="at">pch =</span> <span class="dv">16</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:loess-cv"></span>
 <img src="07-regresion_np_files/figure-html/loess-cv-1.png" alt="Error de predicción de validación cruzada (mediana de los errores absolutos) del ajuste LOWESS dependiendo del parámetro de suavizado." width="75%" />
 <p class="caption">
@@ -515,10 +519,10 @@ Figura 7.3: Error de predicción de validación cruzada (mediana de los errores 
 </p>
 </div>
 <p>Empleamos el parámetro de suavizado seleccionado para ajustar el modelo final (ver Figura <a href="reg-local.html#fig:loess-fit">7.4</a>):</p>
-<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="reg-local.html#cb404-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajuste con todos los datos</span></span>
-<span id="cb404-2"><a href="reg-local.html#cb404-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(accel <span class="sc">~</span> times, <span class="at">data =</span> mcycle, <span class="at">col =</span> <span class="st">&#39;darkgray&#39;</span>)</span>
-<span id="cb404-3"><a href="reg-local.html#cb404-3" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">loess</span>(accel <span class="sc">~</span> times, mcycle, <span class="at">span =</span> span.cv, <span class="at">family =</span> <span class="st">&quot;symmetric&quot;</span>)</span>
-<span id="cb404-4"><a href="reg-local.html#cb404-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(mcycle<span class="sc">$</span>times, <span class="fu">predict</span>(fit))</span></code></pre></div>
+<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="reg-local.html#cb405-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajuste con todos los datos</span></span>
+<span id="cb405-2"><a href="reg-local.html#cb405-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(accel <span class="sc">~</span> times, <span class="at">data =</span> mcycle, <span class="at">col =</span> <span class="st">&#39;darkgray&#39;</span>)</span>
+<span id="cb405-3"><a href="reg-local.html#cb405-3" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">loess</span>(accel <span class="sc">~</span> times, mcycle, <span class="at">span =</span> span.cv, <span class="at">family =</span> <span class="st">&quot;symmetric&quot;</span>)</span>
+<span id="cb405-4"><a href="reg-local.html#cb405-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(mcycle<span class="sc">$</span>times, <span class="fu">predict</span>(fit))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:loess-fit"></span>
 <img src="07-regresion_np_files/figure-html/loess-fit-1.png" alt="Ajuste polinómico local robusto (LOWESS), con el parámetro de suavizado seleccionado mediante validación cruzada." width="75%" />
 <p class="caption">
@@ -535,17 +539,14 @@ Craven, P., y Wahba, G. (1978). Smoothing noisy data with spline functions. <em>
 <div id="ref-fan1996" class="csl-entry">
 Fan, J., y Gijbels, I. (1996). <em>Local Polynomial Modelling and Its Applications</em>. Chapman; Hall.
 </div>
-<div id="ref-R-KernSmooth" class="csl-entry">
-Wand, M. (2021). <em>KernSmooth: Functions for Kernel Smoothing Supporting Wand &amp; Jones (1995)</em>. <a href="https://CRAN.R-project.org/package=KernSmooth">https://CRAN.R-project.org/package=KernSmooth</a>
-</div>
 </div>
 <div class="footnotes">
 <hr />
-<ol start="42">
-<li id="fn42"><p>Se puede pensar que se están estimando los coeficientes de un desarrollo de Taylor de <span class="math inline">\(m(x_0)\)</span>.<a href="reg-local.html#fnref42" class="footnote-back">↩︎</a></p></li>
-<li id="fn43"><p>Asintóticamente el estimador lineal local tiene un sesgo menor que el de Nadaraya-Watson (pero del mismo orden) y la misma varianza (e.g. <span class="citation">Fan y Gijbels (<a href="#ref-fan1996" role="doc-biblioref">1996</a>)</span>).<a href="reg-local.html#fnref43" class="footnote-back">↩︎</a></p></li>
-<li id="fn44"><p>La función <code>KernSmooth::locpoly()</code> también admite la estimación de derivadas.<a href="reg-local.html#fnref44" class="footnote-back">↩︎</a></p></li>
-<li id="fn45"><p>En este caso habría dependencia entre las observaciones y los criterios habituales como validación cruzada tenderán a seleccionar ventanas pequeñas, i.e. a infrasuavizar.<a href="reg-local.html#fnref45" class="footnote-back">↩︎</a></p></li>
+<ol start="43">
+<li id="fn43"><p>Se puede pensar que se están estimando los coeficientes de un desarrollo de Taylor de <span class="math inline">\(m(x_0)\)</span>.<a href="reg-local.html#fnref43" class="footnote-back">↩︎</a></p></li>
+<li id="fn44"><p>Asintóticamente el estimador lineal local tiene un sesgo menor que el de Nadaraya-Watson (pero del mismo orden) y la misma varianza (e.g. <span class="citation">Fan y Gijbels (<a href="#ref-fan1996" role="doc-biblioref">1996</a>)</span>).<a href="reg-local.html#fnref44" class="footnote-back">↩︎</a></p></li>
+<li id="fn45"><p>La función <code>KernSmooth::locpoly()</code> también admite la estimación de derivadas.<a href="reg-local.html#fnref45" class="footnote-back">↩︎</a></p></li>
+<li id="fn46"><p>En este caso habría dependencia entre las observaciones y los criterios habituales como validación cruzada tenderán a seleccionar ventanas pequeñas, i.e. a infrasuavizar.<a href="reg-local.html#fnref46" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

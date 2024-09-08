@@ -1,3 +1,5 @@
+<!-- Capítulo \@ref(trees) -->
+
 # Árboles de decisión {#trees}
 
 

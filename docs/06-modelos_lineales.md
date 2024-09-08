@@ -207,7 +207,15 @@ print(mcor, digits = 1)
   ##  [ reached getOption("max.print") -- omitted 10 rows ]
 ```
 
-<!-- Pendiente: gráfico compacto de correlaciones -->
+<!-- 
+Pendiente: 
+gráfico compacto de correlaciones
+caret::featurePlot(x = train[-1], y = train[1])
+https://plotly.com/ggplot2/splom/
+https://www.statology.org/scatterplot-matrix-in-r/
+https://daviddalpiaz.github.io/r4sl/generative-models.html
+-->
+
 
 En este caso observamos que aparentemente hay una relación (lineal) entre la respuesta y algunas de las variables explicativas (que en principio no parece razonable suponer que son independientes).
 Vemos también que, si consideramos un modelo de regresión lineal simple, el mejor ajuste se obtendría empleando `velocida` como variable explicativa (ver Figura \@ref(fig:lm1)):
@@ -1762,7 +1770,7 @@ with(caret.pcrsel, coef(finalModel, bestTune$nvmax))
   ## (Intercept)         PC1         PC2         PC3         PC4         PC5 
   ##  58.0375000   2.7256200  -2.0882164   1.5167199  -1.1761229  -0.3588877 
   ##         PC6 
-  ##  -3.3571851
+  ##   3.3571851
 ```
 
 ```r
@@ -2030,6 +2038,14 @@ plot(train[-1], pch = as.numeric(train$alianza), col = as.numeric(train$alianza)
 \caption{(ref:plot-df-class)}(\#fig:plot-df-class)
 \end{figure}
 
+<!-- 
+https://plotly.com/ggplot2/splom/
+https://www.statology.org/scatterplot-matrix-in-r/
+https://daviddalpiaz.github.io/r4sl/generative-models.html
+-->
+
+
+
 Para ajustar un modelo de regresión logística bastaría con establecer el argumento `family = binomial` en la llamada a `glm()` (por defecto utiliza `link = "logit"`):
 
 
@@ -2087,10 +2103,6 @@ summary(modelo)
   ## Call:
   ## glm(formula = alianza ~ velocida + calidadp, family = binomial, 
   ##     data = train)
-  ## 
-  ## Deviance Residuals: 
-  ##     Min       1Q   Median       3Q      Max  
-  ## -1.8273  -0.7622  -0.2998   0.7837   1.8375  
   ## 
   ## Coefficients:
   ##             Estimate Std. Error z value Pr(>|z|)    
@@ -2244,10 +2256,6 @@ summary(modelo)
   ## Call:
   ## glm(formula = alianza ~ velocida + calidadp + imgfvent, family = binomial, 
   ##     data = train)
-  ## 
-  ## Deviance Residuals: 
-  ##     Min       1Q   Median       3Q      Max  
-  ## -2.6527  -0.6822  -0.1482   0.7631   2.0561  
   ## 
   ## Coefficients:
   ##             Estimate Std. Error z value Pr(>|z|)    

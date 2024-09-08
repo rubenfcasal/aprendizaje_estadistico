@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>5.3 Naive Bayes | Aprendizaje Estadístico</title>
   <meta name="description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
   <meta property="og:title" content="5.3 Naive Bayes | Aprendizaje Estadístico" />
   <meta property="og:type" content="book" />
@@ -53,12 +53,12 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.26/datatables.js"></script>
-<link href="libs/dt-core-1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="libs/dt-core-1.12.1/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="libs/dt-core-1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="libs/datatables-binding-0.30/datatables.js"></script>
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.13.4/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
 
@@ -128,6 +128,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -352,9 +356,9 @@ Además, y quizás esto sea lo más sorprendente, en ocasiones su rendimiento es
 <p>Asumiendo normalidad, este modelo no es más que un caso particular de QDA con matrices <span class="math inline">\(\Sigma_k\)</span> diagonales.
 Cuando las variables predictoras son categóricas, lo más habitual es modelizar su distribución utilizando distribuciones multinomiales.
 Siguiendo con los ejemplos anteriores, empleamos la función <a href="https://rdrr.io/pkg/e1071/man/naiveBayes.html"><code>e1071::naiveBayes()</code></a> para realizar la clasificación:</p>
-<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="bayes.html#cb250-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(e1071)</span>
-<span id="cb250-2"><a href="bayes.html#cb250-2" aria-hidden="true" tabindex="-1"></a>nb <span class="ot">&lt;-</span> <span class="fu">naiveBayes</span>(taste <span class="sc">~</span> ., <span class="at">data =</span> train)</span>
-<span id="cb250-3"><a href="bayes.html#cb250-3" aria-hidden="true" tabindex="-1"></a>nb</span></code></pre></div>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="bayes.html#cb251-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(e1071)</span>
+<span id="cb251-2"><a href="bayes.html#cb251-2" aria-hidden="true" tabindex="-1"></a>nb <span class="ot">&lt;-</span> <span class="fu">naiveBayes</span>(taste <span class="sc">~</span> ., <span class="at">data =</span> train)</span>
+<span id="cb251-3"><a href="bayes.html#cb251-3" aria-hidden="true" tabindex="-1"></a>nb</span></code></pre></div>
 <pre><code>## 
 ## Naive Bayes Classifier for Discrete Predictors
 ## 
@@ -421,11 +425,11 @@ Siguiendo con los ejemplos anteriores, empleamos la función <a href="https://rd
 ## Y           [,1]      [,2]
 ##   good 10.786959 1.2298425
 ##   bad   9.845611 0.8710844</code></pre>
-<p>En las tablas correspondientes a los predictores<a href="#fn31" class="footnote-ref" id="fnref31"><sup>31</sup></a>, se muestran la media y la desviación típica de sus distribuciones condicionadas a las distintas clases.</p>
+<p>En las tablas correspondientes a los predictores<a href="#fn32" class="footnote-ref" id="fnref32"><sup>32</sup></a>, se muestran la media y la desviación típica de sus distribuciones condicionadas a las distintas clases.</p>
 <p>En este caso los resultados obtenidos en la muestra de test son peores que con los métodos anteriores:</p>
-<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="bayes.html#cb252-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(nb, <span class="at">newdata =</span> test)</span>
-<span id="cb252-2"><a href="bayes.html#cb252-2" aria-hidden="true" tabindex="-1"></a><span class="co"># p.est &lt;- predict(nb, newdata = test, type = &quot;raw&quot;)</span></span>
-<span id="cb252-3"><a href="bayes.html#cb252-3" aria-hidden="true" tabindex="-1"></a>caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(pred, test<span class="sc">$</span>taste)</span></code></pre></div>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="bayes.html#cb253-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(nb, <span class="at">newdata =</span> test)</span>
+<span id="cb253-2"><a href="bayes.html#cb253-2" aria-hidden="true" tabindex="-1"></a><span class="co"># p.est &lt;- predict(nb, newdata = test, type = &quot;raw&quot;)</span></span>
+<span id="cb253-3"><a href="bayes.html#cb253-3" aria-hidden="true" tabindex="-1"></a>caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(pred, test<span class="sc">$</span>taste)</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -458,8 +462,8 @@ Siguiendo con los ejemplos anteriores, empleamos la función <a href="https://rd
 <!-- </div> -->
 <div class="footnotes">
 <hr />
-<ol start="31">
-<li id="fn31"><p>Aunque al imprimir los resultados aparece <code>Naive Bayes Classifier for Discrete Predictors</code>, se trata de un error. En este caso todos los predictores son continuos.<a href="bayes.html#fnref31" class="footnote-back">↩︎</a></p></li>
+<ol start="32">
+<li id="fn32"><p>Aunque al imprimir los resultados aparece <code>Naive Bayes Classifier for Discrete Predictors</code>, se trata de un error. En este caso todos los predictores son continuos.<a href="bayes.html#fnref32" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

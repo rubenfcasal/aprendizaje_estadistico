@@ -35,23 +35,24 @@ Se puede acceder a la versión en línea a través del siguiente enlace:
 
 donde puede descargarse en formato [pdf](https://rubenfcasal.github.io/aprendizaje_estadistico/aprendizaje_estadistico.pdf).
 
-Para ejecutar los ejemplos mostrados en el libro sería necesario tener instalados los siguientes paquetes:
-`r citepkgs(c("caret", "rattle", "gbm", "car", "leaps", "MASS", "RcmdrMisc", "lmtest", "glmnet", "mgcv", "np", "NeuralNetTools", "pdp", "vivid", "plot3D", "AppliedPredictiveModeling", "ISLR"))`.
-<!-- 
-Comprobar si es necesario añadir: "pls"
-Para el gráfico de red: "network", "sna", "intergraph" 
--->
-Por ejemplo mediante los siguientes comandos:
-```{r eval=FALSE}
-pkgs <- c("caret", "rattle", "gbm", "car", "leaps", "MASS", "RcmdrMisc", 
-          "lmtest", "glmnet", "mgcv", "np", "NeuralNetTools", "pdp", "vivid",
-          "plot3D", "AppliedPredictiveModeling", "ISLR")
+Este libro tiene asociado el paquete de R [`mpae`](https://rubenfcasal.github.io/mpae) [*Métodos Predictivos de Aprendizaje Estadístico*, @R-mpae], que incluye funciones y conjuntos de datos utilizados a lo largo del texto.
+Este paquete está disponible en CRAN y puede instalarse ejecutando el siguiente código[^instalacion-1]:
 
-install.packages(setdiff(pkgs, installed.packages()[,"Package"]), dependencies = TRUE)
-# Si aparecen errores (normalmente debidos a incompatibilidades con versiones ya instaladas), 
-# probar a ejecutar en lugar de lo anterior:
-# install.packages(pkgs, dependencies=TRUE) # Instala todos...
+```{r eval=FALSE}
+install.packages("mpae")
 ```
+
+[^instalacion-1]: Alternativamente, se puede instalar la versión en desarrollo disponible en el repositorio [rubenfcasal/mpae](https://github.com/rubenfcasal/mpae) de GitHub.
+Por ejemplo, el comando `remotes::install_github("rubenfcasal/mpae", INSTALL_opts = "--with-keep.source")` instala el paquete incluyendo los comentarios en el código y opcionalmente las dependencias. 
+
+Sin embargo, para poder ejecutar todos los ejemplos mostrados en el libro, es necesario instalar también los siguientes paquetes:
+`r citepkgs(c("caret", "gbm", "car", "leaps", "MASS", "RcmdrMisc", "lmtest", "glmnet", "mgcv", "np", "NeuralNetTools", "pdp", "vivid", "plot3D", "AppliedPredictiveModeling", "ISLR"))`.
+Para ello, en lugar del código anterior, bastaría con ejecutar:
+
+```{r eval=FALSE}
+install.packages("mpae", dependencies = TRUE)
+```
+
 Para generar el libro (compilar) serán necesarios paquetes adicionales, 
 para lo que se recomendaría consultar el libro de ["Escritura de libros con bookdown" ](https://rubenfcasal.github.io/bookdown_intro) en castellano.
 
@@ -68,7 +69,7 @@ Este obra está bajo una licencia de [Creative Commons Reconocimiento-NoComercia
 # Automatically create a bib database for R packages
 pkgs <- c("caret", "rattle", "gbm", "car", "leaps", "MASS", "RcmdrMisc", 
           "lmtest", "glmnet", "mgcv", "np", "NeuralNetTools", "pdp", "vivid",
-          "plot3D", "AppliedPredictiveModeling", "ISLR")
+          "plot3D", "AppliedPredictiveModeling", "ISLR", "mpae")
 knitr::write_bib(c(pkgs, "e1071", "KernSmooth", "tidymodels"), 'packages.bib')
 # Create .nojekyll file in the /docs folder
 file.create('docs/.nojekyll')

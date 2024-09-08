@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>7.4 Regresión spline adaptativa multivariante | Aprendizaje Estadístico</title>
   <meta name="description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
   <meta property="og:title" content="7.4 Regresión spline adaptativa multivariante | Aprendizaje Estadístico" />
   <meta property="og:type" content="book" />
@@ -53,12 +53,12 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.26/datatables.js"></script>
-<link href="libs/dt-core-1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="libs/dt-core-1.12.1/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="libs/dt-core-1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="libs/datatables-binding-0.30/datatables.js"></script>
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.13.4/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
 
@@ -128,6 +128,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -388,9 +392,9 @@ Por último, se puede realizar una cuantificación de la importancia de las vari
 <p>En conclusión, MARS utiliza splines lineales con una selección automática de los puntos de corte mediante un algoritmo avaricioso similar al empleado en los árboles CART, tratando de añadir más puntos de corte donde aparentemente hay más variaciones en la función de regresión y menos puntos donde esta es más estable.</p>
 <div id="mars-con-el-paquete-earth" class="section level3 hasAnchor" number="7.4.1">
 <h3><span class="header-section-number">7.4.1</span> MARS con el paquete <code>earth</code><a href="mars.html#mars-con-el-paquete-earth" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Actualmente el paquete de referencia para MARS es <a href="http://www.milbo.users.sonic.net/earth"><code>earth</code></a> (<em>Enhanced Adaptive Regression Through Hinges</em>)<a href="#fn50" class="footnote-ref" id="fnref50"><sup>50</sup></a>.</p>
+<p>Actualmente el paquete de referencia para MARS es <a href="http://www.milbo.users.sonic.net/earth"><code>earth</code></a> (<em>Enhanced Adaptive Regression Through Hinges</em>)<a href="#fn51" class="footnote-ref" id="fnref51"><sup>51</sup></a>.</p>
 <p>La función principal es <a href="https://rdrr.io/pkg/earth/man/earth.html"><code>earth()</code></a> y se suelen considerar los siguientes argumentos:</p>
-<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="mars.html#cb433-1" aria-hidden="true" tabindex="-1"></a><span class="fu">earth</span>(formula, data, <span class="at">glm =</span> <span class="cn">NULL</span>, <span class="at">degree =</span> <span class="dv">1</span>, ...) </span></code></pre></div>
+<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="mars.html#cb434-1" aria-hidden="true" tabindex="-1"></a><span class="fu">earth</span>(formula, data, <span class="at">glm =</span> <span class="cn">NULL</span>, <span class="at">degree =</span> <span class="dv">1</span>, ...) </span></code></pre></div>
 <ul>
 <li><p><code>formula</code> y <code>data</code> (opcional): permiten especificar la respuesta y las variables predictoras de la forma habitual (e.g. <code>respuesta ~ .</code>; también admite matrices). Admite respuestas multidimensionales (ajustará un modelo para cada componente) y categóricas (las convierte en multivariantes), también predictores categóricos, aunque no permite datos faltantes.</p></li>
 <li><p><code>glm</code>: lista con los parámetros del ajuste GLM (e.g. <code>glm = list(family = binomial)</code>).</p></li>
@@ -409,11 +413,11 @@ Por último, se puede realizar una cuantificación de la importancia de las vari
 </ul>
 <p>Utilizaremos como ejemplo inicial los datos de <code>MASS:mcycle</code> (ver Figura <a href="mars.html#fig:earth-fit-plot">7.12</a>):</p>
 
-<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="mars.html#cb434-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data(mcycle, package = &quot;MASS&quot;)</span></span>
-<span id="cb434-2"><a href="mars.html#cb434-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(earth)</span>
-<span id="cb434-3"><a href="mars.html#cb434-3" aria-hidden="true" tabindex="-1"></a>mars <span class="ot">&lt;-</span> <span class="fu">earth</span>(accel <span class="sc">~</span> times, <span class="at">data =</span> mcycle)</span>
-<span id="cb434-4"><a href="mars.html#cb434-4" aria-hidden="true" tabindex="-1"></a><span class="co"># mars</span></span>
-<span id="cb434-5"><a href="mars.html#cb434-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mars)</span></code></pre></div>
+<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="mars.html#cb435-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data(mcycle, package = &quot;MASS&quot;)</span></span>
+<span id="cb435-2"><a href="mars.html#cb435-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(earth)</span>
+<span id="cb435-3"><a href="mars.html#cb435-3" aria-hidden="true" tabindex="-1"></a>mars <span class="ot">&lt;-</span> <span class="fu">earth</span>(accel <span class="sc">~</span> times, <span class="at">data =</span> mcycle)</span>
+<span id="cb435-4"><a href="mars.html#cb435-4" aria-hidden="true" tabindex="-1"></a><span class="co"># mars</span></span>
+<span id="cb435-5"><a href="mars.html#cb435-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mars)</span></code></pre></div>
 <pre><code>## Call: earth(formula=accel~times, data=mcycle)
 ## 
 ##               coefficients
@@ -427,7 +431,7 @@ Por último, se puede realizar una cuantificación de la importancia de las vari
 ## Importance: times
 ## Number of terms at each degree of interaction: 1 3 (additive model)
 ## GCV 1119.813    RSS 133670.3    GRSq 0.5240328    RSq 0.5663192</code></pre>
-<div class="sourceCode" id="cb436"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb436-1"><a href="mars.html#cb436-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mars)</span></code></pre></div>
+<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="mars.html#cb437-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mars)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:earth-fit-plot"></span>
 <img src="07-regresion_np_files/figure-html/earth-fit-plot-1.png" alt="Resultados de validación del modelo MARS univariante (empleando la función earth() con parámetros por defecto y MASS:mcycle)." width="90%" />
 <p class="caption">
@@ -437,8 +441,8 @@ Figura 7.12: Resultados de validación del modelo MARS univariante (empleando la
 <p>Por defecto, se representa un resumen de los errores de validación en la selección del modelo, la distribución empírica y el gráfico QQ de los residuos, y los residuos frente a las predicciones (en la muestra de entrenamiento).</p>
 <p>Podemos representar el ajuste obtenido (ver Figura <a href="mars.html#fig:earth-fit">7.13</a>):</p>
 
-<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="mars.html#cb437-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(accel <span class="sc">~</span> times, <span class="at">data =</span> mcycle, <span class="at">col =</span> <span class="st">&#39;darkgray&#39;</span>)</span>
-<span id="cb437-2"><a href="mars.html#cb437-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(mcycle<span class="sc">$</span>times, <span class="fu">predict</span>(mars))</span></code></pre></div>
+<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="mars.html#cb438-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(accel <span class="sc">~</span> times, <span class="at">data =</span> mcycle, <span class="at">col =</span> <span class="st">&#39;darkgray&#39;</span>)</span>
+<span id="cb438-2"><a href="mars.html#cb438-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(mcycle<span class="sc">$</span>times, <span class="fu">predict</span>(mars))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:earth-fit"></span>
 <img src="07-regresion_np_files/figure-html/earth-fit-1.png" alt="Ajuste del modelo MARS univariante (obtenido con la función earth() con parámetros por defecto) para predecir accel en función de times." width="75%" />
 <p class="caption">
@@ -447,8 +451,8 @@ Figura 7.13: Ajuste del modelo MARS univariante (obtenido con la función <code>
 </div>
 <p>Como con las opciones por defecto el ajuste no es muy bueno (aunque puede ser suficiente para un análisis preliminar), podríamos forzar la complejidad del modelo en el crecimiento (<code>minspan = 1</code> permite que todas las observaciones sean potenciales nodos; ver Figura <a href="mars.html#fig:earth-fit2">7.14</a>):</p>
 
-<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="mars.html#cb438-1" aria-hidden="true" tabindex="-1"></a>mars2 <span class="ot">&lt;-</span> <span class="fu">earth</span>(accel <span class="sc">~</span> times, <span class="at">data =</span> mcycle, <span class="at">minspan =</span> <span class="dv">1</span>, <span class="at">thresh =</span> <span class="dv">0</span>)</span>
-<span id="cb438-2"><a href="mars.html#cb438-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mars2)</span></code></pre></div>
+<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="mars.html#cb439-1" aria-hidden="true" tabindex="-1"></a>mars2 <span class="ot">&lt;-</span> <span class="fu">earth</span>(accel <span class="sc">~</span> times, <span class="at">data =</span> mcycle, <span class="at">minspan =</span> <span class="dv">1</span>, <span class="at">thresh =</span> <span class="dv">0</span>)</span>
+<span id="cb439-2"><a href="mars.html#cb439-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mars2)</span></code></pre></div>
 <pre><code>## Call: earth(formula=accel~times, data=mcycle, minspan=1, thresh=0)
 ## 
 ##               coefficients
@@ -465,8 +469,8 @@ Figura 7.13: Ajuste del modelo MARS univariante (obtenido con la función <code>
 ## Importance: times
 ## Number of terms at each degree of interaction: 1 6 (additive model)
 ## GCV 623.5209    RSS 67509.03    GRSq 0.7349776    RSq 0.7809732</code></pre>
-<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="mars.html#cb440-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(accel <span class="sc">~</span> times, <span class="at">data =</span> mcycle, <span class="at">col =</span> <span class="st">&#39;darkgray&#39;</span>)</span>
-<span id="cb440-2"><a href="mars.html#cb440-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(mcycle<span class="sc">$</span>times, <span class="fu">predict</span>(mars2))</span></code></pre></div>
+<div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb441-1"><a href="mars.html#cb441-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(accel <span class="sc">~</span> times, <span class="at">data =</span> mcycle, <span class="at">col =</span> <span class="st">&#39;darkgray&#39;</span>)</span>
+<span id="cb441-2"><a href="mars.html#cb441-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(mcycle<span class="sc">$</span>times, <span class="fu">predict</span>(mars2))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:earth-fit2"></span>
 <img src="07-regresion_np_files/figure-html/earth-fit2-1.png" alt="Ajuste del modelo MARS univariante (con la función earth() con parámetros minspan = 1 y thresh = 0)." width="75%" />
 <p class="caption">
@@ -475,10 +479,10 @@ Figura 7.14: Ajuste del modelo MARS univariante (con la función <code>earth()</
 </div>
 <p>Como siguiente ejemplo consideramos los datos de <code>carData::Prestige</code> (ver Figura <a href="mars.html#fig:earth-fit3-plot">7.15</a>):</p>
 
-<div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb441-1"><a href="mars.html#cb441-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data(Prestige, package = &quot;carData&quot;)</span></span>
-<span id="cb441-2"><a href="mars.html#cb441-2" aria-hidden="true" tabindex="-1"></a>mars <span class="ot">&lt;-</span> <span class="fu">earth</span>(prestige <span class="sc">~</span> education <span class="sc">+</span> income <span class="sc">+</span> women, <span class="at">data =</span> Prestige,</span>
-<span id="cb441-3"><a href="mars.html#cb441-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">degree =</span> <span class="dv">2</span>, <span class="at">nk =</span> <span class="dv">40</span>)</span>
-<span id="cb441-4"><a href="mars.html#cb441-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mars)</span></code></pre></div>
+<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="mars.html#cb442-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data(Prestige, package = &quot;carData&quot;)</span></span>
+<span id="cb442-2"><a href="mars.html#cb442-2" aria-hidden="true" tabindex="-1"></a>mars <span class="ot">&lt;-</span> <span class="fu">earth</span>(prestige <span class="sc">~</span> education <span class="sc">+</span> income <span class="sc">+</span> women, <span class="at">data =</span> Prestige,</span>
+<span id="cb442-3"><a href="mars.html#cb442-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">degree =</span> <span class="dv">2</span>, <span class="at">nk =</span> <span class="dv">40</span>)</span>
+<span id="cb442-4"><a href="mars.html#cb442-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mars)</span></code></pre></div>
 <pre><code>## Call: earth(formula=prestige~education+income+women, data=Prestige, degree=2,
 ##             nk=40)
 ## 
@@ -496,7 +500,7 @@ Figura 7.14: Ajuste del modelo MARS univariante (con la función <code>earth()</
 ## Importance: education, income, women
 ## Number of terms at each degree of interaction: 1 4 2
 ## GCV 53.08737    RSS 3849.355    GRSq 0.8224057    RSq 0.8712393</code></pre>
-<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="mars.html#cb443-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mars)</span></code></pre></div>
+<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="mars.html#cb444-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mars)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:earth-fit3-plot"></span>
 <img src="07-regresion_np_files/figure-html/earth-fit3-plot-1.png" alt="Resultados de validación del ajuste del modelo MARS multivariante (para carData::Prestige)." width="90%" />
 <p class="caption">
@@ -505,7 +509,7 @@ Figura 7.15: Resultados de validación del ajuste del modelo MARS multivariante 
 </div>
 <p>Para representar los efectos de las variables importa las herramientas del paquete <a href="https://CRAN.R-project.org/package=plotmo"><code>plotmo</code></a> (del mismo autor; válido también para la mayoría de los modelos tratados en este libro, incluyendo <code>mgcv::gam()</code>; ver Figura <a href="mars.html#fig:earth-eff">7.16</a>):</p>
 
-<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="mars.html#cb444-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotmo</span>(mars)</span></code></pre></div>
+<div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb445-1"><a href="mars.html#cb445-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotmo</span>(mars)</span></code></pre></div>
 <pre><code>##  plotmo grid:    education income women
 ##                      10.54   5930  13.6</code></pre>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:earth-eff"></span>
@@ -515,13 +519,13 @@ Figura 7.16: Efectos parciales de las componentes del modelo MARS ajustado.
 </p>
 </div>
 <p>También podemos obtener la importancia de las variables (función <a href="https://rdrr.io/pkg/earth/man/evimp.html"><code>evimp()</code></a>) y representarla gráficamente (método <a href="https://rdrr.io/pkg/earth/man/plot.evimp.html"><code>plot.evimp()</code></a>; ver Figura <a href="mars.html#fig:evimp-plot">7.17</a>):</p>
-<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="mars.html#cb446-1" aria-hidden="true" tabindex="-1"></a>varimp <span class="ot">&lt;-</span> <span class="fu">evimp</span>(mars)</span>
-<span id="cb446-2"><a href="mars.html#cb446-2" aria-hidden="true" tabindex="-1"></a>varimp</span></code></pre></div>
+<div class="sourceCode" id="cb447"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb447-1"><a href="mars.html#cb447-1" aria-hidden="true" tabindex="-1"></a>varimp <span class="ot">&lt;-</span> <span class="fu">evimp</span>(mars)</span>
+<span id="cb447-2"><a href="mars.html#cb447-2" aria-hidden="true" tabindex="-1"></a>varimp</span></code></pre></div>
 <pre><code>##           nsubsets   gcv    rss
 ## education        6 100.0  100.0
 ## income           5  36.0   40.3
 ## women            3  16.3   22.0</code></pre>
-<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="mars.html#cb448-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(varimp)</span></code></pre></div>
+<div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb449-1"><a href="mars.html#cb449-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(varimp)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:evimp-plot"></span>
 <img src="07-regresion_np_files/figure-html/evimp-plot-1.png" alt="Importancia de los predictores incluidos en el modelo MARS." width="75%" />
 <p class="caption">
@@ -531,9 +535,9 @@ Figura 7.17: Importancia de los predictores incluidos en el modelo MARS.
 <p>Para finalizar, destacar que podríamos tener en cuenta este modelo como punto de partida para ajustar un modelo GAM más flexible (como se mostró en la Sección <a href="reg-gam.html#reg-gam">7.3</a>).
 Por ejemplo:</p>
 
-<div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb449-1"><a href="mars.html#cb449-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(mgcv)</span></span>
-<span id="cb449-2"><a href="mars.html#cb449-2" aria-hidden="true" tabindex="-1"></a>gam <span class="ot">&lt;-</span> <span class="fu">gam</span>(prestige <span class="sc">~</span> <span class="fu">s</span>(education) <span class="sc">+</span> <span class="fu">s</span>(income) <span class="sc">+</span> <span class="fu">s</span>(women), <span class="at">data =</span> Prestige, <span class="at">select =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb449-3"><a href="mars.html#cb449-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gam)</span></code></pre></div>
+<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="mars.html#cb450-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(mgcv)</span></span>
+<span id="cb450-2"><a href="mars.html#cb450-2" aria-hidden="true" tabindex="-1"></a>gam <span class="ot">&lt;-</span> <span class="fu">gam</span>(prestige <span class="sc">~</span> <span class="fu">s</span>(education) <span class="sc">+</span> <span class="fu">s</span>(income) <span class="sc">+</span> <span class="fu">s</span>(women), <span class="at">data =</span> Prestige, <span class="at">select =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb450-3"><a href="mars.html#cb450-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gam)</span></code></pre></div>
 <pre><code>## 
 ## Family: gaussian 
 ## Link function: identity 
@@ -557,8 +561,8 @@ Por ejemplo:</p>
 ## 
 ## R-sq.(adj) =  0.856   Deviance explained = 87.1%
 ## GCV = 48.046  Scale est. = 42.58     n = 102</code></pre>
-<div class="sourceCode" id="cb451"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb451-1"><a href="mars.html#cb451-1" aria-hidden="true" tabindex="-1"></a>gam2 <span class="ot">&lt;-</span> <span class="fu">gam</span>(prestige <span class="sc">~</span> <span class="fu">s</span>(education) <span class="sc">+</span> <span class="fu">s</span>(income, women), <span class="at">data =</span> Prestige)</span>
-<span id="cb451-2"><a href="mars.html#cb451-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gam2)</span></code></pre></div>
+<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="mars.html#cb452-1" aria-hidden="true" tabindex="-1"></a>gam2 <span class="ot">&lt;-</span> <span class="fu">gam</span>(prestige <span class="sc">~</span> <span class="fu">s</span>(education) <span class="sc">+</span> <span class="fu">s</span>(income, women), <span class="at">data =</span> Prestige)</span>
+<span id="cb452-2"><a href="mars.html#cb452-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gam2)</span></code></pre></div>
 <pre><code>## 
 ## Family: gaussian 
 ## Link function: identity 
@@ -581,7 +585,7 @@ Por ejemplo:</p>
 ## 
 ## R-sq.(adj) =  0.841   Deviance explained = 85.3%
 ## GCV = 51.416  Scale est. = 47.032    n = 102</code></pre>
-<div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb453-1"><a href="mars.html#cb453-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(gam, gam2, <span class="at">test =</span> <span class="st">&quot;F&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="mars.html#cb454-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(gam, gam2, <span class="at">test =</span> <span class="st">&quot;F&quot;</span>)</span></code></pre></div>
 <pre><code>## Analysis of Deviance Table
 ## 
 ## Model 1: prestige ~ s(education) + s(income) + s(women)
@@ -591,7 +595,7 @@ Por ejemplo:</p>
 ## 2    91.225     4388.3 -2.9001  -539.16 4.3661 0.00705 **
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div class="sourceCode" id="cb455"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb455-1"><a href="mars.html#cb455-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotmo</span>(gam2)</span></code></pre></div>
+<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="mars.html#cb456-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotmo</span>(gam2)</span></code></pre></div>
 <pre><code>##  plotmo grid:    education income women
 ##                      10.54   5930  13.6</code></pre>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:earth-mgcv-plotmo"></span>
@@ -602,7 +606,7 @@ Figura 7.18: Efectos parciales de las componentes del modelo GAM con interacció
 </div>
 <p>En la Figura <a href="mars.html#fig:earth-mgcv-plotmo">7.18</a> (generada con <code>plotmo::plotmo()</code>) se representan los efectos parciales de las componentes, y en la Figura <a href="mars.html#fig:earth-mgcv-plot">7.19</a> el efecto parcial de la interacción (empleando <a href="https://rdrr.io/pkg/mgcv/man/plot.gam.html"><code>plot()</code></a>):</p>
 
-<div class="sourceCode" id="cb457"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb457-1"><a href="mars.html#cb457-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(gam2, <span class="at">scheme =</span> <span class="dv">2</span>, <span class="at">select =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="mars.html#cb458-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(gam2, <span class="at">scheme =</span> <span class="dv">2</span>, <span class="at">select =</span> <span class="dv">2</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:earth-mgcv-plot"></span>
 <img src="07-regresion_np_files/figure-html/earth-mgcv-plot-1.png" alt="Efecto parcial de la interacción income:women." width="75%" />
 <p class="caption">
@@ -618,29 +622,29 @@ Figura 7.19: Efecto parcial de la interacción <code>income:women</code>.
 <div id="mars-con-el-paquete-caret" class="section level3 hasAnchor" number="7.4.2">
 <h3><span class="header-section-number">7.4.2</span> MARS con el paquete <code>caret</code><a href="mars.html#mars-con-el-paquete-caret" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Emplearemos como ejemplo el conjunto de datos <code>earth::Ozone1</code>:</p>
-<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="mars.html#cb458-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data(ozone1, package = &quot;earth&quot;)</span></span>
-<span id="cb458-2"><a href="mars.html#cb458-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> ozone1  </span>
-<span id="cb458-3"><a href="mars.html#cb458-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb458-4"><a href="mars.html#cb458-4" aria-hidden="true" tabindex="-1"></a>nobs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
-<span id="cb458-5"><a href="mars.html#cb458-5" aria-hidden="true" tabindex="-1"></a>itrain <span class="ot">&lt;-</span> <span class="fu">sample</span>(nobs, <span class="fl">0.8</span> <span class="sc">*</span> nobs)</span>
-<span id="cb458-6"><a href="mars.html#cb458-6" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> df[itrain, ]</span>
-<span id="cb458-7"><a href="mars.html#cb458-7" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> df[<span class="sc">-</span>itrain, ]</span></code></pre></div>
+<div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb459-1"><a href="mars.html#cb459-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data(ozone1, package = &quot;earth&quot;)</span></span>
+<span id="cb459-2"><a href="mars.html#cb459-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> ozone1  </span>
+<span id="cb459-3"><a href="mars.html#cb459-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb459-4"><a href="mars.html#cb459-4" aria-hidden="true" tabindex="-1"></a>nobs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
+<span id="cb459-5"><a href="mars.html#cb459-5" aria-hidden="true" tabindex="-1"></a>itrain <span class="ot">&lt;-</span> <span class="fu">sample</span>(nobs, <span class="fl">0.8</span> <span class="sc">*</span> nobs)</span>
+<span id="cb459-6"><a href="mars.html#cb459-6" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> df[itrain, ]</span>
+<span id="cb459-7"><a href="mars.html#cb459-7" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> df[<span class="sc">-</span>itrain, ]</span></code></pre></div>
 <p><code>caret</code> implementa varios métodos basados en <code>earth</code>, en este caso emplearemos el algoritmo original:</p>
-<div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb459-1"><a href="mars.html#cb459-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
-<span id="cb459-2"><a href="mars.html#cb459-2" aria-hidden="true" tabindex="-1"></a><span class="co"># names(getModelInfo(&quot;[Ee]arth&quot;)) # 4 métodos</span></span>
-<span id="cb459-3"><a href="mars.html#cb459-3" aria-hidden="true" tabindex="-1"></a><span class="fu">modelLookup</span>(<span class="st">&quot;earth&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="mars.html#cb460-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb460-2"><a href="mars.html#cb460-2" aria-hidden="true" tabindex="-1"></a><span class="co"># names(getModelInfo(&quot;[Ee]arth&quot;)) # 4 métodos</span></span>
+<span id="cb460-3"><a href="mars.html#cb460-3" aria-hidden="true" tabindex="-1"></a><span class="fu">modelLookup</span>(<span class="st">&quot;earth&quot;</span>)</span></code></pre></div>
 <pre><code>##   model parameter          label forReg forClass probModel
 ## 1 earth    nprune         #Terms   TRUE     TRUE      TRUE
 ## 2 earth    degree Product Degree   TRUE     TRUE      TRUE</code></pre>
 <p>Para selección de los hiperparámetros óptimos consideramos una rejilla de búsqueda personalizada:</p>
 
-<div class="sourceCode" id="cb461"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb461-1"><a href="mars.html#cb461-1" aria-hidden="true" tabindex="-1"></a>tuneGrid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">degree =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, </span>
-<span id="cb461-2"><a href="mars.html#cb461-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">nprune =</span> <span class="fu">floor</span>(<span class="fu">seq</span>(<span class="dv">2</span>, <span class="dv">20</span>, <span class="at">len =</span> <span class="dv">10</span>)))</span>
-<span id="cb461-3"><a href="mars.html#cb461-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb461-4"><a href="mars.html#cb461-4" aria-hidden="true" tabindex="-1"></a>caret.mars <span class="ot">&lt;-</span> <span class="fu">train</span>(O3 <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">method =</span> <span class="st">&quot;earth&quot;</span>,</span>
-<span id="cb461-5"><a href="mars.html#cb461-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">trControl =</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">10</span>),</span>
-<span id="cb461-6"><a href="mars.html#cb461-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">tuneGrid =</span> tuneGrid)</span>
-<span id="cb461-7"><a href="mars.html#cb461-7" aria-hidden="true" tabindex="-1"></a>caret.mars</span></code></pre></div>
+<div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb462-1"><a href="mars.html#cb462-1" aria-hidden="true" tabindex="-1"></a>tuneGrid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">degree =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, </span>
+<span id="cb462-2"><a href="mars.html#cb462-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">nprune =</span> <span class="fu">floor</span>(<span class="fu">seq</span>(<span class="dv">2</span>, <span class="dv">20</span>, <span class="at">len =</span> <span class="dv">10</span>)))</span>
+<span id="cb462-3"><a href="mars.html#cb462-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb462-4"><a href="mars.html#cb462-4" aria-hidden="true" tabindex="-1"></a>caret.mars <span class="ot">&lt;-</span> <span class="fu">train</span>(O3 <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">method =</span> <span class="st">&quot;earth&quot;</span>,</span>
+<span id="cb462-5"><a href="mars.html#cb462-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">trControl =</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">10</span>),</span>
+<span id="cb462-6"><a href="mars.html#cb462-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">tuneGrid =</span> tuneGrid)</span>
+<span id="cb462-7"><a href="mars.html#cb462-7" aria-hidden="true" tabindex="-1"></a>caret.mars</span></code></pre></div>
 <pre><code>## Multivariate Adaptive Regression Spline 
 ## 
 ## 264 samples
@@ -668,7 +672,7 @@ Figura 7.19: Efecto parcial de la interacción <code>income:women</code>.
 ## 
 ## RMSE was used to select the optimal model using the smallest value.
 ## The final values used for the model were nprune = 10 and degree = 2.</code></pre>
-<div class="sourceCode" id="cb463"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb463-1"><a href="mars.html#cb463-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(caret.mars, <span class="at">highlight =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="mars.html#cb464-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(caret.mars, <span class="at">highlight =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:earth-caret"></span>
 <img src="07-regresion_np_files/figure-html/earth-caret-1.png" alt="Errores RMSE de validación cruzada de los modelos MARS en función del numero de términos nprune y del orden máximo de interacción degree, resaltando la combinación óptima." width="75%" />
 <p class="caption">
@@ -676,7 +680,7 @@ Figura 7.20: Errores RMSE de validación cruzada de los modelos MARS en función
 </p>
 </div>
 <p>Podemos analizar el modelo final con las herramientas de <code>earth</code>:</p>
-<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="mars.html#cb464-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(caret.mars<span class="sc">$</span>finalModel)</span></code></pre></div>
+<div class="sourceCode" id="cb465"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb465-1"><a href="mars.html#cb465-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(caret.mars<span class="sc">$</span>finalModel)</span></code></pre></div>
 <pre><code>## Call: earth(x=matrix[264,9], y=c(4,13,16,3,6,2...), keepxy=TRUE, degree=2,
 ##             nprune=10)
 ## 
@@ -699,8 +703,8 @@ Figura 7.20: Errores RMSE de validación cruzada de los modelos MARS en función
 ## GCV 13.84161    RSS 3032.585    GRSq 0.7846289    RSq 0.8199031</code></pre>
 <p>Representamos los efectos parciales de las componentes, separando los efectos principales (ver Figura <a href="mars.html#fig:earth-caret-plotmo1">7.21</a>) de las interacciones (ver Figura <a href="mars.html#fig:earth-caret-plotmo2">7.22</a>):</p>
 
-<div class="sourceCode" id="cb466"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb466-1"><a href="mars.html#cb466-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plotmo(caret.mars$finalModel)</span></span>
-<span id="cb466-2"><a href="mars.html#cb466-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotmo</span>(caret.mars<span class="sc">$</span>finalModel, <span class="at">degree2 =</span> <span class="dv">0</span>, <span class="at">caption =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb467"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb467-1"><a href="mars.html#cb467-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plotmo(caret.mars$finalModel)</span></span>
+<span id="cb467-2"><a href="mars.html#cb467-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotmo</span>(caret.mars<span class="sc">$</span>finalModel, <span class="at">degree2 =</span> <span class="dv">0</span>, <span class="at">caption =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <pre><code>##  plotmo grid:    vh wind humidity temp    ibh dpg   ibt vis   doy
 ##                5770    5     64.5   62 2046.5  24 169.5 100 213.5</code></pre>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:earth-caret-plotmo1"></span>
@@ -710,7 +714,7 @@ Figura 7.21: Efectos parciales principales del modelo MARS ajustado con <code>ca
 </p>
 </div>
 
-<div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="mars.html#cb468-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotmo</span>(caret.mars<span class="sc">$</span>finalModel, <span class="at">degree1 =</span> <span class="dv">0</span>, <span class="at">caption =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb469"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb469-1"><a href="mars.html#cb469-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotmo</span>(caret.mars<span class="sc">$</span>finalModel, <span class="at">degree1 =</span> <span class="dv">0</span>, <span class="at">caption =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:earth-caret-plotmo2"></span>
 <img src="07-regresion_np_files/figure-html/earth-caret-plotmo2-1.png" alt="Efectos parciales principales de las interacciones del modelo MARS ajustado con caret." width="75%" />
 <p class="caption">
@@ -718,8 +722,8 @@ Figura 7.22: Efectos parciales principales de las interacciones del modelo MARS 
 </p>
 </div>
 <p>Finalmente evaluamos la precisión de las predicciones en la muestra de test con el procedimiento habitual:</p>
-<div class="sourceCode" id="cb469"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb469-1"><a href="mars.html#cb469-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(caret.mars, <span class="at">newdata =</span> test)</span>
-<span id="cb469-2"><a href="mars.html#cb469-2" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(pred, test<span class="sc">$</span>O3)</span></code></pre></div>
+<div class="sourceCode" id="cb470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb470-1"><a href="mars.html#cb470-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(caret.mars, <span class="at">newdata =</span> test)</span>
+<span id="cb470-2"><a href="mars.html#cb470-2" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(pred, test<span class="sc">$</span>O3)</span></code></pre></div>
 <pre><code>##          me        rmse         mae         mpe        mape   r.squared 
 ##   0.4817913   4.0952444   3.0764376 -14.1288949  41.2602037   0.7408061</code></pre>
 </div>
@@ -732,8 +736,8 @@ Friedman, J. H. (1991). <span>Multivariate Adaptive Regression Splines</span>. <
 </div>
 <div class="footnotes">
 <hr />
-<ol start="50">
-<li id="fn50"><p>Desarrollado a partir de la función <code>mda::mars()</code> de T. Hastie y R. Tibshirani. Utiliza este nombre porque MARS está registrado para un uso comercial por <a href="https://www.salford-systems.com">Salford Systems</a>.<a href="mars.html#fnref50" class="footnote-back">↩︎</a></p></li>
+<ol start="51">
+<li id="fn51"><p>Desarrollado a partir de la función <code>mda::mars()</code> de T. Hastie y R. Tibshirani. Utiliza este nombre porque MARS está registrado para un uso comercial por <a href="https://www.salford-systems.com">Salford Systems</a>.<a href="mars.html#fnref51" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>6.9 Modelos lineales generalizados | Aprendizaje Estadístico</title>
   <meta name="description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
   <meta property="og:title" content="6.9 Modelos lineales generalizados | Aprendizaje Estadístico" />
   <meta property="og:type" content="book" />
@@ -53,12 +53,12 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.26/datatables.js"></script>
-<link href="libs/dt-core-1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="libs/dt-core-1.12.1/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="libs/dt-core-1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="libs/datatables-binding-0.30/datatables.js"></script>
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.13.4/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
 
@@ -128,6 +128,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -356,7 +360,7 @@ Esto da lugar al modelo de regresión logística (múltiple), que será el que u
 Para un tratamiento más completo de los métodos de regresión lineal generalizada se recomienda consultar alguno de los libros de referencia, como <span class="citation">Faraway (<a href="#ref-faraway2014linear" role="doc-biblioref">2016</a>)</span>, <span class="citation">T. J. Hastie y Pregibon (<a href="#ref-hastie2017generalized" role="doc-biblioref">2017</a>)</span>, <span class="citation">Dunn y Smyth (<a href="#ref-dunn2018generalized" role="doc-biblioref">2018</a>)</span> o <span class="citation">McCullagh (<a href="#ref-mccullagh2019generalized" role="doc-biblioref">2019</a>)</span>.</p>
 <!-- ### Ajuste: función `glm` -->
 <p>Para el ajuste (estimación de los parámetros) de un modelo lineal generalizado a un conjunto de datos (por máxima verosimilitud) se emplea la función <a href="https://rdrr.io/r/stats/glm.html"><code>glm()</code></a> (la mayoría de los principales parámetros coinciden con los de la función <code>lm()</code>):</p>
-<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="reg-glm.html#cb373-1" aria-hidden="true" tabindex="-1"></a>ajuste <span class="ot">&lt;-</span> <span class="fu">glm</span>(formula, <span class="at">family =</span> gaussian, data, weights, subset, na.action, ...)</span></code></pre></div>
+<div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb374-1"><a href="reg-glm.html#cb374-1" aria-hidden="true" tabindex="-1"></a>ajuste <span class="ot">&lt;-</span> <span class="fu">glm</span>(formula, <span class="at">family =</span> gaussian, data, weights, subset, na.action, ...)</span></code></pre></div>
 <p>El parámetro <code>family</code> especifica la distribución y opcionalmente la función de enlace.
 Por ejemplo:</p>
 <ul>
@@ -375,25 +379,30 @@ Por ejemplo, en el caso del modelo logístico bastará con establecer <code>fami
 load("data/hbat.RData") 
 as.data.frame(attr(hbat, "variable.labels"))
 -->
-<div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb374-1"><a href="reg-glm.html#cb374-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> hbat[<span class="fu">c</span>(<span class="dv">24</span>, <span class="dv">7</span><span class="sc">:</span><span class="dv">19</span>)]</span>
-<span id="cb374-2"><a href="reg-glm.html#cb374-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb374-3"><a href="reg-glm.html#cb374-3" aria-hidden="true" tabindex="-1"></a>nobs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
-<span id="cb374-4"><a href="reg-glm.html#cb374-4" aria-hidden="true" tabindex="-1"></a>itrain <span class="ot">&lt;-</span> <span class="fu">sample</span>(nobs, <span class="fl">0.8</span> <span class="sc">*</span> nobs)</span>
-<span id="cb374-5"><a href="reg-glm.html#cb374-5" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> df[itrain, ]</span>
-<span id="cb374-6"><a href="reg-glm.html#cb374-6" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> df[<span class="sc">-</span>itrain, ]</span></code></pre></div>
+<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="reg-glm.html#cb375-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> hbat[<span class="fu">c</span>(<span class="dv">24</span>, <span class="dv">7</span><span class="sc">:</span><span class="dv">19</span>)]</span>
+<span id="cb375-2"><a href="reg-glm.html#cb375-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb375-3"><a href="reg-glm.html#cb375-3" aria-hidden="true" tabindex="-1"></a>nobs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
+<span id="cb375-4"><a href="reg-glm.html#cb375-4" aria-hidden="true" tabindex="-1"></a>itrain <span class="ot">&lt;-</span> <span class="fu">sample</span>(nobs, <span class="fl">0.8</span> <span class="sc">*</span> nobs)</span>
+<span id="cb375-5"><a href="reg-glm.html#cb375-5" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> df[itrain, ]</span>
+<span id="cb375-6"><a href="reg-glm.html#cb375-6" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> df[<span class="sc">-</span>itrain, ]</span></code></pre></div>
 <p>En primer lugar se suele realizar un análisis descriptivo.
 Por ejemplo, si el número de variables no es muy grande, podemos generar un gráfico de dispersión matricial, diferenciando las observaciones pertenecientes a las distintas clases (ver Figura <a href="reg-glm.html#fig:plot-df-class">6.21</a>).</p>
 
-<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="reg-glm.html#cb375-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(train[<span class="sc">-</span><span class="dv">1</span>], <span class="at">pch =</span> <span class="fu">as.numeric</span>(train<span class="sc">$</span>alianza), <span class="at">col =</span> <span class="fu">as.numeric</span>(train<span class="sc">$</span>alianza))</span></code></pre></div>
+<div class="sourceCode" id="cb376"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb376-1"><a href="reg-glm.html#cb376-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(train[<span class="sc">-</span><span class="dv">1</span>], <span class="at">pch =</span> <span class="fu">as.numeric</span>(train<span class="sc">$</span>alianza), <span class="at">col =</span> <span class="fu">as.numeric</span>(train<span class="sc">$</span>alianza))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:plot-df-class"></span>
 <img src="06-modelos_lineales_files/figure-html/plot-df-class-1.png" alt="Gráfico de dispersión matricial, con colores y símbolos dependiendo de alianza." width="100%" />
 <p class="caption">
 Figura 6.21: Gráfico de dispersión matricial, con colores y símbolos dependiendo de <code>alianza</code>.
 </p>
 </div>
+<!-- 
+https://plotly.com/ggplot2/splom/
+https://www.statology.org/scatterplot-matrix-in-r/
+https://daviddalpiaz.github.io/r4sl/generative-models.html
+-->
 <p>Para ajustar un modelo de regresión logística bastaría con establecer el argumento <code>family = binomial</code> en la llamada a <code>glm()</code> (por defecto utiliza <code>link = "logit"</code>):</p>
-<div class="sourceCode" id="cb376"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb376-1"><a href="reg-glm.html#cb376-1" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">glm</span>(alianza <span class="sc">~</span> velocida <span class="sc">+</span> calidadp, <span class="at">family =</span> binomial, <span class="at">data =</span> train)</span>
-<span id="cb376-2"><a href="reg-glm.html#cb376-2" aria-hidden="true" tabindex="-1"></a>modelo</span></code></pre></div>
+<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="reg-glm.html#cb377-1" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">glm</span>(alianza <span class="sc">~</span> velocida <span class="sc">+</span> calidadp, <span class="at">family =</span> binomial, <span class="at">data =</span> train)</span>
+<span id="cb377-2"><a href="reg-glm.html#cb377-2" aria-hidden="true" tabindex="-1"></a>modelo</span></code></pre></div>
 <pre><code>## 
 ## Call:  glm(formula = alianza ~ velocida + calidadp, family = binomial, 
 ##     data = train)
@@ -406,24 +415,20 @@ Figura 6.21: Gráfico de dispersión matricial, con colores y símbolos dependie
 ## Null Deviance:       218.2 
 ## Residual Deviance: 160.5     AIC: 166.5</code></pre>
 <p>La razón de ventajas (OR) permite cuantificar el efecto de las variables explicativas en la respuesta (incremento proporcional en la razón entre la probabilidad de éxito y la de fracaso, al aumentar una unidad la variable manteniendo las demás fijas):</p>
-<div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="reg-glm.html#cb378-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(modelo))  <span class="co"># Razones de ventajas (&quot;odds ratios&quot;)</span></span></code></pre></div>
+<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="reg-glm.html#cb379-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(modelo))  <span class="co"># Razones de ventajas (&quot;odds ratios&quot;)</span></span></code></pre></div>
 <pre><code>##  (Intercept)     velocida     calidadp 
 ## 3.646214e-06 5.194162e+00 2.055887e+00</code></pre>
-<div class="sourceCode" id="cb380"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb380-1"><a href="reg-glm.html#cb380-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">confint</span>(modelo))</span></code></pre></div>
+<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="reg-glm.html#cb381-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">confint</span>(modelo))</span></code></pre></div>
 <pre><code>##                    2.5 %       97.5 %
 ## (Intercept) 4.465945e-08 1.593277e-04
 ## velocida    2.766629e+00 1.068554e+01
 ## calidadp    1.557441e+00 2.789897e+00</code></pre>
 <p>Para obtener un resumen más completo del ajuste también se utiliza <code>summary()</code>:</p>
-<div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb382-1"><a href="reg-glm.html#cb382-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo)</span></code></pre></div>
+<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="reg-glm.html#cb383-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = alianza ~ velocida + calidadp, family = binomial, 
 ##     data = train)
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -1.8273  -0.7622  -0.2998   0.7837   1.8375  
 ## 
 ## Coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)    
@@ -444,8 +449,8 @@ Figura 6.21: Gráfico de dispersión matricial, con colores y símbolos dependie
 La <em>Null deviance</em> se correspondería con un modelo solo con la constante y la <em>Residual deviance</em> con el modelo ajustado.
 En este caso hay una reducción de 57.65 con una pérdida de 2 grados de libertad (una reducción significativa).</p>
 <p>Para contrastar globalmente el efecto de las covariables también podemos emplear:</p>
-<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="reg-glm.html#cb384-1" aria-hidden="true" tabindex="-1"></a>modelo.null <span class="ot">&lt;-</span> <span class="fu">glm</span>(alianza <span class="sc">~</span> <span class="dv">1</span>, binomial, train)</span>
-<span id="cb384-2"><a href="reg-glm.html#cb384-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(modelo.null, modelo, <span class="at">test =</span> <span class="st">&quot;Chi&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="reg-glm.html#cb385-1" aria-hidden="true" tabindex="-1"></a>modelo.null <span class="ot">&lt;-</span> <span class="fu">glm</span>(alianza <span class="sc">~</span> <span class="dv">1</span>, binomial, train)</span>
+<span id="cb385-2"><a href="reg-glm.html#cb385-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(modelo.null, modelo, <span class="at">test =</span> <span class="st">&quot;Chi&quot;</span>)</span></code></pre></div>
 <pre><code>## Analysis of Deviance Table
 ## 
 ## Model 1: alianza ~ 1
@@ -465,9 +470,9 @@ pero por ejemplo el paquete
 <a href="https://cran.r-project.org/web/packages/bestglm/vignettes/bestglm.pdf"><code>bestglm</code></a>
 proporciona una herramienta equivalente (<code>bestglm()</code>).
 También se podría emplear la función <a href="https://rdrr.io/pkg/RcmdrMisc/man/stepwise.html"><code>stepwise()</code></a> del paquete <a href="https://CRAN.R-project.org/package=RcmdrMisc"><code>RcmdrMisc</code></a> para seleccionar un modelo por pasos según criterio AIC o BIC:</p>
-<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb386-1"><a href="reg-glm.html#cb386-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(RcmdrMisc)</span></span>
-<span id="cb386-2"><a href="reg-glm.html#cb386-2" aria-hidden="true" tabindex="-1"></a>modelo.completo <span class="ot">&lt;-</span> <span class="fu">glm</span>(alianza <span class="sc">~</span> ., <span class="at">family =</span> binomial, <span class="at">data =</span> train)</span>
-<span id="cb386-3"><a href="reg-glm.html#cb386-3" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">stepwise</span>(modelo.completo, <span class="at">direction=</span><span class="st">&#39;forward/backward&#39;</span>, <span class="at">criterion=</span><span class="st">&#39;BIC&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="reg-glm.html#cb387-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(RcmdrMisc)</span></span>
+<span id="cb387-2"><a href="reg-glm.html#cb387-2" aria-hidden="true" tabindex="-1"></a>modelo.completo <span class="ot">&lt;-</span> <span class="fu">glm</span>(alianza <span class="sc">~</span> ., <span class="at">family =</span> binomial, <span class="at">data =</span> train)</span>
+<span id="cb387-3"><a href="reg-glm.html#cb387-3" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">stepwise</span>(modelo.completo, <span class="at">direction=</span><span class="st">&#39;forward/backward&#39;</span>, <span class="at">criterion=</span><span class="st">&#39;BIC&#39;</span>)</span></code></pre></div>
 <pre><code>## 
 ## Direction:  forward/backward
 ## Criterion:  BIC 
@@ -547,15 +552,11 @@ También se podría emplear la función <a href="https://rdrr.io/pkg/RcmdrMisc/m
 ## - velocida  1   160.34 175.57
 ## - imgfvent  1   160.55 175.77
 ## - calidadp  1   178.43 193.65</code></pre>
-<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="reg-glm.html#cb388-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo)</span></code></pre></div>
+<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="reg-glm.html#cb389-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = alianza ~ velocida + calidadp + imgfvent, family = binomial, 
 ##     data = train)
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -2.6527  -0.6822  -0.1482   0.7631   2.0561  
 ## 
 ## Coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)    
@@ -579,21 +580,21 @@ También se podría emplear la función <a href="https://rdrr.io/pkg/RcmdrMisc/m
 <p>Las hipótesis estructurales del modelo son similares al caso de regresión lineal (aunque algunas como la linealidad se suponen en la escala transformada).
 Si no se verifican, los resultados basados en la teoría estadística pueden no ser fiables o totalmente erróneos.</p>
 <p>Con el método <a href="https://rdrr.io/r/stats/plot.lm.html"><code>plot()</code></a> se pueden generar gráficos de interés para la diagnosis del modelo (ver Figura <a href="reg-glm.html#fig:glm-plot">6.22</a>):</p>
-<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb390-1"><a href="reg-glm.html#cb390-1" aria-hidden="true" tabindex="-1"></a>oldpar <span class="ot">&lt;-</span> <span class="fu">par</span>( <span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb390-2"><a href="reg-glm.html#cb390-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(modelo)</span></code></pre></div>
+<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="reg-glm.html#cb391-1" aria-hidden="true" tabindex="-1"></a>oldpar <span class="ot">&lt;-</span> <span class="fu">par</span>( <span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb391-2"><a href="reg-glm.html#cb391-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(modelo)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:glm-plot"></span>
 <img src="06-modelos_lineales_files/figure-html/glm-plot-1.png" alt="Gráficos de diagnóstico del ajuste lineal generalizado." width="90%" />
 <p class="caption">
 Figura 6.22: Gráficos de diagnóstico del ajuste lineal generalizado.
 </p>
 </div>
-<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="reg-glm.html#cb391-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(oldpar)</span></code></pre></div>
+<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="reg-glm.html#cb392-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(oldpar)</span></code></pre></div>
 <p>Su interpretación es similar a la de los modelos lineales (consultar las referencias incluidas al principio de la sección para más detalles).
 En este caso destacan tres posibles datos atípicos, aunque aparentemente no son muy influyentes a posteriori (en el modelo ajustado).
 Adicionalmente se pueden generar gráficos parciales de residuos, por ejemplo con la función <a href="https://rdrr.io/pkg/car/man/crPlots.html"><code>crPlots()</code></a> del paquete <a href="https://CRAN.R-project.org/package=car"><code>car</code></a> (ver Figura <a href="reg-glm.html#fig:crPlots-glm">6.23</a>):</p>
-<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="reg-glm.html#cb392-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(car)</span></span>
-<span id="cb392-2"><a href="reg-glm.html#cb392-2" aria-hidden="true" tabindex="-1"></a>id <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">method =</span> <span class="fu">which</span>(<span class="fu">abs</span>(<span class="fu">residuals</span>(modelo, <span class="at">type =</span> <span class="st">&quot;pearson&quot;</span>)) <span class="sc">&gt;</span> <span class="dv">3</span>), <span class="at">col =</span> <span class="dv">2</span>)</span>
-<span id="cb392-3"><a href="reg-glm.html#cb392-3" aria-hidden="true" tabindex="-1"></a><span class="fu">crPlots</span>(modelo, <span class="at">id =</span> id, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb393-1"><a href="reg-glm.html#cb393-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(car)</span></span>
+<span id="cb393-2"><a href="reg-glm.html#cb393-2" aria-hidden="true" tabindex="-1"></a>id <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">method =</span> <span class="fu">which</span>(<span class="fu">abs</span>(<span class="fu">residuals</span>(modelo, <span class="at">type =</span> <span class="st">&quot;pearson&quot;</span>)) <span class="sc">&gt;</span> <span class="dv">3</span>), <span class="at">col =</span> <span class="dv">2</span>)</span>
+<span id="cb393-3"><a href="reg-glm.html#cb393-3" aria-hidden="true" tabindex="-1"></a><span class="fu">crPlots</span>(modelo, <span class="at">id =</span> id, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:crPlots-glm"></span>
 <img src="06-modelos_lineales_files/figure-html/crPlots-glm-1.png" alt="Gráficos parciales de residuos del ajuste generalizado." width="90%" />
 <p class="caption">
@@ -602,8 +603,8 @@ Figura 6.23: Gráficos parciales de residuos del ajuste generalizado.
 </div>
 <p>Se pueden emplear las mismas funciones vistas en los modelos lineales para obtener medidas de diagnosis de interés (tablas <a href="reg-multiple.html#tab:aux-fun-lm">6.1</a> y <a href="analisis-reg-multiple.html#tab:diag-fun-lm">6.2</a>). Por ejemplo <code>residuals(model, type = "deviance")</code> proporcionará los residuos <em>deviance</em>.
 Por supuesto también pueden aparecer problemas de colinealidad, y podemos emplear las mismas herramientas para detectarla:</p>
-<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb393-1"><a href="reg-glm.html#cb393-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(car)</span></span>
-<span id="cb393-2"><a href="reg-glm.html#cb393-2" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(modelo)</span></code></pre></div>
+<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="reg-glm.html#cb394-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(car)</span></span>
+<span id="cb394-2"><a href="reg-glm.html#cb394-2" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(modelo)</span></code></pre></div>
 <pre><code>## velocida calidadp imgfvent 
 ## 1.193557 1.656649 1.451237</code></pre>
 <p>Si no se satisfacen los supuestos básicos también se pueden intentar distintas alternativas (se puede cambiar la función de enlace y la familia de distribuciones, que puede incluir parámetros para modelar dispersión, además de las descritas en la Sección <a href="analisis-reg-multiple.html#analisis-reg-multiple">6.4</a>), incluyendo emplear modelos más flexibles o técnicas de aprendizaje estadístico que no dependan de ellas (sustancialmente).</p>
@@ -612,10 +613,10 @@ Por supuesto también pueden aparecer problemas de colinealidad, y podemos emple
 <h3><span class="header-section-number">6.9.3</span> Evaluación de la precisión<a href="reg-glm.html#evaluación-de-la-precisión" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Para evaluar la calidad de la predicción en nuevas observaciones podemos seguir los pasos mostrados en la Sección <a href="const-eval.html#eval-class">1.3.5</a>.
 Obteniendo las estimaciones de la probabilidad (de la segunda categoría) empleando <code>predict()</code> con <code>type = "response"</code>:</p>
-<div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb395-1"><a href="reg-glm.html#cb395-1" aria-hidden="true" tabindex="-1"></a>p.est <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>, <span class="at">newdata =</span> test)</span>
-<span id="cb395-2"><a href="reg-glm.html#cb395-2" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">factor</span>(p.est <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;No&quot;</span>, <span class="st">&quot;Si&quot;</span>)) <span class="co"># levels = c(&#39;FALSE&#39;, &#39;TRUE&#39;)</span></span></code></pre></div>
+<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="reg-glm.html#cb396-1" aria-hidden="true" tabindex="-1"></a>p.est <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>, <span class="at">newdata =</span> test)</span>
+<span id="cb396-2"><a href="reg-glm.html#cb396-2" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">factor</span>(p.est <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;No&quot;</span>, <span class="st">&quot;Si&quot;</span>)) <span class="co"># levels = c(&#39;FALSE&#39;, &#39;TRUE&#39;)</span></span></code></pre></div>
 <p>y las medidas de precisión de la predicción (además de los criterios AIC o BIC tradicionales):</p>
-<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="reg-glm.html#cb396-1" aria-hidden="true" tabindex="-1"></a>caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(pred, test<span class="sc">$</span>alianza, <span class="at">positive =</span> <span class="st">&quot;Si&quot;</span>, <span class="at">mode =</span> <span class="st">&quot;everything&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb397-1"><a href="reg-glm.html#cb397-1" aria-hidden="true" tabindex="-1"></a>caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(pred, test<span class="sc">$</span>alianza, <span class="at">positive =</span> <span class="st">&quot;Si&quot;</span>, <span class="at">mode =</span> <span class="st">&quot;everything&quot;</span>)</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference

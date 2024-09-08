@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>3.3 Bagging y bosques aleatorios en R | Aprendizaje Estadístico</title>
   <meta name="description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
   <meta property="og:title" content="3.3 Bagging y bosques aleatorios en R | Aprendizaje Estadístico" />
   <meta property="og:type" content="book" />
@@ -53,12 +53,12 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.26/datatables.js"></script>
-<link href="libs/dt-core-1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="libs/dt-core-1.12.1/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="libs/dt-core-1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="libs/datatables-binding-0.30/datatables.js"></script>
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.13.4/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
 
@@ -128,6 +128,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -358,7 +362,7 @@ Si la respuesta es un factor asumirá que se trata de un problema de clasificaci
 <li><p><code>mtry</code>: número de predictores seleccionados al azar en cada división; por defecto <code>max(floor(p/3), 1)</code> en el caso de regresión y <code>floor(sqrt(p))</code> en clasificación, siendo <code>p = ncol(x) = ncol(data) - 1</code> el número de predictores.</p></li>
 <li><p><code>nodesize</code>: número mínimo de observaciones en un nodo terminal; por defecto 1 en clasificación y 5 en regresión (puede ser recomendable incrementarlo si el conjunto de datos es muy grande, para evitar posibles problemas de sobreajuste, disminuir el tiempo de computación y los requerimientos de memoria; también podría ser considerado como un hiperparámetro).</p></li>
 </ul>
-<p>Otros argumentos que pueden ser de interés<a href="#fn24" class="footnote-ref" id="fnref24"><sup>24</sup></a> son:</p>
+<p>Otros argumentos que pueden ser de interés<a href="#fn25" class="footnote-ref" id="fnref25"><sup>25</sup></a> son:</p>
 <ul>
 <li><p><code>maxnodes</code>: número máximo de nodos terminales (como alternativa para la establecer la complejidad).</p></li>
 <li><p><code>importance = TRUE</code>: permite obtener medidas adicionales de importancia.</p></li>
@@ -370,21 +374,21 @@ Si la respuesta es un factor asumirá que se trata de un problema de clasificaci
 <div id="ejemplo-clasificación-con-bagging" class="section level3 hasAnchor" number="3.3.1">
 <h3><span class="header-section-number">3.3.1</span> Ejemplo: Clasificación con bagging<a href="bagging-rf-r.html#ejemplo-clasificación-con-bagging" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Como ejemplo consideraremos el conjunto de datos de calidad de vino empleado en la Sección <a href="cart-con-el-paquete-rpart.html#class-rpart">2.3.2</a> (para hacer comparaciones con el ajuste de un único árbol).</p>
-<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="bagging-rf-r.html#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/winetaste.RData&quot;</span>)</span>
-<span id="cb142-2"><a href="bagging-rf-r.html#cb142-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb142-3"><a href="bagging-rf-r.html#cb142-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> winetaste</span>
-<span id="cb142-4"><a href="bagging-rf-r.html#cb142-4" aria-hidden="true" tabindex="-1"></a>nobs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
-<span id="cb142-5"><a href="bagging-rf-r.html#cb142-5" aria-hidden="true" tabindex="-1"></a>itrain <span class="ot">&lt;-</span> <span class="fu">sample</span>(nobs, <span class="fl">0.8</span> <span class="sc">*</span> nobs)</span>
-<span id="cb142-6"><a href="bagging-rf-r.html#cb142-6" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> df[itrain, ]</span>
-<span id="cb142-7"><a href="bagging-rf-r.html#cb142-7" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> df[<span class="sc">-</span>itrain, ]</span></code></pre></div>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="bagging-rf-r.html#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/winetaste.RData&quot;</span>)</span>
+<span id="cb143-2"><a href="bagging-rf-r.html#cb143-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb143-3"><a href="bagging-rf-r.html#cb143-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> winetaste</span>
+<span id="cb143-4"><a href="bagging-rf-r.html#cb143-4" aria-hidden="true" tabindex="-1"></a>nobs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
+<span id="cb143-5"><a href="bagging-rf-r.html#cb143-5" aria-hidden="true" tabindex="-1"></a>itrain <span class="ot">&lt;-</span> <span class="fu">sample</span>(nobs, <span class="fl">0.8</span> <span class="sc">*</span> nobs)</span>
+<span id="cb143-6"><a href="bagging-rf-r.html#cb143-6" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> df[itrain, ]</span>
+<span id="cb143-7"><a href="bagging-rf-r.html#cb143-7" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> df[<span class="sc">-</span>itrain, ]</span></code></pre></div>
 <p>Al ser bagging con árboles un caso particular de bosques aleatorios, cuando <span class="math inline">\(m = p\)</span>, también podemos emplear <code>randomForest</code>:</p>
 <!-- 
 Pendiente: establecer nodesize=5 para reducir tiempos de computación? 
 -->
-<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="bagging-rf-r.html#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span>
-<span id="cb143-2"><a href="bagging-rf-r.html#cb143-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">4</span>) <span class="co"># NOTA: Fijamos esta semilla para ilustrar dependencia</span></span>
-<span id="cb143-3"><a href="bagging-rf-r.html#cb143-3" aria-hidden="true" tabindex="-1"></a>bagtrees <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(taste <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">mtry =</span> <span class="fu">ncol</span>(train) <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb143-4"><a href="bagging-rf-r.html#cb143-4" aria-hidden="true" tabindex="-1"></a>bagtrees</span></code></pre></div>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="bagging-rf-r.html#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span>
+<span id="cb144-2"><a href="bagging-rf-r.html#cb144-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">4</span>) <span class="co"># NOTA: Fijamos esta semilla para ilustrar dependencia</span></span>
+<span id="cb144-3"><a href="bagging-rf-r.html#cb144-3" aria-hidden="true" tabindex="-1"></a>bagtrees <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(taste <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">mtry =</span> <span class="fu">ncol</span>(train) <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb144-4"><a href="bagging-rf-r.html#cb144-4" aria-hidden="true" tabindex="-1"></a>bagtrees</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ##  randomForest(formula = taste ~ ., data = train, mtry = ncol(train) -      1) 
@@ -399,8 +403,8 @@ Pendiente: establecer nodesize=5 para reducir tiempos de computación?
 ## bad   138 200   0.4082840</code></pre>
 <p>Con el método <code>plot()</code> podemos examinar la convergencia del error en las muestras OOB (simplemente emplea <code>matplot()</code> para representar la componente <code>$err.rate</code> como se muestra en la Figura <a href="bagging-rf-r.html#fig:bagging-conv">3.1</a>):</p>
 
-<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="bagging-rf-r.html#cb145-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(bagtrees, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span>
-<span id="cb145-2"><a href="bagging-rf-r.html#cb145-2" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;right&quot;</span>, <span class="fu">colnames</span>(bagtrees<span class="sc">$</span>err.rate), <span class="at">lty =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">col =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="bagging-rf-r.html#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(bagtrees, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb146-2"><a href="bagging-rf-r.html#cb146-2" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;right&quot;</span>, <span class="fu">colnames</span>(bagtrees<span class="sc">$</span>err.rate), <span class="at">lty =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">col =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:bagging-conv"></span>
 <img src="03-bagging_boosting_files/figure-html/bagging-conv-1.png" alt="Tasas de error OOB al usar bagging para la predicción de winetaste$taste (realizado empleando randomForest() con mtry igual al número de predictores)." width="75%" />
 <p class="caption">
@@ -413,10 +417,10 @@ Por ejemplo, el siguiente código permite extraer la variable seleccionada para 
 <!--
 View(getTree(bagtrees, 1, labelVar=TRUE))
 -->
-<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="bagging-rf-r.html#cb146-1" aria-hidden="true" tabindex="-1"></a>split_var_1 <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">seq_len</span>(bagtrees<span class="sc">$</span>ntree),</span>
-<span id="cb146-2"><a href="bagging-rf-r.html#cb146-2" aria-hidden="true" tabindex="-1"></a>                   <span class="cf">function</span>(i) <span class="fu">getTree</span>(bagtrees, i, <span class="at">labelVar=</span><span class="cn">TRUE</span>)[<span class="dv">1</span>,<span class="st">&quot;split var&quot;</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="bagging-rf-r.html#cb147-1" aria-hidden="true" tabindex="-1"></a>split_var_1 <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">seq_len</span>(bagtrees<span class="sc">$</span>ntree),</span>
+<span id="cb147-2"><a href="bagging-rf-r.html#cb147-2" aria-hidden="true" tabindex="-1"></a>                   <span class="cf">function</span>(i) <span class="fu">getTree</span>(bagtrees, i, <span class="at">labelVar=</span><span class="cn">TRUE</span>)[<span class="dv">1</span>,<span class="st">&quot;split var&quot;</span>])</span></code></pre></div>
 <p>En este caso concreto podemos observar que siempre es la misma, lo que indicaría una alta dependencia entre los distintos árboles:</p>
-<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="bagging-rf-r.html#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(split_var_1)</span></code></pre></div>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="bagging-rf-r.html#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(split_var_1)</span></code></pre></div>
 <pre><code>## split_var_1
 ##              alcohol            chlorides          citric.acid 
 ##                  500                    0                    0 
@@ -427,8 +431,8 @@ View(getTree(bagtrees, 1, labelVar=TRUE))
 ## total.sulfur.dioxide     volatile.acidity 
 ##                    0                    0</code></pre>
 <p>Por último evaluamos la precisión en la muestra de test:</p>
-<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="bagging-rf-r.html#cb149-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(bagtrees, <span class="at">newdata =</span> test)</span>
-<span id="cb149-2"><a href="bagging-rf-r.html#cb149-2" aria-hidden="true" tabindex="-1"></a>caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(pred, test<span class="sc">$</span>taste)</span></code></pre></div>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="bagging-rf-r.html#cb150-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(bagtrees, <span class="at">newdata =</span> test)</span>
+<span id="cb150-2"><a href="bagging-rf-r.html#cb150-2" aria-hidden="true" tabindex="-1"></a>caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(pred, test<span class="sc">$</span>taste)</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -469,9 +473,9 @@ itrain <- sample(nobs, 0.8 * nobs)
 train <- df[itrain, ]
 test <- df[-itrain, ]
 -->
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="bagging-rf-r.html#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb151-2"><a href="bagging-rf-r.html#cb151-2" aria-hidden="true" tabindex="-1"></a>rf <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(taste <span class="sc">~</span> ., <span class="at">data =</span> train)</span>
-<span id="cb151-3"><a href="bagging-rf-r.html#cb151-3" aria-hidden="true" tabindex="-1"></a>rf</span></code></pre></div>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="bagging-rf-r.html#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb152-2"><a href="bagging-rf-r.html#cb152-2" aria-hidden="true" tabindex="-1"></a>rf <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(taste <span class="sc">~</span> ., <span class="at">data =</span> train)</span>
+<span id="cb152-3"><a href="bagging-rf-r.html#cb152-3" aria-hidden="true" tabindex="-1"></a>rf</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ##  randomForest(formula = taste ~ ., data = train) 
@@ -486,8 +490,8 @@ test <- df[-itrain, ]
 ## bad   136 202   0.4023669</code></pre>
 <p>En este caso también observamos en la Figura <a href="bagging-rf-r.html#fig:rf-plot">3.2</a> que aparentemente hay convergencia y tampoco sería necesario incrementar el número de árboles:</p>
 
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="bagging-rf-r.html#cb153-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rf,<span class="at">main=</span><span class="st">&quot;&quot;</span>)</span>
-<span id="cb153-2"><a href="bagging-rf-r.html#cb153-2" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;right&quot;</span>, <span class="fu">colnames</span>(rf<span class="sc">$</span>err.rate), <span class="at">lty =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">col =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="bagging-rf-r.html#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rf,<span class="at">main=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb154-2"><a href="bagging-rf-r.html#cb154-2" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;right&quot;</span>, <span class="fu">colnames</span>(rf<span class="sc">$</span>err.rate), <span class="at">lty =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">col =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:rf-plot"></span>
 <img src="03-bagging_boosting_files/figure-html/rf-plot-1.png" alt="Tasas de error OOB al usar bosques aleatorios para la predicción de winetaste$taste (empleando randomForest() con las opciones por defecto)." width="75%" />
 <p class="caption">
@@ -496,7 +500,7 @@ Figura 3.2: Tasas de error OOB al usar bosques aleatorios para la predicción de
 </div>
 <p>Podemos mostrar la importancia de las variables predictoras (utilizadas en el bosque aleatorio y sus sustituas) con la función <code>importance()</code> o representarlas con <code>varImpPlot()</code> (ver Figura <a href="bagging-rf-r.html#fig:rf-importance">3.3</a>):</p>
 
-<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="bagging-rf-r.html#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="fu">importance</span>(rf)</span></code></pre></div>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="bagging-rf-r.html#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="fu">importance</span>(rf)</span></code></pre></div>
 <pre><code>##                      MeanDecreaseGini
 ## fixed.acidity                37.77155
 ## volatile.acidity             43.99769
@@ -509,7 +513,7 @@ Figura 3.2: Tasas de error OOB al usar bosques aleatorios para la predicción de
 ## pH                           32.31442
 ## sulphates                    30.32322
 ## alcohol                      63.89185</code></pre>
-<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="bagging-rf-r.html#cb156-1" aria-hidden="true" tabindex="-1"></a><span class="fu">varImpPlot</span>(rf)</span></code></pre></div>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="bagging-rf-r.html#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="fu">varImpPlot</span>(rf)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:rf-importance"></span>
 <img src="03-bagging_boosting_files/figure-html/rf-importance-1.png" alt="Importancia de las variables predictoras al emplear bosques aleatorios para la predicción de winetaste$taste." width="75%" />
 <p class="caption">
@@ -517,8 +521,8 @@ Figura 3.3: Importancia de las variables predictoras al emplear bosques aleatori
 </p>
 </div>
 <p>Si evaluamos la precisión en la muestra de test podemos observar un ligero incremento en la precisión en comparación con el método anterior:</p>
-<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="bagging-rf-r.html#cb157-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(rf, <span class="at">newdata =</span> test)</span>
-<span id="cb157-2"><a href="bagging-rf-r.html#cb157-2" aria-hidden="true" tabindex="-1"></a>caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(pred, test<span class="sc">$</span>taste)</span></code></pre></div>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="bagging-rf-r.html#cb158-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(rf, <span class="at">newdata =</span> test)</span>
+<span id="cb158-2"><a href="bagging-rf-r.html#cb158-2" aria-hidden="true" tabindex="-1"></a>caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(pred, test<span class="sc">$</span>taste)</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -547,9 +551,9 @@ Figura 3.3: Importancia de las variables predictoras al emplear bosques aleatori
 ##        &#39;Positive&#39; Class : good            
 ## </code></pre>
 <p>Esta mejora sería debida a que en este caso la dependencia entre los árboles es menor:</p>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="bagging-rf-r.html#cb159-1" aria-hidden="true" tabindex="-1"></a>split_var_1 <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">seq_len</span>(rf<span class="sc">$</span>ntree),</span>
-<span id="cb159-2"><a href="bagging-rf-r.html#cb159-2" aria-hidden="true" tabindex="-1"></a>                      <span class="cf">function</span>(i) <span class="fu">getTree</span>(rf, i, <span class="at">labelVar=</span><span class="cn">TRUE</span>)[<span class="dv">1</span>, <span class="st">&quot;split var&quot;</span>])</span>
-<span id="cb159-3"><a href="bagging-rf-r.html#cb159-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(split_var_1)</span></code></pre></div>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="bagging-rf-r.html#cb160-1" aria-hidden="true" tabindex="-1"></a>split_var_1 <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">seq_len</span>(rf<span class="sc">$</span>ntree),</span>
+<span id="cb160-2"><a href="bagging-rf-r.html#cb160-2" aria-hidden="true" tabindex="-1"></a>                      <span class="cf">function</span>(i) <span class="fu">getTree</span>(rf, i, <span class="at">labelVar=</span><span class="cn">TRUE</span>)[<span class="dv">1</span>, <span class="st">&quot;split var&quot;</span>])</span>
+<span id="cb160-3"><a href="bagging-rf-r.html#cb160-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(split_var_1)</span></code></pre></div>
 <pre><code>## split_var_1
 ##              alcohol            chlorides          citric.acid 
 ##                  150                   49                   38 
@@ -562,13 +566,13 @@ Figura 3.3: Importancia de las variables predictoras al emplear bosques aleatori
 <p>El análisis e interpretación del modelo puede resultar más complicado en este tipo de métodos.
 Para estudiar el efecto de los predictores en la respuesta se suelen emplear alguna de las herramientas descritas en la Sección <a href="analisis-modelos.html#analisis-modelos">1.5</a>.
 Por ejemplo, empleando la función <code>pdp::partial()</code>, podemos generar gráficos PDP estimando los efectos individuales de los predictores (ver Figura <a href="bagging-rf-r.html#fig:rf-pdp-uni-plot">3.4</a>):</p>
-<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="bagging-rf-r.html#cb161-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pdp)</span>
-<span id="cb161-2"><a href="bagging-rf-r.html#cb161-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
-<span id="cb161-3"><a href="bagging-rf-r.html#cb161-3" aria-hidden="true" tabindex="-1"></a>pdp1 <span class="ot">&lt;-</span> <span class="fu">partial</span>(rf, <span class="st">&quot;alcohol&quot;</span>)</span>
-<span id="cb161-4"><a href="bagging-rf-r.html#cb161-4" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">plotPartial</span>(pdp1)</span>
-<span id="cb161-5"><a href="bagging-rf-r.html#cb161-5" aria-hidden="true" tabindex="-1"></a>pdp2 <span class="ot">&lt;-</span> <span class="fu">partial</span>(rf, <span class="fu">c</span>(<span class="st">&quot;density&quot;</span>))</span>
-<span id="cb161-6"><a href="bagging-rf-r.html#cb161-6" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">plotPartial</span>(pdp2)</span>
-<span id="cb161-7"><a href="bagging-rf-r.html#cb161-7" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(p1, p2, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="bagging-rf-r.html#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pdp)</span>
+<span id="cb162-2"><a href="bagging-rf-r.html#cb162-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb162-3"><a href="bagging-rf-r.html#cb162-3" aria-hidden="true" tabindex="-1"></a>pdp1 <span class="ot">&lt;-</span> <span class="fu">partial</span>(rf, <span class="st">&quot;alcohol&quot;</span>)</span>
+<span id="cb162-4"><a href="bagging-rf-r.html#cb162-4" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">plotPartial</span>(pdp1)</span>
+<span id="cb162-5"><a href="bagging-rf-r.html#cb162-5" aria-hidden="true" tabindex="-1"></a>pdp2 <span class="ot">&lt;-</span> <span class="fu">partial</span>(rf, <span class="fu">c</span>(<span class="st">&quot;density&quot;</span>))</span>
+<span id="cb162-6"><a href="bagging-rf-r.html#cb162-6" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">plotPartial</span>(pdp2)</span>
+<span id="cb162-7"><a href="bagging-rf-r.html#cb162-7" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(p1, p2, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:rf-pdp-uni-plot"></span>
 <img src="images/rf-pdp-uni-1.png" alt="Efecto parcial del alcohol (panel izquierdo) y la densidad (panel derecho) sobre la respuesta." width="90%" />
 <p class="caption">
@@ -576,8 +580,8 @@ Figura 3.4: Efecto parcial del alcohol (panel izquierdo) y la densidad (panel de
 </p>
 </div>
 <p>O gráficos PDP considerando la interacción entre dos predictores (ver Figura <a href="bagging-rf-r.html#fig:rf-pdp-plot">3.5</a>) (cuidado, puede requerir de mucho tiempo de computación):</p>
-<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="bagging-rf-r.html#cb162-1" aria-hidden="true" tabindex="-1"></a>pdp12 <span class="ot">&lt;-</span> <span class="fu">partial</span>(rf, <span class="fu">c</span>(<span class="st">&quot;alcohol&quot;</span>, <span class="st">&quot;density&quot;</span>))</span>
-<span id="cb162-2"><a href="bagging-rf-r.html#cb162-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPartial</span>(pdp12)</span></code></pre></div>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="bagging-rf-r.html#cb163-1" aria-hidden="true" tabindex="-1"></a>pdp12 <span class="ot">&lt;-</span> <span class="fu">partial</span>(rf, <span class="fu">c</span>(<span class="st">&quot;alcohol&quot;</span>, <span class="st">&quot;density&quot;</span>))</span>
+<span id="cb163-2"><a href="bagging-rf-r.html#cb163-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPartial</span>(pdp12)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:rf-pdp-plot"></span>
 <img src="images/rf-pdp-1.png" alt="Efecto parcial de la interacción del alcohol y la densidad sobre la respuesta." width="80%" />
 <p class="caption">
@@ -585,11 +589,11 @@ Figura 3.5: Efecto parcial de la interacción del alcohol y la densidad sobre la
 </p>
 </div>
 <p>Adicionalmente, estableciendo <code>ice = TRUE</code> se calculan las curvas de expectativa condicional individual (ICE). Estos gráficos ICE extienden los PDP, ya que además de mostrar la variación del promedio (ver línea roja en la Figura <a href="bagging-rf-r.html#fig:rf-ice-plot">3.6</a>), también muestra la variación de los valores predichos para cada observación (ver líneas en negro en la Figura <a href="bagging-rf-r.html#fig:rf-ice-plot">3.6</a>).</p>
-<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="bagging-rf-r.html#cb163-1" aria-hidden="true" tabindex="-1"></a>ice1 <span class="ot">&lt;-</span> <span class="fu">partial</span>(rf, <span class="at">pred.var =</span> <span class="st">&quot;alcohol&quot;</span>, <span class="at">ice =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb163-2"><a href="bagging-rf-r.html#cb163-2" aria-hidden="true" tabindex="-1"></a>ice2 <span class="ot">&lt;-</span> <span class="fu">partial</span>(rf, <span class="at">pred.var =</span> <span class="st">&quot;density&quot;</span>, <span class="at">ice =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb163-3"><a href="bagging-rf-r.html#cb163-3" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">plotPartial</span>(ice1, <span class="at">alpha =</span> <span class="fl">0.5</span>)</span>
-<span id="cb163-4"><a href="bagging-rf-r.html#cb163-4" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">plotPartial</span>(ice2, <span class="at">alpha =</span> <span class="fl">0.5</span>)</span>
-<span id="cb163-5"><a href="bagging-rf-r.html#cb163-5" aria-hidden="true" tabindex="-1"></a>gridExtra<span class="sc">:::</span><span class="fu">grid.arrange</span>(p1, p2, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="bagging-rf-r.html#cb164-1" aria-hidden="true" tabindex="-1"></a>ice1 <span class="ot">&lt;-</span> <span class="fu">partial</span>(rf, <span class="at">pred.var =</span> <span class="st">&quot;alcohol&quot;</span>, <span class="at">ice =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb164-2"><a href="bagging-rf-r.html#cb164-2" aria-hidden="true" tabindex="-1"></a>ice2 <span class="ot">&lt;-</span> <span class="fu">partial</span>(rf, <span class="at">pred.var =</span> <span class="st">&quot;density&quot;</span>, <span class="at">ice =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb164-3"><a href="bagging-rf-r.html#cb164-3" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">plotPartial</span>(ice1, <span class="at">alpha =</span> <span class="fl">0.5</span>)</span>
+<span id="cb164-4"><a href="bagging-rf-r.html#cb164-4" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">plotPartial</span>(ice2, <span class="at">alpha =</span> <span class="fl">0.5</span>)</span>
+<span id="cb164-5"><a href="bagging-rf-r.html#cb164-5" aria-hidden="true" tabindex="-1"></a>gridExtra<span class="sc">:::</span><span class="fu">grid.arrange</span>(p1, p2, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:rf-ice-plot"></span>
 <img src="images/rf-ice-1.png" alt="Efecto individual de cada observación de alcohol (panel izquierdo) y densidad (panel derecho) sobre la respuesta." width="90%" />
 <p class="caption">
@@ -598,10 +602,10 @@ Figura 3.6: Efecto individual de cada observación de alcohol (panel izquierdo) 
 </div>
 <p>Se pueden crear gráficos similares utilizando los otros paquetes indicados en la Sección <a href="analisis-modelos.html#analisis-modelos">1.5</a>.<br />
 Por ejemplo, la Figura <a href="bagging-rf-r.html#fig:rf-vivid-plot">3.7</a>, generada con el paquete <a href="https://alaninglis.github.io/vivid"><code>vivid</code></a>, muestra medidas de la importancia de los predictores (<em>Vimp</em>) en la diagonal y de la fuerza de las interacciones (<em>Vint</em>) fuera de la diagonal.</p>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="bagging-rf-r.html#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vivid)</span>
-<span id="cb164-2"><a href="bagging-rf-r.html#cb164-2" aria-hidden="true" tabindex="-1"></a>fit_rf <span class="ot">&lt;-</span> <span class="fu">vivi</span>(<span class="at">data =</span> train, <span class="at">fit =</span> rf, <span class="at">response =</span> <span class="st">&quot;taste&quot;</span>, </span>
-<span id="cb164-3"><a href="bagging-rf-r.html#cb164-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">importanceType =</span> <span class="st">&quot;%IncMSE&quot;</span>)</span>
-<span id="cb164-4"><a href="bagging-rf-r.html#cb164-4" aria-hidden="true" tabindex="-1"></a><span class="fu">viviHeatmap</span>(<span class="at">mat =</span> fit_rf[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="bagging-rf-r.html#cb165-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vivid)</span>
+<span id="cb165-2"><a href="bagging-rf-r.html#cb165-2" aria-hidden="true" tabindex="-1"></a>fit_rf <span class="ot">&lt;-</span> <span class="fu">vivi</span>(<span class="at">data =</span> train, <span class="at">fit =</span> rf, <span class="at">response =</span> <span class="st">&quot;taste&quot;</span>, </span>
+<span id="cb165-3"><a href="bagging-rf-r.html#cb165-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">importanceType =</span> <span class="st">&quot;%IncMSE&quot;</span>)</span>
+<span id="cb165-4"><a href="bagging-rf-r.html#cb165-4" aria-hidden="true" tabindex="-1"></a><span class="fu">viviHeatmap</span>(<span class="at">mat =</span> fit_rf[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:rf-vivid-plot"></span>
 <img src="images/rf-vivid-1.png" alt="Mapa de calor de la importancia e interaciones de los predictores del ajuste mediante bosques aleatorios." width="75%" />
 <p class="caption">
@@ -609,8 +613,8 @@ Figura 3.7: Mapa de calor de la importancia e interaciones de los predictores de
 </p>
 </div>
 <p>Alternativamente, también se pueden visualizar las relaciones mediante un gráfico de red (ver Figura <a href="bagging-rf-r.html#fig:rf-vivid-plot">3.7</a>).</p>
-<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="bagging-rf-r.html#cb165-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(igraph)</span>
-<span id="cb165-2"><a href="bagging-rf-r.html#cb165-2" aria-hidden="true" tabindex="-1"></a><span class="fu">viviNetwork</span>(<span class="at">mat =</span> fit_rf)</span></code></pre></div>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="bagging-rf-r.html#cb166-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(igraph)</span>
+<span id="cb166-2"><a href="bagging-rf-r.html#cb166-2" aria-hidden="true" tabindex="-1"></a><span class="fu">viviNetwork</span>(<span class="at">mat =</span> fit_rf)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:rf-vivid2-plot"></span>
 <img src="images/rf-vivid2-1.png" alt="Gráfico de red para la importancia e interaciones del ajuste mediante bosques aleatorios." width="80%" />
 <p class="caption">
@@ -629,11 +633,11 @@ plot_min_depth_interactions(rf, k = 5) # solo 5 mejores iteraciones
 </div>
 <div id="ejemplo-bosques-aleatorios-con-caret" class="section level3 hasAnchor" number="3.3.3">
 <h3><span class="header-section-number">3.3.3</span> Ejemplo: bosques aleatorios con <code>caret</code><a href="bagging-rf-r.html#ejemplo-bosques-aleatorios-con-caret" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>En paquete <code>caret</code> hay varias implementaciones de bagging y bosques aleatorios<a href="#fn25" class="footnote-ref" id="fnref25"><sup>25</sup></a>, incluyendo el algoritmo del paquete <code>randomForest</code> considerando como hiperparámetro el número de predictores seleccionados al azar en cada división <code>mtry</code>.
+<p>En paquete <code>caret</code> hay varias implementaciones de bagging y bosques aleatorios<a href="#fn26" class="footnote-ref" id="fnref26"><sup>26</sup></a>, incluyendo el algoritmo del paquete <code>randomForest</code> considerando como hiperparámetro el número de predictores seleccionados al azar en cada división <code>mtry</code>.
 Para ajustar este modelo a una muestra de entrenamiento hay que establecer <code>method = "rf"</code> en la llamada a <code>train()</code>.</p>
-<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="bagging-rf-r.html#cb166-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
-<span id="cb166-2"><a href="bagging-rf-r.html#cb166-2" aria-hidden="true" tabindex="-1"></a><span class="co"># str(getModelInfo(&quot;rf&quot;, regex = FALSE))</span></span>
-<span id="cb166-3"><a href="bagging-rf-r.html#cb166-3" aria-hidden="true" tabindex="-1"></a><span class="fu">modelLookup</span>(<span class="st">&quot;rf&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="bagging-rf-r.html#cb167-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb167-2"><a href="bagging-rf-r.html#cb167-2" aria-hidden="true" tabindex="-1"></a><span class="co"># str(getModelInfo(&quot;rf&quot;, regex = FALSE))</span></span>
+<span id="cb167-3"><a href="bagging-rf-r.html#cb167-3" aria-hidden="true" tabindex="-1"></a><span class="fu">modelLookup</span>(<span class="st">&quot;rf&quot;</span>)</span></code></pre></div>
 <pre><code>##   model parameter                         label forReg forClass probModel
 ## 1    rf      mtry #Randomly Selected Predictors   TRUE     TRUE      TRUE</code></pre>
 <!-- 
@@ -648,9 +652,9 @@ test <- df[-itrain, ]
 <p>Con las opciones por defecto únicamente evalúa tres valores posibles del hiperparámetro (ver Figura <a href="bagging-rf-r.html#fig:rf-caret-train">3.9</a>).
 Opcionalmente se podría aumentar el número valores a evaluar con <code>tuneLength</code> o directamente especificarlos con <code>tuneGrid</code>.
 En cualquier caso el tiempo de computación puede ser demasiado alto, por lo que puede ser recomendable reducir el valor de <code>nodesize</code>, paralelizar los cálculos o emplear otros paquetes con implementaciones más eficientes.</p>
-<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="bagging-rf-r.html#cb168-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb168-2"><a href="bagging-rf-r.html#cb168-2" aria-hidden="true" tabindex="-1"></a>rf.caret <span class="ot">&lt;-</span> <span class="fu">train</span>(taste <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">method =</span> <span class="st">&quot;rf&quot;</span>)</span>
-<span id="cb168-3"><a href="bagging-rf-r.html#cb168-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rf.caret)</span></code></pre></div>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="bagging-rf-r.html#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb169-2"><a href="bagging-rf-r.html#cb169-2" aria-hidden="true" tabindex="-1"></a>rf.caret <span class="ot">&lt;-</span> <span class="fu">train</span>(taste <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">method =</span> <span class="st">&quot;rf&quot;</span>)</span>
+<span id="cb169-3"><a href="bagging-rf-r.html#cb169-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rf.caret)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:rf-caret-train"></span>
 <img src="03-bagging_boosting_files/figure-html/rf-caret-train-1.png" alt="Evolución de la precisión de un bosque aleatorio dependiendo del número de predictores seleccionados." width="75%" />
 <p class="caption">
@@ -659,12 +663,12 @@ Figura 3.9: Evolución de la precisión de un bosque aleatorio dependiendo del n
 </div>
 <p><span class="citation">Breiman (<a href="#ref-breiman2001random" role="doc-biblioref">2001a</a>)</span> sugiere emplear el valor por defecto para <code>mtry</code>, la mitad y el doble (ver Figura <a href="bagging-rf-r.html#fig:rf-caret-grid">3.10</a>):</p>
 
-<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="bagging-rf-r.html#cb169-1" aria-hidden="true" tabindex="-1"></a>mtry.class <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">ncol</span>(train) <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb169-2"><a href="bagging-rf-r.html#cb169-2" aria-hidden="true" tabindex="-1"></a>tuneGrid <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">mtry =</span> <span class="fu">floor</span>(<span class="fu">c</span>(mtry.class<span class="sc">/</span><span class="dv">2</span>, mtry.class, <span class="dv">2</span><span class="sc">*</span>mtry.class)))</span>
-<span id="cb169-3"><a href="bagging-rf-r.html#cb169-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb169-4"><a href="bagging-rf-r.html#cb169-4" aria-hidden="true" tabindex="-1"></a>rf.caret <span class="ot">&lt;-</span> <span class="fu">train</span>(taste <span class="sc">~</span> ., <span class="at">data =</span> train,</span>
-<span id="cb169-5"><a href="bagging-rf-r.html#cb169-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">method =</span> <span class="st">&quot;rf&quot;</span>, <span class="at">tuneGrid =</span> tuneGrid)</span>
-<span id="cb169-6"><a href="bagging-rf-r.html#cb169-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rf.caret)</span></code></pre></div>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="bagging-rf-r.html#cb170-1" aria-hidden="true" tabindex="-1"></a>mtry.class <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">ncol</span>(train) <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb170-2"><a href="bagging-rf-r.html#cb170-2" aria-hidden="true" tabindex="-1"></a>tuneGrid <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">mtry =</span> <span class="fu">floor</span>(<span class="fu">c</span>(mtry.class<span class="sc">/</span><span class="dv">2</span>, mtry.class, <span class="dv">2</span><span class="sc">*</span>mtry.class)))</span>
+<span id="cb170-3"><a href="bagging-rf-r.html#cb170-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb170-4"><a href="bagging-rf-r.html#cb170-4" aria-hidden="true" tabindex="-1"></a>rf.caret <span class="ot">&lt;-</span> <span class="fu">train</span>(taste <span class="sc">~</span> ., <span class="at">data =</span> train,</span>
+<span id="cb170-5"><a href="bagging-rf-r.html#cb170-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">method =</span> <span class="st">&quot;rf&quot;</span>, <span class="at">tuneGrid =</span> tuneGrid)</span>
+<span id="cb170-6"><a href="bagging-rf-r.html#cb170-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rf.caret)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:rf-caret-grid"></span>
 <img src="03-bagging_boosting_files/figure-html/rf-caret-grid-1.png" alt="Evolución de la precisión de un bosque aleatorio con caret usando el argumento tuneGrid." width="75%" />
 <p class="caption">
@@ -693,9 +697,9 @@ Breiman, L. (2001a). Random forests. <em>Machine Learning</em>, <em>45</em>(1), 
 </div>
 <div class="footnotes">
 <hr />
-<ol start="24">
-<li id="fn24"><p>Si se quiere minimizar el uso de memoria, por ejemplo mientras se seleccionan hiperparámetros, se puede establecer <code>keep.forest=FALSE</code>.<a href="bagging-rf-r.html#fnref24" class="footnote-back">↩︎</a></p></li>
-<li id="fn25"><p>Se puede hacer una búsqueda en la tabla del <a href="https://topepo.github.io/caret/available-models.html">Capítulo 6: Available Models</a> del manual.<a href="bagging-rf-r.html#fnref25" class="footnote-back">↩︎</a></p></li>
+<ol start="25">
+<li id="fn25"><p>Si se quiere minimizar el uso de memoria, por ejemplo mientras se seleccionan hiperparámetros, se puede establecer <code>keep.forest=FALSE</code>.<a href="bagging-rf-r.html#fnref25" class="footnote-back">↩︎</a></p></li>
+<li id="fn26"><p>Se puede hacer una búsqueda en la tabla del <a href="https://topepo.github.io/caret/available-models.html">Capítulo 6: Available Models</a> del manual.<a href="bagging-rf-r.html#fnref26" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
