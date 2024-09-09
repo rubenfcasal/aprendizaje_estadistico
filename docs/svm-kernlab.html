@@ -4,20 +4,20 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4.4 SVM con el paquete kernlab | Aprendizaje Estadístico</title>
-  <meta name="description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
+  <title>5.4 SVM en R | Métodos predictivos de aprendizaje estadístico</title>
+  <meta name="description" content="5.4 SVM en R | Métodos predictivos de aprendizaje estadístico con R." />
   <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4.4 SVM con el paquete kernlab | Aprendizaje Estadístico" />
+  <meta property="og:title" content="5.4 SVM en R | Métodos predictivos de aprendizaje estadístico" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
-  <meta name="github-repo" content="rubenfcasal/aprendizaje_estadistico" />
+  <meta property="og:description" content="5.4 SVM en R | Métodos predictivos de aprendizaje estadístico con R." />
+  <meta name="github-repo" content="rubenfcasal/book_mpae" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4.4 SVM con el paquete kernlab | Aprendizaje Estadístico" />
+  <meta name="twitter:title" content="5.4 SVM en R | Métodos predictivos de aprendizaje estadístico" />
   
-  <meta name="twitter:description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
+  <meta name="twitter:description" content="5.4 SVM en R | Métodos predictivos de aprendizaje estadístico con R." />
   
 
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es)" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="máquinas-de-soporte-vectorial.html"/>
-<link rel="next" href="class-otros.html"/>
+<link rel="next" href="ext-glm.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -168,19 +168,22 @@ div.csl-indent {
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">Aprendizaje Estadístico</a></li>
+<li><a href="./">Métodos predictivos de aprendizaje estadístico</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prólogo</a></li>
-<li class="chapter" data-level="1" data-path="intro-AE.html"><a href="intro-AE.html"><i class="fa fa-check"></i><b>1</b> Introducción al Aprendizaje Estadístico</a>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Bienvenida</a></li>
+<li class="chapter" data-level="" data-path="prólogo.html"><a href="prólogo.html"><i class="fa fa-check"></i>Prólogo</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje Estadístico vs. Aprendizaje Automático</a>
-<ul>
-<li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#machine-learning-vs.-data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
-<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#las-dos-culturas"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas</a></li>
-<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#machine-learning-vs.-estadística"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística</a></li>
+<li class="chapter" data-level="" data-path="el-lenguaje-de-programación-r.html"><a href="el-lenguaje-de-programación-r.html"><i class="fa fa-check"></i>El lenguaje de programación R</a></li>
+<li class="chapter" data-level="" data-path="organización.html"><a href="organización.html"><i class="fa fa-check"></i>Organización</a></li>
 </ul></li>
-<li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de Aprendizaje Estadístico</a>
+<li class="chapter" data-level="1" data-path="intro-AE.html"><a href="intro-AE.html"><i class="fa fa-check"></i><b>1</b> Introducción al aprendizaje estadístico</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje estadístico vs. aprendizaje automático</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#las-dos-culturas"><i class="fa fa-check"></i><b>1.1.1</b> Las dos culturas</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de aprendizaje estadístico</a>
 <ul>
 <li class="chapter" data-level="1.2.1" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#notacion"><i class="fa fa-check"></i><b>1.2.1</b> Notación y terminología</a></li>
 <li class="chapter" data-level="1.2.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#metodos-pkgs"><i class="fa fa-check"></i><b>1.2.2</b> Métodos (de aprendizaje supervisado) y paquetes de R</a></li>
@@ -189,100 +192,91 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="1.3.1" data-path="const-eval.html"><a href="const-eval.html#bias-variance"><i class="fa fa-check"></i><b>1.3.1</b> Equilibrio entre sesgo y varianza: infraajuste y sobreajuste</a></li>
 <li class="chapter" data-level="1.3.2" data-path="const-eval.html"><a href="const-eval.html#entrenamiento-test"><i class="fa fa-check"></i><b>1.3.2</b> Datos de entrenamiento y datos de test</a></li>
-<li class="chapter" data-level="1.3.3" data-path="const-eval.html"><a href="const-eval.html#cv"><i class="fa fa-check"></i><b>1.3.3</b> Validación cruzada</a></li>
+<li class="chapter" data-level="1.3.3" data-path="const-eval.html"><a href="const-eval.html#cv"><i class="fa fa-check"></i><b>1.3.3</b> Selección de hiperparámetros mediante validación cruzada</a></li>
 <li class="chapter" data-level="1.3.4" data-path="const-eval.html"><a href="const-eval.html#eval-reg"><i class="fa fa-check"></i><b>1.3.4</b> Evaluación de un método de regresión</a></li>
 <li class="chapter" data-level="1.3.5" data-path="const-eval.html"><a href="const-eval.html#eval-class"><i class="fa fa-check"></i><b>1.3.5</b> Evaluación de un método de clasificación</a></li>
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="dimen-curse.html"><a href="dimen-curse.html"><i class="fa fa-check"></i><b>1.4</b> La maldición de la dimensionalidad</a></li>
 <li class="chapter" data-level="1.5" data-path="analisis-modelos.html"><a href="analisis-modelos.html"><i class="fa fa-check"></i><b>1.5</b> Análisis e interpretación de los modelos</a></li>
-<li class="chapter" data-level="1.6" data-path="caret.html"><a href="caret.html"><i class="fa fa-check"></i><b>1.6</b> Introducción al paquete <code>caret</code></a>
+<li class="chapter" data-level="1.6" data-path="caret.html"><a href="caret.html"><i class="fa fa-check"></i><b>1.6</b> Introducción al paquete <code>caret</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="clasicos.html"><a href="clasicos.html"><i class="fa fa-check"></i><b>2</b> Métodos clásicos de estadística</a>
 <ul>
-<li class="chapter" data-level="1.6.1" data-path="caret.html"><a href="caret.html#métodos-implementados"><i class="fa fa-check"></i><b>1.6.1</b> Métodos implementados</a></li>
-<li class="chapter" data-level="1.6.2" data-path="caret.html"><a href="caret.html#herramientas"><i class="fa fa-check"></i><b>1.6.2</b> Herramientas</a></li>
-<li class="chapter" data-level="1.6.3" data-path="caret.html"><a href="caret.html#ejemplo"><i class="fa fa-check"></i><b>1.6.3</b> Ejemplo</a></li>
-<li class="chapter" data-level="1.6.4" data-path="caret.html"><a href="caret.html#desarrollo-futuro"><i class="fa fa-check"></i><b>1.6.4</b> Desarrollo futuro</a></li>
+<li class="chapter" data-level="2.1" data-path="rlm.html"><a href="rlm.html"><i class="fa fa-check"></i><b>2.1</b> Regresión lineal múltiple</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="rlm.html"><a href="rlm.html#colinealidad"><i class="fa fa-check"></i><b>2.1.1</b> El problema de la colinealidad</a></li>
+<li class="chapter" data-level="2.1.2" data-path="rlm.html"><a href="rlm.html#seleccion-rlm"><i class="fa fa-check"></i><b>2.1.2</b> Selección de variables explicativas</a></li>
+<li class="chapter" data-level="2.1.3" data-path="rlm.html"><a href="rlm.html#analisis-rlm"><i class="fa fa-check"></i><b>2.1.3</b> Análisis e interpretación del modelo</a></li>
+<li class="chapter" data-level="2.1.4" data-path="rlm.html"><a href="rlm.html#eval-rlm"><i class="fa fa-check"></i><b>2.1.4</b> Evaluación de la precisión</a></li>
+<li class="chapter" data-level="2.1.5" data-path="rlm.html"><a href="rlm.html#selec-ae-rlm"><i class="fa fa-check"></i><b>2.1.5</b> Selección del modelo mediante remuestreo</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="reg-glm.html"><a href="reg-glm.html"><i class="fa fa-check"></i><b>2.2</b> Modelos lineales generalizados</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="reg-glm.html"><a href="reg-glm.html#seleccion-glm"><i class="fa fa-check"></i><b>2.2.1</b> Selección de variables explicativas</a></li>
+<li class="chapter" data-level="2.2.2" data-path="reg-glm.html"><a href="reg-glm.html#analisis-glm"><i class="fa fa-check"></i><b>2.2.2</b> Análisis e interpretación del modelo</a></li>
+<li class="chapter" data-level="2.2.3" data-path="reg-glm.html"><a href="reg-glm.html#glm-bfan"><i class="fa fa-check"></i><b>2.2.3</b> Evaluación de la precisión</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="generadores.html"><a href="generadores.html"><i class="fa fa-check"></i><b>2.3</b> Otros métodos de clasificación</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="generadores.html"><a href="generadores.html#clas-lda"><i class="fa fa-check"></i><b>2.3.1</b> Análisis discriminante lineal</a></li>
+<li class="chapter" data-level="2.3.2" data-path="generadores.html"><a href="generadores.html#clas-qda"><i class="fa fa-check"></i><b>2.3.2</b> Análisis discriminante cuadrático</a></li>
+<li class="chapter" data-level="2.3.3" data-path="generadores.html"><a href="generadores.html#bayes"><i class="fa fa-check"></i><b>2.3.3</b> Bayes naíf</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="trees.html"><a href="trees.html"><i class="fa fa-check"></i><b>2</b> Árboles de decisión</a>
+<li class="chapter" data-level="3" data-path="trees.html"><a href="trees.html"><i class="fa fa-check"></i><b>3</b> Árboles de decisión</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="árboles-de-regresión-cart.html"><a href="árboles-de-regresión-cart.html"><i class="fa fa-check"></i><b>2.1</b> Árboles de regresión CART</a></li>
-<li class="chapter" data-level="2.2" data-path="árboles-de-clasificación-cart.html"><a href="árboles-de-clasificación-cart.html"><i class="fa fa-check"></i><b>2.2</b> Árboles de clasificación CART</a></li>
-<li class="chapter" data-level="2.3" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html"><i class="fa fa-check"></i><b>2.3</b> CART con el paquete <code>rpart</code></a>
+<li class="chapter" data-level="3.1" data-path="árboles-de-regresión-cart.html"><a href="árboles-de-regresión-cart.html"><i class="fa fa-check"></i><b>3.1</b> Árboles de regresión CART</a></li>
+<li class="chapter" data-level="3.2" data-path="árboles-de-clasificación-cart.html"><a href="árboles-de-clasificación-cart.html"><i class="fa fa-check"></i><b>3.2</b> Árboles de clasificación CART</a></li>
+<li class="chapter" data-level="3.3" data-path="tree-rpart.html"><a href="tree-rpart.html"><i class="fa fa-check"></i><b>3.3</b> CART con el paquete <code>rpart</code></a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#ejemplo-regresión"><i class="fa fa-check"></i><b>2.3.1</b> Ejemplo: regresión</a></li>
-<li class="chapter" data-level="2.3.2" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#class-rpart"><i class="fa fa-check"></i><b>2.3.2</b> Ejemplo: modelo de clasificación</a></li>
-<li class="chapter" data-level="2.3.3" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#interfaz-de-caret"><i class="fa fa-check"></i><b>2.3.3</b> Interfaz de <code>caret</code></a></li>
+<li class="chapter" data-level="3.3.1" data-path="tree-rpart.html"><a href="tree-rpart.html#reg-rpart"><i class="fa fa-check"></i><b>3.3.1</b> Ejemplo: regresión</a></li>
+<li class="chapter" data-level="3.3.2" data-path="tree-rpart.html"><a href="tree-rpart.html#class-rpart"><i class="fa fa-check"></i><b>3.3.2</b> Ejemplo: modelo de clasificación</a></li>
+<li class="chapter" data-level="3.3.3" data-path="tree-rpart.html"><a href="tree-rpart.html#interfaz-de-caret"><i class="fa fa-check"></i><b>3.3.3</b> Interfaz de <code>caret</code></a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html"><i class="fa fa-check"></i><b>2.4</b> Alternativas a los árboles CART</a>
-<ul>
-<li class="chapter" data-level="2.4.1" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html#ejemplo-1"><i class="fa fa-check"></i><b>2.4.1</b> Ejemplo</a></li>
+<li class="chapter" data-level="3.4" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html"><i class="fa fa-check"></i><b>3.4</b> Alternativas a los árboles CART</a></li>
 </ul></li>
+<li class="chapter" data-level="4" data-path="bagging-boosting.html"><a href="bagging-boosting.html"><i class="fa fa-check"></i><b>4</b> Bagging y boosting</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>4.1</b> Bagging</a></li>
+<li class="chapter" data-level="4.2" data-path="rf.html"><a href="rf.html"><i class="fa fa-check"></i><b>4.2</b> Bosques aleatorios</a></li>
+<li class="chapter" data-level="4.3" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html"><i class="fa fa-check"></i><b>4.3</b> Bagging y bosques aleatorios en R</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-clasificación-con-bagging"><i class="fa fa-check"></i><b>4.3.1</b> Ejemplo: clasificación con bagging</a></li>
+<li class="chapter" data-level="4.3.2" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-clasif-rf"><i class="fa fa-check"></i><b>4.3.2</b> Ejemplo: clasificación con bosques aleatorios</a></li>
+<li class="chapter" data-level="4.3.3" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-bosques-aleatorios-con-caret"><i class="fa fa-check"></i><b>4.3.3</b> Ejemplo: bosques aleatorios con <code>caret</code></a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="bagging-boosting.html"><a href="bagging-boosting.html"><i class="fa fa-check"></i><b>3</b> Bagging y Boosting</a>
+<li class="chapter" data-level="4.4" data-path="boosting.html"><a href="boosting.html"><i class="fa fa-check"></i><b>4.4</b> Boosting</a></li>
+<li class="chapter" data-level="4.5" data-path="boosting-r.html"><a href="boosting-r.html"><i class="fa fa-check"></i><b>4.5</b> Boosting en R</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>3.1</b> Bagging</a></li>
-<li class="chapter" data-level="3.2" data-path="bosques-aleatorios.html"><a href="bosques-aleatorios.html"><i class="fa fa-check"></i><b>3.2</b> Bosques aleatorios</a></li>
-<li class="chapter" data-level="3.3" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html"><i class="fa fa-check"></i><b>3.3</b> Bagging y bosques aleatorios en R</a>
-<ul>
-<li class="chapter" data-level="3.3.1" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-clasificación-con-bagging"><i class="fa fa-check"></i><b>3.3.1</b> Ejemplo: Clasificación con bagging</a></li>
-<li class="chapter" data-level="3.3.2" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-clasif-rf"><i class="fa fa-check"></i><b>3.3.2</b> Ejemplo: Clasificación con bosques aleatorios</a></li>
-<li class="chapter" data-level="3.3.3" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-bosques-aleatorios-con-caret"><i class="fa fa-check"></i><b>3.3.3</b> Ejemplo: bosques aleatorios con <code>caret</code></a></li>
-</ul></li>
-<li class="chapter" data-level="3.4" data-path="boosting.html"><a href="boosting.html"><i class="fa fa-check"></i><b>3.4</b> Boosting</a></li>
-<li class="chapter" data-level="3.5" data-path="boosting-en-r.html"><a href="boosting-en-r.html"><i class="fa fa-check"></i><b>3.5</b> Boosting en R</a>
-<ul>
-<li class="chapter" data-level="3.5.1" data-path="boosting-en-r.html"><a href="boosting-en-r.html#ejemplo-clasificación-con-el-paquete-ada"><i class="fa fa-check"></i><b>3.5.1</b> Ejemplo: clasificación con el paquete <code>ada</code></a></li>
-<li class="chapter" data-level="3.5.2" data-path="boosting-en-r.html"><a href="boosting-en-r.html#ejemplo-regresión-con-el-paquete-gbm"><i class="fa fa-check"></i><b>3.5.2</b> Ejemplo: regresión con el paquete <code>gbm</code></a></li>
-<li class="chapter" data-level="3.5.3" data-path="boosting-en-r.html"><a href="boosting-en-r.html#xgb-caret"><i class="fa fa-check"></i><b>3.5.3</b> Ejemplo: XGBoost con el paquete <code>caret</code></a></li>
+<li class="chapter" data-level="4.5.1" data-path="boosting-r.html"><a href="boosting-r.html#ejemplo-clasificación-con-el-paquete-ada"><i class="fa fa-check"></i><b>4.5.1</b> Ejemplo: clasificación con el paquete <code>ada</code></a></li>
+<li class="chapter" data-level="4.5.2" data-path="boosting-r.html"><a href="boosting-r.html#ejemplo-regresión-con-el-paquete-gbm"><i class="fa fa-check"></i><b>4.5.2</b> Ejemplo: regresión con el paquete <code>gbm</code></a></li>
+<li class="chapter" data-level="4.5.3" data-path="boosting-r.html"><a href="boosting-r.html#xgb-caret"><i class="fa fa-check"></i><b>4.5.3</b> Ejemplo: XGBoost con el paquete <code>caret</code></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>4</b> Máquinas de soporte vectorial</a>
+<li class="chapter" data-level="5" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>5</b> Máquinas de soporte vectorial</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="clasificadores-de-máximo-margen.html"><a href="clasificadores-de-máximo-margen.html"><i class="fa fa-check"></i><b>4.1</b> Clasificadores de máximo margen</a></li>
-<li class="chapter" data-level="4.2" data-path="clasificadores-de-soporte-vectorial.html"><a href="clasificadores-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>4.2</b> Clasificadores de soporte vectorial</a></li>
-<li class="chapter" data-level="4.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>4.3</b> Máquinas de soporte vectorial</a>
+<li class="chapter" data-level="5.1" data-path="clasificadores-de-máximo-margen.html"><a href="clasificadores-de-máximo-margen.html"><i class="fa fa-check"></i><b>5.1</b> Clasificadores de máximo margen</a></li>
+<li class="chapter" data-level="5.2" data-path="clasificadores-de-soporte-vectorial.html"><a href="clasificadores-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>5.2</b> Clasificadores de soporte vectorial</a></li>
+<li class="chapter" data-level="5.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>5.3</b> Máquinas de soporte vectorial</a>
 <ul>
-<li class="chapter" data-level="4.3.1" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#regresión-con-svm"><i class="fa fa-check"></i><b>4.3.1</b> Regresión con SVM</a></li>
-<li class="chapter" data-level="4.3.2" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#ventajas-e-incovenientes"><i class="fa fa-check"></i><b>4.3.2</b> Ventajas e incovenientes</a></li>
+<li class="chapter" data-level="5.3.1" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#regresión-con-svm"><i class="fa fa-check"></i><b>5.3.1</b> Regresión con SVM</a></li>
+<li class="chapter" data-level="5.3.2" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#ventajas-e-incovenientes"><i class="fa fa-check"></i><b>5.3.2</b> Ventajas e incovenientes</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="svm-kernlab.html"><a href="svm-kernlab.html"><i class="fa fa-check"></i><b>4.4</b> SVM con el paquete <code>kernlab</code></a></li>
+<li class="chapter" data-level="5.4" data-path="svm-kernlab.html"><a href="svm-kernlab.html"><i class="fa fa-check"></i><b>5.4</b> SVM en R</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="class-otros.html"><a href="class-otros.html"><i class="fa fa-check"></i><b>5</b> Otros métodos de clasificación</a>
+<li class="chapter" data-level="6" data-path="ext-glm.html"><a href="ext-glm.html"><i class="fa fa-check"></i><b>6</b> Extensiones de los modelos lineales (generalizados)</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="clas-lda.html"><a href="clas-lda.html"><i class="fa fa-check"></i><b>5.1</b> Análisis discriminate lineal</a></li>
-<li class="chapter" data-level="5.2" data-path="clas-qda.html"><a href="clas-qda.html"><i class="fa fa-check"></i><b>5.2</b> Análisis discriminante cuadrático</a></li>
-<li class="chapter" data-level="5.3" data-path="bayes.html"><a href="bayes.html"><i class="fa fa-check"></i><b>5.3</b> Naive Bayes</a></li>
+<li class="chapter" data-level="6.1" data-path="shrinkage.html"><a href="shrinkage.html"><i class="fa fa-check"></i><b>6.1</b> Métodos de regularización</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="shrinkage.html"><a href="shrinkage.html#implementación-en-r"><i class="fa fa-check"></i><b>6.1.1</b> Implementación en R</a></li>
+<li class="chapter" data-level="6.1.2" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-ridge-regression"><i class="fa fa-check"></i><b>6.1.2</b> Ejemplo: <em>ridge regression</em></a></li>
+<li class="chapter" data-level="6.1.3" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-lasso"><i class="fa fa-check"></i><b>6.1.3</b> Ejemplo: LASSO</a></li>
+<li class="chapter" data-level="6.1.4" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-elastic-net"><i class="fa fa-check"></i><b>6.1.4</b> Ejemplo: <em>elastic net</em></a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="modelos-lineales.html"><a href="modelos-lineales.html"><i class="fa fa-check"></i><b>6</b> Modelos lineales y extensiones</a>
+<li class="chapter" data-level="6.2" data-path="pca-pls.html"><a href="pca-pls.html"><i class="fa fa-check"></i><b>6.2</b> Métodos de reducción de la dimensión</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="reg-multiple.html"><a href="reg-multiple.html"><i class="fa fa-check"></i><b>6.1</b> Regresión lineal múltiple</a></li>
-<li class="chapter" data-level="6.2" data-path="colinealidad.html"><a href="colinealidad.html"><i class="fa fa-check"></i><b>6.2</b> El problema de la colinealidad</a></li>
-<li class="chapter" data-level="6.3" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html"><i class="fa fa-check"></i><b>6.3</b> Selección de variables explicativas</a>
-<ul>
-<li class="chapter" data-level="6.3.1" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html#búsqueda-exhaustiva"><i class="fa fa-check"></i><b>6.3.1</b> Búsqueda exhaustiva</a></li>
-<li class="chapter" data-level="6.3.2" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html#selección-por-pasos"><i class="fa fa-check"></i><b>6.3.2</b> Selección por pasos</a></li>
-</ul></li>
-<li class="chapter" data-level="6.4" data-path="analisis-reg-multiple.html"><a href="analisis-reg-multiple.html"><i class="fa fa-check"></i><b>6.4</b> Análisis e interpretación del modelo</a></li>
-<li class="chapter" data-level="6.5" data-path="eval-reg-lineal.html"><a href="eval-reg-lineal.html"><i class="fa fa-check"></i><b>6.5</b> Evaluación de la precisión</a></li>
-<li class="chapter" data-level="6.6" data-path="selec-ae-reg-lineal.html"><a href="selec-ae-reg-lineal.html"><i class="fa fa-check"></i><b>6.6</b> Selección del modelo mediante remuestreo</a></li>
-<li class="chapter" data-level="6.7" data-path="shrinkage.html"><a href="shrinkage.html"><i class="fa fa-check"></i><b>6.7</b> Métodos de regularización</a>
-<ul>
-<li class="chapter" data-level="6.7.1" data-path="shrinkage.html"><a href="shrinkage.html#implementación-en-r"><i class="fa fa-check"></i><b>6.7.1</b> Implementación en R</a></li>
-<li class="chapter" data-level="6.7.2" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-ridge-regression"><i class="fa fa-check"></i><b>6.7.2</b> Ejemplo: Ridge Regression</a></li>
-<li class="chapter" data-level="6.7.3" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-lasso"><i class="fa fa-check"></i><b>6.7.3</b> Ejemplo: Lasso</a></li>
-<li class="chapter" data-level="6.7.4" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-elastic-net"><i class="fa fa-check"></i><b>6.7.4</b> Ejemplo: Elastic Net</a></li>
-</ul></li>
-<li class="chapter" data-level="6.8" data-path="pca-pls.html"><a href="pca-pls.html"><i class="fa fa-check"></i><b>6.8</b> Métodos de reducción de la dimensión</a>
-<ul>
-<li class="chapter" data-level="6.8.1" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-componentes-principales-pcr"><i class="fa fa-check"></i><b>6.8.1</b> Regresión por componentes principales (PCR)</a></li>
-<li class="chapter" data-level="6.8.2" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-mínimos-cuadrados-parciales-plsr"><i class="fa fa-check"></i><b>6.8.2</b> Regresión por mínimos cuadrados parciales (PLSR)</a></li>
-</ul></li>
-<li class="chapter" data-level="6.9" data-path="reg-glm.html"><a href="reg-glm.html"><i class="fa fa-check"></i><b>6.9</b> Modelos lineales generalizados</a>
-<ul>
-<li class="chapter" data-level="6.9.1" data-path="reg-glm.html"><a href="reg-glm.html#selección-de-variables-explicativas"><i class="fa fa-check"></i><b>6.9.1</b> Selección de variables explicativas</a></li>
-<li class="chapter" data-level="6.9.2" data-path="reg-glm.html"><a href="reg-glm.html#analisis-glm"><i class="fa fa-check"></i><b>6.9.2</b> Análisis e interpretación del modelo</a></li>
-<li class="chapter" data-level="6.9.3" data-path="reg-glm.html"><a href="reg-glm.html#evaluación-de-la-precisión"><i class="fa fa-check"></i><b>6.9.3</b> Evaluación de la precisión</a></li>
-<li class="chapter" data-level="6.9.4" data-path="reg-glm.html"><a href="reg-glm.html#extensiones"><i class="fa fa-check"></i><b>6.9.4</b> Extensiones</a></li>
+<li class="chapter" data-level="6.2.1" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-componentes-principales-pcr"><i class="fa fa-check"></i><b>6.2.1</b> Regresión por componentes principales (PCR)</a></li>
+<li class="chapter" data-level="6.2.2" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-mínimos-cuadrados-parciales-plsr"><i class="fa fa-check"></i><b>6.2.2</b> Regresión por mínimos cuadrados parciales (PLSR)</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="reg-np.html"><a href="reg-np.html"><i class="fa fa-check"></i><b>7</b> Regresión no paramétrica</a>
@@ -302,7 +296,7 @@ div.csl-indent {
 <li class="chapter" data-level="7.3" data-path="reg-gam.html"><a href="reg-gam.html"><i class="fa fa-check"></i><b>7.3</b> Modelos aditivos</a>
 <ul>
 <li class="chapter" data-level="7.3.1" data-path="reg-gam.html"><a href="reg-gam.html#superficies-de-predicción"><i class="fa fa-check"></i><b>7.3.1</b> Superficies de predicción</a></li>
-<li class="chapter" data-level="7.3.2" data-path="reg-gam.html"><a href="reg-gam.html#comparación-y-selección-de-modelos"><i class="fa fa-check"></i><b>7.3.2</b> Comparación y selección de modelos</a></li>
+<li class="chapter" data-level="7.3.2" data-path="reg-gam.html"><a href="reg-gam.html#anova-gam"><i class="fa fa-check"></i><b>7.3.2</b> Comparación y selección de modelos</a></li>
 <li class="chapter" data-level="7.3.3" data-path="reg-gam.html"><a href="reg-gam.html#mgcv-diagnosis"><i class="fa fa-check"></i><b>7.3.3</b> Diagnosis del modelo</a></li>
 </ul></li>
 <li class="chapter" data-level="7.4" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>7.4</b> Regresión spline adaptativa multivariante</a>
@@ -310,10 +304,10 @@ div.csl-indent {
 <li class="chapter" data-level="7.4.1" data-path="mars.html"><a href="mars.html#mars-con-el-paquete-earth"><i class="fa fa-check"></i><b>7.4.1</b> MARS con el paquete <code>earth</code></a></li>
 <li class="chapter" data-level="7.4.2" data-path="mars.html"><a href="mars.html#mars-con-el-paquete-caret"><i class="fa fa-check"></i><b>7.4.2</b> MARS con el paquete <code>caret</code></a></li>
 </ul></li>
-<li class="chapter" data-level="7.5" data-path="projection-pursuit.html"><a href="projection-pursuit.html"><i class="fa fa-check"></i><b>7.5</b> Projection pursuit</a>
+<li class="chapter" data-level="7.5" data-path="pursuit.html"><a href="pursuit.html"><i class="fa fa-check"></i><b>7.5</b> Projection pursuit</a>
 <ul>
-<li class="chapter" data-level="7.5.1" data-path="projection-pursuit.html"><a href="projection-pursuit.html#ppr"><i class="fa fa-check"></i><b>7.5.1</b> Regresión por <em>projection pursuit</em></a></li>
-<li class="chapter" data-level="7.5.2" data-path="projection-pursuit.html"><a href="projection-pursuit.html#implementación-en-r-1"><i class="fa fa-check"></i><b>7.5.2</b> Implementación en R</a></li>
+<li class="chapter" data-level="7.5.1" data-path="pursuit.html"><a href="pursuit.html#ppr"><i class="fa fa-check"></i><b>7.5.1</b> Regresión por projection pursuit</a></li>
+<li class="chapter" data-level="7.5.2" data-path="pursuit.html"><a href="pursuit.html#implementación-en-r-1"><i class="fa fa-check"></i><b>7.5.2</b> Implementación en R</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="neural-nets.html"><a href="neural-nets.html"><i class="fa fa-check"></i><b>8</b> Redes neuronales</a>
@@ -322,10 +316,7 @@ div.csl-indent {
 <li class="chapter" data-level="8.2" data-path="clasificación-con-ann.html"><a href="clasificación-con-ann.html"><i class="fa fa-check"></i><b>8.2</b> Clasificación con ANN</a></li>
 <li class="chapter" data-level="8.3" data-path="implementación-en-r-2.html"><a href="implementación-en-r-2.html"><i class="fa fa-check"></i><b>8.3</b> Implementación en R</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a>
-<ul>
-<li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
-</ul></li>
+<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -338,7 +329,7 @@ div.csl-indent {
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Aprendizaje Estadístico</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Métodos predictivos de aprendizaje estadístico</a>
           </h1>
         </div>
 
@@ -346,42 +337,44 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="svm-kernlab" class="section level2 hasAnchor" number="4.4">
-<h2><span class="header-section-number">4.4</span> SVM con el paquete <code>kernlab</code><a href="svm-kernlab.html#svm-kernlab" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Hay varios paquetes que implementan este procedimiento <span class="citation">(e.g. <a href="https://CRAN.R-project.org/package=e1071" role="doc-biblioref"><code>e1071</code></a>, <a href="#ref-R-e1071" role="doc-biblioref">Meyer et al., 2020</a>; <a href="https://CRAN.R-project.org/package=svmpath" role="doc-biblioref"><code>svmpath</code></a>, ver <a href="#ref-hastie2004entire" role="doc-biblioref">T. Hastie et al., 2004</a>)</span>, aunque se considera que el más completo es <a href="https://CRAN.R-project.org/package=kernlab"><code>kernlab</code></a> <span class="citation">(<a href="#ref-kernlab2004" role="doc-biblioref">Karatzoglou et al., 2004</a>)</span>.</p>
-<p>La función principal es <a href="https://rdrr.io/pkg/kernlab/man/ksvm.html"><code>ksvm()</code></a> y se suelen considerar los siguientes argumentos:</p>
-<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="svm-kernlab.html#cb225-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ksvm</span>(formula, data, <span class="at">scaled =</span> <span class="cn">TRUE</span>, type, <span class="at">kernel =</span><span class="st">&quot;rbfdot&quot;</span>, <span class="at">kpar =</span> <span class="st">&quot;automatic&quot;</span>,</span>
-<span id="cb225-2"><a href="svm-kernlab.html#cb225-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">C =</span> <span class="dv">1</span>, <span class="at">epsilon =</span> <span class="fl">0.1</span>, <span class="at">prob.model =</span> <span class="cn">FALSE</span>, class.weights, <span class="at">cross =</span> <span class="dv">0</span>)</span></code></pre></div>
+<div id="svm-kernlab" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> SVM en R<a href="svm-kernlab.html#svm-kernlab" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Hay varios paquetes que implementan este procedimiento <span class="citation">(p. ej. <a href="https://CRAN.R-project.org/package=e1071" role="doc-biblioref"><code>e1071</code></a>, <a href="#ref-R-e1071" role="doc-biblioref">Meyer et al., 2020</a>; <a href="https://CRAN.R-project.org/package=svmpath" role="doc-biblioref"><code>svmpath</code></a>, ver <a href="#ref-hastie2004entire" role="doc-biblioref">Hastie et al., 2004</a>)</span>, aunque se considera que el más completo es <a href="https://CRAN.R-project.org/package=kernlab"><code>kernlab</code></a> <span class="citation">(<a href="#ref-kernlab2004" role="doc-biblioref">Karatzoglou et al., 2004</a>)</span>.</p>
+<p>La función principal del paquete <code>kernlab</code> es <a href="https://rdrr.io/pkg/kernlab/man/ksvm.html"><code>ksvm()</code></a> y se suelen utilizar los siguientes argumentos:</p>
+<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="svm-kernlab.html#cb317-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ksvm</span>(formula, data, <span class="at">scaled =</span> <span class="cn">TRUE</span>, type, <span class="at">kernel =</span><span class="st">&quot;rbfdot&quot;</span>, <span class="at">kpar =</span> <span class="st">&quot;automatic&quot;</span>,</span>
+<span id="cb317-2"><a href="svm-kernlab.html#cb317-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">C =</span> <span class="dv">1</span>, <span class="at">epsilon =</span> <span class="fl">0.1</span>, <span class="at">prob.model =</span> <span class="cn">FALSE</span>, class.weights, <span class="at">cross =</span> <span class="dv">0</span>)</span></code></pre></div>
 <ul>
-<li><p><code>formula</code> y <code>data</code> (opcional): permiten especificar la respuesta y las variables predictoras de la forma habitual (e.g. <code>respuesta ~ .</code>; también admite matrices).</p></li>
-<li><p><code>scaled</code>: vector lógico indicando que predictores serán reescalados; por defecto se reescalan todas las variables no binarias (y se almacenan los valores empleados para ser usados en posteriores predicciones).</p></li>
-<li><p><code>type</code> (opcional): cadena de texto que permite seleccionar los distintos métodos de clasificación, de regresión o de detección de atípicos implementados (ver <code>?ksvm</code>); por defecto se establece a partir del tipo de la respuesta: <code>"C-svc"</code>, clasificación con parámetro de coste, si es un factor y <code>"eps-svr"</code>, regresión épsilon, si la respuesta es numérica.</p></li>
-<li><p><code>kernel</code>: función núcleo. Puede ser una función definida por el usuario o una cadena de texto que especifique una de las implementadas en el paquete (ver <code>?kernels</code>); por defecto <code>"rbfdot"</code>, kernel radial gausiano.</p></li>
+<li><p><code>formula</code> y <code>data</code> (opcional): permiten especificar la respuesta y las variables predictoras de la forma habitual (p. ej. <code>respuesta ~ .</code>; también admite matrices).</p></li>
+<li><p><code>scaled</code>: vector lógico indicando qué predictores serán reescalados; por defecto, se reescalan todas las variables no binarias (y se almacenan los valores empleados para ser usados en posteriores predicciones).</p></li>
+<li><p><code>type</code> (opcional): cadena de texto que permite seleccionar los distintos métodos de clasificación, de regresión o de detección de atípicos implementados (ver <code>?ksvm</code>); por defecto, se establece a partir del tipo de la respuesta: <code>"C-svc"</code>, clasificación con parámetro de coste, si es un factor, y <code>"eps-svr"</code>, regresión épsilon, si la respuesta es numérica.</p></li>
+<li><p><code>kernel</code>: función núcleo. Puede ser una función definida por el usuario o una cadena de texto que especifique una de las implementadas en el paquete (ver <code>?kernels</code>); por defecto, <code>"rbfdot"</code>, kernel radial gaussiano.</p></li>
 <li><p><code>kpar</code>: lista con los hiperparámetros del núcleo. En el caso de <code>"rbfdot"</code>, además de una lista con un único componente <code>"sigma"</code> (inversa de la ventana), puede ser <code>"automatic"</code> (valor por defecto) e internamente emplea la función <code>sigest()</code> para seleccionar un valor “adecuado”.</p></li>
-<li><p><code>C</code>: (hiper)parámetro <span class="math inline">\(C\)</span> que especifica el coste de la violación de las restricciones; por defecto 1.</p></li>
-<li><p><code>epsilon</code>: (hiper)parámetro <span class="math inline">\(\epsilon\)</span> empleado en la función de pérdidas de los métodos de regresión; por defecto 0.1.</p></li>
+<li><p><code>C</code>: hiperparámetro <span class="math inline">\(C\)</span> que especifica el coste de la violación de las restricciones; 1 por defecto.</p></li>
+<li><p><code>epsilon</code>: hiperparámetro <span class="math inline">\(\epsilon\)</span> empleado en la función de pérdidas de los métodos de regresión; 0.1 por defecto.</p></li>
 <li><p><code>prob.model</code>: si se establece a <code>TRUE</code> (por defecto es <code>FALSE</code>), se emplean los resultados de la clasificación para ajustar un modelo para estimar las probabilidades (y se podrán calcular con el método <code>predict()</code>).</p></li>
-<li><p><code>class.weights</code>: vector (con las clases como nombres) con los pesos de una mala clasificación en cada clase.</p></li>
-<li><p><code>cross</code>: número grupos para validación cruzada; por defecto 0 (no se hace validación cruzada). Si se asigna un valor mayor que 1 se realizará validación cruzada y se devolverá el error en la componente <code>@cross</code> (se puede acceder con la función <code>cross()</code>; y se puede emplear para seleccionar hiperparámetros).</p></li>
+<li><p><code>class.weights</code>: vector (con las clases como nombres) con los pesos asociados a las observaciones de cada clase (por defecto, 1). Se puede entender como el coste de una mala clasificación en cada clase y podría ser de utilidad también para clases desbalanceadas.</p></li>
+</ul>
+<!-- 
+Revisar: class.weights a named vector of weights for the different classes, used for asymmetric class sizes. Not all factor levels have to be supplied (default weight: 1). All components have to be named. 
+-->
+<ul>
+<li><code>cross</code>: número de grupos para validación cruzada; 0 por defecto (no se hace validación cruzada). Si se asigna un valor mayor que 1, se realizará validación cruzada y se devolverá el error en la componente <code>@cross</code> (se puede acceder con la función <code>cross()</code>; y se puede emplear para seleccionar hiperparámetros).</li>
 </ul>
 <p>Como ejemplo consideraremos el problema de clasificación con los datos de calidad de vino:</p>
-<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="svm-kernlab.html#cb226-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/winetaste.RData&quot;</span>)</span>
-<span id="cb226-2"><a href="svm-kernlab.html#cb226-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Partición de los datos</span></span>
-<span id="cb226-3"><a href="svm-kernlab.html#cb226-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb226-4"><a href="svm-kernlab.html#cb226-4" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> winetaste</span>
-<span id="cb226-5"><a href="svm-kernlab.html#cb226-5" aria-hidden="true" tabindex="-1"></a>nobs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
-<span id="cb226-6"><a href="svm-kernlab.html#cb226-6" aria-hidden="true" tabindex="-1"></a>itrain <span class="ot">&lt;-</span> <span class="fu">sample</span>(nobs, <span class="fl">0.8</span> <span class="sc">*</span> nobs)</span>
-<span id="cb226-7"><a href="svm-kernlab.html#cb226-7" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> df[itrain, ]</span>
-<span id="cb226-8"><a href="svm-kernlab.html#cb226-8" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> df[<span class="sc">-</span>itrain, ]</span>
-<span id="cb226-9"><a href="svm-kernlab.html#cb226-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb226-10"><a href="svm-kernlab.html#cb226-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb226-11"><a href="svm-kernlab.html#cb226-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kernlab)</span>
-<span id="cb226-12"><a href="svm-kernlab.html#cb226-12" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>) </span>
-<span id="cb226-13"><a href="svm-kernlab.html#cb226-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Selección de sigma = mean(sigest(taste ~ ., data = train)[-2]) </span></span>
-<span id="cb226-14"><a href="svm-kernlab.html#cb226-14" aria-hidden="true" tabindex="-1"></a><span class="co"># (depende de la semilla)</span></span>
-<span id="cb226-15"><a href="svm-kernlab.html#cb226-15" aria-hidden="true" tabindex="-1"></a>svm <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(taste <span class="sc">~</span> ., <span class="at">data =</span> train,</span>
-<span id="cb226-16"><a href="svm-kernlab.html#cb226-16" aria-hidden="true" tabindex="-1"></a>            <span class="at">kernel =</span> <span class="st">&quot;rbfdot&quot;</span>, <span class="at">prob.model =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb226-17"><a href="svm-kernlab.html#cb226-17" aria-hidden="true" tabindex="-1"></a>svm</span></code></pre></div>
+<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="svm-kernlab.html#cb318-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mpae)</span>
+<span id="cb318-2"><a href="svm-kernlab.html#cb318-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;winetaste&quot;</span>)</span>
+<span id="cb318-3"><a href="svm-kernlab.html#cb318-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Partición de los datos</span></span>
+<span id="cb318-4"><a href="svm-kernlab.html#cb318-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb318-5"><a href="svm-kernlab.html#cb318-5" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> winetaste</span>
+<span id="cb318-6"><a href="svm-kernlab.html#cb318-6" aria-hidden="true" tabindex="-1"></a>nobs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
+<span id="cb318-7"><a href="svm-kernlab.html#cb318-7" aria-hidden="true" tabindex="-1"></a>itrain <span class="ot">&lt;-</span> <span class="fu">sample</span>(nobs, <span class="fl">0.8</span> <span class="sc">*</span> nobs)</span>
+<span id="cb318-8"><a href="svm-kernlab.html#cb318-8" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> df[itrain, ]</span>
+<span id="cb318-9"><a href="svm-kernlab.html#cb318-9" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> df[<span class="sc">-</span>itrain, ]</span>
+<span id="cb318-10"><a href="svm-kernlab.html#cb318-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Entrenamiento</span></span>
+<span id="cb318-11"><a href="svm-kernlab.html#cb318-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kernlab)</span>
+<span id="cb318-12"><a href="svm-kernlab.html#cb318-12" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>) </span>
+<span id="cb318-13"><a href="svm-kernlab.html#cb318-13" aria-hidden="true" tabindex="-1"></a>svm <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(taste <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">kernel =</span> <span class="st">&quot;rbfdot&quot;</span>, <span class="at">prob.model =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb318-14"><a href="svm-kernlab.html#cb318-14" aria-hidden="true" tabindex="-1"></a>svm</span></code></pre></div>
 <pre><code>## Support Vector Machine object of class &quot;ksvm&quot; 
 ## 
 ## SV type: C-svc  (classification) 
@@ -392,74 +385,80 @@ div.csl-indent {
 ## 
 ## Number of Support Vectors : 594 
 ## 
-## Objective Function Value : -494.1409 
+## Objective Function Value : -494.14 
 ## Training error : 0.198 
 ## Probability model included.</code></pre>
-<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="svm-kernlab.html#cb228-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(svm, data = train) produce un error # packageVersion(&quot;kernlab&quot;) ‘0.9.29’</span></span></code></pre></div>
+<!-- # plot(svm, data = train) produce un error # packageVersion("kernlab") ‘0.9.32’ -->
 <p>Podemos evaluar la precisión en la muestra de test empleando el procedimiento habitual:</p>
-<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="svm-kernlab.html#cb229-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(svm, <span class="at">newdata =</span> test)</span>
-<span id="cb229-2"><a href="svm-kernlab.html#cb229-2" aria-hidden="true" tabindex="-1"></a>caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(pred, test<span class="sc">$</span>taste)</span></code></pre></div>
+<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="svm-kernlab.html#cb320-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(svm, <span class="at">newdata =</span> test)</span>
+<span id="cb320-2"><a href="svm-kernlab.html#cb320-2" aria-hidden="true" tabindex="-1"></a>caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(pred, test<span class="sc">$</span>taste)</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
 ## Prediction good bad
 ##       good  147  45
 ##       bad    19  39
-##                                           
-##                Accuracy : 0.744           
-##                  95% CI : (0.6852, 0.7969)
-##     No Information Rate : 0.664           
-##     P-Value [Acc &gt; NIR] : 0.003886        
-##                                           
-##                   Kappa : 0.3788          
-##                                           
-##  Mcnemar&#39;s Test P-Value : 0.001778        
-##                                           
-##             Sensitivity : 0.8855          
-##             Specificity : 0.4643          
-##          Pos Pred Value : 0.7656          
-##          Neg Pred Value : 0.6724          
-##              Prevalence : 0.6640          
-##          Detection Rate : 0.5880          
-##    Detection Prevalence : 0.7680          
-##       Balanced Accuracy : 0.6749          
-##                                           
-##        &#39;Positive&#39; Class : good            
+##                                         
+##                Accuracy : 0.744         
+##                  95% CI : (0.685, 0.797)
+##     No Information Rate : 0.664         
+##     P-Value [Acc &gt; NIR] : 0.00389       
+##                                         
+##                   Kappa : 0.379         
+##                                         
+##  Mcnemar&#39;s Test P-Value : 0.00178       
+##                                         
+##             Sensitivity : 0.886         
+##             Specificity : 0.464         
+##          Pos Pred Value : 0.766         
+##          Neg Pred Value : 0.672         
+##              Prevalence : 0.664         
+##          Detection Rate : 0.588         
+##    Detection Prevalence : 0.768         
+##       Balanced Accuracy : 0.675         
+##                                         
+##        &#39;Positive&#39; Class : good          
 ## </code></pre>
 <p>Para obtener las estimaciones de las probabilidades, habría que establecer
 <code>type = "probabilities"</code> al predecir (devolverá una matriz con columnas
-correspondientes a los niveles)<a href="#fn31" class="footnote-ref" id="fnref31"><sup>31</sup></a>:</p>
-<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="svm-kernlab.html#cb231-1" aria-hidden="true" tabindex="-1"></a>p.est <span class="ot">&lt;-</span> <span class="fu">predict</span>(svm, <span class="at">newdata =</span> test, <span class="at">type =</span> <span class="st">&quot;probabilities&quot;</span>)</span>
-<span id="cb231-2"><a href="svm-kernlab.html#cb231-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(p.est)</span></code></pre></div>
-<pre><code>##           good       bad
-## [1,] 0.4761934 0.5238066
-## [2,] 0.7089338 0.2910662
-## [3,] 0.8893454 0.1106546
-## [4,] 0.8424003 0.1575997
-## [5,] 0.6640875 0.3359125
-## [6,] 0.3605543 0.6394457</code></pre>
-<!-- 
-Ejercicio: 
-Emplear `class.weights` para tratar de mejorar el ajuste en "bad"
-Tratar de realizar lo mismo empleando `p.est`
--->
-<p>Este procedimiento está implementado en el método <code>"svmRadial"</code> de <code>caret</code> y considera como hiperparámetros:</p>
-<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="svm-kernlab.html#cb233-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
-<span id="cb233-2"><a href="svm-kernlab.html#cb233-2" aria-hidden="true" tabindex="-1"></a><span class="co"># names(getModelInfo(&quot;svm&quot;)) # 17 métodos</span></span>
-<span id="cb233-3"><a href="svm-kernlab.html#cb233-3" aria-hidden="true" tabindex="-1"></a><span class="fu">modelLookup</span>(<span class="st">&quot;svmRadial&quot;</span>)</span></code></pre></div>
+correspondientes a los niveles)<a href="#fn50" class="footnote-ref" id="fnref50"><sup>50</sup></a>:</p>
+<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="svm-kernlab.html#cb322-1" aria-hidden="true" tabindex="-1"></a>p.est <span class="ot">&lt;-</span> <span class="fu">predict</span>(svm, <span class="at">newdata =</span> test, <span class="at">type =</span> <span class="st">&quot;probabilities&quot;</span>)</span>
+<span id="cb322-2"><a href="svm-kernlab.html#cb322-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(p.est)</span></code></pre></div>
+<pre><code>##         good     bad
+## [1,] 0.47619 0.52381
+## [2,] 0.70893 0.29107
+## [3,] 0.88935 0.11065
+## [4,] 0.84240 0.15760
+## [5,] 0.66409 0.33591
+## [6,] 0.36055 0.63945</code></pre>
+<div class="exercise">
+<p><span id="exr:svm-class-weight" class="exercise"><strong>Ejercicio 5.1  </strong></span>En el ejemplo anterior, el error de clasificación en la categoría <code>bad</code> es mucho mayor que en la otra categoría (la especificidad es 0.4643).
+Esto podría ser debido a que las clases están desbalanceadas y el modelo trata de clasificar mejor la clase mayoritaria.
+Podríamos tratar de mejorar la especificidad empleando el argumento <code>class.weights</code> de la función <code>ksvm()</code>.
+Por ejemplo, de forma que el coste de una mala clasificación en la categoría <code>bad</code> sea el doble que el coste en la categoría <code>good</code><a href="#fn51" class="footnote-ref" id="fnref51"><sup>51</sup></a>.
+De esta forma sería de esperar que se clasifique mejor la clase minoritaria, <code>bad</code> (que aumente la especificidad), a expensas de una disminución en la sensibilidad (para la clase mayoritaria <code>good</code>).
+Se esperaría también una mejora en la precisión balanceada, aunque con una reducción en la precisión.
+Repite el ejemplo anterior empleando el argumento <code>class.weights</code> para mejorar la especificidad.</p>
+</div>
+<p>Las SVM también están implementadas en <code>caret</code>, en múltiples métodos.
+Uno de los más empleados es <code>"svmRadial"</code> (equivalente a la clasificación anterior con núcleos radiales gaussianos) y considera como hiperparámetros:</p>
+<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="svm-kernlab.html#cb324-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb324-2"><a href="svm-kernlab.html#cb324-2" aria-hidden="true" tabindex="-1"></a><span class="co"># names(getModelInfo(&quot;svm&quot;)) # 17 métodos</span></span>
+<span id="cb324-3"><a href="svm-kernlab.html#cb324-3" aria-hidden="true" tabindex="-1"></a><span class="fu">modelLookup</span>(<span class="st">&quot;svmRadial&quot;</span>)</span></code></pre></div>
 <pre><code>##       model parameter label forReg forClass probModel
 ## 1 svmRadial     sigma Sigma   TRUE     TRUE      TRUE
 ## 2 svmRadial         C  Cost   TRUE     TRUE      TRUE</code></pre>
-<p>En este caso la función <code>train()</code> por defecto evaluará únicamente tres valores del hiperparámetro <code>C = c(0.25, 0.5, 1)</code> y fijará el valor de <code>sigma</code>.
-Alternativamente podríamos establecer la rejilla de búsqueda, por ejemplo:</p>
-<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="svm-kernlab.html#cb235-1" aria-hidden="true" tabindex="-1"></a>tuneGrid <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">sigma =</span> <span class="fu">kernelf</span>(svm)<span class="sc">@</span>kpar<span class="sc">$</span>sigma, <span class="co"># Emplea clases S4</span></span>
-<span id="cb235-2"><a href="svm-kernlab.html#cb235-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">C =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">5</span>))</span>
-<span id="cb235-3"><a href="svm-kernlab.html#cb235-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb235-4"><a href="svm-kernlab.html#cb235-4" aria-hidden="true" tabindex="-1"></a>caret.svm <span class="ot">&lt;-</span> <span class="fu">train</span>(taste <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">method =</span> <span class="st">&quot;svmRadial&quot;</span>, </span>
-<span id="cb235-5"><a href="svm-kernlab.html#cb235-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">preProcess =</span> <span class="fu">c</span>(<span class="st">&quot;center&quot;</span>, <span class="st">&quot;scale&quot;</span>),</span>
-<span id="cb235-6"><a href="svm-kernlab.html#cb235-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">trControl =</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>),</span>
-<span id="cb235-7"><a href="svm-kernlab.html#cb235-7" aria-hidden="true" tabindex="-1"></a>                   <span class="at">tuneGrid =</span> tuneGrid, <span class="at">prob.model =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb235-8"><a href="svm-kernlab.html#cb235-8" aria-hidden="true" tabindex="-1"></a>caret.svm</span></code></pre></div>
+<p>En este caso, la función <code>train()</code> por defecto evaluará únicamente tres valores del hiperparámetro <code>C = c(0.25, 0.5, 1)</code> y fijará el valor de <code>sigma</code>.
+Alternativamente, podríamos establecer la rejilla de búsqueda.
+Por ejemplo, fijamos <code>sigma</code> al valor por defecto<a href="#fn52" class="footnote-ref" id="fnref52"><sup>52</sup></a> de la función <code>ksvm()</code> e incrementamos los valores del hiperparámetro de coste:</p>
+<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="svm-kernlab.html#cb326-1" aria-hidden="true" tabindex="-1"></a>tuneGrid <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">sigma =</span> <span class="fu">kernelf</span>(svm)<span class="sc">@</span>kpar<span class="sc">$</span>sigma, <span class="co"># Emplea clases S4</span></span>
+<span id="cb326-2"><a href="svm-kernlab.html#cb326-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">C =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">5</span>))</span>
+<span id="cb326-3"><a href="svm-kernlab.html#cb326-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb326-4"><a href="svm-kernlab.html#cb326-4" aria-hidden="true" tabindex="-1"></a>caret.svm <span class="ot">&lt;-</span> <span class="fu">train</span>(taste <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">method =</span> <span class="st">&quot;svmRadial&quot;</span>, </span>
+<span id="cb326-5"><a href="svm-kernlab.html#cb326-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">preProcess =</span> <span class="fu">c</span>(<span class="st">&quot;center&quot;</span>, <span class="st">&quot;scale&quot;</span>),</span>
+<span id="cb326-6"><a href="svm-kernlab.html#cb326-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">trControl =</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>),</span>
+<span id="cb326-7"><a href="svm-kernlab.html#cb326-7" aria-hidden="true" tabindex="-1"></a>                   <span class="at">tuneGrid =</span> tuneGrid, <span class="at">prob.model =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb326-8"><a href="svm-kernlab.html#cb326-8" aria-hidden="true" tabindex="-1"></a>caret.svm</span></code></pre></div>
 <pre><code>## Support Vector Machines with Radial Basis Function Kernel 
 ## 
 ## 1000 samples
@@ -471,94 +470,58 @@ Alternativamente podríamos establecer la rejilla de búsqueda, por ejemplo:</p>
 ## Summary of sample sizes: 800, 801, 800, 800, 799 
 ## Resampling results across tuning parameters:
 ## 
-##   C    Accuracy   Kappa    
-##   0.5  0.7549524  0.4205204
-##   1.0  0.7599324  0.4297468
-##   5.0  0.7549374  0.4192217
+##   C    Accuracy  Kappa  
+##   0.5  0.75495   0.42052
+##   1.0  0.75993   0.42975
+##   5.0  0.75494   0.41922
 ## 
-## Tuning parameter &#39;sigma&#39; was held constant at a value of 0.07511338
+## Tuning parameter &#39;sigma&#39; was held constant at a value of 0.075113
 ## Accuracy was used to select the optimal model using the largest value.
-## The final values used for the model were sigma = 0.07511338 and C = 1.</code></pre>
-<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="svm-kernlab.html#cb237-1" aria-hidden="true" tabindex="-1"></a><span class="fu">varImp</span>(caret.svm)</span></code></pre></div>
-<pre><code>## ROC curve variable importance
-## 
-##                      Importance
-## alcohol                 100.000
-## density                  73.616
-## chlorides                60.766
-## volatile.acidity         57.076
-## total.sulfur.dioxide     45.500
-## fixed.acidity            42.606
-## pH                       34.972
-## sulphates                25.546
-## citric.acid               6.777
-## residual.sugar            6.317
-## free.sulfur.dioxide       0.000</code></pre>
-<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="svm-kernlab.html#cb239-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confusionMatrix</span>(<span class="fu">predict</span>(caret.svm, <span class="at">newdata =</span> test), test<span class="sc">$</span>taste)</span></code></pre></div>
-<pre><code>## Confusion Matrix and Statistics
-## 
-##           Reference
-## Prediction good bad
-##       good  147  45
-##       bad    19  39
-##                                           
-##                Accuracy : 0.744           
-##                  95% CI : (0.6852, 0.7969)
-##     No Information Rate : 0.664           
-##     P-Value [Acc &gt; NIR] : 0.003886        
-##                                           
-##                   Kappa : 0.3788          
-##                                           
-##  Mcnemar&#39;s Test P-Value : 0.001778        
-##                                           
-##             Sensitivity : 0.8855          
-##             Specificity : 0.4643          
-##          Pos Pred Value : 0.7656          
-##          Neg Pred Value : 0.6724          
-##              Prevalence : 0.6640          
-##          Detection Rate : 0.5880          
-##    Detection Prevalence : 0.7680          
-##       Balanced Accuracy : 0.6749          
-##                                           
-##        &#39;Positive&#39; Class : good            
-## </code></pre>
-<!-- 
-::: {.exercise #svm-caret-classProbs}
-
-Ejercicio: 
-Emplear classProbs = TRUE en caret::trainControl() en lugar de prob.model = TRUE
-Cambiar el criterio de error en train() a AUC en lugar de precisión:
-  summaryFunction = twoClassSummary
-  metric = "ROC"
-  
-::: 
-
-::: {.exercise #svm-caret-tuneGrid}
-
-tuneGrid <- data.frame(sigma = with(kernelf(svm)@kpar, c(sigma/2, sigma, 2*sigma), 
-                       C = c(0.5, 1, 5))
-
-:::  
--->
+## The final values used for the model were sigma = 0.075113 and C = 1.</code></pre>
+<p>En este caso, el modelo obtenido es el mismo que en el ejemplo anterior (se seleccionaron los mismos valores de los hiperparámetros).</p>
+<div class="exercise">
+<p><span id="exr:svm-caret-tunegrid" class="exercise"><strong>Ejercicio 5.2  </strong></span>Repite el ajuste anterior realizando una búsqueda de ambos hiperparámetros para tratar de mejorar la clasificación.
+Para el hiperparámetro <code>sigma</code> se podría considerar como referencia el valor seleccionado automáticamente por la función <code>ksvm()</code>.
+Por ejemplo, incluyendo además la mitad y el doble de ese valor: <code>sigma = with(kernelf(svm)@kpar, c(sigma/2, sigma, 2*sigma)</code>.</p>
+</div>
+<div class="exercise">
+<p><span id="exr:svm-caret-roc" class="exercise"><strong>Ejercicio 5.3  </strong></span>Para seleccionar los hiperparámetros en un problema de clasificación, <code>caret</code> utiliza como criterio por defecto la precisión de las predicciones.
+En la Sección <a href="const-eval.html#eval-class">1.3.5</a> se mostraron criterios alternativos que podrían resultar de interés en ciertos casos.
+Por ejemplo, para emplear el área bajo la curva ROC (AUC), en primer lugar necesitaríamos añadir <code>classProbs = TRUE</code> en <code>trainControl()</code>, ya que esta medida precisa de las estimaciones de las probabilidades de cada clase, que no se calculan por defecto.
+En segundo lugar, habría que cambiar la función que calcula los distintos criterios de optimalidad en la llamada a <code>trainControl()</code>.
+Estableciendo <code>summaryFunction = twoClassSummary</code> se calcularían medidas específicas para problemas de dos clases: el área bajo la curva ROC, la sensibilidad y la especificidad (en lugar de la precisión y el valor de Kappa).
+Finalmente, habría que incluir <code>metric = "ROC"</code> en la llamada a <code>train()</code> para establecer el AUC como criterio de selección de hiperparámetros.</p>
+<p>Repite el ejemplo anterior seleccionando los hiperparámetros de forma que se maximice el área bajo la curva ROC.</p>
+</div>
+<div class="exercise">
+<p><span id="exr:bfan-svm" class="exercise"><strong>Ejercicio 5.4  </strong></span>Continuando con el conjunto de datos <a href="https://rubenfcasal.github.io/mpae/reference/bfan.html"><code>mpae::bfan</code></a> empleado en ejercicios de capítulos anteriores, particiona los datos y clasifica los individuos según su nivel de grasa corporal (<code>bfan</code>):</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Empleando la función <code>ksvm()</code> del paquete <code>kernlab</code> con las opciones por defecto.</p></li>
+<li><p>Empleando el método <code>"svmRadial"</code> del paquete <code>caret</code>, seleccionando los valores óptimos de los hiperparámetros mediante validación cruzada con 5 grupos y considerando las posibles combinaciones de <code>C = c(0.5, 1, 5)</code> y <code>sigma = c(0.5, 1, 2)*sigma0</code>, siendo <code>sigma0</code> el valor de este parámetro seleccionado en el apartado anterior.</p></li>
+<li><p>Evalúa la precisión de las predicciones de ambos modelos en la muestra de test y compara los resultados.</p></li>
+</ol>
+</div>
 
 </div>
 <!-- </div> -->
-<h3>References</h3>
+<h3>Bibliografía<a href="bibliografía.html#bibliografía" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
 <div id="ref-hastie2004entire" class="csl-entry">
-Hastie, T., Rosset, S., Tibshirani, R., y Zhu, J. (2004). The entire regularization path for the support vector machine. <em>Journal of Machine Learning Research</em>, <em>5</em>(Oct), 1391-1415.
+Hastie, T., Rosset, S., Tibshirani, R., y Zhu, J. (2004). The entire regularization path for the support vector machine. <em>Journal of Machine Learning Research</em>, <em>5</em>, 1391-1415.
 </div>
 <div id="ref-kernlab2004" class="csl-entry">
-Karatzoglou, A., Smola, A., Hornik, K., y Zeileis, A. (2004). kernlab - An S4 Package for Kernel Methods in R. <em>Journal of Statistical Software, Articles</em>, <em>11</em>(9), 1-20. <a href="https://doi.org/10.18637/jss.v011.i09">https://doi.org/10.18637/jss.v011.i09</a>
+Karatzoglou, A., Smola, A., Hornik, K., y Zeileis, A. (2004). kernlab - An S4 Package for Kernel Methods in R. <em>Journal of Statistical Software</em>, <em>11</em>(9), 1-20. <a href="https://doi.org/10.18637/jss.v011.i09">https://doi.org/10.18637/jss.v011.i09</a>
 </div>
 <div id="ref-R-e1071" class="csl-entry">
-Meyer, D., Dimitriadou, E., Hornik, K., Weingessel, A., y Leisch, F. (2020). <em>e1071: Misc Functions of the Department of Statistics, Probability Theory Group (Formerly: E1071), TU Wien</em>. <a href="https://CRAN.R-project.org/package=e1071">https://CRAN.R-project.org/package=e1071</a>
+Meyer, D., Dimitriadou, E., Hornik, K., Weingessel, A., y Leisch, F. (2020). <em><span>e1071: Misc Functions of the Department of Statistics, Probability Theory Group (Formerly: E1071), TU Wien</span></em>. <a href="https://cran.r-project.org/package=e1071">https://cran.r-project.org/package=e1071</a>
 </div>
 </div>
 <div class="footnotes">
 <hr />
-<ol start="31">
-<li id="fn31"><p>Otras opciones son <code>"votes"</code> y <code>"decision"</code> para obtener matrices con el número de votos o los valores de <span class="math inline">\(m(\mathbf{x})\)</span>.<a href="svm-kernlab.html#fnref31" class="footnote-back">↩︎</a></p></li>
+<ol start="50">
+<li id="fn50"><p>Otras opciones son <code>"votes"</code> y <code>"decision"</code> para obtener matrices con el número de votos o los valores de <span class="math inline">\(m(\mathbf{x})\)</span>.<a href="svm-kernlab.html#fnref50" class="footnote-back">↩︎</a></p></li>
+<li id="fn51"><p>Una alternativa similar, que se suele emplear cuando las clases están desbalanceadas, es ponderar las observaciones por un peso inversamente proporcional a la frecuencia de cada clase.<a href="svm-kernlab.html#fnref51" class="footnote-back">↩︎</a></p></li>
+<li id="fn52"><p>La función <code>ksvm()</code>, por defecto, selecciona <code>sigma = mean(sigest(taste ~ ., data = train)[-2])</code>, aunque hay que tener en cuenta que el resultado de la función <code>sigest()</code> depende de la semilla.<a href="svm-kernlab.html#fnref52" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -567,7 +530,7 @@ Meyer, D., Dimitriadou, E., Hornik, K., Weingessel, A., y Leisch, F. (2020). <em
         </div>
       </div>
 <a href="máquinas-de-soporte-vectorial.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="class-otros.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="ext-glm.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -598,7 +561,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rubenfcasal/aprendizaje_estadistico/edit/master/04-svm.Rmd",
+"link": "https://github.com/rubenfcasal/book_mpae/edit/master/05-svm.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -609,7 +572,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["aprendizaje_estadistico.pdf"],
+"download": ["book_mpae.pdf"],
 "search": {
 "engine": "fuse",
 "options": null

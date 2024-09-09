@@ -1,27 +1,3 @@
-# Referencias {-}
-
-```{r global-options, include=FALSE}
-source("_global_options.R")
-```
-
-<!-- 
-Pendiente: 
-Cambiar encabezado páginas referencias
-Añadir sección enlaces en html y en preamble
--->
-
-```{r echo=FALSE, results="asis"}
-if(is_html()) {
-    cat("\n\n**Bibliografía básica**\n\n")
-    
-    cat("\n\nJames, G., Witten, D., Hastie, T. y Tibshirani, R. (2021). *[An Introduction to Statistical Learning: with Aplications in R, Segunda Edición](https://www.statlearning.com)*. Springer.\n\n")
-    cat("\n\nKuhn, M. y Johnson, K. (2013). *[Applied predictive modeling](http://appliedpredictivemodeling.com)*. Springer.\n\n")
-    cat("\n\nKuhn, M. y Silge, J. (2022). *[Tidy Modeling with R](https://www.tmwr.org)*. [O'Reill](https://amzn.to/35Hn96s).\n\n")
-    cat("\n\nWilliams, G. (2011). *Data Mining with Rattle and R*. Springer.\n\n")
-    
-    cat("\n\n## Bibliografía completa {-}\n\n")
-} else {
-    cat("\n")  
-}
-
-```
+`r if (knitr:::is_html_output()) '
+# Bibliografía {-}
+'`

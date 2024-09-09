@@ -4,20 +4,20 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>7.2 Splines | Aprendizaje Estadístico</title>
-  <meta name="description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
+  <title>7.2 Splines | Métodos predictivos de aprendizaje estadístico</title>
+  <meta name="description" content="7.2 Splines | Métodos predictivos de aprendizaje estadístico con R." />
   <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="7.2 Splines | Aprendizaje Estadístico" />
+  <meta property="og:title" content="7.2 Splines | Métodos predictivos de aprendizaje estadístico" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
-  <meta name="github-repo" content="rubenfcasal/aprendizaje_estadistico" />
+  <meta property="og:description" content="7.2 Splines | Métodos predictivos de aprendizaje estadístico con R." />
+  <meta name="github-repo" content="rubenfcasal/book_mpae" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="7.2 Splines | Aprendizaje Estadístico" />
+  <meta name="twitter:title" content="7.2 Splines | Métodos predictivos de aprendizaje estadístico" />
   
-  <meta name="twitter:description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
+  <meta name="twitter:description" content="7.2 Splines | Métodos predictivos de aprendizaje estadístico con R." />
   
 
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es)" />
@@ -168,19 +168,22 @@ div.csl-indent {
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">Aprendizaje Estadístico</a></li>
+<li><a href="./">Métodos predictivos de aprendizaje estadístico</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prólogo</a></li>
-<li class="chapter" data-level="1" data-path="intro-AE.html"><a href="intro-AE.html"><i class="fa fa-check"></i><b>1</b> Introducción al Aprendizaje Estadístico</a>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Bienvenida</a></li>
+<li class="chapter" data-level="" data-path="prólogo.html"><a href="prólogo.html"><i class="fa fa-check"></i>Prólogo</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje Estadístico vs. Aprendizaje Automático</a>
-<ul>
-<li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#machine-learning-vs.-data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
-<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#las-dos-culturas"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas</a></li>
-<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#machine-learning-vs.-estadística"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística</a></li>
+<li class="chapter" data-level="" data-path="el-lenguaje-de-programación-r.html"><a href="el-lenguaje-de-programación-r.html"><i class="fa fa-check"></i>El lenguaje de programación R</a></li>
+<li class="chapter" data-level="" data-path="organización.html"><a href="organización.html"><i class="fa fa-check"></i>Organización</a></li>
 </ul></li>
-<li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de Aprendizaje Estadístico</a>
+<li class="chapter" data-level="1" data-path="intro-AE.html"><a href="intro-AE.html"><i class="fa fa-check"></i><b>1</b> Introducción al aprendizaje estadístico</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje estadístico vs. aprendizaje automático</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#las-dos-culturas"><i class="fa fa-check"></i><b>1.1.1</b> Las dos culturas</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de aprendizaje estadístico</a>
 <ul>
 <li class="chapter" data-level="1.2.1" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#notacion"><i class="fa fa-check"></i><b>1.2.1</b> Notación y terminología</a></li>
 <li class="chapter" data-level="1.2.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#metodos-pkgs"><i class="fa fa-check"></i><b>1.2.2</b> Métodos (de aprendizaje supervisado) y paquetes de R</a></li>
@@ -189,100 +192,91 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="1.3.1" data-path="const-eval.html"><a href="const-eval.html#bias-variance"><i class="fa fa-check"></i><b>1.3.1</b> Equilibrio entre sesgo y varianza: infraajuste y sobreajuste</a></li>
 <li class="chapter" data-level="1.3.2" data-path="const-eval.html"><a href="const-eval.html#entrenamiento-test"><i class="fa fa-check"></i><b>1.3.2</b> Datos de entrenamiento y datos de test</a></li>
-<li class="chapter" data-level="1.3.3" data-path="const-eval.html"><a href="const-eval.html#cv"><i class="fa fa-check"></i><b>1.3.3</b> Validación cruzada</a></li>
+<li class="chapter" data-level="1.3.3" data-path="const-eval.html"><a href="const-eval.html#cv"><i class="fa fa-check"></i><b>1.3.3</b> Selección de hiperparámetros mediante validación cruzada</a></li>
 <li class="chapter" data-level="1.3.4" data-path="const-eval.html"><a href="const-eval.html#eval-reg"><i class="fa fa-check"></i><b>1.3.4</b> Evaluación de un método de regresión</a></li>
 <li class="chapter" data-level="1.3.5" data-path="const-eval.html"><a href="const-eval.html#eval-class"><i class="fa fa-check"></i><b>1.3.5</b> Evaluación de un método de clasificación</a></li>
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="dimen-curse.html"><a href="dimen-curse.html"><i class="fa fa-check"></i><b>1.4</b> La maldición de la dimensionalidad</a></li>
 <li class="chapter" data-level="1.5" data-path="analisis-modelos.html"><a href="analisis-modelos.html"><i class="fa fa-check"></i><b>1.5</b> Análisis e interpretación de los modelos</a></li>
-<li class="chapter" data-level="1.6" data-path="caret.html"><a href="caret.html"><i class="fa fa-check"></i><b>1.6</b> Introducción al paquete <code>caret</code></a>
+<li class="chapter" data-level="1.6" data-path="caret.html"><a href="caret.html"><i class="fa fa-check"></i><b>1.6</b> Introducción al paquete <code>caret</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="clasicos.html"><a href="clasicos.html"><i class="fa fa-check"></i><b>2</b> Métodos clásicos de estadística</a>
 <ul>
-<li class="chapter" data-level="1.6.1" data-path="caret.html"><a href="caret.html#métodos-implementados"><i class="fa fa-check"></i><b>1.6.1</b> Métodos implementados</a></li>
-<li class="chapter" data-level="1.6.2" data-path="caret.html"><a href="caret.html#herramientas"><i class="fa fa-check"></i><b>1.6.2</b> Herramientas</a></li>
-<li class="chapter" data-level="1.6.3" data-path="caret.html"><a href="caret.html#ejemplo"><i class="fa fa-check"></i><b>1.6.3</b> Ejemplo</a></li>
-<li class="chapter" data-level="1.6.4" data-path="caret.html"><a href="caret.html#desarrollo-futuro"><i class="fa fa-check"></i><b>1.6.4</b> Desarrollo futuro</a></li>
+<li class="chapter" data-level="2.1" data-path="rlm.html"><a href="rlm.html"><i class="fa fa-check"></i><b>2.1</b> Regresión lineal múltiple</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="rlm.html"><a href="rlm.html#colinealidad"><i class="fa fa-check"></i><b>2.1.1</b> El problema de la colinealidad</a></li>
+<li class="chapter" data-level="2.1.2" data-path="rlm.html"><a href="rlm.html#seleccion-rlm"><i class="fa fa-check"></i><b>2.1.2</b> Selección de variables explicativas</a></li>
+<li class="chapter" data-level="2.1.3" data-path="rlm.html"><a href="rlm.html#analisis-rlm"><i class="fa fa-check"></i><b>2.1.3</b> Análisis e interpretación del modelo</a></li>
+<li class="chapter" data-level="2.1.4" data-path="rlm.html"><a href="rlm.html#eval-rlm"><i class="fa fa-check"></i><b>2.1.4</b> Evaluación de la precisión</a></li>
+<li class="chapter" data-level="2.1.5" data-path="rlm.html"><a href="rlm.html#selec-ae-rlm"><i class="fa fa-check"></i><b>2.1.5</b> Selección del modelo mediante remuestreo</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="reg-glm.html"><a href="reg-glm.html"><i class="fa fa-check"></i><b>2.2</b> Modelos lineales generalizados</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="reg-glm.html"><a href="reg-glm.html#seleccion-glm"><i class="fa fa-check"></i><b>2.2.1</b> Selección de variables explicativas</a></li>
+<li class="chapter" data-level="2.2.2" data-path="reg-glm.html"><a href="reg-glm.html#analisis-glm"><i class="fa fa-check"></i><b>2.2.2</b> Análisis e interpretación del modelo</a></li>
+<li class="chapter" data-level="2.2.3" data-path="reg-glm.html"><a href="reg-glm.html#glm-bfan"><i class="fa fa-check"></i><b>2.2.3</b> Evaluación de la precisión</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="generadores.html"><a href="generadores.html"><i class="fa fa-check"></i><b>2.3</b> Otros métodos de clasificación</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="generadores.html"><a href="generadores.html#clas-lda"><i class="fa fa-check"></i><b>2.3.1</b> Análisis discriminante lineal</a></li>
+<li class="chapter" data-level="2.3.2" data-path="generadores.html"><a href="generadores.html#clas-qda"><i class="fa fa-check"></i><b>2.3.2</b> Análisis discriminante cuadrático</a></li>
+<li class="chapter" data-level="2.3.3" data-path="generadores.html"><a href="generadores.html#bayes"><i class="fa fa-check"></i><b>2.3.3</b> Bayes naíf</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="trees.html"><a href="trees.html"><i class="fa fa-check"></i><b>2</b> Árboles de decisión</a>
+<li class="chapter" data-level="3" data-path="trees.html"><a href="trees.html"><i class="fa fa-check"></i><b>3</b> Árboles de decisión</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="árboles-de-regresión-cart.html"><a href="árboles-de-regresión-cart.html"><i class="fa fa-check"></i><b>2.1</b> Árboles de regresión CART</a></li>
-<li class="chapter" data-level="2.2" data-path="árboles-de-clasificación-cart.html"><a href="árboles-de-clasificación-cart.html"><i class="fa fa-check"></i><b>2.2</b> Árboles de clasificación CART</a></li>
-<li class="chapter" data-level="2.3" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html"><i class="fa fa-check"></i><b>2.3</b> CART con el paquete <code>rpart</code></a>
+<li class="chapter" data-level="3.1" data-path="árboles-de-regresión-cart.html"><a href="árboles-de-regresión-cart.html"><i class="fa fa-check"></i><b>3.1</b> Árboles de regresión CART</a></li>
+<li class="chapter" data-level="3.2" data-path="árboles-de-clasificación-cart.html"><a href="árboles-de-clasificación-cart.html"><i class="fa fa-check"></i><b>3.2</b> Árboles de clasificación CART</a></li>
+<li class="chapter" data-level="3.3" data-path="tree-rpart.html"><a href="tree-rpart.html"><i class="fa fa-check"></i><b>3.3</b> CART con el paquete <code>rpart</code></a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#ejemplo-regresión"><i class="fa fa-check"></i><b>2.3.1</b> Ejemplo: regresión</a></li>
-<li class="chapter" data-level="2.3.2" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#class-rpart"><i class="fa fa-check"></i><b>2.3.2</b> Ejemplo: modelo de clasificación</a></li>
-<li class="chapter" data-level="2.3.3" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#interfaz-de-caret"><i class="fa fa-check"></i><b>2.3.3</b> Interfaz de <code>caret</code></a></li>
+<li class="chapter" data-level="3.3.1" data-path="tree-rpart.html"><a href="tree-rpart.html#reg-rpart"><i class="fa fa-check"></i><b>3.3.1</b> Ejemplo: regresión</a></li>
+<li class="chapter" data-level="3.3.2" data-path="tree-rpart.html"><a href="tree-rpart.html#class-rpart"><i class="fa fa-check"></i><b>3.3.2</b> Ejemplo: modelo de clasificación</a></li>
+<li class="chapter" data-level="3.3.3" data-path="tree-rpart.html"><a href="tree-rpart.html#interfaz-de-caret"><i class="fa fa-check"></i><b>3.3.3</b> Interfaz de <code>caret</code></a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html"><i class="fa fa-check"></i><b>2.4</b> Alternativas a los árboles CART</a>
-<ul>
-<li class="chapter" data-level="2.4.1" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html#ejemplo-1"><i class="fa fa-check"></i><b>2.4.1</b> Ejemplo</a></li>
+<li class="chapter" data-level="3.4" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html"><i class="fa fa-check"></i><b>3.4</b> Alternativas a los árboles CART</a></li>
 </ul></li>
+<li class="chapter" data-level="4" data-path="bagging-boosting.html"><a href="bagging-boosting.html"><i class="fa fa-check"></i><b>4</b> Bagging y boosting</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>4.1</b> Bagging</a></li>
+<li class="chapter" data-level="4.2" data-path="rf.html"><a href="rf.html"><i class="fa fa-check"></i><b>4.2</b> Bosques aleatorios</a></li>
+<li class="chapter" data-level="4.3" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html"><i class="fa fa-check"></i><b>4.3</b> Bagging y bosques aleatorios en R</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-clasificación-con-bagging"><i class="fa fa-check"></i><b>4.3.1</b> Ejemplo: clasificación con bagging</a></li>
+<li class="chapter" data-level="4.3.2" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-clasif-rf"><i class="fa fa-check"></i><b>4.3.2</b> Ejemplo: clasificación con bosques aleatorios</a></li>
+<li class="chapter" data-level="4.3.3" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-bosques-aleatorios-con-caret"><i class="fa fa-check"></i><b>4.3.3</b> Ejemplo: bosques aleatorios con <code>caret</code></a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="bagging-boosting.html"><a href="bagging-boosting.html"><i class="fa fa-check"></i><b>3</b> Bagging y Boosting</a>
+<li class="chapter" data-level="4.4" data-path="boosting.html"><a href="boosting.html"><i class="fa fa-check"></i><b>4.4</b> Boosting</a></li>
+<li class="chapter" data-level="4.5" data-path="boosting-r.html"><a href="boosting-r.html"><i class="fa fa-check"></i><b>4.5</b> Boosting en R</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>3.1</b> Bagging</a></li>
-<li class="chapter" data-level="3.2" data-path="bosques-aleatorios.html"><a href="bosques-aleatorios.html"><i class="fa fa-check"></i><b>3.2</b> Bosques aleatorios</a></li>
-<li class="chapter" data-level="3.3" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html"><i class="fa fa-check"></i><b>3.3</b> Bagging y bosques aleatorios en R</a>
-<ul>
-<li class="chapter" data-level="3.3.1" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-clasificación-con-bagging"><i class="fa fa-check"></i><b>3.3.1</b> Ejemplo: Clasificación con bagging</a></li>
-<li class="chapter" data-level="3.3.2" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-clasif-rf"><i class="fa fa-check"></i><b>3.3.2</b> Ejemplo: Clasificación con bosques aleatorios</a></li>
-<li class="chapter" data-level="3.3.3" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-bosques-aleatorios-con-caret"><i class="fa fa-check"></i><b>3.3.3</b> Ejemplo: bosques aleatorios con <code>caret</code></a></li>
-</ul></li>
-<li class="chapter" data-level="3.4" data-path="boosting.html"><a href="boosting.html"><i class="fa fa-check"></i><b>3.4</b> Boosting</a></li>
-<li class="chapter" data-level="3.5" data-path="boosting-en-r.html"><a href="boosting-en-r.html"><i class="fa fa-check"></i><b>3.5</b> Boosting en R</a>
-<ul>
-<li class="chapter" data-level="3.5.1" data-path="boosting-en-r.html"><a href="boosting-en-r.html#ejemplo-clasificación-con-el-paquete-ada"><i class="fa fa-check"></i><b>3.5.1</b> Ejemplo: clasificación con el paquete <code>ada</code></a></li>
-<li class="chapter" data-level="3.5.2" data-path="boosting-en-r.html"><a href="boosting-en-r.html#ejemplo-regresión-con-el-paquete-gbm"><i class="fa fa-check"></i><b>3.5.2</b> Ejemplo: regresión con el paquete <code>gbm</code></a></li>
-<li class="chapter" data-level="3.5.3" data-path="boosting-en-r.html"><a href="boosting-en-r.html#xgb-caret"><i class="fa fa-check"></i><b>3.5.3</b> Ejemplo: XGBoost con el paquete <code>caret</code></a></li>
+<li class="chapter" data-level="4.5.1" data-path="boosting-r.html"><a href="boosting-r.html#ejemplo-clasificación-con-el-paquete-ada"><i class="fa fa-check"></i><b>4.5.1</b> Ejemplo: clasificación con el paquete <code>ada</code></a></li>
+<li class="chapter" data-level="4.5.2" data-path="boosting-r.html"><a href="boosting-r.html#ejemplo-regresión-con-el-paquete-gbm"><i class="fa fa-check"></i><b>4.5.2</b> Ejemplo: regresión con el paquete <code>gbm</code></a></li>
+<li class="chapter" data-level="4.5.3" data-path="boosting-r.html"><a href="boosting-r.html#xgb-caret"><i class="fa fa-check"></i><b>4.5.3</b> Ejemplo: XGBoost con el paquete <code>caret</code></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>4</b> Máquinas de soporte vectorial</a>
+<li class="chapter" data-level="5" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>5</b> Máquinas de soporte vectorial</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="clasificadores-de-máximo-margen.html"><a href="clasificadores-de-máximo-margen.html"><i class="fa fa-check"></i><b>4.1</b> Clasificadores de máximo margen</a></li>
-<li class="chapter" data-level="4.2" data-path="clasificadores-de-soporte-vectorial.html"><a href="clasificadores-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>4.2</b> Clasificadores de soporte vectorial</a></li>
-<li class="chapter" data-level="4.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>4.3</b> Máquinas de soporte vectorial</a>
+<li class="chapter" data-level="5.1" data-path="clasificadores-de-máximo-margen.html"><a href="clasificadores-de-máximo-margen.html"><i class="fa fa-check"></i><b>5.1</b> Clasificadores de máximo margen</a></li>
+<li class="chapter" data-level="5.2" data-path="clasificadores-de-soporte-vectorial.html"><a href="clasificadores-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>5.2</b> Clasificadores de soporte vectorial</a></li>
+<li class="chapter" data-level="5.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>5.3</b> Máquinas de soporte vectorial</a>
 <ul>
-<li class="chapter" data-level="4.3.1" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#regresión-con-svm"><i class="fa fa-check"></i><b>4.3.1</b> Regresión con SVM</a></li>
-<li class="chapter" data-level="4.3.2" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#ventajas-e-incovenientes"><i class="fa fa-check"></i><b>4.3.2</b> Ventajas e incovenientes</a></li>
+<li class="chapter" data-level="5.3.1" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#regresión-con-svm"><i class="fa fa-check"></i><b>5.3.1</b> Regresión con SVM</a></li>
+<li class="chapter" data-level="5.3.2" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#ventajas-e-incovenientes"><i class="fa fa-check"></i><b>5.3.2</b> Ventajas e incovenientes</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="svm-kernlab.html"><a href="svm-kernlab.html"><i class="fa fa-check"></i><b>4.4</b> SVM con el paquete <code>kernlab</code></a></li>
+<li class="chapter" data-level="5.4" data-path="svm-kernlab.html"><a href="svm-kernlab.html"><i class="fa fa-check"></i><b>5.4</b> SVM en R</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="class-otros.html"><a href="class-otros.html"><i class="fa fa-check"></i><b>5</b> Otros métodos de clasificación</a>
+<li class="chapter" data-level="6" data-path="ext-glm.html"><a href="ext-glm.html"><i class="fa fa-check"></i><b>6</b> Extensiones de los modelos lineales (generalizados)</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="clas-lda.html"><a href="clas-lda.html"><i class="fa fa-check"></i><b>5.1</b> Análisis discriminate lineal</a></li>
-<li class="chapter" data-level="5.2" data-path="clas-qda.html"><a href="clas-qda.html"><i class="fa fa-check"></i><b>5.2</b> Análisis discriminante cuadrático</a></li>
-<li class="chapter" data-level="5.3" data-path="bayes.html"><a href="bayes.html"><i class="fa fa-check"></i><b>5.3</b> Naive Bayes</a></li>
+<li class="chapter" data-level="6.1" data-path="shrinkage.html"><a href="shrinkage.html"><i class="fa fa-check"></i><b>6.1</b> Métodos de regularización</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="shrinkage.html"><a href="shrinkage.html#implementación-en-r"><i class="fa fa-check"></i><b>6.1.1</b> Implementación en R</a></li>
+<li class="chapter" data-level="6.1.2" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-ridge-regression"><i class="fa fa-check"></i><b>6.1.2</b> Ejemplo: <em>ridge regression</em></a></li>
+<li class="chapter" data-level="6.1.3" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-lasso"><i class="fa fa-check"></i><b>6.1.3</b> Ejemplo: LASSO</a></li>
+<li class="chapter" data-level="6.1.4" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-elastic-net"><i class="fa fa-check"></i><b>6.1.4</b> Ejemplo: <em>elastic net</em></a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="modelos-lineales.html"><a href="modelos-lineales.html"><i class="fa fa-check"></i><b>6</b> Modelos lineales y extensiones</a>
+<li class="chapter" data-level="6.2" data-path="pca-pls.html"><a href="pca-pls.html"><i class="fa fa-check"></i><b>6.2</b> Métodos de reducción de la dimensión</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="reg-multiple.html"><a href="reg-multiple.html"><i class="fa fa-check"></i><b>6.1</b> Regresión lineal múltiple</a></li>
-<li class="chapter" data-level="6.2" data-path="colinealidad.html"><a href="colinealidad.html"><i class="fa fa-check"></i><b>6.2</b> El problema de la colinealidad</a></li>
-<li class="chapter" data-level="6.3" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html"><i class="fa fa-check"></i><b>6.3</b> Selección de variables explicativas</a>
-<ul>
-<li class="chapter" data-level="6.3.1" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html#búsqueda-exhaustiva"><i class="fa fa-check"></i><b>6.3.1</b> Búsqueda exhaustiva</a></li>
-<li class="chapter" data-level="6.3.2" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html#selección-por-pasos"><i class="fa fa-check"></i><b>6.3.2</b> Selección por pasos</a></li>
-</ul></li>
-<li class="chapter" data-level="6.4" data-path="analisis-reg-multiple.html"><a href="analisis-reg-multiple.html"><i class="fa fa-check"></i><b>6.4</b> Análisis e interpretación del modelo</a></li>
-<li class="chapter" data-level="6.5" data-path="eval-reg-lineal.html"><a href="eval-reg-lineal.html"><i class="fa fa-check"></i><b>6.5</b> Evaluación de la precisión</a></li>
-<li class="chapter" data-level="6.6" data-path="selec-ae-reg-lineal.html"><a href="selec-ae-reg-lineal.html"><i class="fa fa-check"></i><b>6.6</b> Selección del modelo mediante remuestreo</a></li>
-<li class="chapter" data-level="6.7" data-path="shrinkage.html"><a href="shrinkage.html"><i class="fa fa-check"></i><b>6.7</b> Métodos de regularización</a>
-<ul>
-<li class="chapter" data-level="6.7.1" data-path="shrinkage.html"><a href="shrinkage.html#implementación-en-r"><i class="fa fa-check"></i><b>6.7.1</b> Implementación en R</a></li>
-<li class="chapter" data-level="6.7.2" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-ridge-regression"><i class="fa fa-check"></i><b>6.7.2</b> Ejemplo: Ridge Regression</a></li>
-<li class="chapter" data-level="6.7.3" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-lasso"><i class="fa fa-check"></i><b>6.7.3</b> Ejemplo: Lasso</a></li>
-<li class="chapter" data-level="6.7.4" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-elastic-net"><i class="fa fa-check"></i><b>6.7.4</b> Ejemplo: Elastic Net</a></li>
-</ul></li>
-<li class="chapter" data-level="6.8" data-path="pca-pls.html"><a href="pca-pls.html"><i class="fa fa-check"></i><b>6.8</b> Métodos de reducción de la dimensión</a>
-<ul>
-<li class="chapter" data-level="6.8.1" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-componentes-principales-pcr"><i class="fa fa-check"></i><b>6.8.1</b> Regresión por componentes principales (PCR)</a></li>
-<li class="chapter" data-level="6.8.2" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-mínimos-cuadrados-parciales-plsr"><i class="fa fa-check"></i><b>6.8.2</b> Regresión por mínimos cuadrados parciales (PLSR)</a></li>
-</ul></li>
-<li class="chapter" data-level="6.9" data-path="reg-glm.html"><a href="reg-glm.html"><i class="fa fa-check"></i><b>6.9</b> Modelos lineales generalizados</a>
-<ul>
-<li class="chapter" data-level="6.9.1" data-path="reg-glm.html"><a href="reg-glm.html#selección-de-variables-explicativas"><i class="fa fa-check"></i><b>6.9.1</b> Selección de variables explicativas</a></li>
-<li class="chapter" data-level="6.9.2" data-path="reg-glm.html"><a href="reg-glm.html#analisis-glm"><i class="fa fa-check"></i><b>6.9.2</b> Análisis e interpretación del modelo</a></li>
-<li class="chapter" data-level="6.9.3" data-path="reg-glm.html"><a href="reg-glm.html#evaluación-de-la-precisión"><i class="fa fa-check"></i><b>6.9.3</b> Evaluación de la precisión</a></li>
-<li class="chapter" data-level="6.9.4" data-path="reg-glm.html"><a href="reg-glm.html#extensiones"><i class="fa fa-check"></i><b>6.9.4</b> Extensiones</a></li>
+<li class="chapter" data-level="6.2.1" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-componentes-principales-pcr"><i class="fa fa-check"></i><b>6.2.1</b> Regresión por componentes principales (PCR)</a></li>
+<li class="chapter" data-level="6.2.2" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-mínimos-cuadrados-parciales-plsr"><i class="fa fa-check"></i><b>6.2.2</b> Regresión por mínimos cuadrados parciales (PLSR)</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="reg-np.html"><a href="reg-np.html"><i class="fa fa-check"></i><b>7</b> Regresión no paramétrica</a>
@@ -302,7 +296,7 @@ div.csl-indent {
 <li class="chapter" data-level="7.3" data-path="reg-gam.html"><a href="reg-gam.html"><i class="fa fa-check"></i><b>7.3</b> Modelos aditivos</a>
 <ul>
 <li class="chapter" data-level="7.3.1" data-path="reg-gam.html"><a href="reg-gam.html#superficies-de-predicción"><i class="fa fa-check"></i><b>7.3.1</b> Superficies de predicción</a></li>
-<li class="chapter" data-level="7.3.2" data-path="reg-gam.html"><a href="reg-gam.html#comparación-y-selección-de-modelos"><i class="fa fa-check"></i><b>7.3.2</b> Comparación y selección de modelos</a></li>
+<li class="chapter" data-level="7.3.2" data-path="reg-gam.html"><a href="reg-gam.html#anova-gam"><i class="fa fa-check"></i><b>7.3.2</b> Comparación y selección de modelos</a></li>
 <li class="chapter" data-level="7.3.3" data-path="reg-gam.html"><a href="reg-gam.html#mgcv-diagnosis"><i class="fa fa-check"></i><b>7.3.3</b> Diagnosis del modelo</a></li>
 </ul></li>
 <li class="chapter" data-level="7.4" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>7.4</b> Regresión spline adaptativa multivariante</a>
@@ -310,10 +304,10 @@ div.csl-indent {
 <li class="chapter" data-level="7.4.1" data-path="mars.html"><a href="mars.html#mars-con-el-paquete-earth"><i class="fa fa-check"></i><b>7.4.1</b> MARS con el paquete <code>earth</code></a></li>
 <li class="chapter" data-level="7.4.2" data-path="mars.html"><a href="mars.html#mars-con-el-paquete-caret"><i class="fa fa-check"></i><b>7.4.2</b> MARS con el paquete <code>caret</code></a></li>
 </ul></li>
-<li class="chapter" data-level="7.5" data-path="projection-pursuit.html"><a href="projection-pursuit.html"><i class="fa fa-check"></i><b>7.5</b> Projection pursuit</a>
+<li class="chapter" data-level="7.5" data-path="pursuit.html"><a href="pursuit.html"><i class="fa fa-check"></i><b>7.5</b> Projection pursuit</a>
 <ul>
-<li class="chapter" data-level="7.5.1" data-path="projection-pursuit.html"><a href="projection-pursuit.html#ppr"><i class="fa fa-check"></i><b>7.5.1</b> Regresión por <em>projection pursuit</em></a></li>
-<li class="chapter" data-level="7.5.2" data-path="projection-pursuit.html"><a href="projection-pursuit.html#implementación-en-r-1"><i class="fa fa-check"></i><b>7.5.2</b> Implementación en R</a></li>
+<li class="chapter" data-level="7.5.1" data-path="pursuit.html"><a href="pursuit.html#ppr"><i class="fa fa-check"></i><b>7.5.1</b> Regresión por projection pursuit</a></li>
+<li class="chapter" data-level="7.5.2" data-path="pursuit.html"><a href="pursuit.html#implementación-en-r-1"><i class="fa fa-check"></i><b>7.5.2</b> Implementación en R</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="neural-nets.html"><a href="neural-nets.html"><i class="fa fa-check"></i><b>8</b> Redes neuronales</a>
@@ -322,10 +316,7 @@ div.csl-indent {
 <li class="chapter" data-level="8.2" data-path="clasificación-con-ann.html"><a href="clasificación-con-ann.html"><i class="fa fa-check"></i><b>8.2</b> Clasificación con ANN</a></li>
 <li class="chapter" data-level="8.3" data-path="implementación-en-r-2.html"><a href="implementación-en-r-2.html"><i class="fa fa-check"></i><b>8.3</b> Implementación en R</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a>
-<ul>
-<li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
-</ul></li>
+<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -338,7 +329,7 @@ div.csl-indent {
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Aprendizaje Estadístico</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Métodos predictivos de aprendizaje estadístico</a>
           </h1>
         </div>
 
@@ -348,8 +339,8 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="splines" class="section level2 hasAnchor" number="7.2">
 <h2><span class="header-section-number">7.2</span> Splines<a href="splines.html#splines" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Otra alternativa consiste en trocear los datos en intervalos, fijando unos puntos de corte <span class="math inline">\(z_i\)</span> (denominados nudos; <em>knots</em>), con <span class="math inline">\(i = 1, \ldots, k\)</span>, y ajustar un polinomio en cada segmento (lo que se conoce como regresión segmentada, <em>piecewise regression</em>; ver Figura <a href="splines.html#fig:rsegmentada-fit">7.5</a>).
-De esta forma sin embargo habrá discontinuidades en los puntos de corte, pero podrían añadirse restricciones adicionales de continuidad (o incluso de diferenciabilidad) para evitarlo (e.g. paquete <a href="NA"><code>segmented</code></a>).</p>
+<p>Un enfoque alternativo a los métodos de regresión local de la sección anterior consiste en trocear los datos en intervalos: se fijan unos puntos de corte <span class="math inline">\(z_i\)</span>, denominados nudos (<em>knots</em>), con <span class="math inline">\(i = 1, \ldots, k\)</span>, y se ajusta un polinomio en cada segmento, lo que se conoce como regresión segmentada (<em>piecewise regression</em>; ver Figura <a href="splines.html#fig:rsegmentada-fit">7.5</a>).
+Un inconveniente de este método es que da lugar a discontinuidades en los puntos de corte, aunque pueden añadirse restricciones adicionales de continuidad (o incluso de diferenciabilidad) para evitarlo <span class="citation">(p. ej. paquete <a href="https://CRAN.R-project.org/package=segmented" role="doc-biblioref"><code>segmented</code></a>, <a href="#ref-R-segmented" role="doc-biblioref">Fasola et al., 2018</a>)</span>.</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:rsegmentada-fit"></span>
 <img src="07-regresion_np_files/figure-html/rsegmentada-fit-1.png" alt="Estimación mediante regresión segmentada." width="75%" />
 <p class="caption">
@@ -358,119 +349,132 @@ Figura 7.5: Estimación mediante regresión segmentada.
 </div>
 <div id="reg-splines" class="section level3 hasAnchor" number="7.2.1">
 <h3><span class="header-section-number">7.2.1</span> Splines de regresión<a href="splines.html#reg-splines" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Cuando en cada intervalo se ajustan polinomios de orden <span class="math inline">\(d\)</span> y se incluyen restricciones de forma que las derivadas sean continuas hasta el orden <span class="math inline">\(d-1\)</span> se obtienen los denominados splines de regresión (<em>regression splines</em>).
+<p>Cuando en cada intervalo se ajustan polinomios de orden <span class="math inline">\(d\)</span> y se incluyen restricciones de forma que las derivadas sean continuas hasta el orden <span class="math inline">\(d-1\)</span>, se obtienen los denominados <em>splines de regresión</em> (<em>regression splines</em>).
 Puede verse que este tipo de ajustes equivalen a transformar la variable predictora <span class="math inline">\(X\)</span>, considerando por ejemplo la <em>base de potencias truncadas</em> (<em>truncated power basis</em>):
 <span class="math display">\[1, x, \ldots, x^d, (x-z_1)_+^d,\ldots,(x-z_k)_+^d\]</span>
 siendo <span class="math inline">\((x - z)_+ = \max(0, x - z)\)</span>, y posteriormente realizar un ajuste lineal:
 <span class="math display">\[m(x) = \beta_0 + \beta_1 b_1(x) +  \beta_2 b_2(x) + \ldots  + \beta_{k+d} b_{k+d}(x)\]</span></p>
 <p>Típicamente se seleccionan polinomios de grado <span class="math inline">\(d=3\)</span>, lo que se conoce como splines cúbicos, y nodos equiespaciados.
 Además, se podrían emplear otras bases equivalentes.
-Por ejemplo, para evitar posibles problemas computacionales con la base anterior, se suele emplear la denominada base <span class="math inline">\(B\)</span>-spline <span class="citation">(<a href="#ref-de1978practical" role="doc-biblioref">De Boor y De Boor, 1978</a>)</span>, implementada en la función <code>bs()</code> del paquete <code>splines</code> (ver Figura <a href="splines.html#fig:spline-d012">7.6</a>):</p>
-<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="splines.html#cb406-1" aria-hidden="true" tabindex="-1"></a>nknots <span class="ot">&lt;-</span> <span class="dv">9</span> <span class="co"># nodos internos; 10 intervalos</span></span>
-<span id="cb406-2"><a href="splines.html#cb406-2" aria-hidden="true" tabindex="-1"></a>knots <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(times), <span class="fu">max</span>(times), <span class="at">len =</span> nknots <span class="sc">+</span> <span class="dv">2</span>)[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>, nknots <span class="sc">+</span> <span class="dv">2</span>)]</span>
-<span id="cb406-3"><a href="splines.html#cb406-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(splines)</span>
-<span id="cb406-4"><a href="splines.html#cb406-4" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(accel <span class="sc">~</span> <span class="fu">bs</span>(times, <span class="at">knots =</span> knots, <span class="at">degree =</span> <span class="dv">1</span>))</span>
-<span id="cb406-5"><a href="splines.html#cb406-5" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(accel <span class="sc">~</span> <span class="fu">bs</span>(times, <span class="at">knots =</span> knots, <span class="at">degree =</span> <span class="dv">2</span>))</span>
-<span id="cb406-6"><a href="splines.html#cb406-6" aria-hidden="true" tabindex="-1"></a>fit3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(accel <span class="sc">~</span> <span class="fu">bs</span>(times, <span class="at">knots =</span> knots)) <span class="co"># degree = 3</span></span>
-<span id="cb406-7"><a href="splines.html#cb406-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Representar</span></span>
-<span id="cb406-8"><a href="splines.html#cb406-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(times, accel, <span class="at">col =</span> <span class="st">&#39;darkgray&#39;</span>)</span>
-<span id="cb406-9"><a href="splines.html#cb406-9" aria-hidden="true" tabindex="-1"></a>newx <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(times), <span class="fu">max</span>(times), <span class="at">len =</span> <span class="dv">200</span>)</span>
-<span id="cb406-10"><a href="splines.html#cb406-10" aria-hidden="true" tabindex="-1"></a>newdata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">times =</span> newx)</span>
-<span id="cb406-11"><a href="splines.html#cb406-11" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx, <span class="fu">predict</span>(fit1, newdata), <span class="at">lty =</span> <span class="dv">3</span>)</span>
-<span id="cb406-12"><a href="splines.html#cb406-12" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx, <span class="fu">predict</span>(fit2, newdata), <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb406-13"><a href="splines.html#cb406-13" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx, <span class="fu">predict</span>(fit3, newdata))</span>
-<span id="cb406-14"><a href="splines.html#cb406-14" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> knots, <span class="at">lty =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">&#39;darkgray&#39;</span>)</span>
-<span id="cb406-15"><a href="splines.html#cb406-15" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;d=1 (df=11)&quot;</span>, <span class="st">&quot;d=2 (df=12)&quot;</span>, <span class="st">&quot;d=3 (df=13)&quot;</span>), </span>
-<span id="cb406-16"><a href="splines.html#cb406-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>))</span></code></pre></div>
+Por ejemplo, para evitar posibles problemas computacionales con la base anterior, se suele emplear la denominada base <span class="math inline">\(B\)</span>-<em>spline</em> <span class="citation">(<a href="#ref-de1978practical" role="doc-biblioref">De Boor y De Boor, 1978</a>)</span>, implementada en la función <code>bs()</code> del paquete <code>splines</code> (ver Figura <a href="splines.html#fig:spline-d012">7.6</a>):</p>
+<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="splines.html#cb401-1" aria-hidden="true" tabindex="-1"></a>nknots <span class="ot">&lt;-</span> <span class="dv">9</span> <span class="co"># nodos internos; 10 intervalos</span></span>
+<span id="cb401-2"><a href="splines.html#cb401-2" aria-hidden="true" tabindex="-1"></a>knots <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(times), <span class="fu">max</span>(times), <span class="at">len =</span> nknots <span class="sc">+</span> <span class="dv">2</span>)[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>, nknots <span class="sc">+</span> <span class="dv">2</span>)]</span>
+<span id="cb401-3"><a href="splines.html#cb401-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(splines)</span>
+<span id="cb401-4"><a href="splines.html#cb401-4" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(accel <span class="sc">~</span> <span class="fu">bs</span>(times, <span class="at">knots =</span> knots, <span class="at">degree =</span> <span class="dv">1</span>))</span>
+<span id="cb401-5"><a href="splines.html#cb401-5" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(accel <span class="sc">~</span> <span class="fu">bs</span>(times, <span class="at">knots =</span> knots, <span class="at">degree =</span> <span class="dv">2</span>))</span>
+<span id="cb401-6"><a href="splines.html#cb401-6" aria-hidden="true" tabindex="-1"></a>fit3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(accel <span class="sc">~</span> <span class="fu">bs</span>(times, <span class="at">knots =</span> knots)) <span class="co"># degree = 3</span></span>
+<span id="cb401-7"><a href="splines.html#cb401-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Representar</span></span>
+<span id="cb401-8"><a href="splines.html#cb401-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(times, accel, <span class="at">col =</span> <span class="st">&#39;darkgray&#39;</span>)</span>
+<span id="cb401-9"><a href="splines.html#cb401-9" aria-hidden="true" tabindex="-1"></a>newx <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(times), <span class="fu">max</span>(times), <span class="at">len =</span> <span class="dv">200</span>)</span>
+<span id="cb401-10"><a href="splines.html#cb401-10" aria-hidden="true" tabindex="-1"></a>newdata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">times =</span> newx)</span>
+<span id="cb401-11"><a href="splines.html#cb401-11" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx, <span class="fu">predict</span>(fit1, newdata), <span class="at">lty =</span> <span class="dv">3</span>)</span>
+<span id="cb401-12"><a href="splines.html#cb401-12" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx, <span class="fu">predict</span>(fit2, newdata), <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb401-13"><a href="splines.html#cb401-13" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx, <span class="fu">predict</span>(fit3, newdata))</span>
+<span id="cb401-14"><a href="splines.html#cb401-14" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> knots, <span class="at">lty =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">&#39;darkgray&#39;</span>)</span>
+<span id="cb401-15"><a href="splines.html#cb401-15" aria-hidden="true" tabindex="-1"></a>leyenda <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;d=1 (df=11)&quot;</span>, <span class="st">&quot;d=2 (df=12)&quot;</span>, <span class="st">&quot;d=3 (df=13)&quot;</span>)</span>
+<span id="cb401-16"><a href="splines.html#cb401-16" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend =</span> leyenda, <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:spline-d012"></span>
 <img src="07-regresion_np_files/figure-html/spline-d012-1.png" alt="Ajustes mediante splines de regresión (de grados 1, 2 y 3)." width="75%" />
 <p class="caption">
 Figura 7.6: Ajustes mediante splines de regresión (de grados 1, 2 y 3).
 </p>
 </div>
-<p>El grado del polinomio, pero sobre todo el número de nodos, determinarán la flexibilidad del modelo.
-Se podrían considerar el número de parámetros en el ajuste lineal, los grados de libertad, como medida de la complejidad (en la función <code>bs()</code> se puede especificar <code>df</code> en lugar de <code>knots</code>, y estos se generarán a partir de los cuantiles).</p>
+<p>El grado del polinomio y, sobre todo, el número de nodos, determinarán la flexibilidad del modelo.
+El número de parámetros, <span class="math inline">\(k+d+1\)</span>, en el ajuste lineal (los grados de libertad) se puede utilizar como una medida de la complejidad (en la función <code>bs()</code> se puede especificar <code>df</code> en lugar de <code>knots</code>, y estos se generarán a partir de los cuantiles).</p>
 <!-- 
 knots <- quantile(times, 1:nknots/(nknots + 1))
 bs(times, df = nknots + degree + intercept)
 -->
-<p>Como ya se comentó, al aumentar el grado de un modelo polinómico se incrementa la variabilidad de las predicciones, especialmente en la frontera.
-Para tratar de evitar este problema se suelen emplear los <em>splines naturales</em>, que son splines de regresión con restricciones adicionales de forma que el ajuste sea lineal en los intervalos extremos (lo que en general produce estimaciones más estables en la frontera y mejores extrapolaciones).
+<p>Como se comentó previamente, al aumentar el grado de un modelo polinómico se incrementa la variabilidad de las predicciones, especialmente en la frontera.
+Para tratar de evitar este problema se suelen emplear los <em>splines naturales</em>, que son splines de regresión con restricciones adicionales de forma que el ajuste sea lineal en los intervalos extremos, lo que en general produce estimaciones más estables en la frontera y mejores extrapolaciones.
 Estas restricciones reducen la complejidad (los grados de libertad del modelo), y al igual que en el caso de considerar únicamente las restricciones de continuidad y diferenciabilidad, resultan equivalentes a considerar una nueva base en un ajuste sin restricciones.
 Por ejemplo, se puede emplear la función <code>splines::ns()</code> para ajustar un spline natural (cúbico por defecto; ver Figura <a href="splines.html#fig:spline-ns-bs">7.7</a>):</p>
 
-<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="splines.html#cb407-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(times, accel, <span class="at">col =</span> <span class="st">&#39;darkgray&#39;</span>)</span>
-<span id="cb407-2"><a href="splines.html#cb407-2" aria-hidden="true" tabindex="-1"></a>fit4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(accel <span class="sc">~</span> <span class="fu">ns</span>(times, <span class="at">knots =</span> knots))</span>
-<span id="cb407-3"><a href="splines.html#cb407-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx, <span class="fu">predict</span>(fit4, newdata))</span>
-<span id="cb407-4"><a href="splines.html#cb407-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx, <span class="fu">predict</span>(fit3, newdata), <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb407-5"><a href="splines.html#cb407-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> knots, <span class="at">lty =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">&#39;darkgray&#39;</span>)</span>
-<span id="cb407-6"><a href="splines.html#cb407-6" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;ns (d=3, df=11)&quot;</span>, <span class="st">&quot;bs (d=3, df=13)&quot;</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="splines.html#cb402-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(times, accel, <span class="at">col =</span> <span class="st">&#39;darkgray&#39;</span>)</span>
+<span id="cb402-2"><a href="splines.html#cb402-2" aria-hidden="true" tabindex="-1"></a>fit4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(accel <span class="sc">~</span> <span class="fu">ns</span>(times, <span class="at">knots =</span> knots))</span>
+<span id="cb402-3"><a href="splines.html#cb402-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx, <span class="fu">predict</span>(fit4, newdata))</span>
+<span id="cb402-4"><a href="splines.html#cb402-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx, <span class="fu">predict</span>(fit3, newdata), <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb402-5"><a href="splines.html#cb402-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> knots, <span class="at">lty =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">&#39;darkgray&#39;</span>)</span>
+<span id="cb402-6"><a href="splines.html#cb402-6" aria-hidden="true" tabindex="-1"></a>leyenda <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;ns (d=3, df=11)&quot;</span>, <span class="st">&quot;bs (d=3, df=13)&quot;</span>)</span>
+<span id="cb402-7"><a href="splines.html#cb402-7" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend =</span> leyenda, <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:spline-ns-bs"></span>
 <img src="07-regresion_np_files/figure-html/spline-ns-bs-1.png" alt="Ajuste mediante splines naturales (ns) y $B$-splines (bs)." width="75%" />
 <p class="caption">
 Figura 7.7: Ajuste mediante splines naturales (ns) y <span class="math inline">\(B\)</span>-splines (bs).
 </p>
 </div>
-<p>La dificultad está en la selección de los nodos <span class="math inline">\(z_i\)</span>. Si se consideran equiespaciados (o se emplea otro criterio como los cuantiles), se podría seleccionar su número (equivalentemente los grados de libertad) empleando algún método de validación cruzada.
-Sin embargo, sería preferible considerar más nodos donde aparentemente hay más variaciones en la función de regresión y menos donde es más estable, esta es la idea de la regresión spline adaptativa descrita en la Sección <a href="mars.html#mars">7.4</a>.
+<p>La dificultad principal es la selección de los nodos <span class="math inline">\(z_i\)</span>. Si se consideran equiespaciados (o se emplea otro criterio, como los cuantiles), se puede seleccionar su número (equivalentemente, los grados de libertad) empleando validación cruzada.
+Sin embargo, es preferible utilizar más nodos donde aparentemente hay más variaciones en la función de regresión, y menos donde es más estable; esta es la idea de la regresión spline adaptativa, descrita en la Sección <a href="mars.html#mars">7.4</a>.
 Otra alternativa son los splines penalizados, descritos al final de esta sección.</p>
 </div>
 <div id="splines-de-suavizado" class="section level3 hasAnchor" number="7.2.2">
 <h3><span class="header-section-number">7.2.2</span> Splines de suavizado<a href="splines.html#splines-de-suavizado" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Los splines de suavizado (<em>smoothing splines</em>) se obtienen como la función <span class="math inline">\(s(x)\)</span> suave (dos veces diferenciable) que minimiza la suma de cuadrados residual más una penalización que mide su rugosidad:
+<p>Los <em>splines de suavizado</em> (<em>smoothing splines</em>) se obtienen como la función <span class="math inline">\(s(x)\)</span> suave (dos veces diferenciable) que minimiza la suma de cuadrados residual más una penalización que mide su rugosidad:
 <span class="math display">\[\sum_{i=1}^{n} (y_i - s(x_i))^2  + \lambda \int s^{\prime\prime}(x)^2 dx\]</span>
-siendo <span class="math inline">\(0 \leq \lambda &lt; \infty\)</span> el (hiper)parámetro de suavizado.</p>
+siendo <span class="math inline">\(0 \leq \lambda &lt; \infty\)</span> el hiperparámetro de suavizado.</p>
 <p>Puede verse que la solución a este problema, en el caso univariante, es un spline natural cúbico con nodos en <span class="math inline">\(x_1, \ldots, x_n\)</span> y restricciones en los coeficientes determinadas por el valor de <span class="math inline">\(\lambda\)</span> (es una versión regularizada de un spline natural cúbico).
-Por ejemplo si <span class="math inline">\(\lambda = 0\)</span> se interpolarán las observaciones y cuando <span class="math inline">\(\lambda \rightarrow \infty\)</span> el ajuste tenderá a una recta (con segunda derivada nula).
-En el caso multivariante <span class="math inline">\(p&gt; 1\)</span> la solución da lugar a los denominados <em>thin plate splines</em><a href="#fn47" class="footnote-ref" id="fnref47"><sup>47</sup></a>.</p>
+Por ejemplo, si <span class="math inline">\(\lambda = 0\)</span> se interpolarán las observaciones, y cuando <span class="math inline">\(\lambda \rightarrow \infty\)</span> el ajuste tenderá a una recta (con segunda derivada nula).
+En el caso multivariante, <span class="math inline">\(p&gt; 1\)</span>, la solución da lugar a los denominados <em>thin plate splines</em><a href="#fn63" class="footnote-ref" id="fnref63"><sup>63</sup></a>.</p>
 <p>Al igual que en el caso de la regresión polinómica local (Sección <a href="reg-local.html#reg-locpol">7.1.2</a>), estos métodos son suavizadores lineales:
 <span class="math display">\[\hat{\mathbf{Y}} = S_{\lambda}\mathbf{Y}\]</span>
 y para seleccionar el parámetro de suavizado <span class="math inline">\(\lambda\)</span> podemos emplear los criterios de validación cruzada (dejando uno fuera), minimizando:
 <span class="math display">\[CV(\lambda)=\frac{1}{n}\sum_{i=1}^n\left(\frac{y_i-\hat{s}_{\lambda}(x_i)}{1 - \{ S_{\lambda}\}_{ii}}\right)^2\]</span>
-siendo <span class="math inline">\(\{ S_{\lambda}\}_{ii}\)</span> el elemento <span class="math inline">\(i\)</span>-ésimo de la diagonal de la matriz de suavizado,
+siendo <span class="math inline">\(\{ S_{\lambda}\}_{ii}\)</span> el elemento <span class="math inline">\(i\)</span>-ésimo de la diagonal de la matriz de suavizado;
 o validación cruzada generalizada (GCV), minimizando:
 <span class="math display">\[GCV(\lambda)=\frac{1}{n}\sum_{i=1}^n\left(\frac{y_i-\hat{s}_{\lambda}(x_i)}{1 - \frac{1}{n}tr(S_{\lambda})}\right)^2\]</span></p>
-<p>Análogamente, el número efectivo de parámetros o grados de libertad<a href="#fn48" class="footnote-ref" id="fnref48"><sup>48</sup></a> <span class="math inline">\(df_{\lambda}=tr(S_{\lambda})\)</span> sería una medida de la complejidad del modelo equivalente a <span class="math inline">\(\lambda\)</span> (muchas implementaciones permiten seleccionar la complejidad empleando <span class="math inline">\(df\)</span>).</p>
-<p>Este método de suavizado está implementado en la función <code>smooth.spline()</code> del paquete base y por defecto emplea GCV para seleccionar el parámetro de suavizado (aunque también admite CV y se puede especificar <code>lambda</code> o <code>df</code>)<a href="#fn49" class="footnote-ref" id="fnref49"><sup>49</sup></a>.</p>
-<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="splines.html#cb408-1" aria-hidden="true" tabindex="-1"></a>sspline.gcv <span class="ot">&lt;-</span> <span class="fu">smooth.spline</span>(times, accel)</span>
-<span id="cb408-2"><a href="splines.html#cb408-2" aria-hidden="true" tabindex="-1"></a>sspline.cv <span class="ot">&lt;-</span> <span class="fu">smooth.spline</span>(times, accel, <span class="at">cv =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb408-3"><a href="splines.html#cb408-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(times, accel, <span class="at">col =</span> <span class="st">&#39;darkgray&#39;</span>)</span>
-<span id="cb408-4"><a href="splines.html#cb408-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(sspline.gcv)</span>
-<span id="cb408-5"><a href="splines.html#cb408-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(sspline.cv, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
-<p><img src="07-regresion_np_files/figure-html/unnamed-chunk-3-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<p>Análogamente, el número efectivo de parámetros o grados de libertad<a href="#fn64" class="footnote-ref" id="fnref64"><sup>64</sup></a> <span class="math inline">\(df_{\lambda}=tr(S_{\lambda})\)</span> sería una medida de la complejidad del modelo equivalente a <span class="math inline">\(\lambda\)</span> (muchas implementaciones permiten seleccionar la complejidad empleando <span class="math inline">\(df\)</span>).</p>
+<p>Este método de suavizado está implementado en la función <code>smooth.spline()</code> del paquete base.
+Por defecto emplea GCV para seleccionar el parámetro de suavizado, aunque también admite CV y se puede especificar <code>lambda</code> o <code>df</code> (ver Figura <a href="splines.html#fig:spline-smooth">7.8</a>).
+Además de predicciones, el correspondiente método <code>predict()</code> también permite obtener estimaciones de las derivadas.</p>
+<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="splines.html#cb403-1" aria-hidden="true" tabindex="-1"></a>sspline.gcv <span class="ot">&lt;-</span> <span class="fu">smooth.spline</span>(times, accel)</span>
+<span id="cb403-2"><a href="splines.html#cb403-2" aria-hidden="true" tabindex="-1"></a>sspline.cv <span class="ot">&lt;-</span> <span class="fu">smooth.spline</span>(times, accel, <span class="at">cv =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb403-3"><a href="splines.html#cb403-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(times, accel, <span class="at">col =</span> <span class="st">&#39;darkgray&#39;</span>)</span>
+<span id="cb403-4"><a href="splines.html#cb403-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(sspline.gcv)</span>
+<span id="cb403-5"><a href="splines.html#cb403-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(sspline.cv, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:spline-smooth"></span>
+<img src="07-regresion_np_files/figure-html/spline-smooth-1.png" alt="Ajuste mediante splines de suavizado, empleando GCV (línea contínua) y CV (línea discontínua) para seleccionar el parámetro de suavizado." width="75%" />
+<p class="caption">
+Figura 7.8: Ajuste mediante splines de suavizado, empleando GCV (línea contínua) y CV (línea discontínua) para seleccionar el parámetro de suavizado.
+</p>
+</div>
 <p>Cuando el número de observaciones es muy grande, y por tanto el número de nodos, pueden aparecer problemas computacionales al emplear estos métodos.</p>
 </div>
 <div id="splines-penalizados" class="section level3 hasAnchor" number="7.2.3">
 <h3><span class="header-section-number">7.2.3</span> Splines penalizados<a href="splines.html#splines-penalizados" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Los splines penalizados (<em>penalized splines</em>) combinan las dos aproximaciones anteriores.
-Incluyen una penalización (que depende de la base considerada) y el número de nodos puede ser mucho menor que el número de observaciones (son un tipo de <em>low-rank smoothers</em>). De esta forma se obtienen modelos spline con mejores propiedades, con un menor efecto frontera y en los que se evitan problemas en la selección de los nodos.
-Unos de los más empleados son los <span class="math inline">\(P\)</span>-splines <span class="citation">(<a href="#ref-eilers1996flexible" role="doc-biblioref">Eilers y Marx, 1996</a>)</span> que emplean una base <span class="math inline">\(B\)</span>-spline con una penalización simple (basada en los cuadrados de diferencias de coeficientes consecutivos <span class="math inline">\((\beta_{i+1} - \beta_i)^2\)</span>).</p>
-<p>Además, un modelo spline penalizado se puede representar como un modelo lineal mixto, lo que permite emplear herramientas desarrolladas para este tipo de modelos (por ejemplo la implementadas en el paquete <code>nlme</code>, del que depende <code>mgcv</code>, que por defecto emplea splines penalizados).
-Para más detalles ver por ejemplo las secciones 5.2 y 5.3 de <span class="citation">Wood (<a href="#ref-wood2017generalized" role="doc-biblioref">2017</a>)</span>.</p>
+<p>Los <em>splines penalizados</em> (<em>penalized splines</em>) combinan las dos aproximaciones anteriores.
+Incluyen una penalización que depende de la base considerada, y el número de nodos puede ser mucho menor que el número de observaciones (son un tipo de <em>low-rank smoothers</em>). De esta forma, se obtienen modelos spline con mejores propiedades, con un menor efecto frontera y en los que se evitan problemas en la selección de los nodos.
+Entre los más utilizados se encuentran los <span class="math inline">\(P\)</span>-<em>splines</em> <span class="citation">(<a href="#ref-eilers1996flexible" role="doc-biblioref">Eilers y Marx, 1996</a>)</span>, que emplean una base <span class="math inline">\(B\)</span>-spline con una penalización simple basada en los cuadrados de diferencias de coeficientes consecutivos <span class="math inline">\((\beta_{i+1} - \beta_i)^2\)</span>.</p>
+<p>Asimismo, un modelo spline penalizado se puede representar como un modelo lineal mixto, lo que permite emplear herramientas desarrolladas para este tipo de modelos; por ejemplo, las implementadas en el paquete <code>nlme</code> <span class="citation">(<a href="#ref-R-nlme" role="doc-biblioref">Pinheiro et al., 2023</a>)</span>, del que depende <code>mgcv</code> <span class="citation">(<a href="#ref-wood2017generalized" role="doc-biblioref">Wood, 2017</a>)</span>, que por defecto emplea splines penalizados.
+Para más detalles, se recomiendan las secciones 5.2 y 5.3 de <span class="citation">Wood (<a href="#ref-wood2017generalized" role="doc-biblioref">2017</a>)</span>.</p>
 <!-- 
 ?mgcv::adaptive.smooth 
 Wand, M.P. (2003). Smoothing and Mixed Models. *Computational Statistics*, 18(2), 223–249
 -->
 </div>
 </div>
-<h3>References</h3>
+<h3>Bibliografía<a href="bibliografía.html#bibliografía" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
 <div id="ref-de1978practical" class="csl-entry">
-De Boor, C., y De Boor, C. (1978). <em>A practical guide to splines</em> (Vol. 27). springer-verlag New York. <a href="https://doi.org/10.1007/978-1-4612-6333-3">https://doi.org/10.1007/978-1-4612-6333-3</a>
+De Boor, C., y De Boor, C. (1978). <em>A practical guide to splines</em>. Springer-Verlag. <a href="https://doi.org/10.1007/978-1-4612-6333-3">https://doi.org/10.1007/978-1-4612-6333-3</a>
 </div>
 <div id="ref-eilers1996flexible" class="csl-entry">
 Eilers, P. H., y Marx, B. D. (1996). Flexible smoothing with B-splines and penalties. <em>Statistical Science</em>, <em>11</em>(2), 89-121. <a href="https://doi.org/10.1214/ss/1038425655">https://doi.org/10.1214/ss/1038425655</a>
 </div>
+<div id="ref-R-segmented" class="csl-entry">
+Fasola, S., Muggeo, V. M. R., y Kuchenhoff, H. (2018). A heuristic, iterative algorithm for change-point detection in abrupt change models. <em>Computational Statistics</em>, <em>33</em>(2), 997-1015.
+</div>
+<div id="ref-R-nlme" class="csl-entry">
+Pinheiro, J., Bates, D., y R Core Team. (2023). <em><span>nlme: Linear and Nonlinear Mixed Effects Models</span></em>. <a href="https://cran.r-project.org/package=nlme">https://cran.r-project.org/package=nlme</a>
+</div>
 <div id="ref-wood2017generalized" class="csl-entry">
-Wood, S. N. (2017). <em>Generalized Additive Models: An Introduction with R, Second Edition</em>. CRC Press.
+Wood, S. N. (2017). <em>Generalized Additive Models: An Introduction with R</em> (2a. ed.). Chapman &amp; Hall/CRC.
 </div>
 </div>
 <div class="footnotes">
 <hr />
-<ol start="47">
-<li id="fn47"><p>Están relacionados con las funciones radiales. También hay versiones con un número reducido de nodos denominados <em>low-rank thin plate regression splines</em> empleados en el paquete <code>mgcv</code>.<a href="splines.html#fnref47" class="footnote-back">↩︎</a></p></li>
-<li id="fn48"><p>Esto también permitiría generalizar los criterios AIC o BIC.<a href="splines.html#fnref48" class="footnote-back">↩︎</a></p></li>
-<li id="fn49"><p>Además de predicciones, el correspondiente método <code>predict()</code> también permite obtener estimaciones de las derivadas.<a href="splines.html#fnref49" class="footnote-back">↩︎</a></p></li>
+<ol start="63">
+<li id="fn63"><p>Están relacionados con las funciones radiales. También hay versiones con un número reducido de nodos denominados <em>low-rank thin plate regression splines</em>, empleados en el paquete <code>mgcv</code>.<a href="splines.html#fnref63" class="footnote-back">↩︎</a></p></li>
+<li id="fn64"><p>Esto también permitiría generalizar los criterios AIC o BIC.<a href="splines.html#fnref64" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -510,7 +514,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rubenfcasal/aprendizaje_estadistico/edit/master/07-regresion_np.Rmd",
+"link": "https://github.com/rubenfcasal/book_mpae/edit/master/07-regresion_np.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -521,7 +525,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["aprendizaje_estadistico.pdf"],
+"download": ["book_mpae.pdf"],
 "search": {
 "engine": "fuse",
 "options": null

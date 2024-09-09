@@ -4,20 +4,20 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>6.9 Modelos lineales generalizados | Aprendizaje Estadístico</title>
-  <meta name="description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
+  <title>2.2 Modelos lineales generalizados | Métodos predictivos de aprendizaje estadístico</title>
+  <meta name="description" content="2.2 Modelos lineales generalizados | Métodos predictivos de aprendizaje estadístico con R." />
   <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="6.9 Modelos lineales generalizados | Aprendizaje Estadístico" />
+  <meta property="og:title" content="2.2 Modelos lineales generalizados | Métodos predictivos de aprendizaje estadístico" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
-  <meta name="github-repo" content="rubenfcasal/aprendizaje_estadistico" />
+  <meta property="og:description" content="2.2 Modelos lineales generalizados | Métodos predictivos de aprendizaje estadístico con R." />
+  <meta name="github-repo" content="rubenfcasal/book_mpae" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="6.9 Modelos lineales generalizados | Aprendizaje Estadístico" />
+  <meta name="twitter:title" content="2.2 Modelos lineales generalizados | Métodos predictivos de aprendizaje estadístico" />
   
-  <meta name="twitter:description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
+  <meta name="twitter:description" content="2.2 Modelos lineales generalizados | Métodos predictivos de aprendizaje estadístico con R." />
   
 
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es)" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="pca-pls.html"/>
-<link rel="next" href="reg-np.html"/>
+<link rel="prev" href="rlm.html"/>
+<link rel="next" href="generadores.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -168,19 +168,22 @@ div.csl-indent {
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">Aprendizaje Estadístico</a></li>
+<li><a href="./">Métodos predictivos de aprendizaje estadístico</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prólogo</a></li>
-<li class="chapter" data-level="1" data-path="intro-AE.html"><a href="intro-AE.html"><i class="fa fa-check"></i><b>1</b> Introducción al Aprendizaje Estadístico</a>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Bienvenida</a></li>
+<li class="chapter" data-level="" data-path="prólogo.html"><a href="prólogo.html"><i class="fa fa-check"></i>Prólogo</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje Estadístico vs. Aprendizaje Automático</a>
-<ul>
-<li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#machine-learning-vs.-data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
-<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#las-dos-culturas"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas</a></li>
-<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#machine-learning-vs.-estadística"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística</a></li>
+<li class="chapter" data-level="" data-path="el-lenguaje-de-programación-r.html"><a href="el-lenguaje-de-programación-r.html"><i class="fa fa-check"></i>El lenguaje de programación R</a></li>
+<li class="chapter" data-level="" data-path="organización.html"><a href="organización.html"><i class="fa fa-check"></i>Organización</a></li>
 </ul></li>
-<li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de Aprendizaje Estadístico</a>
+<li class="chapter" data-level="1" data-path="intro-AE.html"><a href="intro-AE.html"><i class="fa fa-check"></i><b>1</b> Introducción al aprendizaje estadístico</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje estadístico vs. aprendizaje automático</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#las-dos-culturas"><i class="fa fa-check"></i><b>1.1.1</b> Las dos culturas</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de aprendizaje estadístico</a>
 <ul>
 <li class="chapter" data-level="1.2.1" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#notacion"><i class="fa fa-check"></i><b>1.2.1</b> Notación y terminología</a></li>
 <li class="chapter" data-level="1.2.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#metodos-pkgs"><i class="fa fa-check"></i><b>1.2.2</b> Métodos (de aprendizaje supervisado) y paquetes de R</a></li>
@@ -189,100 +192,91 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="1.3.1" data-path="const-eval.html"><a href="const-eval.html#bias-variance"><i class="fa fa-check"></i><b>1.3.1</b> Equilibrio entre sesgo y varianza: infraajuste y sobreajuste</a></li>
 <li class="chapter" data-level="1.3.2" data-path="const-eval.html"><a href="const-eval.html#entrenamiento-test"><i class="fa fa-check"></i><b>1.3.2</b> Datos de entrenamiento y datos de test</a></li>
-<li class="chapter" data-level="1.3.3" data-path="const-eval.html"><a href="const-eval.html#cv"><i class="fa fa-check"></i><b>1.3.3</b> Validación cruzada</a></li>
+<li class="chapter" data-level="1.3.3" data-path="const-eval.html"><a href="const-eval.html#cv"><i class="fa fa-check"></i><b>1.3.3</b> Selección de hiperparámetros mediante validación cruzada</a></li>
 <li class="chapter" data-level="1.3.4" data-path="const-eval.html"><a href="const-eval.html#eval-reg"><i class="fa fa-check"></i><b>1.3.4</b> Evaluación de un método de regresión</a></li>
 <li class="chapter" data-level="1.3.5" data-path="const-eval.html"><a href="const-eval.html#eval-class"><i class="fa fa-check"></i><b>1.3.5</b> Evaluación de un método de clasificación</a></li>
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="dimen-curse.html"><a href="dimen-curse.html"><i class="fa fa-check"></i><b>1.4</b> La maldición de la dimensionalidad</a></li>
 <li class="chapter" data-level="1.5" data-path="analisis-modelos.html"><a href="analisis-modelos.html"><i class="fa fa-check"></i><b>1.5</b> Análisis e interpretación de los modelos</a></li>
-<li class="chapter" data-level="1.6" data-path="caret.html"><a href="caret.html"><i class="fa fa-check"></i><b>1.6</b> Introducción al paquete <code>caret</code></a>
+<li class="chapter" data-level="1.6" data-path="caret.html"><a href="caret.html"><i class="fa fa-check"></i><b>1.6</b> Introducción al paquete <code>caret</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="clasicos.html"><a href="clasicos.html"><i class="fa fa-check"></i><b>2</b> Métodos clásicos de estadística</a>
 <ul>
-<li class="chapter" data-level="1.6.1" data-path="caret.html"><a href="caret.html#métodos-implementados"><i class="fa fa-check"></i><b>1.6.1</b> Métodos implementados</a></li>
-<li class="chapter" data-level="1.6.2" data-path="caret.html"><a href="caret.html#herramientas"><i class="fa fa-check"></i><b>1.6.2</b> Herramientas</a></li>
-<li class="chapter" data-level="1.6.3" data-path="caret.html"><a href="caret.html#ejemplo"><i class="fa fa-check"></i><b>1.6.3</b> Ejemplo</a></li>
-<li class="chapter" data-level="1.6.4" data-path="caret.html"><a href="caret.html#desarrollo-futuro"><i class="fa fa-check"></i><b>1.6.4</b> Desarrollo futuro</a></li>
+<li class="chapter" data-level="2.1" data-path="rlm.html"><a href="rlm.html"><i class="fa fa-check"></i><b>2.1</b> Regresión lineal múltiple</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="rlm.html"><a href="rlm.html#colinealidad"><i class="fa fa-check"></i><b>2.1.1</b> El problema de la colinealidad</a></li>
+<li class="chapter" data-level="2.1.2" data-path="rlm.html"><a href="rlm.html#seleccion-rlm"><i class="fa fa-check"></i><b>2.1.2</b> Selección de variables explicativas</a></li>
+<li class="chapter" data-level="2.1.3" data-path="rlm.html"><a href="rlm.html#analisis-rlm"><i class="fa fa-check"></i><b>2.1.3</b> Análisis e interpretación del modelo</a></li>
+<li class="chapter" data-level="2.1.4" data-path="rlm.html"><a href="rlm.html#eval-rlm"><i class="fa fa-check"></i><b>2.1.4</b> Evaluación de la precisión</a></li>
+<li class="chapter" data-level="2.1.5" data-path="rlm.html"><a href="rlm.html#selec-ae-rlm"><i class="fa fa-check"></i><b>2.1.5</b> Selección del modelo mediante remuestreo</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="reg-glm.html"><a href="reg-glm.html"><i class="fa fa-check"></i><b>2.2</b> Modelos lineales generalizados</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="reg-glm.html"><a href="reg-glm.html#seleccion-glm"><i class="fa fa-check"></i><b>2.2.1</b> Selección de variables explicativas</a></li>
+<li class="chapter" data-level="2.2.2" data-path="reg-glm.html"><a href="reg-glm.html#analisis-glm"><i class="fa fa-check"></i><b>2.2.2</b> Análisis e interpretación del modelo</a></li>
+<li class="chapter" data-level="2.2.3" data-path="reg-glm.html"><a href="reg-glm.html#glm-bfan"><i class="fa fa-check"></i><b>2.2.3</b> Evaluación de la precisión</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="generadores.html"><a href="generadores.html"><i class="fa fa-check"></i><b>2.3</b> Otros métodos de clasificación</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="generadores.html"><a href="generadores.html#clas-lda"><i class="fa fa-check"></i><b>2.3.1</b> Análisis discriminante lineal</a></li>
+<li class="chapter" data-level="2.3.2" data-path="generadores.html"><a href="generadores.html#clas-qda"><i class="fa fa-check"></i><b>2.3.2</b> Análisis discriminante cuadrático</a></li>
+<li class="chapter" data-level="2.3.3" data-path="generadores.html"><a href="generadores.html#bayes"><i class="fa fa-check"></i><b>2.3.3</b> Bayes naíf</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="trees.html"><a href="trees.html"><i class="fa fa-check"></i><b>2</b> Árboles de decisión</a>
+<li class="chapter" data-level="3" data-path="trees.html"><a href="trees.html"><i class="fa fa-check"></i><b>3</b> Árboles de decisión</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="árboles-de-regresión-cart.html"><a href="árboles-de-regresión-cart.html"><i class="fa fa-check"></i><b>2.1</b> Árboles de regresión CART</a></li>
-<li class="chapter" data-level="2.2" data-path="árboles-de-clasificación-cart.html"><a href="árboles-de-clasificación-cart.html"><i class="fa fa-check"></i><b>2.2</b> Árboles de clasificación CART</a></li>
-<li class="chapter" data-level="2.3" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html"><i class="fa fa-check"></i><b>2.3</b> CART con el paquete <code>rpart</code></a>
+<li class="chapter" data-level="3.1" data-path="árboles-de-regresión-cart.html"><a href="árboles-de-regresión-cart.html"><i class="fa fa-check"></i><b>3.1</b> Árboles de regresión CART</a></li>
+<li class="chapter" data-level="3.2" data-path="árboles-de-clasificación-cart.html"><a href="árboles-de-clasificación-cart.html"><i class="fa fa-check"></i><b>3.2</b> Árboles de clasificación CART</a></li>
+<li class="chapter" data-level="3.3" data-path="tree-rpart.html"><a href="tree-rpart.html"><i class="fa fa-check"></i><b>3.3</b> CART con el paquete <code>rpart</code></a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#ejemplo-regresión"><i class="fa fa-check"></i><b>2.3.1</b> Ejemplo: regresión</a></li>
-<li class="chapter" data-level="2.3.2" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#class-rpart"><i class="fa fa-check"></i><b>2.3.2</b> Ejemplo: modelo de clasificación</a></li>
-<li class="chapter" data-level="2.3.3" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#interfaz-de-caret"><i class="fa fa-check"></i><b>2.3.3</b> Interfaz de <code>caret</code></a></li>
+<li class="chapter" data-level="3.3.1" data-path="tree-rpart.html"><a href="tree-rpart.html#reg-rpart"><i class="fa fa-check"></i><b>3.3.1</b> Ejemplo: regresión</a></li>
+<li class="chapter" data-level="3.3.2" data-path="tree-rpart.html"><a href="tree-rpart.html#class-rpart"><i class="fa fa-check"></i><b>3.3.2</b> Ejemplo: modelo de clasificación</a></li>
+<li class="chapter" data-level="3.3.3" data-path="tree-rpart.html"><a href="tree-rpart.html#interfaz-de-caret"><i class="fa fa-check"></i><b>3.3.3</b> Interfaz de <code>caret</code></a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html"><i class="fa fa-check"></i><b>2.4</b> Alternativas a los árboles CART</a>
-<ul>
-<li class="chapter" data-level="2.4.1" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html#ejemplo-1"><i class="fa fa-check"></i><b>2.4.1</b> Ejemplo</a></li>
+<li class="chapter" data-level="3.4" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html"><i class="fa fa-check"></i><b>3.4</b> Alternativas a los árboles CART</a></li>
 </ul></li>
+<li class="chapter" data-level="4" data-path="bagging-boosting.html"><a href="bagging-boosting.html"><i class="fa fa-check"></i><b>4</b> Bagging y boosting</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>4.1</b> Bagging</a></li>
+<li class="chapter" data-level="4.2" data-path="rf.html"><a href="rf.html"><i class="fa fa-check"></i><b>4.2</b> Bosques aleatorios</a></li>
+<li class="chapter" data-level="4.3" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html"><i class="fa fa-check"></i><b>4.3</b> Bagging y bosques aleatorios en R</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-clasificación-con-bagging"><i class="fa fa-check"></i><b>4.3.1</b> Ejemplo: clasificación con bagging</a></li>
+<li class="chapter" data-level="4.3.2" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-clasif-rf"><i class="fa fa-check"></i><b>4.3.2</b> Ejemplo: clasificación con bosques aleatorios</a></li>
+<li class="chapter" data-level="4.3.3" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-bosques-aleatorios-con-caret"><i class="fa fa-check"></i><b>4.3.3</b> Ejemplo: bosques aleatorios con <code>caret</code></a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="bagging-boosting.html"><a href="bagging-boosting.html"><i class="fa fa-check"></i><b>3</b> Bagging y Boosting</a>
+<li class="chapter" data-level="4.4" data-path="boosting.html"><a href="boosting.html"><i class="fa fa-check"></i><b>4.4</b> Boosting</a></li>
+<li class="chapter" data-level="4.5" data-path="boosting-r.html"><a href="boosting-r.html"><i class="fa fa-check"></i><b>4.5</b> Boosting en R</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>3.1</b> Bagging</a></li>
-<li class="chapter" data-level="3.2" data-path="bosques-aleatorios.html"><a href="bosques-aleatorios.html"><i class="fa fa-check"></i><b>3.2</b> Bosques aleatorios</a></li>
-<li class="chapter" data-level="3.3" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html"><i class="fa fa-check"></i><b>3.3</b> Bagging y bosques aleatorios en R</a>
-<ul>
-<li class="chapter" data-level="3.3.1" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-clasificación-con-bagging"><i class="fa fa-check"></i><b>3.3.1</b> Ejemplo: Clasificación con bagging</a></li>
-<li class="chapter" data-level="3.3.2" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-clasif-rf"><i class="fa fa-check"></i><b>3.3.2</b> Ejemplo: Clasificación con bosques aleatorios</a></li>
-<li class="chapter" data-level="3.3.3" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-bosques-aleatorios-con-caret"><i class="fa fa-check"></i><b>3.3.3</b> Ejemplo: bosques aleatorios con <code>caret</code></a></li>
-</ul></li>
-<li class="chapter" data-level="3.4" data-path="boosting.html"><a href="boosting.html"><i class="fa fa-check"></i><b>3.4</b> Boosting</a></li>
-<li class="chapter" data-level="3.5" data-path="boosting-en-r.html"><a href="boosting-en-r.html"><i class="fa fa-check"></i><b>3.5</b> Boosting en R</a>
-<ul>
-<li class="chapter" data-level="3.5.1" data-path="boosting-en-r.html"><a href="boosting-en-r.html#ejemplo-clasificación-con-el-paquete-ada"><i class="fa fa-check"></i><b>3.5.1</b> Ejemplo: clasificación con el paquete <code>ada</code></a></li>
-<li class="chapter" data-level="3.5.2" data-path="boosting-en-r.html"><a href="boosting-en-r.html#ejemplo-regresión-con-el-paquete-gbm"><i class="fa fa-check"></i><b>3.5.2</b> Ejemplo: regresión con el paquete <code>gbm</code></a></li>
-<li class="chapter" data-level="3.5.3" data-path="boosting-en-r.html"><a href="boosting-en-r.html#xgb-caret"><i class="fa fa-check"></i><b>3.5.3</b> Ejemplo: XGBoost con el paquete <code>caret</code></a></li>
+<li class="chapter" data-level="4.5.1" data-path="boosting-r.html"><a href="boosting-r.html#ejemplo-clasificación-con-el-paquete-ada"><i class="fa fa-check"></i><b>4.5.1</b> Ejemplo: clasificación con el paquete <code>ada</code></a></li>
+<li class="chapter" data-level="4.5.2" data-path="boosting-r.html"><a href="boosting-r.html#ejemplo-regresión-con-el-paquete-gbm"><i class="fa fa-check"></i><b>4.5.2</b> Ejemplo: regresión con el paquete <code>gbm</code></a></li>
+<li class="chapter" data-level="4.5.3" data-path="boosting-r.html"><a href="boosting-r.html#xgb-caret"><i class="fa fa-check"></i><b>4.5.3</b> Ejemplo: XGBoost con el paquete <code>caret</code></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>4</b> Máquinas de soporte vectorial</a>
+<li class="chapter" data-level="5" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>5</b> Máquinas de soporte vectorial</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="clasificadores-de-máximo-margen.html"><a href="clasificadores-de-máximo-margen.html"><i class="fa fa-check"></i><b>4.1</b> Clasificadores de máximo margen</a></li>
-<li class="chapter" data-level="4.2" data-path="clasificadores-de-soporte-vectorial.html"><a href="clasificadores-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>4.2</b> Clasificadores de soporte vectorial</a></li>
-<li class="chapter" data-level="4.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>4.3</b> Máquinas de soporte vectorial</a>
+<li class="chapter" data-level="5.1" data-path="clasificadores-de-máximo-margen.html"><a href="clasificadores-de-máximo-margen.html"><i class="fa fa-check"></i><b>5.1</b> Clasificadores de máximo margen</a></li>
+<li class="chapter" data-level="5.2" data-path="clasificadores-de-soporte-vectorial.html"><a href="clasificadores-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>5.2</b> Clasificadores de soporte vectorial</a></li>
+<li class="chapter" data-level="5.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>5.3</b> Máquinas de soporte vectorial</a>
 <ul>
-<li class="chapter" data-level="4.3.1" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#regresión-con-svm"><i class="fa fa-check"></i><b>4.3.1</b> Regresión con SVM</a></li>
-<li class="chapter" data-level="4.3.2" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#ventajas-e-incovenientes"><i class="fa fa-check"></i><b>4.3.2</b> Ventajas e incovenientes</a></li>
+<li class="chapter" data-level="5.3.1" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#regresión-con-svm"><i class="fa fa-check"></i><b>5.3.1</b> Regresión con SVM</a></li>
+<li class="chapter" data-level="5.3.2" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#ventajas-e-incovenientes"><i class="fa fa-check"></i><b>5.3.2</b> Ventajas e incovenientes</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="svm-kernlab.html"><a href="svm-kernlab.html"><i class="fa fa-check"></i><b>4.4</b> SVM con el paquete <code>kernlab</code></a></li>
+<li class="chapter" data-level="5.4" data-path="svm-kernlab.html"><a href="svm-kernlab.html"><i class="fa fa-check"></i><b>5.4</b> SVM en R</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="class-otros.html"><a href="class-otros.html"><i class="fa fa-check"></i><b>5</b> Otros métodos de clasificación</a>
+<li class="chapter" data-level="6" data-path="ext-glm.html"><a href="ext-glm.html"><i class="fa fa-check"></i><b>6</b> Extensiones de los modelos lineales (generalizados)</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="clas-lda.html"><a href="clas-lda.html"><i class="fa fa-check"></i><b>5.1</b> Análisis discriminate lineal</a></li>
-<li class="chapter" data-level="5.2" data-path="clas-qda.html"><a href="clas-qda.html"><i class="fa fa-check"></i><b>5.2</b> Análisis discriminante cuadrático</a></li>
-<li class="chapter" data-level="5.3" data-path="bayes.html"><a href="bayes.html"><i class="fa fa-check"></i><b>5.3</b> Naive Bayes</a></li>
+<li class="chapter" data-level="6.1" data-path="shrinkage.html"><a href="shrinkage.html"><i class="fa fa-check"></i><b>6.1</b> Métodos de regularización</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="shrinkage.html"><a href="shrinkage.html#implementación-en-r"><i class="fa fa-check"></i><b>6.1.1</b> Implementación en R</a></li>
+<li class="chapter" data-level="6.1.2" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-ridge-regression"><i class="fa fa-check"></i><b>6.1.2</b> Ejemplo: <em>ridge regression</em></a></li>
+<li class="chapter" data-level="6.1.3" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-lasso"><i class="fa fa-check"></i><b>6.1.3</b> Ejemplo: LASSO</a></li>
+<li class="chapter" data-level="6.1.4" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-elastic-net"><i class="fa fa-check"></i><b>6.1.4</b> Ejemplo: <em>elastic net</em></a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="modelos-lineales.html"><a href="modelos-lineales.html"><i class="fa fa-check"></i><b>6</b> Modelos lineales y extensiones</a>
+<li class="chapter" data-level="6.2" data-path="pca-pls.html"><a href="pca-pls.html"><i class="fa fa-check"></i><b>6.2</b> Métodos de reducción de la dimensión</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="reg-multiple.html"><a href="reg-multiple.html"><i class="fa fa-check"></i><b>6.1</b> Regresión lineal múltiple</a></li>
-<li class="chapter" data-level="6.2" data-path="colinealidad.html"><a href="colinealidad.html"><i class="fa fa-check"></i><b>6.2</b> El problema de la colinealidad</a></li>
-<li class="chapter" data-level="6.3" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html"><i class="fa fa-check"></i><b>6.3</b> Selección de variables explicativas</a>
-<ul>
-<li class="chapter" data-level="6.3.1" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html#búsqueda-exhaustiva"><i class="fa fa-check"></i><b>6.3.1</b> Búsqueda exhaustiva</a></li>
-<li class="chapter" data-level="6.3.2" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html#selección-por-pasos"><i class="fa fa-check"></i><b>6.3.2</b> Selección por pasos</a></li>
-</ul></li>
-<li class="chapter" data-level="6.4" data-path="analisis-reg-multiple.html"><a href="analisis-reg-multiple.html"><i class="fa fa-check"></i><b>6.4</b> Análisis e interpretación del modelo</a></li>
-<li class="chapter" data-level="6.5" data-path="eval-reg-lineal.html"><a href="eval-reg-lineal.html"><i class="fa fa-check"></i><b>6.5</b> Evaluación de la precisión</a></li>
-<li class="chapter" data-level="6.6" data-path="selec-ae-reg-lineal.html"><a href="selec-ae-reg-lineal.html"><i class="fa fa-check"></i><b>6.6</b> Selección del modelo mediante remuestreo</a></li>
-<li class="chapter" data-level="6.7" data-path="shrinkage.html"><a href="shrinkage.html"><i class="fa fa-check"></i><b>6.7</b> Métodos de regularización</a>
-<ul>
-<li class="chapter" data-level="6.7.1" data-path="shrinkage.html"><a href="shrinkage.html#implementación-en-r"><i class="fa fa-check"></i><b>6.7.1</b> Implementación en R</a></li>
-<li class="chapter" data-level="6.7.2" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-ridge-regression"><i class="fa fa-check"></i><b>6.7.2</b> Ejemplo: Ridge Regression</a></li>
-<li class="chapter" data-level="6.7.3" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-lasso"><i class="fa fa-check"></i><b>6.7.3</b> Ejemplo: Lasso</a></li>
-<li class="chapter" data-level="6.7.4" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-elastic-net"><i class="fa fa-check"></i><b>6.7.4</b> Ejemplo: Elastic Net</a></li>
-</ul></li>
-<li class="chapter" data-level="6.8" data-path="pca-pls.html"><a href="pca-pls.html"><i class="fa fa-check"></i><b>6.8</b> Métodos de reducción de la dimensión</a>
-<ul>
-<li class="chapter" data-level="6.8.1" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-componentes-principales-pcr"><i class="fa fa-check"></i><b>6.8.1</b> Regresión por componentes principales (PCR)</a></li>
-<li class="chapter" data-level="6.8.2" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-mínimos-cuadrados-parciales-plsr"><i class="fa fa-check"></i><b>6.8.2</b> Regresión por mínimos cuadrados parciales (PLSR)</a></li>
-</ul></li>
-<li class="chapter" data-level="6.9" data-path="reg-glm.html"><a href="reg-glm.html"><i class="fa fa-check"></i><b>6.9</b> Modelos lineales generalizados</a>
-<ul>
-<li class="chapter" data-level="6.9.1" data-path="reg-glm.html"><a href="reg-glm.html#selección-de-variables-explicativas"><i class="fa fa-check"></i><b>6.9.1</b> Selección de variables explicativas</a></li>
-<li class="chapter" data-level="6.9.2" data-path="reg-glm.html"><a href="reg-glm.html#analisis-glm"><i class="fa fa-check"></i><b>6.9.2</b> Análisis e interpretación del modelo</a></li>
-<li class="chapter" data-level="6.9.3" data-path="reg-glm.html"><a href="reg-glm.html#evaluación-de-la-precisión"><i class="fa fa-check"></i><b>6.9.3</b> Evaluación de la precisión</a></li>
-<li class="chapter" data-level="6.9.4" data-path="reg-glm.html"><a href="reg-glm.html#extensiones"><i class="fa fa-check"></i><b>6.9.4</b> Extensiones</a></li>
+<li class="chapter" data-level="6.2.1" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-componentes-principales-pcr"><i class="fa fa-check"></i><b>6.2.1</b> Regresión por componentes principales (PCR)</a></li>
+<li class="chapter" data-level="6.2.2" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-mínimos-cuadrados-parciales-plsr"><i class="fa fa-check"></i><b>6.2.2</b> Regresión por mínimos cuadrados parciales (PLSR)</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="reg-np.html"><a href="reg-np.html"><i class="fa fa-check"></i><b>7</b> Regresión no paramétrica</a>
@@ -302,7 +296,7 @@ div.csl-indent {
 <li class="chapter" data-level="7.3" data-path="reg-gam.html"><a href="reg-gam.html"><i class="fa fa-check"></i><b>7.3</b> Modelos aditivos</a>
 <ul>
 <li class="chapter" data-level="7.3.1" data-path="reg-gam.html"><a href="reg-gam.html#superficies-de-predicción"><i class="fa fa-check"></i><b>7.3.1</b> Superficies de predicción</a></li>
-<li class="chapter" data-level="7.3.2" data-path="reg-gam.html"><a href="reg-gam.html#comparación-y-selección-de-modelos"><i class="fa fa-check"></i><b>7.3.2</b> Comparación y selección de modelos</a></li>
+<li class="chapter" data-level="7.3.2" data-path="reg-gam.html"><a href="reg-gam.html#anova-gam"><i class="fa fa-check"></i><b>7.3.2</b> Comparación y selección de modelos</a></li>
 <li class="chapter" data-level="7.3.3" data-path="reg-gam.html"><a href="reg-gam.html#mgcv-diagnosis"><i class="fa fa-check"></i><b>7.3.3</b> Diagnosis del modelo</a></li>
 </ul></li>
 <li class="chapter" data-level="7.4" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>7.4</b> Regresión spline adaptativa multivariante</a>
@@ -310,10 +304,10 @@ div.csl-indent {
 <li class="chapter" data-level="7.4.1" data-path="mars.html"><a href="mars.html#mars-con-el-paquete-earth"><i class="fa fa-check"></i><b>7.4.1</b> MARS con el paquete <code>earth</code></a></li>
 <li class="chapter" data-level="7.4.2" data-path="mars.html"><a href="mars.html#mars-con-el-paquete-caret"><i class="fa fa-check"></i><b>7.4.2</b> MARS con el paquete <code>caret</code></a></li>
 </ul></li>
-<li class="chapter" data-level="7.5" data-path="projection-pursuit.html"><a href="projection-pursuit.html"><i class="fa fa-check"></i><b>7.5</b> Projection pursuit</a>
+<li class="chapter" data-level="7.5" data-path="pursuit.html"><a href="pursuit.html"><i class="fa fa-check"></i><b>7.5</b> Projection pursuit</a>
 <ul>
-<li class="chapter" data-level="7.5.1" data-path="projection-pursuit.html"><a href="projection-pursuit.html#ppr"><i class="fa fa-check"></i><b>7.5.1</b> Regresión por <em>projection pursuit</em></a></li>
-<li class="chapter" data-level="7.5.2" data-path="projection-pursuit.html"><a href="projection-pursuit.html#implementación-en-r-1"><i class="fa fa-check"></i><b>7.5.2</b> Implementación en R</a></li>
+<li class="chapter" data-level="7.5.1" data-path="pursuit.html"><a href="pursuit.html#ppr"><i class="fa fa-check"></i><b>7.5.1</b> Regresión por projection pursuit</a></li>
+<li class="chapter" data-level="7.5.2" data-path="pursuit.html"><a href="pursuit.html#implementación-en-r-1"><i class="fa fa-check"></i><b>7.5.2</b> Implementación en R</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="neural-nets.html"><a href="neural-nets.html"><i class="fa fa-check"></i><b>8</b> Redes neuronales</a>
@@ -322,10 +316,7 @@ div.csl-indent {
 <li class="chapter" data-level="8.2" data-path="clasificación-con-ann.html"><a href="clasificación-con-ann.html"><i class="fa fa-check"></i><b>8.2</b> Clasificación con ANN</a></li>
 <li class="chapter" data-level="8.3" data-path="implementación-en-r-2.html"><a href="implementación-en-r-2.html"><i class="fa fa-check"></i><b>8.3</b> Implementación en R</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a>
-<ul>
-<li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
-</ul></li>
+<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -338,7 +329,7 @@ div.csl-indent {
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Aprendizaje Estadístico</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Métodos predictivos de aprendizaje estadístico</a>
           </h1>
         </div>
 
@@ -346,22 +337,27 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="reg-glm" class="section level2 hasAnchor" number="6.9">
-<h2><span class="header-section-number">6.9</span> Modelos lineales generalizados<a href="reg-glm.html#reg-glm" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Como ya se comentó, los modelos lineales generalizados son una extensión de los modelos lineales para el caso de que la distribución condicional de la variable respuesta no sea normal, introduciendo una función de enlace (o link) <span class="math inline">\(g\)</span> de forma que
-<span class="math display">\[g\left(E(Y | \mathbf{X} )\right) = \beta_{0}+\beta_{1}X_{1}+\beta_{2}X_{2}+\cdots+\beta_{p}X_{p}\]</span>
-y su ajuste en la práctica se realiza empleando el método de máxima verosimilitud (habrá que especificar también una familia de distribuciones para la respuesta).</p>
-<p>La función link debe ser invertible, de forma que se pueda volver a transformar el modelo ajustado (en la escala lineal de las puntuaciones) a la escala original.
-Por ejemplo, como se comentó al final de la Sección <a href="métodos-de-aprendizaje-estadístico.html#notacion">1.2.1</a>, para modelar una variable indicadora, con distribución de Bernouilli (caso particular de la Binomial) donde <span class="math inline">\(E(Y | \mathbf{X} ) = p(\mathbf{X})\)</span> es la probabilidad de éxito, podemos considerar la función logit
-<span class="math display">\[\operatorname{logit}(p(\mathbf{X}))=\log\left( \frac{p(\mathbf{X})}{1-p(\mathbf{X})} \right) = \beta_{0}+\beta_{1}X_{1}+\beta_{2}X_{2}+\cdots+\beta_{p}X_{p}\]</span>
+<div id="reg-glm" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Modelos lineales generalizados<a href="reg-glm.html#reg-glm" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Los modelos lineales generalizados son una extensión de los modelos lineales para el caso de que la distribución condicional de la variable respuesta no sea normal (por ejemplo, discreta: Bernoulli, Binomial, Poisson…).
+En los modelos lineales generalizados se introduce una función invertible <em>g</em>, denominada función enlace (o <em>link</em>) de forma que:
+<span class="math display">\[g\left(E(Y | \mathbf{X} )\right) = \beta_{0}+\beta_{1}X_{1}+\beta_{2}X_{2}+\ldots+\beta_{p}X_{p}\]</span>
+y su ajuste, en la práctica, se realiza empleando el método de máxima verosimilitud (habrá que especificar también una familia de distribuciones para la respuesta).</p>
+<p>La función de enlace debe ser invertible, de forma que se pueda volver a transformar el modelo ajustado (en la escala lineal de las puntuaciones) a la escala original.
+Por ejemplo, como se comentó al final de la Sección <a href="métodos-de-aprendizaje-estadístico.html#notacion">1.2.1</a>, para modelar una variable indicadora, con distribución de Bernoulli (caso particular de la Binomial) donde <span class="math inline">\(E(Y | \mathbf{X} ) = p(\mathbf{X})\)</span> es la probabilidad de éxito, podemos considerar la función logit
+<span class="math display">\[\operatorname{logit}(p(\mathbf{X}))=\log\left( \frac{p(\mathbf{X})}{1-p(\mathbf{X})} \right) = \beta_{0}+\beta_{1}X_{1}+\beta_{2}X_{2}+\ldots+\beta_{p}X_{p}\]</span>
 (que proyecta el intervalo <span class="math inline">\([0, 1]\)</span> en <span class="math inline">\(\mathbb{R}\)</span>), siendo su inversa la función logística
-<span class="math display">\[p(\mathbf{X}) = \frac{e^{\beta_{0}+\beta_{1}X_{1}+\beta_{2}X_{2}+\cdots+\beta_{p}X_{p}}}{1 + e^{\beta_{0}+\beta_{1}X_{1}+\beta_{2}X_{2}+\cdots+\beta_{p}X_{p}}}\]</span>
+<span class="math display">\[p(\mathbf{X}) = \frac{e^{\beta_{0}+\beta_{1}X_{1}+\beta_{2}X_{2}+\ldots+\beta_{p}X_{p}}}{1 + e^{\beta_{0}+\beta_{1}X_{1}+\beta_{2}X_{2}+\ldots+\beta_{p}X_{p}}}\]</span>
 Esto da lugar al modelo de regresión logística (múltiple), que será el que utilizaremos como ejemplo en esta sección.
-Para un tratamiento más completo de los métodos de regresión lineal generalizada se recomienda consultar alguno de los libros de referencia, como <span class="citation">Faraway (<a href="#ref-faraway2014linear" role="doc-biblioref">2016</a>)</span>, <span class="citation">T. J. Hastie y Pregibon (<a href="#ref-hastie2017generalized" role="doc-biblioref">2017</a>)</span>, <span class="citation">Dunn y Smyth (<a href="#ref-dunn2018generalized" role="doc-biblioref">2018</a>)</span> o <span class="citation">McCullagh (<a href="#ref-mccullagh2019generalized" role="doc-biblioref">2019</a>)</span>.</p>
+Para un tratamiento más completo de los métodos de regresión lineal generalizada, se recomienda consultar alguno de los libros de referencia, como <span class="citation">Faraway (<a href="#ref-faraway2014linear" role="doc-biblioref">2016</a>)</span>, <span class="citation">Hastie y Pregibon (<a href="#ref-hastie2017generalized" role="doc-biblioref">2017</a>)</span>, <span class="citation">Dunn y Smyth (<a href="#ref-dunn2018generalized" role="doc-biblioref">2018</a>)</span> o <span class="citation">McCullagh (<a href="#ref-mccullagh2019generalized" role="doc-biblioref">2019</a>)</span>.</p>
 <!-- ### Ajuste: función `glm` -->
-<p>Para el ajuste (estimación de los parámetros) de un modelo lineal generalizado a un conjunto de datos (por máxima verosimilitud) se emplea la función <a href="https://rdrr.io/r/stats/glm.html"><code>glm()</code></a> (la mayoría de los principales parámetros coinciden con los de la función <code>lm()</code>):</p>
-<div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb374-1"><a href="reg-glm.html#cb374-1" aria-hidden="true" tabindex="-1"></a>ajuste <span class="ot">&lt;-</span> <span class="fu">glm</span>(formula, <span class="at">family =</span> gaussian, data, weights, subset, na.action, ...)</span></code></pre></div>
-<p>El parámetro <code>family</code> especifica la distribución y opcionalmente la función de enlace.
+<p>Para el ajuste (estimación de los parámetros) de un modelo lineal generalizado a un conjunto de datos (por máxima verosimilitud) se emplea la función <a href="https://rdrr.io/r/stats/glm.html"><code>glm()</code></a>:</p>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="reg-glm.html#cb137-1" aria-hidden="true" tabindex="-1"></a>ajuste <span class="ot">&lt;-</span> <span class="fu">glm</span>(formula, <span class="at">family =</span> gaussian, data, weights, subset, ...)</span></code></pre></div>
+<!--
+ajuste <- glm(formula, family = gaussian, data, weights, subset, na.action, ...)
+-->
+<p>La mayoría de los principales parámetros coinciden con los de la función <code>lm()</code>.
+El parámetro <code>family</code> especifica la distribución y, opcionalmente, la función de enlace.
 Por ejemplo:</p>
 <ul>
 <li><p><code>gaussian(link = "identity")</code>, <code>gaussian(link = "log")</code></p></li>
@@ -369,30 +365,37 @@ Por ejemplo:</p>
 <li><p><code>poisson(link = "log")</code></p></li>
 <li><p><code>Gamma(link = "inverse")</code></p></li>
 </ul>
-<p>Para cada distribución se toma por defecto una función de enlace (el denominado <em>enlace canónico</em>, mostrada en primer lugar en la lista anterior; ver <a href="https://rdrr.io/r/stats/family.html"><code>help(family)</code></a> para más detalles).
-Por ejemplo, en el caso del modelo logístico bastará con establecer <code>family = binomial</code>.</p>
-<p>También se podría emplear la función <code>bigglm()</code> del paquete <a href="https://CRAN.R-project.org/package=biglm"><code>biglm</code></a> para ajustar modelos lineales generalizados a grandes conjuntos de datos, aunque en este caso los requerimientos computacionales pueden ser mayores.</p>
-<p>Como se comentó en la Sección <a href="reg-multiple.html#reg-multiple">6.1</a>, muchas de las herramientas y funciones genéricas disponibles para los modelos lineales son válidas también para este tipo de modelos, como por ejemplo las mostradas en las tablas <a href="reg-multiple.html#tab:aux-fun-lm">6.1</a> y <a href="analisis-reg-multiple.html#tab:diag-fun-lm">6.2</a>.</p>
+<p>Para cada distribución se toma por defecto una función de enlace (el denominado <em>enlace canónico</em>, mostrado en primer lugar en la lista anterior; ver <a href="https://rdrr.io/r/stats/family.html"><code>help(family)</code></a> para más detalles).
+Así, en el caso del modelo logístico bastará con establecer <code>family = binomial</code>.
+También se puede emplear la función <code>bigglm()</code> del paquete <a href="https://CRAN.R-project.org/package=biglm"><code>biglm</code></a> para ajustar modelos lineales generalizados a grandes conjuntos de datos, aunque en este caso los requerimientos computacionales pueden ser mayores.</p>
+<p>Como se comentó en la Sección <a href="rlm.html#rlm">2.1</a>, muchas de las herramientas y funciones genéricas disponibles para los modelos lineales son válidas también para este tipo de modelos, como por ejemplo las mostradas en las tablas <a href="rlm.html#tab:aux-fun-lm">2.1</a> y <a href="rlm.html#tab:diag-fun-lm">2.2</a>.</p>
 <!-- ### Ejemplo: Regresión logística -->
-<p>Como ejemplo continuaremos con los datos de clientes de la compañía de distribución industrial HBAT, pero consideraremos como respuesta la variable <em>alianza</em> y como predictores las percepciones de HBAT (al igual que en las secciones anteriores consideraremos únicamente variables explicativas continuas, sin interacciones, por comodidad).</p>
+<p>Como ejemplo, continuaremos con los datos de grasa corporal, pero utilizando como respuesta una nueva variable <code>bfan</code> indicadora de un porcentaje de grasa corporal superior al rango considerado normal.
+Además, añadimos el índice de masa corporal como predictor, empleado habitualmente para establecer el grado de obesidad de un individuo (este conjunto de datos está disponible en <a href="https://rubenfcasal.github.io/mpae/reference/bfan.html"><code>mpae::bfan</code></a>).</p>
 <!-- 
-load("data/hbat.RData") 
-as.data.frame(attr(hbat, "variable.labels"))
+load("data/bodyfat.RData") 
+as.data.frame(attr(bodyfat, "variable.labels"))
 -->
-<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="reg-glm.html#cb375-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> hbat[<span class="fu">c</span>(<span class="dv">24</span>, <span class="dv">7</span><span class="sc">:</span><span class="dv">19</span>)]</span>
-<span id="cb375-2"><a href="reg-glm.html#cb375-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb375-3"><a href="reg-glm.html#cb375-3" aria-hidden="true" tabindex="-1"></a>nobs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
-<span id="cb375-4"><a href="reg-glm.html#cb375-4" aria-hidden="true" tabindex="-1"></a>itrain <span class="ot">&lt;-</span> <span class="fu">sample</span>(nobs, <span class="fl">0.8</span> <span class="sc">*</span> nobs)</span>
-<span id="cb375-5"><a href="reg-glm.html#cb375-5" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> df[itrain, ]</span>
-<span id="cb375-6"><a href="reg-glm.html#cb375-6" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> df[<span class="sc">-</span>itrain, ]</span></code></pre></div>
-<p>En primer lugar se suele realizar un análisis descriptivo.
-Por ejemplo, si el número de variables no es muy grande, podemos generar un gráfico de dispersión matricial, diferenciando las observaciones pertenecientes a las distintas clases (ver Figura <a href="reg-glm.html#fig:plot-df-class">6.21</a>).</p>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="reg-glm.html#cb138-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> bodyfat</span>
+<span id="cb138-2"><a href="reg-glm.html#cb138-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Grasa corporal superior al rango normal</span></span>
+<span id="cb138-3"><a href="reg-glm.html#cb138-3" aria-hidden="true" tabindex="-1"></a>df[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">factor</span>(df<span class="sc">$</span>bodyfat <span class="sc">&gt;</span> <span class="dv">24</span> , <span class="co"># levels = c(&#39;FALSE&#39;, &#39;TRUE&#39;),</span></span>
+<span id="cb138-4"><a href="reg-glm.html#cb138-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;No&#39;</span>, <span class="st">&#39;Yes&#39;</span>)) </span>
+<span id="cb138-5"><a href="reg-glm.html#cb138-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df)[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">&quot;bfan&quot;</span></span>
+<span id="cb138-6"><a href="reg-glm.html#cb138-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Indice de masa corporal (kg/m2)</span></span>
+<span id="cb138-7"><a href="reg-glm.html#cb138-7" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>bmi <span class="ot">&lt;-</span> <span class="fu">with</span>(df, weight<span class="sc">/</span>(height<span class="sc">/</span><span class="dv">100</span>)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb138-8"><a href="reg-glm.html#cb138-8" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb138-9"><a href="reg-glm.html#cb138-9" aria-hidden="true" tabindex="-1"></a>nobs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
+<span id="cb138-10"><a href="reg-glm.html#cb138-10" aria-hidden="true" tabindex="-1"></a>itrain <span class="ot">&lt;-</span> <span class="fu">sample</span>(nobs, <span class="fl">0.8</span> <span class="sc">*</span> nobs)</span>
+<span id="cb138-11"><a href="reg-glm.html#cb138-11" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> df[itrain, ]</span>
+<span id="cb138-12"><a href="reg-glm.html#cb138-12" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> df[<span class="sc">-</span>itrain, ]</span></code></pre></div>
+<p>Es habitual empezar realizando un análisis descriptivo.
+Si el número de variables no es muy grande, podemos generar un gráfico de dispersión matricial, diferenciando las observaciones pertenecientes a las distintas clases (ver Figura <a href="reg-glm.html#fig:plot-df-class">2.11</a>).</p>
 
-<div class="sourceCode" id="cb376"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb376-1"><a href="reg-glm.html#cb376-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(train[<span class="sc">-</span><span class="dv">1</span>], <span class="at">pch =</span> <span class="fu">as.numeric</span>(train<span class="sc">$</span>alianza), <span class="at">col =</span> <span class="fu">as.numeric</span>(train<span class="sc">$</span>alianza))</span></code></pre></div>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="reg-glm.html#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(train[<span class="sc">-</span><span class="dv">1</span>], <span class="at">pch =</span> <span class="fu">as.numeric</span>(train<span class="sc">$</span>bfan), <span class="at">col =</span> <span class="fu">as.numeric</span>(train<span class="sc">$</span>bfan))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:plot-df-class"></span>
-<img src="06-modelos_lineales_files/figure-html/plot-df-class-1.png" alt="Gráfico de dispersión matricial, con colores y símbolos dependiendo de alianza." width="100%" />
+<img src="02-clasicos_files/figure-html/plot-df-class-1.png" alt="Gráfico de dispersión matricial, con colores y símbolos dependiendo de bfan." width="100%" />
 <p class="caption">
-Figura 6.21: Gráfico de dispersión matricial, con colores y símbolos dependiendo de <code>alianza</code>.
+Figura 2.11: Gráfico de dispersión matricial, con colores y símbolos dependiendo de <code>bfan</code>.
 </p>
 </div>
 <!-- 
@@ -400,257 +403,246 @@ https://plotly.com/ggplot2/splom/
 https://www.statology.org/scatterplot-matrix-in-r/
 https://daviddalpiaz.github.io/r4sl/generative-models.html
 -->
-<p>Para ajustar un modelo de regresión logística bastaría con establecer el argumento <code>family = binomial</code> en la llamada a <code>glm()</code> (por defecto utiliza <code>link = "logit"</code>):</p>
-<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="reg-glm.html#cb377-1" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">glm</span>(alianza <span class="sc">~</span> velocida <span class="sc">+</span> calidadp, <span class="at">family =</span> binomial, <span class="at">data =</span> train)</span>
-<span id="cb377-2"><a href="reg-glm.html#cb377-2" aria-hidden="true" tabindex="-1"></a>modelo</span></code></pre></div>
+<p>Para ajustar un modelo de regresión logística bastaría con establecer el argumento <code>family = binomial</code> en la llamada a <code>glm()</code> (por defecto utiliza <code>link = "logit"</code>).
+Por ejemplo, podríamos considerar como punto de partida los predictores seleccionados para regresión en el apartado anterior:</p>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="reg-glm.html#cb140-1" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">glm</span>(bfan <span class="sc">~</span> abdomen <span class="sc">+</span> wrist <span class="sc">+</span> height, <span class="at">family =</span> binomial, </span>
+<span id="cb140-2"><a href="reg-glm.html#cb140-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> train)</span>
+<span id="cb140-3"><a href="reg-glm.html#cb140-3" aria-hidden="true" tabindex="-1"></a>modelo</span></code></pre></div>
 <pre><code>## 
-## Call:  glm(formula = alianza ~ velocida + calidadp, family = binomial, 
+## Call:  glm(formula = bfan ~ abdomen + wrist + height, family = binomial, 
 ##     data = train)
 ## 
 ## Coefficients:
-## (Intercept)     velocida     calidadp  
-##    -12.5218       1.6475       0.7207  
+## (Intercept)      abdomen        wrist       height  
+##       1.859        0.341       -0.906       -0.104  
 ## 
-## Degrees of Freedom: 159 Total (i.e. Null);  157 Residual
-## Null Deviance:       218.2 
-## Residual Deviance: 160.5     AIC: 166.5</code></pre>
-<p>La razón de ventajas (OR) permite cuantificar el efecto de las variables explicativas en la respuesta (incremento proporcional en la razón entre la probabilidad de éxito y la de fracaso, al aumentar una unidad la variable manteniendo las demás fijas):</p>
-<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="reg-glm.html#cb379-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(modelo))  <span class="co"># Razones de ventajas (&quot;odds ratios&quot;)</span></span></code></pre></div>
-<pre><code>##  (Intercept)     velocida     calidadp 
-## 3.646214e-06 5.194162e+00 2.055887e+00</code></pre>
-<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="reg-glm.html#cb381-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">confint</span>(modelo))</span></code></pre></div>
-<pre><code>##                    2.5 %       97.5 %
-## (Intercept) 4.465945e-08 1.593277e-04
-## velocida    2.766629e+00 1.068554e+01
-## calidadp    1.557441e+00 2.789897e+00</code></pre>
-<p>Para obtener un resumen más completo del ajuste también se utiliza <code>summary()</code>:</p>
-<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="reg-glm.html#cb383-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo)</span></code></pre></div>
+## Degrees of Freedom: 195 Total (i.e. Null);  192 Residual
+## Null Deviance:       229 
+## Residual Deviance: 116   AIC: 124</code></pre>
+<p>La razón de ventajas (<em>odds ratio</em>; OR) permite cuantificar el efecto de las variables explicativas en la respuesta (incremento proporcional en la razón entre la probabilidad de éxito y la de fracaso, al aumentar una unidad la variable manteniendo las demás fijas):</p>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="reg-glm.html#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(modelo))  <span class="co"># Razones de ventajas (&quot;odds ratios&quot;)</span></span></code></pre></div>
+<pre><code>## (Intercept)     abdomen       wrist      height 
+##     6.41847     1.40621     0.40402     0.90082</code></pre>
+<!-- 
+exp(confint(modelo)) 
+-->
+<p>Para obtener un resumen más completo del ajuste se puede utilizar <code>summary()</code>:</p>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="reg-glm.html#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo)</span></code></pre></div>
 <pre><code>## 
 ## Call:
-## glm(formula = alianza ~ velocida + calidadp, family = binomial, 
+## glm(formula = bfan ~ abdomen + wrist + height, family = binomial, 
 ##     data = train)
 ## 
 ## Coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept) -12.5218     2.0758  -6.032 1.62e-09 ***
-## velocida      1.6475     0.3426   4.809 1.52e-06 ***
-## calidadp      0.7207     0.1479   4.872 1.11e-06 ***
+## (Intercept)   1.8592     7.3354    0.25    0.800    
+## abdomen       0.3409     0.0562    6.07  1.3e-09 ***
+## wrist        -0.9063     0.3697   -2.45    0.014 *  
+## height       -0.1044     0.0445   -2.35    0.019 *  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## (Dispersion parameter for binomial family taken to be 1)
 ## 
-##     Null deviance: 218.19  on 159  degrees of freedom
-## Residual deviance: 160.55  on 157  degrees of freedom
-## AIC: 166.55
+##     Null deviance: 228.80  on 195  degrees of freedom
+## Residual deviance: 116.14  on 192  degrees of freedom
+## AIC: 124.1
 ## 
-## Number of Fisher Scoring iterations: 5</code></pre>
-<p>La desvianza (deviance) es una medida de la bondad del ajuste de un modelo lineal generalizado (sería equivalente a la suma de cuadrados residual de un modelo lineal; valores más altos indican peor ajuste).
-La <em>Null deviance</em> se correspondería con un modelo solo con la constante y la <em>Residual deviance</em> con el modelo ajustado.
-En este caso hay una reducción de 57.65 con una pérdida de 2 grados de libertad (una reducción significativa).</p>
+## Number of Fisher Scoring iterations: 6</code></pre>
+<p>La desvianza (<em>deviance</em>) es una medida de la bondad del ajuste de un modelo lineal generalizado (sería equivalente a la suma de cuadrados residual de un modelo lineal; valores más altos indican peor ajuste).
+La <em>null deviance</em> se correspondería con un modelo solo con la constante, y la <em>residual deviance</em>, con el modelo ajustado.
+En este caso hay una reducción de 112.65 con una pérdida de 3 grados de libertad (una reducción significativa).</p>
 <p>Para contrastar globalmente el efecto de las covariables también podemos emplear:</p>
-<div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="reg-glm.html#cb385-1" aria-hidden="true" tabindex="-1"></a>modelo.null <span class="ot">&lt;-</span> <span class="fu">glm</span>(alianza <span class="sc">~</span> <span class="dv">1</span>, binomial, train)</span>
-<span id="cb385-2"><a href="reg-glm.html#cb385-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(modelo.null, modelo, <span class="at">test =</span> <span class="st">&quot;Chi&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="reg-glm.html#cb146-1" aria-hidden="true" tabindex="-1"></a>modelo.null <span class="ot">&lt;-</span> <span class="fu">glm</span>(bfan <span class="sc">~</span> <span class="dv">1</span>, binomial, <span class="at">data =</span> train)</span>
+<span id="cb146-2"><a href="reg-glm.html#cb146-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(modelo.null, modelo, <span class="at">test =</span> <span class="st">&quot;Chi&quot;</span>)</span></code></pre></div>
 <pre><code>## Analysis of Deviance Table
 ## 
-## Model 1: alianza ~ 1
-## Model 2: alianza ~ velocida + calidadp
-##   Resid. Df Resid. Dev Df Deviance  Pr(&gt;Chi)    
-## 1       159     218.19                          
-## 2       157     160.55  2   57.646 3.036e-13 ***
+## Model 1: bfan ~ 1
+## Model 2: bfan ~ abdomen + wrist + height
+##   Resid. Df Resid. Dev Df Deviance Pr(&gt;Chi)    
+## 1       195        229                         
+## 2       192        116  3      113   &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div id="selección-de-variables-explicativas" class="section level3 hasAnchor" number="6.9.1">
-<h3><span class="header-section-number">6.9.1</span> Selección de variables explicativas<a href="reg-glm.html#selección-de-variables-explicativas" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>El objetivo sería conseguir un buen ajuste con el menor número de variables explicativas posible.
-Al igual que en el caso del modelo de regresión lineal múltiple, se podría seguir un proceso interactivo, eliminando o añadiendo variables con la función <code>update()</code>, aunque también están disponibles métodos automáticos de selección de variables.</p>
+<div id="seleccion-glm" class="section level3 hasAnchor" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Selección de variables explicativas<a href="reg-glm.html#seleccion-glm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El objetivo es conseguir un buen ajuste con el menor número de variables explicativas posible.
+Al igual que en el caso del modelo de regresión lineal múltiple, se puede seguir un proceso interactivo, eliminando o añadiendo variables con la función <code>update()</code>, aunque también están disponibles métodos automáticos de selección de variables.</p>
 <p>Para obtener el modelo “óptimo” lo ideal sería evaluar todos los modelos posibles.
-En este caso no se puede emplear la función <code>regsubsets</code> del paquete <code>leaps</code> (sólo para modelos lineales),
-pero por ejemplo el paquete
+En este caso no se puede emplear la función <code>regsubsets()</code> del paquete <code>leaps</code> (solo disponible para modelos lineales),
+pero el paquete
 <a href="https://cran.r-project.org/web/packages/bestglm/vignettes/bestglm.pdf"><code>bestglm</code></a>
-proporciona una herramienta equivalente (<code>bestglm()</code>).
-También se podría emplear la función <a href="https://rdrr.io/pkg/RcmdrMisc/man/stepwise.html"><code>stepwise()</code></a> del paquete <a href="https://CRAN.R-project.org/package=RcmdrMisc"><code>RcmdrMisc</code></a> para seleccionar un modelo por pasos según criterio AIC o BIC:</p>
-<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="reg-glm.html#cb387-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(RcmdrMisc)</span></span>
-<span id="cb387-2"><a href="reg-glm.html#cb387-2" aria-hidden="true" tabindex="-1"></a>modelo.completo <span class="ot">&lt;-</span> <span class="fu">glm</span>(alianza <span class="sc">~</span> ., <span class="at">family =</span> binomial, <span class="at">data =</span> train)</span>
-<span id="cb387-3"><a href="reg-glm.html#cb387-3" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">stepwise</span>(modelo.completo, <span class="at">direction=</span><span class="st">&#39;forward/backward&#39;</span>, <span class="at">criterion=</span><span class="st">&#39;BIC&#39;</span>)</span></code></pre></div>
+proporciona una herramienta equivalente, <code>bestglm()</code>.
+También se puede emplear la función <a href="https://rdrr.io/pkg/RcmdrMisc/man/stepwise.html"><code>stepwise()</code></a> del paquete <a href="https://CRAN.R-project.org/package=RcmdrMisc"><code>RcmdrMisc</code></a> para seleccionar un modelo por pasos según criterio AIC o BIC:</p>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="reg-glm.html#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(RcmdrMisc)</span></span>
+<span id="cb148-2"><a href="reg-glm.html#cb148-2" aria-hidden="true" tabindex="-1"></a>modelo.completo <span class="ot">&lt;-</span> <span class="fu">glm</span>(bfan <span class="sc">~</span> ., <span class="at">family =</span> binomial, <span class="at">data =</span> train)</span>
+<span id="cb148-3"><a href="reg-glm.html#cb148-3" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">stepwise</span>(modelo.completo, <span class="at">direction =</span> <span class="st">&quot;forward/backward&quot;</span>,</span>
+<span id="cb148-4"><a href="reg-glm.html#cb148-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">criterion =</span> <span class="st">&quot;BIC&quot;</span>)</span></code></pre></div>
 <pre><code>## 
 ## Direction:  forward/backward
 ## Criterion:  BIC 
 ## 
-## Start:  AIC=223.27
-## alianza ~ 1
+## Start:  AIC=234.07
+## bfan ~ 1
 ## 
-##            Df Deviance    AIC
-## + velocida  1   189.38 199.53
-## + calidadp  1   192.15 202.30
-## + facturac  1   193.45 203.60
-## + producto  1   196.91 207.06
-## + quejas    1   198.10 208.25
-## + imgfvent  1   198.80 208.95
-## + web       1   204.40 214.55
-## + publi     1   209.28 219.43
-## + precio    1   211.97 222.12
-## + garantia  1   212.37 222.52
-## &lt;none&gt;          218.19 223.27
-## + nprod     1   213.97 224.12
-## + soporte   1   216.50 226.65
-## + flexprec  1   216.99 227.14
+##           Df Deviance AIC
+## + abdomen  1      132 142
+## + bmi      1      156 167
+## + chest    1      163 174
+## + hip      1      176 186
+## + weight   1      180 190
+## + knee     1      195 206
+## + thigh    1      197 207
+## + neck     1      197 208
+## + biceps   1      201 212
+## + forearm  1      216 226
+## + wrist    1      218 229
+## + age      1      219 230
+## + ankle    1      223 234
+## &lt;none&gt;            229 234
+## + height   1      229 239
 ## 
-## Step:  AIC=199.53
-## alianza ~ velocida
+## Step:  AIC=142.07
+## bfan ~ abdomen
 ## 
-##            Df Deviance    AIC
-## + calidadp  1   160.55 175.77
-## + imgfvent  1   178.43 193.65
-## + web       1   181.52 196.74
-## + precio    1   183.38 198.61
-## &lt;none&gt;          189.38 199.53
-## + flexprec  1   185.47 200.69
-## + producto  1   185.54 200.77
-## + nprod     1   186.92 202.14
-## + facturac  1   186.93 202.15
-## + garantia  1   187.02 202.25
-## + publi     1   187.44 202.67
-## + soporte   1   189.06 204.29
-## + quejas    1   189.27 204.50
-## - velocida  1   218.19 223.27
+##           Df Deviance AIC
+## + weight   1      117 133
+## + wrist    1      122 138
+## + height   1      123 138
+## + ankle    1      125 141
+## &lt;none&gt;            132 142
+## + age      1      127 143
+## + hip      1      127 143
+## + thigh    1      127 143
+## + forearm  1      128 143
+## + neck     1      128 144
+## + chest    1      128 144
+## + biceps   1      129 145
+## + knee     1      129 145
+## + bmi      1      131 147
+## - abdomen  1      229 234
 ## 
-## Step:  AIC=175.77
-## alianza ~ velocida + calidadp
+## Step:  AIC=133.06
+## bfan ~ abdomen + weight
 ## 
-##            Df Deviance    AIC
-## + imgfvent  1   137.05 157.35
-## + web       1   145.63 165.93
-## &lt;none&gt;          160.55 175.77
-## + publi     1   156.03 176.33
-## + facturac  1   157.35 177.66
-## + flexprec  1   157.44 177.74
-## + producto  1   157.75 178.06
-## + garantia  1   158.97 179.27
-## + nprod     1   160.18 180.47
-## + quejas    1   160.20 180.50
-## + soporte   1   160.37 180.67
-## + precio    1   160.37 180.67
-## - calidadp  1   189.38 199.53
-## - velocida  1   192.15 202.30
-## 
-## Step:  AIC=157.35
-## alianza ~ velocida + calidadp + imgfvent
-## 
-##            Df Deviance    AIC
-## &lt;none&gt;          137.05 157.35
-## + precio    1   134.97 160.35
-## + flexprec  1   135.39 160.77
-## + publi     1   135.65 161.03
-## + producto  1   135.72 161.09
-## + facturac  1   135.81 161.19
-## + garantia  1   136.31 161.69
-## + nprod     1   136.63 162.00
-## + soporte   1   136.79 162.16
-## + quejas    1   136.96 162.33
-## + web       1   137.03 162.40
-## - velocida  1   160.34 175.57
-## - imgfvent  1   160.55 175.77
-## - calidadp  1   178.43 193.65</code></pre>
-<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="reg-glm.html#cb389-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo)</span></code></pre></div>
+##           Df Deviance AIC
+## &lt;none&gt;            117 133
+## + wrist    1      114 135
+## + knee     1      116 137
+## + hip      1      116 137
+## + bmi      1      116 137
+## + height   1      117 138
+## + biceps   1      117 138
+## + neck     1      117 138
+## + ankle    1      117 138
+## + age      1      117 138
+## + chest    1      117 138
+## + thigh    1      117 138
+## + forearm  1      117 138
+## - weight   1      132 142
+## - abdomen  1      180 190</code></pre>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="reg-glm.html#cb150-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo)</span></code></pre></div>
 <pre><code>## 
 ## Call:
-## glm(formula = alianza ~ velocida + calidadp + imgfvent, family = binomial, 
-##     data = train)
+## glm(formula = bfan ~ abdomen + weight, family = binomial, data = train)
 ## 
 ## Coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept) -20.5164     3.4593  -5.931 3.02e-09 ***
-## velocida      1.6631     0.3981   4.177 2.95e-05 ***
-## calidadp      1.0469     0.2014   5.197 2.02e-07 ***
-## imgfvent      1.0085     0.2398   4.205 2.61e-05 ***
+## (Intercept) -30.2831     4.6664   -6.49  8.6e-11 ***
+## abdomen       0.4517     0.0817    5.53  3.2e-08 ***
+## weight       -0.1644     0.0487   -3.38  0.00073 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## (Dispersion parameter for binomial family taken to be 1)
 ## 
-##     Null deviance: 218.19  on 159  degrees of freedom
-## Residual deviance: 137.05  on 156  degrees of freedom
-## AIC: 145.05
+##     Null deviance: 228.80  on 195  degrees of freedom
+## Residual deviance: 117.22  on 193  degrees of freedom
+## AIC: 123.2
 ## 
-## Number of Fisher Scoring iterations: 5</code></pre>
+## Number of Fisher Scoring iterations: 6</code></pre>
 </div>
-<div id="analisis-glm" class="section level3 hasAnchor" number="6.9.2">
-<h3><span class="header-section-number">6.9.2</span> Análisis e interpretación del modelo<a href="reg-glm.html#analisis-glm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="analisis-glm" class="section level3 hasAnchor" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> Análisis e interpretación del modelo<a href="reg-glm.html#analisis-glm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Las hipótesis estructurales del modelo son similares al caso de regresión lineal (aunque algunas como la linealidad se suponen en la escala transformada).
-Si no se verifican, los resultados basados en la teoría estadística pueden no ser fiables o totalmente erróneos.</p>
-<p>Con el método <a href="https://rdrr.io/r/stats/plot.lm.html"><code>plot()</code></a> se pueden generar gráficos de interés para la diagnosis del modelo (ver Figura <a href="reg-glm.html#fig:glm-plot">6.22</a>):</p>
-<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="reg-glm.html#cb391-1" aria-hidden="true" tabindex="-1"></a>oldpar <span class="ot">&lt;-</span> <span class="fu">par</span>( <span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb391-2"><a href="reg-glm.html#cb391-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(modelo)</span></code></pre></div>
+Si no se verifican, los resultados basados en la teoría estadística pueden no ser fiables o ser totalmente erróneos.</p>
+<p>Con el método <a href="https://rdrr.io/r/stats/plot.lm.html"><code>plot()</code></a> se pueden generar gráficos de interés para la diagnosis del modelo (ver Figura <a href="reg-glm.html#fig:glm-plot">2.12</a>):</p>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="reg-glm.html#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(modelo)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:glm-plot"></span>
-<img src="06-modelos_lineales_files/figure-html/glm-plot-1.png" alt="Gráficos de diagnóstico del ajuste lineal generalizado." width="90%" />
+<img src="02-clasicos_files/figure-html/glm-plot-1.png" alt="Gráficos de diagnóstico del ajuste lineal generalizado." width="90%" />
 <p class="caption">
-Figura 6.22: Gráficos de diagnóstico del ajuste lineal generalizado.
+Figura 2.12: Gráficos de diagnóstico del ajuste lineal generalizado.
 </p>
 </div>
-<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="reg-glm.html#cb392-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(oldpar)</span></code></pre></div>
 <p>Su interpretación es similar a la de los modelos lineales (consultar las referencias incluidas al principio de la sección para más detalles).
-En este caso destacan tres posibles datos atípicos, aunque aparentemente no son muy influyentes a posteriori (en el modelo ajustado).
-Adicionalmente se pueden generar gráficos parciales de residuos, por ejemplo con la función <a href="https://rdrr.io/pkg/car/man/crPlots.html"><code>crPlots()</code></a> del paquete <a href="https://CRAN.R-project.org/package=car"><code>car</code></a> (ver Figura <a href="reg-glm.html#fig:crPlots-glm">6.23</a>):</p>
-<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb393-1"><a href="reg-glm.html#cb393-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(car)</span></span>
-<span id="cb393-2"><a href="reg-glm.html#cb393-2" aria-hidden="true" tabindex="-1"></a>id <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">method =</span> <span class="fu">which</span>(<span class="fu">abs</span>(<span class="fu">residuals</span>(modelo, <span class="at">type =</span> <span class="st">&quot;pearson&quot;</span>)) <span class="sc">&gt;</span> <span class="dv">3</span>), <span class="at">col =</span> <span class="dv">2</span>)</span>
-<span id="cb393-3"><a href="reg-glm.html#cb393-3" aria-hidden="true" tabindex="-1"></a><span class="fu">crPlots</span>(modelo, <span class="at">id =</span> id, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+En este caso destacan dos posibles datos atípicos, aunque aparentemente no son muy influyentes a posteriori (en el modelo ajustado).
+Adicionalmente, se pueden generar gráficos parciales de residuos, por ejemplo con la función <a href="https://rdrr.io/pkg/car/man/crPlots.html"><code>crPlots()</code></a> del paquete <a href="https://CRAN.R-project.org/package=car"><code>car</code></a> (ver Figura <a href="reg-glm.html#fig:crPlots-glm">2.13</a>):</p>
+<!-- 
+library(car) 
+train[outliers, ] # train[c(60, 137), ]
+-->
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="reg-glm.html#cb153-1" aria-hidden="true" tabindex="-1"></a>outliers <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">abs</span>(<span class="fu">residuals</span>(modelo, <span class="at">type =</span> <span class="st">&quot;pearson&quot;</span>)) <span class="sc">&gt;</span> <span class="dv">3</span>)</span>
+<span id="cb153-2"><a href="reg-glm.html#cb153-2" aria-hidden="true" tabindex="-1"></a><span class="fu">crPlots</span>(modelo, <span class="at">id =</span> <span class="fu">list</span>(<span class="at">method =</span> outliers, <span class="at">col =</span> <span class="dv">2</span>), <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:crPlots-glm"></span>
-<img src="06-modelos_lineales_files/figure-html/crPlots-glm-1.png" alt="Gráficos parciales de residuos del ajuste generalizado." width="90%" />
+<img src="02-clasicos_files/figure-html/crPlots-glm-1.png" alt="Gráficos parciales de residuos del ajuste generalizado." width="90%" />
 <p class="caption">
-Figura 6.23: Gráficos parciales de residuos del ajuste generalizado.
+Figura 2.13: Gráficos parciales de residuos del ajuste generalizado.
 </p>
 </div>
-<p>Se pueden emplear las mismas funciones vistas en los modelos lineales para obtener medidas de diagnosis de interés (tablas <a href="reg-multiple.html#tab:aux-fun-lm">6.1</a> y <a href="analisis-reg-multiple.html#tab:diag-fun-lm">6.2</a>). Por ejemplo <code>residuals(model, type = "deviance")</code> proporcionará los residuos <em>deviance</em>.
-Por supuesto también pueden aparecer problemas de colinealidad, y podemos emplear las mismas herramientas para detectarla:</p>
-<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="reg-glm.html#cb394-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(car)</span></span>
-<span id="cb394-2"><a href="reg-glm.html#cb394-2" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(modelo)</span></code></pre></div>
-<pre><code>## velocida calidadp imgfvent 
-## 1.193557 1.656649 1.451237</code></pre>
-<p>Si no se satisfacen los supuestos básicos también se pueden intentar distintas alternativas (se puede cambiar la función de enlace y la familia de distribuciones, que puede incluir parámetros para modelar dispersión, además de las descritas en la Sección <a href="analisis-reg-multiple.html#analisis-reg-multiple">6.4</a>), incluyendo emplear modelos más flexibles o técnicas de aprendizaje estadístico que no dependan de ellas (sustancialmente).</p>
+<p>Se pueden emplear las mismas funciones vistas en los modelos lineales para obtener medidas de diagnosis de interés (tablas <a href="rlm.html#tab:aux-fun-lm">2.1</a> y <a href="rlm.html#tab:diag-fun-lm">2.2</a>). Por ejemplo, <code>residuals(model, type = "deviance")</code> proporcionará los residuos <em>deviance</em>.
+Por supuesto, también pueden aparecer problemas de colinealidad, y podemos emplear las mismas herramientas para detectarla:</p>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="reg-glm.html#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(modelo)</span></code></pre></div>
+<pre><code>## abdomen  weight 
+##  4.5443  4.5443</code></pre>
+<p>Si no se satisfacen los supuestos básicos, también se pueden intentar distintas alternativas (se puede cambiar la función de enlace y la familia de distribuciones, que puede incluir parámetros para modelar dispersión, además de las descritas en la Sección <a href="rlm.html#analisis-rlm">2.1.3</a>), incluyendo emplear modelos más flexibles o técnicas de aprendizaje estadístico que no dependan de ellas (sustancialmente).
+En el Capítulo <a href="ext-glm.html#ext-glm">6</a> (y siguientes) se tratarán extensiones de este modelo.</p>
+<div class="exercise">
+<p><span id="exr:outliers-glm" class="exercise"><strong>Ejercicio 2.3  </strong></span>Vuelve a ajustar el modelo anterior eliminando las observaciones atípicas determinadas por <code>outliers &lt;- which(abs(residuals(modelo, type = "pearson")) &gt; 3)</code> y estudia si hay grandes cambios en las estimaciones de los coeficientes.
+Repite también el proceso de selección de variables para confirmar que estas observaciones no influyen en el resultado<a href="#fn32" class="footnote-ref" id="fnref32"><sup>32</sup></a>.</p>
 </div>
-<div id="evaluación-de-la-precisión" class="section level3 hasAnchor" number="6.9.3">
-<h3><span class="header-section-number">6.9.3</span> Evaluación de la precisión<a href="reg-glm.html#evaluación-de-la-precisión" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="glm-bfan" class="section level3 hasAnchor" number="2.2.3">
+<h3><span class="header-section-number">2.2.3</span> Evaluación de la precisión<a href="reg-glm.html#glm-bfan" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Para evaluar la calidad de la predicción en nuevas observaciones podemos seguir los pasos mostrados en la Sección <a href="const-eval.html#eval-class">1.3.5</a>.
-Obteniendo las estimaciones de la probabilidad (de la segunda categoría) empleando <code>predict()</code> con <code>type = "response"</code>:</p>
-<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="reg-glm.html#cb396-1" aria-hidden="true" tabindex="-1"></a>p.est <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>, <span class="at">newdata =</span> test)</span>
-<span id="cb396-2"><a href="reg-glm.html#cb396-2" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">factor</span>(p.est <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;No&quot;</span>, <span class="st">&quot;Si&quot;</span>)) <span class="co"># levels = c(&#39;FALSE&#39;, &#39;TRUE&#39;)</span></span></code></pre></div>
+Las estimaciones de la probabilidad (de la segunda categoría) se obtienen empleando <code>predict()</code> con <code>type = "response"</code>:</p>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="reg-glm.html#cb156-1" aria-hidden="true" tabindex="-1"></a>p.est <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>, <span class="at">newdata =</span> test)</span>
+<span id="cb156-2"><a href="reg-glm.html#cb156-2" aria-hidden="true" tabindex="-1"></a>pred.glm <span class="ot">&lt;-</span> <span class="fu">factor</span>(p.est <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;No&quot;</span>, <span class="st">&quot;Yes&quot;</span>))</span></code></pre></div>
 <p>y las medidas de precisión de la predicción (además de los criterios AIC o BIC tradicionales):</p>
-<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb397-1"><a href="reg-glm.html#cb397-1" aria-hidden="true" tabindex="-1"></a>caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(pred, test<span class="sc">$</span>alianza, <span class="at">positive =</span> <span class="st">&quot;Si&quot;</span>, <span class="at">mode =</span> <span class="st">&quot;everything&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="reg-glm.html#cb157-1" aria-hidden="true" tabindex="-1"></a>caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(pred.glm, test<span class="sc">$</span>bfan, <span class="at">positive =</span> <span class="st">&quot;Yes&quot;</span>, </span>
+<span id="cb157-2"><a href="reg-glm.html#cb157-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">mode =</span> <span class="st">&quot;everything&quot;</span>)</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
-## Prediction No Si
-##         No 19  5
-##         Si  3 13
-##                                           
-##                Accuracy : 0.8             
-##                  95% CI : (0.6435, 0.9095)
-##     No Information Rate : 0.55            
-##     P-Value [Acc &gt; NIR] : 0.0008833       
-##                                           
-##                   Kappa : 0.5918          
-##                                           
-##  Mcnemar&#39;s Test P-Value : 0.7236736       
-##                                           
-##             Sensitivity : 0.7222          
-##             Specificity : 0.8636          
-##          Pos Pred Value : 0.8125          
-##          Neg Pred Value : 0.7917          
-##               Precision : 0.8125          
-##                  Recall : 0.7222          
-##                      F1 : 0.7647          
-##              Prevalence : 0.4500          
-##          Detection Rate : 0.3250          
-##    Detection Prevalence : 0.4000          
-##       Balanced Accuracy : 0.7929          
-##                                           
-##        &#39;Positive&#39; Class : Si              
+## Prediction No Yes
+##        No  27   5
+##        Yes  2  16
+##                                         
+##                Accuracy : 0.86          
+##                  95% CI : (0.733, 0.942)
+##     No Information Rate : 0.58          
+##     P-Value [Acc &gt; NIR] : 1.96e-05      
+##                                         
+##                   Kappa : 0.707         
+##                                         
+##  Mcnemar&#39;s Test P-Value : 0.45          
+##                                         
+##             Sensitivity : 0.762         
+##             Specificity : 0.931         
+##          Pos Pred Value : 0.889         
+##          Neg Pred Value : 0.844         
+##               Precision : 0.889         
+##                  Recall : 0.762         
+##                      F1 : 0.821         
+##              Prevalence : 0.420         
+##          Detection Rate : 0.320         
+##    Detection Prevalence : 0.360         
+##       Balanced Accuracy : 0.846         
+##                                         
+##        &#39;Positive&#39; Class : Yes           
 ## </code></pre>
 <p>o de las estimaciones de las probabilidades (como el AUC).</p>
 <!-- 
 También podemos emplear `caret`: 
-
 
 ```r
 # library(caret)
@@ -663,46 +655,57 @@ names(getModelInfo("glm")) # 11 métodos
 ##  [9] "vglmAdjCat"     "vglmContRatio"  "vglmCumulative"
 ```
 -->
-</div>
-<div id="extensiones" class="section level3 hasAnchor" number="6.9.4">
-<h3><span class="header-section-number">6.9.4</span> Extensiones<a href="reg-glm.html#extensiones" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Se pueden imponer restricciones a las estimaciones de los parámetros de modo análogo al caso de modelos lineales (secciones <a href="shrinkage.html#shrinkage">6.7</a> y <a href="pca-pls.html#pca-pls">6.8</a>).
-Por ejemplo, en los métodos de regularización (<em>ridge</em>, LASSO o <em>elastic net</em>; Sección <a href="shrinkage.html#shrinkage">6.7</a>) bastaría con cambiar en la función de pérdidas la suma residual de cuadrados por el logaritmo negativo de la función de verosimilitud.</p>
+<!-- 
+Ejercicio 
+considerando como respuesta la variable `taste` del conjunto de datos `wintaste`. 
+-->
 <div class="exercise">
-<p><span id="exr:glmnet" class="exercise"><strong>Ejercicio 6.1  </strong></span>Emplear el paquete <code>glmnet</code> para ajustar modelos logísticos con penalización <em>ridge</em> y LASSO a la muestra de entrenamiento de los datos de clientes de la compañía de distribución industrial HBAT, considerando como respuesta la variable <em>alianza</em> y seleccionando un valor “óptimo” del hiperparámetro <span class="math inline">\(\lambda\)</span>.
-Ajustar también un modelo con penalización <em>elastic net</em> empleando <code>caret</code> (seleccionando los valores óptimos de los hiperparámetros).</p>
+<p><span id="exr:winetaste-glm" class="exercise"><strong>Ejercicio 2.4  </strong></span>En este ejercicio se empleará el conjunto de datos <a href="https://rubenfcasal.github.io/mpae/reference/winetaste.html"><code>winetaste</code></a> del paquete <a href="https://rubenfcasal.github.io/mpae"><code>mpae</code></a> <span class="citation">(<a href="#ref-cortez2009modeling" role="doc-biblioref">Cortez et al., 2009</a>)</span> que contiene información fisico-química y sensorial de una muestra de 1250 vinos portugueses de la variedad <em>vinho verde</em> (para más detalles, consultar las secciones <a href="tree-rpart.html#reg-rpart">3.3.1</a> y <a href="tree-rpart.html#class-rpart">3.3.2</a>).
+Considerando como respuesta la variable <code>taste</code>, que clasifica los vinos en “good” o “bad” a partir de evaluaciones realizadas por expertos:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Particiona los datos, considerando un 80 % de las observaciones como muestra de entrenamiento y el resto como muestra de test.</p></li>
+<li><p>Ajusta dos modelos de regresión logística empleando los datos de entrenamiento, uno seleccionando las variables por pasos hacia delante (<code>forward</code>) y otro hacia atrás (<code>backward</code>).</p></li>
+<li><p>Estudia si hay problemas de colinealidad en los modelos.</p></li>
+<li><p>Evalúa la capacidad predictiva de ambos modelos en la muestra <code>test</code>.</p></li>
+</ol>
 </div>
-<p>El método PCR (Sección <a href="pca-pls.html#pca-pls">6.8</a>) se extendería de forma inmediata al caso de modelos generalizados, simplemente cambiando el modelo ajustado.
-También están disponibles métodos PLSR para modelos generalizados.</p>
-<div class="exercise">
-<p><span id="exr:glm-reduccion" class="exercise"><strong>Ejercicio 6.2  </strong></span>Emplear el paquete <code>caret</code> para ajustar modelos logísticos con reducción de la dimensión a los datos de clientes de la compañía de distribución industrial HBAT. Comparar el modelo obtenido con preprocesado <code>"pca"</code> y el método <code>"glmStepAIC"</code>, con el obtenido empleando el método <code>"plsRglm"</code>.</p>
-</div>
-
+<!-- 
+Sección \@ref(generadores)
+-->
 </div>
 </div>
-<!-- </div> -->
-<h3>References</h3>
+<h3>Bibliografía<a href="bibliografía.html#bibliografía" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-cortez2009modeling" class="csl-entry">
+Cortez, P., Cerdeira, A., Almeida, F., Matos, T., y Reis, J. (2009). Modeling wine preferences by data mining from physicochemical properties. <em>Decision Support Systems</em>, <em>47</em>(4), 547-553. <a href="https://doi.org/10.1016/j.dss.2009.05.016">https://doi.org/10.1016/j.dss.2009.05.016</a>
+</div>
 <div id="ref-dunn2018generalized" class="csl-entry">
-Dunn, P. K., y Smyth, G. K. (2018). <em>Generalized linear models with examples in R</em> (Vol. 53). Springer.
+Dunn, P. K., y Smyth, G. K. (2018). <em>Generalized linear models with examples in R</em>. Springer.
 </div>
 <div id="ref-faraway2014linear" class="csl-entry">
-Faraway, J. J. (2016). <em>Linear Models with R</em> (Second). CRC Press.
+Faraway, J. J. (2016). <em>Linear Models with R</em> (2a. ed.). Chapman &amp; Hall/CRC.
 </div>
 <div id="ref-hastie2017generalized" class="csl-entry">
-Hastie, T. J., y Pregibon, D. (2017). <em>Generalized linear models</em> (pp. 195-247). Routledge.
+Hastie, T., y Pregibon, D. (2017). <em>Generalized linear models</em> (pp. 195-247). Routledge.
 </div>
 <div id="ref-mccullagh2019generalized" class="csl-entry">
 McCullagh, P. (2019). <em>Generalized linear models</em>. Routledge.
 </div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="32">
+<li id="fn32"><p>Normalmente se sigue un proceso iterativo, eliminando la más atípica (o influyente) en cada paso, hasta que ninguna observación se identifique como atípica (o influyente).
+En este caso podríamos emplear <code>which.max(abs(residuals(modelo, type = "pearson")))</code>.<a href="reg-glm.html#fnref32" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="pca-pls.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="reg-np.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="rlm.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="generadores.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -733,7 +736,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rubenfcasal/aprendizaje_estadistico/edit/master/06-modelos_lineales.Rmd",
+"link": "https://github.com/rubenfcasal/book_mpae/edit/master/02-clasicos.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -744,7 +747,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["aprendizaje_estadistico.pdf"],
+"download": ["book_mpae.pdf"],
 "search": {
 "engine": "fuse",
 "options": null

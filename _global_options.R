@@ -6,25 +6,60 @@
 # ················································
 # NOTA: Ctrl + Shift + O para Document Outline
 
-# Output bookdown --------------------------------
+if (!require(mpae))
+  remotes::install_github("rubenfcasal/mpae", INSTALL_opts = "--with-keep.source")
+
+# Funciones auxiliares rmarkdown -----------------
+# ················································
+
+# Output bookdown
 # ················································
 is_latex <- function(...) knitr:::is_latex_output(...)
 is_html <- function(...) knitr:::is_html_output(...)
 
-
-# Opciones knitr ---------------------------------
+# Rmd code:
 # ················································
-knitr::opts_chunk$set(
-  fig.dim = c(7, 6), fig.align = "center", fig.pos = "!htb", # fig.pos = "!htbp"
-  out.width = "75%", # out.lines = 50,
-  cache = TRUE, cache.path = 'cache/',
-  echo = TRUE, warning = FALSE, message = FALSE,
-  comment = if(is_html()) "##" else "  ##"
-)
+inline <- function(x = "") paste0("`` `r ", x, "` ``")
+inline2 <- function(x = "") paste0("`r ", x, "`")
+
+
+owidth <- 75 # 70
+fowidth <- function(d) sprintf("%i%%", owidth - d)
+rowidth <- function(p) sprintf("%i%%", round(0.01*p*owidth))
+
+# Opciones knitr
+# ················································
 
 # Opciones salida de texto
-options(max.print = 60, # width = 85 (lo dejamos por defecto?)
-        str = strOptions(strict.width = "cut")) # str()
+options(max.print = 60, width = 80, #73, # 67, # (por defecto 80)
+        str = strOptions(strict.width = "cut"), # str()
+        digits = 5)
+
+# Opciones gráficas
+knitr::knit_hooks$set(small.mar = function(before, ...) {
+  if (before){
+    par(mar = c(bottom = 4, left = 4, top = 2, right = 1) + 0.1)
+  } else
+    par(mar = c(bottom = 5, left = 4, top = 4, right = 2) + 0.1)
+
+})
+
+# Recortar figuras
+knitr::knit_hooks$set(crop = knitr::hook_pdfcrop)
+# https://ghostscript.com/releases/gsdnld.html
+Sys.setenv(R_GSCMD="C:/Program Files/gs/gs10.03.0/bin/gswin64.exe")
+
+# Establecer opciones chunks
+knitr::opts_chunk$set(
+  fig.dim = c(7, 5), fig.align = "center", fig.pos = "!htb", # fig.pos = "!htbp"
+  out.width = fowidth(0), # out.lines = 50,
+  cache = TRUE, cache.path = 'cache/',
+  echo = TRUE, warning = FALSE, message = FALSE,
+  comment = "##",
+  fig.show = "asis",
+  small.mar = TRUE # , crop = TRUE, # Recortar figuras
+)
+
 
 # Directorio figuras
 # ················································
@@ -32,15 +67,6 @@ fig.path <- "figuras/"
 # fig.path <- ""
 
 .regerar <- FALSE
-
-
-# Funciones auxiliares rmarkdown -----------------
-# ················································
-
-# Rmd code:
-# ················································
-inline <- function(x = "") paste0("`` `r ", x, "` ``")
-inline2 <- function(x = "") paste0("`r ", x, "`")
 
 
 # Citas Figuras ----------------------------------
@@ -85,16 +111,37 @@ latexfig2 <- function(..., output = is_latex())
 # Citas paquetes y funciones ---------------------
 # ················································
 
+## Citas paquetes --------------------------------
+# ················································
+
+
 # Cita paquete CRAN
 cite_cran <- function(pkg) {
     pkg <- as.character(substitute(pkg))
     paste0("[`", pkg, "`](https://CRAN.R-project.org/package=", pkg, ")")
 }
 
-# Pendiente: múltiples paquetes
 
-## Citas paquetes --------------------------------
-# ················································
+# https://rubenfcasal.github.io/
+
+cite_github <- function(pkg = mpae){
+  pkg <- as.character(substitute(pkg))
+  cite_pkg_(pkg, paste0("https://rubenfcasal.github.io/", pkg))
+}
+
+cite_fgithub <- function(fun, pkg = mpae, lnk = NULL, full = FALSE)  {
+  fun <- as.character(substitute(fun))
+  pkg <- as.character(substitute(pkg))
+  paste0(if(full) paste0("[`", pkg, "::") else "[`", fun,
+         paste0("()`](https://rubenfcasal.github.io/", pkg, "/reference/"),
+         if (!is.null(lnk)) lnk else fun,
+         ".html)",
+         collapse = ", ")
+  # downlit::autolink_url
+}
+
+
+# Pendiente: múltiples paquetes
 
 cite_pkg_ <- function(pkg, url = sapply(pkg, downlit::href_package)) {
     paste0("[`", pkg, "`](", url, ")",  collapse = ", ")
@@ -181,36 +228,17 @@ cite_method <- function(fun, class, pkg, url, full = FALSE) {
 # ················································
 
 
-## Truncate text output --------------------------
-# ················································
-
-# save the built-in output hook
-hook_output <- knitr::knit_hooks$get("output")
-
-# set a new output hook to truncate text output
-knitr::knit_hooks$set(output = function(x, options) {
-  if (!is.null(n <- options$out.lines)) {
-    x <- xfun::split_lines(x)
-    if (length(x) > n) {
-      # truncate the output
-      x <- c(head(x, n), "[ Se ha omitido el resto de la salida de texto... ]\n")
-    }
-    x <- paste(x, collapse = "\n")
-  }
-  hook_output(x, options)
-})
-
-
-
 # PENDENTE: ----
 # ················································
+# "[ Se ha omitido parte de la salida de texto... ]\n"
 # rmd.lines <- function(l = 1) paste0("<br> \vspace{0.5cm}\n")
 #     cat(rep("<br>", l), "\n") # 0.5*l
-#
+
+
 # https://stackoverflow.com/questions/35317587/extract-names-of-dataframes-passed-with-dots
 # H. Wickham, Advanced R, [Section 19.3.2](https://adv-r.hadley.nz/quasiquotation.html#capturing-symbols)).
-# names_from_dots <- function(...) as.character(rlang::ensyms(...))
-# names_from_dots(swiss, iris)
+names_from_dots <- function(...) as.character(rlang::ensyms(...))
+names_from_dots(swiss, iris)
 # [1] "swiss" "iris"
 
 

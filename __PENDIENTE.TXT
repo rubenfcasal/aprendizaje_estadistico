@@ -1,0 +1,24 @@
+Encabezado Servicio de Publicaciones
+	licencia
+	isbn 9-788497-498722?
+Cambiar \boldsymbol por \symbfit?
+Revisar si eliminar \vspace
+
+
+
+```{css float-right-figure-caption, echo = FALSE}
+.my-right-figure {
+  display: table;
+  float: right;
+  padding-left: 30px;
+  padding-bottom: 10px;
+}
+.my-right-figure p {
+  display: table-caption;
+  caption-side: bottom;
+  padding-left: 30px
+}
+.figure {
+  display: contents;
+}
+```

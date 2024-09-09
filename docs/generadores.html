@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="es" xml:lang="es">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2.3 Otros métodos de clasificación | Métodos predictivos de aprendizaje estadístico</title>
+  <meta name="description" content="2.3 Otros métodos de clasificación | Métodos predictivos de aprendizaje estadístico con R." />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2.3 Otros métodos de clasificación | Métodos predictivos de aprendizaje estadístico" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="2.3 Otros métodos de clasificación | Métodos predictivos de aprendizaje estadístico con R." />
+  <meta name="github-repo" content="rubenfcasal/book_mpae" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2.3 Otros métodos de clasificación | Métodos predictivos de aprendizaje estadístico" />
+  
+  <meta name="twitter:description" content="2.3 Otros métodos de clasificación | Métodos predictivos de aprendizaje estadístico con R." />
+  
+
+<meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es)" />
+<meta name="author" content="Julián Costa Bouzas (julian.costa@udc.es)" />
+<meta name="author" content="Manuel Oviedo de la Fuente (manuel.oviedo@udc.es)" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="reg-glm.html"/>
+<link rel="next" href="trees.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.30/datatables.js"></script>
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.13.4/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Métodos predictivos de aprendizaje estadístico</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Bienvenida</a></li>
+<li class="chapter" data-level="" data-path="prólogo.html"><a href="prólogo.html"><i class="fa fa-check"></i>Prólogo</a>
+<ul>
+<li class="chapter" data-level="" data-path="el-lenguaje-de-programación-r.html"><a href="el-lenguaje-de-programación-r.html"><i class="fa fa-check"></i>El lenguaje de programación R</a></li>
+<li class="chapter" data-level="" data-path="organización.html"><a href="organización.html"><i class="fa fa-check"></i>Organización</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="intro-AE.html"><a href="intro-AE.html"><i class="fa fa-check"></i><b>1</b> Introducción al aprendizaje estadístico</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje estadístico vs. aprendizaje automático</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#las-dos-culturas"><i class="fa fa-check"></i><b>1.1.1</b> Las dos culturas</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de aprendizaje estadístico</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#notacion"><i class="fa fa-check"></i><b>1.2.1</b> Notación y terminología</a></li>
+<li class="chapter" data-level="1.2.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#metodos-pkgs"><i class="fa fa-check"></i><b>1.2.2</b> Métodos (de aprendizaje supervisado) y paquetes de R</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="const-eval.html"><a href="const-eval.html"><i class="fa fa-check"></i><b>1.3</b> Construcción y evaluación de los modelos</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="const-eval.html"><a href="const-eval.html#bias-variance"><i class="fa fa-check"></i><b>1.3.1</b> Equilibrio entre sesgo y varianza: infraajuste y sobreajuste</a></li>
+<li class="chapter" data-level="1.3.2" data-path="const-eval.html"><a href="const-eval.html#entrenamiento-test"><i class="fa fa-check"></i><b>1.3.2</b> Datos de entrenamiento y datos de test</a></li>
+<li class="chapter" data-level="1.3.3" data-path="const-eval.html"><a href="const-eval.html#cv"><i class="fa fa-check"></i><b>1.3.3</b> Selección de hiperparámetros mediante validación cruzada</a></li>
+<li class="chapter" data-level="1.3.4" data-path="const-eval.html"><a href="const-eval.html#eval-reg"><i class="fa fa-check"></i><b>1.3.4</b> Evaluación de un método de regresión</a></li>
+<li class="chapter" data-level="1.3.5" data-path="const-eval.html"><a href="const-eval.html#eval-class"><i class="fa fa-check"></i><b>1.3.5</b> Evaluación de un método de clasificación</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="dimen-curse.html"><a href="dimen-curse.html"><i class="fa fa-check"></i><b>1.4</b> La maldición de la dimensionalidad</a></li>
+<li class="chapter" data-level="1.5" data-path="analisis-modelos.html"><a href="analisis-modelos.html"><i class="fa fa-check"></i><b>1.5</b> Análisis e interpretación de los modelos</a></li>
+<li class="chapter" data-level="1.6" data-path="caret.html"><a href="caret.html"><i class="fa fa-check"></i><b>1.6</b> Introducción al paquete <code>caret</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="clasicos.html"><a href="clasicos.html"><i class="fa fa-check"></i><b>2</b> Métodos clásicos de estadística</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="rlm.html"><a href="rlm.html"><i class="fa fa-check"></i><b>2.1</b> Regresión lineal múltiple</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="rlm.html"><a href="rlm.html#colinealidad"><i class="fa fa-check"></i><b>2.1.1</b> El problema de la colinealidad</a></li>
+<li class="chapter" data-level="2.1.2" data-path="rlm.html"><a href="rlm.html#seleccion-rlm"><i class="fa fa-check"></i><b>2.1.2</b> Selección de variables explicativas</a></li>
+<li class="chapter" data-level="2.1.3" data-path="rlm.html"><a href="rlm.html#analisis-rlm"><i class="fa fa-check"></i><b>2.1.3</b> Análisis e interpretación del modelo</a></li>
+<li class="chapter" data-level="2.1.4" data-path="rlm.html"><a href="rlm.html#eval-rlm"><i class="fa fa-check"></i><b>2.1.4</b> Evaluación de la precisión</a></li>
+<li class="chapter" data-level="2.1.5" data-path="rlm.html"><a href="rlm.html#selec-ae-rlm"><i class="fa fa-check"></i><b>2.1.5</b> Selección del modelo mediante remuestreo</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="reg-glm.html"><a href="reg-glm.html"><i class="fa fa-check"></i><b>2.2</b> Modelos lineales generalizados</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="reg-glm.html"><a href="reg-glm.html#seleccion-glm"><i class="fa fa-check"></i><b>2.2.1</b> Selección de variables explicativas</a></li>
+<li class="chapter" data-level="2.2.2" data-path="reg-glm.html"><a href="reg-glm.html#analisis-glm"><i class="fa fa-check"></i><b>2.2.2</b> Análisis e interpretación del modelo</a></li>
+<li class="chapter" data-level="2.2.3" data-path="reg-glm.html"><a href="reg-glm.html#glm-bfan"><i class="fa fa-check"></i><b>2.2.3</b> Evaluación de la precisión</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="generadores.html"><a href="generadores.html"><i class="fa fa-check"></i><b>2.3</b> Otros métodos de clasificación</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="generadores.html"><a href="generadores.html#clas-lda"><i class="fa fa-check"></i><b>2.3.1</b> Análisis discriminante lineal</a></li>
+<li class="chapter" data-level="2.3.2" data-path="generadores.html"><a href="generadores.html#clas-qda"><i class="fa fa-check"></i><b>2.3.2</b> Análisis discriminante cuadrático</a></li>
+<li class="chapter" data-level="2.3.3" data-path="generadores.html"><a href="generadores.html#bayes"><i class="fa fa-check"></i><b>2.3.3</b> Bayes naíf</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="trees.html"><a href="trees.html"><i class="fa fa-check"></i><b>3</b> Árboles de decisión</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="árboles-de-regresión-cart.html"><a href="árboles-de-regresión-cart.html"><i class="fa fa-check"></i><b>3.1</b> Árboles de regresión CART</a></li>
+<li class="chapter" data-level="3.2" data-path="árboles-de-clasificación-cart.html"><a href="árboles-de-clasificación-cart.html"><i class="fa fa-check"></i><b>3.2</b> Árboles de clasificación CART</a></li>
+<li class="chapter" data-level="3.3" data-path="tree-rpart.html"><a href="tree-rpart.html"><i class="fa fa-check"></i><b>3.3</b> CART con el paquete <code>rpart</code></a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="tree-rpart.html"><a href="tree-rpart.html#reg-rpart"><i class="fa fa-check"></i><b>3.3.1</b> Ejemplo: regresión</a></li>
+<li class="chapter" data-level="3.3.2" data-path="tree-rpart.html"><a href="tree-rpart.html#class-rpart"><i class="fa fa-check"></i><b>3.3.2</b> Ejemplo: modelo de clasificación</a></li>
+<li class="chapter" data-level="3.3.3" data-path="tree-rpart.html"><a href="tree-rpart.html#interfaz-de-caret"><i class="fa fa-check"></i><b>3.3.3</b> Interfaz de <code>caret</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html"><i class="fa fa-check"></i><b>3.4</b> Alternativas a los árboles CART</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="bagging-boosting.html"><a href="bagging-boosting.html"><i class="fa fa-check"></i><b>4</b> Bagging y boosting</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>4.1</b> Bagging</a></li>
+<li class="chapter" data-level="4.2" data-path="rf.html"><a href="rf.html"><i class="fa fa-check"></i><b>4.2</b> Bosques aleatorios</a></li>
+<li class="chapter" data-level="4.3" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html"><i class="fa fa-check"></i><b>4.3</b> Bagging y bosques aleatorios en R</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-clasificación-con-bagging"><i class="fa fa-check"></i><b>4.3.1</b> Ejemplo: clasificación con bagging</a></li>
+<li class="chapter" data-level="4.3.2" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-clasif-rf"><i class="fa fa-check"></i><b>4.3.2</b> Ejemplo: clasificación con bosques aleatorios</a></li>
+<li class="chapter" data-level="4.3.3" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-bosques-aleatorios-con-caret"><i class="fa fa-check"></i><b>4.3.3</b> Ejemplo: bosques aleatorios con <code>caret</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="boosting.html"><a href="boosting.html"><i class="fa fa-check"></i><b>4.4</b> Boosting</a></li>
+<li class="chapter" data-level="4.5" data-path="boosting-r.html"><a href="boosting-r.html"><i class="fa fa-check"></i><b>4.5</b> Boosting en R</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="boosting-r.html"><a href="boosting-r.html#ejemplo-clasificación-con-el-paquete-ada"><i class="fa fa-check"></i><b>4.5.1</b> Ejemplo: clasificación con el paquete <code>ada</code></a></li>
+<li class="chapter" data-level="4.5.2" data-path="boosting-r.html"><a href="boosting-r.html#ejemplo-regresión-con-el-paquete-gbm"><i class="fa fa-check"></i><b>4.5.2</b> Ejemplo: regresión con el paquete <code>gbm</code></a></li>
+<li class="chapter" data-level="4.5.3" data-path="boosting-r.html"><a href="boosting-r.html#xgb-caret"><i class="fa fa-check"></i><b>4.5.3</b> Ejemplo: XGBoost con el paquete <code>caret</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>5</b> Máquinas de soporte vectorial</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="clasificadores-de-máximo-margen.html"><a href="clasificadores-de-máximo-margen.html"><i class="fa fa-check"></i><b>5.1</b> Clasificadores de máximo margen</a></li>
+<li class="chapter" data-level="5.2" data-path="clasificadores-de-soporte-vectorial.html"><a href="clasificadores-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>5.2</b> Clasificadores de soporte vectorial</a></li>
+<li class="chapter" data-level="5.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>5.3</b> Máquinas de soporte vectorial</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#regresión-con-svm"><i class="fa fa-check"></i><b>5.3.1</b> Regresión con SVM</a></li>
+<li class="chapter" data-level="5.3.2" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#ventajas-e-incovenientes"><i class="fa fa-check"></i><b>5.3.2</b> Ventajas e incovenientes</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="svm-kernlab.html"><a href="svm-kernlab.html"><i class="fa fa-check"></i><b>5.4</b> SVM en R</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="ext-glm.html"><a href="ext-glm.html"><i class="fa fa-check"></i><b>6</b> Extensiones de los modelos lineales (generalizados)</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="shrinkage.html"><a href="shrinkage.html"><i class="fa fa-check"></i><b>6.1</b> Métodos de regularización</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="shrinkage.html"><a href="shrinkage.html#implementación-en-r"><i class="fa fa-check"></i><b>6.1.1</b> Implementación en R</a></li>
+<li class="chapter" data-level="6.1.2" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-ridge-regression"><i class="fa fa-check"></i><b>6.1.2</b> Ejemplo: <em>ridge regression</em></a></li>
+<li class="chapter" data-level="6.1.3" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-lasso"><i class="fa fa-check"></i><b>6.1.3</b> Ejemplo: LASSO</a></li>
+<li class="chapter" data-level="6.1.4" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-elastic-net"><i class="fa fa-check"></i><b>6.1.4</b> Ejemplo: <em>elastic net</em></a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="pca-pls.html"><a href="pca-pls.html"><i class="fa fa-check"></i><b>6.2</b> Métodos de reducción de la dimensión</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-componentes-principales-pcr"><i class="fa fa-check"></i><b>6.2.1</b> Regresión por componentes principales (PCR)</a></li>
+<li class="chapter" data-level="6.2.2" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-mínimos-cuadrados-parciales-plsr"><i class="fa fa-check"></i><b>6.2.2</b> Regresión por mínimos cuadrados parciales (PLSR)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="reg-np.html"><a href="reg-np.html"><i class="fa fa-check"></i><b>7</b> Regresión no paramétrica</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="reg-local.html"><a href="reg-local.html"><i class="fa fa-check"></i><b>7.1</b> Regresión local</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="reg-local.html"><a href="reg-local.html#reg-knn"><i class="fa fa-check"></i><b>7.1.1</b> Vecinos más próximos</a></li>
+<li class="chapter" data-level="7.1.2" data-path="reg-local.html"><a href="reg-local.html#reg-locpol"><i class="fa fa-check"></i><b>7.1.2</b> Regresión polinómica local</a></li>
+<li class="chapter" data-level="7.1.3" data-path="reg-local.html"><a href="reg-local.html#regresión-polinómica-local-robusta"><i class="fa fa-check"></i><b>7.1.3</b> Regresión polinómica local robusta</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>7.2</b> Splines</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="splines.html"><a href="splines.html#reg-splines"><i class="fa fa-check"></i><b>7.2.1</b> Splines de regresión</a></li>
+<li class="chapter" data-level="7.2.2" data-path="splines.html"><a href="splines.html#splines-de-suavizado"><i class="fa fa-check"></i><b>7.2.2</b> Splines de suavizado</a></li>
+<li class="chapter" data-level="7.2.3" data-path="splines.html"><a href="splines.html#splines-penalizados"><i class="fa fa-check"></i><b>7.2.3</b> Splines penalizados</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="reg-gam.html"><a href="reg-gam.html"><i class="fa fa-check"></i><b>7.3</b> Modelos aditivos</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="reg-gam.html"><a href="reg-gam.html#superficies-de-predicción"><i class="fa fa-check"></i><b>7.3.1</b> Superficies de predicción</a></li>
+<li class="chapter" data-level="7.3.2" data-path="reg-gam.html"><a href="reg-gam.html#anova-gam"><i class="fa fa-check"></i><b>7.3.2</b> Comparación y selección de modelos</a></li>
+<li class="chapter" data-level="7.3.3" data-path="reg-gam.html"><a href="reg-gam.html#mgcv-diagnosis"><i class="fa fa-check"></i><b>7.3.3</b> Diagnosis del modelo</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>7.4</b> Regresión spline adaptativa multivariante</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="mars.html"><a href="mars.html#mars-con-el-paquete-earth"><i class="fa fa-check"></i><b>7.4.1</b> MARS con el paquete <code>earth</code></a></li>
+<li class="chapter" data-level="7.4.2" data-path="mars.html"><a href="mars.html#mars-con-el-paquete-caret"><i class="fa fa-check"></i><b>7.4.2</b> MARS con el paquete <code>caret</code></a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="pursuit.html"><a href="pursuit.html"><i class="fa fa-check"></i><b>7.5</b> Projection pursuit</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="pursuit.html"><a href="pursuit.html#ppr"><i class="fa fa-check"></i><b>7.5.1</b> Regresión por projection pursuit</a></li>
+<li class="chapter" data-level="7.5.2" data-path="pursuit.html"><a href="pursuit.html#implementación-en-r-1"><i class="fa fa-check"></i><b>7.5.2</b> Implementación en R</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="neural-nets.html"><a href="neural-nets.html"><i class="fa fa-check"></i><b>8</b> Redes neuronales</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="single-hidden-layer-feedforward-network.html"><a href="single-hidden-layer-feedforward-network.html"><i class="fa fa-check"></i><b>8.1</b> Single-hidden-layer feedforward network</a></li>
+<li class="chapter" data-level="8.2" data-path="clasificación-con-ann.html"><a href="clasificación-con-ann.html"><i class="fa fa-check"></i><b>8.2</b> Clasificación con ANN</a></li>
+<li class="chapter" data-level="8.3" data-path="implementación-en-r-2.html"><a href="implementación-en-r-2.html"><i class="fa fa-check"></i><b>8.3</b> Implementación en R</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Métodos predictivos de aprendizaje estadístico</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="generadores" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Otros métodos de clasificación<a href="generadores.html#generadores" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>En regresión logística, y en la mayoría de los métodos de clasificación (por ejemplo, en los que veremos en capítulos siguientes), un objetivo fundamental es estimar la probabilidad a posteriori
+<span class="math display">\[P(Y = k \vert \mathbf{X}=\mathbf{x})\]</span>
+de que una observación correspondiente a <span class="math inline">\(\mathbf{x}\)</span> pertenezca a la categoría <span class="math inline">\(k\)</span>, sin preocuparse por la distribución de las variables predictoras. Estos métodos son conocidos en la terminología de <em>machine learning</em> como métodos discriminadores <span class="citation">(<em>discriminative methods</em>, p. ej. <a href="#ref-NIPS2001_ng" role="doc-biblioref">Ng y Jordan, 2001</a>)</span> y en la estadística como modelos de diseño fijo.</p>
+<p>En esta sección vamos a ver métodos que reciben el nombre genérico de métodos generadores (<em>generative methods</em>)<a href="#fn33" class="footnote-ref" id="fnref33"><sup>33</sup></a>.
+Se caracterizan porque calculan las probabilidades a posteriori utilizando la distribución conjunta de <span class="math inline">\((\mathbf{X}, Y)\)</span> y el teorema de Bayes:
+<span class="math display">\[P(Y = k \vert \mathbf{X}=\mathbf{x}) = \frac{P(Y = k) f_k(\mathbf{x})}{\sum_{l=1}^K P(Y = l) f_l(\mathbf{x})}\]</span>
+donde <span class="math inline">\(f_k(\mathbf{x})\)</span> es la función de densidad del vector aleatorio <span class="math inline">\(\mathbf{X}=(X_1, X_2, \ldots, X_p)\)</span> para una observación perteneciente a la clase <span class="math inline">\(k\)</span>, es decir, es una forma abreviada de escribir <span class="math inline">\(f(\mathbf{X}=\mathbf{x} \vert Y = k)\)</span>.
+En la jerga bayesiana a esta función se la conoce como <em>verosimilitud</em> (es la función de verosimilitud sin más que considerar que la observación muestral <span class="math inline">\(\mathbf{x}\)</span> es fija y la variable es <span class="math inline">\(k\)</span>) y se resume la fórmula anterior como<a href="#fn34" class="footnote-ref" id="fnref34"><sup>34</sup></a>
+<span class="math display">\[posterior \propto prior \times verosimilitud\]</span></p>
+<!-- $\tfrac{1}{P(\mathbf{X}=\mathbf{x})}$ -->
+<p>Una vez estimadas las probabilidades a priori <span class="math inline">\(P(Y = k)\)</span> y las densidades (verosimilitudes) <span class="math inline">\(f_k(\mathbf{x})\)</span>, tenemos las probabilidades a posteriori. Para estimar las funciones de densidad se puede utilizar un método paramétrico o uno no paramétrico. En el primer caso, lo más habitual es modelizar la distribución del vector de variables predictoras como normales multivariantes.</p>
+<p>A continuación vamos a ver, desde el punto de vista aplicado, tres casos particulares de este enfoque, siempre suponiendo normalidad <span class="citation">(para más detalles ver, por ejemplo, el <a href="https://daviddalpiaz.github.io/r4sl/generative-models.html" role="doc-biblioref">Capítulo 11</a> de <a href="#ref-dalpiaz2020statlearn" role="doc-biblioref">Dalpiaz, 2020</a>)</span>.</p>
+<!-- Sección \@ref(clas-lda) -->
+<div id="clas-lda" class="section level3 hasAnchor" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Análisis discriminante lineal<a href="generadores.html#clas-lda" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El análisis discriminante lineal (LDA) se inicia en <span class="citation">Fisher (<a href="#ref-fisher1936use" role="doc-biblioref">1936</a>)</span>, pero es <span class="citation">Welch (<a href="#ref-welch1939note" role="doc-biblioref">1939</a>)</span> quien lo enfoca utilizando el teorema de Bayes. Asumiendo que <span class="math inline">\(X \vert Y = k \sim N(\mu_k, \Sigma)\)</span>, es decir, que todas las categorías comparten la misma matriz <span class="math inline">\(\Sigma\)</span>, se obtienen las funciones discriminantes, lineales en <span class="math inline">\(\mathbf{x}\)</span>,
+<span class="math display">\[\mathbf{x}^t \Sigma^{-1} \mu_k - \frac{1}{2} \mu_k^t \Sigma^{-1} \mu_k + \mbox{log}(P(Y = k))\]</span></p>
+<p>La dificultad técnica del método LDA reside en el cálculo de <span class="math inline">\(\Sigma^{-1}\)</span>. Cuando hay más variables predictoras que datos, o cuando las variables predictoras están fuertemente correlacionadas, hay un problema.
+Una solución pasa por aplicar análisis de componentes principales (PCA) para reducir la dimensión y tener predictores incorrelados antes de utilizar LDA.
+Aunque la solución anterior se utiliza mucho, hay que tener en cuenta que la reducción de la dimensión se lleva a cabo sin tener en cuenta la información de las categorías, es decir, la estructura de los datos en categorías.
+Una alternativa consiste en utilizar <em>partial least squares discriminant analysis</em> (PLSDA, Berntsson y Wold, 1986).
+La idea consiste en realizar una regresión por mínimos cuadrados parciales (PLSR), que se tratará en la Sección <a href="pca-pls.html#pca-pls">6.2</a>, siendo las categorías la respuesta, con el objetivo de reducir la dimensión a la vez que se maximiza la correlación con las respuestas.</p>
+<p>Una generalización de LDA es el <em>mixture discriminant analysis</em> <span class="citation">(<a href="#ref-hastie1996fisher" role="doc-biblioref">Hastie y Tibshirani, 1996</a>)</span>, en el que, siempre con la misma matriz <span class="math inline">\(\Sigma\)</span>, se contempla la posibilidad de que dentro de cada categoría haya múltiples subcategorías que únicamente difieren en la media. Las distribuciones dentro de cada clase se agregan mediante una mixtura de las distribuciones multivariantes.</p>
+<p>A continuación se muestra un ejemplo de análisis discriminante lineal empleando la función <a href="https://rdrr.io/pkg/MASS/man/lda.html"><code>MASS::lda()</code></a>, considerando el problema de clasificación empleado en la Sección <a href="reg-glm.html#reg-glm">2.2</a> anterior, en el que la respuesta es <code>bfan</code>, con la misma partición y los mismos predictores (para comparar los resultados).</p>
+<!-- 
+data(bfan, package = "mpae") 
+-->
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="generadores.html#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb159-2"><a href="generadores.html#cb159-2" aria-hidden="true" tabindex="-1"></a>ld <span class="ot">&lt;-</span> <span class="fu">lda</span>(bfan <span class="sc">~</span> abdomen <span class="sc">+</span> weight, <span class="at">data =</span> train)</span>
+<span id="cb159-3"><a href="generadores.html#cb159-3" aria-hidden="true" tabindex="-1"></a>ld</span></code></pre></div>
+<pre><code>## Call:
+## lda(bfan ~ abdomen + weight, data = train)
+## 
+## Prior probabilities of groups:
+##      No     Yes 
+## 0.72959 0.27041 
+## 
+## Group means:
+##     abdomen weight
+## No    88.25 77.150
+## Yes  103.06 90.487
+## 
+## Coefficients of linear discriminants:
+##               LD1
+## abdomen  0.186094
+## weight  -0.056329</code></pre>
+<p>En este caso, al haber solo dos categorías se construye una única función discriminante lineal.
+Podemos examinar la distribución de los valores que toma esta función en la muestra de entrenamiento mediante el método <a href="https://rdrr.io/pkg/MASS/man/plot.lda.html"><code>plot.lda()</code></a> (ver Figura <a href="generadores.html#fig:lda">2.14</a>):</p>
+
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="generadores.html#cb161-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ld)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:lda"></span>
+<img src="02-clasicos_files/figure-html/lda-1.png" alt="Distribución de los valores de la función discriminante lineal en cada clase." width="75%" />
+<p class="caption">
+Figura 2.14: Distribución de los valores de la función discriminante lineal en cada clase.
+</p>
+</div>
+<p>Podemos evaluar la precisión en la muestra de test empleando la matriz de confusión:</p>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="generadores.html#cb162-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(ld, <span class="at">newdata =</span> test)</span>
+<span id="cb162-2"><a href="generadores.html#cb162-2" aria-hidden="true" tabindex="-1"></a>pred.ld <span class="ot">&lt;-</span> pred<span class="sc">$</span>class</span>
+<span id="cb162-3"><a href="generadores.html#cb162-3" aria-hidden="true" tabindex="-1"></a>caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(pred.ld, test<span class="sc">$</span>bfan, <span class="at">positive =</span> <span class="st">&quot;Yes&quot;</span>)</span></code></pre></div>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction No Yes
+##        No  27   6
+##        Yes  2  15
+##                                         
+##                Accuracy : 0.84          
+##                  95% CI : (0.709, 0.928)
+##     No Information Rate : 0.58          
+##     P-Value [Acc &gt; NIR] : 7.98e-05      
+##                                         
+##                   Kappa : 0.663         
+##                                         
+##  Mcnemar&#39;s Test P-Value : 0.289         
+##                                         
+##             Sensitivity : 0.714         
+##             Specificity : 0.931         
+##          Pos Pred Value : 0.882         
+##          Neg Pred Value : 0.818         
+##              Prevalence : 0.420         
+##          Detection Rate : 0.300         
+##    Detection Prevalence : 0.340         
+##       Balanced Accuracy : 0.823         
+##                                         
+##        &#39;Positive&#39; Class : Yes           
+## </code></pre>
+<p>También podríamos examinar las probabilidades estimadas:</p>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="generadores.html#cb164-1" aria-hidden="true" tabindex="-1"></a>p.est <span class="ot">&lt;-</span> pred<span class="sc">$</span>posterior</span></code></pre></div>
+<!-- Sección \@ref(clas-qda) -->
+</div>
+<div id="clas-qda" class="section level3 hasAnchor" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> Análisis discriminante cuadrático<a href="generadores.html#clas-qda" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El análisis discriminante cuadrático (QDA) relaja la suposición de que todas las categorías tengan la misma estructura de covarianzas, es decir, <span class="math inline">\(X \vert Y = k \sim N(\mu_k, \Sigma_k)\)</span>, obteniendo como solución
+<span class="math display">\[-\frac{1}{2} (\mathbf{x} - \mu_k)^t \Sigma^{-1}_k (\mathbf{x} - \mu_k) - \frac{1}{2} \mbox{log}(|\Sigma_k|) + \mbox{log}(P(Y = k))\]</span></p>
+<p>Vemos que este método da lugar a fronteras discriminantes cuadráticas.</p>
+<p>Si el número de variables predictoras es próximo al tamaño muestral, en la práctica QDA se vuelve impracticable, ya que el número de variables predictoras tiene que ser menor que el número de datos en cada una de las categorías. Una recomendación básica es utilizar LDA y QDA únicamente cuando hay muchos más datos que predictores. Y al igual que en LDA, si dentro de las clases los predictores presentan mucha colinealidad el modelo va a funcionar mal.</p>
+<p>Al ser QDA una generalización de LDA podemos pensar que siempre va a ser preferible, pero eso no es cierto, ya que QDA requiere estimar muchos más parámetros que LDA y por tanto tiene más riesgo de sobreajustar. Al ser menos flexible, LDA da lugar a modelos más simples: menos varianza pero más sesgo. LDA suele funcionar mejor que QDA cuando hay pocos datos y es por tanto muy importante reducir la varianza. Por el contrario, QDA es recomendable cuando hay muchos datos.</p>
+<p>Una solución intermedia entre LDA y QDA es el análisis discriminante regularizado <span class="citation">(RDA, <a href="#ref-friedman1989regularized" role="doc-biblioref">Friedman, 1989</a>)</span>, que utiliza el hiperparámetro <span class="math inline">\(\lambda\)</span> para definir la matriz
+<span class="math display">\[\Sigma_{k,\lambda}&#39; = \lambda\Sigma_k + (1 - \lambda) \Sigma\]</span></p>
+<p>También hay una versión con dos hiperparámetros, <span class="math inline">\(\lambda\)</span> y <span class="math inline">\(\gamma\)</span>,
+<span class="math display">\[\Sigma_{k,\lambda,\gamma}&#39; = (1 - \gamma) \Sigma_{k,\lambda}&#39; + \gamma \frac{1}{p} \mbox{tr} (\Sigma_{k,\lambda}&#39;)I\]</span></p>
+<p>De modo análogo al caso lineal, podemos realizar un análisis discriminante cuadrático empleando la función <a href="https://rdrr.io/pkg/MASS/man/qda.html"><code>MASS::qda()</code></a>:</p>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="generadores.html#cb165-1" aria-hidden="true" tabindex="-1"></a>qd <span class="ot">&lt;-</span> <span class="fu">qda</span>(bfan <span class="sc">~</span> abdomen <span class="sc">+</span> weight, <span class="at">data =</span> train)</span>
+<span id="cb165-2"><a href="generadores.html#cb165-2" aria-hidden="true" tabindex="-1"></a>qd</span></code></pre></div>
+<pre><code>## Call:
+## qda(bfan ~ abdomen + weight, data = train)
+## 
+## Prior probabilities of groups:
+##      No     Yes 
+## 0.72959 0.27041 
+## 
+## Group means:
+##     abdomen weight
+## No    88.25 77.150
+## Yes  103.06 90.487</code></pre>
+<p>y evaluar la precisión en la muestra de test:</p>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="generadores.html#cb167-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(qd, <span class="at">newdata =</span> test)</span>
+<span id="cb167-2"><a href="generadores.html#cb167-2" aria-hidden="true" tabindex="-1"></a>pred.qd <span class="ot">&lt;-</span> pred<span class="sc">$</span>class</span>
+<span id="cb167-3"><a href="generadores.html#cb167-3" aria-hidden="true" tabindex="-1"></a><span class="co"># p.est &lt;- pred$posterior</span></span>
+<span id="cb167-4"><a href="generadores.html#cb167-4" aria-hidden="true" tabindex="-1"></a>caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(pred.qd, test<span class="sc">$</span>bfan, <span class="at">positive =</span> <span class="st">&quot;Yes&quot;</span>)</span></code></pre></div>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction No Yes
+##        No  27   6
+##        Yes  2  15
+##                                         
+##                Accuracy : 0.84          
+##                  95% CI : (0.709, 0.928)
+##     No Information Rate : 0.58          
+##     P-Value [Acc &gt; NIR] : 7.98e-05      
+##                                         
+##                   Kappa : 0.663         
+##                                         
+##  Mcnemar&#39;s Test P-Value : 0.289         
+##                                         
+##             Sensitivity : 0.714         
+##             Specificity : 0.931         
+##          Pos Pred Value : 0.882         
+##          Neg Pred Value : 0.818         
+##              Prevalence : 0.420         
+##          Detection Rate : 0.300         
+##    Detection Prevalence : 0.340         
+##       Balanced Accuracy : 0.823         
+##                                         
+##        &#39;Positive&#39; Class : Yes           
+## </code></pre>
+<p>En este caso vemos que se obtiene el mismo resultado que con el discriminante lineal del ejemplo anterior.</p>
+<!-- Sección \@ref(bayes) -->
+</div>
+<div id="bayes" class="section level3 hasAnchor" number="2.3.3">
+<h3><span class="header-section-number">2.3.3</span> Bayes naíf<a href="generadores.html#bayes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El método Bayes naíf (<em>naive Bayes</em>, Bayes ingenuo) es una simplificación de los métodos discriminantes anteriores en la que se asume que las variables explicativas son independientes.
+Esta es una suposición extremadamente fuerte y en la práctica difícilmente nos encontraremos con un problema en el que los predictores sean independientes, pero a cambio se va a reducir mucho la complejidad del modelo.
+Esta simplicidad del modelo le va a permitir manejar un gran número de predictores, incluso con un tamaño muestral moderado, en situaciones en las que puede ser imposible utilizar LDA o QDA.
+Otra ventaja asociada con su simplicidad es que el cálculo de las predicciones va a poder hacerse muy rápido incluso para tamaños muestrales muy grandes.
+Además, y quizás esto sea lo más sorprendente, en ocasiones su rendimiento es muy competitivo.</p>
+<p>Asumiendo normalidad, este modelo no es más que un caso particular de QDA con matrices <span class="math inline">\(\Sigma_k\)</span> diagonales.
+Cuando las variables predictoras son categóricas, lo más habitual es modelizar su distribución utilizando distribuciones multinomiales.
+Siguiendo con los ejemplos anteriores, empleamos la función <a href="https://rdrr.io/pkg/e1071/man/naiveBayes.html"><code>e1071::naiveBayes()</code></a> para realizar la clasificación:</p>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="generadores.html#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(e1071)</span>
+<span id="cb169-2"><a href="generadores.html#cb169-2" aria-hidden="true" tabindex="-1"></a>nb <span class="ot">&lt;-</span> <span class="fu">naiveBayes</span>(bfan <span class="sc">~</span> abdomen <span class="sc">+</span> weight, <span class="at">data =</span> train)</span>
+<span id="cb169-3"><a href="generadores.html#cb169-3" aria-hidden="true" tabindex="-1"></a>nb</span></code></pre></div>
+<pre><code>## 
+## Naive Bayes Classifier for Discrete Predictors
+## 
+## Call:
+## naiveBayes.default(x = X, y = Y, laplace = laplace)
+## 
+## A-priori probabilities:
+## Y
+##      No     Yes 
+## 0.72959 0.27041 
+## 
+## Conditional probabilities:
+##      abdomen
+## Y       [,1]   [,2]
+##   No   88.25 7.4222
+##   Yes 103.06 8.7806
+## 
+##      weight
+## Y       [,1]   [,2]
+##   No  77.150 10.527
+##   Yes 90.487 11.144</code></pre>
+<p>En las tablas correspondientes a los predictores<a href="#fn35" class="footnote-ref" id="fnref35"><sup>35</sup></a>, se muestran la media y la desviación típica de sus distribuciones condicionadas a las distintas clases.</p>
+<p>En este caso los resultados obtenidos en la muestra de test son peores:</p>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="generadores.html#cb171-1" aria-hidden="true" tabindex="-1"></a>pred.nb <span class="ot">&lt;-</span> <span class="fu">predict</span>(nb, <span class="at">newdata =</span> test)</span>
+<span id="cb171-2"><a href="generadores.html#cb171-2" aria-hidden="true" tabindex="-1"></a><span class="co"># p.est &lt;- predict(nb, newdata = test, type = &quot;raw&quot;)</span></span>
+<span id="cb171-3"><a href="generadores.html#cb171-3" aria-hidden="true" tabindex="-1"></a>caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(pred.nb, test<span class="sc">$</span>bfan, <span class="at">positive =</span> <span class="st">&quot;Yes&quot;</span>)</span></code></pre></div>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction No Yes
+##        No  25   7
+##        Yes  4  14
+##                                        
+##                Accuracy : 0.78         
+##                  95% CI : (0.64, 0.885)
+##     No Information Rate : 0.58         
+##     P-Value [Acc &gt; NIR] : 0.00248      
+##                                        
+##                   Kappa : 0.539        
+##                                        
+##  Mcnemar&#39;s Test P-Value : 0.54649      
+##                                        
+##             Sensitivity : 0.667        
+##             Specificity : 0.862        
+##          Pos Pred Value : 0.778        
+##          Neg Pred Value : 0.781        
+##              Prevalence : 0.420        
+##          Detection Rate : 0.280        
+##    Detection Prevalence : 0.360        
+##       Balanced Accuracy : 0.764        
+##                                        
+##        &#39;Positive&#39; Class : Yes          
+## </code></pre>
+<p>Para finalizar, utilizamos <a href="https://rubenfcasal.github.io/mpae/reference/pred.plot.html"><code>mpae::pred.plot()</code></a> para comparar los resultados de los distintos métodos empleados en este capítulo (ver Figura <a href="generadores.html#fig:comp-bfan">2.15</a>).
+Los mejores (globalmente) se obtuvieron con el modelo de regresión logística de la Sección <a href="reg-glm.html#reg-glm">2.2</a>.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:comp-bfan"></span>
+<img src="02-clasicos_files/figure-html/comp-bfan-1.png" alt="Resultados de la clasificación en la muestra de test obtenidos con los distintos métodos (distribuciones de las predicciones condicionadas a los valores observados)." width="100%" />
+<p class="caption">
+Figura 2.15: Resultados de la clasificación en la muestra de test obtenidos con los distintos métodos (distribuciones de las predicciones condicionadas a los valores observados).
+</p>
+</div>
+<!-- 
+Ejercicio: 
+datos de clientes de la compañía de distribución industrial HBAT, pero consideraremos como respuesta la variable *alianza* y como predictores las percepciones de HBAT (al igual que en las secciones anteriores consideraremos únicamente variables explicativas continuas, sin interacciones, por comodidad)
+-->
+<div class="exercise">
+<p><span id="exr:winetaste-generadores" class="exercise"><strong>Ejercicio 2.5  </strong></span>Continuando el Ejercicio <a href="reg-glm.html#exr:winetaste-glm">2.4</a>, con los datos de calidad del vino <code>winetaste</code>, clasifica la calidad <code>taste</code> de los vinos mediante análisis discriminante lineal, análisis discriminante cuadrático y Bayes naíf.
+Compara los resultados de los distintos métodos, empleando la misma partición de los datos.</p>
+</div>
+
+</div>
+</div>
+<!-- </div> -->
+<h3>Bibliografía<a href="bibliografía.html#bibliografía" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-dalpiaz2020statlearn" class="csl-entry">
+Dalpiaz, D. (2020). <em>R for Statistical Learning</em>. <a href="https://daviddalpiaz.github.io/r4sl" class="uri">https://daviddalpiaz.github.io/r4sl</a>. <a href="https://daviddalpiaz.github.io/r4sl">https://daviddalpiaz.github.io/r4sl</a>
+</div>
+<div id="ref-fisher1936use" class="csl-entry">
+Fisher, R. A. (1936). The use of multiple measurements in taxonomic problems. <em>Annals of eugenics</em>, <em>7</em>(2), 179-188. <a href="https://doi.org/10.1111/j.1469-1809.1936.tb02137.x">https://doi.org/10.1111/j.1469-1809.1936.tb02137.x</a>
+</div>
+<div id="ref-friedman1989regularized" class="csl-entry">
+Friedman, J. (1989). Regularized discriminant analysis. <em>Journal of the American Statistical Association</em>, <em>84</em>(405), 165-175. <a href="https://doi.org/10.1080/01621459.1989.10478752">https://doi.org/10.1080/01621459.1989.10478752</a>
+</div>
+<div id="ref-hastie1996fisher" class="csl-entry">
+Hastie, T., y Tibshirani, R. (1996). Discriminant Analysis by Gaussian Mixtures. <em>Journal of the Royal Statistical Society. Series B (Methodological)</em>, <em>58</em>(1), 155-176. <a href="https://doi.org/10.1111/j.2517-6161.1996.tb02073.x">https://doi.org/10.1111/j.2517-6161.1996.tb02073.x</a>
+</div>
+<div id="ref-NIPS2001_ng" class="csl-entry">
+Ng, A., y Jordan, M. (2001). On Discriminative vs. Generative Classifiers: A comparison of logistic regression and naive Bayes. En T. Dietterich, S. Becker, y Z. Ghahramani (Eds.), <em>Advances in Neural Information Processing Systems</em>. MIT Press. <a href="https://proceedings.neurips.cc/paper_files/paper/2001/file/7b7a53e239400a13bd6be6c91c4f6c4e-Paper.pdf">https://proceedings.neurips.cc/paper_files/paper/2001/file/7b7a53e239400a13bd6be6c91c4f6c4e-Paper.pdf</a>
+</div>
+<div id="ref-welch1939note" class="csl-entry">
+Welch, B. L. (1939). Note on Discriminant Functions. <em>Biometrika</em>, <em>31</em>(1/2), 218-220. <a href="https://doi.org/10.2307/2334985">https://doi.org/10.2307/2334985</a>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="33">
+<li id="fn33"><p><span class="citation">Ng y Jordan (<a href="#ref-NIPS2001_ng" role="doc-biblioref">2001</a>)</span> afirman, ya en la introducción del artículo, que: “Se debe resolver el problema (de clasificación) directamente y nunca resolver un problema más general como un paso intermedio (como modelar, también, <span class="math inline">\(P(\mathbf{X}=\mathbf{x} \vert Y = k)\)</span>).
+De hecho, dejando a un lado detalles computacionales y cuestiones como la gestión de los datos faltantes, el consenso predominante parece ser que los clasificadores discriminadores son casi siempre preferibles a los generadores”.<a href="generadores.html#fnref33" class="footnote-back">↩︎</a></p></li>
+<li id="fn34"><p>Donde <span class="math inline">\(\propto\)</span> indica “proporcional a”, igual salvo una constante multiplicadora; en este caso <span class="math inline">\(1/c\)</span>, donde <span class="math inline">\(c = f(\mathbf{X}=\mathbf{x})\)</span> es la denominada <em>constante normalizadora</em>.<a href="generadores.html#fnref34" class="footnote-back">↩︎</a></p></li>
+<li id="fn35"><p>Aunque al imprimir los resultados aparece <code>Naive Bayes Classifier for Discrete Predictors</code>, se trata de un error. En este caso, todos los predictores son continuos.<a href="generadores.html#fnref35" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="reg-glm.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="trees.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rubenfcasal/book_mpae/edit/master/02-clasicos.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["book_mpae.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

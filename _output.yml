@@ -5,24 +5,11 @@ bookdown::gitbook:
   config:
     toc:
       before: |
-        <li><a href="./">Aprendizaje Estadístico</a></li>
+        <li><a href="./">Métodos predictivos de aprendizaje estadístico</a></li>
       after: |
         <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-    edit: https://github.com/rubenfcasal/aprendizaje_estadistico/edit/master/%s
+    edit: https://github.com/rubenfcasal/book_mpae/edit/master/%s
     sharing:
       github: yes
       facebook: no
       twitter: no
-    download: "pdf"
-    # download: ["pdf", "epub"]
-bookdown::pdf_book:
-  includes:
-    in_header: preamble.tex
-  latex_engine: xelatex
-  pandoc_args: [ "--csl", "apa-no-ampersand.csl"] # -M lang:sp
-  citation_package: default
-  # citation_package: natbib
-  # biblio-style: apalike
-  keep_tex: yes
-  # https://github.com/jgm/pandoc-templates/blob/master/default.latex
-# bookdown::epub_book: default

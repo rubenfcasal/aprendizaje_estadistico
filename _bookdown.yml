@@ -1,5 +1,5 @@
-book_filename: "aprendizaje_estadistico"
-repo: https://github.com/rubenfcasal/aprendizaje_estadistico
+book_filename: "book_mpae"
+repo: https://github.com/rubenfcasal/book_mpae
 output_dir: docs
 new_session: yes
 language:

@@ -4,20 +4,20 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>7.1 Regresión local | Aprendizaje Estadístico</title>
-  <meta name="description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
+  <title>7.1 Regresión local | Métodos predictivos de aprendizaje estadístico</title>
+  <meta name="description" content="7.1 Regresión local | Métodos predictivos de aprendizaje estadístico con R." />
   <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="7.1 Regresión local | Aprendizaje Estadístico" />
+  <meta property="og:title" content="7.1 Regresión local | Métodos predictivos de aprendizaje estadístico" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
-  <meta name="github-repo" content="rubenfcasal/aprendizaje_estadistico" />
+  <meta property="og:description" content="7.1 Regresión local | Métodos predictivos de aprendizaje estadístico con R." />
+  <meta name="github-repo" content="rubenfcasal/book_mpae" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="7.1 Regresión local | Aprendizaje Estadístico" />
+  <meta name="twitter:title" content="7.1 Regresión local | Métodos predictivos de aprendizaje estadístico" />
   
-  <meta name="twitter:description" content="Apuntes de la asignatura de Aprendizaje Estadístico del Máster en Técnicas Estadísticas." />
+  <meta name="twitter:description" content="7.1 Regresión local | Métodos predictivos de aprendizaje estadístico con R." />
   
 
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es)" />
@@ -168,19 +168,22 @@ div.csl-indent {
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">Aprendizaje Estadístico</a></li>
+<li><a href="./">Métodos predictivos de aprendizaje estadístico</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prólogo</a></li>
-<li class="chapter" data-level="1" data-path="intro-AE.html"><a href="intro-AE.html"><i class="fa fa-check"></i><b>1</b> Introducción al Aprendizaje Estadístico</a>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Bienvenida</a></li>
+<li class="chapter" data-level="" data-path="prólogo.html"><a href="prólogo.html"><i class="fa fa-check"></i>Prólogo</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje Estadístico vs. Aprendizaje Automático</a>
-<ul>
-<li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#machine-learning-vs.-data-mining"><i class="fa fa-check"></i><b>1.1.1</b> Machine Learning vs. Data Mining</a></li>
-<li class="chapter" data-level="1.1.2" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#las-dos-culturas"><i class="fa fa-check"></i><b>1.1.2</b> Las dos culturas</a></li>
-<li class="chapter" data-level="1.1.3" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#machine-learning-vs.-estadística"><i class="fa fa-check"></i><b>1.1.3</b> Machine Learning vs. Estadística</a></li>
+<li class="chapter" data-level="" data-path="el-lenguaje-de-programación-r.html"><a href="el-lenguaje-de-programación-r.html"><i class="fa fa-check"></i>El lenguaje de programación R</a></li>
+<li class="chapter" data-level="" data-path="organización.html"><a href="organización.html"><i class="fa fa-check"></i>Organización</a></li>
 </ul></li>
-<li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de Aprendizaje Estadístico</a>
+<li class="chapter" data-level="1" data-path="intro-AE.html"><a href="intro-AE.html"><i class="fa fa-check"></i><b>1</b> Introducción al aprendizaje estadístico</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje estadístico vs. aprendizaje automático</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#las-dos-culturas"><i class="fa fa-check"></i><b>1.1.1</b> Las dos culturas</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de aprendizaje estadístico</a>
 <ul>
 <li class="chapter" data-level="1.2.1" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#notacion"><i class="fa fa-check"></i><b>1.2.1</b> Notación y terminología</a></li>
 <li class="chapter" data-level="1.2.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#metodos-pkgs"><i class="fa fa-check"></i><b>1.2.2</b> Métodos (de aprendizaje supervisado) y paquetes de R</a></li>
@@ -189,100 +192,91 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="1.3.1" data-path="const-eval.html"><a href="const-eval.html#bias-variance"><i class="fa fa-check"></i><b>1.3.1</b> Equilibrio entre sesgo y varianza: infraajuste y sobreajuste</a></li>
 <li class="chapter" data-level="1.3.2" data-path="const-eval.html"><a href="const-eval.html#entrenamiento-test"><i class="fa fa-check"></i><b>1.3.2</b> Datos de entrenamiento y datos de test</a></li>
-<li class="chapter" data-level="1.3.3" data-path="const-eval.html"><a href="const-eval.html#cv"><i class="fa fa-check"></i><b>1.3.3</b> Validación cruzada</a></li>
+<li class="chapter" data-level="1.3.3" data-path="const-eval.html"><a href="const-eval.html#cv"><i class="fa fa-check"></i><b>1.3.3</b> Selección de hiperparámetros mediante validación cruzada</a></li>
 <li class="chapter" data-level="1.3.4" data-path="const-eval.html"><a href="const-eval.html#eval-reg"><i class="fa fa-check"></i><b>1.3.4</b> Evaluación de un método de regresión</a></li>
 <li class="chapter" data-level="1.3.5" data-path="const-eval.html"><a href="const-eval.html#eval-class"><i class="fa fa-check"></i><b>1.3.5</b> Evaluación de un método de clasificación</a></li>
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="dimen-curse.html"><a href="dimen-curse.html"><i class="fa fa-check"></i><b>1.4</b> La maldición de la dimensionalidad</a></li>
 <li class="chapter" data-level="1.5" data-path="analisis-modelos.html"><a href="analisis-modelos.html"><i class="fa fa-check"></i><b>1.5</b> Análisis e interpretación de los modelos</a></li>
-<li class="chapter" data-level="1.6" data-path="caret.html"><a href="caret.html"><i class="fa fa-check"></i><b>1.6</b> Introducción al paquete <code>caret</code></a>
+<li class="chapter" data-level="1.6" data-path="caret.html"><a href="caret.html"><i class="fa fa-check"></i><b>1.6</b> Introducción al paquete <code>caret</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="clasicos.html"><a href="clasicos.html"><i class="fa fa-check"></i><b>2</b> Métodos clásicos de estadística</a>
 <ul>
-<li class="chapter" data-level="1.6.1" data-path="caret.html"><a href="caret.html#métodos-implementados"><i class="fa fa-check"></i><b>1.6.1</b> Métodos implementados</a></li>
-<li class="chapter" data-level="1.6.2" data-path="caret.html"><a href="caret.html#herramientas"><i class="fa fa-check"></i><b>1.6.2</b> Herramientas</a></li>
-<li class="chapter" data-level="1.6.3" data-path="caret.html"><a href="caret.html#ejemplo"><i class="fa fa-check"></i><b>1.6.3</b> Ejemplo</a></li>
-<li class="chapter" data-level="1.6.4" data-path="caret.html"><a href="caret.html#desarrollo-futuro"><i class="fa fa-check"></i><b>1.6.4</b> Desarrollo futuro</a></li>
+<li class="chapter" data-level="2.1" data-path="rlm.html"><a href="rlm.html"><i class="fa fa-check"></i><b>2.1</b> Regresión lineal múltiple</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="rlm.html"><a href="rlm.html#colinealidad"><i class="fa fa-check"></i><b>2.1.1</b> El problema de la colinealidad</a></li>
+<li class="chapter" data-level="2.1.2" data-path="rlm.html"><a href="rlm.html#seleccion-rlm"><i class="fa fa-check"></i><b>2.1.2</b> Selección de variables explicativas</a></li>
+<li class="chapter" data-level="2.1.3" data-path="rlm.html"><a href="rlm.html#analisis-rlm"><i class="fa fa-check"></i><b>2.1.3</b> Análisis e interpretación del modelo</a></li>
+<li class="chapter" data-level="2.1.4" data-path="rlm.html"><a href="rlm.html#eval-rlm"><i class="fa fa-check"></i><b>2.1.4</b> Evaluación de la precisión</a></li>
+<li class="chapter" data-level="2.1.5" data-path="rlm.html"><a href="rlm.html#selec-ae-rlm"><i class="fa fa-check"></i><b>2.1.5</b> Selección del modelo mediante remuestreo</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="reg-glm.html"><a href="reg-glm.html"><i class="fa fa-check"></i><b>2.2</b> Modelos lineales generalizados</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="reg-glm.html"><a href="reg-glm.html#seleccion-glm"><i class="fa fa-check"></i><b>2.2.1</b> Selección de variables explicativas</a></li>
+<li class="chapter" data-level="2.2.2" data-path="reg-glm.html"><a href="reg-glm.html#analisis-glm"><i class="fa fa-check"></i><b>2.2.2</b> Análisis e interpretación del modelo</a></li>
+<li class="chapter" data-level="2.2.3" data-path="reg-glm.html"><a href="reg-glm.html#glm-bfan"><i class="fa fa-check"></i><b>2.2.3</b> Evaluación de la precisión</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="generadores.html"><a href="generadores.html"><i class="fa fa-check"></i><b>2.3</b> Otros métodos de clasificación</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="generadores.html"><a href="generadores.html#clas-lda"><i class="fa fa-check"></i><b>2.3.1</b> Análisis discriminante lineal</a></li>
+<li class="chapter" data-level="2.3.2" data-path="generadores.html"><a href="generadores.html#clas-qda"><i class="fa fa-check"></i><b>2.3.2</b> Análisis discriminante cuadrático</a></li>
+<li class="chapter" data-level="2.3.3" data-path="generadores.html"><a href="generadores.html#bayes"><i class="fa fa-check"></i><b>2.3.3</b> Bayes naíf</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="trees.html"><a href="trees.html"><i class="fa fa-check"></i><b>2</b> Árboles de decisión</a>
+<li class="chapter" data-level="3" data-path="trees.html"><a href="trees.html"><i class="fa fa-check"></i><b>3</b> Árboles de decisión</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="árboles-de-regresión-cart.html"><a href="árboles-de-regresión-cart.html"><i class="fa fa-check"></i><b>2.1</b> Árboles de regresión CART</a></li>
-<li class="chapter" data-level="2.2" data-path="árboles-de-clasificación-cart.html"><a href="árboles-de-clasificación-cart.html"><i class="fa fa-check"></i><b>2.2</b> Árboles de clasificación CART</a></li>
-<li class="chapter" data-level="2.3" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html"><i class="fa fa-check"></i><b>2.3</b> CART con el paquete <code>rpart</code></a>
+<li class="chapter" data-level="3.1" data-path="árboles-de-regresión-cart.html"><a href="árboles-de-regresión-cart.html"><i class="fa fa-check"></i><b>3.1</b> Árboles de regresión CART</a></li>
+<li class="chapter" data-level="3.2" data-path="árboles-de-clasificación-cart.html"><a href="árboles-de-clasificación-cart.html"><i class="fa fa-check"></i><b>3.2</b> Árboles de clasificación CART</a></li>
+<li class="chapter" data-level="3.3" data-path="tree-rpart.html"><a href="tree-rpart.html"><i class="fa fa-check"></i><b>3.3</b> CART con el paquete <code>rpart</code></a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#ejemplo-regresión"><i class="fa fa-check"></i><b>2.3.1</b> Ejemplo: regresión</a></li>
-<li class="chapter" data-level="2.3.2" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#class-rpart"><i class="fa fa-check"></i><b>2.3.2</b> Ejemplo: modelo de clasificación</a></li>
-<li class="chapter" data-level="2.3.3" data-path="cart-con-el-paquete-rpart.html"><a href="cart-con-el-paquete-rpart.html#interfaz-de-caret"><i class="fa fa-check"></i><b>2.3.3</b> Interfaz de <code>caret</code></a></li>
+<li class="chapter" data-level="3.3.1" data-path="tree-rpart.html"><a href="tree-rpart.html#reg-rpart"><i class="fa fa-check"></i><b>3.3.1</b> Ejemplo: regresión</a></li>
+<li class="chapter" data-level="3.3.2" data-path="tree-rpart.html"><a href="tree-rpart.html#class-rpart"><i class="fa fa-check"></i><b>3.3.2</b> Ejemplo: modelo de clasificación</a></li>
+<li class="chapter" data-level="3.3.3" data-path="tree-rpart.html"><a href="tree-rpart.html#interfaz-de-caret"><i class="fa fa-check"></i><b>3.3.3</b> Interfaz de <code>caret</code></a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html"><i class="fa fa-check"></i><b>2.4</b> Alternativas a los árboles CART</a>
-<ul>
-<li class="chapter" data-level="2.4.1" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html#ejemplo-1"><i class="fa fa-check"></i><b>2.4.1</b> Ejemplo</a></li>
+<li class="chapter" data-level="3.4" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html"><i class="fa fa-check"></i><b>3.4</b> Alternativas a los árboles CART</a></li>
 </ul></li>
+<li class="chapter" data-level="4" data-path="bagging-boosting.html"><a href="bagging-boosting.html"><i class="fa fa-check"></i><b>4</b> Bagging y boosting</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>4.1</b> Bagging</a></li>
+<li class="chapter" data-level="4.2" data-path="rf.html"><a href="rf.html"><i class="fa fa-check"></i><b>4.2</b> Bosques aleatorios</a></li>
+<li class="chapter" data-level="4.3" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html"><i class="fa fa-check"></i><b>4.3</b> Bagging y bosques aleatorios en R</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-clasificación-con-bagging"><i class="fa fa-check"></i><b>4.3.1</b> Ejemplo: clasificación con bagging</a></li>
+<li class="chapter" data-level="4.3.2" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-clasif-rf"><i class="fa fa-check"></i><b>4.3.2</b> Ejemplo: clasificación con bosques aleatorios</a></li>
+<li class="chapter" data-level="4.3.3" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-bosques-aleatorios-con-caret"><i class="fa fa-check"></i><b>4.3.3</b> Ejemplo: bosques aleatorios con <code>caret</code></a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="bagging-boosting.html"><a href="bagging-boosting.html"><i class="fa fa-check"></i><b>3</b> Bagging y Boosting</a>
+<li class="chapter" data-level="4.4" data-path="boosting.html"><a href="boosting.html"><i class="fa fa-check"></i><b>4.4</b> Boosting</a></li>
+<li class="chapter" data-level="4.5" data-path="boosting-r.html"><a href="boosting-r.html"><i class="fa fa-check"></i><b>4.5</b> Boosting en R</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>3.1</b> Bagging</a></li>
-<li class="chapter" data-level="3.2" data-path="bosques-aleatorios.html"><a href="bosques-aleatorios.html"><i class="fa fa-check"></i><b>3.2</b> Bosques aleatorios</a></li>
-<li class="chapter" data-level="3.3" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html"><i class="fa fa-check"></i><b>3.3</b> Bagging y bosques aleatorios en R</a>
-<ul>
-<li class="chapter" data-level="3.3.1" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-clasificación-con-bagging"><i class="fa fa-check"></i><b>3.3.1</b> Ejemplo: Clasificación con bagging</a></li>
-<li class="chapter" data-level="3.3.2" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-clasif-rf"><i class="fa fa-check"></i><b>3.3.2</b> Ejemplo: Clasificación con bosques aleatorios</a></li>
-<li class="chapter" data-level="3.3.3" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-bosques-aleatorios-con-caret"><i class="fa fa-check"></i><b>3.3.3</b> Ejemplo: bosques aleatorios con <code>caret</code></a></li>
-</ul></li>
-<li class="chapter" data-level="3.4" data-path="boosting.html"><a href="boosting.html"><i class="fa fa-check"></i><b>3.4</b> Boosting</a></li>
-<li class="chapter" data-level="3.5" data-path="boosting-en-r.html"><a href="boosting-en-r.html"><i class="fa fa-check"></i><b>3.5</b> Boosting en R</a>
-<ul>
-<li class="chapter" data-level="3.5.1" data-path="boosting-en-r.html"><a href="boosting-en-r.html#ejemplo-clasificación-con-el-paquete-ada"><i class="fa fa-check"></i><b>3.5.1</b> Ejemplo: clasificación con el paquete <code>ada</code></a></li>
-<li class="chapter" data-level="3.5.2" data-path="boosting-en-r.html"><a href="boosting-en-r.html#ejemplo-regresión-con-el-paquete-gbm"><i class="fa fa-check"></i><b>3.5.2</b> Ejemplo: regresión con el paquete <code>gbm</code></a></li>
-<li class="chapter" data-level="3.5.3" data-path="boosting-en-r.html"><a href="boosting-en-r.html#xgb-caret"><i class="fa fa-check"></i><b>3.5.3</b> Ejemplo: XGBoost con el paquete <code>caret</code></a></li>
+<li class="chapter" data-level="4.5.1" data-path="boosting-r.html"><a href="boosting-r.html#ejemplo-clasificación-con-el-paquete-ada"><i class="fa fa-check"></i><b>4.5.1</b> Ejemplo: clasificación con el paquete <code>ada</code></a></li>
+<li class="chapter" data-level="4.5.2" data-path="boosting-r.html"><a href="boosting-r.html#ejemplo-regresión-con-el-paquete-gbm"><i class="fa fa-check"></i><b>4.5.2</b> Ejemplo: regresión con el paquete <code>gbm</code></a></li>
+<li class="chapter" data-level="4.5.3" data-path="boosting-r.html"><a href="boosting-r.html#xgb-caret"><i class="fa fa-check"></i><b>4.5.3</b> Ejemplo: XGBoost con el paquete <code>caret</code></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>4</b> Máquinas de soporte vectorial</a>
+<li class="chapter" data-level="5" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>5</b> Máquinas de soporte vectorial</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="clasificadores-de-máximo-margen.html"><a href="clasificadores-de-máximo-margen.html"><i class="fa fa-check"></i><b>4.1</b> Clasificadores de máximo margen</a></li>
-<li class="chapter" data-level="4.2" data-path="clasificadores-de-soporte-vectorial.html"><a href="clasificadores-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>4.2</b> Clasificadores de soporte vectorial</a></li>
-<li class="chapter" data-level="4.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>4.3</b> Máquinas de soporte vectorial</a>
+<li class="chapter" data-level="5.1" data-path="clasificadores-de-máximo-margen.html"><a href="clasificadores-de-máximo-margen.html"><i class="fa fa-check"></i><b>5.1</b> Clasificadores de máximo margen</a></li>
+<li class="chapter" data-level="5.2" data-path="clasificadores-de-soporte-vectorial.html"><a href="clasificadores-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>5.2</b> Clasificadores de soporte vectorial</a></li>
+<li class="chapter" data-level="5.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>5.3</b> Máquinas de soporte vectorial</a>
 <ul>
-<li class="chapter" data-level="4.3.1" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#regresión-con-svm"><i class="fa fa-check"></i><b>4.3.1</b> Regresión con SVM</a></li>
-<li class="chapter" data-level="4.3.2" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#ventajas-e-incovenientes"><i class="fa fa-check"></i><b>4.3.2</b> Ventajas e incovenientes</a></li>
+<li class="chapter" data-level="5.3.1" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#regresión-con-svm"><i class="fa fa-check"></i><b>5.3.1</b> Regresión con SVM</a></li>
+<li class="chapter" data-level="5.3.2" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#ventajas-e-incovenientes"><i class="fa fa-check"></i><b>5.3.2</b> Ventajas e incovenientes</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="svm-kernlab.html"><a href="svm-kernlab.html"><i class="fa fa-check"></i><b>4.4</b> SVM con el paquete <code>kernlab</code></a></li>
+<li class="chapter" data-level="5.4" data-path="svm-kernlab.html"><a href="svm-kernlab.html"><i class="fa fa-check"></i><b>5.4</b> SVM en R</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="class-otros.html"><a href="class-otros.html"><i class="fa fa-check"></i><b>5</b> Otros métodos de clasificación</a>
+<li class="chapter" data-level="6" data-path="ext-glm.html"><a href="ext-glm.html"><i class="fa fa-check"></i><b>6</b> Extensiones de los modelos lineales (generalizados)</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="clas-lda.html"><a href="clas-lda.html"><i class="fa fa-check"></i><b>5.1</b> Análisis discriminate lineal</a></li>
-<li class="chapter" data-level="5.2" data-path="clas-qda.html"><a href="clas-qda.html"><i class="fa fa-check"></i><b>5.2</b> Análisis discriminante cuadrático</a></li>
-<li class="chapter" data-level="5.3" data-path="bayes.html"><a href="bayes.html"><i class="fa fa-check"></i><b>5.3</b> Naive Bayes</a></li>
+<li class="chapter" data-level="6.1" data-path="shrinkage.html"><a href="shrinkage.html"><i class="fa fa-check"></i><b>6.1</b> Métodos de regularización</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="shrinkage.html"><a href="shrinkage.html#implementación-en-r"><i class="fa fa-check"></i><b>6.1.1</b> Implementación en R</a></li>
+<li class="chapter" data-level="6.1.2" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-ridge-regression"><i class="fa fa-check"></i><b>6.1.2</b> Ejemplo: <em>ridge regression</em></a></li>
+<li class="chapter" data-level="6.1.3" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-lasso"><i class="fa fa-check"></i><b>6.1.3</b> Ejemplo: LASSO</a></li>
+<li class="chapter" data-level="6.1.4" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-elastic-net"><i class="fa fa-check"></i><b>6.1.4</b> Ejemplo: <em>elastic net</em></a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="modelos-lineales.html"><a href="modelos-lineales.html"><i class="fa fa-check"></i><b>6</b> Modelos lineales y extensiones</a>
+<li class="chapter" data-level="6.2" data-path="pca-pls.html"><a href="pca-pls.html"><i class="fa fa-check"></i><b>6.2</b> Métodos de reducción de la dimensión</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="reg-multiple.html"><a href="reg-multiple.html"><i class="fa fa-check"></i><b>6.1</b> Regresión lineal múltiple</a></li>
-<li class="chapter" data-level="6.2" data-path="colinealidad.html"><a href="colinealidad.html"><i class="fa fa-check"></i><b>6.2</b> El problema de la colinealidad</a></li>
-<li class="chapter" data-level="6.3" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html"><i class="fa fa-check"></i><b>6.3</b> Selección de variables explicativas</a>
-<ul>
-<li class="chapter" data-level="6.3.1" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html#búsqueda-exhaustiva"><i class="fa fa-check"></i><b>6.3.1</b> Búsqueda exhaustiva</a></li>
-<li class="chapter" data-level="6.3.2" data-path="seleccion-reg-lineal.html"><a href="seleccion-reg-lineal.html#selección-por-pasos"><i class="fa fa-check"></i><b>6.3.2</b> Selección por pasos</a></li>
-</ul></li>
-<li class="chapter" data-level="6.4" data-path="analisis-reg-multiple.html"><a href="analisis-reg-multiple.html"><i class="fa fa-check"></i><b>6.4</b> Análisis e interpretación del modelo</a></li>
-<li class="chapter" data-level="6.5" data-path="eval-reg-lineal.html"><a href="eval-reg-lineal.html"><i class="fa fa-check"></i><b>6.5</b> Evaluación de la precisión</a></li>
-<li class="chapter" data-level="6.6" data-path="selec-ae-reg-lineal.html"><a href="selec-ae-reg-lineal.html"><i class="fa fa-check"></i><b>6.6</b> Selección del modelo mediante remuestreo</a></li>
-<li class="chapter" data-level="6.7" data-path="shrinkage.html"><a href="shrinkage.html"><i class="fa fa-check"></i><b>6.7</b> Métodos de regularización</a>
-<ul>
-<li class="chapter" data-level="6.7.1" data-path="shrinkage.html"><a href="shrinkage.html#implementación-en-r"><i class="fa fa-check"></i><b>6.7.1</b> Implementación en R</a></li>
-<li class="chapter" data-level="6.7.2" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-ridge-regression"><i class="fa fa-check"></i><b>6.7.2</b> Ejemplo: Ridge Regression</a></li>
-<li class="chapter" data-level="6.7.3" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-lasso"><i class="fa fa-check"></i><b>6.7.3</b> Ejemplo: Lasso</a></li>
-<li class="chapter" data-level="6.7.4" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-elastic-net"><i class="fa fa-check"></i><b>6.7.4</b> Ejemplo: Elastic Net</a></li>
-</ul></li>
-<li class="chapter" data-level="6.8" data-path="pca-pls.html"><a href="pca-pls.html"><i class="fa fa-check"></i><b>6.8</b> Métodos de reducción de la dimensión</a>
-<ul>
-<li class="chapter" data-level="6.8.1" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-componentes-principales-pcr"><i class="fa fa-check"></i><b>6.8.1</b> Regresión por componentes principales (PCR)</a></li>
-<li class="chapter" data-level="6.8.2" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-mínimos-cuadrados-parciales-plsr"><i class="fa fa-check"></i><b>6.8.2</b> Regresión por mínimos cuadrados parciales (PLSR)</a></li>
-</ul></li>
-<li class="chapter" data-level="6.9" data-path="reg-glm.html"><a href="reg-glm.html"><i class="fa fa-check"></i><b>6.9</b> Modelos lineales generalizados</a>
-<ul>
-<li class="chapter" data-level="6.9.1" data-path="reg-glm.html"><a href="reg-glm.html#selección-de-variables-explicativas"><i class="fa fa-check"></i><b>6.9.1</b> Selección de variables explicativas</a></li>
-<li class="chapter" data-level="6.9.2" data-path="reg-glm.html"><a href="reg-glm.html#analisis-glm"><i class="fa fa-check"></i><b>6.9.2</b> Análisis e interpretación del modelo</a></li>
-<li class="chapter" data-level="6.9.3" data-path="reg-glm.html"><a href="reg-glm.html#evaluación-de-la-precisión"><i class="fa fa-check"></i><b>6.9.3</b> Evaluación de la precisión</a></li>
-<li class="chapter" data-level="6.9.4" data-path="reg-glm.html"><a href="reg-glm.html#extensiones"><i class="fa fa-check"></i><b>6.9.4</b> Extensiones</a></li>
+<li class="chapter" data-level="6.2.1" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-componentes-principales-pcr"><i class="fa fa-check"></i><b>6.2.1</b> Regresión por componentes principales (PCR)</a></li>
+<li class="chapter" data-level="6.2.2" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-mínimos-cuadrados-parciales-plsr"><i class="fa fa-check"></i><b>6.2.2</b> Regresión por mínimos cuadrados parciales (PLSR)</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="reg-np.html"><a href="reg-np.html"><i class="fa fa-check"></i><b>7</b> Regresión no paramétrica</a>
@@ -302,7 +296,7 @@ div.csl-indent {
 <li class="chapter" data-level="7.3" data-path="reg-gam.html"><a href="reg-gam.html"><i class="fa fa-check"></i><b>7.3</b> Modelos aditivos</a>
 <ul>
 <li class="chapter" data-level="7.3.1" data-path="reg-gam.html"><a href="reg-gam.html#superficies-de-predicción"><i class="fa fa-check"></i><b>7.3.1</b> Superficies de predicción</a></li>
-<li class="chapter" data-level="7.3.2" data-path="reg-gam.html"><a href="reg-gam.html#comparación-y-selección-de-modelos"><i class="fa fa-check"></i><b>7.3.2</b> Comparación y selección de modelos</a></li>
+<li class="chapter" data-level="7.3.2" data-path="reg-gam.html"><a href="reg-gam.html#anova-gam"><i class="fa fa-check"></i><b>7.3.2</b> Comparación y selección de modelos</a></li>
 <li class="chapter" data-level="7.3.3" data-path="reg-gam.html"><a href="reg-gam.html#mgcv-diagnosis"><i class="fa fa-check"></i><b>7.3.3</b> Diagnosis del modelo</a></li>
 </ul></li>
 <li class="chapter" data-level="7.4" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>7.4</b> Regresión spline adaptativa multivariante</a>
@@ -310,10 +304,10 @@ div.csl-indent {
 <li class="chapter" data-level="7.4.1" data-path="mars.html"><a href="mars.html#mars-con-el-paquete-earth"><i class="fa fa-check"></i><b>7.4.1</b> MARS con el paquete <code>earth</code></a></li>
 <li class="chapter" data-level="7.4.2" data-path="mars.html"><a href="mars.html#mars-con-el-paquete-caret"><i class="fa fa-check"></i><b>7.4.2</b> MARS con el paquete <code>caret</code></a></li>
 </ul></li>
-<li class="chapter" data-level="7.5" data-path="projection-pursuit.html"><a href="projection-pursuit.html"><i class="fa fa-check"></i><b>7.5</b> Projection pursuit</a>
+<li class="chapter" data-level="7.5" data-path="pursuit.html"><a href="pursuit.html"><i class="fa fa-check"></i><b>7.5</b> Projection pursuit</a>
 <ul>
-<li class="chapter" data-level="7.5.1" data-path="projection-pursuit.html"><a href="projection-pursuit.html#ppr"><i class="fa fa-check"></i><b>7.5.1</b> Regresión por <em>projection pursuit</em></a></li>
-<li class="chapter" data-level="7.5.2" data-path="projection-pursuit.html"><a href="projection-pursuit.html#implementación-en-r-1"><i class="fa fa-check"></i><b>7.5.2</b> Implementación en R</a></li>
+<li class="chapter" data-level="7.5.1" data-path="pursuit.html"><a href="pursuit.html#ppr"><i class="fa fa-check"></i><b>7.5.1</b> Regresión por projection pursuit</a></li>
+<li class="chapter" data-level="7.5.2" data-path="pursuit.html"><a href="pursuit.html#implementación-en-r-1"><i class="fa fa-check"></i><b>7.5.2</b> Implementación en R</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="neural-nets.html"><a href="neural-nets.html"><i class="fa fa-check"></i><b>8</b> Redes neuronales</a>
@@ -322,10 +316,7 @@ div.csl-indent {
 <li class="chapter" data-level="8.2" data-path="clasificación-con-ann.html"><a href="clasificación-con-ann.html"><i class="fa fa-check"></i><b>8.2</b> Clasificación con ANN</a></li>
 <li class="chapter" data-level="8.3" data-path="implementación-en-r-2.html"><a href="implementación-en-r-2.html"><i class="fa fa-check"></i><b>8.3</b> Implementación en R</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a>
-<ul>
-<li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
-</ul></li>
+<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -338,7 +329,7 @@ div.csl-indent {
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Aprendizaje Estadístico</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Métodos predictivos de aprendizaje estadístico</a>
           </h1>
         </div>
 
@@ -348,62 +339,75 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="reg-local" class="section level2 hasAnchor" number="7.1">
 <h2><span class="header-section-number">7.1</span> Regresión local<a href="reg-local.html#reg-local" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>En este tipo de métodos se incluirían: vecinos más próximos, regresión tipo núcleo y loess (o lowess).
-También se podrían incluir los <em>splines de regresión</em> (<em>regression splines</em>), pero se tratarán en la siguiente sección, ya que también se pueden ver como una extensión de un modelo lineal global.</p>
-<p>Con muchos de estos procedimientos no se obtiene una expresión cerrada del modelo ajustado y (en principio) es necesario disponer de la muestra de entrenamiento para calcular predicciones, por lo que en AE también se denominan <em>métodos basados en memoria</em>.</p>
+<p>Los métodos de <em>regresión local</em> incluyen: vecinos más próximos, regresión tipo núcleo y <em>loess</em> (o <em>lowess</em>).
+También se podrían incluir los <em>splines</em> de regresión (<em>regression splines</em>), pero los trataremos en la siguiente sección, ya que también se pueden ver como una extensión de un modelo lineal global.</p>
+<p>Con la mayoría de estos procedimientos no se obtiene una expresión cerrada del modelo ajustado y, en principio, es necesario disponer de la muestra de entrenamiento para poder realizar las predicciones. Por esta razón, en aprendizaje estadístico también se les denomina <em>métodos basados en memoria</em>.</p>
 <div id="reg-knn" class="section level3 hasAnchor" number="7.1.1">
 <h3><span class="header-section-number">7.1.1</span> Vecinos más próximos<a href="reg-local.html#reg-knn" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Uno de los métodos más conocidos de regresión local es el denominado <em>k-vecinos más cercanos</em> (<em>k-nearest neighbors</em>; KNN), que ya se empleó como ejemplo en la Sección <a href="dimen-curse.html#dimen-curse">1.4</a> (la maldición de la dimensionalidad).
-Se trata de un método muy simple, pero que en la práctica puede ser efectivo en muchas ocasiones.
-Se basa en la idea de que localmente la media condicional (la predicción óptima) es constante.
+<p>Uno de los métodos más conocidos de regresión local es el denominado <em>k-vecinos más cercanos</em> (<em>k-nearest neighbors</em>; KNN), que ya se empleó como ejemplo en la Sección <a href="dimen-curse.html#dimen-curse">1.4</a>, dedicada a la maldición de la dimensionalidad.
+Aunque se trata de un método muy simple, en la práctica puede resultar efectivo en numerosas ocasiones.
+Se basa en la idea de que, localmente, la media condicional (la predicción óptima) es constante.
 Concretamente, dados un entero <span class="math inline">\(k\)</span> (hiperparámetro) y un conjunto de entrenamiento <span class="math inline">\(\mathcal{T}\)</span>, para obtener la predicción correspondiente a un vector de valores de las variables explicativas <span class="math inline">\(\mathbf{x}\)</span>, el método de regresión KNN promedia las observaciones en un vecindario <span class="math inline">\(\mathcal{N}_k(\mathbf{x}, \mathcal{T})\)</span> formado por las <span class="math inline">\(k\)</span> observaciones más cercanas a <span class="math inline">\(\mathbf{x}\)</span>:
 <span class="math display">\[\hat{Y}(\mathbf{x}) = \hat{m}(\mathbf{x}) = \frac{1}{k} \sum_{i \in \mathcal{N}_k(\mathbf{x}, \mathcal{T})} Y_i\]</span>
-Se puede emplear la misma idea en el caso de clasificación, las frecuencias relativas en el vecindario serían las estimaciones de las probabilidades de las clases (lo que sería equivalente a considerar las variables indicadoras de las categorías) y normalmente la predicción sería la moda (la clase más probable).</p>
+Se puede emplear la misma idea en el caso de clasificación: las frecuencias relativas en el vecindario serían las estimaciones de las probabilidades de las clases (lo que sería equivalente a considerar las variables indicadoras de las categorías) y, por lo general, la predicción se haría utilizando la moda (es decir, la clase más probable).</p>
 <p>Para seleccionar el vecindario es necesario especificar una distancia, por ejemplo:
 <span class="math display">\[d(\mathbf{x}_0, \mathbf{x}_i) = \left( \sum_{j=1}^p \left| x_{j0} - x_{ji}  \right|^d  \right)^{\frac{1}{d}}\]</span>
-Normalmente se considera la distancia euclídea (<span class="math inline">\(d=2\)</span>) o la de Manhatan (<span class="math inline">\(d=1\)</span>) si los predictores son muméricos (también habría distancias diseñadas para predictores categóricos).
-En cualquier caso la recomendación es estandarizar previamente los predictores para que no influya su escala en el cálculo de las distancias.</p>
-<p>Como ya se mostró en al final del Capítulo <a href="intro-AE.html#intro-AE">1</a>, este método está implementado en la función <code>knnreg()</code> (Sección <a href="dimen-curse.html#dimen-curse">1.4</a>) y en el método <code>"knn"</code> del paquete <code>caret</code> (Sección <a href="caret.html#caret">1.6</a>).
-Como ejemplo adicional emplearemos el conjunto de datos <code>MASS::mcycle</code> que contiene mediciones de la aceleración de la cabeza en una simulación de un accidente de motocicleta, utilizado para probar cascos protectores (considerando el conjunto de datos completo como si fuese la muestra de entrenamiento; ver Figura <a href="reg-local.html#fig:np-knnfit">7.1</a>):</p>
-<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="reg-local.html#cb399-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(mcycle, <span class="at">package =</span> <span class="st">&quot;MASS&quot;</span>)</span>
-<span id="cb399-2"><a href="reg-local.html#cb399-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
-<span id="cb399-3"><a href="reg-local.html#cb399-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajuste de los modelos</span></span>
-<span id="cb399-4"><a href="reg-local.html#cb399-4" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">knnreg</span>(accel <span class="sc">~</span> times, <span class="at">data =</span> mcycle, <span class="at">k =</span> <span class="dv">5</span>) <span class="co"># 5% de los datos</span></span>
-<span id="cb399-5"><a href="reg-local.html#cb399-5" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">knnreg</span>(accel <span class="sc">~</span> times, <span class="at">data =</span> mcycle, <span class="at">k =</span> <span class="dv">10</span>)</span>
-<span id="cb399-6"><a href="reg-local.html#cb399-6" aria-hidden="true" tabindex="-1"></a>fit3 <span class="ot">&lt;-</span> <span class="fu">knnreg</span>(accel <span class="sc">~</span> times, <span class="at">data =</span> mcycle, <span class="at">k =</span> <span class="dv">20</span>)</span>
-<span id="cb399-7"><a href="reg-local.html#cb399-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Representación</span></span>
-<span id="cb399-8"><a href="reg-local.html#cb399-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(accel <span class="sc">~</span> times, <span class="at">data =</span> mcycle, <span class="at">col =</span> <span class="st">&#39;darkgray&#39;</span>) </span>
-<span id="cb399-9"><a href="reg-local.html#cb399-9" aria-hidden="true" tabindex="-1"></a>newx <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span> , <span class="dv">60</span>, <span class="at">len =</span> <span class="dv">200</span>)</span>
-<span id="cb399-10"><a href="reg-local.html#cb399-10" aria-hidden="true" tabindex="-1"></a>newdata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">times =</span> newx)</span>
-<span id="cb399-11"><a href="reg-local.html#cb399-11" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx, <span class="fu">predict</span>(fit1, newdata), <span class="at">lty =</span> <span class="dv">3</span>)</span>
-<span id="cb399-12"><a href="reg-local.html#cb399-12" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx, <span class="fu">predict</span>(fit2, newdata), <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb399-13"><a href="reg-local.html#cb399-13" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx, <span class="fu">predict</span>(fit3, newdata))</span>
-<span id="cb399-14"><a href="reg-local.html#cb399-14" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;5-NN&quot;</span>, <span class="st">&quot;10-NN&quot;</span>, <span class="st">&quot;20-NN&quot;</span>), </span>
-<span id="cb399-15"><a href="reg-local.html#cb399-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>), <span class="at">lwd =</span> <span class="dv">1</span>)</span></code></pre></div>
+Normalmente, si los predictores son muméricos se considera la distancia euclídea (<span class="math inline">\(d=2\)</span>) o la de Manhattan (<span class="math inline">\(d=1\)</span>) (también existen distancias diseñadas para predictores categóricos).
+En todos los casos se recomienda estandarizar previamente los predictores para que su escala no influya en el cálculo de las distancias.</p>
+<p>Como ya se indicó previamente, este método está implementado en la función <code>knnreg()</code> (Sección <a href="dimen-curse.html#dimen-curse">1.4</a>) y en el método <code>"knn"</code> del paquete <code>caret</code> (Sección <a href="caret.html#caret">1.6</a>).
+Como ejemplo adicional, emplearemos el conjunto de datos <code>MASS::mcycle</code>, que contiene mediciones de la aceleración de la cabeza en una simulación de un accidente de motocicleta, utilizado para probar cascos protectores. Consideraremos el conjunto de datos completo como si fuese la muestra de entrenamiento (ver Figura <a href="reg-local.html#fig:np-knnfit">7.1</a>):</p>
+<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="reg-local.html#cb394-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(mcycle, <span class="at">package =</span> <span class="st">&quot;MASS&quot;</span>)</span>
+<span id="cb394-2"><a href="reg-local.html#cb394-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb394-3"><a href="reg-local.html#cb394-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajuste de los modelos</span></span>
+<span id="cb394-4"><a href="reg-local.html#cb394-4" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">knnreg</span>(accel <span class="sc">~</span> times, <span class="at">data =</span> mcycle, <span class="at">k =</span> <span class="dv">5</span>) <span class="co"># 5% de los datos</span></span>
+<span id="cb394-5"><a href="reg-local.html#cb394-5" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">knnreg</span>(accel <span class="sc">~</span> times, <span class="at">data =</span> mcycle, <span class="at">k =</span> <span class="dv">10</span>)</span>
+<span id="cb394-6"><a href="reg-local.html#cb394-6" aria-hidden="true" tabindex="-1"></a>fit3 <span class="ot">&lt;-</span> <span class="fu">knnreg</span>(accel <span class="sc">~</span> times, <span class="at">data =</span> mcycle, <span class="at">k =</span> <span class="dv">20</span>)</span>
+<span id="cb394-7"><a href="reg-local.html#cb394-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Representación</span></span>
+<span id="cb394-8"><a href="reg-local.html#cb394-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(accel <span class="sc">~</span> times, <span class="at">data =</span> mcycle, <span class="at">col =</span> <span class="st">&#39;darkgray&#39;</span>) </span>
+<span id="cb394-9"><a href="reg-local.html#cb394-9" aria-hidden="true" tabindex="-1"></a>newx <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span> , <span class="dv">60</span>, <span class="at">len =</span> <span class="dv">200</span>)</span>
+<span id="cb394-10"><a href="reg-local.html#cb394-10" aria-hidden="true" tabindex="-1"></a>newdata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">times =</span> newx)</span>
+<span id="cb394-11"><a href="reg-local.html#cb394-11" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx, <span class="fu">predict</span>(fit1, newdata), <span class="at">lty =</span> <span class="dv">3</span>)</span>
+<span id="cb394-12"><a href="reg-local.html#cb394-12" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx, <span class="fu">predict</span>(fit2, newdata), <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb394-13"><a href="reg-local.html#cb394-13" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx, <span class="fu">predict</span>(fit3, newdata))</span>
+<span id="cb394-14"><a href="reg-local.html#cb394-14" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;5-NN&quot;</span>, <span class="st">&quot;10-NN&quot;</span>, <span class="st">&quot;20-NN&quot;</span>), </span>
+<span id="cb394-15"><a href="reg-local.html#cb394-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>), <span class="at">lwd =</span> <span class="dv">1</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:np-knnfit"></span>
 <img src="07-regresion_np_files/figure-html/np-knnfit-1.png" alt="Predicciones con el método KNN y distintos vecindarios." width="75%" />
 <p class="caption">
 Figura 7.1: Predicciones con el método KNN y distintos vecindarios.
 </p>
 </div>
-<p>El hiperparámetro <span class="math inline">\(k\)</span> (número de vecinos más cercanos) determina la complejidad del modelo, de forma que valores más pequeños de <span class="math inline">\(k\)</span> se corresponden con modelos más complejos (en el caso extremo <span class="math inline">\(k = 1\)</span> se interpolarían las observaciones).
-Este parámetro se puede seleccionar empleando alguno de los métodos descritos en la Sección <a href="const-eval.html#cv">1.3.3</a> (por ejemplo mediante validación con <em>k</em> grupos como se mostró en la Sección <a href="caret.html#caret">1.6</a>).</p>
+<p>El hiperparámetro <span class="math inline">\(k\)</span> (número de vecinos más próximos) determina la complejidad del modelo, de forma que valores más pequeños de <span class="math inline">\(k\)</span> se corresponden con modelos más complejos (en el caso extremo <span class="math inline">\(k = 1\)</span> se interpolarían las observaciones).
+Este parámetro se puede seleccionar empleando alguno de los métodos descritos en la Sección <a href="const-eval.html#cv">1.3.3</a> (por ejemplo, mediante validación cruzada, como se mostró en la Sección <a href="caret.html#caret">1.6</a>; ver Ejercicio <a href="reg-local.html#exr:knn-1">7.1</a>).</p>
+<p>El método de los vecinos más próximos también se puede utilizar, de forma análoga, para problemas de clasificación.
+En este caso obtendríamos estimaciones de las probabilidades de cada categoría:
+<span class="math display">\[\hat{p}_j(\mathbf{x}) = \frac{1}{k} \sum_{i \in \mathcal{N}_k(\mathbf{x}, \mathcal{T})} \mathcal I (y_i = j)\]</span>
+A partir de las cuales obtenemos la predicción de la respuesta categórica, como la categoría con mayor probabilidad estimada (ver Ejercicio <a href="reg-local.html#exr:knn-multinom">7.2</a>).</p>
+<div class="exercise">
+<p><span id="exr:knn-1" class="exercise"><strong>Ejercicio 7.1  </strong></span>Repite el ajuste anterior, usando <code>knnreg()</code>, seleccionando el número de <code>k</code> vecinos mediante validación cruzada dejando uno fuera y empleando el mínimo error absoluto medio como criterio.
+Se puede utilizar como referencia el código de la Sección <a href="const-eval.html#cv">1.3.3</a>.</p>
+</div>
+<div class="exercise">
+<p><span id="exr:knn-multinom" class="exercise"><strong>Ejercicio 7.2  </strong></span>En la Sección <a href="const-eval.html#eval-class">1.3.5</a> se utilizó el conjunto de datos <code>iris</code> como ejemplo de un problema de clasificación multiclase, con el objetivo de clasificar tres especies de lirio (<code>Species</code>) a partir de las dimensiones de los sépalos y pétalos de sus flores.
+Retomando ese ejemplo, realiza esta clasificación empleando el método <code>knn</code> de <code>caret</code>.
+Considerando el 80 % de las observaciones como muestra de aprendizaje y el 20 % restante como muestra de test, selecciona el número de vecinos mediante validación cruzada con 10 grupos, empleando el criterio de un error estándar de Breiman.
+Finalmente, evalúa la eficiencia de las predicciones en la muestra de test.</p>
+</div>
 </div>
 <div id="reg-locpol" class="section level3 hasAnchor" number="7.1.2">
 <h3><span class="header-section-number">7.1.2</span> Regresión polinómica local<a href="reg-local.html#reg-locpol" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>En el caso univariante, para cada <span class="math inline">\(x_0\)</span> se ajusta un polinomio de grado <span class="math inline">\(d\)</span>:
+<p>La regresión polinómica local univariante consiste en ajustar, por mínimos cuadrados ponderados, un polinomio de grado <span class="math inline">\(d\)</span> para cada <span class="math inline">\(x_0\)</span>:
 <span class="math display">\[\beta_0+\beta_{1}\left(x - x_0\right) + \cdots
 + \beta_{d}\left( x-x_0\right)^{d}\]</span>
-por mínimos cuadrados ponderados, con pesos
+con pesos
 <span class="math display">\[w_{i} = K_h(x - x_0) = \frac{1}{h}K\left(\frac{x-x_0}{h}\right)\]</span>
-donde <span class="math inline">\(K\)</span> es una función núcleo (normalmente una densidad simétrica en torno al cero) y <span class="math inline">\(h&gt;0\)</span> es un parámetro de suavizado, llamado ventana, que regula el tamaño del entorno que se usa para llevar a cabo el ajuste
-(esta ventana también se puede suponer local, <span class="math inline">\(h \equiv h(x_0)\)</span>; por ejemplo el método KNN se puede considerar un caso particular, con <span class="math inline">\(d=0\)</span> y <span class="math inline">\(K\)</span> la densidad de una <span class="math inline">\(\mathcal{U}(-1, 1)\)</span>).
-A partir de este ajuste<a href="#fn43" class="footnote-ref" id="fnref43"><sup>43</sup></a>:</p>
-<ul>
-<li><p>La estimación en <span class="math inline">\(x_0\)</span> es <span class="math inline">\(\hat{m}_{h}(x_0)=\hat{\beta}_0\)</span>.</p></li>
-<li><p>Podemos obtener también estimaciones de las derivadas:
-<span class="math inline">\(\widehat{m_{h}^{(r)}}(x_0) = r!\hat{\beta}_{r}\)</span>.</p></li>
-</ul>
+donde <span class="math inline">\(K\)</span> es una función núcleo (habitualmente una función de densidad simétrica en torno a cero) y <span class="math inline">\(h&gt;0\)</span> es un parámetro de suavizado, llamado ventana, que regula el tamaño del entorno que se usa para llevar a cabo el ajuste.
+En la expresión anterior se está considerando una ventana global, la misma para todos puntos, pero también se puede emplear una ventana local, <span class="math inline">\(h \equiv h(x_0)\)</span>.
+Por ejemplo, el método KNN se puede considerar un caso particular, con ventana local, <span class="math inline">\(d=0\)</span> (se ajusta una constante) y núcleo <span class="math inline">\(K\)</span> uniforme, la función de densidad de una distribución <span class="math inline">\(\mathcal{U}(-1, 1)\)</span>.
+Como resultado de los ajustes locales obtenemos la estimación en <span class="math inline">\(x_0\)</span>:
+<span class="math display">\[\hat{m}_{h}(x_0)=\hat{\beta}_0\]</span>
+y también podríamos obtener estimaciones de las derivadas
+<span class="math inline">\(\widehat{m_{h}^{(r)}}(x_0) = r!\hat{\beta}_{r}\)</span>.</p>
 <p>Por tanto, la estimación polinómica local de grado <span class="math inline">\(d\)</span>, <span class="math inline">\(\hat{m}_{h}(x)=\hat{\beta}_0\)</span>, se obtiene al minimizar:
 <span class="math display">\[\min_{\beta_0 ,\beta_1, \ldots, \beta_d} \sum_{i=1}^{n}\left\{ Y_{i} - \beta_0
 - \beta_1(x - X_i) - \ldots -\beta_d(x - X_i)^d \right\}^{2} K_{h}(x - X_i)\]</span></p>
@@ -416,102 +420,86 @@ donde <span class="math inline">\(\mathbf{e}_{1} = \left( 1, \cdots, 0\right)^{t
 es la matriz con <span class="math inline">\((1,x - X_i, \ldots, (x - X_i)^d)\)</span> en la fila <span class="math inline">\(i\)</span>,
 <span class="math inline">\(W_{x} = \mathtt{diag} \left( K_{h}(x_{1} - x), \ldots, K_{h}(x_{n} - x) \right)\)</span>
 es la matriz de pesos, e <span class="math inline">\(\mathbf{Y} = \left( Y_1, \cdots, Y_n\right)^{t}\)</span> es el vector de observaciones de la respuesta.</p>
-<p>Se puede pensar que se obtiene aplicando un suavizado polinómico a
+<p>Se puede pensar que la estimación anterior se obtiene aplicando un suavizado polinómico a
 <span class="math inline">\((X_i, Y_i)\)</span>:
 <span class="math display">\[\hat{\mathbf{Y}} = S\mathbf{Y}\]</span>
 siendo <span class="math inline">\(S\)</span> la matriz de suavizado con <span class="math inline">\(\mathbf{s}_{X_{i}}^{t}\)</span> en la fila <span class="math inline">\(i\)</span> (este tipo de métodos también se denominan <em>suavizadores lineales</em>).</p>
-<p>Habitualmente se considera <span class="math inline">\(d=0\)</span>, el estimador Nadaraya-Watson, o <span class="math inline">\(d=1\)</span>, estimador lineal local.
-Desde el punto de vista asintótico ambos estimadores tienen un comportamiento similar<a href="#fn44" class="footnote-ref" id="fnref44"><sup>44</sup></a>, pero en la práctica suele ser preferible el estimador lineal local, sobre todo porque se ve menos afectado por el denominado efecto frontera (Sección <a href="dimen-curse.html#dimen-curse">1.4</a>).</p>
-<p>La ventana <span class="math inline">\(h\)</span> es el (hiper)parámetro de mayor importancia en la predicción y para seleccionarlo se suelen emplear métodos de validación cruzada (Sección <a href="const-eval.html#cv">1.3.3</a>) o tipo plug-in (reemplazando las funciones desconocidas que aparecen en la expresión de la ventana asintóticamente óptima por estimaciones; e.g. función <code>dpill()</code> del paquete <code>KernSmooth</code>).
-Por ejemplo, usando el criterio de validación cruzada dejando uno fuera (LOOCV) se trataría de minimizar:
+<p>En lo que respecta a la selección del grado <span class="math inline">\(d\)</span> del polinomio, lo más habitual es utilizar el estimador de Nadaraya-Watson (<span class="math inline">\(d=0\)</span>) o el estimador lineal local (<span class="math inline">\(d=1\)</span>).
+Desde el punto de vista asintótico, ambos estimadores tienen un comportamiento similar<a href="#fn60" class="footnote-ref" id="fnref60"><sup>60</sup></a>, pero en la práctica suele ser preferible el estimador lineal local, sobre todo porque se ve menos afectado por el denominado efecto frontera (Sección <a href="dimen-curse.html#dimen-curse">1.4</a>).</p>
+<p>La ventana <span class="math inline">\(h\)</span> es el hiperparámetro de mayor importancia en la predicción y para su selección se suelen emplear métodos de validación cruzada (Sección <a href="const-eval.html#cv">1.3.3</a>) o tipo <em>plug-in</em> <span class="citation">(<a href="#ref-ruppert1995effective" role="doc-biblioref">Ruppert et al., 1995</a>)</span>.
+En este último caso, se reemplazan las funciones desconocidas que aparecen en la expresión de la ventana asintóticamente óptima por estimaciones (p. ej. función <code>dpill()</code> del paquete <code>KernSmooth</code>).
+Así, usando el criterio de validación cruzada dejando uno fuera (LOOCV), se trataría de minimizar:
 <span class="math display">\[CV(h)=\frac{1}{n}\sum_{i=1}^n(y_i-\hat{m}_{-i}(x_i))^2\]</span>
 siendo <span class="math inline">\(\hat{m}_{-i}(x_i)\)</span> la predicción obtenida eliminando la observación <span class="math inline">\(i\)</span>-ésima.
 Al igual que en el caso de regresión lineal, este error también se puede obtener a partir del ajuste con todos los datos:
 <span class="math display">\[CV(h)=\frac{1}{n}\sum_{i=1}^n\left(\frac{y_i-\hat{m}(x_i)}{1 - S_{ii}}\right)^2\]</span>
 siendo <span class="math inline">\(S_{ii}\)</span> el elemento <span class="math inline">\(i\)</span>-ésimo de la diagonal de la matriz de suavizado (esto en general es cierto para cualquier suavizador lineal).</p>
-<p>Alternativamente se podría emplear <em>validación cruzada generalizada</em> <span class="citation">(<a href="#ref-craven1978smoothing" role="doc-biblioref">Craven y Wahba, 1978</a>)</span>:
+<p>Alternativamente, se podría emplear <em>validación cruzada generalizada</em> <span class="citation">(<a href="#ref-craven1978smoothing" role="doc-biblioref">Craven y Wahba, 1978</a>)</span>, sin más que sustituir <span class="math inline">\(S_{ii}\)</span> por su promedio:
 <span class="math display">\[GCV(h)=\frac{1}{n}\sum_{i=1}^n\left(\frac{y_i-\hat{m}(x_i)}{1 - \frac{1}{n}tr(S)}\right)^2\]</span>
-(sustituyendo <span class="math inline">\(S_{ii}\)</span> por su promedio).
-Además, la traza de la matriz de suavizado <span class="math inline">\(tr(S)\)</span> es lo que se conoce como el <em>número efectivo de parámetros</em> (<span class="math inline">\(n - tr(S)\)</span> sería una aproximación de los grados de libertad del error).</p>
-<p>Aunque el paquete base de <code>R</code> incluye herramientas para la estimación tipo núcleo de la regresión (<code>ksmooth()</code>, <code>loess()</code>), recomiendan el uso del paquete <code>KernSmooth</code> <span class="citation">(<a href="#ref-R-KernSmooth" role="doc-biblioref"><strong>R-KernSmooth?</strong></a>)</span>.
-Continuando con el ejemplo del conjunto de datos <code>MASS::mcycle</code> emplearemos la función <code>locpoly()</code> de este paquete para obtener estimaciones lineales locales<a href="#fn45" class="footnote-ref" id="fnref45"><sup>45</sup></a> con una venta seleccionada mediante un método plug-in (ver Figura <a href="reg-local.html#fig:llr-fit">7.2</a>):</p>
-<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="reg-local.html#cb400-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data(mcycle, package = &quot;MASS&quot;)</span></span>
-<span id="cb400-2"><a href="reg-local.html#cb400-2" aria-hidden="true" tabindex="-1"></a>times <span class="ot">&lt;-</span> mcycle<span class="sc">$</span>times</span>
-<span id="cb400-3"><a href="reg-local.html#cb400-3" aria-hidden="true" tabindex="-1"></a>accel <span class="ot">&lt;-</span> mcycle<span class="sc">$</span>accel  </span>
-<span id="cb400-4"><a href="reg-local.html#cb400-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(KernSmooth)</span>
-<span id="cb400-5"><a href="reg-local.html#cb400-5" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="fu">dpill</span>(times, accel) <span class="co"># Método plug-in de Ruppert, Sheather y Wand (1995)</span></span>
-<span id="cb400-6"><a href="reg-local.html#cb400-6" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">locpoly</span>(times, accel, <span class="at">bandwidth =</span> h) <span class="co"># Estimación lineal local</span></span>
-<span id="cb400-7"><a href="reg-local.html#cb400-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(times, accel, <span class="at">col =</span> <span class="st">&#39;darkgray&#39;</span>)</span>
-<span id="cb400-8"><a href="reg-local.html#cb400-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(fit)</span></code></pre></div>
+La traza de la matriz de suavizado, <span class="math inline">\(tr(S)\)</span>, se conoce como el <em>número efectivo de parámetros</em> y, para aproximar los grados de libertad del error, se utiliza (<span class="math inline">\(n - tr(S)\)</span>.</p>
+<p>Aunque el paquete base de <code>R</code> incluye herramientas para la estimación tipo núcleo de la regresión (<code>ksmooth()</code>, <code>loess()</code>), se recomienda el uso del paquete <code>KernSmooth</code> <span class="citation">(<a href="#ref-R-KernSmooth" role="doc-biblioref">Wand, 2023</a>)</span>.</p>
+<p>Continuando con el ejemplo del conjunto de datos <code>MASS::mcycle</code>, emplearemos la función <code>locpoly()</code> del paquete <code>KernSmooth</code> para obtener estimaciones lineales locales<a href="#fn61" class="footnote-ref" id="fnref61"><sup>61</sup></a> con una ventana seleccionada mediante un método plug-in (ver Figura <a href="reg-local.html#fig:llr-fit">7.2</a>):</p>
+<div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb395-1"><a href="reg-local.html#cb395-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data(mcycle, package = &quot;MASS&quot;)</span></span>
+<span id="cb395-2"><a href="reg-local.html#cb395-2" aria-hidden="true" tabindex="-1"></a>times <span class="ot">&lt;-</span> mcycle<span class="sc">$</span>times</span>
+<span id="cb395-3"><a href="reg-local.html#cb395-3" aria-hidden="true" tabindex="-1"></a>accel <span class="ot">&lt;-</span> mcycle<span class="sc">$</span>accel  </span>
+<span id="cb395-4"><a href="reg-local.html#cb395-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(KernSmooth)</span>
+<span id="cb395-5"><a href="reg-local.html#cb395-5" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="fu">dpill</span>(times, accel) <span class="co"># Método plug-in</span></span>
+<span id="cb395-6"><a href="reg-local.html#cb395-6" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">locpoly</span>(times, accel, <span class="at">bandwidth =</span> h) <span class="co"># Estimación lineal local</span></span>
+<span id="cb395-7"><a href="reg-local.html#cb395-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(times, accel, <span class="at">col =</span> <span class="st">&#39;darkgray&#39;</span>)</span>
+<span id="cb395-8"><a href="reg-local.html#cb395-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(fit)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:llr-fit"></span>
 <img src="07-regresion_np_files/figure-html/llr-fit-1.png" alt="Ajuste lineal local con ventana plug-in." width="75%" />
 <p class="caption">
 Figura 7.2: Ajuste lineal local con ventana plug-in.
 </p>
 </div>
-<p>Hay que tener en cuenta que el paquete <code>KernSmooth</code> no implementa los métodos
-<code>predict()</code> y <code>residuals()</code>:</p>
-<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="reg-local.html#cb401-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">approx</span>(fit, <span class="at">xout =</span> times)<span class="sc">$</span>y <span class="co"># pred &lt;- predict(fit)</span></span>
-<span id="cb401-2"><a href="reg-local.html#cb401-2" aria-hidden="true" tabindex="-1"></a>resid <span class="ot">&lt;-</span> accel <span class="sc">-</span> pred <span class="co"># resid &lt;- residuals(fit)</span></span></code></pre></div>
+<p>Hay que tener en cuenta que el paquete <code>KernSmooth</code> no implementa los métodos <code>predict()</code> y <code>residuals()</code>.
+El resultado del ajuste es una rejilla con las predicciones y podríamos emplear interpolación para calcular predicciones en otras posiciones:</p>
+<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="reg-local.html#cb396-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">approx</span>(fit, <span class="at">xout =</span> times)<span class="sc">$</span>y </span>
+<span id="cb396-2"><a href="reg-local.html#cb396-2" aria-hidden="true" tabindex="-1"></a>resid <span class="ot">&lt;-</span> accel <span class="sc">-</span> pred </span></code></pre></div>
 <p>Tampoco calcula medidas de bondad de ajuste, aunque podríamos calcular medidas de la precisión de las predicciones de la forma habitual (en este caso de la muestra de entrenamiento):</p>
-<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="reg-local.html#cb402-1" aria-hidden="true" tabindex="-1"></a>accuracy <span class="ot">&lt;-</span> <span class="cf">function</span>(pred, obs, <span class="at">na.rm =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb402-2"><a href="reg-local.html#cb402-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">tol =</span> <span class="fu">sqrt</span>(.Machine<span class="sc">$</span>double.eps)) {</span>
-<span id="cb402-3"><a href="reg-local.html#cb402-3" aria-hidden="true" tabindex="-1"></a>  err <span class="ot">&lt;-</span> obs <span class="sc">-</span> pred     <span class="co"># Errores</span></span>
-<span id="cb402-4"><a href="reg-local.html#cb402-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(na.rm) {</span>
-<span id="cb402-5"><a href="reg-local.html#cb402-5" aria-hidden="true" tabindex="-1"></a>    is.a <span class="ot">&lt;-</span> <span class="sc">!</span><span class="fu">is.na</span>(err)</span>
-<span id="cb402-6"><a href="reg-local.html#cb402-6" aria-hidden="true" tabindex="-1"></a>    err <span class="ot">&lt;-</span> err[is.a]</span>
-<span id="cb402-7"><a href="reg-local.html#cb402-7" aria-hidden="true" tabindex="-1"></a>    obs <span class="ot">&lt;-</span> obs[is.a]</span>
-<span id="cb402-8"><a href="reg-local.html#cb402-8" aria-hidden="true" tabindex="-1"></a>  }  </span>
-<span id="cb402-9"><a href="reg-local.html#cb402-9" aria-hidden="true" tabindex="-1"></a>  perr <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span>err<span class="sc">/</span><span class="fu">pmax</span>(obs, tol)  <span class="co"># Errores porcentuales</span></span>
-<span id="cb402-10"><a href="reg-local.html#cb402-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">c</span>(</span>
-<span id="cb402-11"><a href="reg-local.html#cb402-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">me =</span> <span class="fu">mean</span>(err),           <span class="co"># Error medio</span></span>
-<span id="cb402-12"><a href="reg-local.html#cb402-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">rmse =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(err<span class="sc">^</span><span class="dv">2</span>)), <span class="co"># Raíz del error cuadrático medio </span></span>
-<span id="cb402-13"><a href="reg-local.html#cb402-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">mae =</span> <span class="fu">mean</span>(<span class="fu">abs</span>(err)),     <span class="co"># Error absoluto medio</span></span>
-<span id="cb402-14"><a href="reg-local.html#cb402-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">mpe =</span> <span class="fu">mean</span>(perr),         <span class="co"># Error porcentual medio</span></span>
-<span id="cb402-15"><a href="reg-local.html#cb402-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">mape =</span> <span class="fu">mean</span>(<span class="fu">abs</span>(perr)),   <span class="co"># Error porcentual absoluto medio</span></span>
-<span id="cb402-16"><a href="reg-local.html#cb402-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">r.squared =</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">sum</span>(err<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="fu">sum</span>((obs <span class="sc">-</span> <span class="fu">mean</span>(obs))<span class="sc">^</span><span class="dv">2</span>) <span class="co"># Pseudo R-cuadrado</span></span>
-<span id="cb402-17"><a href="reg-local.html#cb402-17" aria-hidden="true" tabindex="-1"></a>  ))</span>
-<span id="cb402-18"><a href="reg-local.html#cb402-18" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb402-19"><a href="reg-local.html#cb402-19" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(pred, accel)</span></code></pre></div>
-<pre><code>##            me          rmse           mae           mpe          mape 
-## -2.712378e-01  2.140005e+01  1.565921e+01 -2.460832e+10  7.559223e+10 
-##     r.squared 
-##  8.023864e-01</code></pre>
-<p>El caso multivariante es análogo, aunque habría que considerar una matriz de ventanas simétrica <span class="math inline">\(H\)</span>. También hay extensiones para el caso de predictores categóricos (nominales o ordinales) y para el caso de distribuciones de la respuesta distintas de la normal (máxima verosimilitud local).</p>
-<p>Otros paquetes de R incluyen más funcionalidades (<code>sm</code>, <code>locfit</code>, <a href="https://rubenfcasal.github.io/npsp"><code>npsp</code></a>…), pero hoy en día el paquete <a href="https://github.com/JeffreyRacine/R-Package-np"><code>np</code></a> es el que se podría considerar más completo.</p>
+<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb397-1"><a href="reg-local.html#cb397-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(pred, accel)</span></code></pre></div>
+<pre><code>##          me        rmse         mae         mpe        mape   r.squared 
+## -2.7124e-01  2.1400e+01  1.5659e+01 -2.4608e+10  7.5592e+10  8.0239e-01</code></pre>
+<p>La regresión polinómica local multivariante es análoga a la univariante, aunque en este caso habría que considerar una matriz de ventanas simétrica <span class="math inline">\(H\)</span>. También hay extensiones para el caso de predictores categóricos (nominales o ordinales) y para el caso de distribuciones de la respuesta distintas de la normal (máxima verosimilitud local).</p>
+<p>Otros paquetes de <code>R</code> incluyen más funcionalidades (<code>sm</code>, <code>locfit</code>, <a href="https://rubenfcasal.github.io/npsp"><code>npsp</code></a>…), pero hoy en día el paquete <a href="https://github.com/JeffreyRacine/R-Package-np"><code>np</code></a> <span class="citation">(<a href="#ref-R-np" role="doc-biblioref">Racine y Hayfield, 2023</a>)</span> es el que se podría considerar más completo.</p>
 </div>
 <div id="regresión-polinómica-local-robusta" class="section level3 hasAnchor" number="7.1.3">
 <h3><span class="header-section-number">7.1.3</span> Regresión polinómica local robusta<a href="reg-local.html#regresión-polinómica-local-robusta" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>También hay versiones robustas del ajuste polinómico local tipo núcleo.
-Estos métodos surgieron en el caso bivariante (<span class="math inline">\(p=1\)</span>), por lo que también se denominan <em>suavizado de diagramas de dispersión</em> (<em>scatterplot smoothing</em>; e.g. función <code>lowess()</code>, <em>locally weighted scatterplot smoothing</em>, del paquete base).
-Posteriormente se extendieron al caso multivariante (e.g. función <code>loess()</code>).
-Son métodos muy empleados en análisis descriptivo (no supervisado) y normalmente se emplean ventanas locales tipo vecinos más cercanos (por ejemplo a través de un parámetro <code>spam</code> que determina la proporción de observaciones empleadas en el ajuste).</p>
-<p>Como ejemplo emplearemos la función <code>loess()</code> con ajuste robusto (habrá que establecer <code>family = "symmetric"</code> para emplear M-estimadores, por defecto con 4 iteraciones, en lugar de mínimos cuadrados ponderados), seleccionando previamente <code>spam</code> por validación cruzada (LOOCV) pero empleando como criterio de error la mediana de los errores en valor absoluto (<em>median absolute deviation</em>, MAD)<a href="#fn46" class="footnote-ref" id="fnref46"><sup>46</sup></a> (ver Figura <a href="reg-local.html#fig:loess-cv">7.3</a>).</p>
-<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="reg-local.html#cb404-1" aria-hidden="true" tabindex="-1"></a>cv.loess <span class="ot">&lt;-</span> <span class="cf">function</span>(formula, datos, span, ...) {</span>
-<span id="cb404-2"><a href="reg-local.html#cb404-2" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(datos)</span>
-<span id="cb404-3"><a href="reg-local.html#cb404-3" aria-hidden="true" tabindex="-1"></a>  cv.pred <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n)</span>
-<span id="cb404-4"><a href="reg-local.html#cb404-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) {</span>
-<span id="cb404-5"><a href="reg-local.html#cb404-5" aria-hidden="true" tabindex="-1"></a>    modelo <span class="ot">&lt;-</span> <span class="fu">loess</span>(formula, datos[<span class="sc">-</span>i, ], <span class="at">span =</span> span, </span>
-<span id="cb404-6"><a href="reg-local.html#cb404-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">control =</span> <span class="fu">loess.control</span>(<span class="at">surface =</span> <span class="st">&quot;direct&quot;</span>), ...)</span>
-<span id="cb404-7"><a href="reg-local.html#cb404-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># control = loess.control(surface = &quot;direct&quot;) permite extrapolaciones</span></span>
-<span id="cb404-8"><a href="reg-local.html#cb404-8" aria-hidden="true" tabindex="-1"></a>    cv.pred[i] <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo, <span class="at">newdata =</span> datos[i, ])</span>
-<span id="cb404-9"><a href="reg-local.html#cb404-9" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb404-10"><a href="reg-local.html#cb404-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(cv.pred)</span>
-<span id="cb404-11"><a href="reg-local.html#cb404-11" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb404-12"><a href="reg-local.html#cb404-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb404-13"><a href="reg-local.html#cb404-13" aria-hidden="true" tabindex="-1"></a>ventanas <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="at">len =</span> <span class="dv">10</span>)</span>
-<span id="cb404-14"><a href="reg-local.html#cb404-14" aria-hidden="true" tabindex="-1"></a>np <span class="ot">&lt;-</span> <span class="fu">length</span>(ventanas)</span>
-<span id="cb404-15"><a href="reg-local.html#cb404-15" aria-hidden="true" tabindex="-1"></a>cv.error <span class="ot">&lt;-</span> <span class="fu">numeric</span>(np)</span>
-<span id="cb404-16"><a href="reg-local.html#cb404-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(p <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>np){</span>
-<span id="cb404-17"><a href="reg-local.html#cb404-17" aria-hidden="true" tabindex="-1"></a>  cv.pred <span class="ot">&lt;-</span> <span class="fu">cv.loess</span>(accel <span class="sc">~</span> times, mcycle, ventanas[p], <span class="at">family =</span> <span class="st">&quot;symmetric&quot;</span>)</span>
-<span id="cb404-18"><a href="reg-local.html#cb404-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># cv.error[p] &lt;- mean((cv.pred - mcycle$accel)^2)</span></span>
-<span id="cb404-19"><a href="reg-local.html#cb404-19" aria-hidden="true" tabindex="-1"></a>  cv.error[p] <span class="ot">&lt;-</span> <span class="fu">median</span>(<span class="fu">abs</span>(cv.pred <span class="sc">-</span> mcycle<span class="sc">$</span>accel))</span>
-<span id="cb404-20"><a href="reg-local.html#cb404-20" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb404-21"><a href="reg-local.html#cb404-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb404-22"><a href="reg-local.html#cb404-22" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ventanas, cv.error)</span>
-<span id="cb404-23"><a href="reg-local.html#cb404-23" aria-hidden="true" tabindex="-1"></a>imin <span class="ot">&lt;-</span> <span class="fu">which.min</span>(cv.error)</span>
-<span id="cb404-24"><a href="reg-local.html#cb404-24" aria-hidden="true" tabindex="-1"></a>span.cv <span class="ot">&lt;-</span> ventanas[imin]</span>
-<span id="cb404-25"><a href="reg-local.html#cb404-25" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(span.cv, cv.error[imin], <span class="at">pch =</span> <span class="dv">16</span>)</span></code></pre></div>
+<p>Se han desarrollado variantes robustas del ajuste polinómico local tipo núcleo.
+Estos métodos surgieron en el caso bivariante (<span class="math inline">\(p=1\)</span>), por lo que también se denominan <em>suavizado de diagramas de dispersión</em> (<em>scatterplot smoothing</em>; p. ej. la función <code>lowess()</code> del paquete base de <code>R</code>, acrónimo de <em>locally weighted scatterplot smoothing</em>).
+Posteriormente se extendieron al caso multivariante (p. ej. la función <code>loess()</code>).
+Son métodos muy empleados en análisis descriptivo (no supervisado) y normalmente se emplean ventanas locales tipo vecinos más cercanos (por ejemplo a través de un parámetro <code>span</code> que determina la proporción de observaciones empleadas en el ajuste).</p>
+<p>Como ejemplo continuaremos con el conjunto de datos <code>MASS::mcycle</code> y emplearemos la función <code>loess()</code> para realizar un ajuste robusto.
+Será necesario establecer <code>family = "symmetric"</code> para emplear M-estimadores, por defecto con 4 iteraciones, en lugar de mínimos cuadrados ponderados.
+Previamente, seleccionaremos el parámetro <code>span</code> por validación cruzada (LOOCV), pero empleando como criterio de error la mediana de los errores en valor absoluto (<em>median absolute deviation</em>, MAD)<a href="#fn62" class="footnote-ref" id="fnref62"><sup>62</sup></a> (ver Figura <a href="reg-local.html#fig:loess-cv">7.3</a>).</p>
+<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="reg-local.html#cb399-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Función que calcula las predicciones LOOCV</span></span>
+<span id="cb399-2"><a href="reg-local.html#cb399-2" aria-hidden="true" tabindex="-1"></a>cv.loess <span class="ot">&lt;-</span> <span class="cf">function</span>(formula, datos, span, ...) {</span>
+<span id="cb399-3"><a href="reg-local.html#cb399-3" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(datos)</span>
+<span id="cb399-4"><a href="reg-local.html#cb399-4" aria-hidden="true" tabindex="-1"></a>  cv.pred <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n)</span>
+<span id="cb399-5"><a href="reg-local.html#cb399-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) {</span>
+<span id="cb399-6"><a href="reg-local.html#cb399-6" aria-hidden="true" tabindex="-1"></a>    modelo <span class="ot">&lt;-</span> <span class="fu">loess</span>(formula, datos[<span class="sc">-</span>i, ], <span class="at">span =</span> span, </span>
+<span id="cb399-7"><a href="reg-local.html#cb399-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">control =</span> <span class="fu">loess.control</span>(<span class="at">surface =</span> <span class="st">&quot;direct&quot;</span>), ...)</span>
+<span id="cb399-8"><a href="reg-local.html#cb399-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># loess.control(surface = &quot;direct&quot;) permite extrapolaciones</span></span>
+<span id="cb399-9"><a href="reg-local.html#cb399-9" aria-hidden="true" tabindex="-1"></a>    cv.pred[i] <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo, <span class="at">newdata =</span> datos[i, ])</span>
+<span id="cb399-10"><a href="reg-local.html#cb399-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb399-11"><a href="reg-local.html#cb399-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(cv.pred)</span>
+<span id="cb399-12"><a href="reg-local.html#cb399-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb399-13"><a href="reg-local.html#cb399-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Búsqueda valor óptimo</span></span>
+<span id="cb399-14"><a href="reg-local.html#cb399-14" aria-hidden="true" tabindex="-1"></a>ventanas <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="at">len =</span> <span class="dv">10</span>)</span>
+<span id="cb399-15"><a href="reg-local.html#cb399-15" aria-hidden="true" tabindex="-1"></a>np <span class="ot">&lt;-</span> <span class="fu">length</span>(ventanas)</span>
+<span id="cb399-16"><a href="reg-local.html#cb399-16" aria-hidden="true" tabindex="-1"></a>cv.error <span class="ot">&lt;-</span> <span class="fu">numeric</span>(np)</span>
+<span id="cb399-17"><a href="reg-local.html#cb399-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(p <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>np){</span>
+<span id="cb399-18"><a href="reg-local.html#cb399-18" aria-hidden="true" tabindex="-1"></a>  cv.pred <span class="ot">&lt;-</span> <span class="fu">cv.loess</span>(accel <span class="sc">~</span> times, mcycle, ventanas[p], </span>
+<span id="cb399-19"><a href="reg-local.html#cb399-19" aria-hidden="true" tabindex="-1"></a>                      <span class="at">family =</span> <span class="st">&quot;symmetric&quot;</span>)</span>
+<span id="cb399-20"><a href="reg-local.html#cb399-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># cv.error[p] &lt;- mean((cv.pred - mcycle$accel)^2)</span></span>
+<span id="cb399-21"><a href="reg-local.html#cb399-21" aria-hidden="true" tabindex="-1"></a>  cv.error[p] <span class="ot">&lt;-</span> <span class="fu">median</span>(<span class="fu">abs</span>(cv.pred <span class="sc">-</span> mcycle<span class="sc">$</span>accel))</span>
+<span id="cb399-22"><a href="reg-local.html#cb399-22" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb399-23"><a href="reg-local.html#cb399-23" aria-hidden="true" tabindex="-1"></a>imin <span class="ot">&lt;-</span> <span class="fu">which.min</span>(cv.error)</span>
+<span id="cb399-24"><a href="reg-local.html#cb399-24" aria-hidden="true" tabindex="-1"></a>span.cv <span class="ot">&lt;-</span> ventanas[imin]</span>
+<span id="cb399-25"><a href="reg-local.html#cb399-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Representación</span></span>
+<span id="cb399-26"><a href="reg-local.html#cb399-26" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ventanas, cv.error)</span>
+<span id="cb399-27"><a href="reg-local.html#cb399-27" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(span.cv, cv.error[imin], <span class="at">pch =</span> <span class="dv">16</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:loess-cv"></span>
 <img src="07-regresion_np_files/figure-html/loess-cv-1.png" alt="Error de predicción de validación cruzada (mediana de los errores absolutos) del ajuste LOWESS dependiendo del parámetro de suavizado." width="75%" />
 <p class="caption">
@@ -519,10 +507,10 @@ Figura 7.3: Error de predicción de validación cruzada (mediana de los errores 
 </p>
 </div>
 <p>Empleamos el parámetro de suavizado seleccionado para ajustar el modelo final (ver Figura <a href="reg-local.html#fig:loess-fit">7.4</a>):</p>
-<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="reg-local.html#cb405-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajuste con todos los datos</span></span>
-<span id="cb405-2"><a href="reg-local.html#cb405-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(accel <span class="sc">~</span> times, <span class="at">data =</span> mcycle, <span class="at">col =</span> <span class="st">&#39;darkgray&#39;</span>)</span>
-<span id="cb405-3"><a href="reg-local.html#cb405-3" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">loess</span>(accel <span class="sc">~</span> times, mcycle, <span class="at">span =</span> span.cv, <span class="at">family =</span> <span class="st">&quot;symmetric&quot;</span>)</span>
-<span id="cb405-4"><a href="reg-local.html#cb405-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(mcycle<span class="sc">$</span>times, <span class="fu">predict</span>(fit))</span></code></pre></div>
+<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="reg-local.html#cb400-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajuste con todos los datos</span></span>
+<span id="cb400-2"><a href="reg-local.html#cb400-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(accel <span class="sc">~</span> times, <span class="at">data =</span> mcycle, <span class="at">col =</span> <span class="st">&#39;darkgray&#39;</span>)</span>
+<span id="cb400-3"><a href="reg-local.html#cb400-3" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">loess</span>(accel <span class="sc">~</span> times, mcycle, <span class="at">span =</span> span.cv, <span class="at">family =</span> <span class="st">&quot;symmetric&quot;</span>)</span>
+<span id="cb400-4"><a href="reg-local.html#cb400-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(mcycle<span class="sc">$</span>times, <span class="fu">predict</span>(fit))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:loess-fit"></span>
 <img src="07-regresion_np_files/figure-html/loess-fit-1.png" alt="Ajuste polinómico local robusto (LOWESS), con el parámetro de suavizado seleccionado mediante validación cruzada." width="75%" />
 <p class="caption">
@@ -531,7 +519,7 @@ Figura 7.4: Ajuste polinómico local robusto (LOWESS), con el parámetro de suav
 </div>
 </div>
 </div>
-<h3>References</h3>
+<h3>Bibliografía<a href="bibliografía.html#bibliografía" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
 <div id="ref-craven1978smoothing" class="csl-entry">
 Craven, P., y Wahba, G. (1978). Smoothing noisy data with spline functions. <em>Numerische Mathematik</em>, <em>31</em>(4), 377-403. <a href="https://doi.org/10.1007/bf01404567">https://doi.org/10.1007/bf01404567</a>
@@ -539,14 +527,22 @@ Craven, P., y Wahba, G. (1978). Smoothing noisy data with spline functions. <em>
 <div id="ref-fan1996" class="csl-entry">
 Fan, J., y Gijbels, I. (1996). <em>Local Polynomial Modelling and Its Applications</em>. Chapman; Hall.
 </div>
+<div id="ref-R-np" class="csl-entry">
+Racine, J. S., y Hayfield, T. (2023). <em><span>np: Nonparametric Kernel Smoothing Methods for Mixed Data Types</span></em>. <a href="https://cran.r-project.org/package=np">https://cran.r-project.org/package=np</a>
+</div>
+<div id="ref-ruppert1995effective" class="csl-entry">
+Ruppert, D., Sheather, S. J., y Wand, M. P. (1995). An effective bandwidth selector for local least squares regression. <em>Journal of the American Statistical Association</em>, <em>90</em>(432), 1257-1270.
+</div>
+<div id="ref-R-KernSmooth" class="csl-entry">
+Wand, M. (2023). <em><span>KernSmooth: Functions for Kernel Smoothing Supporting Wand and Jones (1995)</span></em>. <a href="https://cran.r-project.org/package=KernSmooth">https://cran.r-project.org/package=KernSmooth</a>
+</div>
 </div>
 <div class="footnotes">
 <hr />
-<ol start="43">
-<li id="fn43"><p>Se puede pensar que se están estimando los coeficientes de un desarrollo de Taylor de <span class="math inline">\(m(x_0)\)</span>.<a href="reg-local.html#fnref43" class="footnote-back">↩︎</a></p></li>
-<li id="fn44"><p>Asintóticamente el estimador lineal local tiene un sesgo menor que el de Nadaraya-Watson (pero del mismo orden) y la misma varianza (e.g. <span class="citation">Fan y Gijbels (<a href="#ref-fan1996" role="doc-biblioref">1996</a>)</span>).<a href="reg-local.html#fnref44" class="footnote-back">↩︎</a></p></li>
-<li id="fn45"><p>La función <code>KernSmooth::locpoly()</code> también admite la estimación de derivadas.<a href="reg-local.html#fnref45" class="footnote-back">↩︎</a></p></li>
-<li id="fn46"><p>En este caso habría dependencia entre las observaciones y los criterios habituales como validación cruzada tenderán a seleccionar ventanas pequeñas, i.e. a infrasuavizar.<a href="reg-local.html#fnref46" class="footnote-back">↩︎</a></p></li>
+<ol start="60">
+<li id="fn60"><p>Asintóticamente el estimador lineal local tiene un sesgo menor que el de Nadaraya-Watson (pero del mismo orden) y la misma varianza (p. ej. <span class="citation">Fan y Gijbels (<a href="#ref-fan1996" role="doc-biblioref">1996</a>)</span>).<a href="reg-local.html#fnref60" class="footnote-back">↩︎</a></p></li>
+<li id="fn61"><p>La función <code>KernSmooth::locpoly()</code> también admite la estimación de derivadas.<a href="reg-local.html#fnref61" class="footnote-back">↩︎</a></p></li>
+<li id="fn62"><p>En este caso hay dependencia entre las observaciones y los criterios habituales, como validación cruzada, tienden a seleccionar ventanas pequeñas, <em>i. e.</em> a infrasuavizar.<a href="reg-local.html#fnref62" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -586,7 +582,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rubenfcasal/aprendizaje_estadistico/edit/master/07-regresion_np.Rmd",
+"link": "https://github.com/rubenfcasal/book_mpae/edit/master/07-regresion_np.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -597,7 +593,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["aprendizaje_estadistico.pdf"],
+"download": ["book_mpae.pdf"],
 "search": {
 "engine": "fuse",
 "options": null

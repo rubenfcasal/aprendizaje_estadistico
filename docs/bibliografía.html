@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="es" xml:lang="es">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Bibliografía | Métodos predictivos de aprendizaje estadístico</title>
+  <meta name="description" content="Bibliografía | Métodos predictivos de aprendizaje estadístico con R." />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Bibliografía | Métodos predictivos de aprendizaje estadístico" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Bibliografía | Métodos predictivos de aprendizaje estadístico con R." />
+  <meta name="github-repo" content="rubenfcasal/book_mpae" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Bibliografía | Métodos predictivos de aprendizaje estadístico" />
+  
+  <meta name="twitter:description" content="Bibliografía | Métodos predictivos de aprendizaje estadístico con R." />
+  
+
+<meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es)" />
+<meta name="author" content="Julián Costa Bouzas (julian.costa@udc.es)" />
+<meta name="author" content="Manuel Oviedo de la Fuente (manuel.oviedo@udc.es)" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="implementación-en-r-2.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.30/datatables.js"></script>
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.13.4/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Métodos predictivos de aprendizaje estadístico</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Bienvenida</a></li>
+<li class="chapter" data-level="" data-path="prólogo.html"><a href="prólogo.html"><i class="fa fa-check"></i>Prólogo</a>
+<ul>
+<li class="chapter" data-level="" data-path="el-lenguaje-de-programación-r.html"><a href="el-lenguaje-de-programación-r.html"><i class="fa fa-check"></i>El lenguaje de programación R</a></li>
+<li class="chapter" data-level="" data-path="organización.html"><a href="organización.html"><i class="fa fa-check"></i>Organización</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="intro-AE.html"><a href="intro-AE.html"><i class="fa fa-check"></i><b>1</b> Introducción al aprendizaje estadístico</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje estadístico vs. aprendizaje automático</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#las-dos-culturas"><i class="fa fa-check"></i><b>1.1.1</b> Las dos culturas</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de aprendizaje estadístico</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#notacion"><i class="fa fa-check"></i><b>1.2.1</b> Notación y terminología</a></li>
+<li class="chapter" data-level="1.2.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#metodos-pkgs"><i class="fa fa-check"></i><b>1.2.2</b> Métodos (de aprendizaje supervisado) y paquetes de R</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="const-eval.html"><a href="const-eval.html"><i class="fa fa-check"></i><b>1.3</b> Construcción y evaluación de los modelos</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="const-eval.html"><a href="const-eval.html#bias-variance"><i class="fa fa-check"></i><b>1.3.1</b> Equilibrio entre sesgo y varianza: infraajuste y sobreajuste</a></li>
+<li class="chapter" data-level="1.3.2" data-path="const-eval.html"><a href="const-eval.html#entrenamiento-test"><i class="fa fa-check"></i><b>1.3.2</b> Datos de entrenamiento y datos de test</a></li>
+<li class="chapter" data-level="1.3.3" data-path="const-eval.html"><a href="const-eval.html#cv"><i class="fa fa-check"></i><b>1.3.3</b> Selección de hiperparámetros mediante validación cruzada</a></li>
+<li class="chapter" data-level="1.3.4" data-path="const-eval.html"><a href="const-eval.html#eval-reg"><i class="fa fa-check"></i><b>1.3.4</b> Evaluación de un método de regresión</a></li>
+<li class="chapter" data-level="1.3.5" data-path="const-eval.html"><a href="const-eval.html#eval-class"><i class="fa fa-check"></i><b>1.3.5</b> Evaluación de un método de clasificación</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="dimen-curse.html"><a href="dimen-curse.html"><i class="fa fa-check"></i><b>1.4</b> La maldición de la dimensionalidad</a></li>
+<li class="chapter" data-level="1.5" data-path="analisis-modelos.html"><a href="analisis-modelos.html"><i class="fa fa-check"></i><b>1.5</b> Análisis e interpretación de los modelos</a></li>
+<li class="chapter" data-level="1.6" data-path="caret.html"><a href="caret.html"><i class="fa fa-check"></i><b>1.6</b> Introducción al paquete <code>caret</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="clasicos.html"><a href="clasicos.html"><i class="fa fa-check"></i><b>2</b> Métodos clásicos de estadística</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="rlm.html"><a href="rlm.html"><i class="fa fa-check"></i><b>2.1</b> Regresión lineal múltiple</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="rlm.html"><a href="rlm.html#colinealidad"><i class="fa fa-check"></i><b>2.1.1</b> El problema de la colinealidad</a></li>
+<li class="chapter" data-level="2.1.2" data-path="rlm.html"><a href="rlm.html#seleccion-rlm"><i class="fa fa-check"></i><b>2.1.2</b> Selección de variables explicativas</a></li>
+<li class="chapter" data-level="2.1.3" data-path="rlm.html"><a href="rlm.html#analisis-rlm"><i class="fa fa-check"></i><b>2.1.3</b> Análisis e interpretación del modelo</a></li>
+<li class="chapter" data-level="2.1.4" data-path="rlm.html"><a href="rlm.html#eval-rlm"><i class="fa fa-check"></i><b>2.1.4</b> Evaluación de la precisión</a></li>
+<li class="chapter" data-level="2.1.5" data-path="rlm.html"><a href="rlm.html#selec-ae-rlm"><i class="fa fa-check"></i><b>2.1.5</b> Selección del modelo mediante remuestreo</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="reg-glm.html"><a href="reg-glm.html"><i class="fa fa-check"></i><b>2.2</b> Modelos lineales generalizados</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="reg-glm.html"><a href="reg-glm.html#seleccion-glm"><i class="fa fa-check"></i><b>2.2.1</b> Selección de variables explicativas</a></li>
+<li class="chapter" data-level="2.2.2" data-path="reg-glm.html"><a href="reg-glm.html#analisis-glm"><i class="fa fa-check"></i><b>2.2.2</b> Análisis e interpretación del modelo</a></li>
+<li class="chapter" data-level="2.2.3" data-path="reg-glm.html"><a href="reg-glm.html#glm-bfan"><i class="fa fa-check"></i><b>2.2.3</b> Evaluación de la precisión</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="generadores.html"><a href="generadores.html"><i class="fa fa-check"></i><b>2.3</b> Otros métodos de clasificación</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="generadores.html"><a href="generadores.html#clas-lda"><i class="fa fa-check"></i><b>2.3.1</b> Análisis discriminante lineal</a></li>
+<li class="chapter" data-level="2.3.2" data-path="generadores.html"><a href="generadores.html#clas-qda"><i class="fa fa-check"></i><b>2.3.2</b> Análisis discriminante cuadrático</a></li>
+<li class="chapter" data-level="2.3.3" data-path="generadores.html"><a href="generadores.html#bayes"><i class="fa fa-check"></i><b>2.3.3</b> Bayes naíf</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="trees.html"><a href="trees.html"><i class="fa fa-check"></i><b>3</b> Árboles de decisión</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="árboles-de-regresión-cart.html"><a href="árboles-de-regresión-cart.html"><i class="fa fa-check"></i><b>3.1</b> Árboles de regresión CART</a></li>
+<li class="chapter" data-level="3.2" data-path="árboles-de-clasificación-cart.html"><a href="árboles-de-clasificación-cart.html"><i class="fa fa-check"></i><b>3.2</b> Árboles de clasificación CART</a></li>
+<li class="chapter" data-level="3.3" data-path="tree-rpart.html"><a href="tree-rpart.html"><i class="fa fa-check"></i><b>3.3</b> CART con el paquete <code>rpart</code></a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="tree-rpart.html"><a href="tree-rpart.html#reg-rpart"><i class="fa fa-check"></i><b>3.3.1</b> Ejemplo: regresión</a></li>
+<li class="chapter" data-level="3.3.2" data-path="tree-rpart.html"><a href="tree-rpart.html#class-rpart"><i class="fa fa-check"></i><b>3.3.2</b> Ejemplo: modelo de clasificación</a></li>
+<li class="chapter" data-level="3.3.3" data-path="tree-rpart.html"><a href="tree-rpart.html#interfaz-de-caret"><i class="fa fa-check"></i><b>3.3.3</b> Interfaz de <code>caret</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html"><i class="fa fa-check"></i><b>3.4</b> Alternativas a los árboles CART</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="bagging-boosting.html"><a href="bagging-boosting.html"><i class="fa fa-check"></i><b>4</b> Bagging y boosting</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>4.1</b> Bagging</a></li>
+<li class="chapter" data-level="4.2" data-path="rf.html"><a href="rf.html"><i class="fa fa-check"></i><b>4.2</b> Bosques aleatorios</a></li>
+<li class="chapter" data-level="4.3" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html"><i class="fa fa-check"></i><b>4.3</b> Bagging y bosques aleatorios en R</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-clasificación-con-bagging"><i class="fa fa-check"></i><b>4.3.1</b> Ejemplo: clasificación con bagging</a></li>
+<li class="chapter" data-level="4.3.2" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-clasif-rf"><i class="fa fa-check"></i><b>4.3.2</b> Ejemplo: clasificación con bosques aleatorios</a></li>
+<li class="chapter" data-level="4.3.3" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-bosques-aleatorios-con-caret"><i class="fa fa-check"></i><b>4.3.3</b> Ejemplo: bosques aleatorios con <code>caret</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="boosting.html"><a href="boosting.html"><i class="fa fa-check"></i><b>4.4</b> Boosting</a></li>
+<li class="chapter" data-level="4.5" data-path="boosting-r.html"><a href="boosting-r.html"><i class="fa fa-check"></i><b>4.5</b> Boosting en R</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="boosting-r.html"><a href="boosting-r.html#ejemplo-clasificación-con-el-paquete-ada"><i class="fa fa-check"></i><b>4.5.1</b> Ejemplo: clasificación con el paquete <code>ada</code></a></li>
+<li class="chapter" data-level="4.5.2" data-path="boosting-r.html"><a href="boosting-r.html#ejemplo-regresión-con-el-paquete-gbm"><i class="fa fa-check"></i><b>4.5.2</b> Ejemplo: regresión con el paquete <code>gbm</code></a></li>
+<li class="chapter" data-level="4.5.3" data-path="boosting-r.html"><a href="boosting-r.html#xgb-caret"><i class="fa fa-check"></i><b>4.5.3</b> Ejemplo: XGBoost con el paquete <code>caret</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>5</b> Máquinas de soporte vectorial</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="clasificadores-de-máximo-margen.html"><a href="clasificadores-de-máximo-margen.html"><i class="fa fa-check"></i><b>5.1</b> Clasificadores de máximo margen</a></li>
+<li class="chapter" data-level="5.2" data-path="clasificadores-de-soporte-vectorial.html"><a href="clasificadores-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>5.2</b> Clasificadores de soporte vectorial</a></li>
+<li class="chapter" data-level="5.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>5.3</b> Máquinas de soporte vectorial</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#regresión-con-svm"><i class="fa fa-check"></i><b>5.3.1</b> Regresión con SVM</a></li>
+<li class="chapter" data-level="5.3.2" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#ventajas-e-incovenientes"><i class="fa fa-check"></i><b>5.3.2</b> Ventajas e incovenientes</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="svm-kernlab.html"><a href="svm-kernlab.html"><i class="fa fa-check"></i><b>5.4</b> SVM en R</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="ext-glm.html"><a href="ext-glm.html"><i class="fa fa-check"></i><b>6</b> Extensiones de los modelos lineales (generalizados)</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="shrinkage.html"><a href="shrinkage.html"><i class="fa fa-check"></i><b>6.1</b> Métodos de regularización</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="shrinkage.html"><a href="shrinkage.html#implementación-en-r"><i class="fa fa-check"></i><b>6.1.1</b> Implementación en R</a></li>
+<li class="chapter" data-level="6.1.2" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-ridge-regression"><i class="fa fa-check"></i><b>6.1.2</b> Ejemplo: <em>ridge regression</em></a></li>
+<li class="chapter" data-level="6.1.3" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-lasso"><i class="fa fa-check"></i><b>6.1.3</b> Ejemplo: LASSO</a></li>
+<li class="chapter" data-level="6.1.4" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-elastic-net"><i class="fa fa-check"></i><b>6.1.4</b> Ejemplo: <em>elastic net</em></a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="pca-pls.html"><a href="pca-pls.html"><i class="fa fa-check"></i><b>6.2</b> Métodos de reducción de la dimensión</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-componentes-principales-pcr"><i class="fa fa-check"></i><b>6.2.1</b> Regresión por componentes principales (PCR)</a></li>
+<li class="chapter" data-level="6.2.2" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-mínimos-cuadrados-parciales-plsr"><i class="fa fa-check"></i><b>6.2.2</b> Regresión por mínimos cuadrados parciales (PLSR)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="reg-np.html"><a href="reg-np.html"><i class="fa fa-check"></i><b>7</b> Regresión no paramétrica</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="reg-local.html"><a href="reg-local.html"><i class="fa fa-check"></i><b>7.1</b> Regresión local</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="reg-local.html"><a href="reg-local.html#reg-knn"><i class="fa fa-check"></i><b>7.1.1</b> Vecinos más próximos</a></li>
+<li class="chapter" data-level="7.1.2" data-path="reg-local.html"><a href="reg-local.html#reg-locpol"><i class="fa fa-check"></i><b>7.1.2</b> Regresión polinómica local</a></li>
+<li class="chapter" data-level="7.1.3" data-path="reg-local.html"><a href="reg-local.html#regresión-polinómica-local-robusta"><i class="fa fa-check"></i><b>7.1.3</b> Regresión polinómica local robusta</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>7.2</b> Splines</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="splines.html"><a href="splines.html#reg-splines"><i class="fa fa-check"></i><b>7.2.1</b> Splines de regresión</a></li>
+<li class="chapter" data-level="7.2.2" data-path="splines.html"><a href="splines.html#splines-de-suavizado"><i class="fa fa-check"></i><b>7.2.2</b> Splines de suavizado</a></li>
+<li class="chapter" data-level="7.2.3" data-path="splines.html"><a href="splines.html#splines-penalizados"><i class="fa fa-check"></i><b>7.2.3</b> Splines penalizados</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="reg-gam.html"><a href="reg-gam.html"><i class="fa fa-check"></i><b>7.3</b> Modelos aditivos</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="reg-gam.html"><a href="reg-gam.html#superficies-de-predicción"><i class="fa fa-check"></i><b>7.3.1</b> Superficies de predicción</a></li>
+<li class="chapter" data-level="7.3.2" data-path="reg-gam.html"><a href="reg-gam.html#anova-gam"><i class="fa fa-check"></i><b>7.3.2</b> Comparación y selección de modelos</a></li>
+<li class="chapter" data-level="7.3.3" data-path="reg-gam.html"><a href="reg-gam.html#mgcv-diagnosis"><i class="fa fa-check"></i><b>7.3.3</b> Diagnosis del modelo</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>7.4</b> Regresión spline adaptativa multivariante</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="mars.html"><a href="mars.html#mars-con-el-paquete-earth"><i class="fa fa-check"></i><b>7.4.1</b> MARS con el paquete <code>earth</code></a></li>
+<li class="chapter" data-level="7.4.2" data-path="mars.html"><a href="mars.html#mars-con-el-paquete-caret"><i class="fa fa-check"></i><b>7.4.2</b> MARS con el paquete <code>caret</code></a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="pursuit.html"><a href="pursuit.html"><i class="fa fa-check"></i><b>7.5</b> Projection pursuit</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="pursuit.html"><a href="pursuit.html#ppr"><i class="fa fa-check"></i><b>7.5.1</b> Regresión por projection pursuit</a></li>
+<li class="chapter" data-level="7.5.2" data-path="pursuit.html"><a href="pursuit.html#implementación-en-r-1"><i class="fa fa-check"></i><b>7.5.2</b> Implementación en R</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="neural-nets.html"><a href="neural-nets.html"><i class="fa fa-check"></i><b>8</b> Redes neuronales</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="single-hidden-layer-feedforward-network.html"><a href="single-hidden-layer-feedforward-network.html"><i class="fa fa-check"></i><b>8.1</b> Single-hidden-layer feedforward network</a></li>
+<li class="chapter" data-level="8.2" data-path="clasificación-con-ann.html"><a href="clasificación-con-ann.html"><i class="fa fa-check"></i><b>8.2</b> Clasificación con ANN</a></li>
+<li class="chapter" data-level="8.3" data-path="implementación-en-r-2.html"><a href="implementación-en-r-2.html"><i class="fa fa-check"></i><b>8.3</b> Implementación en R</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Métodos predictivos de aprendizaje estadístico</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="bibliografía" class="section level1 unnumbered hasAnchor">
+<h1>Bibliografía<a href="bibliografía.html#bibliografía" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div class="csl-entry">
+Agor, J., y Özaltın, O. Y. (2019). Feature selection for classification models via bilevel optimization. <em>Computers and Operations Research</em>, <em>106</em>, 156-168. <a href="https://doi.org/10.1016/j.cor.2018.05.005">https://doi.org/10.1016/j.cor.2018.05.005</a>
+</div>
+<div class="csl-entry">
+Beck, M. W. (2018). <span>NeuralNetTools</span>: Visualization and Analysis Tools for Neural Networks. <em>Journal of Statistical Software</em>, <em>85</em>(11), 1-20. <a href="https://doi.org/10.18637/jss.v085.i11">https://doi.org/10.18637/jss.v085.i11</a>
+</div>
+<div class="csl-entry">
+Bellman, R. (1961). <em>Adaptive Control Processes: a guided tour</em>. Princeton University Press.
+</div>
+<div class="csl-entry">
+Bertrand, F., y Maumy, M. (2023). <em>Partial Least Squares Regression for Generalized Linear Models</em>. manual. <a href="https://fbertran.github.io/homepage/">https://fbertran.github.io/homepage/</a>
+</div>
+<div class="csl-entry">
+Biecek, P. (2018). <span>DALEX: Explainers for Complex Predictive Models in R</span>. <em>Journal of Machine Learning Research</em>, <em>19</em>(84), 1-5. <a href="https://jmlr.org/papers/v19/18-416.html">https://jmlr.org/papers/v19/18-416.html</a>
+</div>
+<div class="csl-entry">
+Bischl, B., Sonabend, R., Kotthoff, L., y Lang, M. (2024). <em>Applied machine learning using mlr3 in R</em>. CRC Press.
+</div>
+<div class="csl-entry">
+Boser, B. E., Guyon, I. M., y Vapnik, V. N. (1992). A training algorithm for optimal margin classifiers. <em>Proceedings of the fifth annual workshop on Computational learning theory</em>, 144-152. <a href="https://doi.org/10.1145/130385.130401">https://doi.org/10.1145/130385.130401</a>
+</div>
+<div class="csl-entry">
+Breiman, L. (1996). Bagging predictors. <em>Machine Learning</em>, <em>24</em>(2), 123-140. <a href="https://doi.org/10.1007/bf00058655">https://doi.org/10.1007/bf00058655</a>
+</div>
+<div class="csl-entry">
+Breiman, L. (2001a). Random forests. <em>Machine Learning</em>, <em>45</em>(1), 5-32.
+</div>
+<div class="csl-entry">
+Breiman, L. (2001b). Statistical modeling: The two cultures (with comments and a rejoinder by the author). <em>Statistical Science</em>, <em>16</em>(3), 199-231. <a href="https://doi.org/10.1214/ss/1009213726">https://doi.org/10.1214/ss/1009213726</a>
+</div>
+<div class="csl-entry">
+Breiman, L., Friedman, J., Stone, C. J., y Olshen, R. A. (1984). <em>Classification and Regression Trees</em>. Taylor; Francis.
+</div>
+<div class="csl-entry">
+Canty, A., y Ripley, B. D. (2024). <em><span>boot: Bootstrap R (S-Plus) Functions</span></em>.
+</div>
+<div class="csl-entry">
+Cao Abad, R., Vilar Fernández, J. M., Presedo Quindimil, M. A., Vilar Fernández, J. A., Francisco Fernández, M., Salvador, N., y Vázquez Brage, M. (2001). <em>Introducci<span>ó</span>n a la estad<span>ı́</span>stica y sus aplicaciones</em>. Ediciones Pir<span>á</span>mide. <a href="https://www.edicionespiramide.es/libro.php?id=242639">https://www.edicionespiramide.es/libro.php?id=242639</a>
+</div>
+<div class="csl-entry">
+Chen, T., y Guestrin, C. (2016). Xgboost: A scalable tree boosting system. <em>Proceedings of the 22nd acm sigkdd international conference on knowledge discovery and data mining</em>, 785-794. <a href="https://doi.org/10.1145/2939672.2939785">https://doi.org/10.1145/2939672.2939785</a>
+</div>
+<div class="csl-entry">
+Chen, T., He, T., Benesty, M., Khotilovich, V., Tang, Y., Cho, H., Chen, K., Mitchell, R., Cano, I., Zhou, T., et al. (2023). <em><span>xgboost: Extreme Gradient Boosting</span></em>. <a href="https://cran.r-project.org/package=xgboost">https://cran.r-project.org/package=xgboost</a>
+</div>
+<div class="csl-entry">
+Chollet, F., y Allaire, J. J. (2018). <em>Deep Learning with R</em>. Manning Publications.
+</div>
+<div class="csl-entry">
+Cohen, J. (1960). A Coefficient of Agreement for Nominal Scales. <em>Educational and Psychological Measurement</em>, <em>20</em>(1), 37-46. <a href="https://doi.org/10.1177/001316446002000104">https://doi.org/10.1177/001316446002000104</a>
+</div>
+<div class="csl-entry">
+Comon, P. (1994). Independent component analysis, a new concept? <em>Signal Processing</em>, <em>36</em>(3), 287-314. <a href="https://doi.org/10.1016/0165-1684(94)90029-9">https://doi.org/10.1016/0165-1684(94)90029-9</a>
+</div>
+<div class="csl-entry">
+Cortes, C., y Vapnik, V. (1995). Support-vector networks. <em>Machine Learning</em>, <em>20</em>(3), 273-297. <a href="https://doi.org/10.1007/bf00994018">https://doi.org/10.1007/bf00994018</a>
+</div>
+<div class="csl-entry">
+Cortez, P., Cerdeira, A., Almeida, F., Matos, T., y Reis, J. (2009). Modeling wine preferences by data mining from physicochemical properties. <em>Decision Support Systems</em>, <em>47</em>(4), 547-553. <a href="https://doi.org/10.1016/j.dss.2009.05.016">https://doi.org/10.1016/j.dss.2009.05.016</a>
+</div>
+<div class="csl-entry">
+Craven, P., y Wahba, G. (1978). Smoothing noisy data with spline functions. <em>Numerische Mathematik</em>, <em>31</em>(4), 377-403. <a href="https://doi.org/10.1007/bf01404567">https://doi.org/10.1007/bf01404567</a>
+</div>
+<div class="csl-entry">
+Culp, M., Johnson, K., y Michailidis, G. (2006). ada: An R Package for Stochastic Boosting. <em>Journal of Statistical Software</em>, <em>17</em>(2), 1-27. <a href="https://doi.org/10.18637/jss.v017.i02">https://doi.org/10.18637/jss.v017.i02</a>
+</div>
+<div class="csl-entry">
+Dalpiaz, D. (2020). <em>R for Statistical Learning</em>. <a href="https://daviddalpiaz.github.io/r4sl" class="uri">https://daviddalpiaz.github.io/r4sl</a>. <a href="https://daviddalpiaz.github.io/r4sl">https://daviddalpiaz.github.io/r4sl</a>
+</div>
+<div class="csl-entry">
+Dalpiaz, D. (2022). <em>Applied Statistics with <span>R</span></em>. <a href="https://book.stat420.org" class="uri">https://book.stat420.org</a>. <a href="https://book.stat420.org">https://book.stat420.org</a>
+</div>
+<div class="csl-entry">
+De Boor, C., y De Boor, C. (1978). <em>A practical guide to splines</em>. Springer-Verlag. <a href="https://doi.org/10.1007/978-1-4612-6333-3">https://doi.org/10.1007/978-1-4612-6333-3</a>
+</div>
+<div class="csl-entry">
+Dietterich, T. G. (2000). An experimental comparison of three methods for constructing ensembles of decision trees: Bagging, boosting, and randomization. <em>Machine Learning</em>, <em>40</em>(2), 139-157.
+</div>
+<div class="csl-entry">
+Drucker, H., Burges, C. J., Kaufman, L., Smola, A., y Vapnik, V. (1997). Support Vector Regression Machines. <em>Advances in Neural Information Processing Systems</em>, 155-161.
+</div>
+<div class="csl-entry">
+Dunn, P. K., y Smyth, G. K. (2018). <em>Generalized linear models with examples in R</em>. Springer.
+</div>
+<div class="csl-entry">
+Dunson, D. B. (2018). Statistics in the big data era: Failures of the machine. <em>Statistics and Probability Letters</em>, <em>136</em>, 4-9. <a href="https://doi.org/10.1016/j.spl.2018.02.028">https://doi.org/10.1016/j.spl.2018.02.028</a>
+</div>
+<div class="csl-entry">
+Efron, B., Hastie, T., Johnstone, I., y Tibshirani, R. (2004). Least angle regression. <em>The Annals of Statistics</em>, <em>32</em>(2), 407-499. <a href="https://doi.org/10.1214/009053604000000067">https://doi.org/10.1214/009053604000000067</a>
+</div>
+<div class="csl-entry">
+Eilers, P. H., y Marx, B. D. (1996). Flexible smoothing with B-splines and penalties. <em>Statistical Science</em>, <em>11</em>(2), 89-121. <a href="https://doi.org/10.1214/ss/1038425655">https://doi.org/10.1214/ss/1038425655</a>
+</div>
+<div class="csl-entry">
+Everitt, B., y Hothorn, T. (2011). <em>An Introduction to Applied Multivariate Analysis with <span>R</span></em>. Springer. <a href="https://link.springer.com/book/10.1007/978-1-4419-9650-3">https://link.springer.com/book/10.1007/978-1-4419-9650-3</a>
+</div>
+<div class="csl-entry">
+Fan, J., y Gijbels, I. (1996). <em>Local Polynomial Modelling and Its Applications</em>. Chapman; Hall.
+</div>
+<div class="csl-entry">
+Faraway, J. J. (2016). <em>Linear Models with R</em> (2a. ed.). Chapman &amp; Hall/CRC.
+</div>
+<div class="csl-entry">
+Fasola, S., Muggeo, V. M. R., y Kuchenhoff, H. (2018). A heuristic, iterative algorithm for change-point detection in abrupt change models. <em>Computational Statistics</em>, <em>33</em>(2), 997-1015.
+</div>
+<div class="csl-entry">
+Febrero-Bande, M., González-Manteiga, W., y Oviedo de la Fuente, M. (2019). Variable selection in functional additive regression models. <em>Computational Statistics</em>, <em>34</em>, 469-487.<a href=" https://doi.org/10.1007/s00180-018-0844-5">https://doi.org/10.1007/s00180-018-0844-5</a>
+</div>
+<div class="csl-entry">
+Febrero-Bande, M., y Oviedo de la Fuente, M. (2012). Statistical Computing in Functional Data Analysis: The <span>R</span> Package <span>fda.usc</span>. <em>Journal of Statistical Software</em>, <em>51</em>(4), 1-28. <a href="https://www.jstatsoft.org/v51/i04/">https://www.jstatsoft.org/v51/i04/</a>
+</div>
+<div class="csl-entry">
+Fernández-Casal, R., Cao, R., y Costa, J. (2023). <em>Técnicas de simulación y remuestreo</em>. <a href="https://rubenfcasal.github.io/simbook" class="uri">https://rubenfcasal.github.io/simbook</a>.
+</div>
+<div class="csl-entry">
+Fernández-Casal, R., Oviedo-de la Fuente, M., y Costa-Bouzas, J. (2024). <em><span>mpae: Metodos Predictivos de Aprendizaje Estadistico (Statistical Learning Predictive Methods)</span></em>. <a href="https://github.com/rubenfcasal/mpae">https://github.com/rubenfcasal/mpae</a>
+</div>
+<div class="csl-entry">
+Fernández-Casal, R., Roca-Pardiñas, J., Costa, J., y Oviedo-de la Fuente, M. (2022). <em>Introducción al Análisis de Datos con R</em>. <a href="https://rubenfcasal.github.io/intror" class="uri">https://rubenfcasal.github.io/intror</a>.
+</div>
+<div class="csl-entry">
+Fisher, R. A. (1936). The use of multiple measurements in taxonomic problems. <em>Annals of eugenics</em>, <em>7</em>(2), 179-188. <a href="https://doi.org/10.1111/j.1469-1809.1936.tb02137.x">https://doi.org/10.1111/j.1469-1809.1936.tb02137.x</a>
+</div>
+<div class="csl-entry">
+Fox, J., Marquez, M. M., y Bouchet-Valat, M. (2024). <em><span>Rcmdr: R Commander</span></em>. <a href="https://socialsciences.mcmaster.ca/jfox/Misc/Rcmdr/">https://socialsciences.mcmaster.ca/jfox/Misc/Rcmdr/</a>
+</div>
+<div class="csl-entry">
+Fox, J., y Monette, G. (2024). <em><span>cv: Cross-Validation of Regression Models</span></em>. <a href="https://cran.r-project.org/package=cv">https://cran.r-project.org/package=cv</a>
+</div>
+<div class="csl-entry">
+Freund, Y., y Schapire, R. E. (1996). <span>Schapire R: Experiments with a new boosting algorithm</span>. <em>Thirteenth International Conference on ML</em>.
+</div>
+<div class="csl-entry">
+Friedman, J. (1989). Regularized discriminant analysis. <em>Journal of the American Statistical Association</em>, <em>84</em>(405), 165-175. <a href="https://doi.org/10.1080/01621459.1989.10478752">https://doi.org/10.1080/01621459.1989.10478752</a>
+</div>
+<div class="csl-entry">
+Friedman, J. (1991). <span>Multivariate Adaptive Regression Splines</span>. <em>The Annals of Statistics</em>, <em>19</em>(1), 1-67. <a href="https://doi.org/10.1214/aos/1176347963">https://doi.org/10.1214/aos/1176347963</a>
+</div>
+<div class="csl-entry">
+Friedman, J. (2001). Greedy function approximation: a gradient boosting machine. <em>The Annals of Statistics</em>, 1189-1232. <a href="https://doi.org/10.1214/aos/1013203451">https://doi.org/10.1214/aos/1013203451</a>
+</div>
+<div class="csl-entry">
+Friedman, J. (2002). Stochastic gradient boosting. <em>Computational Statistics &amp; data analysis</em>, <em>38</em>(4), 367-378. <a href="https://doi.org/10.1016/S0167-9473(01)00065-2">https://doi.org/10.1016/S0167-9473(01)00065-2</a>
+</div>
+<div class="csl-entry">
+Friedman, J., Hastie, T., y Tibshirani, R. (2000). Additive logistic regression: a statistical view of boosting (with discussion and a rejoinder by the authors). <em>The Annals of Statistics</em>, <em>28</em>(2), 337-407. <a href="https://doi.org/10.1214/aos/1016218223">https://doi.org/10.1214/aos/1016218223</a>
+</div>
+<div class="csl-entry">
+Friedman, J., Hastie, T., Tibshirani, R., Narasimhan, B., Tay, K., Simon, N., Qian, J., y Yang, J. (2023). <em><span>glmnet: Lasso and Elastic-Net Regularized Generalized Linear Models</span></em>. <a href="https://cran.r-project.org/package=glmnet">https://cran.r-project.org/package=glmnet</a>
+</div>
+<div class="csl-entry">
+Friedman, J., y Popescu, B. E. (2008). Predictive learning via rule ensembles. <em>The Annals of Applied Statistics</em>, <em>2</em>(3), 916-954. <a href="https://doi.org/10.1214/07-aoas148">https://doi.org/10.1214/07-aoas148</a>
+</div>
+<div class="csl-entry">
+Friedman, J., y Stuetzle, W. (1981). Projection pursuit regression. <em>Journal of the American Statistical Association</em>, <em>76</em>(376), 817-823. <a href="https://doi.org/10.1080/01621459.1981.10477729">https://doi.org/10.1080/01621459.1981.10477729</a>
+</div>
+<div class="csl-entry">
+Friedman, J., y Tukey, J. (1974). A projection pursuit algorithm for exploratory data analysis. <em>IEEE Transactions on computers</em>, <em>100</em>(9), 881-890. <a href="https://doi.org/10.1109/t-c.1974.224051">https://doi.org/10.1109/t-c.1974.224051</a>
+</div>
+<div class="csl-entry">
+Fritsch, S., Guenther, F., y Wright, M. N. (2019). <em>neuralnet: Training of Neural Networks</em>. <a href="https://CRAN.R-project.org/package=neuralnet">https://CRAN.R-project.org/package=neuralnet</a>
+</div>
+<div class="csl-entry">
+Goldstein, A., Kapelner, A., Bleich, J., y Pitkin, E. (2015). Peeking Inside the Black Box: Visualizing Statistical Learning With Plots of Individual Conditional Expectation. <em>Journal of Computational and Graphical Statistics</em>, <em>24</em>(1), 44-65. <a href="https://doi.org/10.1080/10618600.2014.907095">https://doi.org/10.1080/10618600.2014.907095</a>
+</div>
+<div class="csl-entry">
+Greenwell, B. M. (2017). <span>pdp: An R Package for Constructing Partial Dependence Plots</span>. <em><span>The R Journal</span></em>, <em>9</em>(1), 421-436. <a href="https://doi.org/10.32614/RJ-2017-016">https://doi.org/10.32614/RJ-2017-016</a>
+</div>
+<div class="csl-entry">
+Greenwell, B. M. (2022). <em><span>pdp: Partial Dependence Plots</span></em>. <a href="https://cran.r-project.org/package=pdp">https://cran.r-project.org/package=pdp</a>
+</div>
+<div class="csl-entry">
+Greenwell, B. M., y Boehmke, B. C. (2020). Variable Importance Plots–An Introduction to the vip Package. <em>The R Journal</em>, <em>12</em>(1), 343-366. <a href="https://doi.org/10.32614/RJ-2020-013">https://doi.org/10.32614/RJ-2020-013</a>
+</div>
+<div class="csl-entry">
+Greenwell, B., Boehmke, B., Cunningham, J., y Developers, G. (2022). <em><span>gbm: Generalized Boosted Regression Models</span></em>. <a href="https://cran.r-project.org/package=gbm">https://cran.r-project.org/package=gbm</a>
+</div>
+<div class="csl-entry">
+Hair, J. F., Anderson, R. E., Tatham, R. L., y Black, W. (1998). <em>Multivariate Data Analysis</em>. Prentice Hall.
+</div>
+<div class="csl-entry">
+Härdle, W. K., y Simar, L. (2013). <em>Applied Multivariate Statistical Analysis</em>. Springer. <a href="https://link.springer.com/book/10.1007/978-3-662-45171-7">https://link.springer.com/book/10.1007/978-3-662-45171-7</a>
+</div>
+<div class="csl-entry">
+Hastie, T., y Pregibon, D. (2017). <em>Generalized linear models</em> (pp. 195-247). Routledge.
+</div>
+<div class="csl-entry">
+Hastie, T., Rosset, S., Tibshirani, R., y Zhu, J. (2004). The entire regularization path for the support vector machine. <em>Journal of Machine Learning Research</em>, <em>5</em>, 1391-1415.
+</div>
+<div class="csl-entry">
+Hastie, T., y Tibshirani, R. (1990). <em>Generalized Additive Models</em>. Chapman; Hall. <a href="https://doi.org/10.1201/9780203753781">https://doi.org/10.1201/9780203753781</a>
+</div>
+<div class="csl-entry">
+Hastie, T., y Tibshirani, R. (1996). Discriminant Analysis by Gaussian Mixtures. <em>Journal of the Royal Statistical Society. Series B (Methodological)</em>, <em>58</em>(1), 155-176. <a href="https://doi.org/10.1111/j.2517-6161.1996.tb02073.x">https://doi.org/10.1111/j.2517-6161.1996.tb02073.x</a>
+</div>
+<div class="csl-entry">
+Hoerl, A. E., y Kennard, R. W. (1970). Ridge regression: Biased estimation for nonorthogonal problems. <em>Technometrics</em>, <em>12</em>(1), 55-67. <a href="https://doi.org/10.1080/00401706.2000.10485983">https://doi.org/10.1080/00401706.2000.10485983</a>
+</div>
+<div class="csl-entry">
+Hornik, K., Buchta, C., y Zeileis, A. (2009). Open-Source Machine Learning: <span>R</span> Meets <span>Weka</span>. <em>Computational Statistics</em>, <em>24</em>(2), 225-232. <a href="https://doi.org/10.1007/s00180-008-0119-7">https://doi.org/10.1007/s00180-008-0119-7</a>
+</div>
+<div class="csl-entry">
+Hothorn, T., Hornik, K., Strobl, C., y Zeileis, A. (2010). <em><span>Party: A laboratory for recursive partytioning</span></em>. <a href="https://cran.r-project.org/web/packages/party/">https://cran.r-project.org/web/packages/party/</a>
+</div>
+<div class="csl-entry">
+Hothorn, T., Hornik, K., y Zeileis, A. (2006). Unbiased recursive partitioning: A conditional inference framework. <em>Journal of Computational and Graphical Statistics</em>, <em>15</em>(3), 651-674. <a href="https://doi.org/10.1198/106186006x133933">https://doi.org/10.1198/106186006x133933</a>
+</div>
+<div class="csl-entry">
+Husson, F., Josse, J., y Le, S. (2023). <em><span>RcmdrPlugin.FactoMineR: Graphical User Interface for FactoMineR</span></em>. <a href="https://cran.r-project.org/package=RcmdrPlugin.FactoMineR">https://cran.r-project.org/package=RcmdrPlugin.FactoMineR</a>
+</div>
+<div class="csl-entry">
+Hvitfeldt, E., Pedersen, T. L., y Benesty, M. (2022). <em><span>lime: Local Interpretable Model-Agnostic Explanations</span></em>. <a href="https://CRAN.R-project.org/package=lime">https://CRAN.R-project.org/package=lime</a>
+</div>
+<div class="csl-entry">
+Hyndman, R. J., y Athanasopoulos, G. (2021). <em>Forecasting: principles and practice</em> (3a. ed.). OTexts. <a href="https://otexts.com/fpp3" class="uri">https://otexts.com/fpp3</a>. <a href="https://otexts.com/fpp3">https://otexts.com/fpp3</a>
+</div>
+<div class="csl-entry">
+Ichimura, H. (1993). Semiparametric least squares (SLS) and weighted SLS estimation of single-index models. <em>Journal of Econometrics</em>, <em>58</em>(1), 71-120. <a href="https://doi.org/10.1016/0304-4076(93)90114-K">https://doi.org/10.1016/0304-4076(93)90114-K</a>
+</div>
+<div class="csl-entry">
+Inglis, A., Parnell, A., y Hurley, C. (2023). <em><span>vivid: Variable Importance and Variable Interaction Displays</span></em>. <a href="https://cran.r-project.org/package=vivid">https://cran.r-project.org/package=vivid</a>
+</div>
+<div class="csl-entry">
+James, G., Witten, D., Hastie, T., y Tibshirani, R. (2021). <em>An Introduction to Statistical Learning: With Applications in R</em> (2a. ed.). Springer. <a href="https://www.statlearning.com" class="uri">https://www.statlearning.com</a>. <a href="https://www.statlearning.com">https://www.statlearning.com</a>
+</div>
+<div class="csl-entry">
+Karatzoglou, A., Smola, A., Hornik, K., y Zeileis, A. (2004). kernlab - An S4 Package for Kernel Methods in R. <em>Journal of Statistical Software</em>, <em>11</em>(9), 1-20. <a href="https://doi.org/10.18637/jss.v011.i09">https://doi.org/10.18637/jss.v011.i09</a>
+</div>
+<div class="csl-entry">
+Kass, G. V. (1980). An exploratory technique for investigating large quantities of categorical data. <em>Journal of the Royal Statistical Society: Series C (Applied Statistics)</em>, <em>29</em>(2), 119-127. <a href="https://doi.org/10.2307/2986296">https://doi.org/10.2307/2986296</a>
+</div>
+<div class="csl-entry">
+Kearns, M., y Valiant, L. (1994). Cryptographic limitations on learning <span>Boolean</span> formulae and finite automata. <em>Journal of the ACM</em>, <em>41</em>(1), 67-95. <a href="https://doi.org/10.1145/174644.174647">https://doi.org/10.1145/174644.174647</a>
+</div>
+<div class="csl-entry">
+Kruskal, J. B. (1969). Toward a practical method which helps uncover the structure of a set of multivariate observations by finding the linear transformation which optimizes a new <span>«index of condensation»</span>. <em>Statistical Computation</em>, 427-440. <a href="https://doi.org/10.1016/b978-0-12-498150-8.50024-0">https://doi.org/10.1016/b978-0-12-498150-8.50024-0</a>
+</div>
+<div class="csl-entry">
+Kuhn, M. (2008). Building Predictive Models in <span>R</span> Using the caret Package. <em>Journal of Statistical Software</em>, <em>28</em>(5), 1-26. <a href="https://doi.org/10.18637/jss.v028.i05">https://doi.org/10.18637/jss.v028.i05</a>
+</div>
+<div class="csl-entry">
+Kuhn, M. (2019). <em>The caret Package</em>. <a href="https://topepo.github.io/caret" class="uri">https://topepo.github.io/caret</a>.
+</div>
+<div class="csl-entry">
+Kuhn, M. (2023). <em><span>caret: Classification and Regression Training</span></em>. <a href="https://cran.r-project.org/package=caret">https://cran.r-project.org/package=caret</a>
+</div>
+<div class="csl-entry">
+Kuhn, M., y Johnson, K. (2013). <em>Applied predictive modeling</em>. Springer. <a href="http://appliedpredictivemodeling.com" class="uri">http://appliedpredictivemodeling.com</a>. <a href="https://doi.org/10.1007/978-1-4614-6849-3">https://doi.org/10.1007/978-1-4614-6849-3</a>
+</div>
+<div class="csl-entry">
+Kuhn, M., y Johnson, K. (2019). <em>Feature Engineering and Selection: A Practical Approach for Predictive Models</em>. Chapman &amp; Hall/CRC. <a href="http://www.feat.engineering" class="uri">http://www.feat.engineering</a>. <a href="http://www.feat.engineering/">http://www.feat.engineering/</a>
+</div>
+<div class="csl-entry">
+Kuhn, M., y Quinlan, J. R. (2023). <em><span>Cubist: Rule- And Instance-Based Regression Modeling</span></em>. <a href="https://cran.r-project.org/web/packages/Cubist/">https://cran.r-project.org/web/packages/Cubist/</a>
+</div>
+<div class="csl-entry">
+Kuhn, M., y Silge, J. (2022). <em>Tidy Modeling with R</em>. O’Reilly. <a href="https://www.tmwr.org" class="uri">https://www.tmwr.org</a>. <a href="https://www.tmwr.org">https://www.tmwr.org</a>
+</div>
+<div class="csl-entry">
+Kuhn, M., Weston, S., Coulter, N., y Quinlan, J. R. (2014). <em><span>C50: C5.0 Decision Trees and Rule-Based Models</span></em>. <a href="https://cran.r-project.org/web/packages/C50/">https://cran.r-project.org/web/packages/C50/</a>
+</div>
+<div class="csl-entry">
+Kuhn, M., y Wickham, H. (2020). <em><span>Tidymodels: a collection of packages for modeling and machine learning using tidyverse principles</span></em>.
+</div>
+<div class="csl-entry">
+Kuhn, M., y Wickham, H. (2023). <em><span>tidymodels: Easily Install and Load the Tidymodels Packages</span></em>. <a href="https://cran.r-project.org/package=tidymodels">https://cran.r-project.org/package=tidymodels</a>
+</div>
+<div class="csl-entry">
+Kvålseth, T. O. (1985). Cautionary note about <span>R2</span>. <em>The American Statistician</em>, <em>39</em>(4), 279-285. <a href="https://doi.org/10.1080/00031305.1985.10479448">https://doi.org/10.1080/00031305.1985.10479448</a>
+</div>
+<div class="csl-entry">
+Lang, M., Binder, M., Richter, J., Schratz, P., Pfisterer, F., Coors, S., Au, Q., Casalicchio, G., Kotthoff, L., y Bischl, B. (2019). <span>mlr3</span>: A modern object-oriented machine learning framework in <span>R</span>. <em>Journal of Open Source Software</em>, <em>4</em>(44), 1903. <a href="https://doi.org/10.21105/joss.01903">https://doi.org/10.21105/joss.01903</a>
+</div>
+<div class="csl-entry">
+Lauro, C. (1996). Computational statistics or statistical computing, is that the question? <em>Computational Statistics &amp; Data Analysis</em>, <em>23</em>(1), 191-193. <a href="https://doi.org/10.1016/0167-9473(96)88920-1">https://doi.org/10.1016/0167-9473(96)88920-1</a>
+</div>
+<div class="csl-entry">
+Lawson, J. (2014). <em>Design and Analysis of Experiments with R</em>. Chapman &amp; Hall/CRC Press. <a href="https://www.taylorfrancis.com/books/mono/10.1201/b17883/design-
+analysis-experiments-john-lawson">https://www.taylorfrancis.com/books/mono/10.1201/b17883/design-
+analysis-experiments-john-lawson</a>
+</div>
+<div class="csl-entry">
+LeDell, E., y Poirier, S. (2020). H2o automl: Scalable automatic machine learning. <em>Proceedings of the AutoML Workshop at ICML</em>.
+</div>
+<div class="csl-entry">
+Liaw, A., y Wiener, M. (2002). Classification and Regression by <span>randomForest</span>. <em>R News</em>, <em>2</em>(3), 18-22. <a href="https://www.r-project.org/doc/Rnews/Rnews_2002-3.pdf">https://www.r-project.org/doc/Rnews/Rnews_2002-3.pdf</a>
+</div>
+<div class="csl-entry">
+Loh, W.-Y. (2002). Regression tress with unbiased variable selection and interaction detection. <em>Statistica Sinica</em>, 361-386.
+</div>
+<div class="csl-entry">
+Marchini, J. L., Heaton, C., y Ripley, B. D. (2021). <em><span>fastICA: FastICA Algorithms to Perform ICA and Projection Pursuit</span></em>. <a href="https://cran.r-project.org/package=fastICA">https://cran.r-project.org/package=fastICA</a>
+</div>
+<div class="csl-entry">
+Massy, W. F. (1965). Principal components regression in exploratory statistical research. <em>Journal of the American Statistical Association</em>, <em>60</em>(309), 234-256. <a href="https://doi.org/10.1080/01621459.1965.10480787">https://doi.org/10.1080/01621459.1965.10480787</a>
+</div>
+<div class="csl-entry">
+McCullagh, P. (2019). <em>Generalized linear models</em>. Routledge.
+</div>
+<div class="csl-entry">
+McCulloch, W. S., y Pitts, W. (1943). A logical calculus of the ideas immanent in nervous activity. <em>The bulletin of Mathematical Biophysics</em>, <em>5</em>(4), 115-133. <a href="https://doi.org/10.1007/bf02459570">https://doi.org/10.1007/bf02459570</a>
+</div>
+<div class="csl-entry">
+Mevik, B.-H., y Wehrens, R. (2007). The pls Package: Principal Component and Partial Least Squares Regression in <span>R</span>. <em>Journal of Statistical Software</em>, <em>18</em>(2), 1-23. <a href="https://doi.org/10.18637/jss.v018.i02">https://doi.org/10.18637/jss.v018.i02</a>
+</div>
+<div class="csl-entry">
+Meyer, D., Dimitriadou, E., Hornik, K., Weingessel, A., y Leisch, F. (2020). <em><span>e1071: Misc Functions of the Department of Statistics, Probability Theory Group (Formerly: E1071), TU Wien</span></em>. <a href="https://cran.r-project.org/package=e1071">https://cran.r-project.org/package=e1071</a>
+</div>
+<div class="csl-entry">
+Milborrow, S. (2019). <em><span>rpart.plot: Plot ’rpart’ Models: An Enhanced Version of ’plot.rpart’</span></em>. <a href="http://cran.r-project.org/package=rpart.plot/">http://cran.r-project.org/package=rpart.plot/</a>
+</div>
+<div class="csl-entry">
+Milborrow, S. (2022). <em><span>plotmo: Plot a Model’s Residuals, Response, and Partial Dependence Plots</span></em>. <a href="https://cran.r-project.org/package=plotmo">https://cran.r-project.org/package=plotmo</a>
+</div>
+<div class="csl-entry">
+Milborrow, S. (2023). <em><span>earth: Multivariate Adaptive Regression Splines</span></em>. <a href="https://cran.r-project.org/package=earth">https://cran.r-project.org/package=earth</a>
+</div>
+<div class="csl-entry">
+Miller, I., Freund, J. E., y Romero, C. O. (1973). <em>Probabilidad y estadística para ingenieros</em>. Reverté. <a href="https://www.reverte.com/libro/probabilidad-y-estadistica-para-
+ingenieros_89225/">https://www.reverte.com/libro/probabilidad-y-estadistica-para-
+ingenieros_89225/</a>
+</div>
+<div class="csl-entry">
+Molnar, C. (2023). <em>Interpretable Machine Learning: A Guide for Making Black Box Models Explainable</em>. Lulu.com. <a href="https://christophm.github.io/interpretable-ml-book" class="uri">https://christophm.github.io/interpretable-ml-book</a>. <a href="https://christophm.github.io/interpretable-ml-book">https://christophm.github.io/interpretable-ml-book</a>
+</div>
+<div class="csl-entry">
+Molnar, C., Bischl, B., y Casalicchio, G. (2018). <span>iml: An R package for Interpretable Machine Learning</span>. <em>Journal of Open Source Software</em>, <em>3</em>(26), 786. <a href="https://doi.org/10.21105/joss.00786">https://doi.org/10.21105/joss.00786</a>
+</div>
+<div class="csl-entry">
+Ng, A., y Jordan, M. (2001). On Discriminative vs. Generative Classifiers: A comparison of logistic regression and naive Bayes. En T. Dietterich, S. Becker, y Z. Ghahramani (Eds.), <em>Advances in Neural Information Processing Systems</em>. MIT Press. <a href="https://proceedings.neurips.cc/paper_files/paper/2001/file/7b7a53e239400a13bd6be6c91c4f6c4e-Paper.pdf">https://proceedings.neurips.cc/paper_files/paper/2001/file/7b7a53e239400a13bd6be6c91c4f6c4e-Paper.pdf</a>
+</div>
+<div class="csl-entry">
+Nijs, V. (2023). <em><span>radiant: Business Analytics using R and Shiny</span></em>. <a href="https://CRAN.R-project.org/package=radiant">https://CRAN.R-project.org/package=radiant</a>
+</div>
+<div class="csl-entry">
+Paluszynska, A., Biecek, P., y Jiang, Y. (2017). <span>randomForestExplainer: Explaining and visualizing random forests in terms of variable importance</span>. <em>R package version 0.9</em>.
+</div>
+<div class="csl-entry">
+Penrose, K. W., Nelson, A., y Fisher, A. (1985). Generalized body composition prediction equation for men using simple measurement techniques. <em>Medicine &amp; Science in Sports &amp; Exercise</em>, <em>17</em>(2), 189. <a href="https://doi.org/10.1249/00005768-198504000-00037">https://doi.org/10.1249/00005768-198504000-00037</a>
+</div>
+<div class="csl-entry">
+Pinheiro, J., Bates, D., y R Core Team. (2023). <em><span>nlme: Linear and Nonlinear Mixed Effects Models</span></em>. <a href="https://cran.r-project.org/package=nlme">https://cran.r-project.org/package=nlme</a>
+</div>
+<div class="csl-entry">
+Quinlan, J. R. (1992). Learning with continuous classes. <em>5th Australian joint conference on artificial intelligence</em>, 343-348.
+</div>
+<div class="csl-entry">
+Quinlan, J. R. (1986). Induction of decision trees. <em>Machine Learning</em>, <em>1</em>, 81-106.
+</div>
+<div class="csl-entry">
+Quinlan, J. R. (1993). <em>C4.5: Programs for Machine Learning</em>. Elsevier.
+</div>
+<div class="csl-entry">
+R Core Team. (2023). <em>R: A Language and Environment for Statistical Computing</em>. R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>
+</div>
+<div class="csl-entry">
+Racine, J. S., y Hayfield, T. (2023). <em><span>np: Nonparametric Kernel Smoothing Methods for Mixed Data Types</span></em>. <a href="https://cran.r-project.org/package=np">https://cran.r-project.org/package=np</a>
+</div>
+<div class="csl-entry">
+Ripley, B. (2023). <em><span>MASS: Support Functions and Datasets for Venables and Ripley’s MASS</span></em>. <a href="https://cran.r-project.org/package=MASS">https://cran.r-project.org/package=MASS</a>
+</div>
+<div class="csl-entry">
+Robin, X., Turck, N., Hainard, A., Tiberti, N., Lisacek, F., Sanchez, J.-C., y Müller, M. (2011). <span>pROC: an open-source package for R and S+ to analyze and compare ROC curves</span>. <em>BMC Bioinformatics</em>, <em>12</em>, 77. <a href="https://cran.r-project.org/web/packages/pROC/">https://cran.r-project.org/web/packages/pROC/</a>
+</div>
+<div class="csl-entry">
+Ruppert, D., Sheather, S. J., y Wand, M. P. (1995). An effective bandwidth selector for local least squares regression. <em>Journal of the American Statistical Association</em>, <em>90</em>(432), 1257-1270.
+</div>
+<div class="csl-entry">
+Shannon, C. E. (1948). A mathematical theory of communication. <em>The Bell System Technical Journal</em>, <em>27</em>(3), 379-423. <a href="https://doi.org/10.2307/410457">https://doi.org/10.2307/410457</a>
+</div>
+<div class="csl-entry">
+Spinoza, B. (1677). <em>Ethics</em>.
+</div>
+<div class="csl-entry">
+Strumbelj, E., y Kononenko, I. (2010). An efficient explanation of individual classifications using game theory. <em>The Journal of Machine Learning Research</em>, <em>11</em>, 1-18.
+</div>
+<div class="csl-entry">
+Székely, G. J., Rizzo, M. L., y Bakirov, N. K. (2007). <span>Measuring and testing dependence by correlation of distances</span>. <em>The Annals of Statistics</em>, <em>35</em>(6), 2769-2794. <a href="https://doi.org/10.1214/009053607000000505">https://doi.org/10.1214/009053607000000505</a>
+</div>
+<div class="csl-entry">
+Therneau, T. M., Atkinson, E. J., y Ripley, B. (2013). <em><span>Rpart: Recursive Partitioning and Regression Trees</span></em>. <a href="http://cran.r-project.org/package=rpart/">http://cran.r-project.org/package=rpart/</a>
+</div>
+<div class="csl-entry">
+Tibshirani, R. (1996). Regression shrinkage and selection via the lasso. <em>Journal of the Royal Statistical Society: Series B (Methodological)</em>, <em>58</em>(1), 267-288. <a href="https://doi.org/10.1111/j.2517-6161.1996.tb02080.x">https://doi.org/10.1111/j.2517-6161.1996.tb02080.x</a>
+</div>
+<div class="csl-entry">
+Valiant, L. G. (1984). A Theory of the Learnable. <em>Communications of the ACM</em>, <em>27</em>(11), 1134-1142. <a href="https://doi.org/10.1145/800057.808710">https://doi.org/10.1145/800057.808710</a>
+</div>
+<div class="csl-entry">
+Van Rossum, G., y Drake Jr., F. L. (1991). <em>Python reference manual</em>. Instituto Nacional de Investigación en Matemáticas e Informática (CWI), Holanda.
+</div>
+<div class="csl-entry">
+Vapnik, V. N. (1998). <em>Statistical Learning Theory</em>. Wiley. <a href="https://www.wiley.com/en-us/Statistical+Learning+Theory-p-9780471030034">https://www.wiley.com/en-us/Statistical+Learning+Theory-p-9780471030034</a>
+</div>
+<div class="csl-entry">
+Vapnik, V. N. (2000). <em>The Nature of Statistical Learning Theory</em>. Springer. <a href="https://link.springer.com/book/10.1007/978-1-4757-3264-1">https://link.springer.com/book/10.1007/978-1-4757-3264-1</a>
+</div>
+<div class="csl-entry">
+Venables, W. N., y Ripley, B. D. (2002). <em>Modern Applied Statistics with S</em> (4a. ed.). Springer. <a href="https://www.stats.ox.ac.uk/pub/MASS4/">https://www.stats.ox.ac.uk/pub/MASS4/</a>
+</div>
+<div class="csl-entry">
+Vinayak, R. K., y Gilad-Bachrach, R. (2015). Dart: Dropouts meet multiple additive regression trees. <em>Artificial Intelligence and Statistics</em>, 489-497.
+</div>
+<div class="csl-entry">
+Wand, M. (2023). <em><span>KernSmooth: Functions for Kernel Smoothing Supporting Wand and Jones (1995)</span></em>. <a href="https://cran.r-project.org/package=KernSmooth">https://cran.r-project.org/package=KernSmooth</a>
+</div>
+<div class="csl-entry">
+Welch, B. L. (1939). Note on Discriminant Functions. <em>Biometrika</em>, <em>31</em>(1/2), 218-220. <a href="https://doi.org/10.2307/2334985">https://doi.org/10.2307/2334985</a>
+</div>
+<div class="csl-entry">
+Werbos, P. (1974). New tools for prediction and analysis in the behavioral sciences. <em>Tesis doctoral, Harvard University</em>.
+</div>
+<div class="csl-entry">
+Williams, G. (2011). <em>Data mining with Rattle and R: The art of excavating data for knowledge discovery</em>. Springer Science &amp; Business Media.
+</div>
+<div class="csl-entry">
+Williams, G. (2022). <em><span>rattle: Graphical User Interface for Data Science in R</span></em>. <a href="https://cran.r-project.org/package=rattle">https://cran.r-project.org/package=rattle</a>
+</div>
+<div class="csl-entry">
+Wold, S., Martens, H., y Wold, H. (1983). The multivariate calibration problem in chemistry solved by the <span>PLS</span> method. En <em>Matrix pencils</em> (pp. 286-293). Springer. <a href="https://doi.org/10.1007/bfb0062108">https://doi.org/10.1007/bfb0062108</a>
+</div>
+<div class="csl-entry">
+Wolpert, D. H., y Macready, W. G. (1997). No free lunch theorems for optimization. <em>IEEE Transactions on Evolutionary Computation</em>, <em>1</em>(1), 67-82. <a href="https://doi.org/10.1109/4235.585893">https://doi.org/10.1109/4235.585893</a>
+</div>
+<div class="csl-entry">
+Wood, S. N. (2017). <em>Generalized Additive Models: An Introduction with R</em> (2a. ed.). Chapman &amp; Hall/CRC.
+</div>
+<div class="csl-entry">
+Zou, H., y Hastie, T. (2005). Regularization and Variable Selection via the Elastic Net. <em>Journal of the Royal Statistical Society, Series B (Statistical Methodology)</em>, <em>67</em>(2), 301-320. <a href="https://doi.org/10.1111/j.1467-9868.2005.00503.x">https://doi.org/10.1111/j.1467-9868.2005.00503.x</a>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="implementación-en-r-2.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rubenfcasal/book_mpae/edit/master/10-referencias.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["book_mpae.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

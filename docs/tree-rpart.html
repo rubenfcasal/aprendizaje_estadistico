@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="es" xml:lang="es">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>3.3 CART con el paquete rpart | Métodos predictivos de aprendizaje estadístico</title>
+  <meta name="description" content="3.3 CART con el paquete rpart | Métodos predictivos de aprendizaje estadístico con R." />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="3.3 CART con el paquete rpart | Métodos predictivos de aprendizaje estadístico" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="3.3 CART con el paquete rpart | Métodos predictivos de aprendizaje estadístico con R." />
+  <meta name="github-repo" content="rubenfcasal/book_mpae" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3.3 CART con el paquete rpart | Métodos predictivos de aprendizaje estadístico" />
+  
+  <meta name="twitter:description" content="3.3 CART con el paquete rpart | Métodos predictivos de aprendizaje estadístico con R." />
+  
+
+<meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es)" />
+<meta name="author" content="Julián Costa Bouzas (julian.costa@udc.es)" />
+<meta name="author" content="Manuel Oviedo de la Fuente (manuel.oviedo@udc.es)" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="árboles-de-clasificación-cart.html"/>
+<link rel="next" href="alternativas-a-los-árboles-cart.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.30/datatables.js"></script>
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.13.4/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Métodos predictivos de aprendizaje estadístico</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Bienvenida</a></li>
+<li class="chapter" data-level="" data-path="prólogo.html"><a href="prólogo.html"><i class="fa fa-check"></i>Prólogo</a>
+<ul>
+<li class="chapter" data-level="" data-path="el-lenguaje-de-programación-r.html"><a href="el-lenguaje-de-programación-r.html"><i class="fa fa-check"></i>El lenguaje de programación R</a></li>
+<li class="chapter" data-level="" data-path="organización.html"><a href="organización.html"><i class="fa fa-check"></i>Organización</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="intro-AE.html"><a href="intro-AE.html"><i class="fa fa-check"></i><b>1</b> Introducción al aprendizaje estadístico</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><i class="fa fa-check"></i><b>1.1</b> Aprendizaje estadístico vs. aprendizaje automático</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="aprendizaje-estadístico-vs.-aprendizaje-automático.html"><a href="aprendizaje-estadístico-vs.-aprendizaje-automático.html#las-dos-culturas"><i class="fa fa-check"></i><b>1.1.1</b> Las dos culturas</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html"><i class="fa fa-check"></i><b>1.2</b> Métodos de aprendizaje estadístico</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#notacion"><i class="fa fa-check"></i><b>1.2.1</b> Notación y terminología</a></li>
+<li class="chapter" data-level="1.2.2" data-path="métodos-de-aprendizaje-estadístico.html"><a href="métodos-de-aprendizaje-estadístico.html#metodos-pkgs"><i class="fa fa-check"></i><b>1.2.2</b> Métodos (de aprendizaje supervisado) y paquetes de R</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="const-eval.html"><a href="const-eval.html"><i class="fa fa-check"></i><b>1.3</b> Construcción y evaluación de los modelos</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="const-eval.html"><a href="const-eval.html#bias-variance"><i class="fa fa-check"></i><b>1.3.1</b> Equilibrio entre sesgo y varianza: infraajuste y sobreajuste</a></li>
+<li class="chapter" data-level="1.3.2" data-path="const-eval.html"><a href="const-eval.html#entrenamiento-test"><i class="fa fa-check"></i><b>1.3.2</b> Datos de entrenamiento y datos de test</a></li>
+<li class="chapter" data-level="1.3.3" data-path="const-eval.html"><a href="const-eval.html#cv"><i class="fa fa-check"></i><b>1.3.3</b> Selección de hiperparámetros mediante validación cruzada</a></li>
+<li class="chapter" data-level="1.3.4" data-path="const-eval.html"><a href="const-eval.html#eval-reg"><i class="fa fa-check"></i><b>1.3.4</b> Evaluación de un método de regresión</a></li>
+<li class="chapter" data-level="1.3.5" data-path="const-eval.html"><a href="const-eval.html#eval-class"><i class="fa fa-check"></i><b>1.3.5</b> Evaluación de un método de clasificación</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="dimen-curse.html"><a href="dimen-curse.html"><i class="fa fa-check"></i><b>1.4</b> La maldición de la dimensionalidad</a></li>
+<li class="chapter" data-level="1.5" data-path="analisis-modelos.html"><a href="analisis-modelos.html"><i class="fa fa-check"></i><b>1.5</b> Análisis e interpretación de los modelos</a></li>
+<li class="chapter" data-level="1.6" data-path="caret.html"><a href="caret.html"><i class="fa fa-check"></i><b>1.6</b> Introducción al paquete <code>caret</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="clasicos.html"><a href="clasicos.html"><i class="fa fa-check"></i><b>2</b> Métodos clásicos de estadística</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="rlm.html"><a href="rlm.html"><i class="fa fa-check"></i><b>2.1</b> Regresión lineal múltiple</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="rlm.html"><a href="rlm.html#colinealidad"><i class="fa fa-check"></i><b>2.1.1</b> El problema de la colinealidad</a></li>
+<li class="chapter" data-level="2.1.2" data-path="rlm.html"><a href="rlm.html#seleccion-rlm"><i class="fa fa-check"></i><b>2.1.2</b> Selección de variables explicativas</a></li>
+<li class="chapter" data-level="2.1.3" data-path="rlm.html"><a href="rlm.html#analisis-rlm"><i class="fa fa-check"></i><b>2.1.3</b> Análisis e interpretación del modelo</a></li>
+<li class="chapter" data-level="2.1.4" data-path="rlm.html"><a href="rlm.html#eval-rlm"><i class="fa fa-check"></i><b>2.1.4</b> Evaluación de la precisión</a></li>
+<li class="chapter" data-level="2.1.5" data-path="rlm.html"><a href="rlm.html#selec-ae-rlm"><i class="fa fa-check"></i><b>2.1.5</b> Selección del modelo mediante remuestreo</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="reg-glm.html"><a href="reg-glm.html"><i class="fa fa-check"></i><b>2.2</b> Modelos lineales generalizados</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="reg-glm.html"><a href="reg-glm.html#seleccion-glm"><i class="fa fa-check"></i><b>2.2.1</b> Selección de variables explicativas</a></li>
+<li class="chapter" data-level="2.2.2" data-path="reg-glm.html"><a href="reg-glm.html#analisis-glm"><i class="fa fa-check"></i><b>2.2.2</b> Análisis e interpretación del modelo</a></li>
+<li class="chapter" data-level="2.2.3" data-path="reg-glm.html"><a href="reg-glm.html#glm-bfan"><i class="fa fa-check"></i><b>2.2.3</b> Evaluación de la precisión</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="generadores.html"><a href="generadores.html"><i class="fa fa-check"></i><b>2.3</b> Otros métodos de clasificación</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="generadores.html"><a href="generadores.html#clas-lda"><i class="fa fa-check"></i><b>2.3.1</b> Análisis discriminante lineal</a></li>
+<li class="chapter" data-level="2.3.2" data-path="generadores.html"><a href="generadores.html#clas-qda"><i class="fa fa-check"></i><b>2.3.2</b> Análisis discriminante cuadrático</a></li>
+<li class="chapter" data-level="2.3.3" data-path="generadores.html"><a href="generadores.html#bayes"><i class="fa fa-check"></i><b>2.3.3</b> Bayes naíf</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="trees.html"><a href="trees.html"><i class="fa fa-check"></i><b>3</b> Árboles de decisión</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="árboles-de-regresión-cart.html"><a href="árboles-de-regresión-cart.html"><i class="fa fa-check"></i><b>3.1</b> Árboles de regresión CART</a></li>
+<li class="chapter" data-level="3.2" data-path="árboles-de-clasificación-cart.html"><a href="árboles-de-clasificación-cart.html"><i class="fa fa-check"></i><b>3.2</b> Árboles de clasificación CART</a></li>
+<li class="chapter" data-level="3.3" data-path="tree-rpart.html"><a href="tree-rpart.html"><i class="fa fa-check"></i><b>3.3</b> CART con el paquete <code>rpart</code></a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="tree-rpart.html"><a href="tree-rpart.html#reg-rpart"><i class="fa fa-check"></i><b>3.3.1</b> Ejemplo: regresión</a></li>
+<li class="chapter" data-level="3.3.2" data-path="tree-rpart.html"><a href="tree-rpart.html#class-rpart"><i class="fa fa-check"></i><b>3.3.2</b> Ejemplo: modelo de clasificación</a></li>
+<li class="chapter" data-level="3.3.3" data-path="tree-rpart.html"><a href="tree-rpart.html#interfaz-de-caret"><i class="fa fa-check"></i><b>3.3.3</b> Interfaz de <code>caret</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="alternativas-a-los-árboles-cart.html"><a href="alternativas-a-los-árboles-cart.html"><i class="fa fa-check"></i><b>3.4</b> Alternativas a los árboles CART</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="bagging-boosting.html"><a href="bagging-boosting.html"><i class="fa fa-check"></i><b>4</b> Bagging y boosting</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>4.1</b> Bagging</a></li>
+<li class="chapter" data-level="4.2" data-path="rf.html"><a href="rf.html"><i class="fa fa-check"></i><b>4.2</b> Bosques aleatorios</a></li>
+<li class="chapter" data-level="4.3" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html"><i class="fa fa-check"></i><b>4.3</b> Bagging y bosques aleatorios en R</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-clasificación-con-bagging"><i class="fa fa-check"></i><b>4.3.1</b> Ejemplo: clasificación con bagging</a></li>
+<li class="chapter" data-level="4.3.2" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-clasif-rf"><i class="fa fa-check"></i><b>4.3.2</b> Ejemplo: clasificación con bosques aleatorios</a></li>
+<li class="chapter" data-level="4.3.3" data-path="bagging-rf-r.html"><a href="bagging-rf-r.html#ejemplo-bosques-aleatorios-con-caret"><i class="fa fa-check"></i><b>4.3.3</b> Ejemplo: bosques aleatorios con <code>caret</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="boosting.html"><a href="boosting.html"><i class="fa fa-check"></i><b>4.4</b> Boosting</a></li>
+<li class="chapter" data-level="4.5" data-path="boosting-r.html"><a href="boosting-r.html"><i class="fa fa-check"></i><b>4.5</b> Boosting en R</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="boosting-r.html"><a href="boosting-r.html#ejemplo-clasificación-con-el-paquete-ada"><i class="fa fa-check"></i><b>4.5.1</b> Ejemplo: clasificación con el paquete <code>ada</code></a></li>
+<li class="chapter" data-level="4.5.2" data-path="boosting-r.html"><a href="boosting-r.html#ejemplo-regresión-con-el-paquete-gbm"><i class="fa fa-check"></i><b>4.5.2</b> Ejemplo: regresión con el paquete <code>gbm</code></a></li>
+<li class="chapter" data-level="4.5.3" data-path="boosting-r.html"><a href="boosting-r.html#xgb-caret"><i class="fa fa-check"></i><b>4.5.3</b> Ejemplo: XGBoost con el paquete <code>caret</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>5</b> Máquinas de soporte vectorial</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="clasificadores-de-máximo-margen.html"><a href="clasificadores-de-máximo-margen.html"><i class="fa fa-check"></i><b>5.1</b> Clasificadores de máximo margen</a></li>
+<li class="chapter" data-level="5.2" data-path="clasificadores-de-soporte-vectorial.html"><a href="clasificadores-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>5.2</b> Clasificadores de soporte vectorial</a></li>
+<li class="chapter" data-level="5.3" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html"><i class="fa fa-check"></i><b>5.3</b> Máquinas de soporte vectorial</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#regresión-con-svm"><i class="fa fa-check"></i><b>5.3.1</b> Regresión con SVM</a></li>
+<li class="chapter" data-level="5.3.2" data-path="máquinas-de-soporte-vectorial.html"><a href="máquinas-de-soporte-vectorial.html#ventajas-e-incovenientes"><i class="fa fa-check"></i><b>5.3.2</b> Ventajas e incovenientes</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="svm-kernlab.html"><a href="svm-kernlab.html"><i class="fa fa-check"></i><b>5.4</b> SVM en R</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="ext-glm.html"><a href="ext-glm.html"><i class="fa fa-check"></i><b>6</b> Extensiones de los modelos lineales (generalizados)</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="shrinkage.html"><a href="shrinkage.html"><i class="fa fa-check"></i><b>6.1</b> Métodos de regularización</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="shrinkage.html"><a href="shrinkage.html#implementación-en-r"><i class="fa fa-check"></i><b>6.1.1</b> Implementación en R</a></li>
+<li class="chapter" data-level="6.1.2" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-ridge-regression"><i class="fa fa-check"></i><b>6.1.2</b> Ejemplo: <em>ridge regression</em></a></li>
+<li class="chapter" data-level="6.1.3" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-lasso"><i class="fa fa-check"></i><b>6.1.3</b> Ejemplo: LASSO</a></li>
+<li class="chapter" data-level="6.1.4" data-path="shrinkage.html"><a href="shrinkage.html#ejemplo-elastic-net"><i class="fa fa-check"></i><b>6.1.4</b> Ejemplo: <em>elastic net</em></a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="pca-pls.html"><a href="pca-pls.html"><i class="fa fa-check"></i><b>6.2</b> Métodos de reducción de la dimensión</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-componentes-principales-pcr"><i class="fa fa-check"></i><b>6.2.1</b> Regresión por componentes principales (PCR)</a></li>
+<li class="chapter" data-level="6.2.2" data-path="pca-pls.html"><a href="pca-pls.html#regresión-por-mínimos-cuadrados-parciales-plsr"><i class="fa fa-check"></i><b>6.2.2</b> Regresión por mínimos cuadrados parciales (PLSR)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="reg-np.html"><a href="reg-np.html"><i class="fa fa-check"></i><b>7</b> Regresión no paramétrica</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="reg-local.html"><a href="reg-local.html"><i class="fa fa-check"></i><b>7.1</b> Regresión local</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="reg-local.html"><a href="reg-local.html#reg-knn"><i class="fa fa-check"></i><b>7.1.1</b> Vecinos más próximos</a></li>
+<li class="chapter" data-level="7.1.2" data-path="reg-local.html"><a href="reg-local.html#reg-locpol"><i class="fa fa-check"></i><b>7.1.2</b> Regresión polinómica local</a></li>
+<li class="chapter" data-level="7.1.3" data-path="reg-local.html"><a href="reg-local.html#regresión-polinómica-local-robusta"><i class="fa fa-check"></i><b>7.1.3</b> Regresión polinómica local robusta</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>7.2</b> Splines</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="splines.html"><a href="splines.html#reg-splines"><i class="fa fa-check"></i><b>7.2.1</b> Splines de regresión</a></li>
+<li class="chapter" data-level="7.2.2" data-path="splines.html"><a href="splines.html#splines-de-suavizado"><i class="fa fa-check"></i><b>7.2.2</b> Splines de suavizado</a></li>
+<li class="chapter" data-level="7.2.3" data-path="splines.html"><a href="splines.html#splines-penalizados"><i class="fa fa-check"></i><b>7.2.3</b> Splines penalizados</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="reg-gam.html"><a href="reg-gam.html"><i class="fa fa-check"></i><b>7.3</b> Modelos aditivos</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="reg-gam.html"><a href="reg-gam.html#superficies-de-predicción"><i class="fa fa-check"></i><b>7.3.1</b> Superficies de predicción</a></li>
+<li class="chapter" data-level="7.3.2" data-path="reg-gam.html"><a href="reg-gam.html#anova-gam"><i class="fa fa-check"></i><b>7.3.2</b> Comparación y selección de modelos</a></li>
+<li class="chapter" data-level="7.3.3" data-path="reg-gam.html"><a href="reg-gam.html#mgcv-diagnosis"><i class="fa fa-check"></i><b>7.3.3</b> Diagnosis del modelo</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>7.4</b> Regresión spline adaptativa multivariante</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="mars.html"><a href="mars.html#mars-con-el-paquete-earth"><i class="fa fa-check"></i><b>7.4.1</b> MARS con el paquete <code>earth</code></a></li>
+<li class="chapter" data-level="7.4.2" data-path="mars.html"><a href="mars.html#mars-con-el-paquete-caret"><i class="fa fa-check"></i><b>7.4.2</b> MARS con el paquete <code>caret</code></a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="pursuit.html"><a href="pursuit.html"><i class="fa fa-check"></i><b>7.5</b> Projection pursuit</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="pursuit.html"><a href="pursuit.html#ppr"><i class="fa fa-check"></i><b>7.5.1</b> Regresión por projection pursuit</a></li>
+<li class="chapter" data-level="7.5.2" data-path="pursuit.html"><a href="pursuit.html#implementación-en-r-1"><i class="fa fa-check"></i><b>7.5.2</b> Implementación en R</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="neural-nets.html"><a href="neural-nets.html"><i class="fa fa-check"></i><b>8</b> Redes neuronales</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="single-hidden-layer-feedforward-network.html"><a href="single-hidden-layer-feedforward-network.html"><i class="fa fa-check"></i><b>8.1</b> Single-hidden-layer feedforward network</a></li>
+<li class="chapter" data-level="8.2" data-path="clasificación-con-ann.html"><a href="clasificación-con-ann.html"><i class="fa fa-check"></i><b>8.2</b> Clasificación con ANN</a></li>
+<li class="chapter" data-level="8.3" data-path="implementación-en-r-2.html"><a href="implementación-en-r-2.html"><i class="fa fa-check"></i><b>8.3</b> Implementación en R</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Métodos predictivos de aprendizaje estadístico</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="tree-rpart" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> CART con el paquete <code>rpart</code><a href="tree-rpart.html#tree-rpart" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>La metodología CART está implementada en el paquete <a href="https://CRAN.R-project.org/package=rpart"><code>rpart</code></a> (acrónimo de <em>Recursive PARTitioning</em>)<a href="#fn37" class="footnote-ref" id="fnref37"><sup>37</sup></a>, implementado por <span class="citation">Therneau et al. (<a href="#ref-R-rpart" role="doc-biblioref">2013</a>)</span>.</p>
+<p>La función principal es <a href="https://rdrr.io/pkg/rpart/man/rpart.html"><code>rpart()</code></a> y habitualmente se emplea de la forma:</p>
+<p><code>rpart(formula, data, method, parms, control, ...)</code></p>
+<ul>
+<li><p><code>formula</code>: permite especificar la respuesta y las variables predictoras de la forma habitual;
+se suele establecer de la forma <code>respuesta ~ .</code> para incluir todas las posibles variables explicativas.</p></li>
+<li><p><code>data</code>: <code>data.frame</code> (opcional; donde se evaluará la fórmula) con la muestra de entrenamiento.</p></li>
+<li><p><code>method</code>: método empleado para realizar las particiones, puede ser <code>"anova"</code> (regresión), <code>"class"</code> (clasificación),
+<code>"poisson"</code> (regresión de Poisson) o <code>"exp"</code> (supervivencia), o alternativamente una lista de funciones (con componentes
+<code>init</code>, <code>split</code>, <code>eval</code>; ver la <em>vignette</em> <a href="https://cran.r-project.org/web/packages/rpart/vignettes/usercode.pdf"><em>User Written Split Functions</em></a>).
+Por defecto se selecciona a partir de la variable respuesta en <code>formula</code>,
+por ejemplo, si es un factor (lo recomendado en clasificación) emplea <code>method = "class"</code>.</p></li>
+<li><p><code>parms</code>: lista de parámetros opcionales para la partición en el caso de clasificación
+(o regresión de Poisson). Puede contener los componentes <code>prior</code> (vector de probabilidades previas;
+por defecto las frecuencias observadas), <code>loss</code> (matriz de pérdidas; con ceros en la diagonal y por defecto 1 en el resto)
+y <code>split</code> (criterio de error; por defecto <code>"gini"</code> o alternativamente <code>"information"</code>).</p></li>
+<li><p><code>control</code>: lista de opciones que controlan el algoritmo de partición, por defecto se seleccionan mediante la función <code>rpart.control()</code>,
+aunque también se pueden establecer en la llamada a la función principal, y los principales parámetros son:</p>
+<pre><code>rpart.control(minsplit = 20, minbucket = round(minsplit/3), cp = 0.01, 
+              xval = 10, maxdepth = 30, ...)</code></pre>
+<ul>
+<li><p><code>cp</code> es el parámetro de complejidad <span class="math inline">\(\tilde \alpha\)</span> para la poda del árbol, de forma que un valor de 1 se corresponde con un árbol sin divisiones, y un valor de 0, con un árbol de profundidad máxima.
+Adicionalmente, para reducir el tiempo de computación, el algoritmo empleado no realiza una partición si la proporción de reducción del error es inferior a este valor (valores más grandes simplifican el modelo y reducen el tiempo de computación).</p></li>
+<li><p><code>maxdepth</code> es la profundidad máxima del árbol (la profundidad de la raíz sería 0).</p></li>
+<li><p><code>minsplit</code> y <code>minbucket</code> son, respectivamente, los números mínimos de observaciones en un nodo intermedio para particionarlo
+y en un nodo terminal.</p></li>
+<li><p><code>xval</code> es el número de grupos (folds) para validación cruzada.</p></li>
+</ul></li>
+</ul>
+<p>Para más detalles, consultar la documentación de esta función o la <em>vignette</em> <a href="https://cran.r-project.org/web/packages/rpart/vignettes/longintro.pdf"><em>Introduction to Rpart</em></a>.</p>
+<div id="reg-rpart" class="section level3 hasAnchor" number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> Ejemplo: regresión<a href="tree-rpart.html#reg-rpart" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Emplearemos el conjunto de datos <a href="https://rubenfcasal.github.io/mpae/reference/winetaste.html"><code>winequality</code></a> del paquete <a href="https://CRAN.R-project.org/package=mpae"><code>mpae</code></a>, que contiene información fisico-química
+(<code>fixed.acidity</code>, <code>volatile.acidity</code>, <code>citric.acid</code>, <code>residual.sugar</code>, <code>chlorides</code>, <code>free.sulfur.dioxide</code>,
+<code>total.sulfur.dioxide</code>, <code>density</code>, <code>pH</code>, <code>sulphates</code> y <code>alcohol</code>) y sensorial (<code>quality</code>) de una muestra de 1250 vinos portugueses de la variedad <em>vinho verde</em> <span class="citation">(<a href="#ref-cortez2009modeling" role="doc-biblioref">Cortez et al., 2009</a>)</span></p>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="tree-rpart.html#cb174-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mpae)</span>
+<span id="cb174-2"><a href="tree-rpart.html#cb174-2" aria-hidden="true" tabindex="-1"></a><span class="co"># data(winequality, package = &quot;mpae&quot;)</span></span>
+<span id="cb174-3"><a href="tree-rpart.html#cb174-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(winequality)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    1250 obs. of  12 variables:
+##  $ fixed.acidity       : num  6.8 7.1 6.9 7.5 8.6 7.7 5.4 6.8 6.1 5.5 ...
+##  $ volatile.acidity    : num  0.37 0.24 0.32 0.23 0.36 0.28 0.59 0.16 0.28 0.2..
+##  $ citric.acid         : num  0.47 0.34 0.13 0.49 0.26 0.63 0.07 0.36 0.27 0.2..
+##  $ residual.sugar      : num  11.2 1.2 7.8 7.7 11.1 11.1 7 1.3 4.7 1.6 ...
+##  $ chlorides           : num  0.071 0.045 0.042 0.049 0.03 0.039 0.045 0.034 0..
+##  $ free.sulfur.dioxide : num  44 6 11 61 43.5 58 36 32 56 23 ...
+##  $ total.sulfur.dioxide: num  136 132 117 209 171 179 147 98 140 85 ...
+##  $ density             : num  0.997 0.991 0.996 0.994 0.995 ...
+##  $ pH                  : num  2.98 3.16 3.23 3.14 3.03 3.08 3.34 3.02 3.16 3.4..
+##  $ sulphates           : num  0.88 0.46 0.37 0.3 0.49 0.44 0.57 0.58 0.42 0.42..
+##  $ alcohol             : num  9.2 11.2 9.2 11.1 12 8.8 9.7 11.3 12.5 12.5 ...
+##  $ quality             : int  5 4 5 7 5 4 6 6 8 5 ...</code></pre>
+<p>Como respuesta consideraremos la variable <code>quality</code>, mediana de al menos 3 evaluaciones de la calidad del vino realizadas por expertos, que los evaluaron entre 0 (muy malo) y 10 (excelente) como puede observarse en el gráfico de barras de la Figura <a href="tree-rpart.html#fig:barplot">3.3</a>.</p>
+
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="tree-rpart.html#cb176-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(winequality<span class="sc">$</span>quality), <span class="at">xlab =</span> <span class="st">&quot;Calidad&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Frecuencia&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:barplot"></span>
+<img src="03-arboles_files/figure-html/barplot-1.png" alt="Distribución de las evaluaciones de la calidad del vino (winequality$quality)." width="75%" />
+<p class="caption">
+Figura 3.3: Distribución de las evaluaciones de la calidad del vino (<code>winequality$quality</code>).
+</p>
+</div>
+<p>En primer lugar se selecciona el 80 % de los datos como muestra de entrenamiento y el 20 % restante como muestra de test:</p>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="tree-rpart.html#cb177-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb177-2"><a href="tree-rpart.html#cb177-2" aria-hidden="true" tabindex="-1"></a>nobs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(winequality)</span>
+<span id="cb177-3"><a href="tree-rpart.html#cb177-3" aria-hidden="true" tabindex="-1"></a>itrain <span class="ot">&lt;-</span> <span class="fu">sample</span>(nobs, <span class="fl">0.8</span> <span class="sc">*</span> nobs)</span>
+<span id="cb177-4"><a href="tree-rpart.html#cb177-4" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> winequality[itrain, ]</span>
+<span id="cb177-5"><a href="tree-rpart.html#cb177-5" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> winequality[<span class="sc">-</span>itrain, ]</span></code></pre></div>
+<p>Podemos obtener el árbol de decisión con las opciones por defecto con el comando:</p>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="tree-rpart.html#cb178-1" aria-hidden="true" tabindex="-1"></a>tree <span class="ot">&lt;-</span> <span class="fu">rpart</span>(quality <span class="sc">~</span> ., <span class="at">data =</span> train)</span></code></pre></div>
+<p>Al imprimirlo se muestra el número de observaciones e información sobre los distintos nodos (número de nodo, condición que define la partición, número de observaciones en el nodo, función de pérdida y predicción), marcando con un <code>*</code> los nodos terminales.</p>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="tree-rpart.html#cb179-1" aria-hidden="true" tabindex="-1"></a>tree</span></code></pre></div>
+<pre><code>## n= 1000 
+## 
+## node), split, n, deviance, yval
+##       * denotes terminal node
+## 
+##  1) root 1000 768.960 5.8620  
+##    2) alcohol&lt; 10.75 622 340.810 5.5868  
+##      4) volatile.acidity&gt;=0.2575 329 154.760 5.3708  
+##        8) total.sulfur.dioxide&lt; 98.5 24  12.500 4.7500 *
+##        9) total.sulfur.dioxide&gt;=98.5 305 132.280 5.4197  
+##         18) pH&lt; 3.315 269 101.450 5.3532 *
+##         19) pH&gt;=3.315 36  20.750 5.9167 *
+##      5) volatile.acidity&lt; 0.2575 293 153.470 5.8294  
+##       10) sulphates&lt; 0.475 144  80.326 5.6597 *
+##       11) sulphates&gt;=0.475 149  64.993 5.9933 *
+##    3) alcohol&gt;=10.75 378 303.540 6.3148  
+##      6) alcohol&lt; 11.775 200 173.870 6.0750  
+##       12) free.sulfur.dioxide&lt; 11.5 15  10.933 4.9333 *
+##       13) free.sulfur.dioxide&gt;=11.5 185 141.810 6.1676  
+##         26) volatile.acidity&gt;=0.395 7  12.857 5.1429 *
+##         27) volatile.acidity&lt; 0.395 178 121.310 6.2079  
+##           54) citric.acid&gt;=0.385 31  21.935 5.7419 *
+##           55) citric.acid&lt; 0.385 147  91.224 6.3061 *
+##      7) alcohol&gt;=11.775 178 105.240 6.5843 *</code></pre>
+<p>Para representarlo se pueden emplear las herramientas del paquete <a href="https://CRAN.R-project.org/package=rpart"><code>rpart</code></a> (ver Figura <a href="tree-rpart.html#fig:arbolrpart">3.4</a>):</p>
+
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="tree-rpart.html#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tree)</span>
+<span id="cb181-2"><a href="tree-rpart.html#cb181-2" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(tree)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:arbolrpart"></span>
+<img src="03-arboles_files/figure-html/arbolrpart-1.png" alt="Árbol de regresión para predecir winequality$quality (obtenido con las opciones por defecto de rpart())." width="75%" />
+<p class="caption">
+Figura 3.4: Árbol de regresión para predecir <code>winequality$quality</code> (obtenido con las opciones por defecto de <a href="https://rdrr.io/pkg/rpart/man/rpart.html"><code>rpart()</code></a>).
+</p>
+</div>
+<p>Pero puede ser preferible emplear el paquete <a href="https://CRAN.R-project.org/package=rpart.plot"><code>rpart.plot</code></a> <span class="citation">(<a href="#ref-R-rpartplot" role="doc-biblioref">Milborrow, 2019</a>)</span> (ver Figura <a href="tree-rpart.html#fig:arbolrpartplot">3.5</a>):</p>
+
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="tree-rpart.html#cb182-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart.plot)</span>
+<span id="cb182-2"><a href="tree-rpart.html#cb182-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rpart.plot</span>(tree)  </span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:arbolrpartplot"></span>
+<img src="03-arboles_files/figure-html/arbolrpartplot-1.png" alt="Representación del árbol de regresión generada con rpart.plot()." width="75%" />
+<p class="caption">
+Figura 3.5: Representación del árbol de regresión generada con <a href="https://rdrr.io/pkg/rpart.plot/man/rpart.plot.html"><code>rpart.plot()</code></a>.
+</p>
+</div>
+<p>Nos interesa conocer cómo se clasificaría a una nueva observación en los nodos terminales, junto con las predicciones correspondientes (la media de la respuesta en el nodo terminal). En los nodos intermedios, solo nos interesan las condiciones y el orden de las variables consideradas hasta llegar a las hojas. Para ello, puede ser útil imprimir las reglas:</p>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="tree-rpart.html#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rpart.rules</span>(tree, <span class="at">style =</span> <span class="st">&quot;tall&quot;</span>)</span></code></pre></div>
+<pre><code>## quality is 4.8 when
+##     alcohol &lt; 11
+##     volatile.acidity &gt;= 0.26
+##     total.sulfur.dioxide &lt; 99
+## 
+## quality is 4.9 when
+##     alcohol is 11 to 12
+##     free.sulfur.dioxide &lt; 12
+## 
+## quality is 5.1 when
+##     alcohol is 11 to 12
+##     volatile.acidity &gt;= 0.40
+##     free.sulfur.dioxide &gt;= 12
+## 
+## quality is 5.4 when
+##     alcohol &lt; 11
+##     volatile.acidity &gt;= 0.26
+##     total.sulfur.dioxide &gt;= 99
+##     pH &lt; 3.3
+## 
+## quality is 5.7 when
+##     alcohol &lt; 11
+##     volatile.acidity &lt; 0.26
+##     sulphates &lt; 0.48
+## 
+## quality is 5.7 when
+##     alcohol is 11 to 12
+##     volatile.acidity &lt; 0.40
+##     free.sulfur.dioxide &gt;= 12
+##     citric.acid &gt;= 0.39
+## 
+## quality is 5.9 when
+##     alcohol &lt; 11
+##     volatile.acidity &gt;= 0.26
+##     total.sulfur.dioxide &gt;= 99
+##     pH &gt;= 3.3
+## 
+## quality is 6.0 when
+##     alcohol &lt; 11
+##     volatile.acidity &lt; 0.26
+##     sulphates &gt;= 0.48
+## 
+## quality is 6.3 when
+##     alcohol is 11 to 12
+##     volatile.acidity &lt; 0.40
+##     free.sulfur.dioxide &gt;= 12
+##     citric.acid &lt; 0.39
+## 
+## quality is 6.6 when
+##     alcohol &gt;= 12</code></pre>
+<p>Por defecto, el árbol se poda considerando <code>cp = 0.01</code>, que puede ser adecuado en muchas situaciones.
+Sin embargo, para seleccionar el valor óptimo de este hiperparámetro se puede emplear validación cruzada.</p>
+<p>En primer lugar habría que establecer <code>cp = 0</code> para construir el árbol completo, a la profundidad máxima. La profundidad máxima viene determinada por los valores de <code>minsplit</code> y <code>minbucket</code>, los cuales pueden ser ajustados manualmente dependiendo del número de observaciones o tratados como hiperparámetros; esto último no está implementado en <code>rpart</code>, ni en principio en <code>caret</code><a href="#fn38" class="footnote-ref" id="fnref38"><sup>38</sup></a>.</p>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="tree-rpart.html#cb185-1" aria-hidden="true" tabindex="-1"></a>tree <span class="ot">&lt;-</span> <span class="fu">rpart</span>(quality <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">cp =</span> <span class="dv">0</span>)</span></code></pre></div>
+<p>Posteriormente, podemos emplear la función <a href="https://rdrr.io/pkg/rpart/man/printcp.html"><code>printcp()</code></a> para obtener los valores de CP para los árboles (óptimos) de menor tamaño, junto con su error de validación cruzada <code>xerror</code> (reescalado de forma que el máximo de <code>rel error</code> es 1):</p>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="tree-rpart.html#cb186-1" aria-hidden="true" tabindex="-1"></a><span class="fu">printcp</span>(tree)</span></code></pre></div>
+<pre><code>## 
+## Regression tree:
+## rpart(formula = quality ~ ., data = train, cp = 0)
+## 
+## Variables actually used in tree construction:
+##  [1] alcohol              chlorides            citric.acid         
+##  [4] density              fixed.acidity        free.sulfur.dioxide 
+##  [7] pH                   residual.sugar       sulphates           
+## [10] total.sulfur.dioxide volatile.acidity    
+## 
+## Root node error: 769/1000 = 0.769
+## 
+## n= 1000 
+## 
+##          CP nsplit rel error xerror   xstd
+## 1  0.162047      0     1.000  1.002 0.0486
+## 2  0.042375      1     0.838  0.858 0.0436
+## 3  0.031765      2     0.796  0.828 0.0435
+## 4  0.027487      3     0.764  0.813 0.0428
+## 5  0.013044      4     0.736  0.770 0.0397
+## 6  0.010596      6     0.710  0.782 0.0394
+## 7  0.010266      7     0.700  0.782 0.0391
+## 8  0.008408      9     0.679  0.782 0.0391
+## 9  0.008139     10     0.671  0.801 0.0399
+## 10 0.007806     11     0.663  0.800 0.0405
+## 11 0.006842     13     0.647  0.798 0.0402
+## 12 0.006738     15     0.633  0.814 0.0409
+##  [ reached getOption(&quot;max.print&quot;) -- omitted 48 rows ]</code></pre>
+<p>También <a href="https://rdrr.io/pkg/rpart/man/plotcp.html"><code>plotcp()</code></a> para representarlos<a href="#fn39" class="footnote-ref" id="fnref39"><sup>39</sup></a> (ver Figura <a href="tree-rpart.html#fig:cp">3.6</a>):</p>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="tree-rpart.html#cb188-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotcp</span>(tree)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:cp"></span>
+<img src="03-arboles_files/figure-html/cp-1.png" alt="Error de validación cruzada (reescalado) dependiendo del parámetro de complejidad CP empleado en el ajuste del árbol de decisión." width="75%" />
+<p class="caption">
+Figura 3.6: Error de validación cruzada (reescalado) dependiendo del parámetro de complejidad CP empleado en el ajuste del árbol de decisión.
+</p>
+</div>
+<p>La tabla con los valores de las podas (óptimas, dependiendo del parámetro de complejidad) está almacenada en la componente <code>$cptable</code>:</p>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="tree-rpart.html#cb189-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tree<span class="sc">$</span>cptable, <span class="dv">10</span>)</span></code></pre></div>
+<pre><code>##           CP nsplit rel error  xerror     xstd
+## 1  0.1620471      0   1.00000 1.00203 0.048591
+## 2  0.0423749      1   0.83795 0.85779 0.043646
+## 3  0.0317653      2   0.79558 0.82810 0.043486
+## 4  0.0274870      3   0.76381 0.81350 0.042814
+## 5  0.0130437      4   0.73633 0.77038 0.039654
+## 6  0.0105961      6   0.71024 0.78168 0.039353
+## 7  0.0102661      7   0.69964 0.78177 0.039141
+## 8  0.0084080      9   0.67911 0.78172 0.039123
+## 9  0.0081392     10   0.67070 0.80117 0.039915
+## 10 0.0078057     11   0.66256 0.80020 0.040481</code></pre>
+<p>A partir de esta misma tabla podríamos seleccionar el valor óptimo de forma automática, siguiendo el criterio de un error estándar de <span class="citation">Breiman et al. (<a href="#ref-breiman1984classification" role="doc-biblioref">1984</a>)</span>:</p>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="tree-rpart.html#cb191-1" aria-hidden="true" tabindex="-1"></a>xerror <span class="ot">&lt;-</span> tree<span class="sc">$</span>cptable[,<span class="st">&quot;xerror&quot;</span>]</span>
+<span id="cb191-2"><a href="tree-rpart.html#cb191-2" aria-hidden="true" tabindex="-1"></a>imin.xerror <span class="ot">&lt;-</span> <span class="fu">which.min</span>(xerror)</span>
+<span id="cb191-3"><a href="tree-rpart.html#cb191-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Valor óptimo</span></span>
+<span id="cb191-4"><a href="tree-rpart.html#cb191-4" aria-hidden="true" tabindex="-1"></a>tree<span class="sc">$</span>cptable[imin.xerror, ]</span></code></pre></div>
+<pre><code>##        CP    nsplit rel error    xerror      xstd 
+##  0.013044  4.000000  0.736326  0.770380  0.039654</code></pre>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="tree-rpart.html#cb193-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Límite superior &quot;oneSE rule&quot; y complejidad mínima por debajo de ese valor</span></span>
+<span id="cb193-2"><a href="tree-rpart.html#cb193-2" aria-hidden="true" tabindex="-1"></a>upper.xerror <span class="ot">&lt;-</span> xerror[imin.xerror] <span class="sc">+</span> tree<span class="sc">$</span>cptable[imin.xerror, <span class="st">&quot;xstd&quot;</span>]</span>
+<span id="cb193-3"><a href="tree-rpart.html#cb193-3" aria-hidden="true" tabindex="-1"></a>icp <span class="ot">&lt;-</span> <span class="fu">min</span>(<span class="fu">which</span>(xerror <span class="sc">&lt;=</span> upper.xerror))</span>
+<span id="cb193-4"><a href="tree-rpart.html#cb193-4" aria-hidden="true" tabindex="-1"></a>cp <span class="ot">&lt;-</span> tree<span class="sc">$</span>cptable[icp, <span class="st">&quot;CP&quot;</span>]</span></code></pre></div>
+<p>Para obtener el modelo final (ver Figura <a href="tree-rpart.html#fig:arbolpoda">3.7</a>) podamos el árbol con el valor de complejidad obtenido 0.01304 (que en este caso coincide con el valor óptimo).</p>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="tree-rpart.html#cb194-1" aria-hidden="true" tabindex="-1"></a>tree <span class="ot">&lt;-</span> <span class="fu">prune</span>(tree, <span class="at">cp =</span> cp)</span>
+<span id="cb194-2"><a href="tree-rpart.html#cb194-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rpart.plot</span>(tree) </span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:arbolpoda"></span>
+<img src="03-arboles_files/figure-html/arbolpoda-1.png" alt="Árbol de regresión resultante después de la poda (modelo final)." width="75%" />
+<p class="caption">
+Figura 3.7: Árbol de regresión resultante después de la poda (modelo final).
+</p>
+</div>
+<p>Podríamos estudiar el modelo final, por ejemplo, mediante el método <a href="https://rdrr.io/pkg/rpart/man/summary.rpart.html"><code>summary.rpart()</code></a>. Este método muestra, entre otras cosas, una medida (en porcentaje) de la importancia de las variables explicativas para la predicción de la respuesta (teniendo en cuenta todas las particiones, principales y secundarias, en las que se emplea cada variable explicativa). Como alternativa, podríamos emplear el siguiente código:</p>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="tree-rpart.html#cb195-1" aria-hidden="true" tabindex="-1"></a><span class="co"># summary(tree)</span></span>
+<span id="cb195-2"><a href="tree-rpart.html#cb195-2" aria-hidden="true" tabindex="-1"></a>importance <span class="ot">&lt;-</span> tree<span class="sc">$</span>variable.importance <span class="co"># Equivalente a caret::varImp(tree) </span></span>
+<span id="cb195-3"><a href="tree-rpart.html#cb195-3" aria-hidden="true" tabindex="-1"></a>importance <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span>importance<span class="sc">/</span><span class="fu">sum</span>(importance), <span class="dv">1</span>)</span>
+<span id="cb195-4"><a href="tree-rpart.html#cb195-4" aria-hidden="true" tabindex="-1"></a>importance[importance <span class="sc">&gt;=</span> <span class="dv">1</span>]</span></code></pre></div>
+<pre><code>##              alcohol              density            chlorides 
+##                 36.1                 21.7                 11.3 
+##     volatile.acidity total.sulfur.dioxide  free.sulfur.dioxide 
+##                  8.7                  8.5                  5.0 
+##       residual.sugar            sulphates          citric.acid 
+##                  4.0                  1.9                  1.1 
+##                   pH 
+##                  1.1</code></pre>
+<p>El último paso sería evaluarlo en la muestra de test siguiendo los pasos descritos en la Sección <a href="const-eval.html#eval-reg">1.3.4</a>.
+Representamos los valores observados frente a las predicciones (ver Figura <a href="tree-rpart.html#fig:obsXpred">3.8</a>):</p>
+
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="tree-rpart.html#cb197-1" aria-hidden="true" tabindex="-1"></a>obs <span class="ot">&lt;-</span> test<span class="sc">$</span>quality</span>
+<span id="cb197-2"><a href="tree-rpart.html#cb197-2" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(tree, <span class="at">newdata =</span> test)</span>
+<span id="cb197-3"><a href="tree-rpart.html#cb197-3" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(pred, obs, xlab = &quot;Predicción&quot;, ylab = &quot;Observado&quot;)</span></span>
+<span id="cb197-4"><a href="tree-rpart.html#cb197-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">jitter</span>(pred), <span class="fu">jitter</span>(obs), <span class="at">xlab =</span> <span class="st">&quot;Predicción&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Observado&quot;</span>)</span>
+<span id="cb197-5"><a href="tree-rpart.html#cb197-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:obsXpred"></span>
+<img src="03-arboles_files/figure-html/obsXpred-1.png" alt="Gráfico de observaciones frente a predicciones (test$quality; se añade una perturbación para mostrar la distribución de los valores)." width="75%" />
+<p class="caption">
+Figura 3.8: Gráfico de observaciones frente a predicciones (<code>test$quality</code>; se añade una perturbación para mostrar la distribución de los valores).
+</p>
+</div>
+<p>y calculamos medidas de error de las predicciones, bien empleando el paquete <code>caret</code>:</p>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="tree-rpart.html#cb198-1" aria-hidden="true" tabindex="-1"></a>caret<span class="sc">::</span><span class="fu">postResample</span>(pred, obs)</span></code></pre></div>
+<pre><code>##     RMSE Rsquared      MAE 
+##  0.81456  0.19695  0.65743</code></pre>
+<p>o con la función <code>accuracy()</code>:</p>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="tree-rpart.html#cb200-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(pred, test<span class="sc">$</span>quality)</span></code></pre></div>
+<pre><code>##         me       rmse        mae        mpe       mape  r.squared 
+## -0.0012694  0.8145614  0.6574264 -1.9523422 11.5767160  0.1920077</code></pre>
+<p>Como se puede observar, el ajuste del modelo es bastante deficiente. Esto es habitual en árboles de regresión, especialmente si son tan pequeños, y por ello solo se utilizan, por lo general, en un análisis exploratorio inicial o como base para modelos más avanzados como los mostrados en el siguiente capítulo. En problemas de clasificación es más habitual que se puedan llegar a obtener buenos ajustes con árboles de decisión.</p>
+<div class="exercise">
+<p><span id="exr:efecto-semilla" class="exercise"><strong>Ejercicio 3.1  </strong></span>Como se comentó en la introducción del Capítulo <a href="intro-AE.html#intro-AE">1</a>, al emplear el procedimiento habitual en AE de particionar los datos no se garantiza la reproducibilidad/repetibilidad de los resultados, ya que dependen de la semilla.
+El modelo ajustado puede variar con diferentes semillas, especialmente si el conjunto de entrenamiento es pequeño, aunque generalmente no se observan cambios significativos en las predicciones.</p>
+<p>Podemos ilustrar el efecto de la semilla en los resultados empleando el ejemplo anterior. Para ello, repite el ajuste de un árbol de regresión considerando distintas semillas y compara los resultados obtenidos.</p>
+<p>La dificultad podría estar en cómo comparar los resultados.
+Una posible solución sería mantener fija la muestra de test, de modo que no dependa de la semilla utilizada.
+Por comodidad, considera las primeras <code>ntest</code> observaciones del conjunto de datos como muestra de test.
+Posteriormente, para cada semilla, selecciona la muestra de entrenamiento de la forma habitual y ajusta un árbol.
+Finalmente, evalúa los resultados en la muestra de test.</p>
+<p>Como base se puede utilizar el siguiente código:</p>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="tree-rpart.html#cb202-1" aria-hidden="true" tabindex="-1"></a>ntest <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb202-2"><a href="tree-rpart.html#cb202-2" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> winequality[<span class="dv">1</span><span class="sc">:</span>ntest, ]</span>
+<span id="cb202-3"><a href="tree-rpart.html#cb202-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> winequality[<span class="sc">-</span>(<span class="dv">1</span><span class="sc">:</span>ntest), ]</span>
+<span id="cb202-4"><a href="tree-rpart.html#cb202-4" aria-hidden="true" tabindex="-1"></a>nobs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
+<span id="cb202-5"><a href="tree-rpart.html#cb202-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Para las distintas semillas</span></span>
+<span id="cb202-6"><a href="tree-rpart.html#cb202-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(semilla)</span>
+<span id="cb202-7"><a href="tree-rpart.html#cb202-7" aria-hidden="true" tabindex="-1"></a>itrain <span class="ot">&lt;-</span> <span class="fu">sample</span>(nobs, <span class="fl">0.8</span> <span class="sc">*</span> nobs)</span>
+<span id="cb202-8"><a href="tree-rpart.html#cb202-8" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> df[itrain, ]</span>
+<span id="cb202-9"><a href="tree-rpart.html#cb202-9" aria-hidden="true" tabindex="-1"></a><span class="co"># tree &lt;- ...</span></span></code></pre></div>
+<p>Como observación final, en este caso el conjunto de datos no es muy grande y tampoco se obtuvo un buen ajuste con un árbol de regresión, por lo que sería de esperar que se observaran más diferencias.</p>
+</div>
+<div class="exercise">
+<p><span id="exr:train-validate-test-tree" class="exercise"><strong>Ejercicio 3.2  </strong></span>Como se indicó previamente, el paquete <code>rpart</code> implementa la selección del parámetro de complejidad mediante validación cruzada.
+Como alternativa, siguiendo la idea del Ejercicio <a href="const-eval.html#exr:train-validate-test">1.1</a>, y considerando de nuevo el ejemplo anterior, particiona la muestra en datos de entrenamiento (70 %), de validación (15 %) y de test (15 %), para ajustar los árboles de decisión, seleccionar el parámetro de complejidad (el hiperparámetro) y evaluar las predicciones del modelo final, respectivamente.</p>
+</div>
+<div class="exercise">
+<p><span id="exr:train-boot-tree" class="exercise"><strong>Ejercicio 3.3  </strong></span>Una alternativa a particionar en entrenamiento y validación sería emplear bootstrap.
+La idea consiste en emplear una remuestra bootstrap del conjunto de datos de entrenamiento para ajustar el modelo y utilizar las observaciones no seleccionadas (se suelen denominar datos <em>out-of-bag</em>) como conjunto de validación.</p>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="tree-rpart.html#cb203-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb203-2"><a href="tree-rpart.html#cb203-2" aria-hidden="true" tabindex="-1"></a>nobs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(winequality)</span>
+<span id="cb203-3"><a href="tree-rpart.html#cb203-3" aria-hidden="true" tabindex="-1"></a>itrain <span class="ot">&lt;-</span> <span class="fu">sample</span>(nobs, <span class="fl">0.8</span> <span class="sc">*</span> nobs)</span>
+<span id="cb203-4"><a href="tree-rpart.html#cb203-4" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> winequality[itrain, ]</span>
+<span id="cb203-5"><a href="tree-rpart.html#cb203-5" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> winequality[<span class="sc">-</span>itrain, ]</span>
+<span id="cb203-6"><a href="tree-rpart.html#cb203-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Indice muestra de entrenamiento bootstrap</span></span>
+<span id="cb203-7"><a href="tree-rpart.html#cb203-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb203-8"><a href="tree-rpart.html#cb203-8" aria-hidden="true" tabindex="-1"></a>ntrain <span class="ot">&lt;-</span> <span class="fu">nrow</span>(train)</span>
+<span id="cb203-9"><a href="tree-rpart.html#cb203-9" aria-hidden="true" tabindex="-1"></a>itrain.boot <span class="ot">&lt;-</span> <span class="fu">sample</span>(ntrain, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb203-10"><a href="tree-rpart.html#cb203-10" aria-hidden="true" tabindex="-1"></a>train.boot <span class="ot">&lt;-</span> train[itrain.boot, ]</span></code></pre></div>
+<p>La muestra bootstrap va a contener muchas observaciones repetidas y habrá observaciones no seleccionadas.
+La probabilidad de que una observación no sea seleccionada es <span class="math inline">\((1 - 1/n)^n \approx e^{-1} \approx 0.37\)</span>.</p>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="tree-rpart.html#cb204-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Número de casos &quot;out of bag&quot;</span></span>
+<span id="cb204-2"><a href="tree-rpart.html#cb204-2" aria-hidden="true" tabindex="-1"></a>ntrain <span class="sc">-</span> <span class="fu">length</span>(<span class="fu">unique</span>(itrain.boot))</span></code></pre></div>
+<pre><code>## [1] 370</code></pre>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="tree-rpart.html#cb206-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Muestra &quot;out of bag&quot;</span></span>
+<span id="cb206-2"><a href="tree-rpart.html#cb206-2" aria-hidden="true" tabindex="-1"></a>oob <span class="ot">&lt;-</span> train[<span class="sc">-</span>itrain.boot, ]</span></code></pre></div>
+<p>El procedimiento restante sería análogo al caso anterior, cambiando <code>train</code> por <code>train.boot</code> y <code>validate</code> por <code>oob</code>.
+Sin embargo, lo recomendable sería repetir el proceso un número grande de veces y promediar los errores, especialmente cuando el tamaño muestral es pequeño (este enfoque se relaciona con el método de bagging, descrito en el siguiente capítulo).
+No obstante, y por simplicidad, realiza el ajuste empleando una única muestra bootstrap y evalúa las predicciones en la muestra de test.</p>
+</div>
+</div>
+<div id="class-rpart" class="section level3 hasAnchor" number="3.3.2">
+<h3><span class="header-section-number">3.3.2</span> Ejemplo: modelo de clasificación<a href="tree-rpart.html#class-rpart" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Para ilustrar los árboles de clasificación CART, podemos emplear los datos anteriores de calidad de vino, considerando como respuesta una nueva variable <code>taste</code> que clasifica los vinos en “good” o “bad” dependiendo de si <code>winequality$quality &gt;= 6</code>
+(este conjunto de datos está disponible en <a href="https://rubenfcasal.github.io/mpae/reference/winetaste.html"><code>mpae::winetaste</code></a>).</p>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="tree-rpart.html#cb207-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data(winetaste, package = &quot;mpae&quot;)</span></span>
+<span id="cb207-2"><a href="tree-rpart.html#cb207-2" aria-hidden="true" tabindex="-1"></a>winetaste <span class="ot">&lt;-</span> winequality[, <span class="fu">colnames</span>(winequality)<span class="sc">!=</span><span class="st">&quot;quality&quot;</span>]</span>
+<span id="cb207-3"><a href="tree-rpart.html#cb207-3" aria-hidden="true" tabindex="-1"></a>winetaste<span class="sc">$</span>taste <span class="ot">&lt;-</span> <span class="fu">factor</span>(winequality<span class="sc">$</span>quality <span class="sc">&lt;</span> <span class="dv">6</span>, </span>
+<span id="cb207-4"><a href="tree-rpart.html#cb207-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;good&#39;</span>, <span class="st">&#39;bad&#39;</span>)) <span class="co"># levels = c(&#39;FALSE&#39;, &#39;TRUE&#39;)</span></span>
+<span id="cb207-5"><a href="tree-rpart.html#cb207-5" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(winetaste)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    1250 obs. of  12 variables:
+##  $ fixed.acidity       : num  6.8 7.1 6.9 7.5 8.6 7.7 5.4 6.8 6.1 5.5 ...
+##  $ volatile.acidity    : num  0.37 0.24 0.32 0.23 0.36 0.28 0.59 0.16 0.28 0.2..
+##  $ citric.acid         : num  0.47 0.34 0.13 0.49 0.26 0.63 0.07 0.36 0.27 0.2..
+##  $ residual.sugar      : num  11.2 1.2 7.8 7.7 11.1 11.1 7 1.3 4.7 1.6 ...
+##  $ chlorides           : num  0.071 0.045 0.042 0.049 0.03 0.039 0.045 0.034 0..
+##  $ free.sulfur.dioxide : num  44 6 11 61 43.5 58 36 32 56 23 ...
+##  $ total.sulfur.dioxide: num  136 132 117 209 171 179 147 98 140 85 ...
+##  $ density             : num  0.997 0.991 0.996 0.994 0.995 ...
+##  $ pH                  : num  2.98 3.16 3.23 3.14 3.03 3.08 3.34 3.02 3.16 3.4..
+##  $ sulphates           : num  0.88 0.46 0.37 0.3 0.49 0.44 0.57 0.58 0.42 0.42..
+##  $ alcohol             : num  9.2 11.2 9.2 11.1 12 8.8 9.7 11.3 12.5 12.5 ...
+##  $ taste               : Factor w/ 2 levels &quot;good&quot;,&quot;bad&quot;: 2 2 2 1 2 2 1 1 1 2 ..</code></pre>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="tree-rpart.html#cb209-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(winetaste<span class="sc">$</span>taste)</span></code></pre></div>
+<pre><code>## 
+## good  bad 
+##  828  422</code></pre>
+<p>Como en el caso anterior, se contruyen las muestras de entrenamiento (80 %) y de test (20 %):</p>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="tree-rpart.html#cb211-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set.seed(1)</span></span>
+<span id="cb211-2"><a href="tree-rpart.html#cb211-2" aria-hidden="true" tabindex="-1"></a><span class="co"># nobs &lt;- nrow(winetaste)</span></span>
+<span id="cb211-3"><a href="tree-rpart.html#cb211-3" aria-hidden="true" tabindex="-1"></a><span class="co"># itrain &lt;- sample(nobs, 0.8 * nobs)</span></span>
+<span id="cb211-4"><a href="tree-rpart.html#cb211-4" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> winetaste[itrain, ]</span>
+<span id="cb211-5"><a href="tree-rpart.html#cb211-5" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> winetaste[<span class="sc">-</span>itrain, ]</span></code></pre></div>
+<p>Al igual que en el caso anterior, podemos obtener el árbol de clasificación con las opciones por defecto (<code>cp = 0.01</code> y <code>split = "gini"</code>) con el comando:</p>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="tree-rpart.html#cb212-1" aria-hidden="true" tabindex="-1"></a>tree <span class="ot">&lt;-</span> <span class="fu">rpart</span>(taste <span class="sc">~</span> ., <span class="at">data =</span> train)</span></code></pre></div>
+<p>Al imprimirlo, además de mostrar el número de nodo, la condición de la partición y el número de observaciones en el nodo, también se incluye el número de observaciones mal clasificadas, la predicción y las proporciones estimadas (frecuencias relativas en la muestra de entrenamiento) de las clases:</p>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="tree-rpart.html#cb213-1" aria-hidden="true" tabindex="-1"></a>tree</span></code></pre></div>
+<pre><code>## n= 1000 
+## 
+## node), split, n, loss, yval, (yprob)
+##       * denotes terminal node
+## 
+##  1) root 1000 338 good (0.66200 0.33800)  
+##    2) alcohol&gt;=10.117 541 100 good (0.81516 0.18484)  
+##      4) free.sulfur.dioxide&gt;=8.5 522  87 good (0.83333 0.16667)  
+##        8) fixed.acidity&lt; 8.55 500  73 good (0.85400 0.14600) *
+##        9) fixed.acidity&gt;=8.55 22   8 bad (0.36364 0.63636) *
+##      5) free.sulfur.dioxide&lt; 8.5 19   6 bad (0.31579 0.68421) *
+##    3) alcohol&lt; 10.117 459 221 bad (0.48148 0.51852)  
+##      6) volatile.acidity&lt; 0.2875 264 102 good (0.61364 0.38636)  
+##       12) fixed.acidity&lt; 7.45 213  71 good (0.66667 0.33333)  
+##         24) citric.acid&gt;=0.265 160  42 good (0.73750 0.26250) *
+##         25) citric.acid&lt; 0.265 53  24 bad (0.45283 0.54717)  
+##           50) free.sulfur.dioxide&lt; 42.5 33  13 good (0.60606 0.39394) *
+##           51) free.sulfur.dioxide&gt;=42.5 20   4 bad (0.20000 0.80000) *
+##       13) fixed.acidity&gt;=7.45 51  20 bad (0.39216 0.60784)  
+##         26) total.sulfur.dioxide&gt;=150 26  10 good (0.61538 0.38462) *
+##         27) total.sulfur.dioxide&lt; 150 25   4 bad (0.16000 0.84000) *
+##      7) volatile.acidity&gt;=0.2875 195  59 bad (0.30256 0.69744)  
+##       14) pH&gt;=3.235 49  24 bad (0.48980 0.51020)  
+##         28) chlorides&lt; 0.0465 18   4 good (0.77778 0.22222) *
+##         29) chlorides&gt;=0.0465 31  10 bad (0.32258 0.67742) *
+##       15) pH&lt; 3.235 146  35 bad (0.23973 0.76027) *</code></pre>
+<p>También puede ser preferible emplear el paquete <a href="https://CRAN.R-project.org/package=rpart.plot"><code>rpart.plot</code></a> para representarlo (ver Figura <a href="tree-rpart.html#fig:arbolclassif">3.9</a>):</p>
+
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="tree-rpart.html#cb215-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart.plot)</span>
+<span id="cb215-2"><a href="tree-rpart.html#cb215-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rpart.plot</span>(tree) <span class="co"># Alternativa: rattle::fancyRpartPlot</span></span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:arbolclassif"></span>
+<img src="03-arboles_files/figure-html/arbolclassif-1.png" alt="Árbol de clasificación de winetaste$taste (obtenido con las opciones por defecto)." width="75%" />
+<p class="caption">
+Figura 3.9: Árbol de clasificación de <code>winetaste$taste</code> (obtenido con las opciones por defecto).
+</p>
+</div>
+<p>Nos interesa cómo se clasificaría a una nueva observación, es decir, cómo se llegaría a los nodos terminales, así como su probabilidad estimada, que representa la frecuencia relativa de la clase más frecuente en el correspondiente nodo terminal. Para lograrlo, se puede modificar la información que se muestra en cada nodo (ver Figura <a href="tree-rpart.html#fig:arbolextra">3.10</a>):</p>
+
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="tree-rpart.html#cb216-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rpart.plot</span>(tree, </span>
+<span id="cb216-2"><a href="tree-rpart.html#cb216-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">extra =</span> <span class="dv">104</span>,          <span class="co"># show fitted class, probs, percentages</span></span>
+<span id="cb216-3"><a href="tree-rpart.html#cb216-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">box.palette =</span> <span class="st">&quot;GnBu&quot;</span>, <span class="co"># color scheme</span></span>
+<span id="cb216-4"><a href="tree-rpart.html#cb216-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">branch.lty =</span> <span class="dv">3</span>,       <span class="co"># dotted branch lines</span></span>
+<span id="cb216-5"><a href="tree-rpart.html#cb216-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">shadow.col =</span> <span class="st">&quot;gray&quot;</span>,  <span class="co"># shadows under the node boxes</span></span>
+<span id="cb216-6"><a href="tree-rpart.html#cb216-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">nn =</span> <span class="cn">TRUE</span>)            <span class="co"># display the node numbers </span></span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:arbolextra"></span>
+<img src="03-arboles_files/figure-html/arbolextra-1.png" alt="Representación del árbol de clasificación de winetaste$taste con opciones adicionales." width="75%" />
+<p class="caption">
+Figura 3.10: Representación del árbol de clasificación de <code>winetaste$taste</code> con opciones adicionales.
+</p>
+</div>
+<p>Al igual que en el caso de regresión, puede ser de utilidad imprimir las reglas con <code>rpart.rules(tree, style = "tall")</code>.</p>
+<p>También se suele emplear el mismo procedimiento para seleccionar un valor óptimo para el hiperparámetro de complejidad: se construye un árbol de decisión completo y se emplea validación cruzada para podarlo.
+Además, si el número de observaciones es grande y las clases están más o menos balanceadas,
+se podría aumentar los valores mínimos de observaciones en los nodos intermedios y terminales<a href="#fn40" class="footnote-ref" id="fnref40"><sup>40</sup></a>, por ejemplo:</p>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="tree-rpart.html#cb217-1" aria-hidden="true" tabindex="-1"></a>tree <span class="ot">&lt;-</span> <span class="fu">rpart</span>(taste <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">cp =</span> <span class="dv">0</span>, <span class="at">minsplit =</span> <span class="dv">30</span>, <span class="at">minbucket =</span> <span class="dv">10</span>)</span></code></pre></div>
+<p>En este caso mantenemos el resto de valores por defecto:</p>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="tree-rpart.html#cb218-1" aria-hidden="true" tabindex="-1"></a>tree <span class="ot">&lt;-</span> <span class="fu">rpart</span>(taste <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">cp =</span> <span class="dv">0</span>)</span></code></pre></div>
+<p>Representamos los errores (reescalados) de validación cruzada (ver Figura <a href="tree-rpart.html#fig:errorclassif">3.11</a>):</p>
+
+<!-- printcp(tree) -->
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="tree-rpart.html#cb219-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotcp</span>(tree)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:errorclassif"></span>
+<img src="03-arboles_files/figure-html/errorclassif-1.png" alt="Evolución del error (reescalado) de validación cruzada en función del parámetro de complejidad." width="75%" />
+<p class="caption">
+Figura 3.11: Evolución del error (reescalado) de validación cruzada en función del parámetro de complejidad.
+</p>
+</div>
+<p>Para obtener el modelo final, seleccionamos el valor óptimo de complejidad siguiendo el criterio de un error estándar de <span class="citation">Breiman et al. (<a href="#ref-breiman1984classification" role="doc-biblioref">1984</a>)</span> y podamos el árbol (ver Figura <a href="tree-rpart.html#fig:arbolclassifpoda">3.12</a>).</p>
+
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="tree-rpart.html#cb220-1" aria-hidden="true" tabindex="-1"></a>xerror <span class="ot">&lt;-</span> tree<span class="sc">$</span>cptable[,<span class="st">&quot;xerror&quot;</span>]</span>
+<span id="cb220-2"><a href="tree-rpart.html#cb220-2" aria-hidden="true" tabindex="-1"></a>imin.xerror <span class="ot">&lt;-</span> <span class="fu">which.min</span>(xerror)</span>
+<span id="cb220-3"><a href="tree-rpart.html#cb220-3" aria-hidden="true" tabindex="-1"></a>upper.xerror <span class="ot">&lt;-</span> xerror[imin.xerror] <span class="sc">+</span> tree<span class="sc">$</span>cptable[imin.xerror, <span class="st">&quot;xstd&quot;</span>]</span>
+<span id="cb220-4"><a href="tree-rpart.html#cb220-4" aria-hidden="true" tabindex="-1"></a>icp <span class="ot">&lt;-</span> <span class="fu">min</span>(<span class="fu">which</span>(xerror <span class="sc">&lt;=</span> upper.xerror))</span>
+<span id="cb220-5"><a href="tree-rpart.html#cb220-5" aria-hidden="true" tabindex="-1"></a>cp <span class="ot">&lt;-</span> tree<span class="sc">$</span>cptable[icp, <span class="st">&quot;CP&quot;</span>]</span>
+<span id="cb220-6"><a href="tree-rpart.html#cb220-6" aria-hidden="true" tabindex="-1"></a>tree <span class="ot">&lt;-</span> <span class="fu">prune</span>(tree, <span class="at">cp =</span> cp)</span>
+<span id="cb220-7"><a href="tree-rpart.html#cb220-7" aria-hidden="true" tabindex="-1"></a><span class="fu">rpart.plot</span>(tree) </span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:arbolclassifpoda"></span>
+<img src="03-arboles_files/figure-html/arbolclassifpoda-1.png" alt="Árbol de clasificación de winetaste$taste obtenido después de la poda (modelo final)." width="70%" />
+<p class="caption">
+Figura 3.12: Árbol de clasificación de <code>winetaste$taste</code> obtenido después de la poda (modelo final).
+</p>
+</div>
+<p>Si nos interesase estudiar la importancia de los predictores, podríamos utilizar el mismo código de la Sección <a href="tree-rpart.html#reg-rpart">3.3.1</a> (no evaluado):</p>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="tree-rpart.html#cb221-1" aria-hidden="true" tabindex="-1"></a>caret<span class="sc">::</span><span class="fu">varImp</span>(tree)</span>
+<span id="cb221-2"><a href="tree-rpart.html#cb221-2" aria-hidden="true" tabindex="-1"></a>importance <span class="ot">&lt;-</span> tree<span class="sc">$</span>variable.importance</span>
+<span id="cb221-3"><a href="tree-rpart.html#cb221-3" aria-hidden="true" tabindex="-1"></a>importance <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span>importance<span class="sc">/</span><span class="fu">sum</span>(importance), <span class="dv">1</span>)</span>
+<span id="cb221-4"><a href="tree-rpart.html#cb221-4" aria-hidden="true" tabindex="-1"></a>importance[importance <span class="sc">&gt;=</span> <span class="dv">1</span>]</span></code></pre></div>
+<p>El último paso sería evaluar el modelo en la muestra de test siguiendo los pasos descritos en la Sección <a href="const-eval.html#eval-class">1.3.5</a>.
+El método <a href="https://rdrr.io/pkg/rpart/man/predict.rpart.html"><code>predict.rpart()</code></a> devuelve por defecto (<code>type = "prob"</code>) una matriz con las probabilidades de cada clase, por lo que habría que establecer <code>type = "class"</code> para obtener la clase predicha (consultar la ayuda de esta función para más detalles).</p>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="tree-rpart.html#cb222-1" aria-hidden="true" tabindex="-1"></a>obs <span class="ot">&lt;-</span> test<span class="sc">$</span>taste</span>
+<span id="cb222-2"><a href="tree-rpart.html#cb222-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">predict</span>(tree, <span class="at">newdata =</span> test))</span></code></pre></div>
+<pre><code>##       good     bad
+## 1  0.30256 0.69744
+## 4  0.81516 0.18484
+## 9  0.81516 0.18484
+## 10 0.81516 0.18484
+## 12 0.81516 0.18484
+## 16 0.81516 0.18484</code></pre>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="tree-rpart.html#cb224-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(tree, <span class="at">newdata =</span> test, <span class="at">type =</span> <span class="st">&quot;class&quot;</span>)</span>
+<span id="cb224-2"><a href="tree-rpart.html#cb224-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(obs, pred)</span></code></pre></div>
+<pre><code>##       pred
+## obs    good bad
+##   good  153  13
+##   bad    54  30</code></pre>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="tree-rpart.html#cb226-1" aria-hidden="true" tabindex="-1"></a>caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(pred, obs)</span></code></pre></div>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction good bad
+##       good  153  54
+##       bad    13  30
+##                                         
+##                Accuracy : 0.732         
+##                  95% CI : (0.673, 0.786)
+##     No Information Rate : 0.664         
+##     P-Value [Acc &gt; NIR] : 0.0125        
+##                                         
+##                   Kappa : 0.317         
+##                                         
+##  Mcnemar&#39;s Test P-Value : 1.02e-06      
+##                                         
+##             Sensitivity : 0.922         
+##             Specificity : 0.357         
+##          Pos Pred Value : 0.739         
+##          Neg Pred Value : 0.698         
+##              Prevalence : 0.664         
+##          Detection Rate : 0.612         
+##    Detection Prevalence : 0.828         
+##       Balanced Accuracy : 0.639         
+##                                         
+##        &#39;Positive&#39; Class : good          
+## </code></pre>
+<div class="exercise">
+<p><span id="exr:bfan-rpart" class="exercise"><strong>Ejercicio 3.4  </strong></span>En este ejercicio se empleará el conjunto de datos <a href="https://rubenfcasal.github.io/mpae/reference/bfan.html"><code>mpae::bfan</code></a> del paquete <a href="https://CRAN.R-project.org/package=mpae"><code>mpae</code></a> utilizado anteriormente en las secciones <a href="reg-glm.html#reg-glm">2.2</a> y <a href="generadores.html#generadores">2.3</a>.
+Considerando como respuesta la variable indicadora <code>bfan</code>, que clasifica a los individuos en <code>Yes</code> o <code>No</code> dependiendo de si su porcentaje de grasa corporal es superior al rango normal:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Particiona los datos, considerando un 80 % de las observaciones como muestra de aprendizaje y el 20 % restante como muestra de test.</p></li>
+<li><p>Ajusta un árbol de decisión a los datos de entrenamiento seleccionando el parámetro de complejidad mediante la regla de un error estándar de Breiman.</p></li>
+<li><p>Representa e interpreta el árbol resultante, estudiando la importancia de las variables predictoras.</p></li>
+<li><p>Evalúa la precisión de las predicciones en la muestra de test (precisión, sensibilidad y especificidad) y la estimación de las probabilidades mediante el AUC.</p></li>
+</ol>
+</div>
+</div>
+<div id="interfaz-de-caret" class="section level3 hasAnchor" number="3.3.3">
+<h3><span class="header-section-number">3.3.3</span> Interfaz de <code>caret</code><a href="tree-rpart.html#interfaz-de-caret" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>En <code>caret</code> podemos ajustar un árbol CART seleccionando <code>method = "rpart"</code>.
+Por defecto, <code>caret</code> realiza bootstrap de las observaciones para seleccionar el valor óptimo del hiperparámetro <code>cp</code> (considerando únicamente tres posibles valores).
+Si queremos emplear validación cruzada, como se hizo en el caso anterior, podemos emplear la función auxiliar <a href="https://rdrr.io/pkg/caret/man/trainControl.html"><code>trainControl()</code></a>, y para considerar un mayor rango de posibles valores podemos hacer uso del argumento <code>tuneLength</code> (ver Figura <a href="tree-rpart.html#fig:arbolclassifggplot">3.13</a>).</p>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="tree-rpart.html#cb228-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb228-2"><a href="tree-rpart.html#cb228-2" aria-hidden="true" tabindex="-1"></a><span class="co"># modelLookup(&quot;rpart&quot;)  # Información sobre hiperparámetros</span></span>
+<span id="cb228-3"><a href="tree-rpart.html#cb228-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb228-4"><a href="tree-rpart.html#cb228-4" aria-hidden="true" tabindex="-1"></a>trControl <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">10</span>)</span>
+<span id="cb228-5"><a href="tree-rpart.html#cb228-5" aria-hidden="true" tabindex="-1"></a>caret.rpart <span class="ot">&lt;-</span> <span class="fu">train</span>(taste <span class="sc">~</span> ., <span class="at">method =</span> <span class="st">&quot;rpart&quot;</span>, <span class="at">data =</span> train, </span>
+<span id="cb228-6"><a href="tree-rpart.html#cb228-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">tuneLength =</span> <span class="dv">20</span>, <span class="at">trControl =</span> trControl) </span>
+<span id="cb228-7"><a href="tree-rpart.html#cb228-7" aria-hidden="true" tabindex="-1"></a>caret.rpart</span></code></pre></div>
+<pre><code>## CART 
+## 
+## 1000 samples
+##   11 predictor
+##    2 classes: &#39;good&#39;, &#39;bad&#39; 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold) 
+## Summary of sample sizes: 901, 900, 900, 900, 900, 900, ... 
+## Resampling results across tuning parameters:
+## 
+##   cp        Accuracy  Kappa  
+##   0.000000  0.70188   0.34873
+##   0.005995  0.73304   0.38706
+##   0.011990  0.74107   0.38785
+##   0.017985  0.72307   0.33745
+##   0.023980  0.73607   0.36987
+##   0.029975  0.73407   0.35064
+##   0.035970  0.73207   0.34182
+##   0.041965  0.73508   0.34227
+##   0.047960  0.73508   0.34227
+##   0.053955  0.73508   0.34227
+##   0.059950  0.73508   0.34227
+##   0.065945  0.73508   0.34227
+##   0.071940  0.73508   0.34227
+##   0.077935  0.73508   0.34227
+##   0.083930  0.73508   0.34227
+##   0.089925  0.73508   0.34227
+##   0.095920  0.73508   0.34227
+##   0.101915  0.73508   0.34227
+##   0.107910  0.72296   0.29433
+##   0.113905  0.68096   0.10877
+## 
+## Accuracy was used to select the optimal model using the largest value.
+## The final value used for the model was cp = 0.01199.</code></pre>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="tree-rpart.html#cb230-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(caret.rpart, <span class="at">highlight =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:arbolclassifggplot"></span>
+<img src="03-arboles_files/figure-html/arbolclassifggplot-1.png" alt="Evolución de la precisión (obtenida mediante validación cruzada) dependiendo del parámetro de complejidad, resaltando el valor óptimo." width="70%" />
+<p class="caption">
+Figura 3.13: Evolución de la precisión (obtenida mediante validación cruzada) dependiendo del parámetro de complejidad, resaltando el valor óptimo.
+</p>
+</div>
+<p>El modelo final se devuelve en la componente <code>$finalModel</code> (ver Figura <a href="tree-rpart.html#fig:arbolfinalcaret">3.14</a>):</p>
+
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="tree-rpart.html#cb231-1" aria-hidden="true" tabindex="-1"></a>caret.rpart<span class="sc">$</span>finalModel</span></code></pre></div>
+<pre><code>## n= 1000 
+## 
+## node), split, n, loss, yval, (yprob)
+##       * denotes terminal node
+## 
+##  1) root 1000 338 good (0.66200 0.33800)  
+##    2) alcohol&gt;=10.117 541 100 good (0.81516 0.18484)  
+##      4) free.sulfur.dioxide&gt;=8.5 522  87 good (0.83333 0.16667)  
+##        8) fixed.acidity&lt; 8.55 500  73 good (0.85400 0.14600) *
+##        9) fixed.acidity&gt;=8.55 22   8 bad (0.36364 0.63636) *
+##      5) free.sulfur.dioxide&lt; 8.5 19   6 bad (0.31579 0.68421) *
+##    3) alcohol&lt; 10.117 459 221 bad (0.48148 0.51852)  
+##      6) volatile.acidity&lt; 0.2875 264 102 good (0.61364 0.38636)  
+##       12) fixed.acidity&lt; 7.45 213  71 good (0.66667 0.33333)  
+##         24) citric.acid&gt;=0.265 160  42 good (0.73750 0.26250) *
+##         25) citric.acid&lt; 0.265 53  24 bad (0.45283 0.54717)  
+##           50) free.sulfur.dioxide&lt; 42.5 33  13 good (0.60606 0.39394) *
+##           51) free.sulfur.dioxide&gt;=42.5 20   4 bad (0.20000 0.80000) *
+##       13) fixed.acidity&gt;=7.45 51  20 bad (0.39216 0.60784)  
+##         26) total.sulfur.dioxide&gt;=150 26  10 good (0.61538 0.38462) *
+##         27) total.sulfur.dioxide&lt; 150 25   4 bad (0.16000 0.84000) *
+##      7) volatile.acidity&gt;=0.2875 195  59 bad (0.30256 0.69744)  
+##       14) pH&gt;=3.235 49  24 bad (0.48980 0.51020)  
+##         28) chlorides&lt; 0.0465 18   4 good (0.77778 0.22222) *
+##         29) chlorides&gt;=0.0465 31  10 bad (0.32258 0.67742) *
+##       15) pH&lt; 3.235 146  35 bad (0.23973 0.76027) *</code></pre>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="tree-rpart.html#cb233-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rpart.plot</span>(caret.rpart<span class="sc">$</span>finalModel)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:arbolfinalcaret"></span>
+<img src="03-arboles_files/figure-html/arbolfinalcaret-1.png" alt="Árbol de clasificación de winetaste$taste, obtenido con la complejidad “óptima” (empleando caret)." width="70%" />
+<p class="caption">
+Figura 3.14: Árbol de clasificación de <code>winetaste$taste</code>, obtenido con la complejidad “óptima” (empleando <code>caret</code>).
+</p>
+</div>
+<p>Para utilizar la regla de “un error estándar” se puede añadir <code>selectionFunction = "oneSE"</code> en las opciones de entrenamiento<a href="#fn41" class="footnote-ref" id="fnref41"><sup>41</sup></a>:</p>
+
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="tree-rpart.html#cb234-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb234-2"><a href="tree-rpart.html#cb234-2" aria-hidden="true" tabindex="-1"></a>trControl <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">10</span>, </span>
+<span id="cb234-3"><a href="tree-rpart.html#cb234-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">selectionFunction =</span> <span class="st">&quot;oneSE&quot;</span>)</span>
+<span id="cb234-4"><a href="tree-rpart.html#cb234-4" aria-hidden="true" tabindex="-1"></a>caret.rpart <span class="ot">&lt;-</span> <span class="fu">train</span>(taste <span class="sc">~</span> ., <span class="at">method =</span> <span class="st">&quot;rpart&quot;</span>, <span class="at">data =</span> train, </span>
+<span id="cb234-5"><a href="tree-rpart.html#cb234-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">tuneLength =</span> <span class="dv">20</span>, <span class="at">trControl =</span> trControl) </span>
+<span id="cb234-6"><a href="tree-rpart.html#cb234-6" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot(caret.rpart, highlight = TRUE)</span></span>
+<span id="cb234-7"><a href="tree-rpart.html#cb234-7" aria-hidden="true" tabindex="-1"></a>caret.rpart</span></code></pre></div>
+<pre><code>## CART 
+## 
+## 1000 samples
+##   11 predictor
+##    2 classes: &#39;good&#39;, &#39;bad&#39; 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold) 
+## Summary of sample sizes: 901, 900, 900, 900, 900, 900, ... 
+## Resampling results across tuning parameters:
+## 
+##   cp        Accuracy  Kappa  
+##   0.000000  0.70188   0.34873
+##   0.005995  0.73304   0.38706
+##   0.011990  0.74107   0.38785
+##   0.017985  0.72307   0.33745
+##   0.023980  0.73607   0.36987
+##   0.029975  0.73407   0.35064
+##   0.035970  0.73207   0.34182
+##   0.041965  0.73508   0.34227
+##   0.047960  0.73508   0.34227
+##   0.053955  0.73508   0.34227
+##   0.059950  0.73508   0.34227
+##   0.065945  0.73508   0.34227
+##   0.071940  0.73508   0.34227
+##   0.077935  0.73508   0.34227
+##   0.083930  0.73508   0.34227
+##   0.089925  0.73508   0.34227
+##   0.095920  0.73508   0.34227
+##   0.101915  0.73508   0.34227
+##   0.107910  0.72296   0.29433
+##   0.113905  0.68096   0.10877
+## 
+## Accuracy was used to select the optimal model using  the one SE rule.
+## The final value used for the model was cp = 0.10192.</code></pre>
+<p>Como cabría esperar, el modelo resultante es más simple (ver Figura <a href="tree-rpart.html#fig:figarbolclassifoneSE">3.15</a>):</p>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="tree-rpart.html#cb236-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rpart.plot</span>(caret.rpart<span class="sc">$</span>finalModel)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:figarbolclassifoneSE"></span>
+<img src="03-arboles_files/figure-html/figarbolclassifoneSE-1.png" alt="Árbol de clasificación de winetaste$taste, obtenido con la regla de un error estándar para seleccionar la complejidad (empleando caret)." width="75%" />
+<p class="caption">
+Figura 3.15: Árbol de clasificación de <code>winetaste$taste</code>, obtenido con la regla de un error estándar para seleccionar la complejidad (empleando <code>caret</code>).
+</p>
+</div>
+<p>Adicionalmente, representamos la importancia de los predictores (ver Figura <a href="tree-rpart.html#fig:arbolImpor">3.16</a>):</p>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="tree-rpart.html#cb237-1" aria-hidden="true" tabindex="-1"></a>var.imp <span class="ot">&lt;-</span> <span class="fu">varImp</span>(caret.rpart)</span>
+<span id="cb237-2"><a href="tree-rpart.html#cb237-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(var.imp)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:arbolImpor"></span>
+<img src="03-arboles_files/figure-html/arbolImpor-1.png" alt="Importancia de los (posibles) predictores según el modelo obtenido con la regla de un error estándar." width="75%" />
+<p class="caption">
+Figura 3.16: Importancia de los (posibles) predictores según el modelo obtenido con la regla de un error estándar.
+</p>
+</div>
+<p>Finalmente, calculamos las predicciones con el método <a href="https://rdrr.io/pkg/caret/man/predict.train.html"><code>predict.train()</code></a> y posteriormente evaluamos su precisión con <a href="https://rdrr.io/pkg/caret/man/confusionMatrix.html"><code>confusionMatrix()</code></a>:</p>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="tree-rpart.html#cb238-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(caret.rpart, <span class="at">newdata =</span> test)</span>
+<span id="cb238-2"><a href="tree-rpart.html#cb238-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confusionMatrix</span>(pred, test<span class="sc">$</span>taste)</span></code></pre></div>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction good bad
+##       good  153  54
+##       bad    13  30
+##                                         
+##                Accuracy : 0.732         
+##                  95% CI : (0.673, 0.786)
+##     No Information Rate : 0.664         
+##     P-Value [Acc &gt; NIR] : 0.0125        
+##                                         
+##                   Kappa : 0.317         
+##                                         
+##  Mcnemar&#39;s Test P-Value : 1.02e-06      
+##                                         
+##             Sensitivity : 0.922         
+##             Specificity : 0.357         
+##          Pos Pred Value : 0.739         
+##          Neg Pred Value : 0.698         
+##              Prevalence : 0.664         
+##          Detection Rate : 0.612         
+##    Detection Prevalence : 0.828         
+##       Balanced Accuracy : 0.639         
+##                                         
+##        &#39;Positive&#39; Class : good          
+## </code></pre>
+<p>También podríamos calcular las estimaciones de las probabilidades (añadiendo el argumento <code>type = "prob"</code>) y, por ejemplo, generar la curva ROC con <code>pROC::roc()</code> (ver Figura <a href="tree-rpart.html#fig:ROC-tree">3.17</a>):</p>
+
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="tree-rpart.html#cb240-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pROC)</span>
+<span id="cb240-2"><a href="tree-rpart.html#cb240-2" aria-hidden="true" tabindex="-1"></a>p.est <span class="ot">&lt;-</span> <span class="fu">predict</span>(caret.rpart, <span class="at">newdata =</span> test, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>)</span>
+<span id="cb240-3"><a href="tree-rpart.html#cb240-3" aria-hidden="true" tabindex="-1"></a>roc_tree <span class="ot">&lt;-</span> <span class="fu">roc</span>(<span class="at">response =</span> obs, <span class="at">predictor =</span> p.est<span class="sc">$</span>good)</span>
+<span id="cb240-4"><a href="tree-rpart.html#cb240-4" aria-hidden="true" tabindex="-1"></a>roc_tree</span></code></pre></div>
+<pre><code>## 
+## Call:
+## roc.default(response = obs, predictor = p.est$good)
+## 
+## Data: p.est$good in 166 controls (obs good) &gt; 84 cases (obs bad).
+## Area under the curve: 0.72</code></pre>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="tree-rpart.html#cb242-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(roc_tree, <span class="at">xlab =</span> <span class="st">&quot;Especificidad&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Sensibilidad&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ROC-tree"></span>
+<img src="03-arboles_files/figure-html/ROC-tree-1.png" alt="Curva ROC correspondiente al árbol de clasificación de winetaste$taste." width="75%" />
+<p class="caption">
+Figura 3.17: Curva ROC correspondiente al árbol de clasificación de <code>winetaste$taste</code>.
+</p>
+</div>
+<p>A la vista de los resultados, los árboles de clasificación no parecen muy adecuados para este problema.
+Sobre todo por la mala clasificación en la categoría <code>"bad"</code> (en este último ajuste se obtuvo un valor de especificidad de 0.3571 en la muestra de test), lo que podría ser debido a que las clases están desbalanceadas y en el ajuste recibe mayor peso el error en la clase mayoritaria.
+Para tratar de evitarlo, se podría emplear una matriz de pérdidas a través del componente <code>loss</code> del argumento <code>parms</code> (en el Ejercicio <a href="svm-kernlab.html#exr:svm-class-weight">5.1</a> se propone una aproximación similar).
+También se podría pensar en cambiar el criterio de optimalidad.
+Por ejemplo, emplear el coeficiente kappa en lugar de la precisión (solo habría que establecer <code>metric = "Kappa"</code> en la llamada a la función <code>train()</code>), o el área bajo la curva ROC (ver Ejercicio <a href="svm-kernlab.html#exr:svm-caret-roc">5.3</a>).</p>
+<!-- 
+
+NOTA: En principio también se podría utilizar la regla de "un error estándar" seleccionando `method = "rpart1SE"` (pero `caret` implementa internamente este método y en ocasiones no se obtienen los resultados esperados).
+
+
+```r
+set.seed(1)
+caret.rpart <- train(taste ~ ., method = "rpart1SE", data = train) 
+caret.rpart
+printcp(caret.rpart$finalModel)
+caret.rpart$finalModel
+rpart.plot(caret.rpart$finalModel) #, main = "Classification tree winetaste"
+varImp(caret.rpart)
+```
+
+Como alternativas al uso de la metodología CART desde `caret` se  puede considerar las opciones de los metapaquetes: 
+
+* [`mlr3`](https://mlr-org.com), que incorpora una llamada a `rpart::rpart()` desde sus **learners** `lrn("regr.rpart")` y `lrn("classif.rpart")`.
+* [`h2o`](https://www.h2o.ai/blog/finally-you-can-plot-h2o-decision-trees-in-r/), que aunque no ofrece una implementación de los árboles CART, sí ofrece dos alternativas más sofisticadas usando bosques aleatorios `h2o.randomForest()` y los procedimientos basados en el aumento del gradiente `h2o.gbm()`.
+-->
+<div class="exercise">
+<p><span id="exr:bfan-rpart-caret" class="exercise"><strong>Ejercicio 3.5  </strong></span>Continuando con el Ejercicio <a href="tree-rpart.html#exr:bfan-rpart">3.4</a>, emplea <code>caret</code> para clasificar los individuos mediante un árbol de decisión.
+Utiliza la misma partición de los datos, seleccionando el parámetro de complejidad mediante validación cruzada con 10 grupos y el criterio de un error estándar de Breiman.
+Representa e interpreta el árbol resultante (comentando la importancia de las variables) y evalúa la precisión de las predicciones en la muestra de test.</p>
+</div>
+</div>
+</div>
+<h3>Bibliografía<a href="bibliografía.html#bibliografía" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-breiman1984classification" class="csl-entry">
+Breiman, L., Friedman, J., Stone, C. J., y Olshen, R. A. (1984). <em>Classification and Regression Trees</em>. Taylor; Francis.
+</div>
+<div id="ref-cortez2009modeling" class="csl-entry">
+Cortez, P., Cerdeira, A., Almeida, F., Matos, T., y Reis, J. (2009). Modeling wine preferences by data mining from physicochemical properties. <em>Decision Support Systems</em>, <em>47</em>(4), 547-553. <a href="https://doi.org/10.1016/j.dss.2009.05.016">https://doi.org/10.1016/j.dss.2009.05.016</a>
+</div>
+<div id="ref-R-rpartplot" class="csl-entry">
+Milborrow, S. (2019). <em><span>rpart.plot: Plot ’rpart’ Models: An Enhanced Version of ’plot.rpart’</span></em>. <a href="http://cran.r-project.org/package=rpart.plot/">http://cran.r-project.org/package=rpart.plot/</a>
+</div>
+<div id="ref-R-rpart" class="csl-entry">
+Therneau, T. M., Atkinson, E. J., y Ripley, B. (2013). <em><span>Rpart: Recursive Partitioning and Regression Trees</span></em>. <a href="http://cran.r-project.org/package=rpart/">http://cran.r-project.org/package=rpart/</a>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="37">
+<li id="fn37"><p>El paquete <a href="https://CRAN.R-project.org/package=tree"><code>tree</code></a> es una traducción del original en S.<a href="tree-rpart.html#fnref37" class="footnote-back">↩︎</a></p></li>
+<li id="fn38"><p>Los parámetros <code>maxsurrogate</code>, <code>usesurrogate</code> y <code>surrogatestyle</code> serían de utilidad si hay datos faltantes.<a href="tree-rpart.html#fnref38" class="footnote-back">↩︎</a></p></li>
+<li id="fn39"><p>Realmente en la tabla de texto se muestra el valor mínimo de CP, ya que se obtendría la misma solución para un rango de valores de CP (desde ese valor hasta el anterior, sin incluirlo), mientras que en el gráfico generado por <a href="https://rdrr.io/pkg/rpart/man/plotcp.html"><code>plotcp()</code></a> se representa la media geométrica de los extremos de ese intervalo.<a href="tree-rpart.html#fnref39" class="footnote-back">↩︎</a></p></li>
+<li id="fn40"><p>Otra opción, más interesante para regresión, sería considerar estos valores como hiperparámetros.<a href="tree-rpart.html#fnref40" class="footnote-back">↩︎</a></p></li>
+<li id="fn41"><p>En principio también se podría utilizar la regla de un error estándar estableciendo <code>method = "rpart1SE"</code> en la llamada a <code>train()</code>, pero <code>caret</code> implementa internamente este método y en ocasiones no se obtienen los resultados esperados.<a href="tree-rpart.html#fnref41" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="árboles-de-clasificación-cart.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="alternativas-a-los-árboles-cart.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rubenfcasal/book_mpae/edit/master/03-arboles.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["book_mpae.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
