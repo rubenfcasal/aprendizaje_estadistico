@@ -4,7 +4,7 @@ author:
   - "Rubén Fernández Casal (ruben.fcasal@udc.es)"
   - "Julián Costa Bouzas (julian.costa@udc.es)"
   - "Manuel Oviedo de la Fuente (manuel.oviedo@udc.es)"
-date: "Edición: Septiembre de 2024. Impresión: 2024-09-09"
+date: "Edición: Septiembre de 2024. Impresión: 2024-09-24"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
@@ -15,7 +15,7 @@ link-citations: yes
 fontsize: 10pt
 nocite: |
   @spinoza1667ethics, @lauro1996computational
-github-repo: rubenfcasal/book_mpae
+github-repo: rubenfcasal/aprendizaje_estadistico
 description: "Métodos predictivos de aprendizaje estadístico con R."
 ---
 
@@ -26,7 +26,7 @@ description: "Métodos predictivos de aprendizaje estadístico con R."
 Bienvenido a la versión *online* del libro "Métodos predictivos de aprendizaje estadístico" editado por el [Servicio de Publicaciones de la UDC](https://www.udc.es/en/publicacions/).
 
 Puede adquirir una copia impresa a través de su librería habitual^[La comunidad universitaria de la UDC puede comprarlo con un descuento adicional a través del Servicio de Reprografía de la UDC].
-Este libro también está disponible en acceso abierto, de forma gratuita, en formato [pdf](https://rubenfcasal.github.io/aprendizaje_estadistico/book_mpae.pdf). 
+Este libro también está disponible en acceso abierto, de forma gratuita, en formato [pdf](https://rubenfcasal.github.io/aprendizaje_estadistico/aprendizaje_estadistico.pdf). 
 
 ***NOTA: El libro aún está en la última etapa del proceso de publicación. Confiamos en que estará disponible próximamente.***
 
@@ -52,7 +52,7 @@ Esta página web está bajo una licencia de [Creative Commons: Reconocimiento - 
 
 <img src="images/by-nc-nd-88x31.png" width="10%" style="display: block; margin: auto auto auto 0;" />
 
-Este libro ha sido escrito en [R-Markdown](http://rmarkdown.rstudio.com) empleando el paquete [`bookdown`](https://bookdown.org/yihui/bookdown/) y está disponible en el repositorio Github: [rubenfcasal/book_mpae](https://github.com/rubenfcasal/book_mpae). 
+Este libro ha sido escrito en [R-Markdown](http://rmarkdown.rstudio.com) empleando el paquete [`bookdown`](https://bookdown.org/yihui/bookdown/) y está disponible en el repositorio Github: [rubenfcasal/aprendizaje_estadistico](https://github.com/rubenfcasal/aprendizaje_estadistico). 
 
 
 # Prólogo {-}

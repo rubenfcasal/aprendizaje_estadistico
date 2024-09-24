@@ -15,7 +15,7 @@ link-citations: yes
 fontsize: 10pt
 nocite: |
   @spinoza1667ethics, @lauro1996computational
-github-repo: rubenfcasal/book_mpae
+github-repo: rubenfcasal/aprendizaje_estadistico
 description: "Métodos predictivos de aprendizaje estadístico con R."
 ---
 
@@ -28,7 +28,7 @@ knitr::include_graphics("images/cuberta.png")
 Bienvenido a la versión *online* del libro "Métodos predictivos de aprendizaje estadístico" editado por el [Servicio de Publicaciones de la UDC](https://www.udc.es/en/publicacions/).
 
 Puede adquirir una copia impresa a través de su librería habitual^[La comunidad universitaria de la UDC puede comprarlo con un descuento adicional a través del Servicio de Reprografía de la UDC].
-Este libro también está disponible en acceso abierto, de forma gratuita, en formato [pdf](https://rubenfcasal.github.io/aprendizaje_estadistico/book_mpae.pdf). 
+Este libro también está disponible en acceso abierto, de forma gratuita, en formato [pdf](https://rubenfcasal.github.io/aprendizaje_estadistico/aprendizaje_estadistico.pdf). 
 
 ***NOTA: El libro aún está en la última etapa del proceso de publicación. Confiamos en que estará disponible próximamente.***
 
@@ -57,7 +57,7 @@ knitr::include_graphics("images/by-nc-nd-88x31.png")
 # ![](images/by-nc-nd-88x31.png)
 ``` 
 
-Este libro ha sido escrito en [R-Markdown](http://rmarkdown.rstudio.com) empleando el paquete [`bookdown`](https://bookdown.org/yihui/bookdown/) y está disponible en el repositorio Github: [rubenfcasal/book_mpae](https://github.com/rubenfcasal/book_mpae). 
+Este libro ha sido escrito en [R-Markdown](http://rmarkdown.rstudio.com) empleando el paquete [`bookdown`](https://bookdown.org/yihui/bookdown/) y está disponible en el repositorio Github: [rubenfcasal/aprendizaje_estadistico](https://github.com/rubenfcasal/aprendizaje_estadistico). 
 
 
 # Prólogo {-}

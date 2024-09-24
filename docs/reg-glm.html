@@ -12,7 +12,7 @@
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="2.2 Modelos lineales generalizados | Métodos predictivos de aprendizaje estadístico con R." />
-  <meta name="github-repo" content="rubenfcasal/book_mpae" />
+  <meta name="github-repo" content="rubenfcasal/aprendizaje_estadistico" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="2.2 Modelos lineales generalizados | Métodos predictivos de aprendizaje estadístico" />
@@ -349,7 +349,7 @@ Por ejemplo, como se comentó al final de la Sección <a href="métodos-de-apren
 (que proyecta el intervalo <span class="math inline">\([0, 1]\)</span> en <span class="math inline">\(\mathbb{R}\)</span>), siendo su inversa la función logística
 <span class="math display">\[p(\mathbf{X}) = \frac{e^{\beta_{0}+\beta_{1}X_{1}+\beta_{2}X_{2}+\ldots+\beta_{p}X_{p}}}{1 + e^{\beta_{0}+\beta_{1}X_{1}+\beta_{2}X_{2}+\ldots+\beta_{p}X_{p}}}\]</span>
 Esto da lugar al modelo de regresión logística (múltiple), que será el que utilizaremos como ejemplo en esta sección.
-Para un tratamiento más completo de los métodos de regresión lineal generalizada, se recomienda consultar alguno de los libros de referencia, como <span class="citation">Faraway (<a href="#ref-faraway2014linear" role="doc-biblioref">2016</a>)</span>, <span class="citation">Hastie y Pregibon (<a href="#ref-hastie2017generalized" role="doc-biblioref">2017</a>)</span>, <span class="citation">Dunn y Smyth (<a href="#ref-dunn2018generalized" role="doc-biblioref">2018</a>)</span> o <span class="citation">McCullagh (<a href="#ref-mccullagh2019generalized" role="doc-biblioref">2019</a>)</span>.</p>
+Para un tratamiento más completo de los métodos de regresión lineal generalizada, se recomienda consultar alguno de los libros de referencia, como <span class="citation">Hastie y Pregibon (<a href="#ref-hastie1991generalized" role="doc-biblioref">1991</a>)</span>, <span class="citation">Faraway (<a href="#ref-faraway2014linear" role="doc-biblioref">2016</a>)</span>, <span class="citation">Dunn y Smyth (<a href="#ref-dunn2018generalized" role="doc-biblioref">2018</a>)</span> o <span class="citation">McCullagh (<a href="#ref-mccullagh2019generalized" role="doc-biblioref">2019</a>)</span>.</p>
 <!-- ### Ajuste: función `glm` -->
 <p>Para el ajuste (estimación de los parámetros) de un modelo lineal generalizado a un conjunto de datos (por máxima verosimilitud) se emplea la función <a href="https://rdrr.io/r/stats/glm.html"><code>glm()</code></a>:</p>
 <div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="reg-glm.html#cb137-1" aria-hidden="true" tabindex="-1"></a>ajuste <span class="ot">&lt;-</span> <span class="fu">glm</span>(formula, <span class="at">family =</span> gaussian, data, weights, subset, ...)</span></code></pre></div>
@@ -685,8 +685,8 @@ Dunn, P. K., y Smyth, G. K. (2018). <em>Generalized linear models with examples 
 <div id="ref-faraway2014linear" class="csl-entry">
 Faraway, J. J. (2016). <em>Linear Models with R</em> (2a. ed.). Chapman &amp; Hall/CRC.
 </div>
-<div id="ref-hastie2017generalized" class="csl-entry">
-Hastie, T., y Pregibon, D. (2017). <em>Generalized linear models</em> (pp. 195-247). Routledge.
+<div id="ref-hastie1991generalized" class="csl-entry">
+Hastie, T., y Pregibon, D. (1991). Generalized linear models. En J. M. Chambers y T. Hastie (Eds.), <em>Statistical models in S</em> (pp. 195-247). Routledge.
 </div>
 <div id="ref-mccullagh2019generalized" class="csl-entry">
 McCullagh, P. (2019). <em>Generalized linear models</em>. Routledge.
@@ -747,7 +747,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["book_mpae.pdf"],
+"download": null,
 "search": {
 "engine": "fuse",
 "options": null
