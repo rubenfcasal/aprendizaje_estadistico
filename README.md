@@ -11,11 +11,11 @@ Adicionalmente, experimentar con los ejemplos permitiría estudiar los distintos
 Este libro de desarrollo inicialmente como apuntes de la asignatura de [Aprendizaje Estadístico](http://eamo.usc.es/pub/mte/index.php?option=com_content&view=article&id=2202&idm=47&a%C3%B1o=2023) del [Máster en Técnicas Estadísticas](http://eio.usc.es/pub/mte) organizado por las tres universidades gallegas ([USC](https://www.usc.gal), [UDC](https://www.udc.gal) y [UVigo](https://www.uvigo.gal)). 
 Para alumnos que habían cursado previamente una materia con contenidos de regresión (por ejemplo, [*Modelos de Regresión*](http://eamo.usc.es/pub/mte/index.php?option=com_content&view=article&id=2202&idm=37&a%C3%B1o=2023) del itinerario aplicado o [*Regresión Generalizada y Modelos Mixtos*](http://eamo.usc.es/pub/mte/index.php?option=com_content&view=article&id=2202&idm=42&a%C3%B1o=2023) del itinerario teórico del [MTE](http://eio.usc.es/pub/mte)).
 
-El libro ha sido escrito en [R-Markdown](http://rmarkdown.rstudio.com) empleando el paquete [`bookdown`](https://bookdown.org/yihui/bookdown/)  y está disponible en el repositorio Github: [rubenfcasal/book_mpae](https://github.com/rubenfcasal/book_mpae). 
-Se puede acceder a la versión en línea a través del enlace <https://rubenfcasal.github.io/book_mpae>.
+El libro ha sido escrito en [R-Markdown](http://rmarkdown.rstudio.com) empleando el paquete [`bookdown`](https://bookdown.org/yihui/bookdown/)  y está disponible en el repositorio Github: [rubenfcasal/aprendizaje_estadistico](https://github.com/rubenfcasal/aprendizaje_estadistico). 
+Se puede acceder a la versión en línea a través del enlace <https://rubenfcasal.github.io/aprendizaje_estadistico>.
 
 <!-- 
-donde puede descargarse en formato [pdf](https://rubenfcasal.github.io/book_mpae/book_mpae.pdf). -->
+donde puede descargarse en formato [pdf](https://rubenfcasal.github.io/aprendizaje_estadistico/aprendizaje_estadistico.pdf). -->
 
 Para ejecutar los ejemplos mostrados en el libro sería necesario tener instalados los siguientes paquetes:
 `r citepkgs(c("caret", "rattle", "gbm", "car", "leaps", "MASS", "RcmdrMisc", "lmtest", "glmnet", "mgcv", "np", "NeuralNetTools", "pdp", "vivid", "plot3D", "AppliedPredictiveModeling", "ISLR"))`.
