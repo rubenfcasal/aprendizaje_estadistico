@@ -763,7 +763,7 @@ $$\operatorname{logit}(p(\mathbf{X}))=\log\left( \frac{p(\mathbf{X})}{1-p(\mathb
 (que proyecta el intervalo $[0, 1]$ en $\mathbb{R}$), siendo su inversa la función logística
 $$p(\mathbf{X}) = \frac{e^{\beta_{0}+\beta_{1}X_{1}+\beta_{2}X_{2}+\ldots+\beta_{p}X_{p}}}{1 + e^{\beta_{0}+\beta_{1}X_{1}+\beta_{2}X_{2}+\ldots+\beta_{p}X_{p}}}$$
 Esto da lugar al modelo de regresión logística (múltiple), que será el que utilizaremos como ejemplo en esta sección.
-Para un tratamiento más completo de los métodos de regresión lineal generalizada, se recomienda consultar alguno de los libros de referencia, como @faraway2014linear, @hastie2017generalized, @dunn2018generalized o @mccullagh2019generalized.
+Para un tratamiento más completo de los métodos de regresión lineal generalizada, se recomienda consultar alguno de los libros de referencia, como @hastie1991generalized, @faraway2014linear, @dunn2018generalized o @mccullagh2019generalized.
 
 <!-- ### Ajuste: función `glm` -->
 
