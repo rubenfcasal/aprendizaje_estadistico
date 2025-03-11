@@ -364,7 +364,7 @@ Figura 5.3: Ejemplos de máquinas de soporte vectorial con diferentes valores de
 </p>
 </div>
 <p>La metodología <em>support vector machine</em> está específicamente diseñada para clasificar cuando hay exactamente dos categorías.
-En la literatura se pueden encontrar varias propuestas para extenderla al caso multiclase (más de dos categorías), siendo las dos opciones más populares las comentadas en la Sección <a href="métodos-de-aprendizaje-estadístico.html#notacion">1.2.1</a>: “uno contra todos” (<em>One-vs-Rest</em>, OVR) y “uno contra uno” (<em>One-vs-One</em>, OVO)<a href="#fn49" class="footnote-ref" id="fnref49"><sup>49</sup></a>.</p>
+En la literatura se pueden encontrar varias propuestas para extenderla al caso multiclase (más de dos categorías), siendo las dos opciones más populares las comentadas en la Sección <a href="métodos-de-aprendizaje-estadístico.html#notacion">1.2.1</a>: “uno contra todos” (<em>One-vs-Rest</em>, OVR) y “uno contra uno” (<em>One-vs-One</em>, OVO)<a href="#fn50" class="footnote-ref" id="fnref50"><sup>50</sup></a>.</p>
 <!--Para la clasificación multiclase con k niveles, k>2, libsvm utiliza el enfoque 'uno contra uno', en el que se entrenan k(k-1)/2 clasificadores binarios; la clase apropiada se encuentra mediante un esquema de votación.-->
 <div id="regresión-con-svm" class="section level3 hasAnchor" number="5.3.1">
 <h3><span class="header-section-number">5.3.1</span> Regresión con SVM<a href="máquinas-de-soporte-vectorial.html#regresión-con-svm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -414,8 +414,8 @@ Drucker, H., Burges, C. J., Kaufman, L., Smola, A., y Vapnik, V. (1997). Support
 </div>
 <div class="footnotes">
 <hr />
-<ol start="49">
-<li id="fn49"><p>Esta última, también conocida como voto mayoritario (<em>majority voting</em>), es la que implementa la función <code>kernlab::ksvm()</code>, empleada como ejemplo en la Sección <a href="svm-kernlab.html#svm-kernlab">5.4</a>, y también por la función <code>e1071::svm()</code>, que hace uso de la librería LIBSVM.<a href="máquinas-de-soporte-vectorial.html#fnref49" class="footnote-back">↩︎</a></p></li>
+<ol start="50">
+<li id="fn50"><p>Esta última, también conocida como voto mayoritario (<em>majority voting</em>), es la que implementa la función <code>kernlab::ksvm()</code>, empleada como ejemplo en la Sección <a href="svm-kernlab.html#svm-kernlab">5.4</a>, y también por la función <code>e1071::svm()</code>, que hace uso de la librería LIBSVM.<a href="máquinas-de-soporte-vectorial.html#fnref50" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

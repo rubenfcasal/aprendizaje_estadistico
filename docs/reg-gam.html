@@ -366,7 +366,7 @@ Entre las diferentes extensiones interesantes a los modelos generalizados, desta
 El modelo se establece a partir de la <code>formula</code> empleando <a href="https://rdrr.io/pkg/mgcv/man/s.html"><code>s()</code></a> para especificar las componentes “suaves” (ver <a href="https://rdrr.io/pkg/mgcv/man/s.html"><code>help(s)</code></a> y Sección <a href="reg-gam.html#mgcv-diagnosis">7.3.3</a>).</p>
 <p>Algunas posibilidades de uso son las que siguen:</p>
 <ul>
-<li><p>Modelo lineal<a href="#fn65" class="footnote-ref" id="fnref65"><sup>65</sup></a>:</p>
+<li><p>Modelo lineal<a href="#fn66" class="footnote-ref" id="fnref66"><sup>66</sup></a>:</p>
 <div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="reg-gam.html#cb405-1" aria-hidden="true" tabindex="-1"></a>ajuste <span class="ot">&lt;-</span> <span class="fu">gam</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3)</span></code></pre></div></li>
 <li><p>Modelo (semiparamétrico) aditivo con efectos no paramétricos para <code>x1</code> y <code>x2</code>, y un efecto lineal para <code>x3</code>:</p>
 <div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="reg-gam.html#cb406-1" aria-hidden="true" tabindex="-1"></a>ajuste <span class="ot">&lt;-</span> <span class="fu">gam</span>(y <span class="sc">~</span> <span class="fu">s</span>(x1) <span class="sc">+</span> <span class="fu">s</span>(x2) <span class="sc">+</span> x3)</span></code></pre></div></li>
@@ -620,8 +620,8 @@ Wood, S. N. (2017). <em>Generalized Additive Models: An Introduction with R</em>
 </div>
 <div class="footnotes">
 <hr />
-<ol start="65">
-<li id="fn65"><p>No admite una fórmula del tipo <code>respuesta ~ .</code> (producirá un error). Habría que escribir la expresión explícita de la fórmula, por ejemplo con la ayuda de <code>reformulate()</code>.<a href="reg-gam.html#fnref65" class="footnote-back">↩︎</a></p></li>
+<ol start="66">
+<li id="fn66"><p>No admite una fórmula del tipo <code>respuesta ~ .</code> (producirá un error). Habría que escribir la expresión explícita de la fórmula, por ejemplo con la ayuda de <code>reformulate()</code>.<a href="reg-gam.html#fnref66" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

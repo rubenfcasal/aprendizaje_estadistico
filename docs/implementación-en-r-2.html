@@ -365,7 +365,7 @@ Para emplear este parámetro los predictores deberían estar en la misma escala.
 <span id="cb488-7"><a href="implementación-en-r-2.html#cb488-7" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> df[<span class="sc">-</span>itrain, ]</span></code></pre></div>
 <p>En este caso, emplearemos el método <code>"nnet"</code> de <code>caret</code> para preprocesar los datos y seleccionar el número de nodos en la capa oculta y el parámetro de regularización.
 Como <code>caret</code> emplea las opciones por defecto de <code>nnet()</code> (diseñadas para clasificación),
-estableceremos <code>linout = TRUE</code><a href="#fn70" class="footnote-ref" id="fnref70"><sup>70</sup></a> y aumentaremos el número de iteraciones (aunque seguramente siga siendo demasiado pequeño).</p>
+estableceremos <code>linout = TRUE</code><a href="#fn71" class="footnote-ref" id="fnref71"><sup>71</sup></a> y aumentaremos el número de iteraciones (aunque seguramente siga siendo demasiado pequeño).</p>
 <div class="sourceCode" id="cb489"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb489-1"><a href="implementación-en-r-2.html#cb489-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
 <span id="cb489-2"><a href="implementación-en-r-2.html#cb489-2" aria-hidden="true" tabindex="-1"></a><span class="co"># getModelInfo(&quot;nnet&quot;) # Encuentra 10 métodos con &quot;nnet&quot;</span></span>
 <span id="cb489-3"><a href="implementación-en-r-2.html#cb489-3" aria-hidden="true" tabindex="-1"></a><span class="fu">modelLookup</span>(<span class="st">&quot;nnet&quot;</span>)</span></code></pre></div>
@@ -467,8 +467,8 @@ Venables, W. N., y Ripley, B. D. (2002). <em>Modern Applied Statistics with S</e
 </div>
 <div class="footnotes">
 <hr />
-<ol start="70">
-<li id="fn70"><p>La alternativa sería transformar la respuesta a rango 1.<a href="implementación-en-r-2.html#fnref70" class="footnote-back">↩︎</a></p></li>
+<ol start="71">
+<li id="fn71"><p>La alternativa sería transformar la respuesta a rango 1.<a href="implementación-en-r-2.html#fnref71" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

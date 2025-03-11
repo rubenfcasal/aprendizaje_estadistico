@@ -838,7 +838,7 @@ crPlots(modelo, main = "")
 </div>
 
 
-En la tabla \@ref(tab:diag-fun-lm) se incluyen algunas funciones adicionales que permiten obtener medidas de diagnosis o resúmenes numéricos de interés (ver [`help(influence.measures)`](https://rdrr.io/r/stats/influence.measures.html) para un listado más completo).
+En la Tabla \@ref(tab:diag-fun-lm) se incluyen algunas funciones adicionales que permiten obtener medidas de diagnosis o resúmenes numéricos de interés (ver [`help(influence.measures)`](https://rdrr.io/r/stats/influence.measures.html) para un listado más completo).
 
 Table: (\#tab:diag-fun-lm) Principales funciones para la diagnosis del modelo ajustado.
 

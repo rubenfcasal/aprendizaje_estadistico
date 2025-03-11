@@ -414,7 +414,7 @@ Otra alternativa son los splines penalizados, descritos al final de esta secció
 siendo <span class="math inline">\(0 \leq \lambda &lt; \infty\)</span> el hiperparámetro de suavizado.</p>
 <p>Puede verse que la solución a este problema, en el caso univariante, es un spline natural cúbico con nodos en <span class="math inline">\(x_1, \ldots, x_n\)</span> y restricciones en los coeficientes determinadas por el valor de <span class="math inline">\(\lambda\)</span> (es una versión regularizada de un spline natural cúbico).
 Por ejemplo, si <span class="math inline">\(\lambda = 0\)</span> se interpolarán las observaciones, y cuando <span class="math inline">\(\lambda \rightarrow \infty\)</span> el ajuste tenderá a una recta (con segunda derivada nula).
-En el caso multivariante, <span class="math inline">\(p&gt; 1\)</span>, la solución da lugar a los denominados <em>thin plate splines</em><a href="#fn63" class="footnote-ref" id="fnref63"><sup>63</sup></a>.</p>
+En el caso multivariante, <span class="math inline">\(p&gt; 1\)</span>, la solución da lugar a los denominados <em>thin plate splines</em><a href="#fn64" class="footnote-ref" id="fnref64"><sup>64</sup></a>.</p>
 <p>Al igual que en el caso de la regresión polinómica local (Sección <a href="reg-local.html#reg-locpol">7.1.2</a>), estos métodos son suavizadores lineales:
 <span class="math display">\[\hat{\mathbf{Y}} = S_{\lambda}\mathbf{Y}\]</span>
 y para seleccionar el parámetro de suavizado <span class="math inline">\(\lambda\)</span> podemos emplear los criterios de validación cruzada (dejando uno fuera), minimizando:
@@ -422,7 +422,7 @@ y para seleccionar el parámetro de suavizado <span class="math inline">\(\lambd
 siendo <span class="math inline">\(\{ S_{\lambda}\}_{ii}\)</span> el elemento <span class="math inline">\(i\)</span>-ésimo de la diagonal de la matriz de suavizado;
 o validación cruzada generalizada (GCV), minimizando:
 <span class="math display">\[GCV(\lambda)=\frac{1}{n}\sum_{i=1}^n\left(\frac{y_i-\hat{s}_{\lambda}(x_i)}{1 - \frac{1}{n}tr(S_{\lambda})}\right)^2\]</span></p>
-<p>Análogamente, el número efectivo de parámetros o grados de libertad<a href="#fn64" class="footnote-ref" id="fnref64"><sup>64</sup></a> <span class="math inline">\(df_{\lambda}=tr(S_{\lambda})\)</span> sería una medida de la complejidad del modelo equivalente a <span class="math inline">\(\lambda\)</span> (muchas implementaciones permiten seleccionar la complejidad empleando <span class="math inline">\(df\)</span>).</p>
+<p>Análogamente, el número efectivo de parámetros o grados de libertad<a href="#fn65" class="footnote-ref" id="fnref65"><sup>65</sup></a> <span class="math inline">\(df_{\lambda}=tr(S_{\lambda})\)</span> sería una medida de la complejidad del modelo equivalente a <span class="math inline">\(\lambda\)</span> (muchas implementaciones permiten seleccionar la complejidad empleando <span class="math inline">\(df\)</span>).</p>
 <p>Este método de suavizado está implementado en la función <code>smooth.spline()</code> del paquete base.
 Por defecto emplea GCV para seleccionar el parámetro de suavizado, aunque también admite CV y se puede especificar <code>lambda</code> o <code>df</code> (ver Figura <a href="splines.html#fig:spline-smooth">7.8</a>).
 Además de predicciones, el correspondiente método <code>predict()</code> también permite obtener estimaciones de las derivadas.</p>
@@ -472,9 +472,9 @@ Wood, S. N. (2017). <em>Generalized Additive Models: An Introduction with R</em>
 </div>
 <div class="footnotes">
 <hr />
-<ol start="63">
-<li id="fn63"><p>Están relacionados con las funciones radiales. También hay versiones con un número reducido de nodos denominados <em>low-rank thin plate regression splines</em>, empleados en el paquete <code>mgcv</code>.<a href="splines.html#fnref63" class="footnote-back">↩︎</a></p></li>
-<li id="fn64"><p>Esto también permitiría generalizar los criterios AIC o BIC.<a href="splines.html#fnref64" class="footnote-back">↩︎</a></p></li>
+<ol start="64">
+<li id="fn64"><p>Están relacionados con las funciones radiales. También hay versiones con un número reducido de nodos denominados <em>low-rank thin plate regression splines</em>, empleados en el paquete <code>mgcv</code>.<a href="splines.html#fnref64" class="footnote-back">↩︎</a></p></li>
+<li id="fn65"><p>Esto también permitiría generalizar los criterios AIC o BIC.<a href="splines.html#fnref65" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

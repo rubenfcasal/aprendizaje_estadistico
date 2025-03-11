@@ -580,9 +580,11 @@ Figura 3.6: Error de validación cruzada (reescalado) dependiendo del parámetro
 Figura 3.7: Árbol de regresión resultante después de la poda (modelo final).
 </p>
 </div>
-<p>Podríamos estudiar el modelo final, por ejemplo, mediante el método <a href="https://rdrr.io/pkg/rpart/man/summary.rpart.html"><code>summary.rpart()</code></a>. Este método muestra, entre otras cosas, una medida (en porcentaje) de la importancia de las variables explicativas para la predicción de la respuesta (teniendo en cuenta todas las particiones, principales y secundarias, en las que se emplea cada variable explicativa). Como alternativa, podríamos emplear el siguiente código:</p>
+<p>Podríamos estudiar el modelo final, por ejemplo, mediante el método <a href="https://rdrr.io/pkg/rpart/man/summary.rpart.html"><code>summary.rpart()</code></a>.
+Este método muestra, entre otras cosas, una medida (en porcentaje) de la importancia de las variables explicativas para la predicción de la respuesta (teniendo en cuenta todas las particiones, principales y secundarias, en las que se emplea cada variable explicativa).
+Como alternativa, podríamos emplear el siguiente código:</p>
 <div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="tree-rpart.html#cb195-1" aria-hidden="true" tabindex="-1"></a><span class="co"># summary(tree)</span></span>
-<span id="cb195-2"><a href="tree-rpart.html#cb195-2" aria-hidden="true" tabindex="-1"></a>importance <span class="ot">&lt;-</span> tree<span class="sc">$</span>variable.importance <span class="co"># Equivalente a caret::varImp(tree) </span></span>
+<span id="cb195-2"><a href="tree-rpart.html#cb195-2" aria-hidden="true" tabindex="-1"></a>importance <span class="ot">&lt;-</span> tree<span class="sc">$</span>variable.importance </span>
 <span id="cb195-3"><a href="tree-rpart.html#cb195-3" aria-hidden="true" tabindex="-1"></a>importance <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span>importance<span class="sc">/</span><span class="fu">sum</span>(importance), <span class="dv">1</span>)</span>
 <span id="cb195-4"><a href="tree-rpart.html#cb195-4" aria-hidden="true" tabindex="-1"></a>importance[importance <span class="sc">&gt;=</span> <span class="dv">1</span>]</span></code></pre></div>
 <pre><code>##              alcohol              density            chlorides 
@@ -785,10 +787,9 @@ Figura 3.12: Árbol de clasificación de <code>winetaste$taste</code> obtenido d
 </p>
 </div>
 <p>Si nos interesase estudiar la importancia de los predictores, podríamos utilizar el mismo código de la Sección <a href="tree-rpart.html#reg-rpart">3.3.1</a> (no evaluado):</p>
-<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="tree-rpart.html#cb221-1" aria-hidden="true" tabindex="-1"></a>caret<span class="sc">::</span><span class="fu">varImp</span>(tree)</span>
-<span id="cb221-2"><a href="tree-rpart.html#cb221-2" aria-hidden="true" tabindex="-1"></a>importance <span class="ot">&lt;-</span> tree<span class="sc">$</span>variable.importance</span>
-<span id="cb221-3"><a href="tree-rpart.html#cb221-3" aria-hidden="true" tabindex="-1"></a>importance <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span>importance<span class="sc">/</span><span class="fu">sum</span>(importance), <span class="dv">1</span>)</span>
-<span id="cb221-4"><a href="tree-rpart.html#cb221-4" aria-hidden="true" tabindex="-1"></a>importance[importance <span class="sc">&gt;=</span> <span class="dv">1</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="tree-rpart.html#cb221-1" aria-hidden="true" tabindex="-1"></a>importance <span class="ot">&lt;-</span> tree<span class="sc">$</span>variable.importance</span>
+<span id="cb221-2"><a href="tree-rpart.html#cb221-2" aria-hidden="true" tabindex="-1"></a>importance <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span>importance<span class="sc">/</span><span class="fu">sum</span>(importance), <span class="dv">1</span>)</span>
+<span id="cb221-3"><a href="tree-rpart.html#cb221-3" aria-hidden="true" tabindex="-1"></a>importance[importance <span class="sc">&gt;=</span> <span class="dv">1</span>]</span></code></pre></div>
 <p>El último paso sería evaluar el modelo en la muestra de test siguiendo los pasos descritos en la Sección <a href="const-eval.html#eval-class">1.3.5</a>.
 El método <a href="https://rdrr.io/pkg/rpart/man/predict.rpart.html"><code>predict.rpart()</code></a> devuelve por defecto (<code>type = "prob"</code>) una matriz con las probabilidades de cada clase, por lo que habría que establecer <code>type = "class"</code> para obtener la clase predicha (consultar la ayuda de esta función para más detalles).</p>
 <div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="tree-rpart.html#cb222-1" aria-hidden="true" tabindex="-1"></a>obs <span class="ot">&lt;-</span> test<span class="sc">$</span>taste</span>
@@ -987,7 +988,7 @@ Figura 3.14: Árbol de clasificación de <code>winetaste$taste</code>, obtenido 
 Figura 3.15: Árbol de clasificación de <code>winetaste$taste</code>, obtenido con la regla de un error estándar para seleccionar la complejidad (empleando <code>caret</code>).
 </p>
 </div>
-<p>Adicionalmente, representamos la importancia de los predictores (ver Figura <a href="tree-rpart.html#fig:arbolImpor">3.16</a>):</p>
+<p>Adicionalmente, representamos la importancia<a href="#fn42" class="footnote-ref" id="fnref42"><sup>42</sup></a> de los predictores (ver Figura <a href="tree-rpart.html#fig:arbolImpor">3.16</a>):</p>
 <div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="tree-rpart.html#cb237-1" aria-hidden="true" tabindex="-1"></a>var.imp <span class="ot">&lt;-</span> <span class="fu">varImp</span>(caret.rpart)</span>
 <span id="cb237-2"><a href="tree-rpart.html#cb237-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(var.imp)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:arbolImpor"></span>
@@ -1100,6 +1101,8 @@ Therneau, T. M., Atkinson, E. J., y Ripley, B. (2013). <em><span>Rpart: Recursiv
 <li id="fn39"><p>Realmente en la tabla de texto se muestra el valor mínimo de CP, ya que se obtendría la misma solución para un rango de valores de CP (desde ese valor hasta el anterior, sin incluirlo), mientras que en el gráfico generado por <a href="https://rdrr.io/pkg/rpart/man/plotcp.html"><code>plotcp()</code></a> se representa la media geométrica de los extremos de ese intervalo.<a href="tree-rpart.html#fnref39" class="footnote-back">↩︎</a></p></li>
 <li id="fn40"><p>Otra opción, más interesante para regresión, sería considerar estos valores como hiperparámetros.<a href="tree-rpart.html#fnref40" class="footnote-back">↩︎</a></p></li>
 <li id="fn41"><p>En principio también se podría utilizar la regla de un error estándar estableciendo <code>method = "rpart1SE"</code> en la llamada a <code>train()</code>, pero <code>caret</code> implementa internamente este método y en ocasiones no se obtienen los resultados esperados.<a href="tree-rpart.html#fnref41" class="footnote-back">↩︎</a></p></li>
+<li id="fn42"><p>Hay que tener en cuenta que los valores de importancia que devuelven los métodos <code>varImp.train()</code> y <code>varImp.rpart()</code> de <code>caret</code> difieren ligeramente de los proporcionados por el paquete <code>rpart</code>.
+Por ejemplo, en este caso, <code>varImp(caret.rpart$finalModel)</code> es equivalente a <code>varImp(caret.rpart, scale = FALSE)</code>, y son ligeramente distintos a los valores <code>caret.rpart$finalModel$variable.importance</code> calculados por <code>rpart</code>.<a href="tree-rpart.html#fnref42" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

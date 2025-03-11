@@ -421,7 +421,7 @@ Revisar: class.weights a named vector of weights for the different classes, used
 ## </code></pre>
 <p>Para obtener las estimaciones de las probabilidades, habría que establecer
 <code>type = "probabilities"</code> al predecir (devolverá una matriz con columnas
-correspondientes a los niveles)<a href="#fn50" class="footnote-ref" id="fnref50"><sup>50</sup></a>:</p>
+correspondientes a los niveles)<a href="#fn51" class="footnote-ref" id="fnref51"><sup>51</sup></a>:</p>
 <div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="svm-kernlab.html#cb322-1" aria-hidden="true" tabindex="-1"></a>p.est <span class="ot">&lt;-</span> <span class="fu">predict</span>(svm, <span class="at">newdata =</span> test, <span class="at">type =</span> <span class="st">&quot;probabilities&quot;</span>)</span>
 <span id="cb322-2"><a href="svm-kernlab.html#cb322-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(p.est)</span></code></pre></div>
 <pre><code>##         good     bad
@@ -435,7 +435,7 @@ correspondientes a los niveles)<a href="#fn50" class="footnote-ref" id="fnref50"
 <p><span id="exr:svm-class-weight" class="exercise"><strong>Ejercicio 5.1  </strong></span>En el ejemplo anterior, el error de clasificación en la categoría <code>bad</code> es mucho mayor que en la otra categoría (la especificidad es 0.4643).
 Esto podría ser debido a que las clases están desbalanceadas y el modelo trata de clasificar mejor la clase mayoritaria.
 Podríamos tratar de mejorar la especificidad empleando el argumento <code>class.weights</code> de la función <code>ksvm()</code>.
-Por ejemplo, de forma que el coste de una mala clasificación en la categoría <code>bad</code> sea el doble que el coste en la categoría <code>good</code><a href="#fn51" class="footnote-ref" id="fnref51"><sup>51</sup></a>.
+Por ejemplo, de forma que el coste de una mala clasificación en la categoría <code>bad</code> sea el doble que el coste en la categoría <code>good</code><a href="#fn52" class="footnote-ref" id="fnref52"><sup>52</sup></a>.
 De esta forma sería de esperar que se clasifique mejor la clase minoritaria, <code>bad</code> (que aumente la especificidad), a expensas de una disminución en la sensibilidad (para la clase mayoritaria <code>good</code>).
 Se esperaría también una mejora en la precisión balanceada, aunque con una reducción en la precisión.
 Repite el ejemplo anterior empleando el argumento <code>class.weights</code> para mejorar la especificidad.</p>
@@ -450,7 +450,7 @@ Uno de los más empleados es <code>"svmRadial"</code> (equivalente a la clasific
 ## 2 svmRadial         C  Cost   TRUE     TRUE      TRUE</code></pre>
 <p>En este caso, la función <code>train()</code> por defecto evaluará únicamente tres valores del hiperparámetro <code>C = c(0.25, 0.5, 1)</code> y fijará el valor de <code>sigma</code>.
 Alternativamente, podríamos establecer la rejilla de búsqueda.
-Por ejemplo, fijamos <code>sigma</code> al valor por defecto<a href="#fn52" class="footnote-ref" id="fnref52"><sup>52</sup></a> de la función <code>ksvm()</code> e incrementamos los valores del hiperparámetro de coste:</p>
+Por ejemplo, fijamos <code>sigma</code> al valor por defecto<a href="#fn53" class="footnote-ref" id="fnref53"><sup>53</sup></a> de la función <code>ksvm()</code> e incrementamos los valores del hiperparámetro de coste:</p>
 <div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="svm-kernlab.html#cb326-1" aria-hidden="true" tabindex="-1"></a>tuneGrid <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">sigma =</span> <span class="fu">kernelf</span>(svm)<span class="sc">@</span>kpar<span class="sc">$</span>sigma, <span class="co"># Emplea clases S4</span></span>
 <span id="cb326-2"><a href="svm-kernlab.html#cb326-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">C =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">5</span>))</span>
 <span id="cb326-3"><a href="svm-kernlab.html#cb326-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
@@ -518,10 +518,10 @@ Meyer, D., Dimitriadou, E., Hornik, K., Weingessel, A., y Leisch, F. (2020). <em
 </div>
 <div class="footnotes">
 <hr />
-<ol start="50">
-<li id="fn50"><p>Otras opciones son <code>"votes"</code> y <code>"decision"</code> para obtener matrices con el número de votos o los valores de <span class="math inline">\(m(\mathbf{x})\)</span>.<a href="svm-kernlab.html#fnref50" class="footnote-back">↩︎</a></p></li>
-<li id="fn51"><p>Una alternativa similar, que se suele emplear cuando las clases están desbalanceadas, es ponderar las observaciones por un peso inversamente proporcional a la frecuencia de cada clase.<a href="svm-kernlab.html#fnref51" class="footnote-back">↩︎</a></p></li>
-<li id="fn52"><p>La función <code>ksvm()</code>, por defecto, selecciona <code>sigma = mean(sigest(taste ~ ., data = train)[-2])</code>, aunque hay que tener en cuenta que el resultado de la función <code>sigest()</code> depende de la semilla.<a href="svm-kernlab.html#fnref52" class="footnote-back">↩︎</a></p></li>
+<ol start="51">
+<li id="fn51"><p>Otras opciones son <code>"votes"</code> y <code>"decision"</code> para obtener matrices con el número de votos o los valores de <span class="math inline">\(m(\mathbf{x})\)</span>.<a href="svm-kernlab.html#fnref51" class="footnote-back">↩︎</a></p></li>
+<li id="fn52"><p>Una alternativa similar, que se suele emplear cuando las clases están desbalanceadas, es ponderar las observaciones por un peso inversamente proporcional a la frecuencia de cada clase.<a href="svm-kernlab.html#fnref52" class="footnote-back">↩︎</a></p></li>
+<li id="fn53"><p>La función <code>ksvm()</code>, por defecto, selecciona <code>sigma = mean(sigest(taste ~ ., data = train)[-2])</code>, aunque hay que tener en cuenta que el resultado de la función <code>sigest()</code> depende de la semilla.<a href="svm-kernlab.html#fnref53" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

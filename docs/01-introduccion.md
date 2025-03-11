@@ -56,7 +56,7 @@ En *estadística* se consideran modelos estocásticos (con componente aleatoria)
 
 > "Nothing in Nature is random... a thing appears random only through the incompleteness of our knowledge."
 >
-> --- Spinoza, Baruch (*Ethics*, 1677)
+> --- Spinoza, Baruch (*Ethics*, 1677).
 
 Aunque hoy en día gana peso la idea de la física cuántica de que en el fondo hay una *aleatoriedad intrínseca*:
 

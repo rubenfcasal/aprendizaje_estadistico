@@ -425,7 +425,7 @@ es la matriz de pesos, e <span class="math inline">\(\mathbf{Y} = \left( Y_1, \c
 <span class="math display">\[\hat{\mathbf{Y}} = S\mathbf{Y}\]</span>
 siendo <span class="math inline">\(S\)</span> la matriz de suavizado con <span class="math inline">\(\mathbf{s}_{X_{i}}^{t}\)</span> en la fila <span class="math inline">\(i\)</span> (este tipo de métodos también se denominan <em>suavizadores lineales</em>).</p>
 <p>En lo que respecta a la selección del grado <span class="math inline">\(d\)</span> del polinomio, lo más habitual es utilizar el estimador de Nadaraya-Watson (<span class="math inline">\(d=0\)</span>) o el estimador lineal local (<span class="math inline">\(d=1\)</span>).
-Desde el punto de vista asintótico, ambos estimadores tienen un comportamiento similar<a href="#fn60" class="footnote-ref" id="fnref60"><sup>60</sup></a>, pero en la práctica suele ser preferible el estimador lineal local, sobre todo porque se ve menos afectado por el denominado efecto frontera (Sección <a href="dimen-curse.html#dimen-curse">1.4</a>).</p>
+Desde el punto de vista asintótico, ambos estimadores tienen un comportamiento similar<a href="#fn61" class="footnote-ref" id="fnref61"><sup>61</sup></a>, pero en la práctica suele ser preferible el estimador lineal local, sobre todo porque se ve menos afectado por el denominado efecto frontera (Sección <a href="dimen-curse.html#dimen-curse">1.4</a>).</p>
 <p>La ventana <span class="math inline">\(h\)</span> es el hiperparámetro de mayor importancia en la predicción y para su selección se suelen emplear métodos de validación cruzada (Sección <a href="const-eval.html#cv">1.3.3</a>) o tipo <em>plug-in</em> <span class="citation">(<a href="#ref-ruppert1995effective" role="doc-biblioref">Ruppert et al., 1995</a>)</span>.
 En este último caso, se reemplazan las funciones desconocidas que aparecen en la expresión de la ventana asintóticamente óptima por estimaciones (p. ej. función <code>dpill()</code> del paquete <code>KernSmooth</code>).
 Así, usando el criterio de validación cruzada dejando uno fuera (LOOCV), se trataría de minimizar:
@@ -438,7 +438,7 @@ siendo <span class="math inline">\(S_{ii}\)</span> el elemento <span class="math
 <span class="math display">\[GCV(h)=\frac{1}{n}\sum_{i=1}^n\left(\frac{y_i-\hat{m}(x_i)}{1 - \frac{1}{n}tr(S)}\right)^2\]</span>
 La traza de la matriz de suavizado, <span class="math inline">\(tr(S)\)</span>, se conoce como el <em>número efectivo de parámetros</em> y, para aproximar los grados de libertad del error, se utiliza (<span class="math inline">\(n - tr(S)\)</span>.</p>
 <p>Aunque el paquete base de <code>R</code> incluye herramientas para la estimación tipo núcleo de la regresión (<code>ksmooth()</code>, <code>loess()</code>), se recomienda el uso del paquete <code>KernSmooth</code> <span class="citation">(<a href="#ref-R-KernSmooth" role="doc-biblioref">Wand, 2023</a>)</span>.</p>
-<p>Continuando con el ejemplo del conjunto de datos <code>MASS::mcycle</code>, emplearemos la función <code>locpoly()</code> del paquete <code>KernSmooth</code> para obtener estimaciones lineales locales<a href="#fn61" class="footnote-ref" id="fnref61"><sup>61</sup></a> con una ventana seleccionada mediante un método plug-in (ver Figura <a href="reg-local.html#fig:llr-fit">7.2</a>):</p>
+<p>Continuando con el ejemplo del conjunto de datos <code>MASS::mcycle</code>, emplearemos la función <code>locpoly()</code> del paquete <code>KernSmooth</code> para obtener estimaciones lineales locales<a href="#fn62" class="footnote-ref" id="fnref62"><sup>62</sup></a> con una ventana seleccionada mediante un método plug-in (ver Figura <a href="reg-local.html#fig:llr-fit">7.2</a>):</p>
 <div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb395-1"><a href="reg-local.html#cb395-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data(mcycle, package = &quot;MASS&quot;)</span></span>
 <span id="cb395-2"><a href="reg-local.html#cb395-2" aria-hidden="true" tabindex="-1"></a>times <span class="ot">&lt;-</span> mcycle<span class="sc">$</span>times</span>
 <span id="cb395-3"><a href="reg-local.html#cb395-3" aria-hidden="true" tabindex="-1"></a>accel <span class="ot">&lt;-</span> mcycle<span class="sc">$</span>accel  </span>
@@ -472,7 +472,7 @@ Posteriormente se extendieron al caso multivariante (p. ej. la función <code>l
 Son métodos muy empleados en análisis descriptivo (no supervisado) y normalmente se emplean ventanas locales tipo vecinos más cercanos (por ejemplo a través de un parámetro <code>span</code> que determina la proporción de observaciones empleadas en el ajuste).</p>
 <p>Como ejemplo continuaremos con el conjunto de datos <code>MASS::mcycle</code> y emplearemos la función <code>loess()</code> para realizar un ajuste robusto.
 Será necesario establecer <code>family = "symmetric"</code> para emplear M-estimadores, por defecto con 4 iteraciones, en lugar de mínimos cuadrados ponderados.
-Previamente, seleccionaremos el parámetro <code>span</code> por validación cruzada (LOOCV), pero empleando como criterio de error la mediana de los errores en valor absoluto (<em>median absolute deviation</em>, MAD)<a href="#fn62" class="footnote-ref" id="fnref62"><sup>62</sup></a> (ver Figura <a href="reg-local.html#fig:loess-cv">7.3</a>).</p>
+Previamente, seleccionaremos el parámetro <code>span</code> por validación cruzada (LOOCV), pero empleando como criterio de error la mediana de los errores en valor absoluto (<em>median absolute deviation</em>, MAD)<a href="#fn63" class="footnote-ref" id="fnref63"><sup>63</sup></a> (ver Figura <a href="reg-local.html#fig:loess-cv">7.3</a>).</p>
 <div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="reg-local.html#cb399-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Función que calcula las predicciones LOOCV</span></span>
 <span id="cb399-2"><a href="reg-local.html#cb399-2" aria-hidden="true" tabindex="-1"></a>cv.loess <span class="ot">&lt;-</span> <span class="cf">function</span>(formula, datos, span, ...) {</span>
 <span id="cb399-3"><a href="reg-local.html#cb399-3" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(datos)</span>
@@ -539,10 +539,10 @@ Wand, M. (2023). <em><span>KernSmooth: Functions for Kernel Smoothing Supporting
 </div>
 <div class="footnotes">
 <hr />
-<ol start="60">
-<li id="fn60"><p>Asintóticamente el estimador lineal local tiene un sesgo menor que el de Nadaraya-Watson (pero del mismo orden) y la misma varianza (p. ej. <span class="citation">Fan y Gijbels (<a href="#ref-fan1996" role="doc-biblioref">1996</a>)</span>).<a href="reg-local.html#fnref60" class="footnote-back">↩︎</a></p></li>
-<li id="fn61"><p>La función <code>KernSmooth::locpoly()</code> también admite la estimación de derivadas.<a href="reg-local.html#fnref61" class="footnote-back">↩︎</a></p></li>
-<li id="fn62"><p>En este caso hay dependencia entre las observaciones y los criterios habituales, como validación cruzada, tienden a seleccionar ventanas pequeñas, <em>i. e.</em> a infrasuavizar.<a href="reg-local.html#fnref62" class="footnote-back">↩︎</a></p></li>
+<ol start="61">
+<li id="fn61"><p>Asintóticamente el estimador lineal local tiene un sesgo menor que el de Nadaraya-Watson (pero del mismo orden) y la misma varianza (p. ej. <span class="citation">Fan y Gijbels (<a href="#ref-fan1996" role="doc-biblioref">1996</a>)</span>).<a href="reg-local.html#fnref61" class="footnote-back">↩︎</a></p></li>
+<li id="fn62"><p>La función <code>KernSmooth::locpoly()</code> también admite la estimación de derivadas.<a href="reg-local.html#fnref62" class="footnote-back">↩︎</a></p></li>
+<li id="fn63"><p>En este caso hay dependencia entre las observaciones y los criterios habituales, como validación cruzada, tienden a seleccionar ventanas pequeñas, <em>i. e.</em> a infrasuavizar.<a href="reg-local.html#fnref63" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

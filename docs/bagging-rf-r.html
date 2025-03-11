@@ -353,7 +353,7 @@ Si la variable respuesta es un factor asumirá que se trata de un problema de cl
 <li><p><code>mtry</code>: número de predictores seleccionados al azar en cada división; por defecto <code>max(floor(p/3), 1)</code> en el caso de regresión y <code>floor(sqrt(p))</code> en clasificación, siendo <code>p = ncol(x) = ncol(data) - 1</code> el número de predictores.</p></li>
 <li><p><code>nodesize</code>: número mínimo de observaciones en un nodo terminal; por defecto 1 en clasificación y 5 en regresión. Si el conjunto de datos es muy grande, es recomendable incrementarlo para evitar problemas de sobreajuste, disminuir el tiempo de computación y los requerimientos de memoria. Puede ser tratado como un hiperparámetro.</p></li>
 </ul>
-<p>Otros argumentos que pueden ser de interés<a href="#fn43" class="footnote-ref" id="fnref43"><sup>43</sup></a> son:</p>
+<p>Otros argumentos que pueden ser de interés<a href="#fn44" class="footnote-ref" id="fnref44"><sup>44</sup></a> son:</p>
 <ul>
 <li><p><code>maxnodes</code>: número máximo de nodos terminales. Puede utilizarse como alternativa para controlar la complejidad del modelo.</p></li>
 <li><p><code>importance = TRUE</code>: permite obtener medidas adicionales de la importancia de las variables predictoras.</p></li>
@@ -627,7 +627,7 @@ plot_min_depth_interactions(rf, k = 5) # solo 5 mejores iteraciones
 </div>
 <div id="ejemplo-bosques-aleatorios-con-caret" class="section level3 hasAnchor" number="4.3.3">
 <h3><span class="header-section-number">4.3.3</span> Ejemplo: bosques aleatorios con <code>caret</code><a href="bagging-rf-r.html#ejemplo-bosques-aleatorios-con-caret" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>En el paquete <code>caret</code> hay varias implementaciones de bagging y bosques aleatorios<a href="#fn44" class="footnote-ref" id="fnref44"><sup>44</sup></a>, incluyendo el algoritmo del paquete <code>randomForest</code> considerando como hiperparámetro el número de predictores seleccionados al azar en cada división, <code>mtry</code>.
+<p>En el paquete <code>caret</code> hay varias implementaciones de bagging y bosques aleatorios<a href="#fn45" class="footnote-ref" id="fnref45"><sup>45</sup></a>, incluyendo el algoritmo del paquete <code>randomForest</code> considerando como hiperparámetro el número de predictores seleccionados al azar en cada división, <code>mtry</code>.
 Para ajustar este modelo a una muestra de entrenamiento hay que establecer <code>method = "rf"</code> en la llamada a <code>train()</code>.</p>
 <div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="bagging-rf-r.html#cb268-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
 <span id="cb268-2"><a href="bagging-rf-r.html#cb268-2" aria-hidden="true" tabindex="-1"></a><span class="co"># str(getModelInfo(&quot;rf&quot;, regex = FALSE))</span></span>
@@ -716,9 +716,9 @@ Liaw, A., y Wiener, M. (2002). Classification and Regression by <span>randomFore
 </div>
 <div class="footnotes">
 <hr />
-<ol start="43">
-<li id="fn43"><p>Si se quiere minimizar el uso de memoria, por ejemplo mientras se seleccionan hiperparámetros, se puede establecer <code>keep.forest=FALSE</code>.<a href="bagging-rf-r.html#fnref43" class="footnote-back">↩︎</a></p></li>
-<li id="fn44"><p>Se puede hacer una búsqueda en la tabla del <a href="https://topepo.github.io/caret/available-models.html">Capítulo 6: Available Models</a> del manual.<a href="bagging-rf-r.html#fnref44" class="footnote-back">↩︎</a></p></li>
+<ol start="44">
+<li id="fn44"><p>Si se quiere minimizar el uso de memoria, por ejemplo mientras se seleccionan hiperparámetros, se puede establecer <code>keep.forest=FALSE</code>.<a href="bagging-rf-r.html#fnref44" class="footnote-back">↩︎</a></p></li>
+<li id="fn45"><p>Se puede hacer una búsqueda en la tabla del <a href="https://topepo.github.io/caret/available-models.html">Capítulo 6: Available Models</a> del manual.<a href="bagging-rf-r.html#fnref45" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

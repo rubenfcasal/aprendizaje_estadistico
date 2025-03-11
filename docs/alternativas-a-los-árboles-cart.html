@@ -358,7 +358,7 @@ Dado que el método exige que el <em>p</em>-valor sea menor que 0.05 (o el nivel
 Como se desea trabajar con árboles binarios (si se admite que de un nodo salga cualquier número de ramas, con muy pocos niveles de profundidad del árbol ya nos quedaríamos sin datos), es necesario hacer algo más: forzar a que las variables predictoras tengan solo dos categorías mediante un proceso de fusión.
 Se van haciendo pruebas chi-cuadrado entre pares de categorías y la variable respuesta, y se fusiona el par con el <em>p</em>-valor más alto, ya que se trata de fusionar las categorías que sean más similares.</p>
 <p>Para árboles de regresión hay metodologías que, al igual que CHAID, se basan en el cálculo de <em>p</em>-valores, en este caso de contrastes de igualdad de medias.
-Una de las más utilizadas son los <em>conditional inference trees</em> <span class="citation">(<a href="#ref-hothorn2006unbiased" role="doc-biblioref">Hothorn et al., 2006</a>)</span><a href="#fn42" class="footnote-ref" id="fnref42"><sup>42</sup></a>, implementada en la función <a href="https://rdrr.io/pkg/party/man/ctree.html"><code>ctree()</code></a> del paquete <a href="https://CRAN.R-project.org/package=party"><code>party</code></a> <span class="citation">(<a href="#ref-R-party" role="doc-biblioref">Hothorn et al., 2010</a>)</span>.</p>
+Una de las más utilizadas son los <em>conditional inference trees</em> <span class="citation">(<a href="#ref-hothorn2006unbiased" role="doc-biblioref">Hothorn et al., 2006</a>)</span><a href="#fn43" class="footnote-ref" id="fnref43"><sup>43</sup></a>, implementada en la función <a href="https://rdrr.io/pkg/party/man/ctree.html"><code>ctree()</code></a> del paquete <a href="https://CRAN.R-project.org/package=party"><code>party</code></a> <span class="citation">(<a href="#ref-R-party" role="doc-biblioref">Hothorn et al., 2010</a>)</span>.</p>
 <p>Un problema conocido de los árboles CART es que sufren un sesgo de selección de variables: los predictores con más valores distintos son favorecidos.
 Esta es una de las motivaciones de utilizar estos métodos basados en contrastes de hipótesis.
 Por otra parte, hay que ser conscientes de que los contrastes de hipótesis y la calidad predictiva son cosas distintas.</p>
@@ -410,8 +410,8 @@ Quinlan, J. R. (1993). <em>C4.5: Programs for Machine Learning</em>. Elsevier.
 </div>
 <div class="footnotes">
 <hr />
-<ol start="42">
-<li id="fn42"><p>Otra alternativa es GUIDE <span class="citation">(<em>Generalized, Unbiased, Interaction Detection and Estimation</em>, <a href="#ref-loh2002regression" role="doc-biblioref">Loh, 2002</a>)</span>.<a href="alternativas-a-los-árboles-cart.html#fnref42" class="footnote-back">↩︎</a></p></li>
+<ol start="43">
+<li id="fn43"><p>Otra alternativa es GUIDE <span class="citation">(<em>Generalized, Unbiased, Interaction Detection and Estimation</em>, <a href="#ref-loh2002regression" role="doc-biblioref">Loh, 2002</a>)</span>.<a href="alternativas-a-los-árboles-cart.html#fnref43" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

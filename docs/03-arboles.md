@@ -548,12 +548,14 @@ rpart.plot(tree)
 </div>
 
 
-Podríamos estudiar el modelo final, por ejemplo, mediante el método [`summary.rpart()`](https://rdrr.io/pkg/rpart/man/summary.rpart.html).  Este método muestra,  entre otras cosas, una medida (en porcentaje) de la importancia de las variables explicativas para la predicción de la respuesta (teniendo en cuenta todas las particiones, principales y secundarias, en las que se emplea cada variable explicativa). Como alternativa, podríamos emplear el siguiente código:
+Podríamos estudiar el modelo final, por ejemplo, mediante el método [`summary.rpart()`](https://rdrr.io/pkg/rpart/man/summary.rpart.html).
+Este método muestra,  entre otras cosas, una medida (en porcentaje) de la importancia de las variables explicativas para la predicción de la respuesta (teniendo en cuenta todas las particiones, principales y secundarias, en las que se emplea cada variable explicativa). 
+Como alternativa, podríamos emplear el siguiente código:
 
 
 ```r
 # summary(tree)
-importance <- tree$variable.importance # Equivalente a caret::varImp(tree) 
+importance <- tree$variable.importance 
 importance <- round(100*importance/sum(importance), 1)
 importance[importance >= 1]
 ```
@@ -886,7 +888,6 @@ rpart.plot(tree)
 Si nos interesase estudiar la importancia de los predictores, podríamos utilizar el mismo código de la Sección \@ref(reg-rpart) (no evaluado):
 
 ```r
-caret::varImp(tree)
 importance <- tree$variable.importance
 importance <- round(100*importance/sum(importance), 1)
 importance[importance >= 1]
@@ -1149,7 +1150,7 @@ rpart.plot(caret.rpart$finalModel)
 <p class="caption">(\#fig:figarbolclassifoneSE)(ref:arbolclassifoneSE)</p>
 </div>
 
-Adicionalmente, representamos la importancia de los predictores (ver Figura \@ref(fig:arbolImpor)):
+Adicionalmente, representamos la importancia[^rpart-2] de los predictores (ver Figura \@ref(fig:arbolImpor)):
 
 
 ```r
@@ -1161,6 +1162,9 @@ plot(var.imp)
 <img src="03-arboles_files/figure-html/arbolImpor-1.png" alt="Importancia de los (posibles) predictores según el modelo obtenido con la regla de un error estándar." width="75%" />
 <p class="caption">(\#fig:arbolImpor)Importancia de los (posibles) predictores según el modelo obtenido con la regla de un error estándar.</p>
 </div>
+
+[^rpart-2]: Hay que tener en cuenta que los valores de importancia que devuelven los métodos `varImp.train()` y `varImp.rpart()` de `caret` difieren ligeramente de los proporcionados por el paquete `rpart`.
+Por ejemplo, en este caso, `varImp(caret.rpart$finalModel)` es equivalente a `varImp(caret.rpart, scale = FALSE)`, y son ligeramente distintos a los valores `caret.rpart$finalModel$variable.importance` calculados por `rpart`.
 
 Finalmente, calculamos las predicciones con el método [`predict.train()`](https://rdrr.io/pkg/caret/man/predict.train.html) y posteriormente evaluamos su precisión con [`confusionMatrix()`](https://rdrr.io/pkg/caret/man/confusionMatrix.html):
 

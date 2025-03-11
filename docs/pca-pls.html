@@ -408,7 +408,7 @@ Reescalaremos los predictores y emplearemos validación cruzada por grupos para 
 ## X          97.63     98.76     99.37     99.85    100.00
 ## bodyfat    67.33     67.62     67.64     73.65     73.67</code></pre>
 <p>Aunque suele resultar más cómodo representar gráficamente estos valores (ver Figura <a href="pca-pls.html#fig:pcreg-plot">6.6</a>).
-Por ejemplo empleando <a href="https://rdrr.io/pkg/pls/man/mvrVal.html"><code>RMSEP()</code></a> para acceder a los errores de validación<a href="#fn56" class="footnote-ref" id="fnref56"><sup>56</sup></a>:</p>
+Por ejemplo empleando <a href="https://rdrr.io/pkg/pls/man/mvrVal.html"><code>RMSEP()</code></a> para acceder a los errores de validación<a href="#fn57" class="footnote-ref" id="fnref57"><sup>57</sup></a>:</p>
 <div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="pca-pls.html#cb358-1" aria-hidden="true" tabindex="-1"></a><span class="co"># validationplot(pcreg, legend = &quot;topright&quot;) </span></span>
 <span id="cb358-2"><a href="pca-pls.html#cb358-2" aria-hidden="true" tabindex="-1"></a>rmsep.cv <span class="ot">&lt;-</span> <span class="fu">RMSEP</span>(pcreg)</span>
 <span id="cb358-3"><a href="pca-pls.html#cb358-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rmsep.cv, <span class="at">legend =</span> <span class="st">&quot;topright&quot;</span>)</span></code></pre></div>
@@ -421,7 +421,7 @@ Figura 6.6: Errores de validación cruzada en función del número de componente
 <div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="pca-pls.html#cb359-1" aria-hidden="true" tabindex="-1"></a>ncomp.op <span class="ot">&lt;-</span> <span class="fu">with</span>(rmsep.cv, comps[<span class="fu">which.min</span>(val[<span class="dv">2</span>, <span class="dv">1</span>, ])]) <span class="co"># mínimo adjCV RMSEP</span></span></code></pre></div>
 <p>En este caso, empleando el criterio de menor error de validación cruzada se seleccionaría un número elevado de componentes, el mínimo se alcanzaría con 12 componentes (casi como ajustar un modelo lineal con todos los predictores).</p>
 <!-- biplot(pcreg) -->
-<p>Los coeficientes de los predictores originales con el modelo seleccionado serían<a href="#fn57" class="footnote-ref" id="fnref57"><sup>57</sup></a>:</p>
+<p>Los coeficientes de los predictores originales con el modelo seleccionado serían<a href="#fn58" class="footnote-ref" id="fnref58"><sup>58</sup></a>:</p>
 <div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="pca-pls.html#cb360-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(pcreg, <span class="at">ncomp =</span> <span class="dv">12</span>, <span class="at">intercept =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## , , 12 comps
 ## 
@@ -497,7 +497,7 @@ Figura 6.7: Errores de validación cruzada en función del número de componente
 pero esto no está relacionado con su utilidad para explicar la respuesta.
 No va a haber problemas de colinealidad aunque incluyamos muchas componentes, pero se tendrán que estimar más coeficientes y va a disminuir su precisión.
 Sería más razonable obtener las componentes principales y después aplicar un método de selección.
-Por ejemplo, podemos combinar el método de preprocesado <code>"pca"</code> de <code>caret</code> con un método de selección de variables<a href="#fn58" class="footnote-ref" id="fnref58"><sup>58</sup></a> (ver Figura <a href="pca-pls.html#fig:pcr2-plot-caret">6.8</a>):</p>
+Por ejemplo, podemos combinar el método de preprocesado <code>"pca"</code> de <code>caret</code> con un método de selección de variables<a href="#fn59" class="footnote-ref" id="fnref59"><sup>59</sup></a> (ver Figura <a href="pca-pls.html#fig:pcr2-plot-caret">6.8</a>):</p>
 <div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="pca-pls.html#cb371-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
 <span id="cb371-2"><a href="pca-pls.html#cb371-2" aria-hidden="true" tabindex="-1"></a>caret.pcrsel <span class="ot">&lt;-</span> <span class="fu">train</span>(bodyfat <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">method =</span> <span class="st">&quot;leapSeq&quot;</span>,</span>
 <span id="cb371-3"><a href="pca-pls.html#cb371-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">preProcess =</span> <span class="fu">c</span>(<span class="st">&quot;zv&quot;</span>, <span class="st">&quot;center&quot;</span>, <span class="st">&quot;scale&quot;</span>, <span class="st">&quot;pca&quot;</span>),     </span>
@@ -549,7 +549,7 @@ Pendiente: revisar error con nvmax = 1:10
 <p>Como ya se comentó, en PCR las componentes se determinan con el objetivo de explicar la variabilidad de los predictores, ignorando por completo la respuesta.
 Por el contrario, en PLSR <span class="citation">(<em>partial least squares regression</em>, <a href="#ref-wold1983multivariate" role="doc-biblioref">Wold et al., 1983</a>)</span> se construyen las componentes <span class="math inline">\(Z_1, \ldots, Z_k\)</span> teniendo en cuenta desde un principio el objetivo final de predecir linealmente la respuesta.</p>
 <p>Hay varios procedimientos para seleccionar los pesos <span class="math inline">\(a_{ij}\)</span>, pero la idea es asignar mayor peso a los predictores que están más correlacionados con la respuesta (o con los correspondientes residuos al ir obteniendo nuevas componentes), considerando siempre direcciones ortogonales <span class="citation">(ver, por ejemplo, la Sección 6.3.2 de <a href="#ref-james2021introduction" role="doc-biblioref">James et al., 2021</a>)</span>.</p>
-<p>Continuando con el ejemplo anterior, emplearemos en primer lugar la función <a href="https://rdrr.io/pkg/pls/man/mvr.html"><code>plsr()</code></a> del paquete <a href="https://mevik.net/work/software/pls.html"><code>pls</code></a>, que tiene los mismos argumentos que la función <code>pcr()</code> descrita en la sección anterior<a href="#fn59" class="footnote-ref" id="fnref59"><sup>59</sup></a>:</p>
+<p>Continuando con el ejemplo anterior, emplearemos en primer lugar la función <a href="https://rdrr.io/pkg/pls/man/mvr.html"><code>plsr()</code></a> del paquete <a href="https://mevik.net/work/software/pls.html"><code>pls</code></a>, que tiene los mismos argumentos que la función <code>pcr()</code> descrita en la sección anterior<a href="#fn60" class="footnote-ref" id="fnref60"><sup>60</sup></a>:</p>
 <div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="pca-pls.html#cb378-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
 <span id="cb378-2"><a href="pca-pls.html#cb378-2" aria-hidden="true" tabindex="-1"></a>plsreg <span class="ot">&lt;-</span> <span class="fu">plsr</span>(bodyfat <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">validation =</span> <span class="st">&quot;CV&quot;</span>)</span>
 <span id="cb378-3"><a href="pca-pls.html#cb378-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(plsreg)</span></code></pre></div>
@@ -683,10 +683,10 @@ En cualquier caso, <code>caret</code> ajustará un modelo generalizado si la res
 <h3>Bibliografía<a href="bibliografía.html#bibliografía" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
 <div id="ref-R-plsRglm" class="csl-entry">
-Bertrand, F., y Maumy, M. (2023). <em>Partial Least Squares Regression for Generalized Linear Models</em>. manual. <a href="https://fbertran.github.io/homepage/">https://fbertran.github.io/homepage/</a>
+Bertrand, F., y Maumy, M. (2023). <em>Partial Least Squares Regression for Generalized Linear Models</em>. manual.
 </div>
 <div id="ref-james2021introduction" class="csl-entry">
-James, G., Witten, D., Hastie, T., y Tibshirani, R. (2021). <em>An Introduction to Statistical Learning: With Applications in R</em> (2a. ed.). Springer. <a href="https://www.statlearning.com" class="uri">https://www.statlearning.com</a>. <a href="https://www.statlearning.com">https://www.statlearning.com</a>
+James, G., Witten, D., Hastie, T., y Tibshirani, R. (2021). <em>An Introduction to Statistical Learning: With Applications in R</em> (2a. ed.). Springer. <a href="https://www.statlearning.com" class="uri">https://www.statlearning.com</a>.
 </div>
 <div id="ref-massy1965principal" class="csl-entry">
 Massy, W. F. (1965). Principal components regression in exploratory statistical research. <em>Journal of the American Statistical Association</em>, <em>60</em>(309), 234-256. <a href="https://doi.org/10.1080/01621459.1965.10480787">https://doi.org/10.1080/01621459.1965.10480787</a>
@@ -700,11 +700,11 @@ Wold, S., Martens, H., y Wold, H. (1983). The multivariate calibration problem i
 </div>
 <div class="footnotes">
 <hr />
-<ol start="56">
-<li id="fn56"><p><code>"adjCV"</code> es una estimación de validación cruzada con corrección de sesgo.<a href="pca-pls.html#fnref56" class="footnote-back">↩︎</a></p></li>
-<li id="fn57"><p>También se pueden analizar distintos aspectos del ajuste (predicciones, coeficientes, puntuaciones, cargas, biplots, cargas de correlación o gráficos de validación) con el método <a href="https://rdrr.io/pkg/pls/man/plot.mvr.html"><code>plot.mvr()</code></a>.<a href="pca-pls.html#fnref57" class="footnote-back">↩︎</a></p></li>
-<li id="fn58"><p>Esta forma de proceder se podría emplear con otros modelos que puedan tener problemas de colinealidad, como los lineales generalizados.<a href="pca-pls.html#fnref58" class="footnote-back">↩︎</a></p></li>
-<li id="fn59"><p>Realmente, ambas funciones llaman internamente a <a href="https://rdrr.io/pkg/pls/man/mvr.html"><code>mvr()</code></a>, donde están implementadas distintas proyecciones <span class="citation">(ver <a href="https://rdrr.io/pkg/pls/man/pls.options.html" role="doc-biblioref"><code>help(pls.options)</code></a>, o <a href="#ref-Mevik2007pls" role="doc-biblioref">Mevik y Wehrens, 2007</a>)</span>.<a href="pca-pls.html#fnref59" class="footnote-back">↩︎</a></p></li>
+<ol start="57">
+<li id="fn57"><p><code>"adjCV"</code> es una estimación de validación cruzada con corrección de sesgo.<a href="pca-pls.html#fnref57" class="footnote-back">↩︎</a></p></li>
+<li id="fn58"><p>También se pueden analizar distintos aspectos del ajuste (predicciones, coeficientes, puntuaciones, cargas, biplots, cargas de correlación o gráficos de validación) con el método <a href="https://rdrr.io/pkg/pls/man/plot.mvr.html"><code>plot.mvr()</code></a>.<a href="pca-pls.html#fnref58" class="footnote-back">↩︎</a></p></li>
+<li id="fn59"><p>Esta forma de proceder se podría emplear con otros modelos que puedan tener problemas de colinealidad, como los lineales generalizados.<a href="pca-pls.html#fnref59" class="footnote-back">↩︎</a></p></li>
+<li id="fn60"><p>Realmente, ambas funciones llaman internamente a <a href="https://rdrr.io/pkg/pls/man/mvr.html"><code>mvr()</code></a>, donde están implementadas distintas proyecciones <span class="citation">(ver <a href="https://rdrr.io/pkg/pls/man/pls.options.html" role="doc-biblioref"><code>help(pls.options)</code></a>, o <a href="#ref-Mevik2007pls" role="doc-biblioref">Mevik y Wehrens, 2007</a>)</span>.<a href="pca-pls.html#fnref60" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

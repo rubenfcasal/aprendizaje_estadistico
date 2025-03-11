@@ -4,7 +4,7 @@ author:
   - "Rubén Fernández Casal (ruben.fcasal@udc.es)"
   - "Julián Costa Bouzas (julian.costa@udc.es)"
   - "Manuel Oviedo de la Fuente (manuel.oviedo@udc.es)"
-date: "Edición: Septiembre de 2024. Impresión: 2024-09-24"
+date: "Edición: Septiembre de 2024. Impresión: 2025-03-11"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
@@ -22,28 +22,26 @@ description: "Métodos predictivos de aprendizaje estadístico con R."
 # Bienvenida {-}
 
 
-<img src="images/cuberta.png" width="40%" style="display: table; float: right;   padding-left: 30px; padding-bottom: 10px;" style="display: block; margin: auto 0 auto auto;" />
+<a href="http://hdl.handle.net/2183/37227" target="_blank"><img src="images/cuberta.png" width="40%" style="display: table; float: right; padding-left: 30px; padding-bottom: 10px;" style="display: block; margin: auto 0 auto auto;" /></a>
 Bienvenido a la versión *online* del libro "Métodos predictivos de aprendizaje estadístico" editado por el [Servicio de Publicaciones de la UDC](https://www.udc.es/en/publicacions/).
 
-Puede adquirir una copia impresa a través de su librería habitual^[La comunidad universitaria de la UDC puede comprarlo con un descuento adicional a través del Servicio de Reprografía de la UDC].
-Este libro también está disponible en acceso abierto, de forma gratuita, en formato [pdf](https://rubenfcasal.github.io/aprendizaje_estadistico/aprendizaje_estadistico.pdf). 
-
-***NOTA: El libro aún está en la última etapa del proceso de publicación. Confiamos en que estará disponible próximamente.***
+Puede adquirir una copia impresa a través de su librería habitual^[La comunidad universitaria de la UDC puede comprarlo con un descuento adicional a través del Servicio de Reprografía de la UDC.].
+Este libro también está disponible en formato pdf, de forma gratuita y en abierto, en el [Repositorio de la Universidade da Coruña (RUC)](http://hdl.handle.net/2183/37227). 
 
 Para citar el libro o esta web en publicaciones puede emplear:
 
-* Fernández-Casal R., Costa J. y Oviedo M. (2024). *Métodos predictivos de aprendizaje estadístico*. Servizo de Publicacións. Universidade da Coruña. ISBN 978-84-9749-888-3.
+* Fernández-Casal R., Costa J. y Oviedo M. (2024). *Métodos predictivos de aprendizaje estadístico*. Servizo de Publicacións. Universidade da Coruña. <https://doi.org/10.17979/spudc.9788497498937>.
 
 o en formato BibTeX:
 
 ```
-@Book{,
-  title = {Métodos predictivos de aprendizaje estadístico},
-  author = {R. Fernández-Casal and J. Costa and M. Oviedo},
-  publisher = {Servizo de Publicacións. Universidade da Coruña},
+@Book{mpaebook2024,
+  title = {M\'etodos predictivos de aprendizaje estad\'istico},
+  author = {R. Fern\'andez-Casal and J. Costa and M. Oviedo},
+  publisher = {Servizo de Publicaci\'ons. Universidade da Coru\~na},
   year = {2024},
-  note = {ISBN: 978-84-9749-888-3},
-  doi = {10.17979/spudc.9788497498883},
+  note = {ISBN: 978-84-9749-888-3, ISBNe: 978-84-9749-893-7},
+  doi = {10.17979/spudc.9788497498937},
   url = {https://rubenfcasal.github.io/aprendizaje_estadistico/},
 }
 ```  
@@ -75,7 +73,7 @@ Se asume que el lector posee los conocimientos que se adquieren en una primera a
 En concreto, nociones de probabilidad, incluyendo el teorema de Bayes y variables aleatorias, simulación [ver p.&nbsp;ej. @abad2001introduccion; @dalpiaz2022applied; y [Sección 1.3](https://rubenfcasal.github.io/simbook/rrng.html) de @fernandez2023simbook], y los métodos clásicos de análisis de datos (estadística descriptiva e inferencia). 
 Es especialmente importante que el lector esté familiarizado con la regresión simple, lineal y polinómica, y sería deseable, aunque no imprescindible, que disponga de nociones básicas de regresión múltiple.
 
-Este libro se desarrolló inicialmente como apuntes de la asignatura de [Aprendizaje Estadístico](http://eamo.usc.es/pub/mte/index.php?option=com_content&view=article&id=2202&idm=47&a%C3%B1o=2023) del [Máster en Técnicas Estadísticas (MTE)](http://eio.usc.es/pub/mte), organizado conjuntamente por las tres universidades gallegas ([Universidade da Coruña](https://www.udc.gal), [Universidade de Santiago de Compostela](https://www.usc.gal) y [Universidade de Vigo](https://www.uvigo.gal)).
+Este libro se desarrolló inicialmente como apuntes de la asignatura [Aprendizaje Estadístico](http://eamo.usc.es/pub/mte/index.php?option=com_content&view=article&id=2202&idm=47&a%C3%B1o=2023) del [Máster en Técnicas Estadísticas (MTE)](http://eio.usc.es/pub/mte), organizado conjuntamente por las tres universidades públicas gallegas ([Universidade da Coruña](https://www.udc.gal), [Universidade de Santiago de Compostela](https://www.usc.gal) y [Universidade de Vigo](https://www.uvigo.gal)).
 
 
 ## El lenguaje de programación R {-}
