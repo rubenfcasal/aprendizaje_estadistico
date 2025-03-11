@@ -382,7 +382,7 @@ Para obtener el modelo final `r cite_fig(arbolpoda)` podamos el árbol con el va
 
 ```{r eval=F,echo=F}
 tree <- prune(tree, cp = cp) #quitar este chunk
-rpart.plot(tree, main="Regresion tree winequality") 
+rpart.plot(tree, main = "Regresion tree winequality") 
 ```
 
 ```{r arbolpoda,fig.cap="Árbol de regresión resultante después de la poda (modelo final)."}
@@ -391,11 +391,13 @@ rpart.plot(tree)
 ```
 
 
-Podríamos estudiar el modelo final, por ejemplo, mediante el método `r cite_fun(summary.rpart, rpart)`.  Este método muestra,  entre otras cosas, una medida (en porcentaje) de la importancia de las variables explicativas para la predicción de la respuesta (teniendo en cuenta todas las particiones, principales y secundarias, en las que se emplea cada variable explicativa). Como alternativa, podríamos emplear el siguiente código:
+Podríamos estudiar el modelo final, por ejemplo, mediante el método `r cite_fun(summary.rpart, rpart)`.
+Este método muestra,  entre otras cosas, una medida (en porcentaje) de la importancia de las variables explicativas para la predicción de la respuesta (teniendo en cuenta todas las particiones, principales y secundarias, en las que se emplea cada variable explicativa). 
+Como alternativa, podríamos emplear el siguiente código:
 
 ```{r }
 # summary(tree)
-importance <- tree$variable.importance # Equivalente a caret::varImp(tree) 
+importance <- tree$variable.importance 
 importance <- round(100*importance/sum(importance), 1)
 importance[importance >= 1]
 ```
@@ -624,7 +626,6 @@ rpart.plot(tree)
 
 Si nos interesase estudiar la importancia de los predictores, podríamos utilizar el mismo código de la Sección \@ref(reg-rpart) (no evaluado):
 ```{r eval=FALSE}
-caret::varImp(tree)
 importance <- tree$variable.importance
 importance <- round(100*importance/sum(importance), 1)
 importance[importance >= 1]
@@ -704,12 +705,15 @@ Como cabría esperar, el modelo resultante es más simple `r cite_fig(figarbolcl
 rpart.plot(caret.rpart$finalModel)
 ```
 
-Adicionalmente, representamos la importancia de los predictores `r cite_fig(arbolImpor)`:
+Adicionalmente, representamos la importancia[^rpart-2] de los predictores `r cite_fig(arbolImpor)`:
 
 ```{r arbolImpor,fig.cap="Importancia de los (posibles) predictores según el modelo obtenido con la regla de un error estándar."}
 var.imp <- varImp(caret.rpart)
 plot(var.imp)
 ```
+
+[^rpart-2]: Hay que tener en cuenta que los valores de importancia que devuelven los métodos `varImp.train()` y `varImp.rpart()` de `caret` difieren ligeramente de los proporcionados por el paquete `rpart`.
+Por ejemplo, en este caso, `varImp(caret.rpart$finalModel)` es equivalente a `varImp(caret.rpart, scale = FALSE)`, y son ligeramente distintos a los valores `caret.rpart$finalModel$variable.importance` calculados por `rpart`.
 
 Finalmente, calculamos las predicciones con el método `r cite_fun(predict.train, caret)` y posteriormente evaluamos su precisión con `r cite_fun(confusionMatrix, caret)`:
 
