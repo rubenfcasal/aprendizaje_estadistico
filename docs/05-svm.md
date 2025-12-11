@@ -243,7 +243,7 @@ Hay varios paquetes que implementan este procedimiento [p.&nbsp;ej. [`e1071`](ht
 La función principal del paquete `kernlab` es [`ksvm()`](https://rdrr.io/pkg/kernlab/man/ksvm.html) y se suelen utilizar los siguientes argumentos:
 
 
-```r
+``` r
 ksvm(formula, data, scaled = TRUE, type, kernel ="rbfdot", kpar = "automatic",
      C = 1, epsilon = 0.1, prob.model = FALSE, class.weights, cross = 0)
 ```
@@ -276,7 +276,7 @@ Revisar: class.weights a named vector of weights for the different classes, used
 Como ejemplo consideraremos el problema de clasificación con los datos de calidad de vino:
 
 
-```r
+``` r
 library(mpae)
 data("winetaste")
 # Partición de los datos
@@ -314,7 +314,7 @@ svm
 Podemos evaluar la precisión en la muestra de test empleando el procedimiento habitual:
 
 
-```r
+``` r
 pred <- predict(svm, newdata = test)
 caret::confusionMatrix(pred, test$taste)
 ```
@@ -354,7 +354,7 @@ Para obtener las estimaciones de las probabilidades, habría que establecer
 correspondientes a los niveles)^[Otras opciones son `"votes"` y `"decision"` para obtener matrices con el número de votos o los valores de $m(\mathbf{x})$.]:
 
 
-```r
+``` r
 p.est <- predict(svm, newdata = test, type = "probabilities")
 head(p.est)
 ```
@@ -390,7 +390,7 @@ Las SVM también están implementadas en `caret`, en múltiples métodos.
 Uno de los más empleados es `"svmRadial"` (equivalente a la clasificación anterior con núcleos radiales gaussianos) y considera como hiperparámetros:
 
 
-```r
+``` r
 library(caret)
 # names(getModelInfo("svm")) # 17 métodos
 modelLookup("svmRadial")
@@ -409,7 +409,7 @@ Por ejemplo, fijamos `sigma` al valor por defecto[^svm-caret-sigma] de la funci�
 [^svm-caret-sigma]: La función `ksvm()`, por defecto, selecciona `sigma = mean(sigest(taste ~ ., data = train)[-2])`, aunque hay que tener en cuenta que el resultado de la función `sigest()` depende de la semilla.
 
 
-```r
+``` r
 tuneGrid <- data.frame(sigma = kernelf(svm)@kpar$sigma, # Emplea clases S4
                        C = c(0.5, 1, 5))
 set.seed(1)

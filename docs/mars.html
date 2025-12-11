@@ -53,7 +53,8 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
 <script src="libs/datatables-binding-0.30/datatables.js"></script>
 <link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
@@ -475,8 +476,8 @@ library(earth)
 <div class="sourceCode" id="cb436"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb436-1"><a href="mars.html#cb436-1" aria-hidden="true" tabindex="-1"></a>mars <span class="ot">&lt;-</span> <span class="fu">earth</span>(prestige <span class="sc">~</span> education <span class="sc">+</span> income <span class="sc">+</span> women, <span class="at">data =</span> Prestige,</span>
 <span id="cb436-2"><a href="mars.html#cb436-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">degree =</span> <span class="dv">2</span>, <span class="at">nk =</span> <span class="dv">40</span>)</span>
 <span id="cb436-3"><a href="mars.html#cb436-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mars)</span></code></pre></div>
-<pre><code>## Call: earth(formula=prestige~education+income+women, data=Prestige,
-##             degree=2, nk=40)
+<pre><code>## Call: earth(formula=prestige~education+income+women, data=Prestige, degree=2,
+##             nk=40)
 ## 
 ##                                coefficients
 ## (Intercept)                        19.98452
@@ -794,42 +795,42 @@ Milborrow, S. (2023). <em><span>earth: Multivariate Adaptive Regression Splines<
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": true,
-"facebook": false,
-"twitter": false,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/rubenfcasal/aprendizaje_estadistico/edit/master/07-regresion_np.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["aprendizaje_estadistico.pdf"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection"
-}
+  "sharing": {
+    "github": true,
+    "facebook": false,
+    "twitter": false,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/rubenfcasal/aprendizaje_estadistico/edit/master/07-regresion_np.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["aprendizaje_estadistico.pdf"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
 });
 });
 </script>

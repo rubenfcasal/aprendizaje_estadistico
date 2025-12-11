@@ -53,7 +53,8 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
 <script src="libs/datatables-binding-0.30/datatables.js"></script>
 <link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
@@ -568,12 +569,12 @@ Por el contrario, en PLSR <span class="citation">(<em>partial least squares regr
 ## adjCV    4.452    4.438    4.442     4.442     4.442     4.443     4.444
 ## 
 ## TRAINING: % variance explained
-##          1 comps  2 comps  3 comps  4 comps  5 comps  6 comps  7 comps
-## X          60.53     71.8    78.48    81.90    86.35    88.12    90.16
-## bodyfat    44.34     65.1    68.47    71.07    72.35    73.62    73.66
-##          8 comps  9 comps  10 comps  11 comps  12 comps  13 comps
-## X          92.96    95.50     96.51     97.82     98.44    100.00
-## bodyfat    73.67    73.67     73.67     73.67     73.67     73.67</code></pre>
+##          1 comps  2 comps  3 comps  4 comps  5 comps  6 comps  7 comps  8 comps
+## X          60.53     71.8    78.48    81.90    86.35    88.12    90.16    92.96
+## bodyfat    44.34     65.1    68.47    71.07    72.35    73.62    73.66    73.67
+##          9 comps  10 comps  11 comps  12 comps  13 comps
+## X          95.50     96.51     97.82     98.44    100.00
+## bodyfat    73.67     73.67     73.67     73.67     73.67</code></pre>
 <div class="sourceCode" id="cb380"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb380-1"><a href="pca-pls.html#cb380-1" aria-hidden="true" tabindex="-1"></a><span class="co"># validationplot(plsreg, legend = &quot;topright&quot;)</span></span>
 <span id="cb380-2"><a href="pca-pls.html#cb380-2" aria-hidden="true" tabindex="-1"></a>rmsep.cv <span class="ot">&lt;-</span> <span class="fu">RMSEP</span>(plsreg)</span>
 <span id="cb380-3"><a href="pca-pls.html#cb380-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rmsep.cv, <span class="at">legend =</span> <span class="st">&quot;topright&quot;</span>)</span></code></pre></div>
@@ -727,42 +728,42 @@ Wold, S., Martens, H., y Wold, H. (1983). The multivariate calibration problem i
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": true,
-"facebook": false,
-"twitter": false,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/rubenfcasal/aprendizaje_estadistico/edit/master/06-ext_glm.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["aprendizaje_estadistico.pdf"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection"
-}
+  "sharing": {
+    "github": true,
+    "facebook": false,
+    "twitter": false,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/rubenfcasal/aprendizaje_estadistico/edit/master/06-ext_glm.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["aprendizaje_estadistico.pdf"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
 });
 });
 </script>

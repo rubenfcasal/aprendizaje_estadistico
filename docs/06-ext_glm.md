@@ -108,7 +108,7 @@ Además, tampoco admite datos faltantes.
 La función principal es [`glmnet()`](https://glmnet.stanford.edu/reference/glmnet.html):
 
 
-```r
+``` r
 glmnet(x, y, family, alpha = 1, lambda = NULL, ...)
 ```
 
@@ -125,7 +125,7 @@ Entre los métodos disponibles para el objeto resultante, `coef()` y `predict()`
 Para seleccionar el valor "óptimo" del hiperparámetro $\lambda$ (mediante validación cruzada) se puede emplear [`cv.glmnet()`](https://glmnet.stanford.edu/reference/cv.glmnet.html):
 
 
-```r
+``` r
 cv.glmnet(x, y, family, alpha, lambda, type.measure = "default", 
           nfolds = 10, ...)
 ```
@@ -137,7 +137,7 @@ Para más detalles, consultar la *vignette* del paquete [*An Introduction to glm
 Continuaremos con el ejemplo de los datos de grasa corporal empleado en la Sección \@ref(rlm) (con predictores numéricos y sin datos faltantes):
 
 
-```r
+``` r
 library(glmnet)
 library(mpae)
 data(bodyfat)
@@ -158,7 +158,7 @@ Podemos ajustar modelos de regresión ridge (con la secuencia de valores de $\la
 Con el método [`plot()`](https://glmnet.stanford.edu/reference/plot.glmnet.html), podemos representar la evolución de los coeficientes en función de la penalización (etiquetando las curvas con el índice de la variable si `label = TRUE`; ver Figura \@ref(fig:ridge-fit)).
 
 
-```r
+``` r
 fit.ridge <- glmnet(x, y, alpha = 0)
 plot(fit.ridge, xvar = "lambda", label = TRUE)
 ```
@@ -170,7 +170,7 @@ plot(fit.ridge, xvar = "lambda", label = TRUE)
 
 Podemos obtener el modelo o predicciones para un valor concreto de $\lambda$:
 
-```r
+``` r
 coef(fit.ridge, s = 2) # lambda = 2
 ```
 
@@ -199,7 +199,7 @@ El correspondiente método [`plot()`](https://glmnet.stanford.edu/reference/plot
 (ref:ridge-cv) Error cuadrático medio de validación cruzada en función del logaritmo de la penalización del ajuste ridge, junto con los intervalos de un error estándar. Las líneas verticales se corresponden con `lambda.min` y `lambda.1se`.
 
 
-```r
+``` r
 set.seed(1)
 cv.ridge <- cv.glmnet(x, y, alpha = 0)
 plot(cv.ridge)
@@ -215,7 +215,7 @@ plot(cv.ridge)
 En este caso el parámetro óptimo, según la regla de un error estándar de Breiman, sería[^nota-glmnet-1]:
 
 
-```r
+``` r
 cv.ridge$lambda.1se
 ```
 
@@ -226,7 +226,7 @@ cv.ridge$lambda.1se
 y el correspondiente modelo contiene todas las variables explicativas:
 
 
-```r
+``` r
 coef(cv.ridge) # s = "lambda.1se"
 ```
 
@@ -252,7 +252,7 @@ coef(cv.ridge) # s = "lambda.1se"
 Finalmente, evaluamos la precisión en la muestra de test:
 
 
-```r
+``` r
 obs <- test$bodyfat
 newx <- as.matrix(test[-1])
 pred <- predict(cv.ridge, newx = newx) # s = "lambda.1se"
@@ -277,7 +277,7 @@ Pero en este caso lo haremos al mismo tiempo que seleccionamos el parámetro de 
 (ref:lasso-cv) Error cuadrático medio de validación cruzada en función del logaritmo de la penalización del ajuste LASSO, junto con los intervalos de un error estándar. Las líneas verticales se corresponden con `lambda.min` y `lambda.1se`.
 
 
-```r
+``` r
 set.seed(1)
 cv.lasso <- cv.glmnet(x,y)
 plot(cv.lasso)
@@ -293,7 +293,7 @@ También podemos generar el gráfico con la evolución de los componentes a part
 (ref:lasso-fit) Evolución de los coeficientes en función del logaritmo de la penalización del ajuste LASSO. Las líneas verticales se corresponden con `lambda.min` y `lambda.1se`.
 
 
-```r
+``` r
 plot(cv.lasso$glmnet.fit, xvar = "lambda", label = TRUE) 	
 abline(v = log(cv.lasso$lambda.1se), lty = 2)
 abline(v = log(cv.lasso$lambda.min), lty = 3)
@@ -308,7 +308,7 @@ Como podemos observar en la Figura \@ref(fig:lasso-fit), la penalización LASSO 
 En este caso, el modelo resultante (empleando la regla *oneSE*) solo contiene 3 variables explicativas:
 
 
-```r
+``` r
 coef(cv.lasso) # s = "lambda.1se"
 ```
 
@@ -337,7 +337,7 @@ Si se quisiera ajustar el modelo sin regularización con estas variables, solo h
 Finalmente, evaluamos también la precisión en la muestra de test:
 
 
-```r
+``` r
 pred <- predict(cv.lasso, newx = newx)
 accuracy(pred, obs)
 ```
@@ -354,7 +354,7 @@ Podemos ajustar modelos *elastic net* para un valor concreto de `alpha` empleand
 Aunque se podría implementar fácilmente (como se muestra en  [`help(cv.glmnet)`](https://glmnet.stanford.edu/reference/cv.glmnet.html)), resulta mucho más cómodo emplear el método `"glmnet"` de `caret`:
 
 
-```r
+``` r
 library(caret)
 modelLookup("glmnet") 
 ```
@@ -365,7 +365,7 @@ modelLookup("glmnet")
 ## 2 glmnet    lambda Regularization Parameter   TRUE     TRUE      TRUE
 ```
 
-```r
+``` r
 set.seed(1)
 # Se podría emplear una fórmula: train(bodyfat ~ ., data = train, ...)
 caret.glmnet <- train(x, y, method = "glmnet", 
@@ -413,7 +413,7 @@ Los resultados de la selección de los hiperparámetros $\alpha$ y $\lambda$ de 
 (ref:elastic-caret) Errores RMSE de validación cruzada de los modelos *elastic net* en función de los hiperparámetros de regularización.
 
 
-```r
+``` r
 ggplot(caret.glmnet, highlight = TRUE)
 ```
 
@@ -425,7 +425,7 @@ ggplot(caret.glmnet, highlight = TRUE)
 Finalmente, se evalúan las predicciones en la muestra de test del modelo ajustado (que en esta ocasión mejoran los resultados del modelo LASSO obtenido en la sección anterior):
 
 
-```r
+``` r
 pred <- predict(caret.glmnet, newdata = test)
 accuracy(pred, obs)
 ```
@@ -496,7 +496,7 @@ En PCR [*principal component regression*, @massy1965principal] se confía en que
 Aunque se pueden utilizar las funciones `printcomp()` y `lm()` del paquete base, emplearemos por comodidad la función [`pcr()`](https://rdrr.io/pkg/pls/man/mvr.html) del paquete [`pls`](https://mevik.net/work/software/pls.html) [@Mevik2007pls], ya que incorpora validación cruzada para seleccionar el número de componentes y facilita el cálculo de nuevas predicciones.
 Los argumentos principales de esta función son:
 
-```r
+``` r
 pcr(formula, ncomp, data, scale = FALSE, center = TRUE, 
     validation = c("none", "CV", "LOO"), segments = 10, 
     segment.type = c("random", "consecutive", "interleaved"), ...)
@@ -512,7 +512,7 @@ Como ejemplo continuaremos con los datos de grasa corporal.
 Reescalaremos los predictores y emplearemos validación cruzada por grupos para seleccionar el número de componentes:
 
 
-```r
+``` r
 library(pls)
 set.seed(1)
 pcreg <- pcr(bodyfat ~ ., data = train, scale = TRUE, validation = "CV")
@@ -521,7 +521,7 @@ pcreg <- pcr(bodyfat ~ ., data = train, scale = TRUE, validation = "CV")
 Podemos obtener un resumen de los resultados de validación (evolución de los errores de validación cruzada) y del ajuste en la muestra de entrenamiento (evolución de la proporción de variabilidad explicada de los predictores y de la respuesta) con el método [`summary()`](https://rdrr.io/pkg/pls/man/summary.mvr.html):
 
 
-```r
+``` r
 summary(pcreg)
 ```
 
@@ -553,7 +553,7 @@ Aunque suele resultar más cómodo representar gráficamente estos valores (ver 
 Por ejemplo empleando [`RMSEP()`](https://rdrr.io/pkg/pls/man/mvrVal.html) para acceder a los errores de validación^[`"adjCV"` es una estimación de validación cruzada con corrección de sesgo.]:
 
 
-```r
+``` r
 # validationplot(pcreg, legend = "topright") 
 rmsep.cv <- RMSEP(pcreg)
 plot(rmsep.cv, legend = "topright")
@@ -564,7 +564,7 @@ plot(rmsep.cv, legend = "topright")
 <p class="caption">(\#fig:pcreg-plot)Errores de validación cruzada en función del número de componentes en el ajuste mediante PCR.</p>
 </div>
 
-```r
+``` r
 ncomp.op <- with(rmsep.cv, comps[which.min(val[2, 1, ])]) # mínimo adjCV RMSEP
 ```
 
@@ -577,7 +577,7 @@ En este caso, empleando el criterio de menor error de validación cruzada se sel
 Los coeficientes de los predictores originales con el modelo seleccionado serían[^nota-pcreg-1]:
 
 
-```r
+``` r
 coef(pcreg, ncomp = 12, intercept = TRUE)
 ```
 
@@ -604,7 +604,7 @@ coef(pcreg, ncomp = 12, intercept = TRUE)
 Finalmente evaluamos su precisión:
 
 
-```r
+``` r
 pred <- predict (pcreg , test, ncomp = 12)
 accuracy(pred, obs)
 ```
@@ -618,7 +618,7 @@ Alternativamente, podríamos emplear el método `"pcr"` de `caret`.
 Por ejemplo, seleccionando el número de componentes mediante la regla de un error estándar (ver Figura \@ref(fig:pcr-plot-caret)):
 
 
-```r
+``` r
 library(caret)
 modelLookup("pcr")
 ```
@@ -628,7 +628,7 @@ modelLookup("pcr")
 ## 1   pcr     ncomp #Components   TRUE    FALSE     FALSE
 ```
 
-```r
+``` r
 set.seed(1)
 trControl <- trainControl(method = "cv", number = 10, 
                           selectionFunction = "oneSE")
@@ -665,7 +665,7 @@ caret.pcr
 ## The final value used for the model was ncomp = 3.
 ```
 
-```r
+``` r
 ggplot(caret.pcr, highlight = TRUE)
 ```
 
@@ -674,7 +674,7 @@ ggplot(caret.pcr, highlight = TRUE)
 <p class="caption">(\#fig:pcr-plot-caret)Errores de validación cruzada en función del número de componentes en el ajuste mediante PCR y valor óptimo según la regla de un error estándar.</p>
 </div>
 
-```r
+``` r
 pred <- predict(caret.pcr, newdata = test)
 accuracy(pred, obs)
 ```
@@ -691,7 +691,7 @@ Sería más razonable obtener las componentes principales y después aplicar un 
 Por ejemplo, podemos combinar el método de preprocesado `"pca"` de `caret` con un método de selección de variables^[Esta forma de proceder se podría emplear con otros modelos que puedan tener problemas de colinealidad, como los lineales generalizados.] (ver Figura \@ref(fig:pcr2-plot-caret)):
 
 
-```r
+``` r
 set.seed(1)
 caret.pcrsel <- train(bodyfat ~ ., data = train, method = "leapSeq",
                     preProcess = c("zv", "center", "scale", "pca"),     
@@ -723,7 +723,7 @@ caret.pcrsel
 ## The final value used for the model was nvmax = 4.
 ```
 
-```r
+``` r
 ggplot(caret.pcrsel, highlight = TRUE)
 ```
 
@@ -734,7 +734,7 @@ ggplot(caret.pcrsel, highlight = TRUE)
 
 No obstante, en este caso las primeras componentes también resultan ser aparentemente las de mayor utilidad para explicar la respuesta, ya que se seleccionaron las cuatro primeras:
 
-```r
+``` r
 with(caret.pcrsel, coef(finalModel, bestTune$nvmax))
 ```
 
@@ -745,7 +745,7 @@ with(caret.pcrsel, coef(finalModel, bestTune$nvmax))
 
 Para finalizar evaluamos también la precisión del modelo obtenido:
 
-```r
+``` r
 pred <- predict(caret.pcrsel, newdata = test)
 accuracy(pred, obs)
 ```
@@ -773,7 +773,7 @@ Continuando con el ejemplo anterior, emplearemos en primer lugar la función [`p
 [^nota-plsr-1]: Realmente, ambas funciones llaman internamente a [`mvr()`](https://rdrr.io/pkg/pls/man/mvr.html), donde están implementadas distintas proyecciones [ver  [`help(pls.options)`](https://rdrr.io/pkg/pls/man/pls.options.html), o @Mevik2007pls].
 
 
-```r
+``` r
 set.seed(1)
 plsreg <- plsr(bodyfat ~ ., data = train, scale = TRUE, validation = "CV")
 summary(plsreg)
@@ -795,15 +795,15 @@ summary(plsreg)
 ## adjCV    4.452    4.438    4.442     4.442     4.442     4.443     4.444
 ## 
 ## TRAINING: % variance explained
-##          1 comps  2 comps  3 comps  4 comps  5 comps  6 comps  7 comps
-## X          60.53     71.8    78.48    81.90    86.35    88.12    90.16
-## bodyfat    44.34     65.1    68.47    71.07    72.35    73.62    73.66
-##          8 comps  9 comps  10 comps  11 comps  12 comps  13 comps
-## X          92.96    95.50     96.51     97.82     98.44    100.00
-## bodyfat    73.67    73.67     73.67     73.67     73.67     73.67
+##          1 comps  2 comps  3 comps  4 comps  5 comps  6 comps  7 comps  8 comps
+## X          60.53     71.8    78.48    81.90    86.35    88.12    90.16    92.96
+## bodyfat    44.34     65.1    68.47    71.07    72.35    73.62    73.66    73.67
+##          9 comps  10 comps  11 comps  12 comps  13 comps
+## X          95.50     96.51     97.82     98.44    100.00
+## bodyfat    73.67     73.67     73.67     73.67     73.67
 ```
 
-```r
+``` r
 # validationplot(plsreg, legend = "topright")
 rmsep.cv <- RMSEP(plsreg)
 plot(rmsep.cv, legend = "topright")
@@ -814,7 +814,7 @@ plot(rmsep.cv, legend = "topright")
 <p class="caption">(\#fig:plsr-plot)Error cuadrático medio de validación cruzada en función del número de componentes en el ajuste mediante PLS.</p>
 </div>
 
-```r
+``` r
 ncomp.op <- with(rmsep.cv, comps[which.min(val[2, 1, ])]) # mínimo adjCV RMSEP
 ```
 
@@ -822,7 +822,7 @@ En este caso el mínimo se alcanza con 8 componentes, pero, a la vista de la Fig
 Podemos obtener los coeficientes de los predictores del modelo seleccionado:
 
 
-```r
+``` r
 coef(plsreg, ncomp = 6, intercept = TRUE)
 ```
 
@@ -849,7 +849,7 @@ coef(plsreg, ncomp = 6, intercept = TRUE)
 y evaluar su precisión:
 
 
-```r
+``` r
 pred.pls <- predict(plsreg , test, ncomp = 6)
 accuracy(pred.pls, obs)
 ```
@@ -862,7 +862,7 @@ accuracy(pred.pls, obs)
 Empleamos también el método `"pls"` de `caret` seleccionando el número de componentes mediante la regla de un error estándar (ver Figura \@ref(fig:plsr-plot-caret)):
 
 
-```r
+``` r
 modelLookup("pls")
 ```
 
@@ -871,7 +871,7 @@ modelLookup("pls")
 ## 1   pls     ncomp #Components   TRUE     TRUE      TRUE
 ```
 
-```r
+``` r
 set.seed(1)
 caret.pls <- train(bodyfat ~ ., data = train, method = "pls",
                    preProcess = c("zv", "center", "scale"),
@@ -906,7 +906,7 @@ caret.pls
 ## The final value used for the model was ncomp = 5.
 ```
 
-```r
+``` r
 ggplot(caret.pls, highlight = TRUE)
 ```
 
@@ -915,7 +915,7 @@ ggplot(caret.pls, highlight = TRUE)
 <p class="caption">(\#fig:plsr-plot-caret)Errores de validación cruzada en función del número de componentes en el ajuste mediante PLS.</p>
 </div>
 
-```r
+``` r
 pred <- predict(caret.pls, newdata = test)
 accuracy(pred, obs)
 ```
@@ -932,7 +932,7 @@ En este problema concreto, el mejor resultado se obtuvo con el ajuste con `plsr(
 (ref:plsr-test) Gráfico de dispersión de observaciones frente a predicciones, del ajuste lineal con `plsr()`, en la muestra de test.
 
 
-```r
+``` r
 pred.plot(pred.pls, obs, xlab = "Predicción", ylab = "Observado")
 ```
 

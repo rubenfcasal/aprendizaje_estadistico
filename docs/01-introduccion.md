@@ -325,7 +325,7 @@ La idea es que queremos aprender más allá de los datos empleados en el entrena
 Como ejemplo ilustrativo emplearemos regresión polinómica, considerando el grado del polinomio como un hiperparámetro que determina la complejidad del modelo. En primer lugar simulamos una muestra y ajustamos modelos polinómicos con distintos grados de complejidad.
 
 
-```r
+``` r
 # Simulación datos
 n <- 30
 x <- seq(0, 1, length = n)
@@ -370,7 +370,7 @@ No distinguimos en la notación entre el valor teórico (MSE) y la estimación h
 
 
 
-```r
+``` r
 sapply(list(fit1 = fit1, fit2 = fit2, fit3 = fit3),
        function(x) with(summary(x),
           c(MSE = mean(residuals^2), R2 = r.squared, R2adj = adj.r.squared)))
@@ -388,7 +388,7 @@ Table: (\#tab:gof-polyfit)Medidas de bondad de ajuste de los modelos polinómico
 Por ejemplo, si generamos nuevas respuestas de este proceso, la precisión del modelo más complejo empeorará considerablemente (ver Figura \@ref(fig:polyfit2)):
 
 
-```r
+``` r
 y.new <- mu + rnorm(n, 0, sd)
 plot(x, y) 
 points(x, y.new, pch = 2)
@@ -407,7 +407,7 @@ legend("topright", legend = leyenda, lty = c(1, NA, 1, 2, 3, NA),
 <p class="caption">(\#fig:polyfit2)Muestra con ajustes polinómicos con distinta complejidad y nuevas observaciones.</p>
 </div>
 
-```r
+``` r
 MSEP <- sapply(list(fit1 = fit1, fit2 = fit2, fit3 = fit3), 
                function(x) mean((y.new - fitted(x))^2))
 MSEP
@@ -423,7 +423,7 @@ MSEP
 Como ejemplo adicional, para evitar el efecto de la aleatoriedad de la muestra, en el siguiente código se simulan 100 muestras del proceso anterior a las que se les ajustan modelos polinómicos variando el grado desde 1 hasta 20. Posteriormente se evalúa la precisión, en la muestra empleada en el ajuste y en un nuevo conjunto de datos procedente de la misma población.
 
 
-```r
+``` r
 nsim <- 100
 set.seed(1)
 grado.max <- 20
@@ -496,7 +496,7 @@ Típicamente se selecciona al azar el 80&#8239;% de los datos como muestra de en
 Como ejemplo consideraremos el conjunto de datos [`Boston`](https://rdrr.io/pkg/MASS/man/Boston.html) del paquete `MASS` [@R-MASS] que contiene, entre otros datos, la valoración de las viviendas (`medv`, mediana de los valores de las viviendas ocupadas, en miles de dólares) y el porcentaje de población con "menor estatus" (`lstat`) en los suburbios de Boston. Podemos construir las muestras de entrenamiento (80&#8239;%) y de test (20&#8239;%) con el siguiente código:
 
 
-```r
+``` r
 data(Boston, package = "MASS")
 set.seed(1)
 nobs <- nrow(Boston)
@@ -522,7 +522,7 @@ Continuando con el ejemplo anterior, supongamos que queremos emplear regresión 
 (ref:boston-mass) Gráfico de dispersión de las valoraciones de las viviendas (`medv`) frente al porcentaje de población con "menor estatus" (`lstat`).
 
 
-```r
+``` r
 plot(medv ~ lstat, data = train)
 ```
 
@@ -534,7 +534,7 @@ plot(medv ~ lstat, data = train)
 Podríamos emplear la siguiente función que devuelve para cada observación (fila) de una muestra de entrenamiento, el error de predicción en esa observación ajustando un modelo lineal con todas las demás observaciones:
 
 
-```r
+``` r
 cv.lm0 <- function(formula, datos) {
     respuesta <- as.character(formula)[2] # extraer nombre variable respuesta
     n <- nrow(datos)
@@ -553,7 +553,7 @@ La función anterior no es muy eficiente, pero se podría modificar fácilmente 
 [^01-introduccion-9]: Pueden ser de interés el paquete [`cv`](https://CRAN.R-project.org/package=cv) [@R-cv] y también la función `cv.glm()` del paquete [`boot`](https://CRAN.R-project.org/package=boot) [@R-boot].
 
 
-```r
+``` r
 cv.lm <- function(formula, datos) {
     modelo <- lm(formula, datos)
     return(rstandard(modelo, type = "predictive"))
@@ -563,7 +563,7 @@ cv.lm <- function(formula, datos) {
 Empleando esta función, podemos calcular una medida del error de predicción de validación cruzada (en este caso el error cuadrático medio) para cada valor del hiperparámetro (grado del ajuste polinómico) y seleccionar el que lo minimiza (ver Figura \@ref(fig:cv-mse)).
 
 
-```r
+``` r
 grado.max <- 10
 grados <- seq_len(grado.max) 
 cv.mse <- cv.mse.sd <- numeric(grado.max)
@@ -587,7 +587,7 @@ points(grado.min, cv.mse[imin.mse], pch = 16)
 <p class="caption">(\#fig:cv-mse)Error cuadrático medio de validación cruzada dependiendo del grado del polinomio (complejidad)  y valor seleccionado con el criterio de un error estándar (punto sólido).</p>
 </div>
 
-```r
+``` r
 grado.min
 ```
 
@@ -600,7 +600,7 @@ En lugar de emplear los valores óptimos de los hiperparámetros, @breiman1984cl
 [^01-introduccion-10]: Suponiendo que los modelos se pueden ordenar del más simple al más complejo.
 
 
-```r
+``` r
 plot(grados, cv.mse, ylim = c(25, 45),
   xlab = "Grado del polinomio")
 segments(grados, cv.mse - cv.mse.sd, grados, cv.mse + cv.mse.sd)
@@ -618,7 +618,7 @@ points(grado.1se, cv.mse[imin.1se], pch = 16)
 <p class="caption">(\#fig:cv-onese)Error cuadrático medio de validación cruzada dependiendo del grado del polinomio (complejidad) y valor seleccionado con el criterio de un error estándar (punto sólido).</p>
 </div>
 
-```r
+``` r
 grado.1se
 ```
 
@@ -627,7 +627,7 @@ grado.1se
 ```
 
 
-```r
+``` r
 plot(medv ~ lstat, data = train)
 fit.min <- lm(medv ~ poly(lstat, grado.min), train)
 fit.1se <- lm(medv ~ poly(lstat, grado.1se), train)
@@ -650,7 +650,7 @@ Es importante destacar que la selección aleatoria puede no ser muy adecuada en 
 Para estudiar la precisión de las predicciones de un método de regresión se evalúa el modelo en el conjunto de datos de test y se comparan las predicciones frente a los valores reales. Los resultados servirán como medidas globales de la calidad de las predicciones con nuevas observaciones.
 
 
-```r
+``` r
 obs <- test$medv
 pred <- predict(fit.min, newdata = test)
 ```
@@ -666,7 +666,7 @@ Volver a intentar incluir latex en leyenda con referencia externa:
 -->
 
 
-```r
+``` r
 plot(pred, obs, xlab = "Predicción", ylab = "Observado")
 abline(a = 0, b = 1)
 res <- lm(obs ~ pred)
@@ -684,7 +684,7 @@ Este gráfico está implementado en la función [`pred.plot()`](https://rubenfca
 También es habitual calcular distintas medidas de error. Por ejemplo, podríamos emplear la función `postResample()` del paquete `caret`:
 
 
-```r
+``` r
 caret::postResample(pred, obs)
 ```
 
@@ -698,7 +698,7 @@ La función anterior, además de las medidas de error habituales (que dependen e
 [^01-introduccion-12]: Por ejemplo obtendríamos el mismo valor si desplazamos las predicciones sumando una constante (*i.&nbsp;e.* no tiene en cuenta el sesgo). Lo que interesaría sería medir la proximidad de los puntos a la recta $y=x$.
 
 
-```r
+``` r
 accuracy <- function(pred, obs, na.rm = FALSE, 
                      tol = sqrt(.Machine$double.eps)) {
   err <- obs - pred     # Errores
@@ -726,7 +726,7 @@ accu.min
 ##  -0.67313   4.85267   3.66718  -8.23225  19.70974   0.60867
 ```
 
-```r
+``` r
 accu.1se <- accuracy(predict(fit.1se, newdata = test), obs)
 accu.1se
 ```
@@ -744,7 +744,7 @@ Considerando de nuevo el ejemplo anterior, particiona la muestra en datos de ent
 Podría ser de utilidad el siguiente código (basado en la aproximación de `rattle`), que particiona los datos suponiendo que están almacenados en el data.frame `df`:
 
 
-```r
+``` r
 df <- Boston
 set.seed(1)
 nobs <- nrow(df)
@@ -760,7 +760,7 @@ test <- df[itest, ]
 Alternativamente podríamos emplear la función `split()`, creando un factor que divida aleatoriamente los datos en tres grupos[^01-introduccion-13]:
 
 
-```r
+``` r
 set.seed(1)
 p <- c(train = 0.7, validate = 0.15, test = 0.15)
 f <- sample( rep(factor(seq_along(p), labels = names(p)),
@@ -803,7 +803,7 @@ También hay que ser cauteloso al emplear medidas que utilizan como estimación 
 Como ejemplo emplearemos los datos anteriores de valoraciones de viviendas y estatus de la población, considerando como respuesta una nueva variable `fmedv` que clasifica las valoraciones en "Bajo" o "Alto" dependiendo de si `medv > 25`.
 
 
-```r
+``` r
 # data(Boston, package = "MASS")
 datos <- Boston
 datos$fmedv <- factor(datos$medv > 25, # levels = c('FALSE', 'TRUE')
@@ -813,7 +813,7 @@ datos$fmedv <- factor(datos$medv > 25, # levels = c('FALSE', 'TRUE')
 En este ejemplo, si realizamos un análisis descriptivo de la respuesta, podemos observar que las clases no están balanceadas:
 
 
-```r
+``` r
 table(datos$fmedv)
 ```
 
@@ -826,7 +826,7 @@ table(datos$fmedv)
 En este caso también emplearemos el estatus de los residentes (`lstat`) como único predictor. Como se puede observar en la Figura \@ref(fig:featureplot), hay diferencias en su distribución dependiendo de la categoría, por lo que aparentemente es de utilidad para predecir el nivel de valoración de las viviendas.
 
 
-```r
+``` r
 caret::featurePlot(datos$lstat, datos$fmedv, plot = "density",
                    labels = c("lstat", "Densidad"), auto.key = TRUE)
 ```
@@ -839,7 +839,7 @@ caret::featurePlot(datos$lstat, datos$fmedv, plot = "density",
 Como método de clasificación emplearemos regresión logística (este tipo de modelos se tratarán en la Sección \@ref(reg-glm)). El siguiente código realiza la partición de los datos y ajusta este modelo, considerando `lstat` como única variable explicativa, a la muestra de entrenamiento:
 
 
-```r
+``` r
 # Particionado de los datos
 set.seed(1)
 nobs <- nrow(datos)
@@ -867,7 +867,7 @@ modelo
 En este tipo de modelos podemos calcular las estimaciones de la probabilidad de la segunda categoría empleando `predict()` con `type = "response"`, a partir de las cuales podemos establecer las predicciones como la categoría más probable:
 
 
-```r
+``` r
 obs <- test$fmedv
 p.est <- predict(modelo, type = "response", newdata = test)
 pred <- factor(p.est > 0.5, labels = c("Bajo", "Alto"))
@@ -876,7 +876,7 @@ pred <- factor(p.est > 0.5, labels = c("Bajo", "Alto"))
 Finalmente, podemos obtener la matriz de confusión en distintos formatos:
 
 
-```r
+``` r
 tabla <- table(obs, pred)
 # addmargins(tabla, FUN = list(Total = sum))
 tabla
@@ -889,7 +889,7 @@ tabla
 ##   Alto    8   12
 ```
 
-```r
+``` r
 # Porcentajes respecto al total
 print(100*prop.table(tabla), digits = 2) 
 ```
@@ -901,7 +901,7 @@ print(100*prop.table(tabla), digits = 2)
 ##   Alto  7.8 11.8
 ```
 
-```r
+``` r
 # Porcentajes (de aciertos y fallos) por categorías
 print(100*prop.table(tabla, 1), digits = 3) 
 ```
@@ -916,7 +916,7 @@ print(100*prop.table(tabla, 1), digits = 3)
 Alternativamente, podemos emplear la función [`confusionMatrix()`](https://rdrr.io/pkg/caret/man/confusionMatrix.html) del paquete `caret`, que proporciona distintas medidas de precisión:
 
 
-```r
+``` r
 caret::confusionMatrix(pred, obs, positive = "Alto", mode = "everything")
 ```
 
@@ -956,7 +956,7 @@ caret::confusionMatrix(pred, obs, positive = "Alto", mode = "everything")
 Si el método de clasificación proporciona estimaciones de las probabilidades de las categorías, disponemos de más información en la clasificación que también podemos emplear en la evaluación del rendimiento. Por ejemplo, se puede realizar un análisis descriptivo de las probabilidades estimadas y las categorías observadas en la muestra de test (ver Figura \@ref(fig:classprob)):
 
 
-```r
+``` r
 # Imitamos la función caret::plotClassProbs()
 library(lattice) 
 histogram(~ p.est | obs, xlab = "Probabilidad estimada", 
@@ -971,7 +971,7 @@ histogram(~ p.est | obs, xlab = "Probabilidad estimada",
 Para evaluar las estimaciones de las probabilidades se suele emplear la curva ROC (*receiver operating characteristics*, característica operativa del receptor; diseñada inicialmente en el campo de la detección de señales). Como ya se comentó, normalmente se emplea $c = 0.5$ como punto de corte para clasificar en la categoría de interés (*regla de Bayes*), aunque se podrían considerar otros valores (por ejemplo, para mejorar la clasificación en una de las categorías, a costa de empeorar la precisión global). En la curva ROC se representa la sensibilidad (TPR) frente a la tasa de falsos negativos (FNR = 1 $-$ TNR = 1 $-$ especificidad) para distintos valores de corte (ver Figura \@ref(fig:ROC-curve)). Para ello se puede emplear el paquete `pROC` [@R-pROC]:
 
 
-```r
+``` r
 library(pROC)
 roc_glm <- roc(response = obs, predictor = p.est)
 plot(roc_glm, xlab = "Especificidad", ylab = "Sensibilidad")
@@ -991,7 +991,7 @@ plot(roc_glm, legacy.axes = TRUE, print.thres = 0.5)
 Lo ideal sería que la curva se aproximase a la esquina superior izquierda (máxima sensibilidad y especificidad). La recta diagonal se correspondería con un clasificador aleatorio. Una medida global del rendimiento del clasificador es el área bajo la curva ROC (AUC; equivalente al estadístico U de Mann-Whitney o al índice de Gini). Un clasificador perfecto tendría un valor de 1, mientras que un clasificador aleatorio tendría un valor de 0.5.
 
 
-```r
+``` r
 # roc_glm$auc
 roc_glm
 ```
@@ -1005,7 +1005,7 @@ roc_glm
 ## Area under the curve: 0.843
 ```
 
-```r
+``` r
 ci.auc(roc_glm)
 ```
 
@@ -1020,7 +1020,7 @@ En el caso de más de dos categorías podríamos generar una matriz de confusió
 Como ejemplo ilustrativo, consideraremos el conocido conjunto de datos `iris` [@fisher1936use], en el que el objetivo es clasificar flores de lirio en tres especies (`Species`) a partir del largo y ancho de sépalos y pétalos, aunque en este caso emplearemos un clasificador aleatorio.
 
 
-```r
+``` r
 data(iris)
 # Partición de los datos
 datos <- iris
@@ -1040,7 +1040,7 @@ prevalences
 ##    0.32500    0.31667    0.35833
 ```
 
-```r
+``` r
 # Calculo de las predicciones
 levels <- names(prevalences) # levels(train$Species)
 f <- factor(levels, levels = levels) 
@@ -1103,7 +1103,7 @@ Cuando el número de datos es más o menos grande, podríamos pensar en predecir
 Como ejemplo consideraremos un problema de regresión simple, con un conjunto de datos simulados (del proceso ya considerado en la Sección \@ref(bias-variance)) con 100 observaciones (que ya podríamos considerar que no es muy pequeño; ver Figura \@ref(fig:knnfit2)):
 
 
-```r
+``` r
 # Simulación datos
 n <- 100
 x <- seq(0, 1, length = n)
@@ -1138,7 +1138,7 @@ legend("topright", legend = c("Verdadero", "5-NN", "10-NN", "20-NN"),
 A medida que aumenta $k$ disminuye la complejidad del modelo y se observa un incremento del efecto frontera. Habría que seleccionar un valor óptimo de $k$ (buscando un equilibro entre sesgo y varianza, como se mostró en la Sección \@ref(bias-variance) y se ilustrará en la última sección de este capítulo empleando este método con el paquete `caret`), que dependerá de la tendencia teórica y del número de datos. En este caso, para $k=5$, podríamos pensar que el efecto frontera aparece en el 10&#8239;% más externo del rango de la variable explicativa (con un número mayor de datos podría bajar al 1&#8239;%). Al aumentar el número de variables explicativas, considerando que el 10&#8239;% más externo del rango de cada una de ellas constituye la "frontera" de los datos, tendríamos que la proporción de frontera sería $1-0.9^d$, siendo $d$ el número de dimensiones. Lo que se traduce en que, con $d = 10$, el 65&#8239;% del espacio predictivo sería frontera y en torno al 88&#8239;% para $d=20$, es decir, al aumentar el número de dimensiones el problema del efecto frontera será generalizado (ver Figura \@ref(fig:pfrontera)).
 
 
-```r
+``` r
 curve(1 - 0.9^x, 0, 200, ylab = 'Proporción de frontera', 
       xlab = 'Número de dimensiones')
 curve(1 - 0.95^x, lty = 2, add = TRUE)
@@ -1222,7 +1222,7 @@ En esta sección se describirán de forma esquemática las principales herramien
 La función principal es [`train()`](https://rdrr.io/pkg/caret/man/train.html), que incluye un parámetro `method` que permite establecer el modelo mediante una cadena de texto. Podemos obtener información sobre los modelos disponibles con las funciones `getModelInfo()` y `modelLookup()` (puede haber varias implementaciones del mismo método con distintas configuraciones de hiperparámetros; también se pueden definir nuevos modelos, ver el [Capítulo 13](https://topepo.github.io/caret/using-your-own-model-in-train.html) del [manual](https://topepo.github.io/caret)).
 
 
-```r
+``` r
 library(caret)
 str(names(getModelInfo()))  # Listado de los métodos disponibles
 ```
@@ -1231,7 +1231,7 @@ str(names(getModelInfo()))  # Listado de los métodos disponibles
 ##  chr [1:239] "ada" "AdaBag" "AdaBoost.M1" "adaboost" ...
 ```
 
-```r
+``` r
 # names(getModelInfo("knn")) # Encuentra 2 métodos
 modelLookup("knn")  # Información sobre hiperparámetros
 ```
@@ -1246,7 +1246,7 @@ En la siguiente tabla se muestran los métodos actualmente disponibles:
 <div class="figure" style="text-align: center">
 
 ```{=html}
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-7bf94cd961c11210a1ca" style="width:100%;height:auto;"></div>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-7bf94cd961c11210a1ca" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-7bf94cd961c11210a1ca">{"x":{"filter":"none","vertical":false,"data":[["ada","AdaBag","AdaBoost.M1","adaboost","amdai","ANFIS","avNNet","awnb","awtan","bag","bagEarth","bagEarthGCV","bagFDA","bagFDAGCV","bam","bartMachine","bayesglm","binda","blackboost","blasso","blassoAveraged","bridge","brnn","BstLm","bstSm","bstTree","C5.0","C5.0Cost","C5.0Rules","C5.0Tree","cforest","chaid","CSimca","ctree","ctree2","cubist","dda","deepboost","DENFIS","dnn","dwdLinear","dwdPoly","dwdRadial","earth","elm","enet","evtree","extraTrees","fda","FH.GBML","FIR.DM","foba","FRBCS.CHI","FRBCS.W","FS.HGD","gam","gamboost","gamLoess","gamSpline","gaussprLinear","gaussprPoly","gaussprRadial","gbm_h2o","gbm","gcvEarth","GFS.FR.MOGUL","GFS.LT.RS","GFS.THRIFT","glm.nb","glm","glmboost","glmnet_h2o","glmnet","glmStepAIC","gpls","hda","hdda","hdrda","HYFIS","icr","J48","JRip","kernelpls","kknn","knn","krlsPoly","krlsRadial","lars","lars2","lasso","lda","lda2","leapBackward","leapForward","leapSeq","Linda","lm","lmStepAIC","LMT","loclda","logicBag","LogitBoost","logreg","lssvmLinear","lssvmPoly","lssvmRadial","lvq","M5","M5Rules","manb","mda","Mlda","mlp","mlpKerasDecay","mlpKerasDecayCost","mlpKerasDropout","mlpKerasDropoutCost","mlpML","mlpSGD","mlpWeightDecay","mlpWeightDecayML","monmlp","msaenet","multinom","mxnet","mxnetAdam","naive_bayes","nb","nbDiscrete","nbSearch","neuralnet","nnet","nnls","nodeHarvest","null","OneR","ordinalNet","ordinalRF","ORFlog","ORFpls","ORFridge","ORFsvm","ownn","pam","parRF","PART","partDSA","pcaNNet","pcr","pda","pda2","penalized","PenalizedLDA","plr","pls","plsRglm","polr","ppr","pre","PRIM","protoclass","qda","QdaCov","qrf","qrnn","randomGLM","ranger","rbf","rbfDDA","Rborist","rda","regLogistic","relaxo","rf","rFerns","RFlda","rfRules","ridge","rlda","rlm","rmda","rocc","rotationForest","rotationForestCp","rpart","rpart1SE","rpart2","rpartCost","rpartScore","rqlasso","rqnc","RRF","RRFglobal","rrlda","RSimca","rvmLinear","rvmPoly","rvmRadial","SBC","sda","sdwd","simpls","SLAVE","slda","smda","snn","sparseLDA","spikeslab","spls","stepLDA","stepQDA","superpc","svmBoundrangeString","svmExpoString","svmLinear","svmLinear2","svmLinear3","svmLinearWeights","svmLinearWeights2","svmPoly","svmRadial","svmRadialCost","svmRadialSigma","svmRadialWeights","svmSpectrumString","tan","tanSearch","treebag","vbmpRadial","vglmAdjCat","vglmContRatio","vglmCumulative","widekernelpls","WM","wsrf","xgbDART","xgbLinear","xgbTree","xyf"],["Boosted Classification Trees","Bagged AdaBoost","AdaBoost.M1","AdaBoost Classification Trees","Adaptive Mixture Discriminant Analysis","Adaptive-Network-Based Fuzzy Inference System","Model Averaged Neural Network","Naive Bayes Classifier with Attribute Weighting","Tree Augmented Naive Bayes Classifier with Attribute Weighting","Bagged Model","Bagged MARS","Bagged MARS using gCV Pruning","Bagged Flexible Discriminant Analysis","Bagged FDA using gCV Pruning","Generalized Additive Model using Splines","Bayesian Additive Regression Trees","Bayesian Generalized Linear Model","Binary Discriminant Analysis","Boosted Tree","The Bayesian lasso","Bayesian Ridge Regression (Model Averaged)","Bayesian Ridge Regression","Bayesian Regularized Neural Networks","Boosted Linear Model","Boosted Smoothing Spline","Boosted Tree","C5.0","Cost-Sensitive C5.0","Single C5.0 Ruleset","Single C5.0 Tree","Conditional Inference Random Forest","CHi-squared Automated Interaction Detection","SIMCA","Conditional Inference Tree","Conditional Inference Tree","Cubist","Diagonal Discriminant Analysis","DeepBoost","Dynamic Evolving Neural-Fuzzy Inference System ","Stacked AutoEncoder Deep Neural Network","Linear Distance Weighted Discrimination","Distance Weighted Discrimination with Polynomial Kernel","Distance Weighted Discrimination with Radial Basis Function Kernel","Multivariate Adaptive Regression Spline","Extreme Learning Machine","Elasticnet","Tree Models from Genetic Algorithms","Random Forest by Randomization","Flexible Discriminant Analysis","Fuzzy Rules Using Genetic Cooperative-Competitive Learning and Pittsburgh","Fuzzy Inference Rules by Descent Method","Ridge Regression with Variable Selection","Fuzzy Rules Using Chi's Method","Fuzzy Rules with Weight Factor","Simplified TSK Fuzzy Rules","Generalized Additive Model using Splines","Boosted Generalized Additive Model","Generalized Additive Model using LOESS","Generalized Additive Model using Splines","Gaussian Process","Gaussian Process with Polynomial Kernel","Gaussian Process with Radial Basis Function Kernel","Gradient Boosting Machines","Stochastic Gradient Boosting","Multivariate Adaptive Regression Splines","Fuzzy Rules via MOGUL","Genetic Lateral Tuning and Rule Selection of Linguistic Fuzzy Systems","Fuzzy Rules via Thrift","Negative Binomial Generalized Linear Model","Generalized Linear Model","Boosted Generalized Linear Model","glmnet","glmnet","Generalized Linear Model with Stepwise Feature Selection","Generalized Partial Least Squares","Heteroscedastic Discriminant Analysis","High Dimensional Discriminant Analysis","High-Dimensional Regularized Discriminant Analysis","Hybrid Neural Fuzzy Inference System","Independent Component Regression","C4.5-like Trees","Rule-Based Classifier","Partial Least Squares","k-Nearest Neighbors","k-Nearest Neighbors","Polynomial Kernel Regularized Least Squares","Radial Basis Function Kernel Regularized Least Squares","Least Angle Regression","Least Angle Regression","The lasso","Linear Discriminant Analysis","Linear Discriminant Analysis","Linear Regression with Backwards Selection","Linear Regression with Forward Selection","Linear Regression with Stepwise Selection","Robust Linear Discriminant Analysis","Linear Regression","Linear Regression with Stepwise Selection","Logistic Model Trees","Localized Linear Discriminant Analysis","Bagged Logic Regression","Boosted Logistic Regression","Logic Regression","Least Squares Support Vector Machine","Least Squares Support Vector Machine with Polynomial Kernel","Least Squares Support Vector Machine with Radial Basis Function Kernel","Learning Vector Quantization","Model Tree","Model Rules","Model Averaged Naive Bayes Classifier","Mixture Discriminant Analysis","Maximum Uncertainty Linear Discriminant Analysis","Multi-Layer Perceptron","Multilayer Perceptron Network with Weight Decay","Multilayer Perceptron Network with Weight Decay","Multilayer Perceptron Network with Dropout","Multilayer Perceptron Network with Dropout","Multi-Layer Perceptron, with multiple layers","Multilayer Perceptron Network by Stochastic Gradient Descent","Multi-Layer Perceptron","Multi-Layer Perceptron, multiple layers","Monotone Multi-Layer Perceptron Neural Network","Multi-Step Adaptive MCP-Net","Penalized Multinomial Regression","Neural Network","Neural Network","Naive Bayes","Naive Bayes","Naive Bayes Classifier","Semi-Naive Structure Learner Wrapper","Neural Network","Neural Network","Non-Negative Least Squares","Tree-Based Ensembles","Non-Informative Model","Single Rule Classification","Penalized Ordinal Regression","Random Forest","Oblique Random Forest","Oblique Random Forest","Oblique Random Forest","Oblique Random Forest","Optimal Weighted Nearest Neighbor Classifier","Nearest Shrunken Centroids","Parallel Random Forest","Rule-Based Classifier","partDSA","Neural Networks with Feature Extraction","Principal Component Analysis","Penalized Discriminant Analysis","Penalized Discriminant Analysis","Penalized Linear Regression","Penalized Linear Discriminant Analysis","Penalized Logistic Regression","Partial Least Squares","Partial Least Squares Generalized Linear Models ","Ordered Logistic or Probit Regression","Projection Pursuit Regression","Prediction Rule Ensembles","Patient Rule Induction Method","Greedy Prototype Selection","Quadratic Discriminant Analysis","Robust Quadratic Discriminant Analysis","Quantile Random Forest","Quantile Regression Neural Network","Ensembles of Generalized Linear Models","Random Forest","Radial Basis Function Network","Radial Basis Function Network","Random Forest","Regularized Discriminant Analysis","Regularized Logistic Regression","Relaxed Lasso","Random Forest","Random Ferns","Factor-Based Linear Discriminant Analysis","Random Forest Rule-Based Model","Ridge Regression","Regularized Linear Discriminant Analysis","Robust Linear Model","Robust Mixture Discriminant Analysis","ROC-Based Classifier","Rotation Forest","Rotation Forest","CART","CART","CART","Cost-Sensitive CART","CART or Ordinal Responses","Quantile Regression with LASSO penalty","Non-Convex Penalized Quantile Regression","Regularized Random Forest","Regularized Random Forest","Robust Regularized Linear Discriminant Analysis","Robust SIMCA","Relevance Vector Machines with Linear Kernel","Relevance Vector Machines with Polynomial Kernel","Relevance Vector Machines with Radial Basis Function Kernel","Subtractive Clustering and Fuzzy c-Means Rules","Shrinkage Discriminant Analysis","Sparse Distance Weighted Discrimination","Partial Least Squares","Fuzzy Rules Using the Structural Learning Algorithm on Vague Environment","Stabilized Linear Discriminant Analysis","Sparse Mixture Discriminant Analysis","Stabilized Nearest Neighbor Classifier","Sparse Linear Discriminant Analysis","Spike and Slab Regression","Sparse Partial Least Squares","Linear Discriminant Analysis with Stepwise Feature Selection","Quadratic Discriminant Analysis with Stepwise Feature Selection","Supervised Principal Component Analysis","Support Vector Machines with Boundrange String Kernel","Support Vector Machines with Exponential String Kernel","Support Vector Machines with Linear Kernel","Support Vector Machines with Linear Kernel","L2 Regularized Support Vector Machine (dual) with Linear Kernel","Linear Support Vector Machines with Class Weights","L2 Regularized Linear Support Vector Machines with Class Weights","Support Vector Machines with Polynomial Kernel","Support Vector Machines with Radial Basis Function Kernel","Support Vector Machines with Radial Basis Function Kernel","Support Vector Machines with Radial Basis Function Kernel","Support Vector Machines with Class Weights","Support Vector Machines with Spectrum String Kernel","Tree Augmented Naive Bayes Classifier","Tree Augmented Naive Bayes Classifier Structure Learner Wrapper","Bagged CART","Variational Bayesian Multinomial Probit Regression","Adjacent Categories Probability Model for Ordinal Data","Continuation Ratio Model for Ordinal Data","Cumulative Probability Model for Ordinal Data","Partial Least Squares","Wang and Mendel Fuzzy Rules","Weighted Subspace Random Forest","eXtreme Gradient Boosting","eXtreme Gradient Boosting","eXtreme Gradient Boosting","Self-Organizing Maps"],["Classification","Classification","Classification","Classification","Classification","Regression","Classification, Regression","Classification","Classification","Classification, Regression","Classification, Regression","Classification, Regression","Classification","Classification","Classification, Regression","Classification, Regression","Classification, Regression","Classification","Classification, Regression","Regression","Regression","Regression","Regression","Classification, Regression","Classification, Regression","Classification, Regression","Classification","Classification","Classification","Classification","Classification, Regression","Classification","Classification","Classification, Regression","Classification, Regression","Regression","Classification","Classification","Regression","Classification, Regression","Classification","Classification","Classification","Classification, Regression","Classification, Regression","Regression","Classification, Regression","Classification, Regression","Classification","Classification","Regression","Regression","Classification","Classification","Regression","Classification, Regression","Classification, Regression","Classification, Regression","Classification, Regression","Classification, Regression","Classification, Regression","Classification, Regression","Classification, Regression","Classification, Regression","Classification, Regression","Regression","Regression","Regression","Regression","Classification, Regression","Classification, Regression","Classification, Regression","Classification, Regression","Classification, Regression","Classification","Classification","Classification","Classification","Regression","Regression","Classification","Classification","Classification, Regression","Classification, Regression","Classification, Regression","Regression","Regression","Regression","Regression","Regression","Classification","Classification","Regression","Regression","Regression","Classification","Regression","Regression","Classification","Classification","Classification, Regression","Classification","Classification, Regression","Classification","Classification","Classification","Classification","Regression","Regression","Classification","Classification","Classification","Classification, Regression","Classification, Regression","Classification","Classification, Regression","Classification","Classification, Regression","Classification, Regression","Classification, Regression","Classification, Regression","Classification, Regression","Classification, Regression","Classification","Classification, Regression","Classification, Regression","Classification","Classification","Classification","Classification","Regression","Classification, Regression","Regression","Classification, Regression","Classification, Regression","Classification","Classification","Classification","Classification","Classification","Classification","Classification","Classification","Classification","Classification, Regression","Classification","Classification, Regression","Classification, Regression","Regression","Classification","Classification","Regression","Classification","Classification","Classification, Regression","Classification, Regression","Classification","Regression","Classification, Regression","Classification","Classification","Classification","Classification","Regression","Regression","Classification, Regression","Classification, Regression","Classification, Regression","Classification, Regression","Classification, Regression","Classification","Classification","Regression","Classification, Regression","Classification","Classification","Classification, Regression","Regression","Classification","Regression","Classification","Classification","Classification","Classification","Classification, Regression","Classification, Regression","Classification, Regression","Classification","Classification","Regression","Regression","Classification, Regression","Classification, Regression","Classification","Classification","Regression","Regression","Regression","Regression","Classification","Classification","Classification, Regression","Classification","Classification","Classification","Classification","Classification","Regression","Classification, Regression","Classification","Classification","Regression","Classification, Regression","Classification, Regression","Classification, Regression","Classification, Regression","Classification, Regression","Classification","Classification","Classification, Regression","Classification, Regression","Classification, Regression","Classification, Regression","Classification","Classification, Regression","Classification","Classification","Classification, Regression","Classification","Classification","Classification","Classification","Classification, Regression","Regression","Classification","Classification, Regression","Classification, Regression","Classification, Regression","Classification, Regression"],["ada, plyr","adabag, plyr","adabag, plyr","fastAdaboost","adaptDA","frbs","nnet","bnclassify","bnclassify","caret","earth","earth","earth, mda","earth","mgcv","bartMachine","arm","binda","party, mboost, plyr, partykit","monomvn","monomvn","monomvn","brnn","bst, plyr","bst, plyr","bst, plyr","C50, plyr","C50, plyr","C50","C50","party","CHAID","rrcov, rrcovHD","party","party","Cubist","sparsediscrim","deepboost","frbs","deepnet","kerndwd","kerndwd","kernlab, kerndwd","earth","elmNN","elasticnet","evtree","extraTrees","earth, mda","frbs","frbs","foba","frbs","frbs","frbs","mgcv","mboost, plyr, import","gam","gam","kernlab","kernlab","kernlab","h2o","gbm, plyr","earth","frbs","frbs","frbs","MASS","","plyr, mboost","h2o","glmnet, Matrix","MASS","gpls","hda","HDclassif","sparsediscrim","frbs","fastICA","RWeka","RWeka","pls","kknn","","KRLS","KRLS, kernlab","lars","lars","elasticnet","MASS","MASS","leaps","leaps","leaps","rrcov","","MASS","RWeka","klaR","logicFS","caTools","LogicReg","kernlab","kernlab","kernlab","class","RWeka","RWeka","bnclassify","mda","HiDimDA","RSNNS","keras","keras","keras","keras","RSNNS","FCNN4R, plyr","RSNNS","RSNNS","monmlp","msaenet","nnet","mxnet","mxnet","naivebayes","klaR","bnclassify","bnclassify","neuralnet","nnet","nnls","nodeHarvest","","RWeka","ordinalNet, plyr","e1071, ranger, dplyr, ordinalForest","obliqueRF","obliqueRF","obliqueRF","obliqueRF","snn","pamr","e1071, randomForest, foreach, import","RWeka","partDSA","nnet","pls","mda","mda","penalized","penalizedLDA, plyr","stepPlr","pls","plsRglm","MASS","","pre","supervisedPRIM","proxy, protoclass","MASS","rrcov","quantregForest","qrnn","randomGLM","e1071, ranger, dplyr","RSNNS","RSNNS","Rborist","klaR","LiblineaR","relaxo, plyr","randomForest","rFerns","HiDimDA","randomForest, inTrees, plyr","elasticnet","sparsediscrim","MASS","robustDA","rocc","rotationForest","rpart, plyr, rotationForest","rpart","rpart","rpart","rpart, plyr","rpartScore, plyr","rqPen","rqPen","randomForest, RRF","RRF","rrlda","rrcovHD","kernlab","kernlab","kernlab","frbs","sda","sdwd","pls","frbs","ipred","sparseLDA","snn","sparseLDA","spikeslab, plyr","spls","klaR, MASS","klaR, MASS","superpc","kernlab","kernlab","kernlab","e1071","LiblineaR","e1071","LiblineaR","kernlab","kernlab","kernlab","kernlab","kernlab","kernlab","bnclassify","bnclassify","ipred, plyr, e1071","vbmp","VGAM","VGAM","VGAM","pls","frbs","wsrf","xgboost, plyr","xgboost","xgboost, plyr","kohonen"],["iter, maxdepth, nu","mfinal, maxdepth","mfinal, maxdepth, coeflearn","nIter, method","model","num.labels, max.iter","size, decay, bag","smooth","score, smooth","vars","nprune, degree","degree","degree, nprune","degree","select, method","num_trees, k, alpha, beta, nu","None","lambda.freqs","mstop, maxdepth","sparsity","None","None","neurons","mstop, nu","mstop, nu","mstop, maxdepth, nu","trials, model, winnow","trials, model, winnow, cost","None","None","mtry","alpha2, alpha3, alpha4","None","mincriterion","maxdepth, mincriterion","committees, neighbors","model, shrinkage","num_iter, tree_depth, beta, lambda, loss_type","Dthr, max.iter","layer1, layer2, layer3, hidden_dropout, visible_dropout","lambda, qval","lambda, qval, degree, scale","lambda, qval, sigma","nprune, degree","nhid, actfun","fraction, lambda","alpha","mtry, numRandomCuts","degree, nprune","max.num.rule, popu.size, max.gen","num.labels, max.iter","k, lambda","num.labels, type.mf","num.labels, type.mf","num.labels, max.iter","select, method","mstop, prune","span, degree","df","None","degree, scale","sigma","ntrees, max_depth, min_rows, learn_rate, col_sample_rate","n.trees, interaction.depth, shrinkage, n.minobsinnode","degree","max.gen, max.iter, max.tune","popu.size, num.labels, max.gen","popu.size, num.labels, max.gen","link","None","mstop, prune","alpha, lambda","alpha, lambda","None","K.prov","gamma, lambda, newdim","threshold, model","gamma, lambda, shrinkage_type","num.labels, max.iter","n.comp","C, M","NumOpt, NumFolds, MinWeights","ncomp","kmax, distance, kernel","k","lambda, degree","lambda, sigma","fraction","step","fraction","None","dimen","nvmax","nvmax","nvmax","None","intercept","None","iter","k","nleaves, ntrees","nIter","treesize, ntrees","tau","degree, scale, tau","sigma, tau","size, k","pruned, smoothed, rules","pruned, smoothed","smooth, prior","subclasses","None","size","size, lambda, batch_size, lr, rho, decay, activation","size, lambda, batch_size, lr, rho, decay, cost, activation","size, dropout, batch_size, lr, rho, decay, activation","size, dropout, batch_size, lr, rho, decay, cost, activation","layer1, layer2, layer3","size, l2reg, lambda, learn_rate, momentum, gamma, minibatchsz, repeats","size, decay","layer1, layer2, layer3, decay","hidden1, n.ensemble","alphas, nsteps, scale","decay","layer1, layer2, layer3, learning.rate, momentum, dropout, activation","layer1, layer2, layer3, dropout, beta1, beta2, learningrate, activation","laplace, usekernel, adjust","fL, usekernel, adjust","smooth","k, epsilon, smooth, final_smooth, direction","layer1, layer2, layer3","size, decay","None","maxinter, mode","None","None","alpha, criteria, link, lambda, modeltype, family","nsets, ntreeperdiv, ntreefinal","mtry","mtry","mtry","mtry","K","threshold","mtry","threshold, pruned","cut.off.growth, MPD","size, decay","ncomp","lambda","df","lambda1, lambda2","lambda, K","lambda, cp","ncomp","nt, alpha.pvals.expli","method","nterms","sampfrac, maxdepth, learnrate, mtry, use.grad, penalty.par.val","peel.alpha, paste.alpha, mass.min","eps, Minkowski","None","None","mtry","n.hidden, penalty, bag","maxInteractionOrder","mtry, splitrule, min.node.size","size","negativeThreshold","predFixed, minNode","gamma, lambda","cost, loss, epsilon","lambda, phi","mtry","depth","q","mtry, maxdepth","lambda","estimator","intercept, psi","K, model","xgenes","K, L","K, L, cp","cp","None","maxdepth","cp, Cost","cp, split, prune","lambda","lambda, penalty","mtry, coefReg, coefImp","mtry, coefReg","lambda, hp, penalty","None","None","scale, degree","sigma","r.a, eps.high, eps.low","diagonal, lambda","lambda, lambda2","ncomp","num.labels, max.iter, max.gen","None","NumVars, lambda, R","lambda","NumVars, lambda","vars","K, eta, kappa","maxvar, direction","maxvar, direction","threshold, n.components","length, C","lambda, C","C","cost","cost, Loss","cost, weight","cost, Loss, weight","degree, scale, C","sigma, C","C","sigma, C","sigma, C, Weight","length, C","score, smooth","k, epsilon, smooth, final_smooth, sp","None","estimateTheta","parallel, link","parallel, link","parallel, link","ncomp","num.labels, type.mf","mtry","nrounds, max_depth, eta, gamma, subsample, colsample_bytree, rate_drop, skip_drop, min_child_weight","nrounds, lambda, alpha, eta","nrounds, max_depth, eta, gamma, colsample_bytree, min_child_weight, subsample","xdim, ydim, user.weights, topo"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>`method`<\/th>\n      <th>Modelo<\/th>\n      <th>Tipo<\/th>\n      <th>Librerías<\/th>\n      <th>Hiperparámetros<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 ```
 
@@ -1336,7 +1336,7 @@ Pendiente: Comparación de modelos: resamples, summary.resamples
 Como ejemplo consideraremos el problema de regresión anterior, empleando KNN en `caret`:
 
 
-```r
+``` r
 data(Boston, package = "MASS")
 library(caret)
 ```
@@ -1344,7 +1344,7 @@ library(caret)
 En primer lugar, particionamos los datos:
 
 
-```r
+``` r
 set.seed(1)
 itrain <- createDataPartition(Boston$medv, p = 0.8, list = FALSE)
 train <- Boston[itrain, ]
@@ -1354,7 +1354,7 @@ test <- Boston[-itrain, ]
 Realizamos el entrenamiento, incluyendo un preprocesado de los datos (se almacenan las transformaciones para volver a aplicarlas en la predicción con nuevos datos) y empleando validación cruzada con 10 grupos para la selección de hiperparámetros (ver Figura \@ref(fig:caret-knn-plot)). Además, en lugar de utilizar las opciones por defecto, establecemos la rejilla de búsqueda del hiperparámetro:
 
 
-```r
+``` r
 set.seed(1)
 knn <- train(medv ~ ., data = train, method = "knn",
              preProc = c("center", "scale"), tuneGrid = data.frame(k = 1:10),
@@ -1389,7 +1389,7 @@ knn
 ## The final value used for the model was k = 3.
 ```
 
-```r
+``` r
 ggplot(knn, highlight = TRUE) # Alternativamente: plot(knn)
 ```
 
@@ -1403,7 +1403,7 @@ ggplot(knn, highlight = TRUE) # Alternativamente: plot(knn)
 Los valores seleccionados de los hiperparámetros se devuelven en la componente `$bestTune`:
 
 
-```r
+``` r
 knn$bestTune
 ```
 
@@ -1415,7 +1415,7 @@ knn$bestTune
 y en la componente `$finalModel` el modelo final ajustado (en el formato del paquete que se empleó internamente para el ajuste):
 
 
-```r
+``` r
 knn$finalModel
 ```
 
@@ -1426,7 +1426,7 @@ knn$finalModel
 Obtenemos medidas de la importancia de las variables (interpretación del modelo):
 
 
-```r
+``` r
 varImp(knn)
 ```
 
@@ -1452,7 +1452,7 @@ varImp(knn)
 y, finalmente, evaluamos la capacidad predictiva del modelo obtenido empleando la muestra de test:
 
 
-```r
+``` r
 postResample(predict(knn, newdata = test), test$medv)
 ```
 

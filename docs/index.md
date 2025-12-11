@@ -4,7 +4,7 @@ author:
   - "Rubén Fernández Casal (ruben.fcasal@udc.es)"
   - "Julián Costa Bouzas (julian.costa@udc.es)"
   - "Manuel Oviedo de la Fuente (manuel.oviedo@udc.es)"
-date: "Edición: Septiembre de 2024. Impresión: 2025-03-11"
+date: "Edición: Septiembre de 2024. Impresión: 2025-12-11"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
@@ -91,7 +91,7 @@ Este libro tiene asociado el paquete de R [`mpae`](https://rubenfcasal.github.io
 Este paquete está disponible en CRAN y puede instalarse ejecutando el siguiente código[^instalacion-1]:
 
 
-```r
+``` r
 install.packages("mpae")
 ```
 
@@ -103,7 +103,7 @@ Sin embargo, para poder ejecutar todos los ejemplos mostrados en el libro, es ne
 Para ello, en lugar del código anterior, bastaría con ejecutar:
 
 
-```r
+``` r
 install.packages("mpae", dependencies = TRUE)
 ```
 

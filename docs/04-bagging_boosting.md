@@ -190,7 +190,7 @@ Entre las numerosas alternativas disponibles, además de las implementadas en pa
 Como ejemplo consideraremos el conjunto de datos de calidad de vino empleado previamente en la Sección \@ref(class-rpart), y haremos comparaciones con el ajuste de un único árbol.
 
 
-```r
+``` r
 data(winetaste, package = "mpae")
 set.seed(1)
 df <- winetaste
@@ -207,7 +207,7 @@ Pendiente: establecer nodesize=5 para reducir tiempos de computación?
 -->
 
 
-```r
+``` r
 library(randomForest)
 set.seed(4) # NOTA: Fijamos esta semilla para ilustrar dependencia
 bagtrees <- randomForest(taste ~ ., data = train, mtry = ncol(train) - 1)
@@ -235,7 +235,7 @@ Este método emplea `matplot()` para representar la componente `$err.rate`, como
 (ref:bagging-conv) Evolución de las tasas de error OOB al emplear bagging para la predicción de `winetaste$taste`.
 
 
-```r
+``` r
 plot(bagtrees, main = "")
 legend("right", colnames(bagtrees$err.rate), lty = 1:5, col = 1:6)
 ```
@@ -255,7 +255,7 @@ View(getTree(bagtrees, 1, labelVar=TRUE))
 -->
 
 
-```r
+``` r
 split_var_1 <- sapply(seq_len(bagtrees$ntree), function(i) 
                        getTree(bagtrees, i, labelVar = TRUE)[1, "split var"])
 ```
@@ -263,7 +263,7 @@ split_var_1 <- sapply(seq_len(bagtrees$ntree), function(i)
 En este caso concreto, podemos observar que la variable seleccionada para la primera división es siempre la misma, lo que indicaría una alta dependencia entre los distintos árboles:
 
 
-```r
+``` r
 table(split_var_1)
 ```
 
@@ -282,7 +282,7 @@ table(split_var_1)
 Por último, evaluamos la precisión en la muestra de test:
 
 
-```r
+``` r
 pred <- predict(bagtrees, newdata = test)
 caret::confusionMatrix(pred, test$taste)
 ```
@@ -334,7 +334,7 @@ test <- df[-itrain, ]
 
 
 
-```r
+``` r
 set.seed(1)
 rf <- randomForest(taste ~ ., data = train)
 rf
@@ -360,7 +360,7 @@ En la Figura \@ref(fig:rf-plot) podemos observar que aparentemente hay convergen
 (ref:rf-plot) Evolución de las tasas de error OOB al usar bosques aleatorios para la predicción de `winetaste$taste` (empleando `randomForest()` con las opciones por defecto).
 
 
-```r
+``` r
 plot(rf, main = "")
 legend("right", colnames(rf$err.rate), lty = 1:5, col = 1:6)
 ```
@@ -375,7 +375,7 @@ Podemos mostrar la importancia de las variables predictoras (utilizadas en el bo
 (ref:rf-importance) Importancia de las variables predictoras al emplear bosques aleatorios para la predicción de `winetaste$taste`.
 
 
-```r
+``` r
 importance(rf)
 ```
 
@@ -394,7 +394,7 @@ importance(rf)
 ## alcohol                        63.892
 ```
 
-```r
+``` r
 varImpPlot(rf)
 ```
 
@@ -406,7 +406,7 @@ varImpPlot(rf)
 Si evaluamos la precisión en la muestra de test podemos observar un ligero incremento en la precisión en comparación con el método anterior:
 
 
-```r
+``` r
 pred <- predict(rf, newdata = test)
 caret::confusionMatrix(pred, test$taste)
 ```
@@ -444,22 +444,22 @@ caret::confusionMatrix(pred, test$taste)
 Esta mejora sería debida a que en este caso la dependencia entre los árboles es menor:
 
 
-```r
-split_var_1 <- sapply(seq_len(bagtrees$ntree), function(i) 
-                       getTree(bagtrees, i, labelVar = TRUE)[1, "split var"])
+``` r
+split_var_1 <- sapply(seq_len(rf$ntree), function(i) 
+                       getTree(rf, i, labelVar = TRUE)[1, "split var"])
 table(split_var_1)
 ```
 
 ```
 ## split_var_1
 ##              alcohol            chlorides          citric.acid 
-##                  500                    0                    0 
+##                  150                   49                   38 
 ##              density        fixed.acidity  free.sulfur.dioxide 
-##                    0                    0                    0 
+##                  114                   23                   20 
 ##                   pH       residual.sugar            sulphates 
-##                    0                    0                    0 
+##                   11                    0                    5 
 ## total.sulfur.dioxide     volatile.acidity 
-##                    0                    0
+##                   49                   41
 ```
 
 El análisis e interpretación del modelo puede resultar más complicado en este tipo de métodos.
@@ -468,7 +468,7 @@ Por ejemplo, empleando la función `pdp::partial()` [@R-pdp] podemos generar gr�
 
 
 
-```r
+``` r
 library(pdp)
 library(gridExtra)
 pdp1 <- partial(rf, "alcohol")
@@ -487,7 +487,7 @@ grid.arrange(p1, p2, ncol = 2)
 Adicionalmente, estableciendo `ice = TRUE` se calculan las curvas de expectativa condicional individual (ICE). Estos gráficos ICE extienden los PDP, ya que, además de mostrar la variación del promedio (línea roja en Figura \@ref(fig:rf-ice-plot)), también muestra la variación de los valores predichos para cada observación  (líneas negras en Figura \@ref(fig:rf-ice-plot)).
 
 
-```r
+``` r
 ice1 <- partial(rf, pred.var = "alcohol", ice = TRUE)
 ice2 <- partial(rf, pred.var = "density", ice = TRUE)
 p1 <- plotPartial(ice1, alpha = 0.5)
@@ -504,7 +504,7 @@ Se pueden crear gráficos similares utilizando los otros paquetes indicados en l
 Por ejemplo, la Figura \@ref(fig:rf-vivid-plot), generada con el paquete [`vivid`](https://alaninglis.github.io/vivid) [@R-vivid], muestra medidas de la importancia de los predictores (*Vimp*) en la diagonal y de la fuerza de las interacciones (*Vint*) fuera de la diagonal. 
 
 
-```r
+``` r
 library(vivid)
 fit_rf <- vivi(data = train, fit = rf, response = "taste", 
                importanceType = "%IncMSE")
@@ -519,7 +519,7 @@ viviHeatmap(mat = fit_rf[1:5,1:5])
 Alternativamente, también se pueden visualizar las relaciones mediante un gráfico de red (ver Figura \@ref(fig:rf-vivid2-plot)).
 
 
-```r
+``` r
 require(igraph)
 viviNetwork(mat = fit_rf)
 ```
@@ -535,7 +535,7 @@ Podemos representarla mediante un gráfico PDP (ver Figura \@ref(fig:rf-pdp-plot
 La generación de este gráfico puede requerir mucho tiempo de computación.
 
 
-```r
+``` r
 pdp12 <- partial(rf, c("alcohol", "citric.acid"))
 plotPartial(pdp12)
 ```
@@ -561,17 +561,15 @@ En el paquete `caret` hay varias implementaciones de bagging y bosques aleatorio
 Para ajustar este modelo a una muestra de entrenamiento hay que establecer `method = "rf"` en la llamada a `train()`.
 
 
-```r
+``` r
 library(caret)
 # str(getModelInfo("rf", regex = FALSE))
 modelLookup("rf")
 ```
 
 ```
-##   model parameter                         label forReg forClass
-## 1    rf      mtry #Randomly Selected Predictors   TRUE     TRUE
-##   probModel
-## 1      TRUE
+##   model parameter                         label forReg forClass probModel
+## 1    rf      mtry #Randomly Selected Predictors   TRUE     TRUE      TRUE
 ```
 
 <!-- 
@@ -591,7 +589,7 @@ Además, en este caso es preferible emplear el método por defecto para la selec
 
 
 
-```r
+``` r
 set.seed(1)
 rf.caret <- train(taste ~ ., data = train, method = "rf")
 ggplot(rf.caret, highlight = TRUE)
@@ -607,7 +605,7 @@ ggplot(rf.caret, highlight = TRUE)
 (ref:rf-caret-grid) Evolución de la precisión de un bosque aleatorio con `caret` usando el argumento `tuneGrid`.
 
 
-```r
+``` r
 mtry.class <- sqrt(ncol(train) - 1)
 tuneGrid <- data.frame(mtry = 
                          floor(c(mtry.class/2, mtry.class, 2*mtry.class)))
@@ -788,7 +786,7 @@ Además, un posible problema al emplear esta función es que ordena alfabéticam
 
 Los principales parámetros son los siguientes:
 
-```r
+``` r
 ada(formula, data, loss = c("exponential", "logistic"),
     type = c("discrete", "real", "gentle"), iter = 50, 
     nu = 0.1, bag.frac = 0.5, ...)
@@ -811,7 +809,7 @@ ada(formula, data, loss = c("exponential", "logistic"),
 A modo de ejemplo consideraremos el conjunto de datos de calidad de vino empleado en las secciones \@ref(class-rpart) y \@ref(bagging-rf-r). Para evitar problemas reordenamos alfabéticamente los niveles de la respuesta.
 
 
-```r
+``` r
 # data(winetaste, package = "mpae")
 # Reordenar alfabéticamente los niveles de winetaste$taste
 winetaste$taste <- factor(as.character(winetaste$taste))
@@ -827,7 +825,7 @@ test <- df[-itrain, ]
 El siguiente código llama a la función `ada()` con la opción para estimar probabilidades (`type = "real"`, *Real AdaBoost*), considerando interacciones de segundo orden entre los predictores (`maxdepth = 2`), disminuyendo ligeramente el valor del parámetro de aprendizaje y aumentando el número de iteraciones:
 
 
-```r
+``` r
 library(ada)
 control <- rpart.control(maxdepth = 2, cp = 0, minsplit = 10, xval = 0)
 ada.boost <- ada(taste ~ ., data = train, type = "real",
@@ -863,7 +861,7 @@ Con el método `plot()` podemos representar la evolución del error de clasifica
 (ref:ada-plot) Evolución de la tasa de error utilizando `ada()`.
 
 
-```r
+``` r
 plot(ada.boost)
 ```
 
@@ -876,13 +874,13 @@ plot(ada.boost)
 Con la función `varplot()` podemos representar la importancia de las variables (y almacenarla empleando `type = "scores"`): 
 
 
-```r
+``` r
 res <- varplot(ada.boost, type = "scores")
 ```
 
 <img src="04-bagging_boosting_files/figure-html/unnamed-chunk-2-1.png" width="75%" style="display: block; margin: auto;" />
 
-```r
+``` r
 res
 ```
 
@@ -901,7 +899,7 @@ res
 Podemos evaluar la precisión en la muestra de test empleando el procedimiento habitual:
 
 
-```r
+``` r
 pred <- predict(ada.boost, newdata = test)
 caret::confusionMatrix(pred, test$taste, positive = "good")
 ```
@@ -939,7 +937,7 @@ caret::confusionMatrix(pred, test$taste, positive = "good")
 Para obtener las estimaciones de las probabilidades, habría que establecer `type = "probs"` al predecir (devolverá una matriz en la que cada columna se corresponde con un nivel):
 
 
-```r
+``` r
 p.est <- predict(ada.boost, newdata = test, type = "probs")
 head(p.est)
 ```
@@ -956,7 +954,7 @@ head(p.est)
 
 Este procedimiento también está implementado en el paquete `caret` seleccionando el método `"ada"`, que considera como hiperparámetros:
 
-```r
+``` r
 library(caret)
 modelLookup("ada")
 ```
@@ -971,7 +969,7 @@ modelLookup("ada")
 Por defecto la función `train()` solo considera nueve combinaciones de hiperparámetros (en lugar de las 27 que cabría esperar):
 
 
-```r
+``` r
 set.seed(1)
 trControl <- trainControl(method = "cv", number = 5)
 caret.ada0 <- train(taste ~ ., method = "ada", data = train, 
@@ -1004,8 +1002,7 @@ caret.ada0
 ## 
 ## Tuning parameter 'nu' was held constant at a value of 0.1
 ## Accuracy was used to select the optimal model using the largest value.
-## The final values used for the model were iter = 150, maxdepth = 3 and
-##  nu = 0.1.
+## The final values used for the model were iter = 150, maxdepth = 3 and nu = 0.1.
 ```
 
 En la salida anterior, se observa que el parámetro `nu` se ha fijado en 0.1, por lo que solo se tienen los resultados para las combinaciones de `maxdepth` e `iter`. 
@@ -1013,7 +1010,7 @@ Se puede aumentar el número de combinaciones empleando `tuneLength` o `tuneGrid
 Por este motivo, se suelen seguir procedimientos alternativos de búsqueda. Por ejemplo, fijar la tasa de aprendizaje (inicialmente a un valor alto) para seleccionar primero un número de interaciones y la complejidad del árbol, y posteriormente fijar estos valores para seleccionar una nueva tasa de aprendizaje (repitiendo el proceso, si es necesario, hasta conseguir convergencia).
 
 
-```r
+``` r
 set.seed(1)
 tuneGrid <- data.frame(iter = 150, maxdepth = 3,
                        nu = c(0.3, 0.1, 0.05, 0.01, 0.005))
@@ -1042,17 +1039,16 @@ caret.ada1
 ##   0.300  0.75801   0.44051
 ## 
 ## Tuning parameter 'iter' was held constant at a value of 150
-## 
-## Tuning parameter 'maxdepth' was held constant at a value of 3
+## Tuning
+##  parameter 'maxdepth' was held constant at a value of 3
 ## Accuracy was used to select the optimal model using the largest value.
-## The final values used for the model were iter = 150, maxdepth = 3 and
-##  nu = 0.1.
+## The final values used for the model were iter = 150, maxdepth = 3 and nu = 0.1.
 ```
 
 Por último, podemos evaluar la precisión del modelo en la muestra de test:
 
 
-```r
+``` r
 confusionMatrix(predict(caret.ada1, newdata = test), 
                 test$taste, positive = "good")
 ```
@@ -1106,7 +1102,7 @@ d) Evalúa la precisión de las predicciones en la muestra de test y compara los
 El paquete [`gbm`](https://CRAN.R-project.org/package=gbm) [@R-gbm] implementa el algoritmo SGB de @friedman2002stochastic y admite varios tipos de respuesta considerando distintas funciones de pérdida (aunque en el caso de variables dicotómicas estas deben^[Se puede evitar este inconveniente empleando la interfaz de `caret`.] tomar valores en $\{0, 1\}$).
 La función principal es [`gbm()`](https://rdrr.io/pkg/gbm/man/gbm.html) y se suelen considerar los siguientes argumentos:
 
-```r
+``` r
 gbm( formula, distribution = "bernoulli", data, n.trees = 100, 
      interaction.depth = 1, n.minobsinnode = 10, shrinkage = 0.1, 
      bag.fraction = 0.5, cv.folds = 0, n.cores = NULL)
@@ -1136,7 +1132,7 @@ Otras opciones que pueden ser de interés son: `"laplace"` (error absoluto), `"a
 Como ejemplo emplearemos el conjunto de datos [`winequality`](https://rubenfcasal.github.io/mpae/reference/winequality.html), considerando la variable `quality` como respuesta:
 
 
-```r
+``` r
 data(winequality, package = "mpae")
 set.seed(1)
 df <- winequality
@@ -1149,7 +1145,7 @@ test <- df[-itrain, ]
 Ajustamos el modelo SGB:
 
 
-```r
+``` r
 library(gbm)
 gbm.fit <- gbm(quality ~ ., data = train) #  distribution = "gaussian"
 ```
@@ -1158,7 +1154,7 @@ gbm.fit <- gbm(quality ~ ., data = train) #  distribution = "gaussian"
 ## Distribution not specified, assuming gaussian ...
 ```
 
-```r
+``` r
 gbm.fit
 ```
 
@@ -1174,7 +1170,7 @@ El método `summary()` calcula las medidas de influencia de los predictores y la
 (ref:gbm-summary) Importancia de las variables predictoras (con los valores por defecto de `gbm()`).
 
 
-```r
+``` r
 summary(gbm.fit)
 ```
 
@@ -1207,7 +1203,7 @@ mejorar la resolución
 -->
 
 
-```r
+``` r
 p1 <- plot(gbm.fit, i = "alcohol")
 p2 <- plot(gbm.fit, i = "volatile.acidity")
 gridExtra::grid.arrange(p1, p2, ncol = 2)
@@ -1226,7 +1222,7 @@ Finalmente, podemos evaluar la precisión en la muestra de test empleando el có
 
 
 
-```r
+``` r
 pred <- predict(gbm.fit, newdata = test)
 obs <- test$quality
 accuracy(pred, obs)
@@ -1239,22 +1235,17 @@ accuracy(pred, obs)
 
 Este procedimiento también está implementado en el paquete `caret` seleccionando el método `"gbm"`, que considera 4 hiperparámetros:
 
-```r
+``` r
 library(caret)
 modelLookup("gbm")
 ```
 
 ```
-##   model         parameter                   label forReg forClass
-## 1   gbm           n.trees   # Boosting Iterations   TRUE     TRUE
-## 2   gbm interaction.depth          Max Tree Depth   TRUE     TRUE
-## 3   gbm         shrinkage               Shrinkage   TRUE     TRUE
-## 4   gbm    n.minobsinnode Min. Terminal Node Size   TRUE     TRUE
-##   probModel
-## 1      TRUE
-## 2      TRUE
-## 3      TRUE
-## 4      TRUE
+##   model         parameter                   label forReg forClass probModel
+## 1   gbm           n.trees   # Boosting Iterations   TRUE     TRUE      TRUE
+## 2   gbm interaction.depth          Max Tree Depth   TRUE     TRUE      TRUE
+## 3   gbm         shrinkage               Shrinkage   TRUE     TRUE      TRUE
+## 4   gbm    n.minobsinnode Min. Terminal Node Size   TRUE     TRUE      TRUE
 ```
 
 Aunque por defecto la función `train()` solo considera nueve combinaciones de hiperparámetros. 
@@ -1262,7 +1253,7 @@ Para hacer una búsqueda más completa se podría seguir un procedimiento análo
 Primero, seleccionamos los hiperparámetros `interaction.depth` y `n.trees` (con las opciones por defecto, manteniendo `shrinkage` y `n.minobsinnode` fijos, aunque sin imprimir el progreso durante la búsqueda):
 
 
-```r
+``` r
 set.seed(1)
 trControl <- trainControl(method = "cv", number = 5)
 caret.gbm0 <- train(quality ~ ., method = "gbm", data = train,
@@ -1296,14 +1287,14 @@ caret.gbm0
 ## 
 ## Tuning parameter 'n.minobsinnode' was held constant at a value of 10
 ## RMSE was used to select the optimal model using the smallest value.
-## The final values used for the model were n.trees =
-##  100, interaction.depth = 2, shrinkage = 0.1 and n.minobsinnode = 10.
+## The final values used for the model were n.trees = 100, interaction.depth =
+##  2, shrinkage = 0.1 and n.minobsinnode = 10.
 ```
 
 A continuación elegimos `shrinkage`, fijando la selección previa de `interaction.depth` y `n.trees` (también se podría incluir `n.minobsinnode` en la búsqueda, pero lo mantenemos fijo para reducir el tiempo de computación):
 
 
-```r
+``` r
 tuneGrid <- data.frame(n.trees =  100, interaction.depth = 2, 
               n.minobsinnode = 10, shrinkage = c(0.3, 0.1, 0.05, 0.01, 0.005))
 caret.gbm1 <- train(quality ~ ., method = "gbm", data = train,
@@ -1330,13 +1321,13 @@ caret.gbm1
 ##   0.300      0.77208  0.26138   0.60918
 ## 
 ## Tuning parameter 'n.trees' was held constant at a value of 100
+## Tuning
+##  parameter 'interaction.depth' was held constant at a value of 2
 ## 
-## Tuning parameter 'interaction.depth' was held constant at a value of
-##  2
 ## Tuning parameter 'n.minobsinnode' was held constant at a value of 10
 ## RMSE was used to select the optimal model using the smallest value.
-## The final values used for the model were n.trees =
-##  100, interaction.depth = 2, shrinkage = 0.1 and n.minobsinnode = 10.
+## The final values used for the model were n.trees = 100, interaction.depth =
+##  2, shrinkage = 0.1 and n.minobsinnode = 10.
 ```
 
 <!-- varImp(caret.gbm1) -->
@@ -1344,7 +1335,7 @@ caret.gbm1
 Por último, evaluamos el modelo resultante en la muestra de test:
 
 
-```r
+``` r
 pred <- predict(caret.gbm1, newdata = test)
 accuracy(pred, obs)
 ```
@@ -1379,29 +1370,29 @@ El algoritmo estándar *XGBoost*, que emplea árboles como modelo base, está im
 [^xgb-caret-1]: Otras alternativas son: `"xgbDART"` que también emplean árboles como modelo base, pero incluye el método DART [@vinayak2015dart] para evitar sobreajuste (básicamente descarta árboles al azar en la secuencia), y `"xgbLinear"` que emplea modelos lineales.
 
 
-```r
+``` r
 library(caret)
 # names(getModelInfo("xgb"))
 modelLookup("xgbTree")
 ```
 
 ```
-##     model        parameter                          label forReg
-## 1 xgbTree          nrounds          # Boosting Iterations   TRUE
-## 2 xgbTree        max_depth                 Max Tree Depth   TRUE
-## 3 xgbTree              eta                      Shrinkage   TRUE
-## 4 xgbTree            gamma         Minimum Loss Reduction   TRUE
-## 5 xgbTree colsample_bytree     Subsample Ratio of Columns   TRUE
-## 6 xgbTree min_child_weight Minimum Sum of Instance Weight   TRUE
-## 7 xgbTree        subsample           Subsample Percentage   TRUE
-##   forClass probModel
-## 1     TRUE      TRUE
-## 2     TRUE      TRUE
-## 3     TRUE      TRUE
-## 4     TRUE      TRUE
-## 5     TRUE      TRUE
-## 6     TRUE      TRUE
-## 7     TRUE      TRUE
+##     model        parameter                          label forReg forClass
+## 1 xgbTree          nrounds          # Boosting Iterations   TRUE     TRUE
+## 2 xgbTree        max_depth                 Max Tree Depth   TRUE     TRUE
+## 3 xgbTree              eta                      Shrinkage   TRUE     TRUE
+## 4 xgbTree            gamma         Minimum Loss Reduction   TRUE     TRUE
+## 5 xgbTree colsample_bytree     Subsample Ratio of Columns   TRUE     TRUE
+## 6 xgbTree min_child_weight Minimum Sum of Instance Weight   TRUE     TRUE
+## 7 xgbTree        subsample           Subsample Percentage   TRUE     TRUE
+##   probModel
+## 1      TRUE
+## 2      TRUE
+## 3      TRUE
+## 4      TRUE
+## 5      TRUE
+## 6      TRUE
+## 7      TRUE
 ```
 
 Este método considera los siguientes hiperparámetros:
@@ -1425,7 +1416,7 @@ Para más información sobre parámetros adicionales, se puede consultar la ayud
 A modo de ejemplo, consideraremos un problema de clasificación empleando de nuevo el conjunto de datos de calidad de vino:
 
 
-```r
+``` r
 # data(winetaste, package = "mpae")
 set.seed(1)
 df <- winetaste
@@ -1443,7 +1434,7 @@ En este caso, la función `train()` considera por defecto 108 combinaciones de h
 [^xgb-caret-3]: El parámetro `tuneLength` especificaría el número total de combinaciones de parámetros que se evaluarían.
 
 
-```r
+``` r
 caret.xgb <- train(taste ~ ., method = "xgbTree", data = train,
                    trControl = trControl, verbosity = 0)
 caret.xgb
@@ -1461,39 +1452,30 @@ caret.xgb
 ## Summary of sample sizes: 799, 801, 801, 799, 800 
 ## Resampling results across tuning parameters:
 ## 
-##   eta  max_depth  colsample_bytree  subsample  nrounds  Accuracy
-##   0.3  1          0.6               0.50        50      0.74795 
-##   0.3  1          0.6               0.50       100      0.75096 
-##   0.3  1          0.6               0.50       150      0.74802 
-##   0.3  1          0.6               0.75        50      0.73895 
-##   0.3  1          0.6               0.75       100      0.74996 
-##   0.3  1          0.6               0.75       150      0.75199 
-##   0.3  1          0.6               1.00        50      0.74794 
-##   0.3  1          0.6               1.00       100      0.74395 
-##   Kappa  
-##   0.39977
-##   0.42264
-##   0.41424
-##   0.37757
-##   0.41789
-##   0.41944
-##   0.39332
-##   0.39468
+##   eta  max_depth  colsample_bytree  subsample  nrounds  Accuracy  Kappa  
+##   0.3  1          0.6               0.50        50      0.74795   0.39977
+##   0.3  1          0.6               0.50       100      0.75096   0.42264
+##   0.3  1          0.6               0.50       150      0.74802   0.41424
+##   0.3  1          0.6               0.75        50      0.73895   0.37757
+##   0.3  1          0.6               0.75       100      0.74996   0.41789
+##   0.3  1          0.6               0.75       150      0.75199   0.41944
+##   0.3  1          0.6               1.00        50      0.74794   0.39332
+##   0.3  1          0.6               1.00       100      0.74395   0.39468
 ##  [ reached getOption("max.print") -- omitted 100 rows ]
 ## 
 ## Tuning parameter 'gamma' was held constant at a value of 0
-## 
-## Tuning parameter 'min_child_weight' was held constant at a value of 1
+## Tuning
+##  parameter 'min_child_weight' was held constant at a value of 1
 ## Accuracy was used to select the optimal model using the largest value.
-## The final values used for the model were nrounds = 100, max_depth =
-##  2, eta = 0.4, gamma = 0, colsample_bytree = 0.8, min_child_weight =
-##  1 and subsample = 1.
+## The final values used for the model were nrounds = 100, max_depth = 2, eta
+##  = 0.4, gamma = 0, colsample_bytree = 0.8, min_child_weight = 1 and subsample
+##  = 1.
 ```
 Al imprimir el resultado del ajuste, observamos que fija los valores de los hiperparámetros `gamma` y `min_child_weight`.
 Adicionalmente, se podría seguir una estrategia de selección de los hiperparámetros similar a la empleada en los métodos anteriores, alternando la búsqueda de los valores óptimos de distintos grupos de hiperparámetros.
 
 
-```r
+``` r
 caret.xgb$bestTune
 ```
 
@@ -1507,7 +1489,7 @@ En este caso, en un siguiente paso, podríamos seleccionar `gamma` y `min_child_
 Al finalizar, evaluaríamos el modelo resultante en la muestra de test:
 
 
-```r
+``` r
 confusionMatrix(predict(caret.xgb, newdata = test), test$taste)
 ```
 

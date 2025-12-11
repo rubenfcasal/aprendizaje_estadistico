@@ -82,7 +82,7 @@ denotando por RSS la suma de cuadrados residual (*residual sum of squares*), es 
 Para realizar este ajuste en R podemos emplear la función [`lm()`](https://rdrr.io/r/stats/lm.html):
 
 
-```r
+``` r
 ajuste <- lm(formula, data, subset, weights, na.action, ...)
 ```
 
@@ -108,7 +108,7 @@ Proxeccións demográficas de Galicia 2011-2030. Análise dos resultados. Docume
 Como ejemplo, consideraremos el conjunto de datos [`bodyfat`](https://rubenfcasal.github.io/mpae/reference/bodyfat.html) del paquete [`mpae`](https://rubenfcasal.github.io/mpae), que contiene observaciones de grasa corporal y mediciones corporales de una muestra de 246 hombres [@penrose1985generalized].
 
 
-```r
+``` r
 library(mpae)
 # data(bodyfat, package = "mpae")
 as.data.frame(attr(bodyfat, "variable.labels"))
@@ -147,7 +147,7 @@ Pendiente:
 -->
 
 
-```r
+``` r
 df <- bodyfat 
 set.seed(1)
 nobs <- nrow(df)
@@ -164,7 +164,7 @@ En la Figura \@ref(fig:corrplot) se combinan elipses con colores para representa
 (ref:corrplot) Representación de las correlaciones lineales entre las variables del conjunto de datos `bodyfat`, generada con la función `corrplot::corrplot()`.
 
 
-```r
+``` r
 # plot(train) # gráfico de dispersión matricial
 mcor <- cor(train)
 corrplot::corrplot(mcor, method = "ellipse")
@@ -175,21 +175,21 @@ corrplot::corrplot(mcor, method = "ellipse")
 <p class="caption">(\#fig:corrplot)(ref:corrplot)</p>
 </div>
 
-```r
+``` r
 print(mcor, digits = 3)
 ```
 
 ```
-##         bodyfat      age  weight  height   neck chest abdomen     hip
-## bodyfat  1.0000  0.23003  0.6174 -0.0294 0.4820 0.701   0.816  0.6259
-## age      0.2300  1.00000 -0.0384 -0.2145 0.0858 0.164   0.204 -0.0718
-## weight   0.6174 -0.03838  1.0000  0.4923 0.7947 0.882   0.876  0.9313
-## height  -0.0294 -0.21445  0.4923  1.0000 0.3116 0.179   0.177  0.3785
-##          thigh     knee  ankle  biceps forearm wrist
-## bodyfat  0.542  0.47448  0.213  0.4681   0.353 0.288
-## age     -0.238 -0.00612 -0.167 -0.0662  -0.124 0.153
-## weight   0.849  0.83207  0.630  0.7771   0.680 0.714
-## height   0.342  0.51736  0.474  0.3101   0.312 0.390
+##         bodyfat      age  weight  height   neck chest abdomen     hip  thigh
+## bodyfat  1.0000  0.23003  0.6174 -0.0294 0.4820 0.701   0.816  0.6259  0.542
+## age      0.2300  1.00000 -0.0384 -0.2145 0.0858 0.164   0.204 -0.0718 -0.238
+## weight   0.6174 -0.03838  1.0000  0.4923 0.7947 0.882   0.876  0.9313  0.849
+## height  -0.0294 -0.21445  0.4923  1.0000 0.3116 0.179   0.177  0.3785  0.342
+##             knee  ankle  biceps forearm wrist
+## bodyfat  0.47448  0.213  0.4681   0.353 0.288
+## age     -0.00612 -0.167 -0.0662  -0.124 0.153
+## weight   0.83207  0.630  0.7771   0.680 0.714
+## height   0.51736  0.474  0.3101   0.312 0.390
 ##  [ reached getOption("max.print") -- omitted 10 rows ]
 ```
 
@@ -209,7 +209,7 @@ Si consideramos un modelo de regresión lineal simple, el mejor ajuste se obtend
 (ref:lm1) Gráfico de dispersión y recta de regresión ajustada para `bodyfat` en función de `abdomen`.
 
 
-```r
+``` r
 modelo <- lm(bodyfat ~ abdomen, data = train)
 summary(modelo)
 ```
@@ -235,7 +235,7 @@ summary(modelo)
 ## F-statistic:  386 on 1 and 194 DF,  p-value: <2e-16
 ```
 
-```r
+``` r
 plot(bodyfat ~ abdomen, data = train)
 abline(modelo)
 ```
@@ -251,7 +251,7 @@ En la Figura \@ref(fig:lm2) se muestra su representación gráfica.
 (ref:lm2) Ajuste lineal (predicciones) e intervalos de confianza y predicción (puntuales).
 
 
-```r
+``` r
 # Predicciones
 valores <- seq(70, 130, len = 100)
 newdata <- data.frame(abdomen = valores)
@@ -293,12 +293,12 @@ Función          |   Descripción
 
 Después de particionar los datos y ajustar el modelo inicial anterior:
 
-```r
+``` r
 modelo <- lm(bodyfat ~ abdomen, data = train)
 ```
 ejecuta el siguiente código:
 
-```r
+``` r
 modelo2 <- update(modelo, . ~ . + wrist)
 summary(modelo2)
 confint(modelo2)
@@ -340,7 +340,7 @@ En este caso, las estimaciones de los parámetros pueden verse seriamente afecta
 Consideraremos un ejemplo de regresión lineal bidimensional con datos simulados en el que las dos variables explicativas están altamente correlacionadas. Además, en este ejemplo solo una de las variables explicativas tiene un efecto lineal sobre la respuesta:
 
 
-```r
+``` r
 set.seed(1)
 n <- 50
 rand.gen <- runif
@@ -368,7 +368,7 @@ Los valores de las variables explicativas y la tendencia teórica se muestran en
 (ref:lm3d) Modelo teórico y valores de las variables explicativas (altamente correlacionadas, con un coeficiente de determinación de 0.99).
 
 
-```r
+``` r
 library(plot3D)
 ylim <- c(-2, 3) # range(y, y.pred)
 scatter3D(z = y.mean, x = x1, y = x2, pch = 16, cex = 1, clim = ylim, 
@@ -391,7 +391,7 @@ Para ilustrar el efecto de la correlación en los predictores, en la Figura \@re
 Los valores de la variable respuesta, los modelos ajustados y las superficies de predicción se han obtenido aplicando, reiteradamente:
 
 
-```r
+``` r
 y <- y.mean + rnorm(n, 0, 0.25)
 fit <- lm(y ~ x1 + x2)
 y.pred <- matrix(predict(fit, newdata = xy), nrow = length(x1.grid)) 
@@ -411,7 +411,7 @@ Incluso puede ocurrir que el contraste de regresión sea significativo (alto coe
 Por ejemplo, en el último ajuste obtendríamos:
 
 
-```r
+``` r
 summary(fit)
 ```
 
@@ -438,7 +438,7 @@ summary(fit)
 Podemos comparar los resultados anteriores con los obtenidos, también mediante simulación, utilizando predictores incorrelados (ver Figura \@ref(fig:indep-movie-plot)).
 En este caso, el único cambio es generar el segundo predictor de forma independiente:
 
-```r
+``` r
 x2 <- rand.gen(n) 
 ```
 
@@ -453,7 +453,7 @@ x2 <- rand.gen(n)
 
 Por ejemplo, en el último ajuste obtendríamos:
 
-```r
+``` r
 summary(fit2)
 ```
 
@@ -464,26 +464,26 @@ summary(fit2)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -0.4493 -0.1437  0.0179  0.1532  0.3990 
+## -0.4580 -0.0864  0.0045  0.1540  0.3366 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  -0.0777     0.0902   -0.86     0.39    
-## x1            1.0371     0.1157    8.97  9.6e-12 ***
-## x2           -0.0549     0.1134   -0.48     0.63    
+## (Intercept)  -0.2237     0.0851   -2.63    0.012 *  
+## x1            1.0413     0.1104    9.43  2.1e-12 ***
+## x2            0.2233     0.1021    2.19    0.034 *  
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 0.22 on 47 degrees of freedom
-## Multiple R-squared:  0.632,	Adjusted R-squared:  0.617 
-## F-statistic: 40.4 on 2 and 47 DF,  p-value: 6.09e-11
+## Residual standard error: 0.21 on 47 degrees of freedom
+## Multiple R-squared:  0.665,	Adjusted R-squared:  0.65 
+## F-statistic: 46.6 on 2 and 47 DF,  p-value: 7.02e-12
 ```
 
 En la práctica, para la detección de colinealidad se puede emplear la función
 `vif()` del paquete [`car`](https://CRAN.R-project.org/package=car), que calcula los factores de inflación de la varianza para las variables del modelo.
 Por ejemplo, en los últimos ajustes obtendríamos:
 
-```r
+``` r
 library(car)
 vif(fit)
 ```
@@ -493,13 +493,13 @@ vif(fit)
 ## 107.08 107.08
 ```
 
-```r
+``` r
 vif(fit2) 
 ```
 
 ```
 ##     x1     x2 
-## 1.0005 1.0005
+## 1.0001 1.0001
 ```
 La idea de este estadístico es que la varianza de la estimación del efecto en 
 regresión simple (efecto global) es menor que en regresión múltiple (efecto parcial).
@@ -509,7 +509,7 @@ Valores grandes, por ejemplo mayores que 10, indican la posible presencia de col
 Las tolerancias, proporciones de variabilidad no explicada por las demás covariables, se pueden calcular con `1/vif(modelo)`.
 Por ejemplo, los coeficientes de tolerancia de los últimos ajustes serían:
 
-```r
+``` r
 1/vif(fit)
 ```
 
@@ -518,13 +518,13 @@ Por ejemplo, los coeficientes de tolerancia de los últimos ajustes serían:
 ## 0.0093387 0.0093387
 ```
 
-```r
+``` r
 1/vif(fit2) 
 ```
 
 ```
 ##      x1      x2 
-## 0.99947 0.99947
+## 0.99986 0.99986
 ```
 
 Aunque el factor de inflación de la varianza y la tolerancia son las medidas más utilizadas, son bastante simples y puede ser preferible emplear otras como el *índice de condicionamiento*, implementado en el paquete [`mctest`](https://CRAN.R-project.org/package=mctest).
@@ -547,7 +547,7 @@ Para obtener el modelo "óptimo" lo ideal sería evaluar todas las posibles comb
 La función [`regsubsets()`](https://rdrr.io/pkg/leaps/man/regsubsets.html) del paquete [`leaps`](https://CRAN.R-project.org/package=leaps) permite seleccionar los mejores modelos fijando el número máximo de variables explicativas. 
 Por defecto, evalúa todos los modelos posibles con un determinado número de parámetros (variando desde 1 hasta por defecto un máximo de `nvmax = 8`) y selecciona el mejor (`nbest = 1`).
 
-```r
+``` r
 library(leaps)
 regsel <- regsubsets(bodyfat ~ . , data = train)
 # summary(regsel)
@@ -562,7 +562,7 @@ Aunque estos criterios pueden diferir al comparar modelos con distinto número d
     
     
 
-```r
+``` r
 plot(regsel, scale = "adjr2")
 ```
 
@@ -575,7 +575,7 @@ En este caso, considerando que es preferible un modelo más simple que una mejor
 Podemos obtener fácilmente los coeficientes de este modelo:
 
 
-```r
+``` r
 coef(regsel, 2)
 ```
 
@@ -587,7 +587,7 @@ coef(regsel, 2)
 pero suele ser recomendable volver a hacer el ajuste:
 
 
-```r
+``` r
 modelo <- lm(bodyfat ~ abdomen + wrist, data = train)
 ```
 
@@ -630,7 +630,7 @@ Normalmente, obtendremos un modelo más simple combinando el método por pasos h
 
 
 
-```r
+``` r
 library(MASS)
 library(RcmdrMisc)
 modelo.completo <- lm(bodyfat ~ . , data = train)
@@ -725,7 +725,7 @@ El algoritmo se detiene cuando ninguna de ellas mejora el modelo actual.
 Como resultado devuelve el modelo ajustado final:
 
 
-```r
+``` r
 summary(modelo)
 ```
 
@@ -786,7 +786,7 @@ Además del problema de la colinealidad, si no se verifican las otras hipótesis
 Con el método [`plot()`](https://rdrr.io/r/stats/plot.lm.html) se pueden generar gráficos de interés para la diagnosis del modelo (ver Figura \@ref(fig:lm-plot)):
 
 
-```r
+``` r
 oldpar <- par(mfrow = c(2,2))
 plot(modelo)
 par(oldpar)
@@ -817,7 +817,7 @@ Es recomendable utilizar gráficos parciales de residuos para analizar los efect
 Se pueden generar con:
 
 
-```r
+``` r
 termplot(modelo, partial.resid = TRUE)
 ```
 
@@ -826,7 +826,7 @@ aunque puede ser preferible emplear las funciones [`crPlots()`](https://rdrr.io/
 [^analisis-rlm-2]: Estas funciones también permitirían detectar observaciones atípicas o influyentes mediante el argumento `id` (como se muestra en la Sección \@ref(analisis-glm)).
 
 
-```r
+``` r
 library(car)
 # avPlots(modelo)
 crPlots(modelo, main = "")
@@ -882,7 +882,7 @@ Trataremos en primer lugar este último paso y posteriormente, en la Sección \@
 
 Una vez obtenido el ajuste final, la ventaja de emplear un modelo lineal es que resultaría muy fácil interpretar el efecto de los predictores en la respuesta a partir de las estimaciones de los coeficientes:
 
-```r
+``` r
 coef(modelo)
 ```
 
@@ -895,7 +895,7 @@ Por ejemplo, estimaríamos que por cada incremento de un centímetro en la circu
 Es importante destacar que estos coeficientes dependen de la escala de las variables y, por tanto, no deberían ser empleados como medidas de importancia de los predictores si sus unidades de medida no son comparables. 
 Es preferible emplear los valores observados de los estadísticos para contrastar si su efecto es significativo (columna `t value` en el resumen del modelo ajustado):
 
-```r
+``` r
 summary(modelo)$coefficients[-1, 3]
 ```
 
@@ -906,7 +906,7 @@ summary(modelo)$coefficients[-1, 3]
 ya que son funciones del correspondiente coeficiente de correlación parcial (la correlación entre la respuesta y el predictor después de eliminar el efecto lineal del resto de predictores).
 Alternativamente, se pueden emplear los denominados coeficientes estandarizados o pesos beta, por ejemplo mediante la función [`scaled.coef()`](https://rubenfcasal.github.io/mpae/reference/scaled.coef.html) del paquete [`mpae`](https://rubenfcasal.github.io/mpae):
 
-```r
+``` r
 scaled.coef(modelo) # scale.response = TRUE
 ```
 
@@ -925,7 +925,7 @@ Tanto el valor absoluto de estos coeficientes como el de los estadísticos de co
 Para evaluar la precisión de las predicciones se puede utilizar el coeficiente de determinación ajustado:
 
 
-```r
+``` r
 summary(modelo)$adj.r.squared
 ```
 
@@ -948,7 +948,7 @@ Podemos evaluar el modelo ajustado en el conjunto de datos de test y comparar la
 En este caso, se observa una infrapredicción en valores grandes de la respuesta, especialmente en torno al 20&#8239;% de grasa corporal (como ya se ha visto en la diagnosis realizada en la sección anterior, aparentemente se debería haber incluido un término cuadrático).
 
 
-```r
+``` r
 obs <- test$bodyfat
 pred <- predict(modelo, newdata = test)
 pred.plot(pred, obs, xlab = "Predicción", ylab = "Observado")
@@ -962,7 +962,7 @@ pred.plot(pred, obs, xlab = "Predicción", ylab = "Observado")
 También podemos obtener medidas de error:
 
 
-```r
+``` r
 accuracy(pred, obs)
 ```
 
@@ -978,7 +978,7 @@ El conjunto de datos [`mpae::bodyfat.raw`](https://rubenfcasal.github.io/mpae/re
 Particiona estos datos en una muestra de entrenamiento y una de test, ajusta el modelo anterior mediante regresión robusta con la función `MASS::rlm()`:
 
 
-```r
+``` r
 rlm(bodyfat ~ abdomen + wrist + height, data = train)
 ```
 evalúa las predicciones en la muestra de test y compara los resultados con los del ejemplo anterior.
@@ -1013,7 +1013,7 @@ Esto último puede hacerse fácilmente con el paquete `caret`.
 Este paquete implementa métodos de selección basados en el paquete `leaps`, considerando el número máximo de predictores `nvmax` como hiperparámetro y empleando búsqueda: hacia atrás (`"leapBackward"`), hacia delante (`"leapForward"`) y por pasos (`"leapSeq"`).
 
 
-```r
+``` r
 library(caret)
 modelLookup("leapSeq")
 ```
@@ -1023,7 +1023,7 @@ modelLookup("leapSeq")
 ## 1 leapSeq     nvmax Maximum Number of Predictors   TRUE    FALSE     FALSE
 ```
 
-```r
+``` r
 caret.leapSeq <- train(bodyfat ~ ., data = train, method = "leapSeq",
                        trControl = trainControl(method = "cv", number = 10),
                        tuneGrid = data.frame(nvmax = 1:6))
@@ -1053,7 +1053,7 @@ caret.leapSeq
 ## The final value used for the model was nvmax = 3.
 ```
 
-```r
+``` r
 # summary(caret.leapSeq$finalModel)
 with(caret.leapSeq, coef(finalModel, bestTune$nvmax))
 ```
@@ -1065,7 +1065,7 @@ with(caret.leapSeq, coef(finalModel, bestTune$nvmax))
 
 Una vez seleccionado el modelo final^[Se podrían haber entrenado distintos métodos de selección de predictores y comparar los resultados (en las mismas muestras de validación) para escoger el modelo final.], estudiaríamos la eficiencia de las predicciones en la muestra de test:
 
-```r
+``` r
 pred <- predict(caret.leapSeq, newdata = test)
 accuracy(pred, obs)
 ```
@@ -1108,7 +1108,7 @@ Para un tratamiento más completo de los métodos de regresión lineal generaliz
 Para el ajuste (estimación de los parámetros) de un modelo lineal generalizado a un conjunto de datos (por máxima verosimilitud) se emplea la función [`glm()`](https://rdrr.io/r/stats/glm.html):
 
 
-```r
+``` r
 ajuste <- glm(formula, family = gaussian, data, weights, subset, ...)
 ```
 
@@ -1145,7 +1145,7 @@ as.data.frame(attr(bodyfat, "variable.labels"))
 -->
 
 
-```r
+``` r
 df <- bodyfat
 # Grasa corporal superior al rango normal
 df[1] <- factor(df$bodyfat > 24 , # levels = c('FALSE', 'TRUE'),
@@ -1166,7 +1166,7 @@ Si el número de variables no es muy grande, podemos generar un gráfico de disp
 (ref:plot-df-class) Gráfico de dispersión matricial, con colores y símbolos dependiendo de `bfan`.
 
 
-```r
+``` r
 plot(train[-1], pch = as.numeric(train$bfan), col = as.numeric(train$bfan))
 ```
 
@@ -1185,7 +1185,7 @@ Para ajustar un modelo de regresión logística bastaría con establecer el argu
 Por ejemplo, podríamos considerar como punto de partida los predictores seleccionados para regresión en el apartado anterior:
 
 
-```r
+``` r
 modelo <- glm(bfan ~ abdomen + wrist + height, family = binomial, 
               data = train)
 modelo
@@ -1208,7 +1208,7 @@ modelo
 La razón de ventajas (*odds ratio*; OR) permite cuantificar el efecto de las variables explicativas en la respuesta (incremento proporcional en la razón entre la probabilidad de éxito y la de fracaso, al aumentar una unidad la variable manteniendo las demás fijas):
 
 
-```r
+``` r
 exp(coef(modelo))  # Razones de ventajas ("odds ratios")
 ```
 
@@ -1224,7 +1224,7 @@ exp(confint(modelo))
 Para obtener un resumen más completo del ajuste se puede utilizar `summary()`:
 
 
-```r
+``` r
 summary(modelo)
 ```
 
@@ -1259,7 +1259,7 @@ En este caso hay una reducción de 112.65 con una pérdida de 3 grados de libert
 Para contrastar globalmente el efecto de las covariables también podemos emplear:
 
 
-```r
+``` r
 modelo.null <- glm(bfan ~ 1, binomial, data = train)
 anova(modelo.null, modelo, test = "Chi")
 ```
@@ -1290,7 +1290,7 @@ proporciona una herramienta equivalente, `bestglm()`.
 También se puede emplear la función [`stepwise()`](https://rdrr.io/pkg/RcmdrMisc/man/stepwise.html) del paquete [`RcmdrMisc`](https://CRAN.R-project.org/package=RcmdrMisc) para seleccionar un modelo por pasos según criterio AIC o BIC:
 
 
-```r
+``` r
 # library(RcmdrMisc)
 modelo.completo <- glm(bfan ~ ., family = binomial, data = train)
 modelo <- stepwise(modelo.completo, direction = "forward/backward",
@@ -1363,7 +1363,7 @@ modelo <- stepwise(modelo.completo, direction = "forward/backward",
 ## - abdomen  1      180 190
 ```
 
-```r
+``` r
 summary(modelo)
 ```
 
@@ -1397,7 +1397,7 @@ Si no se verifican, los resultados basados en la teoría estadística pueden no 
 Con el método [`plot()`](https://rdrr.io/r/stats/plot.lm.html) se pueden generar gráficos de interés para la diagnosis del modelo (ver Figura \@ref(fig:glm-plot)):
 
 
-```r
+``` r
 plot(modelo)
 ```
 
@@ -1416,7 +1416,7 @@ train[outliers, ] # train[c(60, 137), ]
 -->
 
 
-```r
+``` r
 outliers <- which(abs(residuals(modelo, type = "pearson")) > 3)
 crPlots(modelo, id = list(method = outliers, col = 2), main = "")
 ```
@@ -1430,7 +1430,7 @@ Se pueden emplear las mismas funciones vistas en los modelos lineales para obten
 Por supuesto, también pueden aparecer problemas de colinealidad, y podemos emplear las mismas herramientas para detectarla:
 
 
-```r
+``` r
 vif(modelo)
 ```
 
@@ -1459,7 +1459,7 @@ Para evaluar la calidad de la predicción en nuevas observaciones podemos seguir
 Las estimaciones de la probabilidad (de la segunda categoría) se obtienen empleando `predict()` con `type = "response"`:
 
 
-```r
+``` r
 p.est <- predict(modelo, type = "response", newdata = test)
 pred.glm <- factor(p.est > 0.5, labels = c("No", "Yes"))
 ```
@@ -1467,7 +1467,7 @@ pred.glm <- factor(p.est > 0.5, labels = c("No", "Yes"))
 y las medidas de precisión de la predicción (además de los criterios AIC o BIC tradicionales):
 
 
-```r
+``` r
 caret::confusionMatrix(pred.glm, test$bfan, positive = "Yes", 
                        mode = "everything")
 ```
@@ -1510,7 +1510,7 @@ o de las estimaciones de las probabilidades (como el AUC).
 <!-- 
 También podemos emplear `caret`: 
 
-```r
+``` r
 # library(caret)
 names(getModelInfo("glm")) # 11 métodos
 ```
@@ -1594,7 +1594,7 @@ data(bfan, package = "mpae")
 -->
 
 
-```r
+``` r
 library(MASS)
 ld <- lda(bfan ~ abdomen + weight, data = train)
 ld
@@ -1625,7 +1625,7 @@ Podemos examinar la distribución de los valores que toma esta función en la mu
 (ref:lda) Distribución de los valores de la función discriminante lineal en cada clase. 
  
 
-```r
+``` r
 plot(ld)
 ```
 
@@ -1637,7 +1637,7 @@ plot(ld)
 Podemos evaluar la precisión en la muestra de test empleando la matriz de confusión:
 
 
-```r
+``` r
 pred <- predict(ld, newdata = test)
 pred.ld <- pred$class
 caret::confusionMatrix(pred.ld, test$bfan, positive = "Yes")
@@ -1676,7 +1676,7 @@ caret::confusionMatrix(pred.ld, test$bfan, positive = "Yes")
 También podríamos examinar las probabilidades estimadas:
 
 
-```r
+``` r
 p.est <- pred$posterior
 ```
 
@@ -1704,7 +1704,7 @@ $$\Sigma_{k,\lambda,\gamma}' = (1 - \gamma) \Sigma_{k,\lambda}' + \gamma \frac{1
 De modo análogo al caso lineal, podemos realizar un análisis discriminante cuadrático empleando la función [`MASS::qda()`](https://rdrr.io/pkg/MASS/man/qda.html):
 
 
-```r
+``` r
 qd <- qda(bfan ~ abdomen + weight, data = train)
 qd
 ```
@@ -1726,7 +1726,7 @@ qd
 y evaluar la precisión en la muestra de test:
 
 
-```r
+``` r
 pred <- predict(qd, newdata = test)
 pred.qd <- pred$class
 # p.est <- pred$posterior
@@ -1782,7 +1782,7 @@ Cuando las variables predictoras son categóricas, lo más habitual es modelizar
 Siguiendo con los ejemplos anteriores, empleamos la función [`e1071::naiveBayes()`](https://rdrr.io/pkg/e1071/man/naiveBayes.html) para realizar la clasificación:
 
 
-```r
+``` r
 library(e1071)
 nb <- naiveBayes(bfan ~ abdomen + weight, data = train)
 nb
@@ -1819,7 +1819,7 @@ En las tablas correspondientes a los predictores[^nota-bayes-1], se muestran la 
 En este caso los resultados obtenidos en la muestra de test son peores:
 
 
-```r
+``` r
 pred.nb <- predict(nb, newdata = test)
 # p.est <- predict(nb, newdata = test, type = "raw")
 caret::confusionMatrix(pred.nb, test$bfan, positive = "Yes")

@@ -53,7 +53,8 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
 <script src="libs/datatables-binding-0.30/datatables.js"></script>
 <link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
@@ -412,13 +413,13 @@ Figura 4.11: Evolución de la tasa de error utilizando <code>ada()</code>.
 Con la función `varplot()` podemos representar la importancia de las variables (y almacenarla empleando `type = "scores"`): 
 
 
-```r
+``` r
 res <- varplot(ada.boost, type = "scores")
 ```
 
 <img src="04-bagging_boosting_files/figure-html/unnamed-chunk-2-1.png" width="75%" style="display: block; margin: auto;" />
 
-```r
+``` r
 res
 ```
 
@@ -510,8 +511,7 @@ res
 ## 
 ## Tuning parameter &#39;nu&#39; was held constant at a value of 0.1
 ## Accuracy was used to select the optimal model using the largest value.
-## The final values used for the model were iter = 150, maxdepth = 3 and
-##  nu = 0.1.</code></pre>
+## The final values used for the model were iter = 150, maxdepth = 3 and nu = 0.1.</code></pre>
 <p>En la salida anterior, se observa que el parámetro <code>nu</code> se ha fijado en 0.1, por lo que solo se tienen los resultados para las combinaciones de <code>maxdepth</code> e <code>iter</code>.
 Se puede aumentar el número de combinaciones empleando <code>tuneLength</code> o <code>tuneGrid</code>, pero la búsqueda en una rejilla completa puede incrementar considerablemente el tiempo de computación.
 Por este motivo, se suelen seguir procedimientos alternativos de búsqueda. Por ejemplo, fijar la tasa de aprendizaje (inicialmente a un valor alto) para seleccionar primero un número de interaciones y la complejidad del árbol, y posteriormente fijar estos valores para seleccionar una nueva tasa de aprendizaje (repitiendo el proceso, si es necesario, hasta conseguir convergencia).</p>
@@ -540,11 +540,10 @@ Por este motivo, se suelen seguir procedimientos alternativos de búsqueda. Por 
 ##   0.300  0.75801   0.44051
 ## 
 ## Tuning parameter &#39;iter&#39; was held constant at a value of 150
-## 
-## Tuning parameter &#39;maxdepth&#39; was held constant at a value of 3
+## Tuning
+##  parameter &#39;maxdepth&#39; was held constant at a value of 3
 ## Accuracy was used to select the optimal model using the largest value.
-## The final values used for the model were iter = 150, maxdepth = 3 and
-##  nu = 0.1.</code></pre>
+## The final values used for the model were iter = 150, maxdepth = 3 and nu = 0.1.</code></pre>
 <p>Por último, podemos evaluar la precisión del modelo en la muestra de test:</p>
 <div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="boosting-r.html#cb287-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confusionMatrix</span>(<span class="fu">predict</span>(caret.ada1, <span class="at">newdata =</span> test), </span>
 <span id="cb287-2"><a href="boosting-r.html#cb287-2" aria-hidden="true" tabindex="-1"></a>                test<span class="sc">$</span>taste, <span class="at">positive =</span> <span class="st">&quot;good&quot;</span>)</span></code></pre></div>
@@ -668,16 +667,11 @@ Figura 4.13: Efecto parcial del alcohol (panel izquierdo) y la acidez volátil (
 <p>Este procedimiento también está implementado en el paquete <code>caret</code> seleccionando el método <code>"gbm"</code>, que considera 4 hiperparámetros:</p>
 <div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="boosting-r.html#cb300-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
 <span id="cb300-2"><a href="boosting-r.html#cb300-2" aria-hidden="true" tabindex="-1"></a><span class="fu">modelLookup</span>(<span class="st">&quot;gbm&quot;</span>)</span></code></pre></div>
-<pre><code>##   model         parameter                   label forReg forClass
-## 1   gbm           n.trees   # Boosting Iterations   TRUE     TRUE
-## 2   gbm interaction.depth          Max Tree Depth   TRUE     TRUE
-## 3   gbm         shrinkage               Shrinkage   TRUE     TRUE
-## 4   gbm    n.minobsinnode Min. Terminal Node Size   TRUE     TRUE
-##   probModel
-## 1      TRUE
-## 2      TRUE
-## 3      TRUE
-## 4      TRUE</code></pre>
+<pre><code>##   model         parameter                   label forReg forClass probModel
+## 1   gbm           n.trees   # Boosting Iterations   TRUE     TRUE      TRUE
+## 2   gbm interaction.depth          Max Tree Depth   TRUE     TRUE      TRUE
+## 3   gbm         shrinkage               Shrinkage   TRUE     TRUE      TRUE
+## 4   gbm    n.minobsinnode Min. Terminal Node Size   TRUE     TRUE      TRUE</code></pre>
 <p>Aunque por defecto la función <code>train()</code> solo considera nueve combinaciones de hiperparámetros.
 Para hacer una búsqueda más completa se podría seguir un procedimiento análogo al empleado con el método anterior.
 Primero, seleccionamos los hiperparámetros <code>interaction.depth</code> y <code>n.trees</code> (con las opciones por defecto, manteniendo <code>shrinkage</code> y <code>n.minobsinnode</code> fijos, aunque sin imprimir el progreso durante la búsqueda):</p>
@@ -711,8 +705,8 @@ Primero, seleccionamos los hiperparámetros <code>interaction.depth</code> y <co
 ## 
 ## Tuning parameter &#39;n.minobsinnode&#39; was held constant at a value of 10
 ## RMSE was used to select the optimal model using the smallest value.
-## The final values used for the model were n.trees =
-##  100, interaction.depth = 2, shrinkage = 0.1 and n.minobsinnode = 10.</code></pre>
+## The final values used for the model were n.trees = 100, interaction.depth =
+##  2, shrinkage = 0.1 and n.minobsinnode = 10.</code></pre>
 <p>A continuación elegimos <code>shrinkage</code>, fijando la selección previa de <code>interaction.depth</code> y <code>n.trees</code> (también se podría incluir <code>n.minobsinnode</code> en la búsqueda, pero lo mantenemos fijo para reducir el tiempo de computación):</p>
 <div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="boosting-r.html#cb304-1" aria-hidden="true" tabindex="-1"></a>tuneGrid <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">n.trees =</span>  <span class="dv">100</span>, <span class="at">interaction.depth =</span> <span class="dv">2</span>, </span>
 <span id="cb304-2"><a href="boosting-r.html#cb304-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">n.minobsinnode =</span> <span class="dv">10</span>, <span class="at">shrinkage =</span> <span class="fu">c</span>(<span class="fl">0.3</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>, <span class="fl">0.01</span>, <span class="fl">0.005</span>))</span>
@@ -737,13 +731,13 @@ Primero, seleccionamos los hiperparámetros <code>interaction.depth</code> y <co
 ##   0.300      0.77208  0.26138   0.60918
 ## 
 ## Tuning parameter &#39;n.trees&#39; was held constant at a value of 100
+## Tuning
+##  parameter &#39;interaction.depth&#39; was held constant at a value of 2
 ## 
-## Tuning parameter &#39;interaction.depth&#39; was held constant at a value of
-##  2
 ## Tuning parameter &#39;n.minobsinnode&#39; was held constant at a value of 10
 ## RMSE was used to select the optimal model using the smallest value.
-## The final values used for the model were n.trees =
-##  100, interaction.depth = 2, shrinkage = 0.1 and n.minobsinnode = 10.</code></pre>
+## The final values used for the model were n.trees = 100, interaction.depth =
+##  2, shrinkage = 0.1 and n.minobsinnode = 10.</code></pre>
 <!-- varImp(caret.gbm1) -->
 <p>Por último, evaluamos el modelo resultante en la muestra de test:</p>
 <div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="boosting-r.html#cb306-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(caret.gbm1, <span class="at">newdata =</span> test)</span>
@@ -769,22 +763,22 @@ Por este motivo, puede ser preferible emplear la interfaz de <code>caret</code>.
 <div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="boosting-r.html#cb308-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
 <span id="cb308-2"><a href="boosting-r.html#cb308-2" aria-hidden="true" tabindex="-1"></a><span class="co"># names(getModelInfo(&quot;xgb&quot;))</span></span>
 <span id="cb308-3"><a href="boosting-r.html#cb308-3" aria-hidden="true" tabindex="-1"></a><span class="fu">modelLookup</span>(<span class="st">&quot;xgbTree&quot;</span>)</span></code></pre></div>
-<pre><code>##     model        parameter                          label forReg
-## 1 xgbTree          nrounds          # Boosting Iterations   TRUE
-## 2 xgbTree        max_depth                 Max Tree Depth   TRUE
-## 3 xgbTree              eta                      Shrinkage   TRUE
-## 4 xgbTree            gamma         Minimum Loss Reduction   TRUE
-## 5 xgbTree colsample_bytree     Subsample Ratio of Columns   TRUE
-## 6 xgbTree min_child_weight Minimum Sum of Instance Weight   TRUE
-## 7 xgbTree        subsample           Subsample Percentage   TRUE
-##   forClass probModel
-## 1     TRUE      TRUE
-## 2     TRUE      TRUE
-## 3     TRUE      TRUE
-## 4     TRUE      TRUE
-## 5     TRUE      TRUE
-## 6     TRUE      TRUE
-## 7     TRUE      TRUE</code></pre>
+<pre><code>##     model        parameter                          label forReg forClass
+## 1 xgbTree          nrounds          # Boosting Iterations   TRUE     TRUE
+## 2 xgbTree        max_depth                 Max Tree Depth   TRUE     TRUE
+## 3 xgbTree              eta                      Shrinkage   TRUE     TRUE
+## 4 xgbTree            gamma         Minimum Loss Reduction   TRUE     TRUE
+## 5 xgbTree colsample_bytree     Subsample Ratio of Columns   TRUE     TRUE
+## 6 xgbTree min_child_weight Minimum Sum of Instance Weight   TRUE     TRUE
+## 7 xgbTree        subsample           Subsample Percentage   TRUE     TRUE
+##   probModel
+## 1      TRUE
+## 2      TRUE
+## 3      TRUE
+## 4      TRUE
+## 5      TRUE
+## 6      TRUE
+## 7      TRUE</code></pre>
 <p>Este método considera los siguientes hiperparámetros:</p>
 <ul>
 <li><p><code>"nrounds"</code>: número de iteraciones boosting.</p></li>
@@ -819,33 +813,24 @@ Por este motivo, puede ser preferible emplear la interfaz de <code>caret</code>.
 ## Summary of sample sizes: 799, 801, 801, 799, 800 
 ## Resampling results across tuning parameters:
 ## 
-##   eta  max_depth  colsample_bytree  subsample  nrounds  Accuracy
-##   0.3  1          0.6               0.50        50      0.74795 
-##   0.3  1          0.6               0.50       100      0.75096 
-##   0.3  1          0.6               0.50       150      0.74802 
-##   0.3  1          0.6               0.75        50      0.73895 
-##   0.3  1          0.6               0.75       100      0.74996 
-##   0.3  1          0.6               0.75       150      0.75199 
-##   0.3  1          0.6               1.00        50      0.74794 
-##   0.3  1          0.6               1.00       100      0.74395 
-##   Kappa  
-##   0.39977
-##   0.42264
-##   0.41424
-##   0.37757
-##   0.41789
-##   0.41944
-##   0.39332
-##   0.39468
+##   eta  max_depth  colsample_bytree  subsample  nrounds  Accuracy  Kappa  
+##   0.3  1          0.6               0.50        50      0.74795   0.39977
+##   0.3  1          0.6               0.50       100      0.75096   0.42264
+##   0.3  1          0.6               0.50       150      0.74802   0.41424
+##   0.3  1          0.6               0.75        50      0.73895   0.37757
+##   0.3  1          0.6               0.75       100      0.74996   0.41789
+##   0.3  1          0.6               0.75       150      0.75199   0.41944
+##   0.3  1          0.6               1.00        50      0.74794   0.39332
+##   0.3  1          0.6               1.00       100      0.74395   0.39468
 ##  [ reached getOption(&quot;max.print&quot;) -- omitted 100 rows ]
 ## 
 ## Tuning parameter &#39;gamma&#39; was held constant at a value of 0
-## 
-## Tuning parameter &#39;min_child_weight&#39; was held constant at a value of 1
+## Tuning
+##  parameter &#39;min_child_weight&#39; was held constant at a value of 1
 ## Accuracy was used to select the optimal model using the largest value.
-## The final values used for the model were nrounds = 100, max_depth =
-##  2, eta = 0.4, gamma = 0, colsample_bytree = 0.8, min_child_weight =
-##  1 and subsample = 1.</code></pre>
+## The final values used for the model were nrounds = 100, max_depth = 2, eta
+##  = 0.4, gamma = 0, colsample_bytree = 0.8, min_child_weight = 1 and subsample
+##  = 1.</code></pre>
 <p>Al imprimir el resultado del ajuste, observamos que fija los valores de los hiperparámetros <code>gamma</code> y <code>min_child_weight</code>.
 Adicionalmente, se podría seguir una estrategia de selección de los hiperparámetros similar a la empleada en los métodos anteriores, alternando la búsqueda de los valores óptimos de distintos grupos de hiperparámetros.</p>
 <div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="boosting-r.html#cb313-1" aria-hidden="true" tabindex="-1"></a>caret.xgb<span class="sc">$</span>bestTune</span></code></pre></div>
@@ -939,42 +924,42 @@ Vinayak, R. K., y Gilad-Bachrach, R. (2015). Dart: Dropouts meet multiple additi
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": true,
-"facebook": false,
-"twitter": false,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/rubenfcasal/aprendizaje_estadistico/edit/master/04-bagging_boosting.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["aprendizaje_estadistico.pdf"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection"
-}
+  "sharing": {
+    "github": true,
+    "facebook": false,
+    "twitter": false,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/rubenfcasal/aprendizaje_estadistico/edit/master/04-bagging_boosting.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["aprendizaje_estadistico.pdf"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
 });
 });
 </script>

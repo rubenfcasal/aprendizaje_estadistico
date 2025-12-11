@@ -253,7 +253,7 @@ Emplearemos el conjunto de datos [`winequality`](https://rubenfcasal.github.io/m
 `total.sulfur.dioxide`, `density`, `pH`, `sulphates` y `alcohol`) y sensorial (`quality`)  de una muestra de 1250 vinos portugueses de la variedad *vinho verde* [@cortez2009modeling]
 
 
-```r
+``` r
 library(mpae)
 # data(winequality, package = "mpae")
 str(winequality)
@@ -279,7 +279,7 @@ Como respuesta consideraremos la variable `quality`, mediana de al menos 3 evalu
 (ref:barplot) Distribución de las evaluaciones de la calidad del vino (`winequality$quality`).
 
 
-```r
+``` r
 barplot(table(winequality$quality), xlab = "Calidad", ylab = "Frecuencia")
 ```
 
@@ -290,7 +290,7 @@ barplot(table(winequality$quality), xlab = "Calidad", ylab = "Frecuencia")
 
 En primer lugar se selecciona el 80&#8239;% de los datos como muestra de entrenamiento y el 20&#8239;% restante como muestra de test:
 
-```r
+``` r
 set.seed(1)
 nobs <- nrow(winequality)
 itrain <- sample(nobs, 0.8 * nobs)
@@ -301,14 +301,14 @@ test <- winequality[-itrain, ]
 Podemos obtener el árbol de decisión con las opciones por defecto con el comando:
 
 
-```r
+``` r
 tree <- rpart(quality ~ ., data = train)
 ```
 
 Al imprimirlo se muestra el número de observaciones e información sobre los distintos nodos (número de nodo, condición que define la partición, número de observaciones en el nodo, función de pérdida y predicción), marcando con un `*` los nodos terminales.
 
 
-```r
+``` r
 tree
 ```
 
@@ -344,7 +344,7 @@ Para representarlo se pueden emplear las herramientas del paquete [`rpart`](http
 (ref:arbolrpart) Árbol de regresión para predecir `winequality$quality` (obtenido con las opciones por defecto de [`rpart()`](https://rdrr.io/pkg/rpart/man/rpart.html)).
 
 
-```r
+``` r
 plot(tree)
 text(tree)
 ```
@@ -359,7 +359,7 @@ Pero puede ser preferible emplear el paquete [`rpart.plot`](https://CRAN.R-proje
 (ref:arbolrpartplot) Representación del árbol de regresión generada con [`rpart.plot()`](https://rdrr.io/pkg/rpart.plot/man/rpart.plot.html).
 
 
-```r
+``` r
 library(rpart.plot)
 rpart.plot(tree)  
 ```
@@ -372,7 +372,7 @@ rpart.plot(tree)
 Nos interesa conocer cómo se clasificaría a una nueva observación en los nodos terminales, junto con las predicciones correspondientes (la media de la respuesta en el nodo terminal). En los nodos intermedios, solo nos interesan las condiciones y el orden de las variables consideradas hasta llegar a las hojas. Para ello, puede ser útil imprimir las reglas:
 
 
-```r
+``` r
 rpart.rules(tree, style = "tall")
 ```
 
@@ -435,14 +435,14 @@ Sin embargo, para seleccionar el valor óptimo de este hiperparámetro se puede 
 En primer lugar habría que establecer `cp = 0` para construir el árbol completo, a la profundidad máxima. La profundidad máxima viene determinada por los valores de `minsplit` y `minbucket`, los cuales pueden ser ajustados manualmente dependiendo del número de observaciones o tratados como hiperparámetros; esto último no está implementado en `rpart`, ni en principio en `caret`^[Los parámetros `maxsurrogate`, `usesurrogate` y `surrogatestyle` serían de utilidad si hay datos faltantes.]. 
 
 
-```r
+``` r
 tree <- rpart(quality ~ ., data = train, cp = 0)
 ```
 
 Posteriormente, podemos emplear la función [`printcp()`](https://rdrr.io/pkg/rpart/man/printcp.html) para obtener los valores de CP para los árboles (óptimos) de menor tamaño, junto con su error de validación cruzada `xerror` (reescalado de forma que el máximo de `rel error` es 1):
 
 
-```r
+``` r
 printcp(tree)
 ```
 
@@ -480,7 +480,7 @@ printcp(tree)
 También [`plotcp()`](https://rdrr.io/pkg/rpart/man/plotcp.html) para representarlos^[Realmente en la tabla de texto se muestra el valor mínimo de CP, ya que se obtendría la misma solución para un rango de valores de CP (desde ese valor hasta el anterior, sin incluirlo), mientras que en el gráfico generado por [`plotcp()`](https://rdrr.io/pkg/rpart/man/plotcp.html) se representa la media geométrica de los extremos de ese intervalo.] (ver Figura \@ref(fig:cp)): 
 
 
-```r
+``` r
 plotcp(tree)
 ```
 
@@ -492,7 +492,7 @@ plotcp(tree)
 La tabla con los valores de las podas (óptimas, dependiendo del parámetro de complejidad) está almacenada en la componente `$cptable`:
 
 
-```r
+``` r
 head(tree$cptable, 10)
 ```
 
@@ -513,7 +513,7 @@ head(tree$cptable, 10)
 A partir de esta misma tabla podríamos seleccionar el valor óptimo de forma automática, siguiendo el criterio de un error estándar de @breiman1984classification: 
 
 
-```r
+``` r
 xerror <- tree$cptable[,"xerror"]
 imin.xerror <- which.min(xerror)
 # Valor óptimo
@@ -525,7 +525,7 @@ tree$cptable[imin.xerror, ]
 ##  0.013044  4.000000  0.736326  0.770380  0.039654
 ```
 
-```r
+``` r
 # Límite superior "oneSE rule" y complejidad mínima por debajo de ese valor
 upper.xerror <- xerror[imin.xerror] + tree$cptable[imin.xerror, "xstd"]
 icp <- min(which(xerror <= upper.xerror))
@@ -537,7 +537,7 @@ Para obtener el modelo final (ver Figura \@ref(fig:arbolpoda)) podamos el árbol
 
 
 
-```r
+``` r
 tree <- prune(tree, cp = cp)
 rpart.plot(tree) 
 ```
@@ -553,7 +553,7 @@ Este método muestra,  entre otras cosas, una medida (en porcentaje) de la impor
 Como alternativa, podríamos emplear el siguiente código:
 
 
-```r
+``` r
 # summary(tree)
 importance <- tree$variable.importance 
 importance <- round(100*importance/sum(importance), 1)
@@ -577,7 +577,7 @@ Representamos los valores observados frente a las predicciones (ver Figura \@ref
 (ref:obsXpred) Gráfico de observaciones frente a predicciones (`test$quality`; se añade una perturbación para mostrar la distribución de los valores).
 
 
-```r
+``` r
 obs <- test$quality
 pred <- predict(tree, newdata = test)
 # plot(pred, obs, xlab = "Predicción", ylab = "Observado")
@@ -592,7 +592,7 @@ abline(a = 0, b = 1)
 
 y calculamos medidas de error de las predicciones, bien empleando el paquete `caret`: 
 
-```r
+``` r
 caret::postResample(pred, obs)
 ```
 
@@ -604,7 +604,7 @@ o con la función `accuracy()`:
 
 
 
-```r
+``` r
 accuracy(pred, test$quality)
 ```
 
@@ -633,7 +633,7 @@ Finalmente, evalúa los resultados en la muestra de test.
 Como base se puede utilizar el siguiente código:
 
 
-```r
+``` r
 ntest <- 10
 test <- winequality[1:ntest, ]
 df <- winequality[-(1:ntest), ]
@@ -665,7 +665,7 @@ La idea consiste en emplear una remuestra bootstrap del conjunto de datos de ent
 
 
 
-```r
+``` r
 set.seed(1)
 nobs <- nrow(winequality)
 itrain <- sample(nobs, 0.8 * nobs)
@@ -682,7 +682,7 @@ La muestra bootstrap va a contener muchas observaciones repetidas y habrá obser
 La probabilidad de que una observación no sea seleccionada es $(1 - 1/n)^n \approx e^{-1} \approx 0.37$.
 
 
-```r
+``` r
 # Número de casos "out of bag"
 ntrain - length(unique(itrain.boot))
 ```
@@ -691,7 +691,7 @@ ntrain - length(unique(itrain.boot))
 ## [1] 370
 ```
 
-```r
+``` r
 # Muestra "out of bag"
 oob <- train[-itrain.boot, ]
 ```
@@ -709,7 +709,7 @@ Para ilustrar los árboles de clasificación CART, podemos emplear los datos ant
 (este conjunto de datos está disponible en [`mpae::winetaste`](https://rubenfcasal.github.io/mpae/reference/winetaste.html)).
 
 
-```r
+``` r
 # data(winetaste, package = "mpae")
 winetaste <- winequality[, colnames(winequality)!="quality"]
 winetaste$taste <- factor(winequality$quality < 6, 
@@ -733,7 +733,7 @@ str(winetaste)
 ##  $ taste               : Factor w/ 2 levels "good","bad": 2 2 2 1 2 2 1 1 1 2 ..
 ```
 
-```r
+``` r
 table(winetaste$taste)
 ```
 
@@ -746,7 +746,7 @@ table(winetaste$taste)
 Como en el caso anterior, se contruyen las muestras de entrenamiento (80&#8239;%) y de test (20&#8239;%):
 
 
-```r
+``` r
 # set.seed(1)
 # nobs <- nrow(winetaste)
 # itrain <- sample(nobs, 0.8 * nobs)
@@ -757,14 +757,14 @@ test <- winetaste[-itrain, ]
 Al igual que en el caso anterior, podemos obtener el árbol de clasificación con las opciones por defecto (`cp = 0.01` y `split = "gini"`) con el comando:
 
 
-```r
+``` r
 tree <- rpart(taste ~ ., data = train)
 ```
 
 Al imprimirlo, además de mostrar el número de nodo, la condición de la partición y el número de observaciones en el nodo, también se incluye el número de observaciones mal clasificadas, la predicción y las proporciones estimadas (frecuencias relativas en la muestra de entrenamiento) de las clases:
 
 
-```r
+``` r
 tree
 ```
 
@@ -802,7 +802,7 @@ También puede ser preferible emplear el paquete [`rpart.plot`](https://CRAN.R-p
 (ref:arbolclassif) Árbol de clasificación de `winetaste$taste` (obtenido con las opciones por defecto).
 
 
-```r
+``` r
 library(rpart.plot)
 rpart.plot(tree) # Alternativa: rattle::fancyRpartPlot
 ```
@@ -817,7 +817,7 @@ Nos interesa cómo se clasificaría a una nueva observación, es decir, cómo se
 (ref:arbolextra) Representación del árbol de clasificación de `winetaste$taste` con opciones adicionales.
 
 
-```r
+``` r
 rpart.plot(tree, 
            extra = 104,          # show fitted class, probs, percentages
            box.palette = "GnBu", # color scheme
@@ -838,14 +838,14 @@ Además, si el número de observaciones es grande y las clases están más o men
 se podría aumentar los valores mínimos de observaciones en los nodos intermedios y terminales^[Otra opción, más interesante para regresión, sería considerar estos valores como hiperparámetros.], por ejemplo:
 
 
-```r
+``` r
 tree <- rpart(taste ~ ., data = train, cp = 0, minsplit = 30, minbucket = 10)
 ```
 
 En este caso mantenemos el resto de valores por defecto:
 
 
-```r
+``` r
 tree <- rpart(taste ~ ., data = train, cp = 0)
 ```
 
@@ -856,7 +856,7 @@ Representamos los errores (reescalados) de validación cruzada (ver Figura \@ref
 <!-- printcp(tree) -->
 
 
-```r
+``` r
 plotcp(tree)
 ```
 
@@ -870,7 +870,7 @@ Para obtener el modelo final, seleccionamos el valor óptimo de complejidad sigu
 (ref:arbolclassifpoda) Árbol de clasificación de `winetaste$taste` obtenido después de la poda (modelo final).
 
 
-```r
+``` r
 xerror <- tree$cptable[,"xerror"]
 imin.xerror <- which.min(xerror)
 upper.xerror <- xerror[imin.xerror] + tree$cptable[imin.xerror, "xstd"]
@@ -887,7 +887,7 @@ rpart.plot(tree)
 
 Si nos interesase estudiar la importancia de los predictores, podríamos utilizar el mismo código de la Sección \@ref(reg-rpart) (no evaluado):
 
-```r
+``` r
 importance <- tree$variable.importance
 importance <- round(100*importance/sum(importance), 1)
 importance[importance >= 1]
@@ -898,7 +898,7 @@ El último paso sería evaluar el modelo en la muestra de test siguiendo los pas
 El método [`predict.rpart()`](https://rdrr.io/pkg/rpart/man/predict.rpart.html) devuelve por defecto (`type = "prob"`) una matriz con las probabilidades de cada clase, por lo que habría que establecer `type = "class"` para obtener la clase predicha (consultar la ayuda de esta función para más detalles).
 
 
-```r
+``` r
 obs <- test$taste
 head(predict(tree, newdata = test))
 ```
@@ -913,7 +913,7 @@ head(predict(tree, newdata = test))
 ## 16 0.81516 0.18484
 ```
 
-```r
+``` r
 pred <- predict(tree, newdata = test, type = "class")
 table(obs, pred)
 ```
@@ -925,7 +925,7 @@ table(obs, pred)
 ##   bad    54  30
 ```
 
-```r
+``` r
 caret::confusionMatrix(pred, obs)
 ```
 
@@ -980,7 +980,7 @@ Por defecto, `caret`  realiza bootstrap de las observaciones para seleccionar el
 Si queremos emplear validación cruzada, como se hizo en el caso anterior, podemos emplear la función auxiliar [`trainControl()`](https://rdrr.io/pkg/caret/man/trainControl.html), y para considerar un mayor rango de posibles valores podemos hacer uso del argumento `tuneLength` (ver Figura \@ref(fig:arbolclassifggplot)).
 
 
-```r
+``` r
 library(caret)
 # modelLookup("rpart")  # Información sobre hiperparámetros
 set.seed(1)
@@ -1028,7 +1028,7 @@ caret.rpart
 ## The final value used for the model was cp = 0.01199.
 ```
 
-```r
+``` r
 ggplot(caret.rpart, highlight = TRUE)
 ```
 
@@ -1041,7 +1041,7 @@ El modelo final se devuelve en la componente `$finalModel` (ver Figura \@ref(fig
 (ref:arbolfinalcaret) Árbol de clasificación de `winetaste$taste`, obtenido con la complejidad "óptima" (empleando `caret`).
 
 
-```r
+``` r
 caret.rpart$finalModel
 ```
 
@@ -1074,7 +1074,7 @@ caret.rpart$finalModel
 ##       15) pH< 3.235 146  35 bad (0.23973 0.76027) *
 ```
 
-```r
+``` r
 rpart.plot(caret.rpart$finalModel)
 ```
 
@@ -1090,7 +1090,7 @@ Para utilizar la regla de "un error estándar" se puede añadir `selectionFuncti
 (ref:arbolclassifoneSE) Árbol de clasificación de `winetaste$taste`, obtenido con la regla de un error estándar para seleccionar la complejidad (empleando `caret`).
 
 
-```r
+``` r
 set.seed(1)
 trControl <- trainControl(method = "cv", number = 10, 
                           selectionFunction = "oneSE")
@@ -1141,7 +1141,7 @@ caret.rpart
 Como cabría esperar, el modelo resultante es más simple (ver Figura \@ref(fig:figarbolclassifoneSE)):
 
 
-```r
+``` r
 rpart.plot(caret.rpart$finalModel)
 ```
 
@@ -1153,7 +1153,7 @@ rpart.plot(caret.rpart$finalModel)
 Adicionalmente, representamos la importancia[^rpart-2] de los predictores (ver Figura \@ref(fig:arbolImpor)):
 
 
-```r
+``` r
 var.imp <- varImp(caret.rpart)
 plot(var.imp)
 ```
@@ -1169,7 +1169,7 @@ Por ejemplo, en este caso, `varImp(caret.rpart$finalModel)` es equivalente a `va
 Finalmente, calculamos las predicciones con el método [`predict.train()`](https://rdrr.io/pkg/caret/man/predict.train.html) y posteriormente evaluamos su precisión con [`confusionMatrix()`](https://rdrr.io/pkg/caret/man/confusionMatrix.html):
 
 
-```r
+``` r
 pred <- predict(caret.rpart, newdata = test)
 confusionMatrix(pred, test$taste)
 ```
@@ -1209,7 +1209,7 @@ También podríamos calcular las estimaciones de las probabilidades (añadiendo 
 (ref:ROC-tree) Curva ROC correspondiente al árbol de clasificación de `winetaste$taste`.
 
 
-```r
+``` r
 library(pROC)
 p.est <- predict(caret.rpart, newdata = test, type = "prob")
 roc_tree <- roc(response = obs, predictor = p.est$good)
@@ -1225,7 +1225,7 @@ roc_tree
 ## Area under the curve: 0.72
 ```
 
-```r
+``` r
 plot(roc_tree, xlab = "Especificidad", ylab = "Sensibilidad")
 ```
 
@@ -1246,7 +1246,7 @@ Por ejemplo, emplear el coeficiente kappa en lugar de la precisión (solo habrí
 NOTA: En principio también se podría utilizar la regla de "un error estándar" seleccionando `method = "rpart1SE"` (pero `caret` implementa internamente este método y en ocasiones no se obtienen los resultados esperados).
 
 
-```r
+``` r
 set.seed(1)
 caret.rpart <- train(taste ~ ., method = "rpart1SE", data = train) 
 caret.rpart
@@ -1311,7 +1311,7 @@ A modo de ejemplo, siguiendo con el problema de clasificación anterior, podría
 (ref:ctree-plot) Árbol de decisión para clasificar la calidad del vino (`winetaste$taste`) obtenido con el método condicional.
 
 
-```r
+``` r
 library(party)
 tree2 <- ctree(taste ~ ., data = train) 
 plot(tree2)

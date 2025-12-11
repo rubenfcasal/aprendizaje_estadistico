@@ -70,7 +70,7 @@ Como ya se indicó previamente, este método está implementado en la función `
 Como ejemplo adicional, emplearemos el conjunto de datos `MASS::mcycle`, que contiene mediciones de la aceleración de la cabeza en una simulación de un accidente de motocicleta, utilizado para probar cascos protectores. Consideraremos el conjunto de datos completo como si fuese la muestra de entrenamiento (ver Figura \@ref(fig:np-knnfit)):
 
 
-```r
+``` r
 data(mcycle, package = "MASS")
 library(caret)
 # Ajuste de los modelos
@@ -176,7 +176,7 @@ Aunque el paquete base de `R` incluye herramientas para la estimación tipo núc
 Continuando con el ejemplo del conjunto de datos `MASS::mcycle`, emplearemos la función `locpoly()` del paquete `KernSmooth` para obtener estimaciones lineales locales^[La función `KernSmooth::locpoly()` también admite la estimación de derivadas.] con una ventana seleccionada mediante un método plug-in (ver Figura \@ref(fig:llr-fit)):
 
 
-```r
+``` r
 # data(mcycle, package = "MASS")
 times <- mcycle$times
 accel <- mcycle$accel  
@@ -196,7 +196,7 @@ Hay que tener en cuenta que el paquete `KernSmooth` no implementa los métodos `
 El resultado del ajuste es una rejilla con las predicciones y podríamos emplear interpolación para calcular predicciones en otras posiciones:
 
 
-```r
+``` r
 pred <- approx(fit, xout = times)$y 
 resid <- accel - pred 
 ```
@@ -204,7 +204,7 @@ resid <- accel - pred
 Tampoco calcula medidas de bondad de ajuste, aunque podríamos calcular medidas de la precisión de las predicciones de la forma habitual (en este caso de la muestra de entrenamiento):
 
 
-```r
+``` r
 accuracy(pred, accel)
 ```
 
@@ -230,7 +230,7 @@ Será necesario establecer `family = "symmetric"` para emplear M-estimadores, po
 Previamente, seleccionaremos el parámetro `span` por validación cruzada (LOOCV), pero empleando como criterio de error la mediana de los errores en valor absoluto (*median absolute deviation*, MAD)^[En este caso hay dependencia entre las observaciones y los criterios habituales, como validación cruzada, tienden a seleccionar ventanas pequeñas, *i.&nbsp;e.* a infrasuavizar.] (ver Figura \@ref(fig:loess-cv)).
 
 
-```r
+``` r
 # Función que calcula las predicciones LOOCV
 cv.loess <- function(formula, datos, span, ...) {
   n <- nrow(datos)
@@ -268,7 +268,7 @@ points(span.cv, cv.error[imin], pch = 16)
 Empleamos el parámetro de suavizado seleccionado para ajustar el modelo final (ver Figura \@ref(fig:loess-fit)):
 
 
-```r
+``` r
 # Ajuste con todos los datos
 plot(accel ~ times, data = mcycle, col = 'darkgray')
 fit <- loess(accel ~ times, mcycle, span = span.cv, family = "symmetric")
@@ -305,7 +305,7 @@ Además, se podrían emplear otras bases equivalentes.
 Por ejemplo, para evitar posibles problemas computacionales con la base anterior, se suele emplear la denominada base $B$-*spline* [@de1978practical], implementada en la función `bs()` del paquete `splines` (ver Figura \@ref(fig:spline-d012)):
 
 
-```r
+``` r
 nknots <- 9 # nodos internos; 10 intervalos
 knots <- seq(min(times), max(times), len = nknots + 2)[-c(1, nknots + 2)]
 library(splines)
@@ -345,7 +345,7 @@ Por ejemplo, se puede emplear la función `splines::ns()` para ajustar un spline
 (ref:spline-ns-bs) Ajuste mediante splines naturales y $B$-splines."}
 
 
-```r
+``` r
 plot(times, accel, col = 'darkgray')
 fit4 <- lm(accel ~ ns(times, knots = knots))
 lines(newx, predict(fit4, newdata))
@@ -392,7 +392,7 @@ Por defecto emplea GCV para seleccionar el parámetro de suavizado, aunque tambi
 Además de predicciones, el correspondiente método `predict()` también permite obtener estimaciones de las derivadas.
 
 
-```r
+``` r
 sspline.gcv <- smooth.spline(times, accel)
 sspline.cv <- smooth.spline(times, accel, cv = TRUE)
 plot(times, accel, col = 'darkgray')
@@ -452,7 +452,7 @@ Entre las diferentes extensiones interesantes a los modelos generalizados, desta
 La función [`gam()`](https://rdrr.io/pkg/mgcv/man/gam.html) del paquete [`mgcv`](https://CRAN.R-project.org/package=mgcv) permite ajustar modelos aditivos generalizados empleando suavizado mediante splines:
 
 
-```r
+``` r
 ajuste <- gam(formula, family = gaussian, data, ...)
 ```
 
@@ -463,25 +463,25 @@ Algunas posibilidades de uso son las que siguen:
 
 -   Modelo lineal[^reg-gam-1]:
     
-    ```r
+    ``` r
     ajuste <- gam(y ~ x1 + x2 + x3)
     ```
 
 -   Modelo (semiparamétrico) aditivo con efectos no paramétricos para `x1` y `x2`, y un efecto lineal para `x3`:
     
-    ```r
+    ``` r
     ajuste <- gam(y ~ s(x1) + s(x2) + x3)
     ```
 
 -   Modelo no aditivo (con interacción):
     
-    ```r
+    ``` r
     ajuste <- gam(y ~ s(x1, x2))
     ```
 
 -   Modelo (semiparamétrico) con distintas combinaciones :
     
-    ```r
+    ``` r
     ajuste <- gam(y ~ s(x1, x2) + s(x3) + x4)
     ```
 
@@ -492,7 +492,7 @@ En esta sección utilizaremos como ejemplo el conjunto de datos `Prestige` de la
 Se tratará de explicar `prestige` (puntuación de ocupaciones obtenidas a partir de una encuesta) a partir de `income` (media de ingresos en la ocupación) y `education` (media de los años de educación).
 
 
-```r
+``` r
 library(mgcv)
 data(Prestige, package = "carData")
 modelo <- gam(prestige ~ s(income) + s(education), data = Prestige)
@@ -534,7 +534,7 @@ En este caso, el método [`plot()`](https://rdrr.io/pkg/mgcv/man/plot.gam.html) 
 (ref:gam-eff) Estimaciones de los efectos parciales de `income` (izquierda) y `education` (derecha).
 
 
-```r
+``` r
 plot(modelo, shade = TRUE, pages = 1) # residuals = FALSE por defecto
 ```
 
@@ -557,7 +557,7 @@ Para generar esta rejilla se puede emplear la función `expand.grid(x,y)` que cr
 (ref:rejilla-pred) Observaciones y rejilla de predicción (para los predictores `education` e `income`). 
 
 
-```r
+``` r
 inc <- with(Prestige, seq(min(income), max(income), len = 25))
 ed <- with(Prestige, seq(min(education), max(education), len = 25))
 newdata <- expand.grid(income = inc, education = ed)
@@ -574,7 +574,7 @@ abline(h = inc, v = ed, col = "grey")
 A continuación, usamos estos valores para obtener la superficie de predicción, que en este caso representamos con la función [`plot3D::persp3D()`](https://rdrr.io/pkg/plot3D/man/persp3D.html) (ver Figura \@ref(fig:sup-pred)). Alternativamente, se podrían emplear las funciones `contour()`, `filled.contour()`, `plot3D::image2D()` o similares.
 
 
-```r
+``` r
 pred <- predict(modelo, newdata)
 pred <- matrix(pred, nrow = 25)
 plot3D::persp3D(inc, ed, pred, theta = -40, phi = 30, ticktype = "detailed",
@@ -596,7 +596,7 @@ Además de las medidas de bondad de ajuste, como el coeficiente de determinació
 Por ejemplo, viendo la representación de los efectos (Figura \@ref(fig:gam-eff) anterior) se podría pensar que el efecto de `education` podría ser lineal:
 
 
-```r
+``` r
 # plot(modelo)
 modelo0 <- gam(prestige ~ s(income) + education, data = Prestige)
 summary(modelo0)
@@ -627,7 +627,7 @@ summary(modelo0)
 ## GCV = 54.798  Scale est. = 51.8      n = 102
 ```
 
-```r
+``` r
 anova(modelo0, modelo, test="F")
 ```
 
@@ -648,7 +648,7 @@ En este caso aceptaríamos que el modelo original es significativamente mejor.
 Alternativamente, podríamos pensar que hay interacción:
 
 
-```r
+``` r
 modelo2 <- gam(prestige ~ s(income, education), data = Prestige)
 summary(modelo2)
 ```
@@ -686,7 +686,7 @@ En este caso, el coeficiente de determinación ajustado es menor y ya no tendrí
 También podríamos emplear el criterio `AIC()` (o `BIC()`): 
 
 
-```r
+``` r
 AIC(modelo)
 ```
 
@@ -694,7 +694,7 @@ AIC(modelo)
 ## [1] 694.22
 ```
 
-```r
+``` r
 AIC(modelo2)
 ```
 
@@ -718,7 +718,7 @@ La función [`gam.check()`](https://rdrr.io/pkg/mgcv/man/gam.check.html) realiza
 <!-- fig.dim = c(9, 9) -->
 
 
-```r
+``` r
 gam.check(modelo)
 ```
 
@@ -739,8 +739,8 @@ gam.check(modelo)
 ## indicate that k is too low, especially if edf is close to k'.
 ## 
 ##                k'  edf k-index p-value
-## s(income)    9.00 3.12    0.98    0.32
-## s(education) 9.00 3.18    1.03    0.60
+## s(income)    9.00 3.12    0.98    0.40
+## s(education) 9.00 3.18    1.03    0.54
 ```
 
 Lo ideal sería observar normalidad en los dos gráficos de la izquierda, falta de patrón en el superior derecho, y ajuste a una recta en el inferior derecho. En este caso parece que el modelo se comporta adecuadamente.
@@ -751,7 +751,7 @@ Normalmente no influye demasiado en el resultado, aunque puede influir en el tie
 También se puede chequear la concurvidad (generalización de la colinealidad) entre las componentes del modelo, con la función [`concurvity()`](https://rdrr.io/pkg/mgcv/man/concurvity.html):
 
 
-```r
+``` r
 concurvity(modelo)
 ```
 
@@ -776,7 +776,7 @@ También se pueden ajustar modelos GAM empleando `caret`.
 Por ejemplo, con los métodos `"gam"` y `"gamLoess"`:
 
 
-```r
+``` r
 library(caret)
 # names(getModelInfo("gam")) # 4 métodos
 modelLookup("gam")
@@ -788,7 +788,7 @@ modelLookup("gam")
 ## 2   gam    method            Method   TRUE     TRUE      TRUE
 ```
 
-```r
+``` r
 modelLookup("gamLoess")
 ```
 
@@ -879,7 +879,7 @@ Actualmente el paquete de referencia para MARS es [`earth`](http://www.milbo.use
 La función principal es [`earth()`](https://rdrr.io/pkg/earth/man/earth.html) y se suelen considerar los siguientes argumentos:
 
 
-```r
+``` r
 earth(formula, data, glm = NULL, degree = 1, ...) 
 ```
 * `formula` y `data` (opcional): permiten especificar la respuesta y las variables predictoras de la forma habitual (p.&nbsp;ej. `respuesta ~ .`; también admite matrices). Admite respuestas multidimensionales (ajustará un modelo para cada componente) y categóricas (las convierte en multivariantes); también predictores categóricos, aunque no permite datos faltantes.
@@ -909,7 +909,7 @@ Otros parámetros que pueden ser de interés (afectan a la complejidad del model
 Utilizaremos como ejemplo inicial los datos de `MASS:mcycle`:
 
 
-```r
+``` r
 # data(mcycle, package = "MASS")
 library(earth)
 mars <- earth(accel ~ times, data = mcycle)
@@ -937,7 +937,7 @@ Por defecto, el método \texttt{plot()} representa un resumen de los errores de 
 (ref:earth-fit-plot) Resultados de validación del modelo MARS univariante (empleando la función `earth()` con parámetros por defecto y `MASS:mcycle`).
 
 
-```r
+``` r
 plot(mars)
 ```
 
@@ -951,7 +951,7 @@ Si representamos el ajuste obtenido (ver Figura \@ref(fig:earth-fit)), vemos que
 (ref:earth-fit) Ajuste del modelo MARS univariante (obtenido con la función `earth()` con parámetros por defecto) para predecir `accel` en función de `times`.
 
 
-```r
+``` r
 plot(accel ~ times, data = mcycle, col = 'darkgray')
 lines(mcycle$times, predict(mars))
 ```
@@ -966,7 +966,7 @@ Para mejorar el ajuste, podríamos forzar la complejidad del modelo en el crecim
 (ref:earth-fit2) Ajuste del modelo MARS univariante (con la función `earth()` con parámetros `minspan = 1` y `thresh = 0`).
 
 
-```r
+``` r
 mars2 <- earth(accel ~ times, data = mcycle, minspan = 1, thresh = 0)
 summary(mars2)
 ```
@@ -990,7 +990,7 @@ summary(mars2)
 ## GCV 623.52    RSS 67509    GRSq 0.73498    RSq 0.78097
 ```
 
-```r
+``` r
 plot(accel ~ times, data = mcycle, col = 'darkgray')
 lines(mcycle$times, predict(mars2))
 ```
@@ -1008,15 +1008,15 @@ library(earth)
 -->
 
 
-```r
+``` r
 mars <- earth(prestige ~ education + income + women, data = Prestige,
               degree = 2, nk = 40)
 summary(mars)
 ```
 
 ```
-## Call: earth(formula=prestige~education+income+women, data=Prestige,
-##             degree=2, nk=40)
+## Call: earth(formula=prestige~education+income+women, data=Prestige, degree=2,
+##             nk=40)
 ## 
 ##                                coefficients
 ## (Intercept)                        19.98452
@@ -1045,7 +1045,7 @@ Para representar los efectos de las variables, `earth` utiliza las herramientas 
 (ref:earth-eff) Efectos parciales de las componentes del modelo MARS ajustado.
 
 
-```r
+``` r
 plotmo(mars)
 ```
 
@@ -1062,7 +1062,7 @@ plotmo(mars)
 También podemos obtener la importancia de las variables mediante la función [`evimp()`](https://rdrr.io/pkg/earth/man/evimp.html) y representarla gráficamente utilizando el método [`plot.evimp()`](https://rdrr.io/pkg/earth/man/plot.evimp.html); ver Figura \@ref(fig:evimp-plot):
 
 
-```r
+``` r
 varimp <- evimp(mars)
 varimp
 ```
@@ -1074,7 +1074,7 @@ varimp
 ## women            3  16.3   22.0
 ```
 
-```r
+``` r
 plot(varimp)
 ```
 
@@ -1087,7 +1087,7 @@ Para finalizar, queremos destacar que se puede tener en cuenta este modelo como 
 En este caso, el ajuste GAM equivalente al modelo MARS anterior sería el siguiente:
 
 
-```r
+``` r
 fit.gam <- gam(prestige ~ s(education) + s(income, women), data = Prestige)
 summary(fit.gam)
 ```
@@ -1123,7 +1123,7 @@ En esta gráfica se representan los efectos principales de los predictores y el 
 (ref:earth-mgcv-plotmo) Efectos parciales de las componentes del modelo GAM con interacción.
 
 
-```r
+``` r
 plotmo(fit.gam)
 ```
 
@@ -1144,7 +1144,7 @@ Esto se puede ver claramente en la Figura \@ref(fig:earth-mgcv-plot), donde se r
 (ref:earth-mgcv-plot) Efecto parcial de la interacción `income:women`.
 
 
-```r
+``` r
 plot(fit.gam, scheme = 2, select = 2)
 ```
 
@@ -1157,7 +1157,7 @@ Lo anterior nos podría hacer sospechar que el efecto de la interacción no es s
 Además, si ajustamos el modelo sin interacción obtenemos un coeficiente de determinación ajustado mejor:
 
 
-```r
+``` r
 fit.gam2 <- gam(prestige ~ s(education) + s(income) + s(women), 
                 data = Prestige)
 summary(fit.gam2)
@@ -1191,7 +1191,7 @@ summary(fit.gam2)
 
 El procedimiento clásico sería realizar un contraste de hipótesis, como se mostró en la Sección \@ref(anova-gam):
 
-```r
+``` r
 anova(fit.gam2, fit.gam, test = "F")
 ```
 
@@ -1225,7 +1225,7 @@ Siguiendo con el ejemplo anterior de los datos `Prestige`, compara los errores d
 En esta sección, emplearemos como ejemplo el conjunto de datos `earth::Ozone1` y seguiremos el procedimiento habitual en aprendizaje estadístico:
 
 
-```r
+``` r
 # data(ozone1, package = "earth")
 df <- ozone1  
 set.seed(1)
@@ -1238,7 +1238,7 @@ test <- df[-itrain, ]
 De los varios métodos basados en `earth` que implementa `caret`, emplearemos el algoritmo original:
 
 
-```r
+``` r
 library(caret)
 # names(getModelInfo("[Ee]arth")) # 4 métodos
 modelLookup("earth")
@@ -1255,7 +1255,7 @@ Para la selección de los hiperparámetros óptimos, consideramos una rejilla de
 (ref:earth-caret) Errores RMSE de validación cruzada de los modelos MARS en función del numero de términos `nprune` y del orden máximo de interacción `degree`, resaltando la combinación óptima.
 
 
-```r
+``` r
 tuneGrid <- expand.grid(degree = 1:2, nprune = floor(seq(2, 20, len = 10)))
 set.seed(1)
 caret.mars <- train(O3 ~ ., data = train, method = "earth",
@@ -1293,7 +1293,7 @@ caret.mars
 ## The final values used for the model were nprune = 10 and degree = 2.
 ```
 
-```r
+``` r
 ggplot(caret.mars, highlight = TRUE)
 ```
 
@@ -1310,7 +1310,7 @@ El modelo final contiene 10 términos con interacciones.
 Podemos analizarlo con las herramientas de `earth`:
 
 
-```r
+``` r
 summary(caret.mars$finalModel)
 ```
 
@@ -1342,7 +1342,7 @@ Representamos los efectos parciales de las componentes, separando los efectos pr
 (ref:earth-caret-plotmo1) Efectos parciales principales del modelo MARS ajustado con `caret`.
 
 
-```r
+``` r
 # plotmo(caret.mars$finalModel)
 plotmo(caret.mars$finalModel, degree2 = 0, caption = "")
 ```
@@ -1360,7 +1360,7 @@ plotmo(caret.mars$finalModel, degree2 = 0, caption = "")
 (ref:earth-caret-plotmo2) Efectos parciales principales de las interacciones del modelo MARS ajustado con `caret`.
 
 
-```r
+``` r
 plotmo(caret.mars$finalModel, degree1 = 0, caption = "")
 ```
 
@@ -1372,7 +1372,7 @@ plotmo(caret.mars$finalModel, degree1 = 0, caption = "")
 Finalmente, evaluamos la precisión de las predicciones en la muestra de test con el procedimiento habitual:
 
 
-```r
+``` r
 pred <- predict(caret.mars, newdata = test)
 accuracy(pred, test$O3)
 ```
@@ -1467,7 +1467,7 @@ El método PPR (con respuesta multivariante) está implementado en la función `
 [^nota-pursuit-1]: Basada en la función `ppreg()` de S-PLUS e implementado en R por B.D. Ripley, inicialmente para el paquete `MASS`.
 
 
-```r
+``` r
 ppr(formula, data, nterms, max.terms = nterms, optlevel = 2,
     sm.method = c("supsmu", "spline", "gcvspline"),
     bass = 0, span = 0, df = 5, gcvpen = 1, ...)
@@ -1481,7 +1481,7 @@ A continuación, retomamos el ejemplo del conjunto de datos `earth::Ozone1`.
 En primer lugar ajustamos un modelo PPR con dos términos [incrementando el suavizado por defecto de `supsmu()` siguiendo la recomendación de @MASS]:
 
 
-```r
+``` r
 ppreg <- ppr(O3 ~ ., nterms = 2, data = train, bass = 2)
 ```
 
@@ -1492,7 +1492,7 @@ En este caso, la primera componente no paramétrica es la que tiene mayor peso e
 las estimaciones de los coeficientes permiten interpretarlas como variables latentes 
 -->
 
-```r
+``` r
 summary(ppreg)
 ```
 
@@ -1523,7 +1523,7 @@ summary(ppreg)
 
 Podemos representar las funciones rigde con método `plot()` (ver Figura \@ref(fig:ppr-plot)):
 
-```r
+``` r
 plot(ppreg)
 ```
 
@@ -1539,7 +1539,7 @@ En este caso, se estimaría que la primera componente lineal tiene aproximadamen
 Por último evaluamos las predicciones en la muestra de test:
 
 
-```r
+``` r
 pred <- predict(ppreg, newdata = test)
 obs <- test$O3
 accuracy(pred, obs)
@@ -1558,7 +1558,7 @@ pred.plot(pred, obs, main = "Observado frente a predicciones",
 Empleamos también el método `"ppr"` de `caret` para seleccionar automáticamente el número de términos:
 
 
-```r
+``` r
 library(caret)
 modelLookup("ppr")
 ```
@@ -1568,7 +1568,7 @@ modelLookup("ppr")
 ## 1   ppr    nterms # Terms   TRUE    FALSE     FALSE
 ```
 
-```r
+``` r
 set.seed(1)
 caret.ppr <- train(O3 ~ ., data = train, method = "ppr", 
                    trControl = trainControl(method = "cv", number = 10))
@@ -1613,7 +1613,7 @@ Podríamos analizar el modelo final ajustado de forma análoga (ver Figura \@ref
 (ref:ppr-caret-plot) Estimación de la función *ridge* del ajuste PPR (con selección óptima del número de componentes).  
 
 
-```r
+``` r
 summary(caret.ppr$finalModel)
 ```
 
@@ -1626,17 +1626,17 @@ summary(caret.ppr$finalModel)
 ##  4436.7 
 ## 
 ## Projection direction vectors ('alpha'):
-##         vh       wind   humidity       temp        ibh        dpg 
-## -0.0160915 -0.1678913  0.3517739  0.9073015 -0.0018289  0.0269015 
-##        ibt        vis        doy 
-##  0.1480212 -0.0264704 -0.0357039 
+##         vh       wind   humidity       temp        ibh        dpg        ibt 
+## -0.0160915 -0.1678913  0.3517739  0.9073015 -0.0018289  0.0269015  0.1480212 
+##        vis        doy 
+## -0.0264704 -0.0357039 
 ## 
 ## Coefficients of ridge terms ('beta'):
 ## term 1 
 ##  6.854
 ```
 
-```r
+``` r
 plot(caret.ppr$finalModel) 
 ```
 
@@ -1648,7 +1648,7 @@ plot(caret.ppr$finalModel)
 Si estudiamos las predicciones en la muestra de test, la proporción de variabilidad explicada es similar a la obtenida anteriormente con dos componentes *ridge*:
 
 
-```r
+``` r
 pred <- predict(caret.ppr, newdata = test)
 accuracy(pred, obs)
 ```
@@ -1662,7 +1662,7 @@ accuracy(pred, obs)
 Para ajustar un modelo *single index* también se podría emplear la función [`npindex()`](https://rdrr.io/pkg/np/man/np.singleindex.html) del paquete  [`np`](https://github.com/JeffreyRacine/R-Package-np) [que implementa el método de @ichimura1993, considerando un estimador local constante], aunque en este caso ni el tiempo de computación ni el resultado es satisfactorio[^np-npindexbw-1]:
 
 
-```r
+``` r
 library(np)
 formula <- O3 ~ vh + wind + humidity + temp + ibh + dpg + ibt + vis + doy
 bw <- npindexbw(formula, data = train, optim.method = "BFGS", nmulti = 1) 
@@ -1677,7 +1677,7 @@ summary(bw)
 Otro inconveniente es que los resultados de texto contienen caracteres inválidos para compilar en LaTeX y pueden aparecer errores al generar informes.
 
 
-```r
+``` r
 sindex <- npindex(bws = bw, gradients = TRUE)
 summary(sindex)
 ```
@@ -1704,7 +1704,7 @@ Al representar la función *ridge* se observa que, aparentemente, la ventana sel
 (ref:npindex-plot) Estimación de la función *ridge* del modelo *single index* ajustado.
 
 
-```r
+``` r
 plot(bw)
 ```
 
@@ -1716,7 +1716,7 @@ plot(bw)
 Si analizamos la eficiencia de las predicciones en la muestra de test, la proporción de variabilidad explicada es mucho menor que la del modelo ajustado con la función `ppr()`: 
 
 
-```r
+``` r
 pred <- predict(sindex, newdata = test)
 accuracy(pred, obs)
 ```

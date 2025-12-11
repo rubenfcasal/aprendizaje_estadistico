@@ -149,7 +149,7 @@ Para el caso de redes más complejas se puede utilizar, por ejemplo, el paquete 
 La función principal [`nnet()`](https://rdrr.io/pkg/nnet/man/nnet.html) se suele emplear con los siguientes argumentos:
 
 
-```r
+``` r
 nnet(formula, data, size, Wts, linout = FALSE, skip = FALSE, 
      rang = 0.7, decay = 0, maxit = 100, ...)
 ```
@@ -172,7 +172,7 @@ Para emplear este parámetro los predictores deberían estar en la misma escala.
 Como ejemplo consideraremos el conjunto de datos `earth::Ozone1` empleado en el capítulo anterior:
 
 
-```r
+``` r
 data(ozone1, package = "earth")
 df <- ozone1
 set.seed(1)
@@ -187,7 +187,7 @@ Como `caret` emplea las opciones por defecto de `nnet()` (diseñadas para clasif
 estableceremos `linout = TRUE`^[La alternativa sería transformar la respuesta a rango 1.] y aumentaremos el número de iteraciones (aunque seguramente siga siendo demasiado pequeño).
 
 
-```r
+``` r
 library(caret)
 # getModelInfo("nnet") # Encuentra 10 métodos con "nnet"
 modelLookup("nnet")
@@ -199,7 +199,7 @@ modelLookup("nnet")
 ## 2  nnet     decay  Weight Decay   TRUE     TRUE      TRUE
 ```
 
-```r
+``` r
 tuneGrid <- expand.grid(size = 2*1:5, decay = c(0, 0.001, 0.01))
 set.seed(1)
 caret.nnet <- train(O3 ~ ., data = train, method = "nnet",
@@ -214,7 +214,7 @@ En este caso se seleccionaron 4 nodos en la capa oculta y un valor de 0.01 para 
 (ref:nnet-cv) Selección de los hiperparámetros asociados a una red neuronal (el número de nodos  y el parámetro de regularización) mediante  un criterio de error RMSE calculado por validación cruzada.
  
 
-```r
+``` r
 ggplot(caret.nnet, highlight = TRUE)
 ```
 
@@ -226,7 +226,7 @@ ggplot(caret.nnet, highlight = TRUE)
 A continuación, analizamos el modelo resultante con el método `summary()`:
 
 
-```r
+``` r
 summary(caret.nnet$finalModel)
 ```
 
@@ -249,7 +249,7 @@ que muestra los valores de los pesos (45 en total).
 Aunque suele ser preferible representarlo gráficamente, empleando el paquete `NeuralNetTools`  [@R-NeuralNetTools], ver Figura \@ref(fig:nnet-model):
 
 
-```r
+``` r
 library(NeuralNetTools)
 plotnet(caret.nnet$finalModel)
 ```
@@ -264,7 +264,7 @@ plotnet(caret.nnet$finalModel)
 Por último, evaluamos las predicciones en la muestra de test:
 
 
-```r
+``` r
 pred <- predict(caret.nnet, newdata = test)
 obs <- test$O3
 library(mpae)
@@ -281,7 +281,7 @@ y las representamos gráficamente (ver Figura \@ref(fig:nnet-pred)):
 (ref:nnet-pred) Observaciones frente a predicciones (en la muestra de test) con la red neuronal ajustada.
 
 
-```r
+``` r
 pred.plot(pred, obs, xlab = "Predicción", ylab = "Observado")
 ```
 

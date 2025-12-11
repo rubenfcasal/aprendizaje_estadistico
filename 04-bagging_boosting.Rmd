@@ -302,8 +302,8 @@ caret::confusionMatrix(pred, test$taste)
 Esta mejora sería debida a que en este caso la dependencia entre los árboles es menor:
 
 ```{r rf-split1}
-split_var_1 <- sapply(seq_len(bagtrees$ntree), function(i) 
-                       getTree(bagtrees, i, labelVar = TRUE)[1, "split var"])
+split_var_1 <- sapply(seq_len(rf$ntree), function(i) 
+                       getTree(rf, i, labelVar = TRUE)[1, "split var"])
 table(split_var_1)
 ```
 

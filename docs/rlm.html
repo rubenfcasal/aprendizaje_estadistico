@@ -53,7 +53,8 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
 <script src="libs/datatables-binding-0.30/datatables.js"></script>
 <link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
@@ -426,16 +427,16 @@ Figura 2.1: Representación de las correlaciones lineales entre las variables de
 </p>
 </div>
 <div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="rlm.html#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(mcor, <span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div>
-<pre><code>##         bodyfat      age  weight  height   neck chest abdomen     hip
-## bodyfat  1.0000  0.23003  0.6174 -0.0294 0.4820 0.701   0.816  0.6259
-## age      0.2300  1.00000 -0.0384 -0.2145 0.0858 0.164   0.204 -0.0718
-## weight   0.6174 -0.03838  1.0000  0.4923 0.7947 0.882   0.876  0.9313
-## height  -0.0294 -0.21445  0.4923  1.0000 0.3116 0.179   0.177  0.3785
-##          thigh     knee  ankle  biceps forearm wrist
-## bodyfat  0.542  0.47448  0.213  0.4681   0.353 0.288
-## age     -0.238 -0.00612 -0.167 -0.0662  -0.124 0.153
-## weight   0.849  0.83207  0.630  0.7771   0.680 0.714
-## height   0.342  0.51736  0.474  0.3101   0.312 0.390
+<pre><code>##         bodyfat      age  weight  height   neck chest abdomen     hip  thigh
+## bodyfat  1.0000  0.23003  0.6174 -0.0294 0.4820 0.701   0.816  0.6259  0.542
+## age      0.2300  1.00000 -0.0384 -0.2145 0.0858 0.164   0.204 -0.0718 -0.238
+## weight   0.6174 -0.03838  1.0000  0.4923 0.7947 0.882   0.876  0.9313  0.849
+## height  -0.0294 -0.21445  0.4923  1.0000 0.3116 0.179   0.177  0.3785  0.342
+##             knee  ankle  biceps forearm wrist
+## bodyfat  0.47448  0.213  0.4681   0.353 0.288
+## age     -0.00612 -0.167 -0.0662  -0.124 0.153
+## weight   0.83207  0.630  0.7771   0.680 0.714
+## height   0.51736  0.474  0.3101   0.312 0.390
 ##  [ reached getOption(&quot;max.print&quot;) -- omitted 10 rows ]</code></pre>
 <!-- 
 Pendiente: 
@@ -672,19 +673,19 @@ Figura 2.6: Ejemplo de simulaciones bajo independencia y correspondientes modelo
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -0.4493 -0.1437  0.0179  0.1532  0.3990 
+## -0.4580 -0.0864  0.0045  0.1540  0.3366 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  -0.0777     0.0902   -0.86     0.39    
-## x1            1.0371     0.1157    8.97  9.6e-12 ***
-## x2           -0.0549     0.1134   -0.48     0.63    
+## (Intercept)  -0.2237     0.0851   -2.63    0.012 *  
+## x1            1.0413     0.1104    9.43  2.1e-12 ***
+## x2            0.2233     0.1021    2.19    0.034 *  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 0.22 on 47 degrees of freedom
-## Multiple R-squared:  0.632,  Adjusted R-squared:  0.617 
-## F-statistic: 40.4 on 2 and 47 DF,  p-value: 6.09e-11</code></pre>
+## Residual standard error: 0.21 on 47 degrees of freedom
+## Multiple R-squared:  0.665,  Adjusted R-squared:  0.65 
+## F-statistic: 46.6 on 2 and 47 DF,  p-value: 7.02e-12</code></pre>
 <p>En la práctica, para la detección de colinealidad se puede emplear la función
 <code>vif()</code> del paquete <a href="https://CRAN.R-project.org/package=car"><code>car</code></a>, que calcula los factores de inflación de la varianza para las variables del modelo.
 Por ejemplo, en los últimos ajustes obtendríamos:</p>
@@ -694,7 +695,7 @@ Por ejemplo, en los últimos ajustes obtendríamos:</p>
 ## 107.08 107.08</code></pre>
 <div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="rlm.html#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(fit2) </span></code></pre></div>
 <pre><code>##     x1     x2 
-## 1.0005 1.0005</code></pre>
+## 1.0001 1.0001</code></pre>
 <p>La idea de este estadístico es que la varianza de la estimación del efecto en
 regresión simple (efecto global) es menor que en regresión múltiple (efecto parcial).
 El factor de inflación de la varianza mide el incremento debido a la colinealidad.
@@ -706,7 +707,7 @@ Por ejemplo, los coeficientes de tolerancia de los últimos ajustes serían:</p>
 ## 0.0093387 0.0093387</code></pre>
 <div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="rlm.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">/</span><span class="fu">vif</span>(fit2) </span></code></pre></div>
 <pre><code>##      x1      x2 
-## 0.99947 0.99947</code></pre>
+## 0.99986 0.99986</code></pre>
 <p>Aunque el factor de inflación de la varianza y la tolerancia son las medidas más utilizadas, son bastante simples y puede ser preferible emplear otras como el <em>índice de condicionamiento</em>, implementado en el paquete <a href="https://CRAN.R-project.org/package=mctest"><code>mctest</code></a>.</p>
 <p>Como ya se comentó en la Sección 1.4, el problema de la colinealidad se agrava al aumentar el número de dimensiones (la maldición de la dimensionalidad).
 Hay que tener en cuenta también que, además de la dificultad para interpretar el efecto de los predictores, va a resultar más difícil determinar qué variables son de interés para predecir la respuesta (<em>i. e.</em> no son ruido). Debido a la aleatoriedad, predictores que realmente no están relacionados con la respuesta pueden incluirse en el modelo con mayor facilidad, especialmente si se recurre a los contrastes tradicionales para determinar si tienen un efecto significativo.</p>
@@ -1162,42 +1163,42 @@ En este caso no tendría sentido hacerlo con la muestra de entrenamiento, ya que
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": true,
-"facebook": false,
-"twitter": false,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/rubenfcasal/aprendizaje_estadistico/edit/master/02-clasicos.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["aprendizaje_estadistico.pdf"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection"
-}
+  "sharing": {
+    "github": true,
+    "facebook": false,
+    "twitter": false,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/rubenfcasal/aprendizaje_estadistico/edit/master/02-clasicos.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["aprendizaje_estadistico.pdf"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
 });
 });
 </script>
